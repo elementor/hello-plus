@@ -48,8 +48,8 @@ export const SettingsPanel = ( { SETTINGS, settingsData, updateSettings } ) => {
 			<code className="code-example"> &lt;div class=&quot;page-header&quot;&gt; &lt;h1 class=&quot;entry-title&quot;&gt; Post title &lt;/h1&gt; &lt;/div&gt; </code>
 
 			<ToggleControl
-				label={ __( 'Unregister Hello style.css', 'hello-plus' ) }
-				help={ __( "Disable Hello theme's style.css file which contains CSS reset rules for unified cross-browser view.", 'hello-plus' ) }
+				label={ __( 'Unregister Hello Plus style.css', 'hello-plus' ) }
+				help={ __( "Disable Hello Plus's style.css file which contains CSS reset rules for unified cross-browser view.", 'hello-plus' ) }
 				checked={ !! settingsData[ SETTINGS.HELLO_PLUS_STYLE ] || false }
 				onChange={ ( value ) => updateSettings( SETTINGS.HELLO_PLUS_STYLE, value ) }
 			/>
@@ -57,7 +57,7 @@ export const SettingsPanel = ( { SETTINGS, settingsData, updateSettings } ) => {
 
 			<ToggleControl
 				label={ __( 'Unregister Hello Plus theme.css', 'hello-plus' ) }
-				help={ __( "Disable Hello Plus theme's theme.css file which contains CSS rules that style WordPress elements.", 'hello-plus' ) }
+				help={ __( "Disable Hello Plus's theme.css file which contains CSS rules that style WordPress elements.", 'hello-plus' ) }
 				checked={ !! settingsData[ SETTINGS.HELLO_PLUS_THEME ] || false }
 				onChange={ ( value ) => updateSettings( SETTINGS.HELLO_PLUS_THEME, value ) }
 			/>

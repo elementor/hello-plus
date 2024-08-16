@@ -1,0 +1,21 @@
+/**
+ * Elementor editor styling
+ */
+
+.hello-plus {
+
+	&.elementor-nerd-box {
+
+		.elementor-nerd-box-title {
+			margin-block-start: 24px;
+		}
+
+		.elementor-nerd-box-message {
+			margin-block-start: 12px;
+		}
+
+		.elementor-nerd-box-link {
+			margin-block-start: 24px;
+		}
+	}
+}

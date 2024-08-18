@@ -34,10 +34,6 @@ $skip_link_url = apply_filters( 'hello_plus_skip_link_url', '#content' );
 <?php
 if ( ! function_exists( 'elementor_theme_do_location' ) || ! elementor_theme_do_location( 'header' ) ) {
 	if ( hello_plus_display_header_footer() ) {
-		if ( did_action( 'elementor/loaded' ) && hello_plus_header_footer_experiment_active() ) {
-			get_template_part( 'template-parts/dynamic-header' );
-		} else {
-			get_template_part( 'template-parts/header' );
-		}
+		get_template_part( 'template-parts/header' );
 	}
 }

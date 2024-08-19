@@ -44,8 +44,6 @@ class Customizer_Action_Links extends \WP_Customize_Control {
 			$action_link_type = 'install-elementor';
 		} elseif ( ! defined( 'ELEMENTOR_VERSION' ) ) {
 			$action_link_type = 'activate-elementor';
-		} elseif ( ! hello_plus_header_footer_experiment_active() ) {
-			$action_link_type = 'activate-header-footer-experiment';
 		} else {
 			$action_link_type = 'style-header-footer';
 		}

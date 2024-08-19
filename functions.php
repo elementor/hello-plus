@@ -212,9 +212,6 @@ if ( is_admin() ) {
 // Settings page
 require get_template_directory() . '/includes/settings-functions.php';
 
-// Header & footer styling option, inside Elementor
-require get_template_directory() . '/includes/elementor-functions.php';
-
 // Add Hello-Plus widgets
 require get_template_directory() . '/includes/widgets-manager.php';
 

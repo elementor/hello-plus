@@ -1,0 +1,216 @@
+<?php
+
+namespace HelloPlus\Includes;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+/**
+ * Module Base.
+ *
+ * An abstract class providing the properties and methods needed to
+ * manage and handle modules in inheriting classes.
+ *
+ * @abstract
+ */
+abstract class Module_Base {
+
+	/**
+	 * Module class reflection.
+	 *
+	 * Holds the information about a class.
+	 * @access private
+	 *
+	 * @var ?\ReflectionClass
+	 */
+	private ?\ReflectionClass $reflection = null;
+
+	/**
+	 * Module components.
+	 *
+	 * Holds the module components.
+	 * @access private
+	 *
+	 * @var array
+	 */
+	private array $components = [];
+
+	/**
+	 * Module instance.
+	 *
+	 * Holds the module instance.
+	 * @access protected
+	 *
+	 * @var Module_Base[]
+	 */
+	protected static array $_instances = [];
+
+	/**
+	 * Get module name.
+	 *
+	 * Retrieve the module name.
+	 * @access public
+	 * @abstract
+	 *
+	 * @return string Module name.
+	 */
+	abstract public function get_name(): string;
+
+	/**
+	 * Instance.
+	 *
+	 * Ensures only one instance of the module class is loaded or can be loaded.
+	 * @access public
+	 * @static
+	 *
+	 * @return Module_Base An instance of the class.
+	 */
+	public static function instance(): Module_Base {
+		$class_name = static::class_name();
+
+		if ( empty( static::$_instances[ $class_name ] ) ) {
+			static::$_instances[ $class_name ] = new static(); // @codeCoverageIgnore
+		}
+
+		return static::$_instances[ $class_name ];
+	}
+
+	/**
+	 * is_active
+	 * @access public
+	 * @static
+	 * @return bool
+	 */
+	public static function is_active(): bool {
+		return true;
+	}
+
+	/**
+	 * Class name.
+	 *
+	 * Retrieve the name of the class.
+	 * @access public
+	 * @static
+	 */
+	public static function class_name(): string {
+		return get_called_class();
+	}
+
+	/**
+	 * Clone.
+	 *
+	 * Disable class cloning and throw an error on object clone.
+	 *
+	 * The whole idea of the singleton design pattern is that there is a single
+	 * object. Therefore, we don't want the object to be cloned.
+	 *
+	 * @access public
+	 */
+	public function __clone() {
+		// Cloning instances of the class is forbidden
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Something went wrong.', 'hello-plus' ), '0.0.1' ); // @codeCoverageIgnore
+	}
+
+	/**
+	 * Wakeup.
+	 *
+	 * Disable unserializing of the class.
+	 * @access public
+	 */
+	public function __wakeup() {
+		// Unserializing instances of the class is forbidden
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Something went wrong.', 'hello-plus' ), '0.0.1' ); // @codeCoverageIgnore
+	}
+
+	/**
+	 * @access public
+	 */
+	public function get_reflection(): \ReflectionClass {
+		if ( null === $this->reflection ) {
+			try {
+				$this->reflection = new \ReflectionClass( $this );
+			} catch ( \ReflectionException $e ) {
+				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+					error_log( $e->getMessage() );
+				}
+			}
+		}
+
+		return $this->reflection;
+	}
+
+	/**
+	 * Add module component.
+	 *
+	 * Add new component to the current module.
+	 * @access public
+	 *
+	 * @param string $id       Component ID.
+	 * @param mixed  $instance An instance of the component.
+	 */
+	public function add_component( string $id, $instance ) {
+		$this->components[ $id ] = $instance;
+	}
+
+	/**
+	 * @access public
+	 * @return array
+	 */
+	public function get_components(): array {
+		return $this->components;
+	}
+
+	/**
+	 * Get module component.
+	 *
+	 * Retrieve the module component.
+	 * @access public
+	 *
+	 * @param string $id Component ID.
+	 *
+	 * @return mixed An instance of the component, or `false` if the component
+	 *               doesn't exist.
+	 * @codeCoverageIgnore
+	 */
+	public function get_component( string $id ) {
+		if ( isset( $this->components[ $id ] ) ) {
+			return $this->components[ $id ];
+		}
+
+		return false;
+	}
+
+	/**
+	 * Retrieve the namespace of the class
+	 *
+	 * @access public
+	 * @static
+	 */
+	public static function namespace_name(): string {
+		$class_name = static::class_name();
+		return substr( $class_name, 0, strrpos( $class_name, '\\' ) );
+	}
+
+	/**
+	 * Adds an array of components.
+	 * Assumes namespace structure contains `\Components\`
+	 *
+	 * @param array $components_ids => component's class name.
+	 */
+	public function register_components( array $components_ids  = [] ) {
+		if ( empty( $components_ids ) ) {
+			$components_ids = $this->get_component_ids();
+		}
+		$namespace = static::namespace_name();
+		foreach ( $components_ids as $component_id ) {
+			$class_name = $namespace . '\\Components\\' . $component_id;
+			$this->add_component( $component_id, new $class_name() );
+		}
+	}
+
+	/**
+	 * @return string[]
+	 */
+	abstract protected function get_component_ids(): array;
+}

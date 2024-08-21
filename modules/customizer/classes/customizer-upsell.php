@@ -1,6 +1,6 @@
 <?php
 
-namespace HelloPlus\Includes\Customizer;
+namespace HelloPlus\Modules\Customizer\Classes;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.

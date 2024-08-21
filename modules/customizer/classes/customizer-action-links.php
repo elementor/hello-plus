@@ -1,6 +1,6 @@
 <?php
 
-namespace HelloPlus\Includes\Customizer;
+namespace HelloPlus\Modules\Customizer\Classes;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -80,7 +80,7 @@ class Customizer_Action_Links extends \WP_Customize_Control {
 				break;
 			case 'activate-header-footer-experiment':
 				$action_link_data = [
-					'image' => get_template_directory_uri() . '/assets/images/elementor.svg',
+					'image' => HELLO_PLUS_ASSETS_URL . '/images/elementor.svg',
 					'alt' => esc_attr__( 'Elementor', 'hello-plus' ),
 					'title' => esc_html__( 'Style using Elementor', 'hello-plus' ),
 					'message' => esc_html__( 'Design your cross-site header & footer from Elementor’s "Site Settings" panel.', 'hello-plus' ),
@@ -90,7 +90,7 @@ class Customizer_Action_Links extends \WP_Customize_Control {
 				break;
 			case 'style-header-footer':
 				$action_link_data = [
-					'image' => get_template_directory_uri() . '/assets/images/elementor.svg',
+					'image' => HELLO_PLUS_ASSETS_URL . '/images/elementor.svg',
 					'alt' => esc_attr__( 'Elementor', 'hello-plus' ),
 					'title' => esc_html__( 'Style cross-site header & footer', 'hello-plus' ),
 					'message' => esc_html__( 'Customize your cross-site header & footer from Elementor’s "Site Settings" panel.', 'hello-plus' ),
@@ -112,7 +112,7 @@ class Customizer_Action_Links extends \WP_Customize_Control {
 	 *
 	 * @return string
 	 */
-	private function get_customizer_action_links_html( $data ) {
+	private function get_customizer_action_links_html( $data ): string {
 		if (
 			empty( $data )
 			|| ! isset( $data['image'] )
@@ -122,7 +122,7 @@ class Customizer_Action_Links extends \WP_Customize_Control {
 			|| ! isset( $data['link'] )
 			|| ! isset( $data['button'] )
 		) {
-			return;
+			return '';
 		}
 
 		return sprintf(

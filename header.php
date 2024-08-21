@@ -33,7 +33,7 @@ $skip_link_url = apply_filters( 'hello_plus_skip_link_url', '#content' );
 
 <?php
 if ( ! function_exists( 'elementor_theme_do_location' ) || ! elementor_theme_do_location( 'header' ) ) {
-	if ( hello_plus_display_header_footer() ) {
+	if ( \HelloPlus\Modules\Theme\Module::display_header_footer() ) {
 		get_template_part( 'template-parts/header' );
 	}
 }

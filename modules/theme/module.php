@@ -2,6 +2,10 @@
 
 namespace HelloPlus\Modules\Theme;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 use HelloPlus\Includes\Module_Base;
 use HelloPlus\Theme;
 
@@ -11,7 +15,7 @@ class Module extends Module_Base {
 	/**
 	 * @inheritDoc
 	 */
-	public function get_name(): string {
+	public static function get_name(): string {
 		return 'theme';
 	}
 

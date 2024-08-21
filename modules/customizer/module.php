@@ -2,6 +2,10 @@
 
 namespace HelloPlus\Modules\Customizer;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 use HelloPlus\Includes\Module_Base;
 use HelloPlus\Modules\Customizer\Classes\Customizer_Action_Links;
 use HelloPlus\Modules\Customizer\Classes\Customizer_Upsell;
@@ -12,7 +16,7 @@ class Module extends Module_Base {
 	/**
 	 * @inheritDoc
 	 */
-	public function get_name(): string {
+	public static function get_name(): string {
 		return 'customizer';
 	}
 

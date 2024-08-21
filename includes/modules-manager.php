@@ -2,6 +2,10 @@
 
 namespace HelloPlus;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 use HelloPlus\Includes\Module_Base;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -37,17 +41,27 @@ final class Modules_Manager {
 	/**
 	 * @param string $module_name
 	 *
-	 * @return ?Module_Base|Module_Base[]
+	 * @return ?Module_Base
 	 */
-	public function get_modules( string $module_name ) {
-		if ( $module_name ) {
-			if ( isset( $this->modules[ $module_name ] ) ) {
-				return $this->modules[ $module_name ];
-			}
-
-			return null;
+	public function get_module( string $module_name ): ?Module_Base {
+		if ( isset( $this->modules[ $module_name ] ) ) {
+			return $this->modules[ $module_name ];
 		}
 
-		return $this->modules;
+		return null;
+	}
+
+	/**
+	 * @param Module_Base $module
+	 *
+	 * allow child theme and 3rd party plugins to add modules
+	 *
+	 * @return void
+	 */
+	public function add_module( Module_Base $module ) {
+		$class_name = $module->get_reflection()->getName();
+		if ( $module::is_active() ) {
+			$this->modules[ $class_name ] = $module::instance();
+		}
 	}
 }

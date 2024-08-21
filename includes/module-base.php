@@ -55,7 +55,7 @@ abstract class Module_Base {
 	 *
 	 * @return string Module name.
 	 */
-	abstract public function get_name(): string;
+	abstract public static function get_name(): string;
 
 	/**
 	 * Instance.
@@ -83,7 +83,12 @@ abstract class Module_Base {
 	 * @return bool
 	 */
 	public static function is_active(): bool {
-		return true;
+		/**
+		 * allow enabling/disabling the module on run-time
+		 *
+		 * @param bool $is_active the filters value
+		 */
+		return apply_filters( 'hello-plus/modules/' . static::get_name() . '/is-active', true );
 	}
 
 	/**

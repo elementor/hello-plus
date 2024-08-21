@@ -2,6 +2,10 @@
 
 namespace HelloPlus\Modules\Admin\Components;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * Plugin_Notice class
  * responsible over promo notices shown on the Plugins screen

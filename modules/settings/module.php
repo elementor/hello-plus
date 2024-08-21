@@ -2,6 +2,10 @@
 
 namespace HelloPlus\Modules\Settings;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 use HelloPlus\Includes\Module_Base;
 
 class Module extends Module_Base {
@@ -9,7 +13,7 @@ class Module extends Module_Base {
 	/**
 	 * @inheritDoc
 	 */
-	public function get_name(): string {
+	public static function get_name(): string {
 		return 'settings';
 	}
 

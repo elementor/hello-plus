@@ -2,6 +2,10 @@
 
 namespace HelloPlus\Modules\Settings\Components;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 use HelloPlus\Theme;
 
 class Settings {

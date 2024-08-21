@@ -2,25 +2,34 @@
 namespace HelloPlus;
 
 if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+use Elementor\Plugin;
+
+if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
 /**
  * Theme's main class
  */
-class Theme {
+final class Theme {
 
 	/**
-	 * @var Theme
+	 * @var ?Theme
 	 */
-	private static $_instance;
+	private static ?Theme $_instance = null;
 
 	/**
 	 * @var ?Modules_Manager
 	 */
-	public $modules_manager = null;
+	public ?Modules_Manager $modules_manager = null;
 
-	private $classes_aliases = [];
+	/**
+	 * @var array
+	 */
+	private array $classes_aliases = [];
 
 	/**
 	 * Throw error on object clone
@@ -40,7 +49,7 @@ class Theme {
 	}
 
 	/**
-	 * Disable unserializing of the class
+	 * Disable un-serializing of the class
 	 *
 	 * @since 1.0.0
 	 * @return void
@@ -57,19 +66,12 @@ class Theme {
 	 * @return \Elementor\Plugin
 	 */
 
-	public static function elementor() {
+	public static function elementor(): Plugin {
 		return \Elementor\Plugin::$instance;
 	}
 
-	/**
-	 * @return Theme
-	 */
-	public static function instance(): Theme {
-		if ( is_null( self::$_instance ) ) {
-			self::$_instance = new self();
-		}
-
-		return self::$_instance;
+	public static function get_min_suffix(): string {
+		return defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 	}
 
 	public function autoload( $class ) {
@@ -107,16 +109,26 @@ class Theme {
 		}
 	}
 
-	public function enqueue_styles() {}
-
 	private function includes() {
 		require_once  HELLO_PLUS_PATH . '/includes/modules-manager.php';
 		$this->modules_manager = new Modules_Manager();
 	}
 
+	/**
+	 * Singleton
+	 *
+	 * @return Theme
+	 */
+	public static function instance(): Theme {
+		if ( is_null( self::$_instance ) ) {
+			self::$_instance = new self();
+		}
+
+		return self::$_instance;
+	}
 
 	/**
-	 * Theme constructor.
+	 * Theme private constructor.
 	 */
 	private function __construct() {
 		static $autoloader_registered = false;
@@ -126,14 +138,6 @@ class Theme {
 		$this->includes();
 	}
 
-	public static function get_min_suffix(): string {
-		return defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-	}
-
-	public function say_hi(  ) {
-		echo __NAMESPACE__;
-		die( __METHOD__ );
-	}
 }
 
 Theme::instance();

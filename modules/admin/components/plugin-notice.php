@@ -115,6 +115,7 @@ class Plugin_Notice {
 			'helloPlusNoticeData',
 			[
 				'nonce' => wp_create_nonce( self::DISMISS_INSTALL_NOTICE_NONCE ),
+				'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			]
 		);
 	}

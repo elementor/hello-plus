@@ -1,5 +1,3 @@
-//import '../../scss/modules/hello-plus-notice.scss';
-
 window.addEventListener( 'load', () => {
 	const dismissNotice = document.querySelector( '.notice.hello-plus-install-elementor button.notice-dismiss' );
 	dismissNotice.addEventListener( 'click', async ( event ) => {
@@ -9,6 +7,6 @@ window.addEventListener( 'load', () => {
 		formData.append( 'action', 'hello_plus_set_admin_notice_viewed' );
 		formData.append( 'dismiss_nonce', helloPlusNoticeData.nonce );
 
-		await fetch( ajaxurl, { method: 'POST', body: formData } );
+		await fetch( helloPlusNoticeData.ajaxurl, { method: 'POST', body: formData } );
 	} );
 } );

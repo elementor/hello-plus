@@ -12,6 +12,7 @@ const entry = {
 	'hello-plus-editor': path.resolve( __dirname, './assets/dev/js/editor/hello-plus-editor.js' ),
 	'hello-plus-frontend': path.resolve( __dirname, './assets/dev/js/frontend/hello-plus-frontend.js' ),
 	'hello-plus-admin': path.resolve( __dirname, './assets/dev/js/admin/hello-plus-admin.js' ),
+	'hello-plus-notice': path.resolve( __dirname, './assets/dev/js/modules/hello-plus-notice.js' ),
 };
 
 const moduleRules = {

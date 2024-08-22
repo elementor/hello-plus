@@ -2,6 +2,8 @@
 
 namespace HelloPlus\Modules\Admin\Components;
 
+use HelloPlus\Theme;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -67,80 +69,6 @@ class Plugin_Notice {
 		}
 
 		?>
-		<style>
-			.notice.hello-plus-notice {
-				border: 1px solid #ccd0d4;
-				border-inline-start: 4px solid #9b0a46 !important;
-				box-shadow: 0 1px 4px rgba(0,0,0,0.15);
-				display: flex;
-				padding: 0;
-			}
-			.notice.hello-plus-notice.hello-plus-install-elementor {
-				padding: 0;
-			}
-			.notice.hello-plus-notice .hello-plus-notice-aside {
-				display: flex;
-				align-items: start;
-				justify-content: center;
-				padding: 20px 10px;
-				background: rgba(215,43,63,0.04);
-			}
-			.notice.hello-plus-notice .hello-plus-notice-aside img {
-				width: 1.5rem;
-			}
-			.notice.hello-plus-notice .hello-plus-notice-content {
-				display: flex;
-				flex-direction: column;
-				gap: 5px;
-				padding: 20px;
-				width: 100%;
-			}
-			.notice.hello-plus-notice .hello-plus-notice-content h3,
-			.notice.hello-plus-notice .hello-plus-notice-content p {
-				padding: 0;
-				margin: 0;
-			}
-			.notice.hello-plus-notice .hello-plus-information-link {
-				align-self: start;
-			}
-			.notice.hello-plus-notice .hello-plus-install-button {
-				align-self: start;
-				background-color: #127DB8;
-				border-radius: 3px;
-				color: #fff;
-				text-decoration: none;
-				height: auto;
-				line-height: 20px;
-				padding: 0.4375rem 0.75rem;
-				margin-block-start: 15px;
-			}
-			.notice.hello-plus-notice .hello-plus-install-button:active {
-				transform: translateY(1px);
-			}
-			@media (max-width: 767px) {
-				.notice.hello-plus-notice .hello-plus-notice-aside {
-					padding: 10px;
-				}
-				.notice.hello-plus-notice .hello-plus-notice-content {
-					gap: 10px;
-					padding: 10px;
-				}
-			}
-		</style>
-		<script>
-			window.addEventListener( 'load', () => {
-				const dismissNotice = document.querySelector( '.notice.hello-plus-install-elementor button.notice-dismiss' );
-				dismissNotice.addEventListener( 'click', async ( event ) => {
-					event.preventDefault();
-
-					const formData = new FormData();
-					formData.append( 'action', 'hello_plus_set_admin_notice_viewed' );
-					formData.append( 'dismiss_nonce', '<?php echo esc_js( wp_create_nonce( self::DISMISS_INSTALL_NOTICE_NONCE ) ); ?>' );
-
-					await fetch( ajaxurl, { method: 'POST', body: formData } );
-				} );
-			} );
-		</script>
 		<div class="notice updated is-dismissible hello-plus-notice hello-plus-install-elementor">
 			<div class="hello-plus-notice-aside">
 				<img src="<?php echo esc_url( HELLO_PLUS_ASSETS_URL . '/images/elementor-notice-icon.svg' ); ?>" alt="<?php echo esc_attr__( 'Get Elementor', 'hello-plus' ); ?>" />
@@ -167,11 +95,29 @@ class Plugin_Notice {
 		die;
 	}
 
+	public function enqueue() {
+		wp_enqueue_style(
+			'hello-plus-notice-style',
+			HELLO_PLUS_ASSETS_URL . '/js/hello-plus-notice' . Theme::get_min_suffix() . '.css',
+			[],
+			HELLO_PLUS_ELEMENTOR_VERSION
+		);
+
+		wp_enqueue_script(
+			'hello-plus-notice',
+			HELLO_PLUS_ASSETS_URL . '/js/hello-plus-notice' . Theme::get_min_suffix() . '.js',
+			[],
+			HELLO_PLUS_ELEMENTOR_VERSION
+		);
+	}
+
 	/**
 	 * @return void
 	 */
 	private function register_hooks() {
 		add_action( 'wp_ajax_hello_plus_set_admin_notice_viewed', [ $this, 'ajax_set_admin_notice_viewed' ] );
+
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue' ] );
 
 		if ( ! did_action( 'elementor/loaded' ) ) {
 			add_action( 'admin_notices', [ $this, 'load_failed_admin_notice' ] );

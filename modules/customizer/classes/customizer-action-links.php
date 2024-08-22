@@ -43,15 +43,13 @@ class Customizer_Action_Links extends \WP_Customize_Control {
 		}
 
 		$action_link_data = [];
-		$action_link_type = '';
+		$action_link_type = 'style-header-footer';
 		$installed_plugins = get_plugins();
 
 		if ( ! isset( $installed_plugins['elementor/elementor.php'] ) ) {
 			$action_link_type = 'install-elementor';
 		} elseif ( ! defined( 'ELEMENTOR_VERSION' ) ) {
 			$action_link_type = 'activate-elementor';
-		} else {
-			$action_link_type = 'style-header-footer';
 		}
 
 		switch ( $action_link_type ) {
@@ -82,16 +80,6 @@ class Customizer_Action_Links extends \WP_Customize_Control {
 					'message' => esc_html__( 'Create cross-site header & footer using Elementor.', 'hello-plus' ),
 					'button' => esc_html__( 'Activate Elementor', 'hello-plus' ),
 					'link' => wp_nonce_url( 'plugins.php?action=activate&plugin=elementor/elementor.php', 'activate-plugin_elementor/elementor.php' ),
-				];
-				break;
-			case 'activate-header-footer-experiment':
-				$action_link_data = [
-					'image' => HELLO_PLUS_ASSETS_URL . '/images/elementor.svg',
-					'alt' => esc_attr__( 'Elementor', 'hello-plus' ),
-					'title' => esc_html__( 'Style using Elementor', 'hello-plus' ),
-					'message' => esc_html__( 'Design your cross-site header & footer from Elementor’s "Site Settings" panel.', 'hello-plus' ),
-					'button' => esc_html__( 'Activate header & footer experiment', 'hello-plus' ),
-					'link' => wp_nonce_url( 'admin.php?page=elementor#tab-experiments' ),
 				];
 				break;
 			case 'style-header-footer':

@@ -109,6 +109,14 @@ class Plugin_Notice {
 			[],
 			HELLO_PLUS_ELEMENTOR_VERSION
 		);
+
+		wp_localize_script(
+			'hello-plus-notice',
+			'helloPlusNoticeData',
+			[
+				'nonce' => wp_create_nonce( self::DISMISS_INSTALL_NOTICE_NONCE ),
+			]
+		);
 	}
 
 	/**

@@ -139,5 +139,4 @@ class Plugin_Notice {
 	public function __construct() {
 		$this->register_hooks();
 	}
-
 }

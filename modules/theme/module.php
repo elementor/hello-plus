@@ -9,8 +9,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 use HelloPlus\Includes\Module_Base;
 use HelloPlus\Theme;
 
+/**
+ * Theme module
+ */
 class Module extends Module_Base {
 	const HELLO_PLUS_THEME_VERSION_OPTION = 'hello_plus_theme_version';
+	const HELLO_PLUS_EDITOR_CATEGORY = 'helloplus';
 
 	/**
 	 * @inheritDoc
@@ -27,10 +31,11 @@ class Module extends Module_Base {
 	}
 
 	protected function register_hooks() {
-		add_action( 'wp_head', [ $this, 'add_description_meta_tag' ] );
+		add_action( 'wp_head', [ __NAMESPACE__ . '\Module', 'add_description_meta_tag' ] );
 		add_action( 'after_setup_theme', [ $this, 'setup' ] );
 		add_action( 'after_setup_theme', [ $this, 'content_width' ], 0 );
 		add_action( 'wp_enqueue_scripts', [ $this, 'scripts_styles' ] );
+		add_action( 'elementor/elements/categories_registered', [ $this, 'add_hello_plus_e_panel_categories' ] );
 		add_action( 'elementor/theme/register_locations', [ $this, 'register_elementor_locations' ] );
 	}
 
@@ -163,7 +168,7 @@ class Module extends Module_Base {
 	 *
 	 * @return void
 	 */
-	function register_elementor_locations( $elementor_theme_manager ) {
+	public function register_elementor_locations( $elementor_theme_manager ) {
 		if ( apply_filters( 'hello_plus_register_elementor_locations', true ) ) {
 			$elementor_theme_manager->register_all_core_location();
 		}
@@ -174,17 +179,16 @@ class Module extends Module_Base {
 	 *
 	 * @return void
 	 */
-	function content_width() {
+	public function content_width() {
 		$GLOBALS['content_width'] = apply_filters( 'hello_plus_content_width', 800 );
 	}
-
 
 	/**
 	 * Add description meta tag with excerpt text.
 	 *
 	 * @return void
 	 */
-	function add_description_meta_tag() {
+	public static function add_description_meta_tag() {
 		if ( ! apply_filters( 'hello_plus_description_meta_tag', true ) ) {
 			return;
 		}
@@ -199,6 +203,16 @@ class Module extends Module_Base {
 		}
 
 		echo '<meta name="description" content="' . esc_attr( wp_strip_all_tags( $post->post_excerpt ) ) . '">' . "\n";
+	}
+
+	public function add_hello_plus_e_panel_categories( \Elementor\Elements_Manager $elements_manager ) {
+		$elements_manager->add_category(
+			self::HELLO_PLUS_EDITOR_CATEGORY,
+			[
+				'title' => esc_html__('Hello+', 'hello-plus'),
+				'icon' => 'fa fa-plug',
+			]
+		);
 	}
 
 	protected function __construct(  ) {

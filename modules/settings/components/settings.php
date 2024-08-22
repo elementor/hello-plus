@@ -35,7 +35,7 @@ class Settings {
 	 */
 	public function settings_page_scripts() {
 
-		$dir = HELLO_PLUS_PATH . '/assets/js';
+		$dir = HELLO_PLUS_ASSETS_PATH . '/js';
 		$suffix = Theme::get_min_suffix();
 		$handle = 'hello-plus-admin';
 		$asset_path = "$dir/hello-plus-admin.asset.php";
@@ -154,35 +154,66 @@ class Settings {
 
 	}
 
+	private function get_default_action_tweaks(): array {
+		$tweaks = [
+			'DESCRIPTION_META_TAG' => [
+				'hook'      => 'wp_head',
+				'callback'  => [
+					'HelloPlus\Modules\Theme\Module',
+					'add_description_meta_tag'
+				],
+			],
+		];
+
+		return apply_filters( 'hello-plus/settings/tweaks-list/actions', $tweaks );
+	}
+
+	private function get_default_filter_tweaks(): array {
+		$tweaks = [
+			'SKIP_LINK' => [
+				'hook'      => 'hello_plus_enable_skip_link',
+				'callback'  => '__return_false',
+			],
+			'HEADER_FOOTER' => [
+				'hook'      => 'hello_plus_header_footer',
+				'callback'  => '__return_false',
+			],
+			'PAGE_TITLE' => [
+				'hook'      => 'hello_plus_page_title',
+				'callback'  => '__return_false',
+			],
+			'HELLO_PLUS_STYLE' => [
+				'hook'      => 'hello_plus_enqueue_style',
+				'callback'  => '__return_false',
+			],
+			'HELLO_PLUS_THEME' => [
+				'hook'      => 'hello_plus_enqueue_theme_style',
+				'callback'  => '__return_false',
+			]
+		];
+
+		return apply_filters( 'hello-plus/settings/tweaks-list/filters', $tweaks );
+	}
 	/**
 	 * Render theme tweaks.
 	 */
 	public function render_tweaks( $settings_group, $settings ) {
 
-		$this->do_tweak( $settings_group . $settings['DESCRIPTION_META_TAG'], function() {
-			remove_action( 'wp_head', 'hello_plus_add_description_meta_tag' );
-		} );
+		$tweaks = $this->get_default_action_tweaks();
 
-		$this->do_tweak( $settings_group . $settings['SKIP_LINK'], function() {
-			add_filter( 'hello_plus_enable_skip_link', '__return_false' );
-		} );
+		foreach ( $tweaks as $tweak_key => $tweak_value ) {
+			$this->do_tweak( $settings_group . $settings[ $tweak_key ], function () use ( $tweak_value ) {
+				remove_action( $tweak_value[ 'hook' ], $tweak_value[ 'callback' ] );
+			} );
+		}
 
-		$this->do_tweak( $settings_group . $settings['HEADER_FOOTER'], function() {
-			add_filter( 'hello_plus_header_footer', '__return_false' );
-		} );
+		$tweaks = $this->get_default_filter_tweaks();
 
-		$this->do_tweak( $settings_group . $settings['PAGE_TITLE'], function() {
-			add_filter( 'hello_plus_page_title', '__return_false' );
-		} );
-
-		$this->do_tweak( $settings_group . $settings['HELLO_PLUS_STYLE'], function() {
-			add_filter( 'hello_plus_enqueue_style', '__return_false' );
-		} );
-
-		$this->do_tweak( $settings_group . $settings['HELLO_PLUS_THEME'], function() {
-			add_filter( 'hello_plus_enqueue_theme_style', '__return_false' );
-		} );
-
+		foreach ( $tweaks as $tweak_key => $tweak_value ) {
+			$this->do_tweak( $settings_group . $settings[ $tweak_key ], function () use ( $tweak_value ) {
+				add_filter( $tweak_value[ 'hook' ], $tweak_value[ 'callback' ] );
+			} );
+		}
 	}
 
 	public function __construct(  ) {

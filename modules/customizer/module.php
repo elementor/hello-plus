@@ -11,6 +11,12 @@ use HelloPlus\Modules\Customizer\Classes\Customizer_Action_Links;
 use HelloPlus\Modules\Customizer\Classes\Customizer_Upsell;
 use HelloPlus\Theme;
 
+/**
+ * class Module
+ *
+ * @package HelloPlus
+ * @subpackage HelloPlusModules
+ */
 class Module extends Module_Base {
 
 	/**
@@ -27,13 +33,6 @@ class Module extends Module_Base {
 		return [];
 	}
 
-	protected function register_hooks(  ) {
-		add_filter( 'hello_plus_page_title', [ $this, 'check_hide_title' ] );
-		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_styles' ] );
-		add_action( 'customize_register', [ $this, 'register' ] );
-		add_action( 'customize_register', [ $this, 'register_elementor_pro_upsell' ] );
-	}
-
 	/**
 	 * Check whether to display the page title.
 	 *
@@ -41,7 +40,7 @@ class Module extends Module_Base {
 	 *
 	 * @return bool
 	 */
-	function check_hide_title( bool $val ): bool {
+	public function check_hide_title( bool $val ): bool {
 		if ( defined( 'ELEMENTOR_VERSION' ) ) {
 			$current_doc = Theme::elementor()->documents->get( get_the_ID() );
 			if ( $current_doc && 'yes' === $current_doc->get_settings( 'hide_title' ) ) {
@@ -51,7 +50,12 @@ class Module extends Module_Base {
 		return $val;
 	}
 
-	function register( $wp_customize ) {
+	/**
+	 * @param $wp_customize
+	 *
+	 * @return void
+	 */
+	public function register( $wp_customize ) {
 		$wp_customize->add_section(
 			'hello-plus-options',
 			[
@@ -85,7 +89,7 @@ class Module extends Module_Base {
 	 *
 	 * @return void
 	 */
-	function register_elementor_pro_upsell( $wp_customize ) {
+	public function register_elementor_pro_upsell( $wp_customize ) {
 		if ( function_exists( 'elementor_pro_load_plugin' ) ) {
 			return;
 		}
@@ -110,7 +114,7 @@ class Module extends Module_Base {
 	 *
 	 * @return void
 	 */
-	function enqueue_styles() {
+	public function enqueue_styles() {
 		wp_enqueue_style(
 			'hello-plus-customizer',
 			get_template_directory_uri() . '/customizer' . Theme::get_min_suffix() . '.css',
@@ -119,8 +123,13 @@ class Module extends Module_Base {
 		);
 	}
 
-	protected function __construct() {
-		$this->register_components();
-		$this->register_hooks();
+	/**
+	 * @inheritDoc
+	 */
+	protected function register_hooks(): void {
+		add_filter( 'hello_plus_page_title', [ $this, 'check_hide_title' ] );
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_styles' ] );
+		add_action( 'customize_register', [ $this, 'register' ] );
+		add_action( 'customize_register', [ $this, 'register_elementor_pro_upsell' ] );
 	}
 }

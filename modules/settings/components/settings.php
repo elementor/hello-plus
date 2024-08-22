@@ -8,6 +8,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use HelloPlus\Theme;
 
+/**
+ * class Settings
+ *
+ * @package HelloPlus
+ * @subpackage HelloPlusModules
+ */
 class Settings {
 	/**
 	 * Register theme settings page.

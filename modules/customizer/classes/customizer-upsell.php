@@ -6,15 +6,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+/**
+ * class Customizer_Upsell
+ *
+ * @package HelloPlus
+ * @subpackage HelloPlusModules
+ */
 class Customizer_Upsell extends \WP_Customize_Section {
 
-	public $heading;
+	public string $heading;
 
 	public $description;
 
-	public $button_text;
+	public string $button_text;
 
-	public $button_url;
+	public string $button_url;
 
 	/**
 	 * Render the section, and the controls that have been added to it.

@@ -13,6 +13,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * manage and handle modules in inheriting classes.
  *
  * @abstract
+ * @package HelloPlus
+ * @subpackage HelloPlusModules
  */
 abstract class Module_Base {
 
@@ -58,7 +60,15 @@ abstract class Module_Base {
 	abstract public static function get_name(): string;
 
 	/**
-	 * Instance.
+	 * @abstract
+	 * @access protected
+	 *
+	 * @return string[]
+	 */
+	abstract protected function get_component_ids(): array;
+
+	/**
+	 * Singleton Instance.
 	 *
 	 * Ensures only one instance of the module class is loaded or can be loaded.
 	 * @access public
@@ -78,8 +88,10 @@ abstract class Module_Base {
 
 	/**
 	 * is_active
+	 *
 	 * @access public
 	 * @static
+	 *
 	 * @return bool
 	 */
 	public static function is_active(): bool {
@@ -103,33 +115,9 @@ abstract class Module_Base {
 	}
 
 	/**
-	 * Clone.
-	 *
-	 * Disable class cloning and throw an error on object clone.
-	 *
-	 * The whole idea of the singleton design pattern is that there is a single
-	 * object. Therefore, we don't want the object to be cloned.
-	 *
 	 * @access public
-	 */
-	public function __clone() {
-		// Cloning instances of the class is forbidden
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Something went wrong.', 'hello-plus' ), '0.0.1' ); // @codeCoverageIgnore
-	}
-
-	/**
-	 * Wakeup.
 	 *
-	 * Disable unserializing of the class.
-	 * @access public
-	 */
-	public function __wakeup() {
-		// Unserializing instances of the class is forbidden
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Something went wrong.', 'hello-plus' ), '0.0.1' ); // @codeCoverageIgnore
-	}
-
-	/**
-	 * @access public
+	 * @return \ReflectionClass
 	 */
 	public function get_reflection(): \ReflectionClass {
 		if ( null === $this->reflection ) {
@@ -160,6 +148,7 @@ abstract class Module_Base {
 
 	/**
 	 * @access public
+	 *
 	 * @return array
 	 */
 	public function get_components(): array {
@@ -174,23 +163,24 @@ abstract class Module_Base {
 	 *
 	 * @param string $id Component ID.
 	 *
-	 * @return mixed An instance of the component, or `false` if the component
+	 * @return mixed An instance of the component, or `null` if the component
 	 *               doesn't exist.
-	 * @codeCoverageIgnore
 	 */
 	public function get_component( string $id ) {
 		if ( isset( $this->components[ $id ] ) ) {
 			return $this->components[ $id ];
 		}
 
-		return false;
+		return null;
 	}
 
 	/**
 	 * Retrieve the namespace of the class
 	 *
-	 * @access public
 	 * @static
+	 * @access public
+	 *
+	 * @return string
 	 */
 	public static function namespace_name(): string {
 		$class_name = static::class_name();
@@ -201,9 +191,12 @@ abstract class Module_Base {
 	 * Adds an array of components.
 	 * Assumes namespace structure contains `\Components\`
 	 *
-	 * @param array $components_ids => component's class name.
+	 * @access protected
+	 *
+	 * @param ?array $components_ids => component's class name.
+	 * @return void
 	 */
-	public function register_components( array $components_ids  = [] ) {
+	protected function register_components( array $components_ids  = null ):void {
 		if ( empty( $components_ids ) ) {
 			$components_ids = $this->get_component_ids();
 		}
@@ -215,7 +208,47 @@ abstract class Module_Base {
 	}
 
 	/**
-	 * @return string[]
+	 * @access protected
+	 *
+	 * @return void
 	 */
-	abstract protected function get_component_ids(): array;
+	protected function register_hooks(): void {}
+
+	/**
+	 * Clone.
+	 *
+	 * Disable class cloning and throw an error on object clone.
+	 *
+	 * The whole idea of the singleton design pattern is that there is a single
+	 * object. Therefore, we don't want the object to be cloned.
+	 *
+	 * @access private
+	 */
+	private function __clone() {
+		// Cloning instances of the class is forbidden
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Something went wrong.', 'hello-plus' ), '0.0.1' ); // @codeCoverageIgnore
+	}
+
+	/**
+	 * Wakeup.
+	 *
+	 * Disable un-serializing of the class.
+	 * @access public
+	 */
+	private function __wakeup() {
+		// Un-serializing instances of the class is forbidden
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Something went wrong.', 'hello-plus' ), '0.0.1' ); // @codeCoverageIgnore
+	}
+
+	/**
+	 * class constructor
+	 *
+	 * @access protected
+	 *
+	 * @param ?string[] $components_list
+	 */
+	protected function __construct( ?array $components_list = null ) {
+		$this->register_components( $components_list );
+		$this->register_hooks();
+	}
 }

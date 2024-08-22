@@ -9,6 +9,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Plugin_Notice class
  * responsible over promo notices shown on the Plugins screen
+ *
+ * @package HelloPlus
+ * @subpackage HelloPlusModules
  */
 class Plugin_Notice {
 
@@ -163,13 +166,21 @@ class Plugin_Notice {
 		update_user_meta( get_current_user_id(), self::INSTALL_NOTICE_META_KEY, 'true' );
 		die;
 	}
-	public function register_hooks() {
+
+	/**
+	 * @return void
+	 */
+	private function register_hooks() {
 		add_action( 'wp_ajax_hello_plus_set_admin_notice_viewed', [ $this, 'ajax_set_admin_notice_viewed' ] );
 
 		if ( ! did_action( 'elementor/loaded' ) ) {
 			add_action( 'admin_notices', [ $this, 'load_failed_admin_notice' ] );
 		}
 	}
+
+	/**
+	 * class constructor
+	 */
 	public function __construct() {
 		$this->register_hooks();
 	}

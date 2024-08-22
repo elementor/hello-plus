@@ -8,6 +8,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use HelloPlus\Includes\Module_Base;
 
+/**
+ * class Module
+ *
+ * @package HelloPlus
+ * @subpackage HelloPlusModules
+ *
+ */
 class Module extends Module_Base {
 
 	/**
@@ -24,9 +31,5 @@ class Module extends Module_Base {
 		return [
 			'Settings'
 		];
-	}
-
-	protected function __construct() {
-		$this->register_components();
 	}
 }

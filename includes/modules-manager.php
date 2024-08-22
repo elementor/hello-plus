@@ -8,35 +8,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use HelloPlus\Includes\Module_Base;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
-
+/**
+ * class Modules_Manager
+ *
+ * @package HelloPlus
+ * @subpackage HelloPlusModules
+ */
 final class Modules_Manager {
 	/**
 	 * @var Module_Base[]
 	 */
 	private array $modules = [];
-
-	public function __construct() {
-		$modules_list = [
-			'Customizer',
-			'Settings',
-			'Admin',
-			'Theme',
-		];
-
-		foreach ( $modules_list as $module_name ) {
-			$class_name = str_replace( '-', ' ', $module_name );
-			$class_name = str_replace( ' ', '', ucwords( $class_name ) );
-			$class_name =  __NAMESPACE__ . '\\Modules\\' . $class_name . '\Module';
-
-			/** @var Module_Base $class_name */
-			if ( $class_name::is_active() ) {
-				$this->modules[ $module_name ] = $class_name::instance();
-			}
-		}
-	}
 
 	/**
 	 * @param string $module_name
@@ -62,6 +44,29 @@ final class Modules_Manager {
 		$class_name = $module->get_reflection()->getName();
 		if ( $module::is_active() ) {
 			$this->modules[ $class_name ] = $module::instance();
+		}
+	}
+
+	/**
+	 * class constructor
+	 */
+	public function __construct() {
+		$modules_list = [
+			'Customizer',
+			'Settings',
+			'Admin',
+			'Theme',
+		];
+
+		foreach ( $modules_list as $module_name ) {
+			$class_name = str_replace( '-', ' ', $module_name );
+			$class_name = str_replace( ' ', '', ucwords( $class_name ) );
+			$class_name =  __NAMESPACE__ . '\\Modules\\' . $class_name . '\Module';
+
+			/** @var Module_Base $class_name */
+			if ( $class_name::is_active() ) {
+				$this->modules[ $module_name ] = $class_name::instance();
+			}
 		}
 	}
 }

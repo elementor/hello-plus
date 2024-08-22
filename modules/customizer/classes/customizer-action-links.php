@@ -6,6 +6,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+/**
+ * class Customizer_Action_Links
+ *
+ * @package HelloPlus
+ * @subpackage HelloPlusModules
+ */
 class Customizer_Action_Links extends \WP_Customize_Control {
 
 	// Whitelist content parameter
@@ -112,7 +118,7 @@ class Customizer_Action_Links extends \WP_Customize_Control {
 	 *
 	 * @return string
 	 */
-	private function get_customizer_action_links_html( $data ): string {
+	private function get_customizer_action_links_html( array $data ): string {
 		if (
 			empty( $data )
 			|| ! isset( $data['image'] )

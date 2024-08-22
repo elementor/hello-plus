@@ -8,6 +8,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use HelloPlus\Includes\Module_Base;
 
+/**
+ * class Module
+ *
+ * @package HelloPlus
+ * @subpackage HelloPlusModules
+ */
 class Module extends Module_Base {
 	/**
 	 * @inheritDoc
@@ -23,11 +29,5 @@ class Module extends Module_Base {
 		return [
 			'Plugin_Notice'
 		];
-	}
-
-	public function register_hooks() {}
-	protected function __construct() {
-		$this->register_components();
-		$this->register_hooks();
 	}
 }

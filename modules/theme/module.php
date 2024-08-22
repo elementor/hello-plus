@@ -11,10 +11,13 @@ use HelloPlus\Theme;
 
 /**
  * Theme module
+ *
+ * @package HelloPlus
+ * @subpackage HelloPlusModules
  */
 class Module extends Module_Base {
 	const HELLO_PLUS_THEME_VERSION_OPTION = 'hello_plus_theme_version';
-	const HELLO_PLUS_EDITOR_CATEGORY = 'helloplus';
+	const HELLO_PLUS_EDITOR_CATEGORY_SLUG = 'helloplus';
 
 	/**
 	 * @inheritDoc
@@ -30,15 +33,9 @@ class Module extends Module_Base {
 		return [];
 	}
 
-	protected function register_hooks() {
-		add_action( 'wp_head', [ __NAMESPACE__ . '\Module', 'add_description_meta_tag' ] );
-		add_action( 'after_setup_theme', [ $this, 'setup' ] );
-		add_action( 'after_setup_theme', [ $this, 'content_width' ], 0 );
-		add_action( 'wp_enqueue_scripts', [ $this, 'scripts_styles' ] );
-		add_action( 'elementor/elements/categories_registered', [ $this, 'add_hello_plus_e_panel_categories' ] );
-		add_action( 'elementor/theme/register_locations', [ $this, 'register_elementor_locations' ] );
-	}
-
+	/**
+	 * @return void
+	 */
 	public function setup() {
 		if ( is_admin() ) {
 			$this->maybe_update_theme_version_in_db();
@@ -205,9 +202,14 @@ class Module extends Module_Base {
 		echo '<meta name="description" content="' . esc_attr( wp_strip_all_tags( $post->post_excerpt ) ) . '">' . "\n";
 	}
 
+	/**
+	 * @param \Elementor\Elements_Manager $elements_manager
+	 *
+	 * @return void
+	 */
 	public function add_hello_plus_e_panel_categories( \Elementor\Elements_Manager $elements_manager ) {
 		$elements_manager->add_category(
-			self::HELLO_PLUS_EDITOR_CATEGORY,
+			self::HELLO_PLUS_EDITOR_CATEGORY_SLUG,
 			[
 				'title' => esc_html__('Hello+', 'hello-plus'),
 				'icon' => 'fa fa-plug',
@@ -215,8 +217,15 @@ class Module extends Module_Base {
 		);
 	}
 
-	protected function __construct(  ) {
-		$this->register_components();
-		$this->register_hooks();
+	/**
+	 * @inheritDoc
+	 */
+	protected function register_hooks(): void {
+		add_action( 'wp_head', [ __NAMESPACE__ . '\Module', 'add_description_meta_tag' ] );
+		add_action( 'after_setup_theme', [ $this, 'setup' ] );
+		add_action( 'after_setup_theme', [ $this, 'content_width' ], 0 );
+		add_action( 'wp_enqueue_scripts', [ $this, 'scripts_styles' ] );
+		add_action( 'elementor/elements/categories_registered', [ $this, 'add_hello_plus_e_panel_categories' ] );
+		add_action( 'elementor/theme/register_locations', [ $this, 'register_elementor_locations' ] );
 	}
 }

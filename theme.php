@@ -7,12 +7,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use Elementor\Plugin;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
-
 /**
  * Theme's main class
+ *
+ * @package HelloPlus
  */
 final class Theme {
 
@@ -63,17 +61,30 @@ final class Theme {
 	}
 
 	/**
+	 * @static
+	 * @access public
+	 *
 	 * @return \Elementor\Plugin
 	 */
-
 	public static function elementor(): Plugin {
 		return \Elementor\Plugin::$instance;
 	}
 
+	/**
+	 * @static
+	 * @access public
+	 *
+	 * @return string
+	 */
 	public static function get_min_suffix(): string {
 		return defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 	}
 
+	/**
+	 * @param $class
+	 *
+	 * @return void
+	 */
 	public function autoload( $class ) {
 		if ( 0 !== strpos( $class, __NAMESPACE__ ) ) {
 			return;
@@ -109,6 +120,9 @@ final class Theme {
 		}
 	}
 
+	/**
+	 * @return void
+	 */
 	private function includes() {
 		require_once  HELLO_PLUS_PATH . '/includes/modules-manager.php';
 		$this->modules_manager = new Modules_Manager();

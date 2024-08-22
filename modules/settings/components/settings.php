@@ -15,6 +15,7 @@ use HelloPlus\Theme;
  * @subpackage HelloPlusModules
  */
 class Settings {
+
 	/**
 	 * Register theme settings page.
 	 */
@@ -125,6 +126,13 @@ class Settings {
 			'HELLO_PLUS_THEME' => '_hello_plus_theme',
 		];
 
+		/**
+		 * allow child theme and 3rd party plugins to extend the Theme settings
+		 *
+		 * @param array $settings , the filtered value, array of key/value settings options pairs
+		 */
+		$settings = apply_filters( 'hello-plus/settings', $settings );
+
 		$this->register_settings( $settings_group, $settings );
 		$this->render_tweaks( $settings_group, $settings );
 	}
@@ -160,6 +168,9 @@ class Settings {
 
 	}
 
+	/**
+	 * @return array
+	 */
 	private function get_default_action_tweaks(): array {
 		$tweaks = [
 			'DESCRIPTION_META_TAG' => [
@@ -171,9 +182,15 @@ class Settings {
 			],
 		];
 
+		/**
+		 * Allow child theme and 3rd party plugins to extend the list of tweaks controlled by the Theme settings
+		 */
 		return apply_filters( 'hello-plus/settings/tweaks-list/actions', $tweaks );
 	}
 
+	/**
+	 * @return array
+	 */
 	private function get_default_filter_tweaks(): array {
 		$tweaks = [
 			'SKIP_LINK' => [
@@ -198,6 +215,9 @@ class Settings {
 			]
 		];
 
+		/**
+		 * Allow child theme and 3rd party plugins to extend the list of tweaks controlled by the Theme settings
+		 */
 		return apply_filters( 'hello-plus/settings/tweaks-list/filters', $tweaks );
 	}
 	/**
@@ -222,6 +242,9 @@ class Settings {
 		}
 	}
 
+	/**
+	 * class constructor
+	 */
 	public function __construct(  ) {
 		add_action( 'admin_menu', [ $this, 'settings_page' ] );
 		add_action( 'init', [ $this, 'tweak_settings' ], 0 );

@@ -127,6 +127,7 @@ class Module extends Module_Base {
 	 * @inheritDoc
 	 */
 	protected function register_hooks(): void {
+		parent::register_hooks();
 		add_filter( 'hello_plus_page_title', [ $this, 'check_hide_title' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_styles' ] );
 		add_action( 'customize_register', [ $this, 'register' ] );

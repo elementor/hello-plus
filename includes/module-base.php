@@ -208,11 +208,41 @@ abstract class Module_Base {
 	}
 
 	/**
+	 * Registers the Module's widgets.
+	 * Assumes namespace structure contains `\Widgets\`
+	 *
+	 * @access protected
+	 *
+	 * @param \Elementor\Widgets_Manager $widgets_manager
+	 * @return void
+	 */
+	protected function register_widgets( \Elementor\Widgets_Manager $widgets_manager ):void {
+		$widget_ids = $this->get_widget_ids();
+		$namespace = static::namespace_name();
+
+		foreach ( $widget_ids as $widget_id ) {
+			$class_name = $namespace . '\\Widgets\\' . $widget_id;
+			$this->add_component( $widget_id, new $class_name() );
+		}
+	}
+
+	/**
+	 * @access protected
+	 *
+	 * @return string[]
+	 */
+	protected function get_widget_ids(): array {
+		return [];
+	}
+
+	/**
 	 * @access protected
 	 *
 	 * @return void
 	 */
-	protected function register_hooks(): void {}
+	protected function register_hooks(): void {
+		add_action( 'elementor/widgets/register', [ $this, 'register_widgets' ] );
+	}
 
 	/**
 	 * Clone.

@@ -221,6 +221,7 @@ class Module extends Module_Base {
 	 * @inheritDoc
 	 */
 	protected function register_hooks(): void {
+		parent::register_hooks();
 		add_action( 'wp_head', [ __NAMESPACE__ . '\Module', 'add_description_meta_tag' ] );
 		add_action( 'after_setup_theme', [ $this, 'setup' ] );
 		add_action( 'after_setup_theme', [ $this, 'content_width' ], 0 );

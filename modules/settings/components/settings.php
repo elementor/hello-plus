@@ -28,7 +28,7 @@ class Settings {
 			esc_html__( 'Theme Settings', 'hello-plus' ),
 			'manage_options',
 			'hello-plus-settings',
-			'HelloPlus\Modules\Settings\Components\Settings::settings_page_render'
+			[ __NAMESPACE__ . '\Settings', 'settings_page_render' ]
 		);
 
 		add_action( 'load-' . $menu_hook, function() {

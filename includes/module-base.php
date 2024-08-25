@@ -216,7 +216,7 @@ abstract class Module_Base {
 	 * @param \Elementor\Widgets_Manager $widgets_manager
 	 * @return void
 	 */
-	protected function register_widgets( \Elementor\Widgets_Manager $widgets_manager ):void {
+	public function register_widgets( \Elementor\Widgets_Manager $widgets_manager ):void {
 		$widget_ids = $this->get_widget_ids();
 		$namespace = static::namespace_name();
 
@@ -254,7 +254,7 @@ abstract class Module_Base {
 	 *
 	 * @access private
 	 */
-	private function __clone() {
+	public function __clone() {
 		// Cloning instances of the class is forbidden
 		_doing_it_wrong( __FUNCTION__, esc_html__( 'Something went wrong.', 'hello-plus' ), '0.0.1' ); // @codeCoverageIgnore
 	}
@@ -265,7 +265,7 @@ abstract class Module_Base {
 	 * Disable un-serializing of the class.
 	 * @access public
 	 */
-	private function __wakeup() {
+	public function __wakeup() {
 		// Un-serializing instances of the class is forbidden
 		_doing_it_wrong( __FUNCTION__, esc_html__( 'Something went wrong.', 'hello-plus' ), '0.0.1' ); // @codeCoverageIgnore
 	}

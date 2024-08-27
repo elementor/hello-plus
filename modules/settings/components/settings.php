@@ -16,6 +16,8 @@ use HelloPlus\Theme;
  */
 class Settings {
 
+	const SETTINGS_GROUP = 'hello_plus_settings';
+
 	/**
 	 * Register theme settings page.
 	 */
@@ -114,9 +116,6 @@ class Settings {
 	 * Theme tweaks & settings.
 	 */
 	public function tweak_settings() {
-
-		$settings_group = 'hello_plus_settings';
-
 		$settings = [
 			'DESCRIPTION_META_TAG' => '_description_meta_tag',
 			'SKIP_LINK' => '_skip_link',
@@ -133,8 +132,8 @@ class Settings {
 		 */
 		$settings = apply_filters( 'hello-plus/settings', $settings );
 
-		$this->register_settings( $settings_group, $settings );
-		$this->render_tweaks( $settings_group, $settings );
+		$this->register_settings( self::SETTINGS_GROUP, $settings );
+		$this->render_tweaks( self::SETTINGS_GROUP, $settings );
 	}
 
 	/**

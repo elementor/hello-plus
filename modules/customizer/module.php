@@ -19,6 +19,14 @@ use HelloPlus\Theme;
  */
 class Module extends Module_Base {
 
+	const UPSELL_ELEMENTOR_PRO_SECTION = 'hello-plus-upsell-elementor-pro';
+
+	const HEADER_FOOTER_SETTINGS = 'hello-plus-header-footer';
+
+	const CUSTOMIZER_STYLE = 'hello-plus-customizer';
+
+	const THEME_OPTIONS = 'hello-plus-options';
+
 	/**
 	 * @inheritDoc
 	 */
@@ -57,7 +65,7 @@ class Module extends Module_Base {
 	 */
 	public function register( $wp_customize ) {
 		$wp_customize->add_section(
-			'hello-plus-options',
+			self::THEME_OPTIONS,
 			[
 				'title' => esc_html__( 'Header & Footer', 'hello-plus' ),
 				'capability' => 'edit_theme_options',
@@ -65,7 +73,7 @@ class Module extends Module_Base {
 		);
 
 		$wp_customize->add_setting(
-			'hello-plus-header-footer',
+			self::HEADER_FOOTER_SETTINGS,
 			[
 				'sanitize_callback' => false,
 				'transport' => 'refresh',
@@ -75,9 +83,9 @@ class Module extends Module_Base {
 		$wp_customize->add_control(
 			new Customizer_Action_Links(
 				$wp_customize,
-				'hello-plus-header-footer',
+				self::HEADER_FOOTER_SETTINGS,
 				[
-					'section' => 'hello-plus-options',
+					'section' => self::THEME_OPTIONS,
 					'priority' => 20,
 				]
 			)
@@ -97,7 +105,7 @@ class Module extends Module_Base {
 		$wp_customize->add_section(
 			new Customizer_Upsell(
 				$wp_customize,
-				'hello-plus-upsell-elementor-pro',
+				self::UPSELL_ELEMENTOR_PRO_SECTION,
 				[
 					'heading' => esc_html__( 'Customize your entire website with Elementor Pro', 'hello-plus' ),
 					'description' => esc_html__( 'Build and customize every part of your website, including Theme Parts with Elementor Pro.', 'hello-plus' ),
@@ -116,7 +124,7 @@ class Module extends Module_Base {
 	 */
 	public function enqueue_styles() {
 		wp_enqueue_style(
-			'hello-plus-customizer',
+			self::CUSTOMIZER_STYLE,
 			get_template_directory_uri() . '/customizer' . Theme::get_min_suffix() . '.css',
 			[],
 			HELLO_PLUS_ELEMENTOR_VERSION

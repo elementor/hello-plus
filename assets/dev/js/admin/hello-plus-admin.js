@@ -1,4 +1,3 @@
-import './hello-plus-admin.scss';
 import { render } from '@wordpress/element';
 import { SettingsPage } from './pages/settings-page.js';
 

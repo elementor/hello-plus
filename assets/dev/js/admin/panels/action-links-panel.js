@@ -20,15 +20,6 @@ const actionLinks = {
 			button: __( 'Activate Elementor', 'hello-plus' ),
 			link: helloPlusAdminData.actionLinkURL,
 		},
-	'activate-header-footer-experiment':
-		{
-			image: helloPlusAdminData.templateDirectoryURI + '/assets/images/elementor.svg',
-			alt: __( 'Elementor', 'hello-plus' ),
-			title: __( 'Style using Elementor', 'hello-plus' ),
-			message: __( 'Design your cross-site header & footer from Elementor’s "Site Settings" panel.', 'hello-plus' ),
-			button: __( 'Activate header & footer experiment', 'hello-plus' ),
-			link: helloPlusAdminData.actionLinkURL,
-		},
 	'style-header-footer':
 		{
 			image: helloPlusAdminData.templateDirectoryURI + '/assets/images/elementor.svg',

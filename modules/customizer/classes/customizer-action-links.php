@@ -1,11 +1,17 @@
 <?php
 
-namespace HelloPlus\Includes\Customizer;
+namespace HelloPlus\Modules\Customizer\Classes;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+/**
+ * class Customizer_Action_Links
+ *
+ * @package HelloPlus
+ * @subpackage HelloPlusModules
+ */
 class Customizer_Action_Links extends \WP_Customize_Control {
 
 	// Whitelist content parameter
@@ -37,15 +43,13 @@ class Customizer_Action_Links extends \WP_Customize_Control {
 		}
 
 		$action_link_data = [];
-		$action_link_type = '';
+		$action_link_type = 'style-header-footer';
 		$installed_plugins = get_plugins();
 
 		if ( ! isset( $installed_plugins['elementor/elementor.php'] ) ) {
 			$action_link_type = 'install-elementor';
 		} elseif ( ! defined( 'ELEMENTOR_VERSION' ) ) {
 			$action_link_type = 'activate-elementor';
-		} else {
-			$action_link_type = 'style-header-footer';
 		}
 
 		switch ( $action_link_type ) {
@@ -78,19 +82,9 @@ class Customizer_Action_Links extends \WP_Customize_Control {
 					'link' => wp_nonce_url( 'plugins.php?action=activate&plugin=elementor/elementor.php', 'activate-plugin_elementor/elementor.php' ),
 				];
 				break;
-			case 'activate-header-footer-experiment':
-				$action_link_data = [
-					'image' => get_template_directory_uri() . '/assets/images/elementor.svg',
-					'alt' => esc_attr__( 'Elementor', 'hello-plus' ),
-					'title' => esc_html__( 'Style using Elementor', 'hello-plus' ),
-					'message' => esc_html__( 'Design your cross-site header & footer from Elementor’s "Site Settings" panel.', 'hello-plus' ),
-					'button' => esc_html__( 'Activate header & footer experiment', 'hello-plus' ),
-					'link' => wp_nonce_url( 'admin.php?page=elementor#tab-experiments' ),
-				];
-				break;
 			case 'style-header-footer':
 				$action_link_data = [
-					'image' => get_template_directory_uri() . '/assets/images/elementor.svg',
+					'image' => HELLO_PLUS_ASSETS_URL . '/images/elementor.svg',
 					'alt' => esc_attr__( 'Elementor', 'hello-plus' ),
 					'title' => esc_html__( 'Style cross-site header & footer', 'hello-plus' ),
 					'message' => esc_html__( 'Customize your cross-site header & footer from Elementor’s "Site Settings" panel.', 'hello-plus' ),
@@ -112,7 +106,7 @@ class Customizer_Action_Links extends \WP_Customize_Control {
 	 *
 	 * @return string
 	 */
-	private function get_customizer_action_links_html( $data ) {
+	private function get_customizer_action_links_html( array $data ): string {
 		if (
 			empty( $data )
 			|| ! isset( $data['image'] )
@@ -122,7 +116,7 @@ class Customizer_Action_Links extends \WP_Customize_Control {
 			|| ! isset( $data['link'] )
 			|| ! isset( $data['button'] )
 		) {
-			return;
+			return '';
 		}
 
 		return sprintf(

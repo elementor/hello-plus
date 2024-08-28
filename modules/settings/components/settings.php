@@ -98,7 +98,7 @@ class Settings {
 			[
 				'actionLinkType' => $action_link_type,
 				'actionLinkURL' => $action_link_url,
-				'templateDirectoryURI' => get_template_directory_uri(),
+				'templateDirectoryURI' => HELLO_PLUS_URL,
 			]
 		);
 	}

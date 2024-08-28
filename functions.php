@@ -5,6 +5,8 @@
  * @package HelloPlus
  */
 
+use HelloPlus\Theme;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -21,3 +23,6 @@ if ( ! isset( $content_width ) ) {
 
 // Init the Theme class
 require HELLO_PLUS_PATH . '/theme.php';
+
+Theme::instance();
+

@@ -5,8 +5,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use Elementor\Plugin;
-
 /**
  * Theme's main class
  *
@@ -66,7 +64,7 @@ final class Theme {
 	 *
 	 * @return \Elementor\Plugin
 	 */
-	public static function elementor(): Plugin {
+	public static function elementor(): \Elementor\Plugin {
 		return \Elementor\Plugin::$instance;
 	}
 
@@ -153,5 +151,3 @@ final class Theme {
 	}
 
 }
-
-Theme::instance();

@@ -222,7 +222,7 @@ abstract class Module_Base {
 
 		foreach ( $widget_ids as $widget_id ) {
 			$class_name = $namespace . '\\Widgets\\' . $widget_id;
-			$this->add_component( $widget_id, new $class_name() );
+			$widgets_manager->register( new $class_name() );
 		}
 	}
 

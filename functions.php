@@ -25,4 +25,3 @@ if ( ! isset( $content_width ) ) {
 require HELLO_PLUS_PATH . '/theme.php';
 
 Theme::instance();
-

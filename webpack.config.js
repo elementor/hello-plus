@@ -19,6 +19,10 @@ const entry = {
 		path.resolve( __dirname, './assets/dev/js/modules/hello-plus-notice.js' ),
 		path.resolve( __dirname, './assets/dev/scss/modules/hello-plus-notice.scss' ),
 	],
+	'hello-plus-content': [
+		path.resolve( __dirname, './assets/dev/js/modules/hello-plus-content.js' ),
+		path.resolve( __dirname, './assets/dev/scss/modules/hello-plus-content.scss' ),
+	],
 };
 
 const moduleRules = {

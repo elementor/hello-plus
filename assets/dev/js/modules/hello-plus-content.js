@@ -10,10 +10,10 @@ window.addEventListener( 'elementor/frontend/init', ( e ) => {
 const zigzagObserveHandler = ( entries, observer ) => {
 	entries.forEach( ( entry ) => {
 		if ( entry.isIntersecting ) {
-			const $element = $( entry.target );
-			const delay = $element.data( 'motion-effect-delay' ) || 0;
+			const element = entry.target;
+			const delay = element.dataset.motionEffectDelay || 0;
 			setTimeout( function() {
-				$element.addClass( 'elementor-element-visible' );
+				element.classList.add( 'elementor-element-visible' );
 			}, delay );
 
 			observer.unobserve( entry.target );

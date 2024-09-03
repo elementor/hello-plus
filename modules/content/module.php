@@ -41,16 +41,14 @@ class Module extends Module_Base {
 		wp_enqueue_script(
 			'hello-plus-content',
 			HELLO_PLUS_ASSETS_URL . 'js/hello-plus-content' . Theme::get_min_suffix() . '.js',
-			[
-				'jquery',
-			],
+			[],
 			HELLO_PLUS_ELEMENTOR_VERSION,
 			true
 		);
 
 		wp_enqueue_style(
 			'hello-plus-content',
-			HELLO_PLUS_ASSETS_URL . '/js/hello-plus-content' . Theme::get_min_suffix() . '.css',
+			HELLO_PLUS_ASSETS_URL . 'js/hello-plus-content' . Theme::get_min_suffix() . '.css',
 			[],
 			HELLO_PLUS_ELEMENTOR_VERSION
 		);

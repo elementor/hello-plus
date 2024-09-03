@@ -1,0 +1,136 @@
+/* CSS for the ZigZag widget */
+
+.zigzag-inner-container {
+  border-style: solid;
+  border-width: 0;
+}
+
+.zigzag-widget-container {
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  align-items: center;
+	&.full-width {
+		width: 100%;
+	}
+}
+
+.elementor-widget-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.zigzag-block-item-container {
+  	display: flex;
+	&.row-odd {
+  		flex-direction: row !important;
+	}
+
+	&.row-even {
+		flex-direction: row-reverse !important;
+	}
+
+	&.row-reverse-odd {
+		flex-direction: row-reverse !important;
+	}
+
+	.row-reverse-even {
+		flex-direction: row !important;
+	}
+
+	&:nth-child(even) .zigzag-text-container {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: start;
+		width: 50%;
+		padding: 20px
+	}
+	&:nth-child(odd) .zigzag-text-container {
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: center;
+	  align-items: start;
+	  width: 50%;
+	  padding: 20px
+	}
+}
+
+.zigzag-text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+  padding: 20px;
+}
+
+.zigzag-graphic-element-container {
+  width: 50%;
+  padding: 20px;
+}
+
+.elementor-button-link {
+  border-style: solid;
+}
+
+/* Mobile */
+@media screen and (max-width: 767px) {
+	.zigzag-block-item-container:first-child {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.zigzag-widget-container,
+  	.zigzag-text-container,
+	.zigzag-graphic-element-container,
+	.zigzag-block-item-container:nth-child(even) .zigzag-text-container,
+	.zigzag-block-item-container:nth-child(odd) .zigzag-text-container {
+		width: 100%;
+	}
+
+  .zigzag-block-item-container,
+  .zigzag-block-item-container:nth-child(even),
+  .zigzag-block-item-container:nth-child(odd){
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+
+.elementor-button-content-wrapper {
+	display: flex;
+	align-items: center;
+}
+
+
+.elementor-button-content-wrapper.icon-before {
+	flex-direction: row !important;
+}
+
+.elementor-button-content-wrapper.icon-after {
+	flex-direction: row-reverse !important;
+}
+
+
+
+.zigzag-button {
+	flex: 0 0 auto;
+	margin-top: 0;
+	text-align: start;
+	padding-top: 15px;
+
+	a {
+		border-style: solid;
+		border-width: 0px;
+		padding: 12px 24px;
+	}
+}
+
+.hello-plus-zigzag-icon {
+display: flex;
+align-items: center;
+height: 60%;
+}
+

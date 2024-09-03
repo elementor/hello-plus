@@ -5,8 +5,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use HelloPlus\Includes\Module_Base;
+
 /**
- * Theme's main class
+ * Theme's main class,
+ * responsible over initializing the modules & some general definitions.
  *
  * @package HelloPlus
  */
@@ -18,9 +21,9 @@ final class Theme {
 	private static ?Theme $_instance = null;
 
 	/**
-	 * @var ?Modules_Manager
+	 * @var Module_Base[]
 	 */
-	public ?Modules_Manager $modules_manager = null;
+	private array $modules = [];
 
 	/**
 	 * @var array
@@ -119,14 +122,6 @@ final class Theme {
 	}
 
 	/**
-	 * @return void
-	 */
-	private function includes() {
-		require_once  HELLO_PLUS_PATH . '/includes/modules-manager.php';
-		$this->modules_manager = new Modules_Manager();
-	}
-
-	/**
 	 * Singleton
 	 *
 	 * @return Theme
@@ -140,6 +135,59 @@ final class Theme {
 	}
 
 	/**
+	 * @param string $module_name
+	 *
+	 * @return ?Module_Base
+	 */
+	public function get_module( string $module_name ): ?Module_Base {
+		if ( isset( $this->modules[ $module_name ] ) ) {
+			return $this->modules[ $module_name ];
+		}
+
+		return null;
+	}
+
+	/**
+	 * @param Module_Base $module
+	 *
+	 * allow child theme and 3rd party plugins to add modules
+	 *
+	 * @return void
+	 */
+	public function add_module( Module_Base $module ) {
+		$class_name = $module->get_reflection()->getName();
+		if ( $module::is_active() ) {
+			$this->modules[ $class_name ] = $module::instance();
+		}
+	}
+
+	/**
+	 * Initialize all Modules
+	 *
+	 * @return void
+	 */
+	private function init_modules() {
+		$modules_list = [
+			'Theme',
+			'Customizer',
+			'Settings',
+			'Admin',
+			'Content',
+		];
+
+		foreach ( $modules_list as $module_name ) {
+			$class_name = str_replace( '-', ' ', $module_name );
+			$class_name = str_replace( ' ', '', ucwords( $class_name ) );
+			$class_name =  __NAMESPACE__ . '\\Modules\\' . $class_name . '\Module';
+
+			/** @var Module_Base $class_name */
+			if ( $class_name::is_active() && empty( $this->classes_aliases[ $module_name ] ) ) {
+				$this->modules[ $module_name ] = $class_name::instance();
+			}
+		}
+	}
+
+	/**
 	 * Theme private constructor.
 	 */
 	private function __construct() {
@@ -147,7 +195,7 @@ final class Theme {
 		if ( ! $autoloader_registered ) {
 			$autoloader_registered = spl_autoload_register( [ $this, 'autoload' ] );
 		}
-		$this->includes();
-	}
 
+		$this->init_modules();
+	}
 }

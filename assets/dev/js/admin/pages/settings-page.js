@@ -48,7 +48,7 @@ export const SettingsPage = () => {
 			<div className="hello_plus__header">
 				<div className="hello_plus__container">
 					<div className="hello_plus__title">
-						<h1>{ __( 'Hello Plus Dashboard', 'hello-plus' ) }</h1>
+						<h1>{ __( 'Hello+ Dashboard', 'hello-plus' ) }</h1>
 					</div>
 				</div>
 			</div>

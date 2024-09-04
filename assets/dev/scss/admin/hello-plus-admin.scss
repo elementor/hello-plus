@@ -30,6 +30,8 @@
 		max-width: 750px;
 		margin-inline-start: auto;
 		margin-inline-end: auto;
+		display: flex;
+		flex-direction: row;
 
 		.components-panel {
 			background: none;
@@ -80,6 +82,11 @@
 	}
 
 	.hello_plus__action_links {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.hello_plus__action_link {
 		text-align: center;
 		margin-block-start: 50px;
 		margin-block-end: 20px;

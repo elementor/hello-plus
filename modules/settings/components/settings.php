@@ -72,32 +72,57 @@ class Settings {
 
 		$plugins = get_plugins();
 
+		$action_links_data = [];
+
 		if ( ! isset( $plugins['elementor/elementor.php'] ) ) {
-			$action_link_type = 'install-elementor';
-			$action_link_url = wp_nonce_url(
-				add_query_arg(
-					[
-						'action' => 'install-plugin',
-						'plugin' => 'elementor',
-					],
-					admin_url( 'update.php' )
+			$action_links_data[] = [
+				'type' => 'install-elementor',
+				'url' => wp_nonce_url(
+					add_query_arg(
+						[
+							'action' => 'install-plugin',
+							'plugin' => 'elementor',
+						],
+						admin_url( 'update.php' )
+					),
+					'install-plugin_elementor'
 				),
-				'install-plugin_elementor'
-			);
-		} elseif ( ! defined( 'ELEMENTOR_VERSION' ) ) {
-			$action_link_type = 'activate-elementor';
-			$action_link_url = wp_nonce_url( 'plugins.php?action=activate&plugin=elementor/elementor.php', 'activate-plugin_elementor/elementor.php' );
-		} else {
-			$action_link_type = '';
-			$action_link_url = '';
+			];
+		}
+
+		if ( ! defined( 'ELEMENTOR_VERSION' ) ) {
+			$action_links_data[] = [
+					'type' =>  'activate-elementor',
+					'url' => wp_nonce_url( 'plugins.php?action=activate&plugin=elementor/elementor.php', 'activate-plugin_elementor/elementor.php' ),
+				];
+		}
+
+		if ( ! defined( 'ELEMENTOR_PRO_VERSION' ) ) {
+			$action_links_data[] = [
+					'type' => 'go-pro',
+					'url' => 'https://elementor.com/pricing-plugin',
+				];
+		}
+
+		if ( ! defined( 'ELEMENTOR_AI_VERSION' ) ) {
+			$action_links_data[] = [
+				'type' => 'go-ai',
+				'url' => 'https://elementor.com/pricing-ai',
+			];
+		}
+
+		if ( ! defined( 'ELEMENTOR_IMAGE_OPTIMIZER_VERSION' ) ) {
+			$action_links_data[] = [
+				'type' => 'go-image-optimizer',
+				'url' => 'https://elementor.com/pricing-plugin',
+			];
 		}
 
 		wp_localize_script(
 			$handle,
 			'helloPlusAdminData',
 			[
-				'actionLinkType' => $action_link_type,
-				'actionLinkURL' => $action_link_url,
+				'links' => $action_links_data,
 				'templateDirectoryURI' => HELLO_PLUS_URL,
 			]
 		);

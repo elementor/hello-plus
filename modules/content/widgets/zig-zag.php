@@ -8,6 +8,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
+use Elementor\Icons_Manager;
+
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
 /**
@@ -90,12 +92,24 @@ class Zig_Zag extends Widget_Base {
 	 * @access protected
 	 */
 	protected function register_controls() {
+		$this->add_content_section();
+		$this->add_style_section();
+		$this->add_advanced_section();
+	}
+
+	protected function add_content_section() {
 		$this->add_layout_section();
 		$this->add_blocks_section();
-		$this->add_style_section();
+	}
+
+	protected function add_style_section() {
+		$this->add_blocks_style_section();
 		$this->add_background_style_section();
 		$this->add_border_style_section();
-		$this->add_advanced_section();
+	}
+
+	protected function add_advanced_section() {
+		$this->add_layout_advanced_section();
 		$this->add_motion_effects_section();
 		$this->add_advanced_responsive_section();
 		$this->add_custom_section();
@@ -154,7 +168,7 @@ class Zig_Zag extends Widget_Base {
 				'tablet_default' => 'center',
 				'mobile_default' => 'center',
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-text-container' => 'justify-content: {{VALUE}};',
+					'{{WRAPPER}} .elementor-widget-zigzag__text-container' => 'justify-content: {{VALUE}};',
 				],
 			]
 		);
@@ -353,7 +367,7 @@ class Zig_Zag extends Widget_Base {
 		$this->end_controls_section();
 	}
 
-	private function add_style_section() {
+	private function add_blocks_style_section() {
 		$this->start_controls_section(
 			'style_section',
 			[
@@ -535,7 +549,7 @@ class Zig_Zag extends Widget_Base {
 			\Elementor\Group_Control_Typography::get_type(),
 			[
 				'name' => 'button_typography',
-				'selector' => '{{WRAPPER}} .zigzag-button a',
+				'selector' => '{{WRAPPER}} .elementor-widget-zigzag__button',
 				'fields_options' => [
 					'typography' => ['default' => 'yes'],
 					'font_family' => [
@@ -579,23 +593,30 @@ class Zig_Zag extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'button_icon_position',
 			[
 				'label' => esc_html__( 'Icon Position', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::CHOOSE,
+				'type' => Controls_Manager::CHOOSE,
+				'default' => is_rtl() ? 'row-reverse' : 'row',
+				'toggle' => false,
 				'options' => [
-					'left' => [
-						'title' => esc_html__( 'Left', 'hello-plus' ),
+					'row' => [
+						'title' => esc_html__( 'Start', 'hello-plus' ),
 						'icon' => 'eicon-h-align-left',
 					],
-					'right' => [
-						'title' => esc_html__( 'Right', 'hello-plus' ),
+					'row-reverse' => [
+						'title' => esc_html__( 'End', 'hello-plus' ),
 						'icon' => 'eicon-h-align-right',
 					],
 				],
-				'default' => 'right',
-				'toggle' => true,
+				'selectors_dictionary' => [
+					'left' => is_rtl() ? 'row-reverse' : 'row',
+					'right' => is_rtl() ? 'row' : 'row-reverse',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .elementor-widget-zigzag__button' => 'flex-direction: {{VALUE}};',
+				],
 			]
 		);
 
@@ -603,26 +624,24 @@ class Zig_Zag extends Widget_Base {
 			'button_icon_spacing',
 			[
 				'label' => esc_html__( 'Icon Spacing', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 100,
-						'step' => 2,
+					],
+					'em' => [
+						'max' => 5,
+					],
+					'rem' => [
+						'max' => 5,
 					],
 					'%' => [
-						'min' => 0,
 						'max' => 100,
 					],
 				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 10,
-				],
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-button a .icon-left' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .zigzag-button a .icon-right' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}' => '--zigzag-button-icon-spacing: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -645,7 +664,7 @@ class Zig_Zag extends Widget_Base {
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'default' => '#000000',
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-button a' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .elementor-widget-zigzag__button' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -669,7 +688,7 @@ class Zig_Zag extends Widget_Base {
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'default' => '#00000000',
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-button a' => 'background-color: {{VALUE}}', // Replace .your-class with .elementor-button-link
+					'{{WRAPPER}} .elementor-widget-zigzag__button' => 'background-color: {{VALUE}}', // Replace .your-class with .elementor-button-link
 				],
 			]
 		);
@@ -689,7 +708,7 @@ class Zig_Zag extends Widget_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-button a:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .elementor-widget-zigzag__button:hover' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -713,7 +732,7 @@ class Zig_Zag extends Widget_Base {
 				'label' => esc_html__( 'Background Color', 'hello-plus' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-button a:hover' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .elementor-widget-zigzag__button:hover' => 'background-color: {{VALUE}}',
 				],
 			]
 		);
@@ -775,7 +794,7 @@ class Zig_Zag extends Widget_Base {
 					'show_border' => 'yes',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-button a' => 'border-width: {{SIZE}}{{UNIT}}; border-style: solid;',
+					'{{WRAPPER}} .elementor-widget-zigzag__button' => 'border-width: {{SIZE}}{{UNIT}}; border-style: solid;',
 				],
 			]
 		);
@@ -787,7 +806,7 @@ class Zig_Zag extends Widget_Base {
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'default' => '#000000', // Default to black if no color is selected
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-button a' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .elementor-widget-zigzag__button' => 'border-color: {{VALUE}}',
 				],
 				'condition' => [
 					'show_border' => 'yes',
@@ -813,7 +832,7 @@ class Zig_Zag extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-button a' => 'border-radius: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .elementor-widget-zigzag__button' => 'border-radius: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -839,7 +858,7 @@ class Zig_Zag extends Widget_Base {
 					'show_button_border_shadow' => 'yes',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-button a' => 'box-shadow: {{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{SPREAD}}px {{COLOR}};',
+					'{{WRAPPER}} .elementor-widget-zigzag__button' => 'box-shadow: {{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{SPREAD}}px {{COLOR}};',
 				],
 			]
 		);
@@ -1025,7 +1044,7 @@ class Zig_Zag extends Widget_Base {
 		$this->end_controls_section();
 	}
 
-	private function add_advanced_section() {
+	private function add_layout_advanced_section() {
 		$this->start_controls_section(
 			'advanced_section',
 			[
@@ -1437,120 +1456,6 @@ class Zig_Zag extends Widget_Base {
 		echo '</div>';
 	}
 
-	/**
-	 * Render zigzag widget output in the editor.
-	 *
-	 * Written as a Backbone JavaScript template and used to generate the live preview.
-	 *
-	 * @since 1.0.0
-	 * @access protected
-	 */
-	public function _content_template() {
-		?>
-		<#
-		var custom_attributes = settings.zigzag_custom_attributes;
-		var custom_attribute_string = '';
-		if (custom_attributes) {
-		var attributes = custom_attributes.split("\n");
-		_.each(attributes, function(attribute) {
-		if (attribute.includes('|')) {
-		var parts = attribute.split('|');
-		custom_attribute_string += ' ' + parts[0] + '="' + parts[1] + '"';
-		}
-		});
-		}
-
-		var wrapper_classes = 'zigzag-widget-container';
-		if ('yes' === settings.zigzag_hide_on_desktop) {
-		wrapper_classes += ' elementor-hidden-desktop';
-		}
-		if ('yes' === settings.zigzag_hide_on_tablet) {
-		wrapper_classes += ' elementor-hidden-tablet';
-		}
-		if ('yes' === settings.zigzag_hide_on_mobile) {
-		wrapper_classes += ' elementor-hidden-mobile';
-		}
-
-		var animation_styles = '';
-		if (settings.zigzag_entrance_animation) {
-		wrapper_classes += ' animated ' + settings.zigzag_entrance_animation;
-
-		var animation_duration_map = {
-		'slow': 2000,
-		'normal': 1000,
-		'fast': 500,
-		};
-
-		var animation_duration_setting = settings.zigzag_animation_duration;
-		if (_.isNumber(animation_duration_setting)) {
-		if (animation_duration_setting <= 500) {
-		animation_duration_setting = 'fast';
-		} else if (animation_duration_setting <= 1000) {
-		animation_duration_setting = 'normal';
-		} else {
-		animation_duration_setting = 'slow';
-		}
-		}
-
-		var animation_duration = animation_duration_map[animation_duration_setting] || animation_duration_map['normal'];
-		var animation_delay = settings.zigzag_animation_delay;
-
-		animation_styles = ' style="';
-		animation_styles += 'animation-duration: ' + animation_duration + 'ms;';
-		animation_styles += 'animation-delay: ' + animation_delay + 'ms;';
-		animation_styles += '"';
-		}
-		#>
-		<div class="{{{ wrapper_classes }}}"{{{ animation_styles }}}>
-			<#
-			var first_block_direction = settings.first_block_direction;
-			_.each(settings.block_items, function(item, index) {
-			var is_odd = index % 2 == 0;
-			var item_class = first_block_direction + (is_odd ? '-odd' : '-even');
-			#>
-			<div class="zigzag-block-item-container {{ item_class }}">
-				<div class="zigzag-graphic-element-container">
-					<div class="zigzag-widget-image-container">
-						<# if (item.graphic_element === 'image' && item.graphic_image && item.graphic_image.url) { #>
-						<img src="{{{ item.graphic_image.url }}}" alt="{{{ item.graphic_image.alt }}}" title="{{{ item.graphic_image.title }}}" class="my-custom-class">
-						<# } else if (item.graphic_element === 'icon' && item.graphic_icon && item.graphic_icon.value) { #>
-						<div class="hello-plus-zigzag-icon">
-							<i class="{{{ item.graphic_icon.value }}}"></i>
-						</div>
-						<# } else { #>
-						<img src="path/to/default/image.jpg" alt="">
-						<# } #>
-					</div>
-				</div>
-				<div class="zigzag-text-container">
-					<h2>{{{ item.title }}}</h2>
-					<p>{{{ item.description }}}</p>
-					<# if (item.button_text) { #>
-					<div class="zigzag-button">
-						<div class="{{ settings.button_hover_animation ? 'elementor-animation-' + settings.button_hover_animation : '' }}">
-							<a href="{{ item.button_link && item.button_link.url ? item.button_link.url : 'javascript:void(0);' }}">
-								<# if (item.button_icon && item.button_icon.value) { #>
-								<# if (settings.button_icon_position === 'left') { #>
-								<i class="{{ item.button_icon.value }} icon-left" style="color: {{ item.icon_color }}"></i>
-								<# } #>
-								<# } #>
-								{{{ item.button_text }}}
-								<# if (item.button_icon && item.button_icon.value) { #>
-								<# if (settings.button_icon_position === 'right') { #>
-								<i class="{{ item.button_icon.value }} icon-right" style="color: {{ item.icon_color }}"></i>
-								<# } #>
-								<# } #>
-							</a>
-						</div>
-					</div>
-					<# } #>
-				</div>
-			</div>
-			<# }); #>
-		</div>
-		<?php
-	}
-
 	private function render_graphic_element_container( $item, $settings ) {
 		// Start graphic element container
 		echo '<div class="zigzag-graphic-element-container">';
@@ -1586,50 +1491,49 @@ class Zig_Zag extends Widget_Base {
 	}
 
 	private function render_text_element_container( $item, $settings ) {
-		// Start text and button container
-		echo '<div class="zigzag-text-container">';
-
-		// Title
-		echo '<h2>' . esc_html( $item['title'] ) . '</h2>';
-
-		// Description
-		echo '<p>' . esc_html( $item['description'] ) . '</p>';
-
-
-		// Get the button text, link, and icon from the item
-		$button_text = $item['button_text'] ?? 'Lean More';
-		$button_link = $item['button_link']['url'] ?? '#';
+		// MAGGIE's TODO: all the defaults need to go in the controls
+		$button_text = $item['button_text'] ?? '';
+		$button_link = $item['button_link'] ?? '';
 		$button_icon = $item['button_icon'] ?? '';
 		$icon_color  = $item['icon_color'] ?? ''; // Default to black if no color is selected
-
-		// Get the hover animation for the button
 		$button_hover_animation = $settings['button_hover_animation'] ?? '';
+		$button_classnames = 'elementor-widget-zigzag__button';
 
-		if ( ! empty( $button_text ) ) :
-			$btn_hover_animation_class = $button_hover_animation ? 'elementor-animation-' . $button_hover_animation : '';
-			?>
-			<div class="zigzag-button">
-				<div class="<?php echo esc_attr( $btn_hover_animation_class ); ?>">
-					<a href="<?php echo ! empty( $button_link ) ? esc_url( $button_link ) : 'javascript:void(0);'; ?>">
-						<?php if ( is_array( $button_icon ) && ! empty( $button_icon['value'] ) ) : ?>
-							<?php if ( $settings['button_icon_position'] === 'left' ) : ?>
-								<i class="<?php echo esc_attr( $button_icon['value'] ); ?> icon-left"
-								   style="color: <?php echo esc_attr( $icon_color ); ?>;"></i>
-							<?php endif; ?>
-						<?php endif; ?>
-						<?php echo esc_html( $button_text ); ?>
-						<?php if ( is_array( $button_icon ) && ! empty( $button_icon['value'] ) ) : ?>
-							<?php if ( $settings['button_icon_position'] === 'right' ) : ?>
-								<i class="<?php echo esc_attr( $button_icon['value'] ); ?> icon-right"
-								   style="color: <?php echo esc_attr( $icon_color ); ?>;"></i>
-							<?php endif; ?>
-						<?php endif; ?>
-					</a>
-				</div>
+		$this->add_render_attribute( 'title', [
+			'class' => 'zigzag-title',
+		] );
 
+		$this->add_render_attribute( 'description', [
+			'class' => 'zigzag-description',
+		] );
+
+		if ( $button_hover_animation ) {
+			$button_classnames .= ' elementor-animation-' . $button_hover_animation;
+		}
+
+		$this->add_render_attribute( 'button-link', [
+			'class' => $button_classnames,
+		] );
+
+		if ( ! empty( $button_link ) ) {
+			$this->add_link_attributes( 'button-link', $button_link );
+		}
+		?>
+		<div class="elementor-widget-zigzag__text-container">
+			<h2 <?php echo $this->get_render_attribute_string( 'title' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php esc_html_e( $item['title'], 'hello-plus' ); ?></h2>
+			<p <?php echo $this->get_render_attribute_string( 'description' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php esc_html_e( $item['description'], 'hello-plus' ); ?></p>
+
+			<?php if ( ! empty( $button_text ) ) { ?>
+			<div class="elementor-widget-zigzag__button-container">
+				<a <?php echo $this->get_render_attribute_string( 'button-link' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+					<?php Icons_Manager::render_icon( $button_icon, [
+						'aria-hidden' => 'true',
+						'class' => 'elementor-widget-zigzag__button-icon'
+					] ); ?>
+					<?php echo esc_html( $button_text ); ?>
+				</a>
 			</div>
-		<?php endif; ?>
-
+			<?php } ?>
 		</div>
 		<?php
 	}

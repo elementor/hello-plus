@@ -10,6 +10,7 @@ use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Icons_Manager;
 use Elementor\Group_Control_Typography;
+use Elementor\Group_Control_Box_Shadow;
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
@@ -667,7 +668,7 @@ class Zig_Zag extends Widget_Base {
 			'button_border_width',
 			[
 				'label' => __( 'Border Width', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SLIDER,
+				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
 				'range' => [
 					'px' => [
@@ -680,15 +681,11 @@ class Zig_Zag extends Widget_Base {
 						'max' => 100,
 					],
 				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 2,
+				'selectors' => [
+					'{{WRAPPER}}' => '--zigzag-button-border-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'show_border' => 'yes',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .elementor-widget-zigzag__button' => 'border-width: {{SIZE}}{{UNIT}}; border-style: solid;',
 				],
 			]
 		);
@@ -697,10 +694,9 @@ class Zig_Zag extends Widget_Base {
 			'button_border_color',
 			[
 				'label' => esc_html__( 'Color', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'default' => '#000000', // Default to black if no color is selected
+				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .elementor-widget-zigzag__button' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}}' => '--zigzag-button-border-color: {{VALUE}}',
 				],
 				'condition' => [
 					'show_border' => 'yes',
@@ -726,34 +722,19 @@ class Zig_Zag extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .elementor-widget-zigzag__button' => 'border-radius: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}' => '--zigzag-button-border-radius: {{SIZE}}{{UNIT}};',
 				],
-			]
-		);
-
-		$this->add_control(
-			'show_button_border_shadow',
-			[
-				'label' => esc_html__( 'Box Shadow', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
-				'label_off' => esc_html__( 'No', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => 'no',
-			]
-		);
-
-		$this->add_control(
-			'zigzag_button_box_shadow',
-			[
-				'label' => esc_html__( 'Box Shadow', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::BOX_SHADOW,
 				'condition' => [
-					'show_button_border_shadow' => 'yes',
+					'show_border' => 'yes',
 				],
-				'selectors' => [
-					'{{WRAPPER}} .elementor-widget-zigzag__button' => 'box-shadow: {{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{SPREAD}}px {{COLOR}};',
-				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'zigzag_button_box_shadow',
+				'selector' => '{{WRAPPER}} .elementor-widget-zigzag__button',
 			]
 		);
 
@@ -1385,13 +1366,14 @@ class Zig_Zag extends Widget_Base {
 	}
 
 	private function render_text_element_container( $item, $settings ) {
-		// MAGGIE's TODO: all the defaults need to go in the controls
 		$button_text = $item['button_text'] ?? '';
 		$button_link = $item['button_link'] ?? '';
 		$button_icon = $item['button_icon'] ?? '';
-		$icon_color  = $item['icon_color'] ?? ''; // Default to black if no color is selected
-		$button_hover_animation = $settings['button_hover_animation'] ?? '';
+		$icon_color  = $item['icon_color'] ?? '';
+
 		$button_classnames = 'elementor-widget-zigzag__button';
+		$button_hover_animation = $settings['button_hover_animation'] ?? '';
+		$button_has_border = $settings['show_border'];
 
 		$this->add_render_attribute( 'title', [
 			'class' => 'elementor-widget-zigzag__title',
@@ -1403,6 +1385,10 @@ class Zig_Zag extends Widget_Base {
 
 		if ( $button_hover_animation ) {
 			$button_classnames .= ' elementor-animation-' . $button_hover_animation;
+		}
+
+		if ( 'yes' === $button_has_border ) {
+			$button_classnames .= ' has-border';
 		}
 
 		$this->add_render_attribute( 'button-link', [

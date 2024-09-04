@@ -7,6 +7,9 @@
 	--zigzag-button-icon-color-hover: #000000;
 	--zigzag-button-background-color: transparent;
 	--zigzag-button-background-color-hover: transparent;
+	--zigzag-button-border-width: 1px;
+	--zigzag-button-border-color: #000000;
+	--zigzag-button-border-radius: 0;
 	--zigzag-title-color: #000000;
 	--zigzag-description-color: #000000;
 	--transition: all .3s;
@@ -21,9 +24,9 @@
 
 	&__button {
 		align-items: center;
+		background-color: var(--zigzag-button-background-color);
 		border-style: solid;
 		border-width: 0;
-		background-color: var(--zigzag-button-background-color);
 		color: var(--zigzag-button-text-color);
 		display: flex;
 		font-weight: 500;
@@ -44,6 +47,13 @@
 				fill: currentColor;
 				transition: var(--transition);
 			}
+		}
+
+		&.has-border {
+			border-color: var(--zigzag-button-border-color);
+			border-style: solid;
+			border-width: var(--zigzag-button-border-width);
+			border-radius: var(--zigzag-button-border-radius);
 		}
 	}
 

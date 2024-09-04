@@ -9,6 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Icons_Manager;
+use Elementor\Group_Control_Typography;
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
@@ -416,7 +417,7 @@ class Zig_Zag extends Widget_Base {
 			'style_heading',
 			[
 				'label' => esc_html__( 'Heading', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::HEADING,
+				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
 		);
@@ -425,52 +426,18 @@ class Zig_Zag extends Widget_Base {
 			'title_color',
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
+				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-block-item-container h2' => 'color: {{VALUE}}',
+					'{{WRAPPER}}' => '--zigzag-title-color: {{VALUE}}',
 				],
 			]
 		);
 
 		$this->add_group_control(
-			\Elementor\Group_Control_Typography::get_type(),
+			Group_Control_Typography::get_type(),
 			[
 				'name' => 'title_typography',
-				'selector' => '{{WRAPPER}} .zigzag-block-item-container h2',
-				'fields_options' => [
-					'typography' => ['default' => 'yes'],
-					'font_family' => [
-						'default' => 'Poppins',
-					],
-					'font_size' => [
-						'default' => [
-							'unit' => 'px',
-							'size' => 40,
-						],
-						'tablet_default' => [
-							'unit' => 'px',
-							'size' => 36,
-						],
-						'mobile_default' => [
-							'unit' => 'px',
-							'size' => 32,
-						],
-					],
-					'line_height' => [
-						'default' => [
-							'unit' => 'px',
-							'size' => 58,
-						],
-						'tablet_default' => [
-							'unit' => 'px',
-							'size' => 52,
-						],
-						'mobile_default' => [
-							'unit' => 'px',
-							'size' => 46,
-						],
-					],
-				]
+				'selector' => '{{WRAPPER}} .elementor-widget-zigzag__title',
 			]
 		);
 
@@ -478,7 +445,7 @@ class Zig_Zag extends Widget_Base {
 			'style_description',
 			[
 				'label' => esc_html__( 'Paragraph', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::HEADING,
+				'type' => Controls_Manager::HEADING,
 				'separator' => 'default',
 			]
 		);
@@ -487,52 +454,18 @@ class Zig_Zag extends Widget_Base {
 			'description_color',
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
+				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-block-item-container p' => 'color: {{VALUE}}',
+					'{{WRAPPER}}' => '--zigzag-description-color: {{VALUE}}',
 				],
 			]
 		);
 
 		$this->add_group_control(
-			\Elementor\Group_Control_Typography::get_type(),
+			Group_Control_Typography::get_type(),
 			[
 				'name' => 'description_typography',
-				'selector' => '{{WRAPPER}} .zigzag-block-item-container p',
-				'fields_options' => [
-					'typography' => ['default' => 'yes'],
-					'font_family' => [
-						'default' => 'Poppins',
-					],
-					'font_size' => [
-						'default' => [
-							'unit' => 'px',
-							'size' => 18,
-						],
-						'tablet_default' => [
-							'unit' => 'px',
-							'size' => 16,
-						],
-						'mobile_default' => [
-							'unit' => 'px',
-							'size' => 14,
-						],
-					],
-					'line_height' => [
-						'default' => [
-							'unit' => 'px',
-							'size' => 32,
-						],
-						'tablet_default' => [
-							'unit' => 'px',
-							'size' => 28,
-						],
-						'mobile_default' => [
-							'unit' => 'px',
-							'size' => 24,
-						],
-					],
-				]
+				'selector' => '{{WRAPPER}} .elementor-widget-zigzag__description',
 			]
 		);
 
@@ -540,52 +473,18 @@ class Zig_Zag extends Widget_Base {
 			'style_button',
 			[
 				'label' => esc_html__( 'Button', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::HEADING,
+				'type' => Controls_Manager::HEADING,
 				'separator' => 'default',
 			]
 		);
 
 		$this->add_group_control(
-			\Elementor\Group_Control_Typography::get_type(),
+			Group_Control_Typography::get_type(),
 			[
 				'name' => 'button_typography',
 				'selector' => '{{WRAPPER}} .elementor-widget-zigzag__button',
 				'fields_options' => [
-					'typography' => ['default' => 'yes'],
-					'font_family' => [
-						'default' => 'Poppins',
-					],
-					'font_weight' => [
-						'default' => '500',
-					],
-					'font_size' => [
-						'default' => [
-							'unit' => 'px',
-							'size' => 16,
-						],
-						'tablet_default' => [
-							'unit' => 'px',
-							'size' => 14,
-						],
-						'mobile_default' => [
-							'unit' => 'px',
-							'size' => 12,
-						],
-					],
-					'line_height' => [
-						'default' => [
-							'unit' => 'px',
-							'size' => 24,
-						],
-						'tablet_default' => [
-							'unit' => 'px',
-							'size' => 22,
-						],
-						'mobile_default' => [
-							'unit' => 'px',
-							'size' => 20,
-						],
-					],
+					'typography' => [ 'default' => 'yes' ],
 					'text_decoration' => [
 						'default' => 'underline',
 					],
@@ -661,10 +560,9 @@ class Zig_Zag extends Widget_Base {
 			'button_text_color',
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'default' => '#000000',
+				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .elementor-widget-zigzag__button' => 'color: {{VALUE}}',
+					'{{WRAPPER}}' => '--zigzag-button-text-color: {{VALUE}}',
 				],
 			]
 		);
@@ -673,10 +571,9 @@ class Zig_Zag extends Widget_Base {
 			'button_icon_color',
 			[
 				'label' => esc_html__( 'Icon Color', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'default' => '#000000', // Default to black if no color is selected
+				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .icon-left, {{WRAPPER}} .icon-right' => 'color: {{VALUE}};',
+					'{{WRAPPER}}' => '--zigzag-button-icon-color: {{VALUE}};',
 				],
 			]
 		);
@@ -685,10 +582,9 @@ class Zig_Zag extends Widget_Base {
 			'button_background_color',
 			[
 				'label' => esc_html__( 'Background Color', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'default' => '#00000000',
+				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .elementor-widget-zigzag__button' => 'background-color: {{VALUE}}', // Replace .your-class with .elementor-button-link
+					'{{WRAPPER}}' => '--zigzag-button-background-color: {{VALUE}}',
 				],
 			]
 		);
@@ -706,33 +602,31 @@ class Zig_Zag extends Widget_Base {
 			'hover_button_text_color',
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
+				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .elementor-widget-zigzag__button:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}}' => '--zigzag-button-text-color-hover: {{VALUE}}',
 				],
 			]
 		);
 
-		// Button Icon Color on Hover
 		$this->add_control(
 			'hover_button_icon_color',
 			[
 				'label' => esc_html__( 'Icon Color', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
+				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .icon-left:hover, {{WRAPPER}} .icon-right:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}}' => '--zigzag-button-icon-color-hover: {{VALUE}}',
 				],
 			]
 		);
 
-		// Button Background Color on Hover
 		$this->add_control(
 			'hover_button_background_color',
 			[
 				'label' => esc_html__( 'Background Color', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
+				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .elementor-widget-zigzag__button:hover' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}}' => '--zigzag-button-background-color-hover: {{VALUE}}',
 				],
 			]
 		);
@@ -741,7 +635,7 @@ class Zig_Zag extends Widget_Base {
 			'button_hover_animation',
 			[
 				'label' => esc_html__( 'Hover Animation', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::HOVER_ANIMATION,
+				'type' => Controls_Manager::HOVER_ANIMATION,
 
 			]
 		);
@@ -1500,11 +1394,11 @@ class Zig_Zag extends Widget_Base {
 		$button_classnames = 'elementor-widget-zigzag__button';
 
 		$this->add_render_attribute( 'title', [
-			'class' => 'zigzag-title',
+			'class' => 'elementor-widget-zigzag__title',
 		] );
 
 		$this->add_render_attribute( 'description', [
-			'class' => 'zigzag-description',
+			'class' => 'elementor-widget-zigzag__description',
 		] );
 
 		if ( $button_hover_animation ) {

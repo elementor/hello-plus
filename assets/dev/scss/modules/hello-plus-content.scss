@@ -1,20 +1,50 @@
-/* CSS for the ZigZag widget */
 .elementor-widget-zigzag {
 	--zigzag-button-icon-size: 16px;
 	--zigzag-button-icon-spacing: 10px;
+	--zigzag-button-text-color: #000000;
+	--zigzag-button-text-color-hover: #000000;
+	--zigzag-button-icon-color: #000000;
+	--zigzag-button-icon-color-hover: #000000;
+	--zigzag-button-background-color: transparent;
+	--zigzag-button-background-color-hover: transparent;
+	--zigzag-title-color: #000000;
+	--zigzag-description-color: #000000;
+	--transition: all .3s;
+
+	&__button-icon {
+		color: var(--zigzag-button-icon-color);
+		fill: currentColor;
+		height: var(--zigzag-button-icon-size);
+		transition: var(--transition);
+		width: var(--zigzag-button-icon-size);
+	}
 
 	&__button {
 		align-items: center;
 		border-style: solid;
 		border-width: 0;
+		background-color: var(--zigzag-button-background-color);
+		color: var(--zigzag-button-text-color);
 		display: flex;
+		font-weight: 500;
+		font-size: 16px;
 		gap: var(--zigzag-button-icon-spacing);
 		padding: 12px 24px;
-	}
+		text-decoration: underline;
+		transition: var(--transition);
 
-	&__button-icon {
-		height: var(--zigzag-button-icon-size);
-		width: var(--zigzag-button-icon-size);
+		&:hover,
+		&:focus {
+			background-color: var(--zigzag-button-background-color-hover);
+			color: var(--zigzag-button-text-color-hover);
+			transition: var(--transition);
+
+			.elementor-widget-zigzag__button-icon {
+				color: var(--zigzag-button-icon-color-hover);
+				fill: currentColor;
+				transition: var(--transition);
+			}
+		}
 	}
 
 	&__button-container {
@@ -30,6 +60,16 @@
 		justify-content: center;
 		width: 50%;
 		padding: 20px;
+	}
+
+	&__title {
+		color: var(--zigzag-title-color);
+		font-size: 40px;
+	}
+
+	&__description {
+		color: var(--zigzag-description-color);
+		font-size: 18px;
 	}
 }
 

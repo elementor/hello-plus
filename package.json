@@ -2,16 +2,9 @@
 	"name": "hello-plus",
 	"slug": "hello-plus",
 	"homepage": "https://elementor.com/",
-	"description": "A sample theme for Elementor.",
+	"description": "A quick-start theme for Elementor.",
 	"version": "0.0.1",
 	"scripts": {
-		"update-version": "node .github/scripts/update-version-in-files.js",
-		"build:prod": "grunt default --environment=production && WP_SRC_DIRECTORY=$(pwd) wp-scripts build --env=production",
-		"build:dev": "concurrently \"grunt default\" \"webpack --env=development\"",
-		"build:dev:watch": "concurrently \"grunt default watch\" \"webpack --env=developmentLocal\"",
-		"clean:build": "rimraf build && rimraf hello-plus",
-		"zip": "npm run clean:build && npm run build:prod && rsync -av --exclude-from=.buildignore . hello-plus && zip -r hello-plus.$npm_package_version.zip hello-plus/*",
-		"lint:js": "eslint .",
 		"start": "wp-scripts start",
 		"build": "wp-scripts build"
 	},

@@ -125,7 +125,7 @@ class Module extends Module_Base {
 	public function enqueue_styles() {
 		wp_enqueue_style(
 			self::CUSTOMIZER_STYLE,
-			HELLO_PLUS_URL . '/customizer' . Theme::get_min_suffix() . '.css',
+			HELLO_PLUS_STYLE_URL . '/customizer' . Theme::get_min_suffix() . '.css',
 			[],
 			HELLO_PLUS_ELEMENTOR_VERSION
 		);

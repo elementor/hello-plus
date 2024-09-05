@@ -228,10 +228,6 @@ class Settings {
 				'hook'      => 'hello_plus_page_title',
 				'callback'  => '__return_false',
 			],
-			'HELLO_PLUS_STYLE' => [
-				'hook'      => 'hello_plus_enqueue_style',
-				'callback'  => '__return_false',
-			],
 			'HELLO_PLUS_THEME' => [
 				'hook'      => 'hello_plus_enqueue_theme_style',
 				'callback'  => '__return_false',

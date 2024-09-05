@@ -84,7 +84,7 @@ class Customizer_Action_Links extends \WP_Customize_Control {
 				break;
 			case 'style-header-footer':
 				$action_link_data = [
-					'image' => HELLO_PLUS_ASSETS_URL . '/images/elementor.svg',
+					'image' => get_template_directory_uri() . '/assets/images/elementor.svg',
 					'alt' => esc_attr__( 'Elementor', 'hello-plus' ),
 					'title' => esc_html__( 'Style cross-site header & footer', 'hello-plus' ),
 					'message' => esc_html__( 'Customize your cross-site header & footer from Elementor’s "Site Settings" panel.', 'hello-plus' ),

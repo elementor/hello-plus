@@ -40,7 +40,7 @@ class Module extends Module_Base {
 	public function enqueue(): void {
 		wp_enqueue_script(
 			'hello-plus-content',
-			HELLO_PLUS_ASSETS_URL . 'js/hello-plus-content' . Theme::get_min_suffix() . '.js',
+			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-content' . Theme::get_min_suffix() . '.js',
 			[],
 			HELLO_PLUS_ELEMENTOR_VERSION,
 			true
@@ -48,7 +48,7 @@ class Module extends Module_Base {
 
 		wp_enqueue_style(
 			'hello-plus-content',
-			HELLO_PLUS_ASSETS_URL . 'js/hello-plus-content' . Theme::get_min_suffix() . '.css',
+			HELLO_PLUS_STYLE_URL . 'hello-plus-content' . Theme::get_min_suffix() . '.css',
 			[],
 			HELLO_PLUS_ELEMENTOR_VERSION
 		);

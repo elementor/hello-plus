@@ -12,6 +12,5 @@ Thumbs.db
 *.log
 *.map
 yarn.lock
-*.css
 *.zip
 dist/

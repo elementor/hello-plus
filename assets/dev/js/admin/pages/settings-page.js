@@ -1,5 +1,6 @@
 import { Fragment } from 'react';
 import { __ } from '@wordpress/i18n';
+// TODO: minimize to only necessary imports
 import { Container, Box, Tabs, Tab, TabPanel, useTabs } from '@elementor/ui';
 import { SettingsPanel } from '../panels/settings-panel';
 import { HomePanel } from '../panels/home-panel';

@@ -6,96 +6,45 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use Elementor\Widget_Base;
+use Elementor\Group_Control_Background;
+use Elementor\Group_Control_Box_Shadow;
+use Elementor\Group_Control_Image_Size;
+use Elementor\Group_Control_Typography;
+
 use Elementor\Controls_Manager;
 use Elementor\Icons_Manager;
-use Elementor\Group_Control_Typography;
-use Elementor\Group_Control_Box_Shadow;
-use Elementor\Utils;
 use Elementor\Repeater;
-use Elementor\Group_Control_Image_Size;
+use Elementor\Widget_Base;
+use Elementor\Utils;
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
-/**
- * class Zigzag
- **/
 class Zig_Zag extends Widget_Base {
 
-	/**
-	 * @inheritDoc
-	 */
 	public function get_name(): string {
 		return 'zigzag';
 	}
 
-	/**
-	 * Get widget title.
-	 *
-	 * Retrieve list widget title.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @return string Widget title.
-	 */
 	public function get_title(): string {
 		return esc_html__( 'Zig-Zag', 'hello-plus' );
 	}
 
-	/**
-	 * Get widget icon.
-	 *
-	 * Retrieve list widget icon.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @return string Widget icon.
-	 */
 	public function get_icon(): string {
 		return 'eicon-time-line';
 	}
 
-	/**
-	 * Get widget categories.
-	 *
-	 * Retrieve the list of categories the list widget belongs to.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @return array Widget categories.
-	 */
 	public function get_categories(): array {
 		return [ Theme_Module::HELLO_PLUS_EDITOR_CATEGORY_SLUG ];
 	}
 
-	/**
-	 * Get widget keywords.
-	 *
-	 * Retrieve the list of keywords the list widget belongs to.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @return array Widget keywords.
-	 */
 	public function get_keywords(): array {
 		return [ 'zigzag', 'content' ];
 	}
 
-	/**
-	 * @return string[]
-	 */
 	public function get_style_depends(): array {
 		return [ 'hello-plus-content' ];
 	}
 
-	/**
-	 * Register zigzag widget controls.
-	 *
-	 * Add input fields to allow the user to customize the widget settings.
-	 *
-	 * @since 1.0.0
-	 * @access protected
-	 */
 	protected function register_controls() {
 		$this->add_content_section();
 		$this->add_style_section();
@@ -135,15 +84,13 @@ class Zig_Zag extends Widget_Base {
 				'label' => esc_html__( 'Image Width', 'hello-plus' ),
 				'type' => \Elementor\Controls_Manager::SELECT,
 				'options' => [
-					'100' => '50%',
-					'50' => '30%',
+					'50%' => '50%',
+					'30%' => '30%',
 				],
+				'default' => '50%',
 				'devices' => [ 'desktop', 'tablet', 'mobile' ],
-				'desktop_default' => '100',
-				'tablet_default' => '100',
-				'mobile_default' => '100',
 				'selectors' => [
-					'{{WRAPPER}} .elementor-widget-zigzag__image-container img' => 'width: {{VALUE}}%;',
+					'{{WRAPPER}}' => '--zigzag-image-width: {{VALUE}};',
 				],
 			]
 		);
@@ -153,10 +100,10 @@ class Zig_Zag extends Widget_Base {
 			'content_alignment',
 			[
 				'label' => esc_html__( 'Align Content', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::CHOOSE,
+				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'flex-start' => [
-						'title' => esc_html__( 'Left', 'hello-plus' ),
+						'title' => esc_html__( 'Start', 'hello-plus' ),
 						'icon' => 'eicon-align-start-v',
 					],
 					'center' => [
@@ -164,16 +111,12 @@ class Zig_Zag extends Widget_Base {
 						'icon' => 'eicon-align-center-v',
 					],
 					'flex-end' => [
-						'title' => esc_html__( 'Right', 'hello-plus' ),
+						'title' => esc_html__( 'End', 'hello-plus' ),
 						'icon' => 'eicon-align-end-v',
 					],
 				],
-				'devices' => [ 'desktop', 'tablet', 'mobile' ],
-				'desktop_default' => 'center',
-				'tablet_default' => 'center',
-				'mobile_default' => 'center',
 				'selectors' => [
-					'{{WRAPPER}} .elementor-widget-zigzag__text-container' => 'justify-content: {{VALUE}};',
+					'{{WRAPPER}}' => '--zigzag-text-alignment: {{VALUE}};',
 				],
 			]
 		);
@@ -182,7 +125,7 @@ class Zig_Zag extends Widget_Base {
 			'first_block_direction',
 			[
 				'label' => esc_html__( 'First Image Position', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::CHOOSE,
+				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'row' => [
 						'title' => esc_html__( 'Row', 'hello-plus' ),
@@ -201,7 +144,7 @@ class Zig_Zag extends Widget_Base {
 			'important_note',
 			[
 				'label' => '<em>' . esc_html__( 'Note: Image position applies only on desktop.', 'hello-plus' ) . '</em>',
-				'type' => \Elementor\Controls_Manager::HEADING,
+				'type' => Controls_Manager::HEADING,
 				'separator' => 'default',
 			]
 		);
@@ -214,11 +157,9 @@ class Zig_Zag extends Widget_Base {
 			'Blocks_section',
 			[
 				'label' => esc_html__( 'Blocks', 'hello-plus' ),
-				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
+				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
-
-		/* Start repeater */
 
 		$repeater = new Repeater();
 
@@ -270,7 +211,6 @@ class Zig_Zag extends Widget_Base {
 				],
 			]
 		);
-
 
 		$repeater->add_control(
 			'title',
@@ -372,7 +312,7 @@ class Zig_Zag extends Widget_Base {
 			'style_section',
 			[
 				'label' => esc_html__( 'Blocks', 'hello-plus' ),
-				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
 
@@ -380,7 +320,7 @@ class Zig_Zag extends Widget_Base {
 			'style_spacing',
 			[
 				'label' => esc_html__( 'Spacing', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::HEADING,
+				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
 		);
@@ -389,7 +329,7 @@ class Zig_Zag extends Widget_Base {
 			'space_rows',
 			[
 				'label' => esc_html__( 'Space Between Rows', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SLIDER,
+				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
@@ -402,12 +342,8 @@ class Zig_Zag extends Widget_Base {
 						'max' => 100,
 					],
 				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 40,
-				],
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-block-item-container' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}' => '--zigzag-rows-spacing: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -646,7 +582,7 @@ class Zig_Zag extends Widget_Base {
 		$this->add_control(
 			'button_style_divider',
 			[
-				'type' => \Elementor\Controls_Manager::DIVIDER,
+				'type' => Controls_Manager::DIVIDER,
 			]
 		);
 
@@ -654,7 +590,7 @@ class Zig_Zag extends Widget_Base {
 			'show_border',
 			[
 				'label' => esc_html__( 'Border', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'type' => Controls_Manager::SWITCHER,
 				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
 				'label_off' => esc_html__( 'No', 'hello-plus' ),
 				'return_value' => 'yes',
@@ -706,7 +642,7 @@ class Zig_Zag extends Widget_Base {
 			'button_border_radius',
 			[
 				'label' => __( 'Border Radius', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SLIDER,
+				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
 				'range' => [
 					'px' => [
@@ -739,12 +675,60 @@ class Zig_Zag extends Widget_Base {
 		$this->end_controls_section();
 	}
 
+	private function add_background_style_section(  ) {
+		$this->start_controls_section(
+			'background_style-section',
+			[
+				'label' => esc_html__( 'Background', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
+			[
+				'name' => 'background',
+				'types' => [ 'classic', 'gradient' ],
+				'exclude' => ['image'],
+				'selector' => '{{WRAPPER}} .elementor-widget-zigzag__wrapper',
+
+			]
+		);
+
+		$this->add_control(
+			'show_alternate_background',
+			[
+				'label' => esc_html__( 'Alternate Background', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Show', 'hello-plus' ),
+				'label_off' => esc_html__( 'Hide', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
+			[
+				'name' => 'alternate_background',
+				'types' => [ 'classic', 'gradient' ],
+				'exclude' => ['image'],
+				'condition' => [
+					'show_alternate_background' => 'yes',
+				],
+				'selector' => '{{WRAPPER}} .elementor-widget-zigzag__item-container:nth-child(even)',
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
 	private function add_border_style_section(  ) {
 		$this->start_controls_section(
 			'border_style_section',
 			[
 				'label' => esc_html__( 'Border', 'hello-plus' ),
-				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
 
@@ -752,7 +736,7 @@ class Zig_Zag extends Widget_Base {
 			'show_widget_border',
 			[
 				'label' => esc_html__( 'Border', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'type' => Controls_Manager::SWITCHER,
 				'label_on' => esc_html__( 'Show', 'hello-plus' ),
 				'label_off' => esc_html__( 'Hide', 'hello-plus' ),
 				'return_value' => 'yes',
@@ -764,7 +748,7 @@ class Zig_Zag extends Widget_Base {
 			'widget_border_width',
 			[
 				'label' => esc_html__( 'Border Width', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SLIDER,
+				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', '%', 'vw' ],
 				'range' => [
 					'px' => [
@@ -780,15 +764,11 @@ class Zig_Zag extends Widget_Base {
 						'max' => 100,
 					],
 				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 2,
-				],
 				'condition' => [
 					'show_widget_border' => 'yes',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-widget-container' => 'border-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}' => '--zigzag-wrapper-border-width: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -797,12 +777,12 @@ class Zig_Zag extends Widget_Base {
 			'widget_border_color',
 			[
 				'label' => esc_html__( 'Border Color', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
+				'type' => Controls_Manager::COLOR,
 				'condition' => [
 					'show_widget_border' => 'yes',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-widget-container' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}}' => '--zigzag-wrapper-border-color: {{VALUE}}',
 				],
 			]
 		);
@@ -811,7 +791,7 @@ class Zig_Zag extends Widget_Base {
 			'widget_border_radius',
 			[
 				'label' => esc_html__( 'Border Radius', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SLIDER,
+				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', '%' ],
 				'range' => [
 					'px' => [
@@ -824,93 +804,20 @@ class Zig_Zag extends Widget_Base {
 						'max' => 100,
 					],
 				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 0,
-				],
 				'condition' => [
 					'show_widget_border' => 'yes',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-widget-container' => 'border-radius: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}' => '--zigzag-wrapper-border-radius: {{SIZE}}{{UNIT}};',
 				],
-			]
-		);
-
-		$this->add_control(
-			'show_widget_shadow',
-			[
-				'label' => esc_html__( 'Box Shadow', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
-				'label_off' => esc_html__( 'No', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => 'no',
-				'condition' => [
-					'show_widget_border' => 'yes',
-				],
-			]
-		);
-
-		$this->add_control(
-			'widget_box_shadow',
-			[
-				'label' => esc_html__( 'Box Shadow', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::BOX_SHADOW,
-				'condition' => [
-					'show_widget_shadow' => 'yes',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .zigzag-widget-container' => 'box-shadow: {{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{SPREAD}}px {{COLOR}};',
-				],
-			]
-		);
-
-		$this->end_controls_section();
-	}
-
-	private function add_background_style_section(  ) {
-		$this->start_controls_section(
-			'background_style-section',
-			[
-				'label' => esc_html__( 'Background', 'hello-plus' ),
-				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
 
 		$this->add_group_control(
-			\Elementor\Group_Control_Background::get_type(),
+			Group_Control_Box_Shadow::get_type(),
 			[
-				'name' => 'background',
-				'types' => [ 'classic', 'gradient' ],
-				'exclude' => ['image'],
-				'selector' => '{{WRAPPER}} .zigzag-widget-container',
-
-			]
-		);
-
-		$this->add_control(
-			'show_alternate_background',
-			[
-				'label' => esc_html__( 'Alternate Background', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Show', 'hello-plus' ),
-				'label_off' => esc_html__( 'Hide', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => 'no',
-			]
-		);
-
-		$this->add_group_control(
-			\Elementor\Group_Control_Background::get_type(),
-			[
-				'name' => 'alternate_background',
-				'types' => [ 'classic', 'gradient' ],
-				'exclude' => ['image'],
-				'condition' => [
-					'show_alternate_background' => 'yes',
-				],
-				'selector' => '{{WRAPPER}} .zigzag-block-item-container:nth-child(even)',
+				'name' => 'widget_box_shadow',
+				'selector' => '{{WRAPPER}} .elementor-widget-zigzag__wrapper',
 			]
 		);
 
@@ -922,7 +829,7 @@ class Zig_Zag extends Widget_Base {
 			'advanced_section',
 			[
 				'label' => esc_html__( 'Layout', 'hello-plus' ),
-				'tab' => \Elementor\Controls_Manager::TAB_ADVANCED,
+				'tab' => Controls_Manager::TAB_ADVANCED,
 			]
 		);
 
@@ -930,7 +837,7 @@ class Zig_Zag extends Widget_Base {
 			'full_width',
 			[
 				'label' => __( 'Full Width', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'type' => Controls_Manager::SWITCHER,
 				'label_on' => __( 'Yes', 'hello-plus' ),
 				'label_off' => __( 'No', 'hello-plus' ),
 				'return_value' => 'yes',
@@ -942,7 +849,7 @@ class Zig_Zag extends Widget_Base {
 			'zigzag_width',
 			[
 				'label' => esc_html__( 'Zig-Zag Width', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SLIDER,
+				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
@@ -959,9 +866,8 @@ class Zig_Zag extends Widget_Base {
 					'unit' => 'px',
 					'size' => 1000,
 				],
-
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-widget-container' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .elementor-widget-zigzag__wrapper' => 'width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'full_width!' => 'yes',
@@ -973,7 +879,7 @@ class Zig_Zag extends Widget_Base {
 			'main_content_width',
 			[
 				'label' => esc_html__( 'Content Width', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SLIDER,
+				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', '%' ],
 				'range' => [
 					'px' => [
@@ -987,8 +893,7 @@ class Zig_Zag extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-widget-container' => 'padding-right: calc(100% - {{SIZE}}{{UNIT}}); padding-left: calc(100% - {{SIZE}}{{UNIT}});',
-//					'{{WRAPPER}} .zigzag-widget-container' => 'padding-right: calc(500px - {{SIZE}}{{UNIT}}); padding-left: calc(500px - {{SIZE}}{{UNIT}});',
+					'{{WRAPPER}} .elementor-widget-zigzag__wrapper' => 'padding-right: calc(100% - {{SIZE}}{{UNIT}}); padding-left: calc(100% - {{SIZE}}{{UNIT}});',
 				],
 			]
 		);
@@ -997,7 +902,7 @@ class Zig_Zag extends Widget_Base {
 			'padding_top',
 			[
 				'label' => esc_html__( 'Top Padding', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SLIDER,
+				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
@@ -1011,7 +916,7 @@ class Zig_Zag extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-widget-container' => 'padding-top: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .elementor-widget-zigzag__wrapper' => 'padding-top: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -1020,7 +925,7 @@ class Zig_Zag extends Widget_Base {
 			'padding_bottom',
 			[
 				'label' => esc_html__( 'Bottom Padding', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SLIDER,
+				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
@@ -1034,7 +939,7 @@ class Zig_Zag extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-widget-container' => 'padding-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .elementor-widget-zigzag__wrapper' => 'padding-bottom: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -1043,7 +948,7 @@ class Zig_Zag extends Widget_Base {
 			'element_spacing',
 			[
 				'label' => esc_html__( 'Element Spacing', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SELECT,
+				'type' => Controls_Manager::SELECT,
 				'default' => 'default',
 				'options' => [
 					'default' => esc_html__( 'Default', 'hello-plus' ),
@@ -1058,7 +963,6 @@ class Zig_Zag extends Widget_Base {
 	}
 
 	private function add_motion_effects_section() {
-		// Motion Effects Section
 		$this->start_controls_section(
 			'zigzag_motion_effects',
 			[
@@ -1111,7 +1015,6 @@ class Zig_Zag extends Widget_Base {
 	}
 
 	private function add_advanced_responsive_section() {
-		// Responsive Section
 		$this->start_controls_section(
 			'zigzag_advanced_responsive',
 			[
@@ -1120,7 +1023,6 @@ class Zig_Zag extends Widget_Base {
 			]
 		);
 
-		// Responsive controls
 		$this->add_control(
 			'zigzag_responsive_description',
 			[
@@ -1130,7 +1032,6 @@ class Zig_Zag extends Widget_Base {
 			]
 		);
 
-		// Hide On Desktop control
 		$this->add_control(
 			'zigzag_hide_on_desktop',
 			[
@@ -1143,7 +1044,6 @@ class Zig_Zag extends Widget_Base {
 			]
 		);
 
-		// Hide On Tablet control
 		$this->add_control(
 			'zigzag_hide_on_tablet',
 			[
@@ -1156,7 +1056,6 @@ class Zig_Zag extends Widget_Base {
 			]
 		);
 
-		// Hide On Mobile control
 		$this->add_control(
 			'zigzag_hide_on_mobile',
 			[
@@ -1177,16 +1076,15 @@ class Zig_Zag extends Widget_Base {
 			'Custom_section',
 			[
 				'label' => esc_html__( 'Custom', 'hello-plus' ),
-				'tab' => \Elementor\Controls_Manager::TAB_ADVANCED,
+				'tab' => Controls_Manager::TAB_ADVANCED,
 			]
 		);
 
-		//CSS ID control
 		$this->add_control(
 			'css_id',
 			[
 				'label' => esc_html__( 'CSS ID', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
+				'type' => Controls_Manager::TEXT,
 				'dynamic' => [
 					'active' => true,
 				],
@@ -1196,12 +1094,11 @@ class Zig_Zag extends Widget_Base {
 			]
 		);
 
-		// CSS Classes control
 		$this->add_control(
 			'css_classes',
 			[
 				'label' => esc_html__( 'CSS Classes', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
+				'type' => Controls_Manager::TEXT,
 				'dynamic' => [
 					'active' => true,
 				],
@@ -1210,24 +1107,22 @@ class Zig_Zag extends Widget_Base {
 			]
 		);
 
-		// Custom CSS control
 		$this->add_control(
 			'custom_css',
 			[
 				'label' => esc_html__( 'Custom CSS', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::CODE,
+				'type' => Controls_Manager::CODE,
 				'language' => 'css',
 				'rows' => 20,
 				'separator' => 'before',
 			]
 		);
 
-		// Custom Attributes control
 		$this->add_control(
 			'zigzag_custom_attributes',
 			[
 				'label' => esc_html__( 'Custom Attributes', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::TEXTAREA,
+				'type' => Controls_Manager::TEXTAREA,
 				'dynamic' => [
 					'active' => true,
 				],
@@ -1240,14 +1135,6 @@ class Zig_Zag extends Widget_Base {
 		$this->end_controls_section();
 	}
 
-	/**
-	 * Render zigzag widget output on the frontend.
-	 *
-	 * Written in PHP and used to generate the final HTML.
-	 *
-	 * @since 1.0.0
-	 * @access protected
-	 */
 	public function render() {
 		$settings = $this->get_settings_for_display();
 
@@ -1265,7 +1152,6 @@ class Zig_Zag extends Widget_Base {
 			}
 		}
 */
-		$wrapper_classes = 'zigzag-widget-container';
 /*
 		if ( 'yes' === $settings['zigzag_hide_on_desktop'] ) {
 			$wrapper_classes .= ' elementor-hidden-desktop';
@@ -1279,7 +1165,10 @@ class Zig_Zag extends Widget_Base {
 			$wrapper_classes .= ' elementor-hidden-mobile';
 		}
 */
+		$wrapper_classes = 'elementor-widget-zigzag__wrapper';
+		$has_border = $settings['show_widget_border'];
 		$animation_styles = '';
+
 		if ( ! empty( $settings['zigzag_entrance_animation'] ) ) {
 			$wrapper_classes .= ' animated ' . esc_attr( $settings['zigzag_entrance_animation'] );
 
@@ -1304,29 +1193,43 @@ class Zig_Zag extends Widget_Base {
 			$animation_duration = $animation_duration_map[ $animation_duration_setting ] ?? $animation_duration_map['normal'];
 			$animation_delay = isset( $settings['zigzag_animation_delay'] ) ? intval( $settings['zigzag_animation_delay'] ) : 0;
 
-			$animation_styles = sprintf( ' style="animation-duration: %dms; animation-delay: %dms;"', $animation_duration, $animation_delay );
+			$wrapper_classes .= sprintf( ' style="animation-duration: %dms; animation-delay: %dms;"', $animation_duration, $animation_delay );
 		}
 
-		// Open main widget container
-		echo '<div class="' . esc_attr( $wrapper_classes ) . '"' . $animation_styles . '>';
-
-		$first_block_direction = $settings['first_block_direction'];
-		// Start the loop for the block items
-		foreach ( $settings['block_items'] as $index => $item ) {
-			// Determine if the item is odd or even
-			$is_odd = 0 !== $index % 2;
-
-			// Add a prefix to the CSS class of the item
-			$item_class = $first_block_direction . ( $is_odd ? '-odd' : '-even' );
-
-			// Start block item container
-			echo '<div class="zigzag-block-item-container ' . $item_class . '">';
-			$this->render_graphic_element_container( $item, $settings );
-			$this->render_text_element_container( $item, $settings );
-			echo '</div>';
+		if ( 'yes' === $has_border ) {
+			$wrapper_classes .= ' has-border';
 		}
-		// Close main widget container
-		echo '</div>';
+
+		$this->add_render_attribute( 'wrapper', [
+			'class' => $wrapper_classes,
+		] );
+		?>
+		<div <?php echo $this->get_render_attribute_string( 'wrapper' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+			<?php
+
+			$first_block_direction = $settings['first_block_direction'];
+
+			foreach ( $settings['block_items'] as $key => $item ) {
+				$is_odd = 0 !== $key % 2;
+
+				$item_class = 'elementor-widget-zigzag__item-container ';
+
+				$item_class .= $first_block_direction . ( $is_odd ? '-odd' : '-even' );
+
+				$this->add_render_attribute( 'block-item-' . $key, [
+					'class' => $item_class,
+				] );
+				?>
+				<div <?php echo $this->get_render_attribute_string( 'block-item-' . $key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+					<?php
+						$this->render_graphic_element_container( $item, $settings );
+						$this->render_text_element_container( $item, $settings );					
+					?>
+				</div>
+				<?php
+			} ?>
+			</div>
+		<?php
 	}
 
 	private function render_graphic_element_container( $item, $settings ) {
@@ -1404,4 +1307,3 @@ class Zig_Zag extends Widget_Base {
 		<?php
 	}
 }
-

@@ -1,4 +1,6 @@
 .elementor-widget-zigzag {
+	$transition: all .3s;
+
 	--zigzag-button-icon-size: 16px;
 	--zigzag-button-icon-spacing: 10px;
 	--zigzag-button-text-color: #000000;
@@ -12,13 +14,18 @@
 	--zigzag-button-border-radius: 0;
 	--zigzag-title-color: #000000;
 	--zigzag-description-color: #000000;
-	--transition: all .3s;
+	--zigzag-rows-spacing: 40px;
+	--zigzag-wrapper-border-width: 2px;
+	--zigzag-wrapper-border-color: #000000;
+	--zigzag-wrapper-border-radius: 0;
+	--zigzag-text-alignment: center;
+	--zigzag-image-width: 50%;
 
 	&__button-icon {
 		color: var(--zigzag-button-icon-color);
 		fill: currentColor;
 		height: var(--zigzag-button-icon-size);
-		transition: var(--transition);
+		transition: $transition;
 		width: var(--zigzag-button-icon-size);
 	}
 
@@ -34,18 +41,18 @@
 		gap: var(--zigzag-button-icon-spacing);
 		padding: 12px 24px;
 		text-decoration: underline;
-		transition: var(--transition);
+		transition: $transition;
 
 		&:hover,
 		&:focus {
 			background-color: var(--zigzag-button-background-color-hover);
 			color: var(--zigzag-button-text-color-hover);
-			transition: var(--transition);
+			transition: $transition;
 
 			.elementor-widget-zigzag__button-icon {
 				color: var(--zigzag-button-icon-color-hover);
 				fill: currentColor;
-				transition: var(--transition);
+				transition: $transition;
 			}
 		}
 
@@ -67,9 +74,9 @@
 	&__text-container {
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
-		width: 50%;
+		justify-content: var(--zigzag-text-alignment);
 		padding: 20px;
+		width: calc(100% - var(--zigzag-image-width));
 	}
 
 	&__title {
@@ -83,7 +90,7 @@
 	}
 
 	&__graphic-element-container {
-		width: 50%;
+		width: var(--zigzag-image-width);
 		padding: 20px;
 	}
 
@@ -92,105 +99,54 @@
 		align-items: center;
 		height: 60%;
 	}
-}
 
-.zigzag-inner-container {
-	border-style: solid;
-	border-width: 0;
-}
-  
-.zigzag-widget-container {
-	display: flex;
-	flex-direction: column;
-	background-color: transparent;
-	align-items: center;
-
-	&.full-width {
-		width: 100%;
-	}
-}
-  
-.elementor-widget-container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-
-.zigzag-block-item-container {
-	display: flex;
-
-	&.row-odd {
-		flex-direction: row !important;
+	&__item-container {
+		display: flex;
+		margin-bottom: var(--zigzag-rows-spacing);
+	
+		&.row-odd {
+			flex-direction: row;
+		}
+	
+		&.row-even {
+			flex-direction: row-reverse;
+		}
+	
+		&.row-reverse-odd {
+			flex-direction: row-reverse;
+		}
+	
+		&.row-reverse-even {
+			flex-direction: row;
+		}
 	}
 
-	&.row-even {
-		flex-direction: row-reverse !important;
-	}
-
-	&.row-reverse-odd {
-		flex-direction: row-reverse !important;
-	}
-
-	.row-reverse-even {
-		flex-direction: row !important;
-	}
-
-	&:nth-child(even) .elementor-widget-zigzag__text-container {
+	&__wrapper {
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
-		align-items: start;
-		width: 50%;
-		padding: 20px
+		background-color: transparent;
+		align-items: center;
+	
+		&.full-width {
+			width: 100%;
+		}
+
+		&.has-border {
+			border-color: var(--zigzag-wrapper-border-color);
+			border-style: solid;
+			border-width: var(--zigzag-wrapper-border-width);
+			border-radius: var(--zigzag-wrapper-border-radius);
+		}
 	}
 
-	&:nth-child(odd) .elementor-widget-zigzag__text-container {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: start;
-		width: 50%;
-		padding: 20px
-	}
-}
-  
-.elementor-button-link {
-	border-style: solid;
-}
-  
-/* Mobile */
-@media screen and (max-width: 767px) {
-	.zigzag-block-item-container:first-child {
-		display: flex;
-		flex-direction: column;
-	}
+	@media screen and (max-width: 767px) {
+		.elementor-widget-zigzag__item-container {
+			flex-direction: column;
+		}
 
-	.zigzag-widget-container,
-	.elementor-widget-zigzag__text-container,
-	.elementor-widget-zigzag__graphic-element-container,
-	.zigzag-block-item-container:nth-child(even) .elementor-widget-zigzag__text-container,
-	.zigzag-block-item-container:nth-child(odd) .elementor-widget-zigzag__text-container {
-		width: 100%;
-	}
-
-	.zigzag-block-item-container,
-	.zigzag-block-item-container:nth-child(even),
-	.zigzag-block-item-container:nth-child(odd){
-		display: flex;
-		flex-direction: column;
+		.elementor-widget-zigzag__graphic-element-container,
+		.elementor-widget-zigzag__text-container {
+			width: 100%;
+		}
 	}
 }
-
-// .elementor-button-content-wrapper {
-// 	display: flex;
-// 	align-items: center;
-// }
-
-// .elementor-button-content-wrapper.icon-before {
-// 	flex-direction: row !important;
-// }
-
-// .elementor-button-content-wrapper.icon-after {
-// 	flex-direction: row-reverse !important;
-// }
-

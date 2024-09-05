@@ -8,16 +8,16 @@ import { ActionLinksPanel } from '../panels/action-links-panel';
 export const SettingsPage = ( props ) => {
 	const tabs = [
 		{
-			name: 'SETTINGS',
-			children: null,
-			component: <SettingsPanel />,
-			title: __( 'Settings', 'hello-plus' ),
-		},
-		{
 			name: 'HOME',
 			children: null,
 			component: <HomePanel />,
 			title: __( 'Home', 'hello-plus' ),
+		},
+		{
+			name: 'SETTINGS',
+			children: null,
+			component: <SettingsPanel />,
+			title: __( 'Settings', 'hello-plus' ),
 		},
 	];
 
@@ -40,17 +40,10 @@ export const SettingsPage = ( props ) => {
 				<Container sx={ { width: '100%' } }>
 					<Box sx={ { borderBottom: 1, borderColor: 'divider' } }>
 						<Tabs { ...props } { ...getTabsProps() }>
-							{ tabs.map( ( tab ) => {
-								return ( <Tab key={ tab.name } label={ tab.title } { ...getTabProps( tab.name ) } /> );
-							} ) }
+							{ tabs.map( ( tab ) => <Tab key={ tab.name } label={ tab.title } { ...getTabProps( tab.name ) } /> ) }
 						</Tabs>
 					</Box>
-					{ tabs.map( ( tab ) => {
-						return (
-							<TabPanel key={ tab.name } { ...getTabPanelProps( tab.name ) }>
-								{ tab.component }
-							</TabPanel> );
-					} ) }
+					{ tabs.map( ( tab ) => <TabPanel key={ tab.name } { ...getTabPanelProps( tab.name ) }>{ tab.component }</TabPanel> ) }
 				</Container>
 				<ActionLinksPanel />
 			</div>

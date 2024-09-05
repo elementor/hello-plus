@@ -6,7 +6,7 @@ const App = () => {
 };
 
 document.addEventListener( 'DOMContentLoaded', () => {
-	const rootElement = document.getElementById( 'hello-plus-settings' );
+	const rootElement = document.getElementById( 'hello-plus-dashboard' );
 
 	if ( rootElement ) {
 		render(

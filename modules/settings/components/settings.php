@@ -26,10 +26,10 @@ class Settings {
 		$menu_hook = '';
 
 		$menu_hook = add_theme_page(
-			esc_html__( 'Hello Plus Settings', 'hello-plus' ),
-			esc_html__( 'Theme Settings', 'hello-plus' ),
+			esc_html__( 'Hello+ Dashboard', 'hello-plus' ),
+			esc_html__( 'Hello+ Dashboard', 'hello-plus' ),
 			'manage_options',
-			'hello-plus-settings',
+			'hello-plus-dashboard',
 			[ __NAMESPACE__ . '\Settings', 'settings_page_render' ]
 		);
 
@@ -44,11 +44,10 @@ class Settings {
 	 */
 	public function settings_page_scripts() {
 
-		$dir = HELLO_PLUS_ASSETS_PATH . '/js';
 		$suffix = Theme::get_min_suffix();
 		$handle = 'hello-plus-admin';
-		$asset_path = "$dir/hello-plus-admin.asset.php";
-		$asset_url = HELLO_PLUS_ASSETS_URL . '/js';
+		$asset_path = HELLO_PLUS_SCRIPTS_PATH . "hello-plus-admin.asset.php";
+		$asset_url = HELLO_PLUS_SCRIPTS_URL;
 		if ( ! file_exists( $asset_path ) ) {
 			throw new \Error( 'You need to run `npm run build` for the "hello-plus" first.' );
 		}
@@ -56,7 +55,7 @@ class Settings {
 
 		wp_enqueue_script(
 			$handle,
-			"$asset_url/$handle$suffix.js",
+			HELLO_PLUS_SCRIPTS_URL."$handle$suffix.js",
 			$script_asset['dependencies'],
 			$script_asset['version']
 		);
@@ -65,7 +64,7 @@ class Settings {
 
 		wp_enqueue_style(
 			$handle,
-			"$asset_url/$handle$suffix.css",
+			HELLO_PLUS_STYLE_URL . "$handle$suffix.css",
 			[ 'wp-components' ],
 			$script_asset['version']
 		);
@@ -133,7 +132,7 @@ class Settings {
 	 */
 	public static function settings_page_render() {
 		?>
-		<div id="hello-plus-settings"></div>
+		<div id="hello-plus-dashboard"></div>
 		<?php
 	}
 

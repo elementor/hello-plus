@@ -1,4 +1,4 @@
-import { render } from '@wordpress/element';
+import { createRoot } from 'react-dom/client';
 import { SettingsPage } from './pages/settings-page.js';
 
 const App = () => {
@@ -6,12 +6,10 @@ const App = () => {
 };
 
 document.addEventListener( 'DOMContentLoaded', () => {
-	const rootElement = document.getElementById( 'hello-plus-dashboard' );
+	const container = document.getElementById( 'hello-plus-dashboard' );
 
-	if ( rootElement ) {
-		render(
-			<App />,
-			rootElement,
-		);
+	if ( container ) {
+		const root = createRoot( container );
+		root.render( <App /> );
 	}
 } );

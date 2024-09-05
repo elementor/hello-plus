@@ -61,8 +61,10 @@
     "dependencies": {
         "@babel/plugin-transform-modules-commonjs": "^7.2.0",
         "@babel/plugin-transform-runtime": "^7.3.4",
+        "@elementor/ui": "^1.11.0",
         "@elementor/icons": "^1.11.0",
         "@lodder/grunt-postcss": "^3.1.1",
-        "grunt-autoprefixer": "^3.0.4"
+        "grunt-autoprefixer": "^3.0.4",
+        "react-dom": "^18.3.1"
     }
 }

@@ -1,47 +1,31 @@
 import { Fragment } from 'react';
-import { store as noticesStore } from '@wordpress/notices';
-import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
-import { TabPanel, SnackbarList } from '@wordpress/components';
+import { Container, Box, Tabs, Tab, TabPanel, useTabs } from '@elementor/ui';
 import { SettingsPanel } from '../panels/settings-panel';
 import { HomePanel } from '../panels/home-panel';
 import { ActionLinksPanel } from '../panels/action-links-panel';
 
-const Notices = () => {
-	const notices = useSelect(
-		( select ) =>
-			select( noticesStore )
-				.getNotices()
-				.filter( ( notice ) => 'snackbar' === notice.type ),
-		[],
-	);
-
-	const { removeNotice } = useDispatch( noticesStore );
-
-	return (
-		<SnackbarList
-			className="edit-site-notices"
-			notices={ notices }
-			onRemove={ removeNotice }
-		/>
-	);
-};
-
-export const SettingsPage = () => {
+export const SettingsPage = ( props ) => {
 	const tabs = [
 		{
-			name: 'HOME',
-			children: <HomePanel />,
-			title: __( 'Home', 'hello-plus' ),
-			className: 'hello-plus-home-panel',
+			name: 'SETTINGS',
+			children: null,
+			component: <SettingsPanel />,
+			title: __( 'Settings', 'hello-plus' ),
 		},
 		{
-			name: 'SETTINGS',
-			children: <SettingsPanel />,
-			title: __( 'Settings', 'hello-plus' ),
-			className: 'hello-plus-settings-panel',
+			name: 'HOME',
+			children: null,
+			component: <HomePanel />,
+			title: __( 'Home', 'hello-plus' ),
 		},
 	];
+
+	const params = {
+		tab: tabs[ 0 ].name,
+	};
+
+	const { getTabsProps, getTabProps, getTabPanelProps } = useTabs( params.tab );
 
 	return (
 		<Fragment>
@@ -53,14 +37,24 @@ export const SettingsPage = () => {
 				</div>
 			</div>
 			<div className="hello_plus__main">
-				<TabPanel className="hello-plus-home-tabs"
-					activeClass="active-tab"
-					tabs={ tabs } >{ ( tab ) => tab.children }
-				</TabPanel>
+				<Box sx={ { width: '100%' } }>
+					<Box sx={ { borderBottom: 1, borderColor: 'divider' } }>
+						<Tabs { ...props } { ...getTabsProps() }>
+							{ tabs.map( ( tab ) => {
+								return ( <Tab key={ tab.name } label={ tab.title } { ...getTabProps( tab.name ) } /> );
+							} ) }
+						</Tabs>
+					</Box>
+					{ tabs.map( ( tab ) => {
+						return (
+							<TabPanel key={ tab.name } { ...getTabPanelProps( tab.name ) }>
+								{ tab.component }
+							</TabPanel> );
+					} ) }
+				</Box>
 				<ActionLinksPanel />
 			</div>
 			<div className="hello_plus__notices">
-				<Notices />
 			</div>
 		</Fragment>
 	);

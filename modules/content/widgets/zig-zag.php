@@ -11,6 +11,9 @@ use Elementor\Controls_Manager;
 use Elementor\Icons_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Box_Shadow;
+use Elementor\Utils;
+use Elementor\Repeater;
+use Elementor\Group_Control_Image_Size;
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
@@ -140,7 +143,7 @@ class Zig_Zag extends Widget_Base {
 				'tablet_default' => '100',
 				'mobile_default' => '100',
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-widget-image-container img' => 'width: {{VALUE}}%;',
+					'{{WRAPPER}} .elementor-widget-zigzag__image-container img' => 'width: {{VALUE}}%;',
 				],
 			]
 		);
@@ -217,13 +220,13 @@ class Zig_Zag extends Widget_Base {
 
 		/* Start repeater */
 
-		$repeater = new \Elementor\Repeater();
+		$repeater = new Repeater();
 
 		$repeater->add_control(
 			'graphic_element',
 			[
 				'label' => esc_html__( 'Graphic Element', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::CHOOSE,
+				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'image' => [
 						'title' => esc_html__( 'Image', 'hello-plus' ),
@@ -243,9 +246,9 @@ class Zig_Zag extends Widget_Base {
 			'graphic_image',
 			[
 				'label' => esc_html__( 'Image', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::MEDIA,
+				'type' => Controls_Manager::MEDIA,
 				'default' => [
-					'url' => \Elementor\Utils::get_placeholder_image_src(),
+					'url' => Utils::get_placeholder_image_src(),
 				],
 				'condition' => [
 					'graphic_element' => 'image',
@@ -257,7 +260,7 @@ class Zig_Zag extends Widget_Base {
 			'graphic_icon',
 			[
 				'label' => esc_html__( 'Icon', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::ICONS,
+				'type' => Controls_Manager::ICONS,
 				'default' => [
 					'value' => 'fas fa-circle',
 					'library' => 'fa-solid',
@@ -273,7 +276,7 @@ class Zig_Zag extends Widget_Base {
 			'title',
 			[
 				'label' => esc_html__( 'Title', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
+				'type' => Controls_Manager::TEXT,
 				'default' => esc_html__( 'Default title', 'hello-plus' ),
 				'label_block' => true,
 				'placeholder' => esc_html__( 'Type your title here', 'hello-plus' ),
@@ -287,7 +290,7 @@ class Zig_Zag extends Widget_Base {
 			'description',
 			[
 				'label' => esc_html__( 'Description', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::TEXTAREA,
+				'type' => Controls_Manager::TEXTAREA,
 				'rows' => 6,
 				'default' => esc_html__( 'Default description', 'hello-plus' ),
 				'placeholder' => esc_html__( 'Type your description here', 'hello-plus' ),
@@ -297,12 +300,11 @@ class Zig_Zag extends Widget_Base {
 			]
 		);
 
-		// Add a control for the button text
 		$repeater->add_control(
 			'button_text',
 			[
 				'label' => esc_html__( 'Button Text', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
+				'type' => Controls_Manager::TEXT,
 				'default' => esc_html__( 'Learn More', 'hello-plus' ),
 				'dynamic' => [
 					'active' => true,
@@ -314,7 +316,7 @@ class Zig_Zag extends Widget_Base {
 			'button_link',
 			[
 				'label' => esc_html__( 'Link', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::URL,
+				'type' => Controls_Manager::URL,
 				'dynamic' => [
 					'active' => true,
 				],
@@ -328,22 +330,18 @@ class Zig_Zag extends Widget_Base {
 			'button_icon',
 			[
 				'label' => esc_html__( 'Icon', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::ICONS,
+				'type' => Controls_Manager::ICONS,
 				'label_block' => false,
 				'skin' => 'inline',
 			]
 		);
-
-
-
-		/* End repeater */
 
 		$this->add_control(
 			'block_items',
 			[
 				'label' => esc_html__( 'Block Items', 'hello-plus' ),
 				'type' => \Elementor\Controls_Manager::REPEATER,
-				'fields' => $repeater->get_controls(),           /* Use our repeater */
+				'fields' => $repeater->get_controls(),
 				'default' => [
 					[
 						'title' => esc_html__( 'Social media done right', 'hello-plus' ),
@@ -1332,37 +1330,25 @@ class Zig_Zag extends Widget_Base {
 	}
 
 	private function render_graphic_element_container( $item, $settings ) {
-		// Start graphic element container
-		echo '<div class="zigzag-graphic-element-container">';
-
-		// Start of the image container
-		echo '<div class="zigzag-widget-image-container">';
-
-		// Graphic Element
-		if ( 'image' === $item['graphic_element'] && ! empty( $item['graphic_image']['url'] ) ) {
-			// Output the image
-			$this->add_render_attribute( 'image', 'src', $item['graphic_image']['url'] );
-			$this->add_render_attribute( 'image', 'alt', \Elementor\Control_Media::get_image_alt( $item['graphic_image'] ) );
-			$this->add_render_attribute( 'image', 'title', \Elementor\Control_Media::get_image_title( $item['graphic_image'] ) );
-//			$this->add_render_attribute( 'image', 'class', 'my-custom-class' );
-			echo \Elementor\Group_Control_Image_Size::get_attachment_image_html( [ 'image' => $item['graphic_image'] ], 'thumbnail', 'image' );
-		} elseif ( 'icon' === $item['graphic_element'] && !empty( $item['graphic_icon']['value'] ) ) {
-			// Output the icon
-			echo '<div class="hello-plus-zigzag-icon">';
-			\Elementor\Icons_Manager::render_icon( $item['graphic_icon'], [ 'aria-hidden' => 'true' ] );
-			echo '</div>';
-
-		} else {
-			// Output a default image
-			echo '<img src="' . HELLO_PLUS_URL . '/screenshot.png' . '" alt="">';
+		if ( 'icon' === $item['graphic_element'] ) {
+			$this->add_render_attribute( 'graphic_element', 'class', 'elementor-widget-zigzag__graphic-element'
+			);
 		}
-
-		// End of the image container
-		echo '</div>';
-
-		// End graphic element container
-		echo '</div>';
-
+		?>
+		<div class="elementor-widget-zigzag__graphic-element-container">
+			<div class="elementor-widget-zigzag__image-container">
+				<?php if ( 'image' === $item['graphic_element'] && ! empty( $item['graphic_image']['url'] ) ) : ?>
+					<div class="elementor-widget-zigzag__graphic-image">
+						<?php Group_Control_Image_Size::print_attachment_image_html( $item, 'graphic_image' ); ?>
+					</div>
+				<?php elseif ( 'icon' === $item['graphic_element'] && ( ! empty( $item['graphic_icon'] ) ) ) : ?>
+					<div class="elementor-widget-zigzag__graphic-icon">
+						<?php Icons_Manager::render_icon( $item['graphic_icon'], [ 'aria-hidden' => 'true' ] ); ?>
+					</div>
+				<?php endif; ?>
+			</div>
+		</div>
+		<?php
 	}
 
 	private function render_text_element_container( $item, $settings ) {

@@ -37,7 +37,7 @@ export const SettingsPage = ( props ) => {
 				</div>
 			</div>
 			<div className="hello_plus__main">
-				<Box sx={ { width: '100%' } }>
+				<Container sx={ { width: '100%' } }>
 					<Box sx={ { borderBottom: 1, borderColor: 'divider' } }>
 						<Tabs { ...props } { ...getTabsProps() }>
 							{ tabs.map( ( tab ) => {
@@ -51,7 +51,7 @@ export const SettingsPage = ( props ) => {
 								{ tab.component }
 							</TabPanel> );
 					} ) }
-				</Box>
+				</Container>
 				<ActionLinksPanel />
 			</div>
 			<div className="hello_plus__notices">

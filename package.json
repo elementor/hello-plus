@@ -18,6 +18,8 @@
         "@babel/plugin-proposal-class-properties": "^7.2.1",
         "@babel/plugin-proposal-optional-chaining": "^7.9.0",
         "@babel/preset-env": "^7.12.11",
+        "@elementor/icons": "^1.11.0",
+        "@elementor/ui": "^1.19.0",
         "@wordpress/components": "^25.7.0",
         "@wordpress/eslint-plugin": "^12.1.0",
         "@wordpress/i18n": "^4.41.0",
@@ -59,7 +61,10 @@
     "dependencies": {
         "@babel/plugin-transform-modules-commonjs": "^7.2.0",
         "@babel/plugin-transform-runtime": "^7.3.4",
+        "@elementor/ui": "^1.11.0",
+        "@elementor/icons": "^1.11.0",
         "@lodder/grunt-postcss": "^3.1.1",
-        "grunt-autoprefixer": "^3.0.4"
+        "grunt-autoprefixer": "^3.0.4",
+        "react-dom": "^18.3.1"
     }
 }

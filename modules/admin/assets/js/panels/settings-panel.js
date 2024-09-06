@@ -1,9 +1,9 @@
 import { Fragment, useEffect, useState } from 'react';
 import { __ } from '@wordpress/i18n';
 import api from '@wordpress/api';
-import { Placeholder, Spinner, Button } from '@wordpress/components';
 import { dispatch } from '@wordpress/data';
 import { SettingsBody } from './settings-body';
+import { Box, Button, CircularProgress } from '@elementor/ui';
 
 export const SettingsPanel = () => {
 	const [ settingsData, setSettingsData ] = useState( {} );
@@ -83,16 +83,20 @@ export const SettingsPanel = () => {
 
 	if ( ! hasLoaded ) {
 		return (
-			<Placeholder>
-				<Spinner />
-			</Placeholder>
+			<Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+				<CircularProgress />
+			</Box>
 		);
 	}
 
 	return (
 		<Fragment>
-			{ SettingsBody( SETTINGS, settingsData, updateSettings ) }
-			<Button isPrimary onClick={ saveSettings }>
+			<SettingsBody
+				settingsData={ settingsData }
+				updateSettings={ updateSettings }
+				settings={ SETTINGS }
+			/>
+			<Button variant="contained" onClick={ saveSettings }>
 				{ __( 'Save Settings', 'hello-plus' ) }
 			</Button>
 		</Fragment>

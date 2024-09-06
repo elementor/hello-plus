@@ -7,6 +7,7 @@ const App = () => {
 
 document.addEventListener( 'DOMContentLoaded', () => {
 	const container = document.getElementById( 'hello-plus-dashboard' );
+
 	if ( container ) {
 		const root = createRoot( container );
 		root.render( <App /> );

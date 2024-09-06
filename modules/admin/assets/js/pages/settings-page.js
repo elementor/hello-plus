@@ -1,12 +1,10 @@
-import { Fragment } from 'react';
 import { __ } from '@wordpress/i18n';
 // TODO: minimize to only necessary imports
 import { Container, Box, Tabs, Tab, TabPanel, useTabs } from '@elementor/ui';
 import { ThemeProvider } from '@elementor/ui/styles';
 
 import { SettingsPanel } from '../panels/settings-panel';
-import { HomePanel } from '../panels/home-panel';
-import { ActionLinksPanel } from '../panels/action-links-panel';
+import { HomePanel } from '../panels/home/home-panel';
 
 export const SettingsPage = ( props ) => {
 	const tabs = [
@@ -50,7 +48,6 @@ export const SettingsPage = ( props ) => {
 						tabs.map( ( tab ) => <TabPanel key={ tab.name } { ...getTabPanelProps( tab.name ) }>{ tab.component }</TabPanel> )
 					}
 				</Container>
-				<ActionLinksPanel />
 			</Box>
 			<Box className="hello_plus__notices" component="div">
 			</Box>

@@ -1307,3 +1307,4 @@ class Zig_Zag extends Widget_Base {
 		<?php
 	}
 }
+

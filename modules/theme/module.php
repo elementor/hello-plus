@@ -79,7 +79,7 @@ class Module extends Module_Base {
 			/*
 			 * Editor Style.
 			 */
-			add_editor_style( 'classic-editor.css' );
+			add_editor_style( HELLO_PLUS_STYLE_REALTIVE_PATH . 'classic-editor.css' );
 
 			/*
 			 * Gutenberg wide images.
@@ -130,19 +130,10 @@ class Module extends Module_Base {
 	public function scripts_styles() {
 		$min_suffix = Theme::get_min_suffix();
 
-		if ( apply_filters( 'hello_plus_enqueue_style', true ) ) {
-			wp_enqueue_style(
-				'hello-plus',
-				HELLO_PLUS_URL . '/style' . $min_suffix . '.css',
-				[],
-				HELLO_PLUS_ELEMENTOR_VERSION
-			);
-		}
-
 		if ( apply_filters( 'hello_plus_enqueue_theme_style', true ) ) {
 			wp_enqueue_style(
-				'hello-plus-theme-style',
-				HELLO_PLUS_URL . '/theme' . $min_suffix . '.css',
+				'hello-plus',
+				HELLO_PLUS_STYLE_URL . '/theme' . $min_suffix . '.css',
 				[],
 				HELLO_PLUS_ELEMENTOR_VERSION
 			);
@@ -151,7 +142,7 @@ class Module extends Module_Base {
 		if ( self::display_header_footer() ) {
 			wp_enqueue_style(
 				'hello-plus-header-footer',
-				HELLO_PLUS_URL . '/header-footer' . $min_suffix . '.css',
+				HELLO_PLUS_STYLE_URL . '/header-footer' . $min_suffix . '.css',
 				[],
 				HELLO_PLUS_ELEMENTOR_VERSION
 			);

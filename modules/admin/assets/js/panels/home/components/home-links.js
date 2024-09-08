@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from '@elementor/ui';
+import { Box, Link, Stack, Typography } from '@elementor/ui';
 
 export const HomeLinks = ( { linksColumns } ) => {
 	return (
@@ -11,8 +11,8 @@ export const HomeLinks = ( { linksColumns } ) => {
 							<Box><Typography variant="h6">{ title } </Typography> </Box>
 							{ links.map( ( link, i ) => {
 							return (
-								<Box key={ i }>
-									<a href={ link.url }>{ link.title }</a>
+								<Box key={ link.url }>
+									<Link href={ link.url }>{ link.title }</Link>
 								</Box>
 							);
 						} ) }

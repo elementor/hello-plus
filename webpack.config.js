@@ -36,7 +36,7 @@ module.exports = {
 		},
 		output: {
 			...defaultConfig.output,
-			path: path.resolve( __dirname, './dist' ),
+			path: path.resolve( __dirname, './build' ),
 		},
 		plugins: [
 			// Include WP's plugin config.

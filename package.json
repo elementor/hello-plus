@@ -6,7 +6,8 @@
 	"version": "0.0.1",
 	"scripts": {
 		"start": "wp-scripts start",
-		"build": "wp-scripts build"
+		"build": "wp-scripts build",
+		"build:prod": "wp-scripts build --env=production"
 	},
 	"devDependencies": {
 		"@wordpress/scripts": "^27.1.0",

@@ -12,7 +12,7 @@ use Elementor\Repeater;
 use Elementor\Widget_Base;
 use Elementor\Utils;
 
-use HelloPlus\Modules\Content\Widgets\Classes\Render\Zig_Zag_Render;
+use HelloPlus\Modules\Content\Widgets\Classes\Render\Widget_Zig_Zag_Render;
 
 abstract class Widget_Zig_Zag_Base extends Widget_Base {
 
@@ -21,7 +21,7 @@ abstract class Widget_Zig_Zag_Base extends Widget_Base {
 	}
 
 	protected function render(): void {
-		$render_strategy = new Zig_Zag_Render( $this );
+		$render_strategy = new Widget_Zig_Zag_Render( $this );
 
 		$render_strategy->render();
 	}

@@ -14,7 +14,7 @@ use Elementor\Utils;
 
 use HelloPlus\Modules\Content\Widgets\Classes\Base\Widget_Zig_Zag_Base;
 
-class Zig_Zag_Render {
+class Widget_Zig_Zag_Render {
 	protected Widget_Zig_Zag_Base $widget;
 
 	protected array $settings;
@@ -90,11 +90,11 @@ class Zig_Zag_Render {
 			$wrapper_classes .= ' has-border';
 		}
 
-		$this->add_render_attribute( 'wrapper', [
+		$this->widget->add_render_attribute( 'wrapper', [
 			'class' => $wrapper_classes,
 		] );
 		?>
-		<div <?php echo $this->get_render_attribute_string( 'wrapper' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<div <?php echo $this->widget->get_render_attribute_string( 'wrapper' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<?php
 
 			$first_block_direction = $this->settings['first_block_direction'];
@@ -106,14 +106,14 @@ class Zig_Zag_Render {
 
 				$item_class .= $first_block_direction . ( $is_odd ? '-odd' : '-even' );
 
-				$this->add_render_attribute( 'block-item-' . $key, [
+				$this->widget->add_render_attribute( 'block-item-' . $key, [
 					'class' => $item_class,
 				] );
 				?>
-				<div <?php echo $this->get_render_attribute_string( 'block-item-' . $key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+				<div <?php echo $this->widget->get_render_attribute_string( 'block-item-' . $key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 					<?php
 						$this->render_graphic_element_container( $item );
-						$this->render_text_element_container( $item );					
+						$this->render_text_element_container( $item );
 					?>
 				</div>
 				<?php
@@ -124,7 +124,7 @@ class Zig_Zag_Render {
 
 	private function render_graphic_element_container( $item ) {
 		if ( 'icon' === $item['graphic_element'] ) {
-			$this->add_render_attribute( 'graphic_element', 'class', 'elementor-widget-zigzag__graphic-element'
+			$this->widget->add_render_attribute( 'graphic_element', 'class', 'elementor-widget-zigzag__graphic-element'
 			);
 		}
 		?>
@@ -154,11 +154,11 @@ class Zig_Zag_Render {
 		$button_hover_animation = $this->settings['button_hover_animation'] ?? '';
 		$button_has_border = $this->settings['show_border'];
 
-		$this->add_render_attribute( 'title', [
+		$this->widget->add_render_attribute( 'title', [
 			'class' => 'elementor-widget-zigzag__title',
 		] );
 
-		$this->add_render_attribute( 'description', [
+		$this->widget->add_render_attribute( 'description', [
 			'class' => 'elementor-widget-zigzag__description',
 		] );
 
@@ -170,21 +170,21 @@ class Zig_Zag_Render {
 			$button_classnames .= ' has-border';
 		}
 
-		$this->add_render_attribute( 'button-link', [
+		$this->widget->add_render_attribute( 'button-link', [
 			'class' => $button_classnames,
 		] );
 
 		if ( ! empty( $button_link ) ) {
-			$this->add_link_attributes( 'button-link', $button_link );
+			$this->widget->add_link_attributes( 'button-link', $button_link );
 		}
 		?>
 		<div class="elementor-widget-zigzag__text-container">
-			<h2 <?php echo $this->get_render_attribute_string( 'title' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php esc_html_e( $item['title'], 'hello-plus' ); ?></h2>
-			<p <?php echo $this->get_render_attribute_string( 'description' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php esc_html_e( $item['description'], 'hello-plus' ); ?></p>
+			<h2 <?php echo $this->widget->get_render_attribute_string( 'title' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php esc_html_e( $item['title'], 'hello-plus' ); ?></h2>
+			<p <?php echo $this->widget->get_render_attribute_string( 'description' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php esc_html_e( $item['description'], 'hello-plus' ); ?></p>
 
 			<?php if ( ! empty( $button_text ) ) { ?>
 			<div class="elementor-widget-zigzag__button-container">
-				<a <?php echo $this->get_render_attribute_string( 'button-link' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+				<a <?php echo $this->widget->get_render_attribute_string( 'button-link' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 					<?php Icons_Manager::render_icon( $button_icon, [
 						'aria-hidden' => 'true',
 						'class' => 'elementor-widget-zigzag__button-icon'

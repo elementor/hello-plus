@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use HelloPlus\Modules\Content\Widgets\Classes\Base\Widget_Zig_Zag_Base;
+use HelloPlus\Modules\Content\Classes\Base\Widget_Zig_Zag_Base;
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
 class Zig_Zag extends Widget_Zig_Zag_Base {

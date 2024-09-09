@@ -1,6 +1,6 @@
 <?php
 
-namespace HelloPlus\Modules\Content\Widgets\Classes\Render;
+namespace HelloPlus\Modules\Content\Classes\Render;
 
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Box_Shadow;
@@ -12,7 +12,7 @@ use Elementor\Repeater;
 use Elementor\Widget_Base;
 use Elementor\Utils;
 
-use HelloPlus\Modules\Content\Widgets\Classes\Base\Widget_Zig_Zag_Base;
+use HelloPlus\Modules\Content\Classes\Base\Widget_Zig_Zag_Base;
 
 class Widget_Zig_Zag_Render {
 	protected Widget_Zig_Zag_Base $widget;

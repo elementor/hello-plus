@@ -26,65 +26,8 @@ class Widget_Zig_Zag_Render {
 
 
 	public function render(): void {
-		// $settings = $this->get_settings_for_display();
-
-/*		// Custom Attributes
-		$custom_attributes = $settings['zigzag_custom_attributes'];
-		$custom_attribute_string = '';
-		if (!empty($custom_attributes)) {
-			$custom_attributes = explode("\n", $custom_attributes);
-			$custom_attributes = array_filter($custom_attributes);
-			foreach ($custom_attributes as $attribute) {
-				if (strpos($attribute, '|') !== false) {
-					list($key, $value) = explode('|', $attribute);
-					$custom_attribute_string .= ' ' . $key . '="' . esc_attr($value) . '"';
-				}
-			}
-		}
-*/
-/*
-		if ( 'yes' === $settings['zigzag_hide_on_desktop'] ) {
-			$wrapper_classes .= ' elementor-hidden-desktop';
-		}
-
-		if ('yes' === $settings['zigzag_hide_on_tablet']) {
-			$wrapper_classes .= ' elementor-hidden-tablet';
-		}
-
-		if ('yes' === $settings['zigzag_hide_on_mobile']) {
-			$wrapper_classes .= ' elementor-hidden-mobile';
-		}
-*/
 		$wrapper_classes = 'elementor-widget-zigzag__wrapper';
 		$has_border = $this->settings['show_widget_border'];
-		$animation_styles = '';
-
-		if ( ! empty( $this->settings['zigzag_entrance_animation'] ) ) {
-			$wrapper_classes .= ' animated ' . esc_attr( $this->settings['zigzag_entrance_animation'] );
-
-			$animation_duration_map = [
-				'slow' => 2000,
-				'normal' => 1000,
-				'fast' => 500,
-			];
-
-			$animation_duration_setting = $this->settings['zigzag_animation_duration'];
-
-			if ( is_numeric( $animation_duration_setting ) ) {
-				if ( $animation_duration_setting <= 500 ) {
-					$animation_duration_setting = 'fast';
-				} elseif ( $animation_duration_setting <= 1000 ) {
-					$animation_duration_setting = 'normal';
-				} else {
-					$animation_duration_setting = 'slow';
-				}
-			}
-
-			$animation_duration = $animation_duration_map[ $animation_duration_setting ] ?? $animation_duration_map['normal'];
-			$animation_delay = isset( $this->settings['zigzag_animation_delay'] ) ? intval( $this->settings['zigzag_animation_delay'] ) : 0;
-
-			$wrapper_classes .= sprintf( ' style="animation-duration: %dms; animation-delay: %dms;"', $animation_duration, $animation_delay );
-		}
 
 		if ( 'yes' === $has_border ) {
 			$wrapper_classes .= ' has-border';
@@ -96,7 +39,6 @@ class Widget_Zig_Zag_Render {
 		?>
 		<div <?php echo $this->widget->get_render_attribute_string( 'wrapper' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<?php
-
 			$first_block_direction = $this->settings['first_block_direction'];
 
 			foreach ( $this->settings['block_items'] as $key => $item ) {
@@ -123,10 +65,6 @@ class Widget_Zig_Zag_Render {
 	}
 
 	private function render_graphic_element_container( $item ) {
-		if ( 'icon' === $item['graphic_element'] ) {
-			$this->widget->add_render_attribute( 'graphic_element', 'class', 'elementor-widget-zigzag__graphic-element'
-			);
-		}
 		?>
 		<div class="elementor-widget-zigzag__graphic-element-container">
 			<div class="elementor-widget-zigzag__image-container">
@@ -197,85 +135,3 @@ class Widget_Zig_Zag_Render {
 		<?php
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

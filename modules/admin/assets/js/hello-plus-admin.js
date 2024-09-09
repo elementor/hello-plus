@@ -1,8 +1,8 @@
 import { createRoot } from 'react-dom/client';
-import { SettingsPage } from './pages/settings-page.js';
+import { DashboardPage } from './pages/dashboard-page.js';
 
 const App = () => {
-	return <SettingsPage />;
+	return <DashboardPage />;
 };
 
 document.addEventListener( 'DOMContentLoaded', () => {

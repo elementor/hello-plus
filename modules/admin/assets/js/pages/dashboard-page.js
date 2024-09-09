@@ -6,7 +6,7 @@ import { ThemeProvider } from '@elementor/ui/styles';
 import { SettingsPanel } from '../panels/settings-panel';
 import { HomePanel } from '../panels/home/home-panel';
 
-export const SettingsPage = ( props ) => {
+export const DashboardPage = ( props ) => {
 	const tabs = [
 		{
 			name: 'HOME',
@@ -38,7 +38,7 @@ export const SettingsPage = ( props ) => {
 			<Box className="hello_plus__main" component="div">
 				<Container sx={ { width: '100%' } }>
 					<Box sx={ { borderBottom: 1, borderColor: 'divider' } }>
-						<Tabs { ...props } { ...getTabsProps() }>
+						<Tabs { ...props } { ...getTabsProps() } centered>
 							{
 								tabs.map( ( tab ) => <Tab key={ tab.name } label={ tab.title } { ...getTabProps( tab.name ) } /> )
 							}

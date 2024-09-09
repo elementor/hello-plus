@@ -14,8 +14,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'HELLO_PLUS_ELEMENTOR_VERSION', '0.0.1' );
 define( 'HELLO_PLUS_PATH', get_template_directory() );
 define( 'HELLO_PLUS_URL', get_template_directory_uri() );
-define( 'HELLO_PLUS_ASSETS_PATH', HELLO_PLUS_PATH . '/assets/' );
-define( 'HELLO_PLUS_ASSETS_URL', HELLO_PLUS_URL . '/assets/' );
+define( 'HELLO_PLUS_ASSETS_PATH', HELLO_PLUS_PATH . '/dist/' );
+define( 'HELLO_PLUS_ASSETS_URL', HELLO_PLUS_URL . '/dist/' );
+define( 'HELLO_PLUS_SCRIPTS_PATH', HELLO_PLUS_ASSETS_PATH . 'js/' );
+define( 'HELLO_PLUS_SCRIPTS_URL', HELLO_PLUS_ASSETS_URL . 'js/' );
+define( 'HELLO_PLUS_STYLE_PATH', HELLO_PLUS_ASSETS_PATH . 'css/' );
+define( 'HELLO_PLUS_STYLE_URL', HELLO_PLUS_ASSETS_URL . 'css/' );
+define( 'HELLO_PLUS_STYLE_REALTIVE_PATH', './dist/css/' );
 
 if ( ! isset( $content_width ) ) {
 	$content_width = 800; // Pixels.

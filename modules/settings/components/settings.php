@@ -26,10 +26,10 @@ class Settings {
 		$menu_hook = '';
 
 		$menu_hook = add_theme_page(
-			esc_html__( 'Hello Plus Settings', 'hello-plus' ),
-			esc_html__( 'Theme Settings', 'hello-plus' ),
+			esc_html__( 'Hello+ Dashboard', 'hello-plus' ),
+			esc_html__( 'Hello+ Dashboard', 'hello-plus' ),
 			'manage_options',
-			'hello-plus-settings',
+			'hello-plus-dashboard',
 			[ __NAMESPACE__ . '\Settings', 'settings_page_render' ]
 		);
 
@@ -44,11 +44,10 @@ class Settings {
 	 */
 	public function settings_page_scripts() {
 
-		$dir = HELLO_PLUS_ASSETS_PATH . '/js';
 		$suffix = Theme::get_min_suffix();
 		$handle = 'hello-plus-admin';
-		$asset_path = "$dir/hello-plus-admin.asset.php";
-		$asset_url = HELLO_PLUS_ASSETS_URL . '/js';
+		$asset_path = HELLO_PLUS_SCRIPTS_PATH . "hello-plus-admin.asset.php";
+		$asset_url = HELLO_PLUS_SCRIPTS_URL;
 		if ( ! file_exists( $asset_path ) ) {
 			throw new \Error( 'You need to run `npm run build` for the "hello-plus" first.' );
 		}
@@ -56,7 +55,7 @@ class Settings {
 
 		wp_enqueue_script(
 			$handle,
-			"$asset_url/$handle$suffix.js",
+			HELLO_PLUS_SCRIPTS_URL."$handle$suffix.js",
 			$script_asset['dependencies'],
 			$script_asset['version']
 		);
@@ -65,39 +64,64 @@ class Settings {
 
 		wp_enqueue_style(
 			$handle,
-			"$asset_url/$handle$suffix.css",
+			HELLO_PLUS_STYLE_URL . "$handle$suffix.css",
 			[ 'wp-components' ],
 			$script_asset['version']
 		);
 
 		$plugins = get_plugins();
 
+		$action_links_data = [];
+
 		if ( ! isset( $plugins['elementor/elementor.php'] ) ) {
-			$action_link_type = 'install-elementor';
-			$action_link_url = wp_nonce_url(
-				add_query_arg(
-					[
-						'action' => 'install-plugin',
-						'plugin' => 'elementor',
-					],
-					admin_url( 'update.php' )
+			$action_links_data[] = [
+				'type' => 'install-elementor',
+				'url' => wp_nonce_url(
+					add_query_arg(
+						[
+							'action' => 'install-plugin',
+							'plugin' => 'elementor',
+						],
+						admin_url( 'update.php' )
+					),
+					'install-plugin_elementor'
 				),
-				'install-plugin_elementor'
-			);
-		} elseif ( ! defined( 'ELEMENTOR_VERSION' ) ) {
-			$action_link_type = 'activate-elementor';
-			$action_link_url = wp_nonce_url( 'plugins.php?action=activate&plugin=elementor/elementor.php', 'activate-plugin_elementor/elementor.php' );
-		} else {
-			$action_link_type = '';
-			$action_link_url = '';
+			];
+		}
+
+		if ( ! defined( 'ELEMENTOR_VERSION' ) ) {
+			$action_links_data[] = [
+					'type' =>  'activate-elementor',
+					'url' => wp_nonce_url( 'plugins.php?action=activate&plugin=elementor/elementor.php', 'activate-plugin_elementor/elementor.php' ),
+				];
+		}
+
+		if ( ! defined( 'ELEMENTOR_PRO_VERSION' ) ) {
+			$action_links_data[] = [
+					'type' => 'go-pro',
+					'url' => 'https://elementor.com/pricing-plugin',
+				];
+		}
+
+		if ( ! defined( 'ELEMENTOR_AI_VERSION' ) ) {
+			$action_links_data[] = [
+				'type' => 'go-ai',
+				'url' => 'https://elementor.com/pricing-ai',
+			];
+		}
+
+		if ( ! defined( 'ELEMENTOR_IMAGE_OPTIMIZER_VERSION' ) ) {
+			$action_links_data[] = [
+				'type' => 'go-image-optimizer',
+				'url' => 'https://elementor.com/pricing-plugin',
+			];
 		}
 
 		wp_localize_script(
 			$handle,
 			'helloPlusAdminData',
 			[
-				'actionLinkType' => $action_link_type,
-				'actionLinkURL' => $action_link_url,
+				'links' => $action_links_data,
 				'templateDirectoryURI' => HELLO_PLUS_URL,
 			]
 		);
@@ -108,7 +132,7 @@ class Settings {
 	 */
 	public static function settings_page_render() {
 		?>
-		<div id="hello-plus-settings"></div>
+		<div id="hello-plus-dashboard"></div>
 		<?php
 	}
 
@@ -202,10 +226,6 @@ class Settings {
 			],
 			'PAGE_TITLE' => [
 				'hook'      => 'hello_plus_page_title',
-				'callback'  => '__return_false',
-			],
-			'HELLO_PLUS_STYLE' => [
-				'hook'      => 'hello_plus_enqueue_style',
 				'callback'  => '__return_false',
 			],
 			'HELLO_PLUS_THEME' => [

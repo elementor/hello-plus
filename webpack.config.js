@@ -7,36 +7,40 @@ const RemoveEmptyScriptsPlugin = require( 'webpack-remove-empty-scripts' );
 // Utilities.
 const path = require( 'path' );
 
+const modulesDir = process.cwd() + '/modules/';
+
+const entryPoints = {
+	// Editor:
+	'js/hello-plus-editor': path.resolve( process.cwd(), 'assets/dev/js/editor', 'hello-plus-editor.js' ),
+	'js/hello-plus-frontend': path.resolve( process.cwd(), 'assets/dev/js/frontend', 'hello-plus-frontend.js' ),
+
+	// Customizer module:
+	'css/customizer': path.resolve( modulesDir, 'customizer/assets/scss', 'customizer.scss' ),
+
+	// Admin module:
+	'js/hello-plus-admin': path.resolve( modulesDir, 'admin/assets/js', 'hello-plus-admin.js' ),
+	'css/hello-plus-admin': path.resolve( modulesDir, 'admin/assets/scss', 'hello-plus-admin.scss' ),
+	'js/hello-plus-notice': path.resolve( modulesDir, 'admin/assets/js', 'hello-plus-notice.js' ),
+	'css/hello-plus-notice': path.resolve( modulesDir, 'admin/assets/scss', 'hello-plus-notice.scss' ),
+
+	// Content module
+	'js/hello-plus-content': path.resolve( modulesDir, 'content/assets/js', 'hello-plus-content.js' ),
+	'css/hello-plus-content': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-content.scss' ),
+
+	// Theme module
+	'css/theme': path.resolve( modulesDir, 'theme/assets/scss', 'theme.scss' ),
+	'css/header-footer': path.resolve( modulesDir, 'theme/assets/scss', 'header-footer.scss' ),
+	'css/editor': path.resolve( modulesDir, 'theme/assets/scss', 'editor.scss' ),
+	'css/classic-editor': path.resolve( modulesDir, 'theme/assets/scss', 'classic-editor.scss' ),
+};
+
 module.exports = {
 	...defaultConfig,
 	...{
-		entry: {
-			// Editor:
-			'js/hello-plus-editor': path.resolve( process.cwd(), 'assets/dev/js/editor', 'hello-plus-editor.js' ),
-			'js/hello-plus-frontend': path.resolve( process.cwd(), 'assets/dev/js/frontend', 'hello-plus-frontend.js' ),
-
-			// Customizer module:
-			'css/customizer': path.resolve( process.cwd(), 'modules/customizer/assets/scss', 'customizer.scss' ),
-
-			// Admin module:
-			'js/hello-plus-admin': path.resolve( process.cwd(), 'modules/admin/assets/js', 'hello-plus-admin.js' ),
-			'css/hello-plus-admin': path.resolve( process.cwd(), 'modules/admin/assets/scss', 'hello-plus-admin.scss' ),
-			'js/hello-plus-notice': path.resolve( process.cwd(), 'modules/admin/assets/js', 'hello-plus-notice.js' ),
-			'css/hello-plus-notice': path.resolve( process.cwd(), 'modules/admin/assets/scss', 'hello-plus-notice.scss' ),
-
-			// Content module
-			'js/hello-plus-content': path.resolve( process.cwd(), 'modules/content/assets/js', 'hello-plus-content.js' ),
-			'css/hello-plus-content': path.resolve( process.cwd(), 'modules/content/assets/scss', 'hello-plus-content.scss' ),
-
-			// Theme module
-			'css/theme': path.resolve( process.cwd(), 'modules/theme/assets/scss', 'theme.scss' ),
-			'css/header-footer': path.resolve( process.cwd(), 'modules/theme/assets/scss', 'header-footer.scss' ),
-			'css/editor': path.resolve( process.cwd(), 'modules/theme/assets/scss', 'editor.scss' ),
-			'css/classic-editor': path.resolve( process.cwd(), 'modules/theme/assets/scss', 'classic-editor.scss' ),
-		},
+		entry: entryPoints,
 		output: {
 			...defaultConfig.output,
-			path: path.resolve( __dirname, './dist' ),
+			path: path.resolve( __dirname, './build' ),
 		},
 		plugins: [
 			// Include WP's plugin config.

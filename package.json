@@ -6,15 +6,21 @@
 	"version": "0.0.1",
 	"scripts": {
 		"start": "wp-scripts start",
-		"build": "wp-scripts build"
+		"build": "wp-scripts build",
+		"build:prod": "wp-scripts build --env=production",
+		"lint:js": "wp-scripts lint-js"
 	},
 	"devDependencies": {
 		"@wordpress/scripts": "^27.1.0",
+		"eslint-plugin-babel": "^5.3.1",
+		"eslint-plugin-no-jquery": "^3.0.2",
 		"path": "^0.12.7",
 		"webpack-cli": "^5.1.4",
 		"webpack-remove-empty-scripts": "^1.0.4"
 	},
 	"dependencies": {
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1",
 		"@elementor/ui": "^1.19.0"
 	}
 }

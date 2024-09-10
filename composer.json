@@ -11,7 +11,7 @@
 		}
 	},
 	"scripts": {
-		"lint": "vendor/bin/phpcs --ignore=node_modules,vendor,build .",
+		"lint": "vendor/bin/phpcs --standard=./phpcs.xml --ignore=node_modules,vendor,build .",
 		"lint:fix": "vendor/bin/phpcbf --ignore=node_modules,vendor,build ."
 	}
 }

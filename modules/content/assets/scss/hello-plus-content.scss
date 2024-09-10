@@ -1,4 +1,4 @@
-.elementor-widget-zigzag {
+.e-zigzag {
     $transition: all .3s;
 
 	--zigzag-button-icon-size: 16px;
@@ -20,6 +20,22 @@
 	--zigzag-wrapper-border-radius: 0;
 	--zigzag-text-alignment: center;
 	--zigzag-image-width: 50%;
+
+	display: flex;
+	flex-direction: column;
+	background-color: transparent;
+	align-items: center;
+
+	&.full-width {
+		width: 100%;
+	}
+
+	&.has-border {
+		border-color: var(--zigzag-wrapper-border-color);
+		border-style: solid;
+		border-width: var(--zigzag-wrapper-border-width);
+		border-radius: var(--zigzag-wrapper-border-radius);
+	}
 
 	&__button-icon {
 		color: var(--zigzag-button-icon-color);
@@ -49,7 +65,7 @@
 			color: var(--zigzag-button-text-color-hover);
 			transition: $transition;
 
-			.elementor-widget-zigzag__button-icon {
+			.e-zigzag__button-icon {
 				color: var(--zigzag-button-icon-color-hover);
 				fill: currentColor;
 				transition: $transition;
@@ -65,10 +81,7 @@
 	}
 
 	&__button-container {
-		flex: 0 0 auto;
-		margin-top: 0;
-		text-align: start;
-		padding-top: 15px;
+		display: flex;
 	}
 
 	&__text-container {
@@ -111,41 +124,15 @@
 		&.row-even {
 			flex-direction: row-reverse;
 		}
-	
-		&.row-reverse-odd {
-			flex-direction: row-reverse;
-		}
-	
-		&.row-reverse-even {
-			flex-direction: row;
-		}
-	}
-
-	&__wrapper {
-		display: flex;
-		flex-direction: column;
-		background-color: transparent;
-		align-items: center;
-	
-		&.full-width {
-			width: 100%;
-		}
-
-		&.has-border {
-			border-color: var(--zigzag-wrapper-border-color);
-			border-style: solid;
-			border-width: var(--zigzag-wrapper-border-width);
-			border-radius: var(--zigzag-wrapper-border-radius);
-		}
 	}
 
 	@media screen and (max-width: 767px) {
-		.elementor-widget-zigzag__item-container {
+		.e-zigzag__item-container {
 			flex-direction: column;
 		}
 
-		.elementor-widget-zigzag__graphic-element-container,
-		.elementor-widget-zigzag__text-container {
+		.e-zigzag__graphic-element-container,
+		.e-zigzag__text-container {
 			width: 100%;
 		}
 	}

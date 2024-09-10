@@ -1,4 +1,5 @@
-import { Box, Grid, Link, Stack, Typography } from '@elementor/ui';
+import { Grid, Stack, Typography } from '@elementor/ui';
+import { AdminLink } from '../../../../link/admin-link';
 
 export const LinksColumn = ( { linksColumn } ) => {
 	const { title, links } = linksColumn;
@@ -8,7 +9,7 @@ export const LinksColumn = ( { linksColumn } ) => {
 			<Stack gap={ 1 }>
 				<Typography variant="h6" sx={ { mb: 1 } }>{ title }</Typography>
 				{ links.map( ( link, i ) => {
-					return <Link underline="hover" variant="body1" href={ link.url } key={ i }>{ link.title }</Link>;
+					return <AdminLink href={ link.url } key={ i }>{ link.title }</AdminLink>;
 				} ) }
 			</Stack>
 		</Grid>

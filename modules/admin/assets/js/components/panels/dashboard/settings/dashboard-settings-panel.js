@@ -1,12 +1,14 @@
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { __ } from '@wordpress/i18n';
 import api from '@wordpress/api';
-import { dispatch } from '@wordpress/data';
-import { SettingsBody } from './settings-body';
-import { Box, Button, CircularProgress } from '@elementor/ui';
+import { SettingsBody } from './components/settings-body';
+import { Alert, Box, Button, CircularProgress, Stack } from '@elementor/ui';
+import { GridWithActionLinks } from '../../../../layouts/grids/grid-with-action-links';
 
-export const SettingsPanel = () => {
+export const DashboardSettingsPanel = () => {
 	const [ settingsData, setSettingsData ] = useState( {} );
+	const [ message, setMessage ] = useState( '' );
+	const [ severity, setSeverity ] = useState( 'success' );
 
 	const settingsPrefix = 'hello_plus_settings';
 
@@ -35,23 +37,21 @@ export const SettingsPanel = () => {
 	/**
 	 * Save settings to server.
 	 */
-	const saveSettings = () => {
+	const saveSettings = async () => {
 		const data = {};
 
 		Object.values( SETTINGS ).forEach( ( value ) => data[ `${ settingsPrefix }${ value }` ] = settingsData[ value ] ? 'true' : '' );
 
-		const settings = new api.models.Settings( data );
+		try {
+			const settings = new api.models.Settings( data );
 
-		settings.save();
-
-		dispatch( 'core/notices' ).createNotice(
-			'success',
-			__( 'Settings Saved', 'hello-plus' ),
-			{
-				type: 'snackbar',
-				isDismissible: true,
-			},
-		);
+			await settings.save();
+			setMessage( __( 'Settings Saved', 'hello-plus' ) );
+			setSeverity( 'success' );
+		} catch ( e ) {
+			setMessage( __( 'Failed to save settings', 'hello-plus' ) );
+			setSeverity( 'error' );
+		}
 	};
 
 	useEffect( () => {
@@ -90,15 +90,18 @@ export const SettingsPanel = () => {
 	}
 
 	return (
-		<Fragment>
-			<SettingsBody
-				settingsData={ settingsData }
-				updateSettings={ updateSettings }
-				settings={ SETTINGS }
+		<GridWithActionLinks>
+			<Stack gap={ 1 }>
+				{ message && <Alert severity={ severity } onClose={ () => setMessage( '' ) }>{ message }</Alert> }
+				<SettingsBody
+					settingsData={ settingsData }
+					updateSettings={ updateSettings }
+					settings={ SETTINGS }
 			/>
-			<Button variant="contained" onClick={ saveSettings }>
-				{ __( 'Save Settings', 'hello-plus' ) }
-			</Button>
-		</Fragment>
+				<Button variant="contained" onClick={ saveSettings }>
+					{ __( 'Save Settings', 'hello-plus' ) }
+				</Button>
+			</Stack>
+		</GridWithActionLinks>
 	);
 };

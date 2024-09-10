@@ -1,8 +1,8 @@
-import { Box, Stack } from '@elementor/ui';
+import { Stack } from '@elementor/ui';
 import HomeHero from './components/home-hero';
-import { ActionLinksPanel } from '../action-links-panel';
-import { HomeLinks } from './components/home-links';
+import { HomeLinksGrid } from './components/home-links-grid';
 import { __ } from '@wordpress/i18n';
+import { GridWithActionLinks } from '../../../../layouts/grids/grid-with-action-links';
 
 const linksColumns = [
 	{
@@ -70,19 +70,13 @@ const linksColumns = [
 	},
 ];
 
-export const HomePanel = () => {
+export const DashboardHomePanel = () => {
 	return (
-		<Stack direction="row">
-			<Box flex="0 0 70%">
-				<Stack gap={ 1 }>
-					<HomeHero />
-					<HomeLinks linksColumns={ linksColumns } />
-				</Stack>
-			</Box>
-			<Box flex="0 0 30%">
-				<ActionLinksPanel />
-			</Box>
-		</Stack>
-
+		<GridWithActionLinks>
+			<Stack gap={ 1 }>
+				<HomeHero />
+				<HomeLinksGrid linksColumns={ linksColumns } />
+			</Stack>
+		</GridWithActionLinks>
 	);
 };

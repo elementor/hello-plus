@@ -3,19 +3,19 @@ import { __ } from '@wordpress/i18n';
 import { Container, Box, Tabs, Tab, TabPanel, useTabs } from '@elementor/ui';
 import { ThemeProvider } from '@elementor/ui/styles';
 
-import { SettingsPanel } from '../panels/settings-panel';
-import { HomePanel } from '../panels/home/home-panel';
+import { DashboardSettingsPanel } from '../components/panels/dashboard/settings/dashboard-settings-panel';
+import { DashboardHomePanel } from '../components/panels/dashboard/home/dashboard-home-panel';
 
 export const DashboardPage = ( props ) => {
 	const tabs = [
 		{
 			name: 'HOME',
-			component: <HomePanel />,
+			component: <DashboardHomePanel />,
 			title: __( 'Home', 'hello-plus' ),
 		},
 		{
 			name: 'SETTINGS',
-			component: <SettingsPanel />,
+			component: <DashboardSettingsPanel />,
 			title: __( 'Settings', 'hello-plus' ),
 		},
 	];

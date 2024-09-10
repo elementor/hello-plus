@@ -26,50 +26,6 @@
 		}
 	}
 
-	.hello_plus__main {
-		max-width: 750px;
-		margin-inline-start: auto;
-		margin-inline-end: auto;
-		display: flex;
-		flex-direction: row;
-
-		.components-panel {
-			background: none;
-			border: none;
-		}
-
-		.components-panel__body {
-			margin: 1rem 0;
-			border: 1px solid #e2e4e7;
-			background: #ffffff;
-		}
-
-		.components-notice {
-			margin: 0;
-			margin-block-end: 20px;
-
-			.dashicon {
-				padding-inline-end: 10px;
-				color: #f0b849;
-			}
-
-			button {
-				display: none;
-			}
-		}
-
-		.code-example {
-			display: inline-block;
-			margin-block-end: 0.25rem;
-			border-radius: 4px;
-			font-size: 10px;
-
-			+ *:not(.code-example) {
-				margin-block-start: 1.25rem;
-			}
-		}
-	}
-
 	.components-base-control__help {
 		margin-block-start: .5rem;
 	}

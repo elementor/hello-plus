@@ -1,8 +1,13 @@
 import { createRoot } from 'react-dom/client';
 import { DashboardPage } from './pages/dashboard-page.js';
+import { DashboardProvider } from './providers/dashboard-provider';
 
 const App = () => {
-	return <DashboardPage />;
+	return (
+		<DashboardProvider>
+			<DashboardPage />
+		</DashboardProvider>
+	);
 };
 
 document.addEventListener( 'DOMContentLoaded', () => {

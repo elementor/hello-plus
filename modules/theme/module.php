@@ -79,7 +79,7 @@ class Module extends Module_Base {
 			/*
 			 * Editor Style.
 			 */
-			add_editor_style( HELLO_PLUS_STYLE_REALTIVE_PATH . 'classic-editor.css' );
+			add_editor_style( HELLO_PLUS_STYLE_PATH . 'classic-editor.css' );
 
 			/*
 			 * Gutenberg wide images.

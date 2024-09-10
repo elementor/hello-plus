@@ -6,7 +6,9 @@
 	"version": "0.0.1",
 	"scripts": {
 		"start": "wp-scripts start",
-		"build": "wp-scripts build"
+		"build": "wp-scripts build",
+		"build:prod": "wp-scripts build --env=production",
+		"lint:js": "wp-scripts lint-js"
 	},
 	"devDependencies": {
 		"@wordpress/scripts": "^27.1.0",
@@ -19,6 +21,8 @@
 	},
 	"dependencies": {
 		"@elementor/icons": "^1.11.0",
-		"@elementor/ui": "^1.19.0"
+		"@elementor/ui": "^1.19.0",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1"
 	}
 }

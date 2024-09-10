@@ -8,7 +8,9 @@
 		"start": "wp-scripts start",
 		"build": "wp-scripts build",
 		"build:prod": "wp-scripts build --env=production",
-		"lint:js": "wp-scripts lint-js"
+		"format": "wp-scripts format",
+		"lint:js": "wp-scripts lint-js",
+		"lint:style": "wp-scripts lint-style"
 	},
 	"devDependencies": {
 		"@wordpress/scripts": "^27.1.0",

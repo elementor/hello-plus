@@ -76,9 +76,10 @@ final class Theme {
 	 * @access public
 	 *
 	 * @return string
+	 * @deprecated just delete. no replacement required, resolved by the build scripts
 	 */
 	public static function get_min_suffix(): string {
-		return defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		return '';
 	}
 
 	/**

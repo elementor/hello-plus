@@ -27,6 +27,11 @@ class Widget_Zig_Zag_Render {
 	public function render(): void {
 		$layout_classnames = 'e-zigzag';
 		$has_border = $this->settings['show_widget_border'];
+		$is_full_width = $this->settings['box_full_width'];
+
+		if ( 'yes' === $is_full_width ) {
+			$layout_classnames .= ' is-full-width';
+		}
 
 		if ( 'yes' === $has_border ) {
 			$layout_classnames .= ' has-border';
@@ -64,11 +69,24 @@ class Widget_Zig_Zag_Render {
 	}
 
 	private function render_graphic_element_container( $item ) {
+		$graphic_element_classnames = 'e-zigzag__graphic-element-container';
+		$has_icon = 'icon' === $item['graphic_element'] && ! empty( $item['graphic_icon'] );
+		$has_image = 'image' === $item['graphic_element'] && ! empty( $item['graphic_image']['url'] );
+
+		if ( $has_icon ) {
+			$graphic_element_classnames .= ' has-icon';
+		} else if ( $has_image ) {
+			$graphic_element_classnames .= ' has-image';
+		}
+
+		$this->widget->add_render_attribute( 'graphic-element-container', [
+			'class' => $graphic_element_classnames,
+		] );
 		?>
-		<div class="e-zigzag__graphic-element-container">
-			<?php if ( 'image' === $item['graphic_element'] && ! empty( $item['graphic_image']['url'] ) ) : ?>
+		<div <?php echo $this->widget->get_render_attribute_string( 'graphic-element-container' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+			<?php if ( $has_image ) : ?>
 				<?php Group_Control_Image_Size::print_attachment_image_html( $item, 'graphic_image' ); ?>
-			<?php elseif ( 'icon' === $item['graphic_element'] && ( ! empty( $item['graphic_icon'] ) ) ) : ?>
+			<?php elseif ( $has_icon ) : ?>
 				<?php Icons_Manager::render_icon( $item['graphic_icon'], [ 'aria-hidden' => 'true' ] ); ?>
 			<?php endif; ?>
 		</div>
@@ -79,19 +97,28 @@ class Widget_Zig_Zag_Render {
 		$button_text = $item['button_text'] ?? '';
 		$button_link = $item['button_link'] ?? '';
 		$button_icon = $item['button_icon'] ?? '';
-		$icon_color  = $item['icon_color'] ?? '';
+		$has_button = ! empty( $button_text );
+
+		$title_tag = $item['title_tag'] ?? 'h2';
+		$title_text = $item['title'] ?? '';
+		$has_title = ! empty( $title_text );
+
+		$description_text = $item['description'] ?? '';
+		$has_description = ! empty( $description_text );
 
 		$button_classnames = 'e-zigzag__button';
 		$button_hover_animation = $this->settings['button_hover_animation'] ?? '';
-		$button_has_border = $this->settings['show_border'];
-
-		$this->widget->add_render_attribute( 'title', [
-			'class' => 'e-zigzag__title',
-		] );
+		$button_has_border = $this->settings['show_button_border'];
+		$button_corner_shape = $this->settings['button_shape'] ?? '';
+		$button_type = $this->settings['button_type'] ?? '';
 
 		$this->widget->add_render_attribute( 'description', [
 			'class' => 'e-zigzag__description',
 		] );
+
+		if ( ! empty( $button_type ) ) {
+			$button_classnames .= ' is-type-' . $button_type;
+		}
 
 		if ( $button_hover_animation ) {
 			$button_classnames .= ' elementor-animation-' . $button_hover_animation;
@@ -99,6 +126,10 @@ class Widget_Zig_Zag_Render {
 
 		if ( 'yes' === $button_has_border ) {
 			$button_classnames .= ' has-border';
+		}
+
+		if ( ! empty( $button_corner_shape ) ) {
+			$button_classnames .= ' has-shape-' . $button_corner_shape;
 		}
 
 		$this->widget->add_render_attribute( 'button-link', [
@@ -110,10 +141,16 @@ class Widget_Zig_Zag_Render {
 		}
 		?>
 		<div class="e-zigzag__text-container">
-			<h2 <?php echo $this->widget->get_render_attribute_string( 'title' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php echo esc_html( $item['title'] ); ?></h2>
-			<p <?php echo $this->widget->get_render_attribute_string( 'description' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php echo esc_html( $item['description'] ); ?></p>
-
-			<?php if ( ! empty( $button_text ) ) { ?>
+			<?php if ( $has_title ) {
+				$this->widget->add_render_attribute( 'title', 'class', 'e-zigzag__title' );
+				$title_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $title_tag ), $this->widget->get_render_attribute_string( 'heading' ), esc_html( $title_text ) );
+					// Escaped above
+					Utils::print_unescaped_internal_string( $title_output );
+			} ?>
+			<?php if ( $has_description ) { ?>
+				<p <?php echo $this->widget->get_render_attribute_string( 'description' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php echo esc_html( $description_text ); ?></p>
+			<?php } ?>
+			<?php if ( $has_button ) { ?>
 				<div class="e-zigzag__button-container">
 					<a <?php echo $this->widget->get_render_attribute_string( 'button-link' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 						<?php Icons_Manager::render_icon( $button_icon, [

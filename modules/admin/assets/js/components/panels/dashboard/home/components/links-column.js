@@ -1,4 +1,6 @@
-import { Grid, Stack, Typography } from '@elementor/ui';
+import { Grid } from '@elementor/ui/Grid';
+import { Stack } from '@elementor/ui/Stack';
+import { Typography } from '@elementor/ui/Typography';
 import { AdminLink } from '../../../../link/admin-link';
 
 export const LinksColumn = ( { linksColumn } ) => {

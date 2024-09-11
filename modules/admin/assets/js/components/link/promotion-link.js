@@ -1,4 +1,6 @@
-import { Stack, Typography, Button } from '@elementor/ui';
+import { Stack } from '@elementor/ui/Stack';
+import { Typography } from '@elementor/ui/Typography';
+import { Button } from '@elementor/ui/Button';
 
 export const PromotionLink = ( { image, alt, title, message, button, link } ) => {
 	return (

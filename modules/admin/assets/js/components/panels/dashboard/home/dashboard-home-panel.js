@@ -1,4 +1,4 @@
-import { Stack } from '@elementor/ui';
+import { Stack } from '@elementor/ui/Stack';
 import HomeHero from './components/home-hero';
 import { HomeLinksGrid } from './components/home-links-grid';
 import { __ } from '@wordpress/i18n';

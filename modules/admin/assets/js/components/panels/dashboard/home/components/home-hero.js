@@ -1,5 +1,7 @@
 import { __ } from '@wordpress/i18n';
-import { Box, Stack, Typography } from '@elementor/ui';
+import { Box } from '@elementor/ui/Box';
+import { Stack } from '@elementor/ui/Stack';
+import { Typography } from '@elementor/ui/Typography';
 
 const HomeHero = () => {
 	return (

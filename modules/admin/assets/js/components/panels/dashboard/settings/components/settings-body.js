@@ -1,4 +1,8 @@
-import { Alert, Switch, Typography, Stack, Paper } from '@elementor/ui';
+import { Alert } from '@elementor/ui/Alert';
+import { Switch } from '@elementor/ui/Switch';
+import { Typography } from '@elementor/ui/Typography';
+import { Stack } from '@elementor/ui/Stack';
+import { Paper } from '@elementor/ui/Paper';
 import { __ } from '@wordpress/i18n';
 import { SettingCard } from './setting-card';
 

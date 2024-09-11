@@ -1,4 +1,4 @@
-import { Link } from '@elementor/ui';
+import { Link } from '@elementor/ui/Link';
 
 export const AdminLink = ( { href, children } ) => {
 	return (

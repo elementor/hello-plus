@@ -1,4 +1,4 @@
-import { Grid } from '@elementor/ui';
+import { Grid } from '@elementor/ui/Grid';
 import { PromotionsLinksPanel } from '../../components/panels/promotions-links-panel';
 
 export const GridWithActionLinks = ( { children } ) => {

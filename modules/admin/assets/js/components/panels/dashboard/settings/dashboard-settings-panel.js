@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 import { __ } from '@wordpress/i18n';
 import api from '@wordpress/api';
 import { SettingsBody } from './components/settings-body';
-import { Alert, Box, Button, CircularProgress, Stack } from '@elementor/ui';
+import { Alert } from '@elementor/ui/Alert';
+import { Box } from '@elementor/ui/Box';
+import { Button } from '@elementor/ui/Button';
+import { CircularProgress } from '@elementor/ui/CircularProgress';
+import { Stack } from '@elementor/ui/Stack';
 import { GridWithActionLinks } from '../../../../layouts/grids/grid-with-action-links';
 
 export const DashboardSettingsPanel = () => {

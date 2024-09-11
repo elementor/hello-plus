@@ -1,4 +1,8 @@
-import { Box, Card, CardContent, CardHeader, FormControlLabel, Stack, Typography } from '@elementor/ui';
+import { Box } from '@elementor/ui/Box';
+import { Card } from '@elementor/ui/Card';
+import { CardContent } from '@elementor/ui/CardContent';
+import { FormControlLabel } from '@elementor/ui/FormControlLabel';
+import { Stack } from '@elementor/ui/Stack';
 
 export const SettingCard = ( { label, description, control, code } ) => {
 	return (

@@ -1,4 +1,4 @@
-import { Grid } from '@elementor/ui';
+import { Grid } from '@elementor/ui/Grid';
 import { LinksColumn } from './links-column';
 
 export const HomeLinksGrid = ( { linksColumns } ) => {

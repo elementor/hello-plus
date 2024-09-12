@@ -1,6 +1,6 @@
 <?php
 
-namespace HelloPlus\Modules\Settings\Components;
+namespace HelloPlus\Modules\Admin\Components;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -14,7 +14,7 @@ use HelloPlus\Theme;
  * @package HelloPlus
  * @subpackage HelloPlusModules
  */
-class Settings {
+class settings {
 
 	const SETTINGS_GROUP = 'hello_plus_settings';
 

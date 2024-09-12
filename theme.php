@@ -171,7 +171,6 @@ final class Theme {
 		$modules_list = [
 			'Theme',
 			'Customizer',
-			'Settings',
 			'Admin',
 			'Content',
 		];

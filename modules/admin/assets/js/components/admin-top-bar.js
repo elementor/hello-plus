@@ -31,7 +31,7 @@ const adminTopBarLinks = [
 
 export const AdminTopBar = () => {
 	return (
-		<AppBar position="static" elevation={ 6 } sx={ { boxShadow: '0px 3px 16px 0px rgba(35, 38, 42, 0.20)' } }>
+		<AppBar position="static" elevation={ 6 }>
 			<Toolbar sx={ { alignItems: 'center', backgroundColor: 'background.default', justifyContent: 'space-between' } } padding={ 2 }>
 				<AdminTopBarLink linkData={ home } />
 				<AdminTopBarLinks linksData={ adminTopBarLinks } />

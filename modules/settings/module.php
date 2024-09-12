@@ -29,7 +29,7 @@ class Module extends Module_Base {
 	 */
 	protected function get_component_ids(): array {
 		return [
-			'Settings'
+			'Settings',
 		];
 	}
 }

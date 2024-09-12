@@ -18,7 +18,7 @@ final class Theme {
 	/**
 	 * @var ?Theme
 	 */
-	private static ?Theme $_instance = null;
+	private static ?Theme $instance = null;
 
 	/**
 	 * @var Module_Base[]
@@ -83,23 +83,23 @@ final class Theme {
 	}
 
 	/**
-	 * @param $class
+	 * @param $class_name
 	 *
 	 * @return void
 	 */
-	public function autoload( $class ) {
-		if ( 0 !== strpos( $class, __NAMESPACE__ ) ) {
+	public function autoload( $class_name ) {
+		if ( 0 !== strpos( $class_name, __NAMESPACE__ ) ) {
 			return;
 		}
 
-		$has_class_alias = isset( $this->classes_aliases[ $class ] );
+		$has_class_alias = isset( $this->classes_aliases[ $class_name ] );
 
 		// Backward Compatibility: Save old class name for set an alias after the new class is loaded
 		if ( $has_class_alias ) {
-			$class_alias_name = $this->classes_aliases[ $class ];
+			$class_alias_name = $this->classes_aliases[ $class_name ];
 			$class_to_load = $class_alias_name;
 		} else {
-			$class_to_load = $class;
+			$class_to_load = $class_name;
 		}
 
 		if ( ! class_exists( $class_to_load ) ) {
@@ -113,12 +113,12 @@ final class Theme {
 			$filename = trailingslashit( HELLO_PLUS_PATH ) . $filename . '.php';
 
 			if ( is_readable( $filename ) ) {
-				include( $filename );
+				include $filename;
 			}
 		}
 
 		if ( $has_class_alias ) {
-			class_alias( $class_alias_name, $class );
+			class_alias( $class_alias_name, $class_name );
 		}
 	}
 
@@ -128,11 +128,11 @@ final class Theme {
 	 * @return Theme
 	 */
 	public static function instance(): Theme {
-		if ( is_null( self::$_instance ) ) {
-			self::$_instance = new self();
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self();
 		}
 
-		return self::$_instance;
+		return self::$instance;
 	}
 
 	/**
@@ -179,7 +179,7 @@ final class Theme {
 		foreach ( $modules_list as $module_name ) {
 			$class_name = str_replace( '-', ' ', $module_name );
 			$class_name = str_replace( ' ', '', ucwords( $class_name ) );
-			$class_name =  __NAMESPACE__ . '\\Modules\\' . $class_name . '\Module';
+			$class_name = __NAMESPACE__ . '\\Modules\\' . $class_name . '\Module';
 
 			/** @var Module_Base $class_name */
 			if ( $class_name::is_active() && empty( $this->classes_aliases[ $module_name ] ) ) {

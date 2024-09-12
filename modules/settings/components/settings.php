@@ -33,29 +33,27 @@ class Settings {
 			[ __NAMESPACE__ . '\Settings', 'settings_page_render' ]
 		);
 
-		add_action( 'load-' . $menu_hook, function() {
-			add_action( 'admin_enqueue_scripts', [ $this, 'settings_page_scripts' ], 10 );
-		} );
-
+		add_action( 'load-' . $menu_hook, function () {
+				add_action( 'admin_enqueue_scripts', [ $this, 'settings_page_scripts' ], 10 );
+			}
+		);
 	}
 
 	/**
 	 * Register settings page scripts.
 	 */
 	public function settings_page_scripts() {
-
-		$suffix = Theme::get_min_suffix();
 		$handle = 'hello-plus-admin';
-		$asset_path = HELLO_PLUS_SCRIPTS_PATH . "hello-plus-admin.asset.php";
+		$asset_path = HELLO_PLUS_SCRIPTS_PATH . 'hello-plus-admin.asset.php';
 		$asset_url = HELLO_PLUS_SCRIPTS_URL;
 		if ( ! file_exists( $asset_path ) ) {
 			throw new \Error( 'You need to run `npm run build` for the "hello-plus" first.' );
 		}
-		$script_asset = require( $asset_path );
+		$script_asset = require $asset_path;
 
 		wp_enqueue_script(
 			$handle,
-			HELLO_PLUS_SCRIPTS_URL."$handle$suffix.js",
+			HELLO_PLUS_SCRIPTS_URL . "$handle.js",
 			$script_asset['dependencies'],
 			$script_asset['version']
 		);
@@ -64,7 +62,7 @@ class Settings {
 
 		wp_enqueue_style(
 			$handle,
-			HELLO_PLUS_STYLE_URL . "$handle$suffix.css",
+			HELLO_PLUS_STYLE_URL . "$handle.css",
 			[ 'wp-components' ],
 			$script_asset['version']
 		);
@@ -91,16 +89,16 @@ class Settings {
 
 		if ( ! defined( 'ELEMENTOR_VERSION' ) ) {
 			$action_links_data[] = [
-					'type' =>  'activate-elementor',
-					'url' => wp_nonce_url( 'plugins.php?action=activate&plugin=elementor/elementor.php', 'activate-plugin_elementor/elementor.php' ),
-				];
+				'type' => 'activate-elementor',
+				'url' => wp_nonce_url( 'plugins.php?action=activate&plugin=elementor/elementor.php', 'activate-plugin_elementor/elementor.php' ),
+			];
 		}
 
 		if ( ! defined( 'ELEMENTOR_PRO_VERSION' ) ) {
 			$action_links_data[] = [
-					'type' => 'go-pro',
-					'url' => 'https://elementor.com/pricing-plugin',
-				];
+				'type' => 'go-pro',
+				'url' => 'https://elementor.com/pricing-plugin',
+			];
 		}
 
 		if ( ! defined( 'ELEMENTOR_AI_VERSION' ) ) {
@@ -176,7 +174,6 @@ class Settings {
 				]
 			);
 		}
-
 	}
 
 	/**
@@ -188,7 +185,6 @@ class Settings {
 		if ( isset( $option ) && ( 'true' === $option ) && is_callable( $tweak_callback ) ) {
 			$tweak_callback();
 		}
-
 	}
 
 	/**
@@ -200,7 +196,7 @@ class Settings {
 				'hook'      => 'wp_head',
 				'callback'  => [
 					'HelloPlus\Modules\Theme\Module',
-					'add_description_meta_tag'
+					'add_description_meta_tag',
 				],
 			],
 		];
@@ -231,7 +227,7 @@ class Settings {
 			'HELLO_PLUS_THEME' => [
 				'hook'      => 'hello_plus_enqueue_theme_style',
 				'callback'  => '__return_false',
-			]
+			],
 		];
 
 		/**
@@ -248,7 +244,7 @@ class Settings {
 
 		foreach ( $tweaks as $tweak_key => $tweak_value ) {
 			$this->do_tweak( $settings_group . $settings[ $tweak_key ], function () use ( $tweak_value ) {
-				remove_action( $tweak_value[ 'hook' ], $tweak_value[ 'callback' ] );
+				remove_action( $tweak_value['hook'], $tweak_value['callback'] );
 			} );
 		}
 
@@ -256,7 +252,7 @@ class Settings {
 
 		foreach ( $tweaks as $tweak_key => $tweak_value ) {
 			$this->do_tweak( $settings_group . $settings[ $tweak_key ], function () use ( $tweak_value ) {
-				add_filter( $tweak_value[ 'hook' ], $tweak_value[ 'callback' ] );
+				add_filter( $tweak_value['hook'], $tweak_value['callback'] );
 			} );
 		}
 	}
@@ -264,7 +260,7 @@ class Settings {
 	/**
 	 * class constructor
 	 */
-	public function __construct(  ) {
+	public function __construct() {
 		add_action( 'admin_menu', [ $this, 'settings_page' ] );
 		add_action( 'init', [ $this, 'tweak_settings' ], 0 );
 	}

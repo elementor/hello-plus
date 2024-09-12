@@ -27,7 +27,7 @@ class Module extends Module_Base {
 	 */
 	protected function get_component_ids(): array {
 		return [
-			'Plugin_Notice'
+			'Plugin_Notice',
 		];
 	}
 }

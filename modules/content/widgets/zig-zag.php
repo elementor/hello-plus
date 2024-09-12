@@ -77,15 +77,15 @@ class Zig_Zag extends Widget_Base {
 		$this->add_control(
 			'first_block_direction',
 			[
-				'label' => esc_html__( 'Align First Image', 'hello-plus' ),
+				'label' => esc_html__( 'Align First Graphic', 'hello-plus' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'row' => [
-						'title' => esc_html__( 'Row', 'hello-plus' ),
+						'title' => esc_html__( 'Left', 'hello-plus' ),
 						'icon' => 'eicon-order-start',
 					],
 					'row-reverse' => [
-						'title' => esc_html__( 'Row Reverse', 'hello-plus' ),
+						'title' => esc_html__( 'Right', 'hello-plus' ),
 						'icon' => 'eicon-order-end',
 					],
 				],
@@ -96,9 +96,8 @@ class Zig_Zag extends Widget_Base {
 		$this->add_control(
 			'important_note',
 			[
-				'label' => '<em>' . esc_html__( 'Note: Image alignment does not apply to Mobile', 'hello-plus' ) . '</em>',
+				'label' => esc_html__( 'Note: Graphic alignment does not apply to Mobile', 'hello-plus' ),
 				'type' => Controls_Manager::HEADING,
-				'separator' => 'default',
 			]
 		);
 
@@ -120,7 +119,7 @@ class Zig_Zag extends Widget_Base {
 					],
 				],
 				'default' => 'image',
-				'toggle' => true,
+				'toggle' => false,
 			]
 		);
 
@@ -206,7 +205,6 @@ class Zig_Zag extends Widget_Base {
 			[
 				'label' => esc_html__( 'Button', 'hello-plus' ),
 				'type' => Controls_Manager::HEADING,
-				'separator' => 'before',
 			]
 		);
 
@@ -286,18 +284,10 @@ class Zig_Zag extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'image_label',
-			[
-				'label' => esc_html__( 'Image', 'hello-plus' ),
-				'type' => Controls_Manager::HEADING,
-			]
-		);
-
 		$this->add_responsive_control(
 			'image_width',
 			[
-				'label' => esc_html__( 'Width', 'hello-plus' ),
+				'label' => esc_html__( 'Graphic Element Width', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'50%' => '50%',
@@ -308,6 +298,15 @@ class Zig_Zag extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .e-zigzag' => '--zigzag-image-width: {{VALUE}};',
 				],
+			]
+		);
+
+		$this->add_control(
+			'image_label',
+			[
+				'label' => esc_html__( 'Image', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
 			]
 		);
 
@@ -343,6 +342,17 @@ class Zig_Zag extends Widget_Base {
 				'label' => esc_html__( 'Icon', 'hello-plus' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'icon_zigzag_color',
+			[
+				'label' => esc_html__( 'Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .e-zigzag' => '--zigzag-icon-color: {{VALUE}}',
+				],
 			]
 		);
 
@@ -748,6 +758,27 @@ class Zig_Zag extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
+			'content_width',
+			[
+				'label' => esc_html__( 'Content Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 1600,
+					],
+					'%' => [
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .e-zigzag' => '--zigzag-content-width: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
 			'space_rows',
 			[
 				'label' => esc_html__( 'Space Between', 'hello-plus' ),
@@ -766,7 +797,6 @@ class Zig_Zag extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .e-zigzag' => '--zigzag-rows-spacing: {{SIZE}}{{UNIT}};',
 				],
-				'separator' => 'before',
 			]
 		);
 
@@ -796,7 +826,7 @@ class Zig_Zag extends Widget_Base {
 				'name' => 'background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => ['image'],
-				'selector' => '{{WRAPPER}} .e-zigzag__item-container',
+				'selector' => '{{WRAPPER}} .e-zigzag__item-wrapper',
 
 			]
 		);
@@ -822,163 +852,10 @@ class Zig_Zag extends Widget_Base {
 				'condition' => [
 					'show_alternate_background' => 'yes',
 				],
-				'selector' => '{{WRAPPER}} .e-zigzag__item-container:nth-child(even)',
+				'selector' => '{{WRAPPER}} .e-zigzag__item-wrapper:nth-child(even)',
 			]
 		);
-
-		// ADD DIMENSIONS HERE
-		$this->add_control(
-			'box_dimensions_label',
-			[
-				'label' => esc_html__( 'Dimensions', 'hello-plus' ),
-				'type' => Controls_Manager::HEADING,
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'box_full_width',
-			[
-				'label' => esc_html__( 'Full Width', 'hello-plus' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
-				'label_off' => esc_html__( 'No', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => 'yes',
-			]
-		);
-
-		$this->add_responsive_control(
-			'box_layout_width',
-			[
-				'label' => esc_html__( 'Layout Width', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
-				'range' => [
-					'px' => [
-						'max' => 1600,
-					],
-					'%' => [
-						'max' => 100,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .e-zigzag' => '--zigzag-layout-width: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'box_full_width' => '',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'box_content_width',
-			[
-				'label' => esc_html__( 'Content Width', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
-				'range' => [
-					'px' => [
-						'max' => 1600,
-					],
-					'%' => [
-						'max' => 100,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .e-zigzag' => '--zigzag-content-width: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'show_widget_border',
-			[
-				'label' => esc_html__( 'Border', 'hello-plus' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Show', 'hello-plus' ),
-				'label_off' => esc_html__( 'Hide', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => 'no',
-				'separator' => 'before',
-				'condition' => [
-					'box_full_width' => 'no',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'widget_border_width',
-			[
-				'label' => esc_html__( 'Border Width', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%', 'vw' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 2000,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
-					'vw' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'condition' => [
-					'show_widget_border' => 'yes',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .e-zigzag' => '--zigzag-wrapper-border-width: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'widget_border_color',
-			[
-				'label' => esc_html__( 'Border Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'condition' => [
-					'show_widget_border' => 'yes',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .e-zigzag' => '--zigzag-wrapper-border-color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'widget_border_radius',
-			[
-				'label' => esc_html__( 'Border Radius', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 1000,
-						'step' => 2,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'condition' => [
-					'show_widget_border' => 'yes',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .e-zigzag' => '--zigzag-wrapper-border-radius: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
-		// ADD VERTICAL PADDING HERE
 
 		$this->end_controls_section();
 	}
 }
-

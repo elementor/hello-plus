@@ -26,16 +26,6 @@ class Widget_Zig_Zag_Render {
 
 	public function render(): void {
 		$layout_classnames = 'e-zigzag';
-		$has_border = $this->settings['show_widget_border'];
-		$is_full_width = $this->settings['box_full_width'];
-
-		if ( 'yes' === $is_full_width ) {
-			$layout_classnames .= ' is-full-width';
-		}
-
-		if ( 'yes' === $has_border ) {
-			$layout_classnames .= ' has-border';
-		}
 
 		$this->widget->add_render_attribute( 'layout', [
 			'class' => $layout_classnames,
@@ -56,11 +46,13 @@ class Widget_Zig_Zag_Render {
 					'class' => $item_class,
 				] );
 				?>
-				<div <?php echo $this->widget->get_render_attribute_string( 'block-item-' . $key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-					<?php
-						$this->render_graphic_element_container( $item );
-						$this->render_text_element_container( $item );
-					?>
+				<div class="e-zigzag__item-wrapper">
+					<div <?php echo $this->widget->get_render_attribute_string( 'block-item-' . $key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+						<?php
+							$this->render_graphic_element_container( $item );
+							$this->render_text_element_container( $item );
+						?>
+					</div>
 				</div>
 				<?php
 			} ?>
@@ -70,12 +62,13 @@ class Widget_Zig_Zag_Render {
 
 	private function render_graphic_element_container( $item ) {
 		$graphic_element_classnames = 'e-zigzag__graphic-element-container';
-		$has_icon = 'icon' === $item['graphic_element'] && ! empty( $item['graphic_icon'] );
-		$has_image = 'image' === $item['graphic_element'] && ! empty( $item['graphic_image']['url'] );
 
-		if ( $has_icon ) {
+		$is_icon = 'icon' === $item['graphic_element'] && ! empty( $item['graphic_icon'] );
+		$is_image = 'image' === $item['graphic_element'] && ! empty( $item['graphic_image']['url'] );
+
+		if ( $is_icon ) {
 			$graphic_element_classnames .= ' has-icon';
-		} else if ( $has_image ) {
+		} else if ( $is_image ) {
 			$graphic_element_classnames .= ' has-image';
 		}
 
@@ -84,9 +77,9 @@ class Widget_Zig_Zag_Render {
 		] );
 		?>
 		<div <?php echo $this->widget->get_render_attribute_string( 'graphic-element-container' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-			<?php if ( $has_image ) : ?>
+			<?php if ( $is_image ) : ?>
 				<?php Group_Control_Image_Size::print_attachment_image_html( $item, 'graphic_image' ); ?>
-			<?php elseif ( $has_icon ) : ?>
+			<?php elseif ( $is_icon ) : ?>
 				<?php Icons_Manager::render_icon( $item['graphic_icon'], [ 'aria-hidden' => 'true' ] ); ?>
 			<?php endif; ?>
 		</div>

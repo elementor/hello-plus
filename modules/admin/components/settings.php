@@ -14,7 +14,7 @@ use HelloPlus\Theme;
  * @package HelloPlus
  * @subpackage HelloPlusModules
  */
-class settings {
+class Settings {
 
 	const SETTINGS_GROUP = 'hello_plus_settings';
 

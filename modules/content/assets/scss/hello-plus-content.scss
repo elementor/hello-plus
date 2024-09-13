@@ -25,6 +25,7 @@
 	--zigzag-wrapper-border-radius: 0;
 	--zigzag-text-alignment: center;
 	--zigzag-image-width: 50%;
+	--zigzag-icon-width: 50%;
 	--zigzag-image-position: center center;
 	--zigzag-button-padding-block-end: 8px;
 	--zigzag-button-padding-block-start: 8px;
@@ -132,7 +133,14 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: var(--zigzag-text-alignment);
-		width: calc(100% - var(--zigzag-image-width));
+		
+		&.is-graphic-image {
+			width: calc(100% - var(--zigzag-image-width));
+		}
+
+		&.is-graphic-icon {
+			width: calc(100% - var(--zigzag-icon-width));
+		}
 
 		.row-even & {
 
@@ -151,7 +159,6 @@
 
 	&__title {
 		color: var(--zigzag-title-color);
-		font-size: 40px;
 	}
 
 	&__description {
@@ -162,13 +169,16 @@
 	&__graphic-element-container {
 		align-items: center;
 		display: flex;
-		width: var(--zigzag-image-width);
 
-		&.has-image img {
-			aspect-ratio: 16 / 9;
-			object-fit: cover;
-			object-position: var(--zigzag-image-position);
-			width: 100%;
+		&.has-image {
+			width: var(--zigzag-image-width);
+
+			img {
+				aspect-ratio: 16 / 9;
+				object-fit: cover;
+				object-position: var(--zigzag-image-position);
+				width: 100%;
+			}	
 		}
 
 		&.has-icon {
@@ -176,6 +186,7 @@
 			color: var(--zigzag-icon-color);
 			display: flex;
 			justify-content: center;
+			width: var(--zigzag-icon-width);
 
 			& svg {
 				fill: currentColor;
@@ -199,6 +210,7 @@
 		display: flex;
 		padding-block: calc(var(--zigzag-rows-spacing) / 2);
 		max-width: var(--zigzag-content-width);
+		width: 100%;
 	
 		&.row-odd {
 			flex-direction: row;

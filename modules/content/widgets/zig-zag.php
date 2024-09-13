@@ -101,9 +101,7 @@ class Zig_Zag extends Widget_Base {
 			]
 		);
 
-		$repeater = new Repeater();
-
-		$repeater->add_control(
+		$this->add_control(
 			'graphic_element',
 			[
 				'label' => esc_html__( 'Graphic Element', 'hello-plus' ),
@@ -123,37 +121,21 @@ class Zig_Zag extends Widget_Base {
 			]
 		);
 
-		$repeater->add_control(
-			'graphic_image',
+		$image_repeater = new Repeater();
+
+		$image_repeater->add_control(
+			'image_graphic_image',
 			[
 				'label' => esc_html__( 'Image', 'hello-plus' ),
 				'type' => Controls_Manager::MEDIA,
 				'default' => [
 					'url' => Utils::get_placeholder_image_src(),
 				],
-				'condition' => [
-					'graphic_element' => 'image',
-				],
 			]
 		);
 
-		$repeater->add_control(
-			'graphic_icon',
-			[
-				'label' => esc_html__( 'Icon', 'hello-plus' ),
-				'type' => Controls_Manager::ICONS,
-				'default' => [
-					'value' => 'fas fa-circle',
-					'library' => 'fa-solid',
-				],
-				'condition' => [
-					'graphic_element' => 'icon',
-				],
-			]
-		);
-
-		$repeater->add_control(
-			'title',
+		$image_repeater->add_control(
+			'image_title',
 			[
 				'label' => esc_html__( 'Title', 'hello-plus' ),
 				'type' => Controls_Manager::TEXT,
@@ -166,8 +148,8 @@ class Zig_Zag extends Widget_Base {
 			]
 		);
 
-		$repeater->add_control(
-			'title_tag',
+		$image_repeater->add_control(
+			'image_title_tag',
 			[
 				'label' => esc_html__( 'HTML Tag', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
@@ -186,8 +168,8 @@ class Zig_Zag extends Widget_Base {
 			]
 		);
 
-		$repeater->add_control(
-			'description',
+		$image_repeater->add_control(
+			'image_description',
 			[
 				'label' => esc_html__( 'Description', 'hello-plus' ),
 				'type' => Controls_Manager::TEXTAREA,
@@ -200,16 +182,16 @@ class Zig_Zag extends Widget_Base {
 			]
 		);
 
-		$repeater->add_control(
-			'button_label',
+		$image_repeater->add_control(
+			'image_button_label',
 			[
 				'label' => esc_html__( 'Button', 'hello-plus' ),
 				'type' => Controls_Manager::HEADING,
 			]
 		);
 
-		$repeater->add_control(
-			'button_text',
+		$image_repeater->add_control(
+			'image_button_text',
 			[
 				'label' => esc_html__( 'Text', 'hello-plus' ),
 				'type' => Controls_Manager::TEXT,
@@ -220,8 +202,8 @@ class Zig_Zag extends Widget_Base {
 			]
 		);
 
-		$repeater->add_control(
-			'button_link',
+		$image_repeater->add_control(
+			'image_button_link',
 			[
 				'label' => esc_html__( 'Link', 'hello-plus' ),
 				'type' => Controls_Manager::URL,
@@ -235,8 +217,8 @@ class Zig_Zag extends Widget_Base {
 			]
 		);
 
-		$repeater->add_control(
-			'button_icon',
+		$image_repeater->add_control(
+			'image_button_icon',
 			[
 				'label' => esc_html__( 'Icon', 'hello-plus' ),
 				'type' => Controls_Manager::ICONS,
@@ -246,29 +228,169 @@ class Zig_Zag extends Widget_Base {
 		);
 
 		$this->add_control(
-			'block_items',
+			'image_block_items',
 			[
 				'type' => Controls_Manager::REPEATER,
-				'fields' => $repeater->get_controls(),
+				'fields' => $image_repeater->get_controls(),
 				'default' => [
 					[
-						'title' => esc_html__( 'Social media done right', 'hello-plus' ),
-						'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet',
+						'image_title' => esc_html__( 'Social media done right', 'hello-plus' ),
+						'image_description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet',
 					],
 					[
-						'title' => esc_html__( 'Award-winning  studio', 'hello-plus' ),
-						'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet',
+						'image_title' => esc_html__( 'Award-winning  studio', 'hello-plus' ),
+						'image_description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet',
 					],
 					[
-						'title' => esc_html__( 'Join Our Community', 'hello-plus' ),
-						'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet',
+						'image_title' => esc_html__( 'Join Our Community', 'hello-plus' ),
+						'image_description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet',
 					],
 					[
-						'title' => esc_html__( 'Your Perfect Match', 'hello-plus' ),
-						'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet',
+						'image_title' => esc_html__( 'Your Perfect Match', 'hello-plus' ),
+						'image_description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet',
 					],
 				],
-				'title_field' => '{{{ title }}}',
+				'title_field' => '{{{ image_title }}}',
+				'condition' => [
+					'graphic_element' => 'image',
+				],
+			]
+		);
+
+		$icon_repeater = new Repeater();
+
+		$icon_repeater->add_control(
+			'icon_graphic_icon',
+			[
+				'label' => esc_html__( 'Icon', 'hello-plus' ),
+				'type' => Controls_Manager::ICONS,
+				'default' => [
+					'value' => 'fas fa-circle',
+					'library' => 'fa-solid',
+				],
+			]
+		);
+
+		$icon_repeater->add_control(
+			'icon_title',
+			[
+				'label' => esc_html__( 'Title', 'hello-plus' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => esc_html__( 'Default title', 'hello-plus' ),
+				'label_block' => true,
+				'placeholder' => esc_html__( 'Type your title here', 'hello-plus' ),
+				'dynamic' => [
+					'active' => true,
+				],
+			]
+		);
+
+		$icon_repeater->add_control(
+			'icon_title_tag',
+			[
+				'label' => esc_html__( 'HTML Tag', 'elementor' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => 'H1',
+					'h2' => 'H2',
+					'h3' => 'H3',
+					'h4' => 'H4',
+					'h5' => 'H5',
+					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'p' => 'p',
+				],
+				'default' => 'h2',
+			]
+		);
+
+		$icon_repeater->add_control(
+			'icon_description',
+			[
+				'label' => esc_html__( 'Description', 'hello-plus' ),
+				'type' => Controls_Manager::TEXTAREA,
+				'rows' => 6,
+				'default' => esc_html__( 'Default description', 'hello-plus' ),
+				'placeholder' => esc_html__( 'Type your description here', 'hello-plus' ),
+				'dynamic' => [
+					'active' => true,
+				],
+			]
+		);
+
+		$icon_repeater->add_control(
+			'icon_button_label',
+			[
+				'label' => esc_html__( 'Button', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+			]
+		);
+
+		$icon_repeater->add_control(
+			'icon_button_text',
+			[
+				'label' => esc_html__( 'Text', 'hello-plus' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => esc_html__( 'Learn More', 'hello-plus' ),
+				'dynamic' => [
+					'active' => true,
+				],
+			]
+		);
+
+		$icon_repeater->add_control(
+			'icon_button_link',
+			[
+				'label' => esc_html__( 'Link', 'hello-plus' ),
+				'type' => Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				],
+				'default' => [
+					'url' => '',
+					'is_external' => true,
+				],
+			]
+		);
+
+		$icon_repeater->add_control(
+			'icon_button_icon',
+			[
+				'label' => esc_html__( 'Icon', 'hello-plus' ),
+				'type' => Controls_Manager::ICONS,
+				'label_block' => false,
+				'skin' => 'inline',
+			]
+		);
+
+		$this->add_control(
+			'icon_block_items',
+			[
+				'type' => Controls_Manager::REPEATER,
+				'fields' => $icon_repeater->get_controls(),
+				'default' => [
+					[
+						'icon_title' => esc_html__( 'Social media done right', 'hello-plus' ),
+						'icon_description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet',
+					],
+					[
+						'icon_title' => esc_html__( 'Award-winning  studio', 'hello-plus' ),
+						'icon_description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet',
+					],
+					[
+						'icon_title' => esc_html__( 'Join Our Community', 'hello-plus' ),
+						'icon_description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet',
+					],
+					[
+						'icon_title' => esc_html__( 'Your Perfect Match', 'hello-plus' ),
+						'icon_description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet',
+					],
+				],
+				'title_field' => '{{{ icon_title }}}',
+				'condition' => [
+					'graphic_element' => 'icon',
+				],
 			]
 		);
 
@@ -283,11 +405,23 @@ class Zig_Zag extends Widget_Base {
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
+		
+		$this->add_control(
+			'image_label',
+			[
+				'label' => esc_html__( 'Image', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+				'condition' => [
+					'graphic_element' => 'image',
+				],
+			]
+		);
 
 		$this->add_responsive_control(
 			'image_width',
 			[
-				'label' => esc_html__( 'Graphic Element Width', 'hello-plus' ),
+				'label' => esc_html__( 'Image Width', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'50%' => '50%',
@@ -298,15 +432,9 @@ class Zig_Zag extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .e-zigzag' => '--zigzag-image-width: {{VALUE}};',
 				],
-			]
-		);
-
-		$this->add_control(
-			'image_label',
-			[
-				'label' => esc_html__( 'Image', 'hello-plus' ),
-				'type' => Controls_Manager::HEADING,
-				'separator' => 'before',
+				'condition' => [
+					'graphic_element' => 'image',
+				],
 			]
 		);
 
@@ -333,6 +461,9 @@ class Zig_Zag extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .e-zigzag' => '--zigzag-image-position: {{VALUE}}',
 				],
+				'condition' => [
+					'graphic_element' => 'image',
+				],
 			]
 		);
 
@@ -342,6 +473,29 @@ class Zig_Zag extends Widget_Base {
 				'label' => esc_html__( 'Icon', 'hello-plus' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
+				'condition' => [
+					'graphic_element' => 'icon',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'icon_width',
+			[
+				'label' => esc_html__( 'Box Width', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'50%' => '50%',
+					'30%' => '30%',
+				],
+				'default' => '50%',
+				'devices' => [ 'desktop', 'tablet', 'mobile' ],
+				'selectors' => [
+					'{{WRAPPER}} .e-zigzag' => '--zigzag-icon-width: {{VALUE}};',
+				],
+				'condition' => [
+					'graphic_element' => 'icon',
+				],
 			]
 		);
 
@@ -352,6 +506,9 @@ class Zig_Zag extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .e-zigzag' => '--zigzag-icon-color: {{VALUE}}',
+				],
+				'condition' => [
+					'graphic_element' => 'icon',
 				],
 			]
 		);
@@ -372,6 +529,9 @@ class Zig_Zag extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .e-zigzag' => '--zigzag-icon-size: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'graphic_element' => 'icon',
 				],
 			]
 		);

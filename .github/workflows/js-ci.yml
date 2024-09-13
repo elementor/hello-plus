@@ -13,7 +13,7 @@ concurrency:
 
 env:
   token: ${{ secrets.CLOUD_DEVOPS_TOKEN }}
-  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  NODE_AUTH_TOKEN: ${{ secrets.CLOUD_DEVOPS_TOKEN }}
 
 jobs:
   build:
@@ -33,7 +33,7 @@ jobs:
           cache: 'npm'
           cache-dependency-path: package-lock.json
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           registry-url: 'https://npm.pkg.github.com'  
           scope: '@elementor'
@@ -41,7 +41,7 @@ jobs:
       - name: Install Dependencies
         run: npm ci
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.CLOUD_DEVOPS_TOKEN }}
 
       - name: Build
         run: npm run build

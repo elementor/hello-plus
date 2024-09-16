@@ -40,7 +40,6 @@
 	background-color: transparent;
 	display: flex;
 	flex-direction: column;
-	padding-block: 60px;
 
 	@media screen and (min-width: $breakpoint-tablet-min) {
 		--zigzag-elements-gap: 40px;

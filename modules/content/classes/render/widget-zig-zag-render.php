@@ -33,10 +33,10 @@ class Widget_Zig_Zag_Render {
 		?>
 		<div <?php echo $this->widget->get_render_attribute_string( 'layout' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<?php
-			$remainder = 'row' === $this->settings['first_block_direction'] ? 0 : 1;
+			$remainder = 'row' === $this->settings['first_zigzag_direction'] ? 0 : 1;
 
 			$graphic_element = $this->settings['graphic_element'];
-			$repeater = 'image' === $graphic_element ? $this->settings['image_block_items'] : $this->settings['icon_block_items'];
+			$repeater = 'image' === $graphic_element ? $this->settings['image_zigzag_items'] : $this->settings['icon_zigzag_items'];
 
 			foreach ( $repeater as $key => $item ) {
 				$is_odd = $remainder !== $key % 2;
@@ -45,12 +45,12 @@ class Widget_Zig_Zag_Render {
 
 				$item_class .= 'row' . ( $is_odd ? '-odd' : '-even' );
 
-				$this->widget->add_render_attribute( 'block-item-' . $key, [
+				$this->widget->add_render_attribute( 'zigzag-item-' . $key, [
 					'class' => $item_class,
 				] );
 				?>
 				<div class="e-zigzag__item-wrapper">
-					<div <?php echo $this->widget->get_render_attribute_string( 'block-item-' . $key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+					<div <?php echo $this->widget->get_render_attribute_string( 'zigzag-item-' . $key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 						<?php
 							$this->render_graphic_element_container( $item, $key );
 							$this->render_text_element_container( $item, $key );

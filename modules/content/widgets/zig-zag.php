@@ -65,7 +65,7 @@ class Zig_Zag extends Widget_Base {
 		$this->add_box_style_section();
 	}
 
-	private function add_zigzags_content_section(  ) {
+	private function add_zigzags_content_section() {
 		$this->start_controls_section(
 			'zigzags_content_section',
 			[
@@ -175,7 +175,7 @@ class Zig_Zag extends Widget_Base {
 		$repeater->add_control(
 			$type . '_title_tag',
 			[
-				'label' => esc_html__( 'HTML Tag', 'elementor' ),
+				'label' => esc_html__( 'HTML Tag', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'h1' => 'H1',
@@ -290,7 +290,7 @@ class Zig_Zag extends Widget_Base {
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
-		
+
 		$this->add_control(
 			'image_label',
 			[
@@ -326,22 +326,22 @@ class Zig_Zag extends Widget_Base {
 		$this->add_responsive_control(
 			'image_position',
 			[
-				'label' => esc_html__( 'Position', 'elementor' ),
+				'label' => esc_html__( 'Position', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
 				'desktop_default' => 'center center',
 				'tablet_default' => 'center center',
 				'mobile_default' => 'center center',
 				'options' => [
-					'' => esc_html__( 'Default', 'elementor' ),
-					'center center' => esc_html__( 'Center Center', 'elementor' ),
-					'center left' => esc_html__( 'Center Left', 'elementor' ),
-					'center right' => esc_html__( 'Center Right', 'elementor' ),
-					'top center' => esc_html__( 'Top Center', 'elementor' ),
-					'top left' => esc_html__( 'Top Left', 'elementor' ),
-					'top right' => esc_html__( 'Top Right', 'elementor' ),
-					'bottom center' => esc_html__( 'Bottom Center', 'elementor' ),
-					'bottom left' => esc_html__( 'Bottom Left', 'elementor' ),
-					'bottom right' => esc_html__( 'Bottom Right', 'elementor' ),
+					'' => esc_html__( 'Default', 'hello-plus' ),
+					'center center' => esc_html__( 'Center Center', 'hello-plus' ),
+					'center left' => esc_html__( 'Center Left', 'hello-plus' ),
+					'center right' => esc_html__( 'Center Right', 'hello-plus' ),
+					'top center' => esc_html__( 'Top Center', 'hello-plus' ),
+					'top left' => esc_html__( 'Top Left', 'hello-plus' ),
+					'top right' => esc_html__( 'Top Right', 'hello-plus' ),
+					'bottom center' => esc_html__( 'Bottom Center', 'hello-plus' ),
+					'bottom left' => esc_html__( 'Bottom Left', 'hello-plus' ),
+					'bottom right' => esc_html__( 'Bottom Right', 'hello-plus' ),
 				],
 				'selectors' => [
 					'{{WRAPPER}} .e-zigzag' => '--zigzag-image-position: {{VALUE}}',
@@ -536,12 +536,12 @@ class Zig_Zag extends Widget_Base {
 		$this->add_control(
 			'button_type',
 			[
-				'label' => esc_html__( 'Type', 'elementor' ),
+				'label' => esc_html__( 'Type', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'link',
 				'options' => [
-					'button' => esc_html__( 'Button', 'elementor' ),
-					'link' => esc_html__( 'Link', 'elementor' ),
+					'button' => esc_html__( 'Button', 'hello-plus' ),
+					'link' => esc_html__( 'Link', 'hello-plus' ),
 				],
 			]
 		);
@@ -553,7 +553,7 @@ class Zig_Zag extends Widget_Base {
 				'selector' => '{{WRAPPER}} .e-zigzag__button',
 				'fields_options' => [
 					'typography' => [ 'default' => 'yes' ],
-				]
+				],
 			]
 		);
 
@@ -637,7 +637,7 @@ class Zig_Zag extends Widget_Base {
 			[
 				'name' => 'button_background',
 				'types' => [ 'classic', 'gradient' ],
-				'exclude' => ['image'],
+				'exclude' => [ 'image' ],
 				'selector' => '{{WRAPPER}} .e-zigzag__button',
 				'fields_options' => [
 					'background' => [
@@ -760,14 +760,14 @@ class Zig_Zag extends Widget_Base {
 		$this->add_control(
 			'button_shape',
 			[
-				'label' => esc_html__( 'Shape', 'elementor' ),
+				'label' => esc_html__( 'Shape', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'default',
 				'options' => [
-					'default' => esc_html__( 'Default', 'elementor' ),
-					'sharp' => esc_html__( 'Sharp', 'elementor' ),
-					'round' => esc_html__( 'Round', 'elementor' ),
-					'rounded' => esc_html__( 'Rounded', 'elementor' ),
+					'default' => esc_html__( 'Default', 'hello-plus' ),
+					'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
+					'round' => esc_html__( 'Round', 'hello-plus' ),
+					'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
 				],
 				'condition' => [
 					'button_type' => 'button',
@@ -789,7 +789,7 @@ class Zig_Zag extends Widget_Base {
 		$this->add_responsive_control(
 			'button_padding',
 			[
-				'label' => esc_html__( 'Padding', 'elementor' ),
+				'label' => esc_html__( 'Padding', 'hello-plus' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
 				'selectors' => [
@@ -848,7 +848,7 @@ class Zig_Zag extends Widget_Base {
 		$this->end_controls_section();
 	}
 
-	private function add_box_style_section(  ) {
+	private function add_box_style_section() {
 		$this->start_controls_section(
 			'box_style_section',
 			[
@@ -870,7 +870,7 @@ class Zig_Zag extends Widget_Base {
 			[
 				'name' => 'background',
 				'types' => [ 'classic', 'gradient' ],
-				'exclude' => ['image'],
+				'exclude' => [ 'image' ],
 				'selector' => '{{WRAPPER}} .e-zigzag__item-wrapper',
 
 			]
@@ -893,7 +893,7 @@ class Zig_Zag extends Widget_Base {
 			[
 				'name' => 'alternate_background',
 				'types' => [ 'classic', 'gradient' ],
-				'exclude' => ['image'],
+				'exclude' => [ 'image' ],
 				'condition' => [
 					'show_alternate_background' => 'yes',
 				],

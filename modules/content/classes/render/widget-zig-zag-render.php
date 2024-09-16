@@ -73,7 +73,7 @@ class Widget_Zig_Zag_Render {
 
 		if ( $is_icon ) {
 			$graphic_element_classnames .= ' has-icon';
-		} else if ( $is_image ) {
+		} elseif ( $is_image ) {
 			$graphic_element_classnames .= ' has-image';
 		}
 
@@ -103,7 +103,7 @@ class Widget_Zig_Zag_Render {
 		$title_text = $item[ $graphic_element . '_title' ] ?? '';
 		$has_title = ! empty( $title_text );
 
-		$description_text = $item[ $graphic_element . '_description'] ?? '';
+		$description_text = $item[ $graphic_element . '_description' ] ?? '';
 		$has_description = ! empty( $description_text );
 
 		$button_classnames = 'e-zigzag__button';
@@ -167,10 +167,10 @@ class Widget_Zig_Zag_Render {
 				<div class="e-zigzag__button-container">
 					<a <?php echo $this->widget->get_render_attribute_string( 'button-link-' . $key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 						<?php Icons_Manager::render_icon( $button_icon,
-							[
-								'aria-hidden' => 'true',
-								'class' => 'e-zigzag__button-icon',
-							] ); ?>
+						[
+							'aria-hidden' => 'true',
+							'class' => 'e-zigzag__button-icon',
+						] ); ?>
 						<?php echo esc_html( $button_text ); ?>
 					</a>
 				</div>

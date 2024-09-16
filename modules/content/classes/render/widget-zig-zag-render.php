@@ -172,7 +172,7 @@ class Widget_Zig_Zag_Render {
 							'class' => 'e-zigzag__button-icon',
 						] );
 					?>
-						<?php echo esc_html( $button_text ); ?>
+					<?php echo esc_html( $button_text ); ?>
 					</a>
 				</div>
 			<?php } ?>

@@ -1,4 +1,4 @@
-window.addEventListener( 'elementor/frontend/init', ( e ) => {
+window.addEventListener( 'elementor/frontend/init', () => {
 	elementorFrontend.hooks.addAction( 'frontend/element_ready/zigzag.default', ( $scope ) => {
 		const scope0 = $scope[ 0 ];
 		const motionEffectElements = scope0.querySelectorAll( '.motion-effect-fade-in' );

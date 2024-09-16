@@ -27,6 +27,10 @@ const entryPoints = {
 	'js/hello-plus-content': path.resolve( modulesDir, 'content/assets/js', 'hello-plus-content.js' ),
 	'css/hello-plus-content': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-content.scss' ),
 
+	// Hero module
+	'js/hello-plus-hero': path.resolve( modulesDir, 'hero/assets/js', 'hello-plus-hero.js' ),
+	'css/hello-plus-hero': path.resolve( modulesDir, 'hero/assets/scss', 'hello-plus-hero.scss' ),
+
 	// Theme module
 	'css/theme': path.resolve( modulesDir, 'theme/assets/scss', 'theme.scss' ),
 	'css/header-footer': path.resolve( modulesDir, 'theme/assets/scss', 'header-footer.scss' ),

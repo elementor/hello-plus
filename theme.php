@@ -173,6 +173,7 @@ final class Theme {
 			'Customizer',
 			'Admin',
 			'Content',
+			'Hero',
 		];
 
 		foreach ( $modules_list as $module_name ) {

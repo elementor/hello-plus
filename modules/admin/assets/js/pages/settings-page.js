@@ -1,6 +1,10 @@
 import { __ } from '@wordpress/i18n';
-// TODO: minimize to only necessary imports
-import { Container, Box, Tabs, Tab, TabPanel, useTabs } from '@elementor/ui';
+import Container from '@elementor/ui/Container';
+import Box from '@elementor/ui/Box';
+import Tabs from '@elementor/ui/Tabs';
+import Tab from '@elementor/ui/Tab';
+import TabPanel from '@elementor/ui/TabPanel';
+import useTabs from '@elementor/ui/useTabs';
 import { ThemeProvider } from '@elementor/ui/styles';
 
 import { SettingsPanel } from '../panels/settings-panel';

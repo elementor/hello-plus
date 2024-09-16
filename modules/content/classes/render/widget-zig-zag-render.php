@@ -166,11 +166,14 @@ class Widget_Zig_Zag_Render {
 			<?php if ( $has_button ) { ?>
 				<div class="e-zigzag__button-container">
 					<a <?php echo $this->widget->get_render_attribute_string( 'button-link-' . $key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-					<?php Icons_Manager::render_icon( $button_icon,
-						[
-							'aria-hidden' => 'true',
-							'class' => 'e-zigzag__button-icon',
-					] ); ?>
+					<?php
+						Icons_Manager::render_icon( $button_icon,
+							[
+								'aria-hidden' => 'true',
+								'class' => 'e-zigzag__button-icon',
+							]
+						);
+					?>
 					<?php echo esc_html( $button_text ); ?>
 					</a>
 				</div>

@@ -1,6 +1,6 @@
 <?php
 
-namespace HelloPlus\Modules\Settings\Components;
+namespace HelloPlus\Modules\Admin\Components;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -34,7 +34,7 @@ class Settings {
 		);
 
 		add_action( 'load-' . $menu_hook, function () {
-				add_action( 'admin_enqueue_scripts', [ $this, 'settings_page_scripts' ], 10 );
+				add_action( 'admin_enqueue_scripts', [ $this, 'settings_page_scripts' ], 10 ); //phpcs:ignore
 			}
 		);
 	}

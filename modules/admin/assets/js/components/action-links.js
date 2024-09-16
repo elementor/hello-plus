@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import { ActionLink } from './action-link';
 
 export const ActionLinks = ( linksData ) => {

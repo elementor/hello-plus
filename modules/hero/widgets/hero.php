@@ -236,22 +236,43 @@ class Hero extends Widget_Base {
 				'label' => esc_html__( 'Content Position', 'hello-plus' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
-					'flex-start' => [
+					'start' => [
 						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => 'eicon-align-start-v',
+						'icon' => 'eicon-align-start-h',
 					],
 					'center' => [
 						'title' => esc_html__( 'Center', 'hello-plus' ),
-						'icon' => 'eicon-align-center-v',
+						'icon' => 'eicon-align-center-h',
 					],
-					'flex-end' => [
+					'end' => [
 						'title' => esc_html__( 'End', 'hello-plus' ),
-						'icon' => 'eicon-align-end-v',
+						'icon' => 'eicon-align-end-h',
 					],
 				],
 				'default' => 'center',
+				'tablet_default' => 'center',
+				'mobile_default' => 'center',
 				'selectors' => [
-					// '{{WRAPPER}} .e-zigzag' => '--zigzag-text-alignment: {{VALUE}};',
+					'{{WRAPPER}} .e-hero' => '--hero-content-position: {{VALUE}}; --hero-content-text-align: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'text_width',
+			[
+				'label' => esc_html__( 'Text Width', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'default' => 'Default',
+					'narrow' => 'Narrow',
+					'wide' => 'Wide',
+				],
+				'default' => 'default',
+				'tablet_default' => 'default',
+				'mobile_default' => 'default',
+				'selectors' => [
+					'{{WRAPPER}} .e-hero' => '--hero-text-heading-width: var(--hero-text-{{VALUE}}-heading); --hero-text-subheading-width: var(--hero-text-{{VALUE}}-subheading);',
 				],
 			]
 		);
@@ -264,7 +285,7 @@ class Hero extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'heading_color',
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
@@ -292,7 +313,7 @@ class Hero extends Widget_Base {
 		);
 
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'subheading_color',
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),

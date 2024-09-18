@@ -3,8 +3,8 @@ import Toolbar from '@elementor/ui/Toolbar';
 import { __ } from '@wordpress/i18n';
 import HomeIcon from '@elementor/icons/HomeIcon';
 import HelpIcon from '@elementor/icons/HelpIcon';
-import { AdminTopBarLinks } from './admin-top-bar-links';
-import { AdminTopBarLink } from './admin-top-bar-link';
+import { TopBarLinks } from './top-bar-links';
+import { TopBarLink } from '../link/top-bar-link';
 
 const home = {
 	label: __( 'Hello+', 'hello-plus' ),
@@ -29,12 +29,12 @@ const adminTopBarLinks = [
 	},
 ];
 
-export const AdminTopBar = () => {
+export const TopBar = () => {
 	return (
 		<AppBar position="static" elevation={ 6 }>
 			<Toolbar sx={ { alignItems: 'center', backgroundColor: 'background.default', justifyContent: 'space-between' } } padding={ 2 }>
-				<AdminTopBarLink linkData={ home } />
-				<AdminTopBarLinks linksData={ adminTopBarLinks } />
+				<TopBarLink linkData={ home } />
+				<TopBarLinks linksData={ adminTopBarLinks } />
 			</Toolbar>
 		</AppBar>
 	);

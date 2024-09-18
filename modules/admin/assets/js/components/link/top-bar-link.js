@@ -1,7 +1,7 @@
 import Typography from '@elementor/ui/Typography';
 import IconButton from '@elementor/ui/IconButton';
 
-export const AdminTopBarLink = ( { linkData } ) => {
+export const TopBarLink = ( { linkData } ) => {
 	const { label, hrefStr, children, color, aria } = linkData;
 	return (
 		<IconButton

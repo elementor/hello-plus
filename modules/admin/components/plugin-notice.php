@@ -98,16 +98,17 @@ class Plugin_Notice {
 	public function enqueue() {
 		wp_enqueue_style(
 			'hello-plus-notice-style',
-			HELLO_PLUS_STYLE_URL . 'hello-plus-notice' . Theme::get_min_suffix() . '.css',
+			HELLO_PLUS_STYLE_URL . 'hello-plus-notice.css',
 			[],
 			HELLO_PLUS_ELEMENTOR_VERSION
 		);
 
 		wp_enqueue_script(
 			'hello-plus-notice',
-			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-notice' . Theme::get_min_suffix() . '.js',
+			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-notice.js',
 			[],
-			HELLO_PLUS_ELEMENTOR_VERSION
+			HELLO_PLUS_ELEMENTOR_VERSION,
+			true
 		);
 
 		wp_localize_script(

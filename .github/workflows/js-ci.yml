@@ -1,0 +1,53 @@
+name: NPM CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+env:
+  token: ${{ secrets.CLOUD_DEVOPS_TOKEN }}
+  NODE_AUTH_TOKEN: ${{ secrets.CLOUD_DEVOPS_TOKEN }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+
+      - uses: actions/setup-node@v4
+        with:
+          registry-url: 'https://npm.pkg.github.com'  
+          scope: '@elementor'
+
+      - name: Install Dependencies
+        run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.CLOUD_DEVOPS_TOKEN }}
+
+      - name: Build
+        run: npm run build
+
+      - name: Lint
+        run: npm run lint:js
+
+#      - name: Test
+#        run: npm run test

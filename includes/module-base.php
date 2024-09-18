@@ -46,7 +46,7 @@ abstract class Module_Base {
 	 *
 	 * @var Module_Base[]
 	 */
-	protected static array $_instances = [];
+	protected static array $instances = [];
 
 	/**
 	 * Get module name.
@@ -79,11 +79,11 @@ abstract class Module_Base {
 	public static function instance(): Module_Base {
 		$class_name = static::class_name();
 
-		if ( empty( static::$_instances[ $class_name ] ) ) {
-			static::$_instances[ $class_name ] = new static(); // @codeCoverageIgnore
+		if ( empty( static::$instances[ $class_name ] ) ) {
+			static::$instances[ $class_name ] = new static(); // @codeCoverageIgnore
 		}
 
-		return static::$_instances[ $class_name ];
+		return static::$instances[ $class_name ];
 	}
 
 	/**
@@ -125,7 +125,7 @@ abstract class Module_Base {
 				$this->reflection = new \ReflectionClass( $this );
 			} catch ( \ReflectionException $e ) {
 				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-					error_log( $e->getMessage() );
+					error_log( $e->getMessage() ); //phpcs:ignore
 				}
 			}
 		}
@@ -196,7 +196,7 @@ abstract class Module_Base {
 	 * @param ?array $components_ids => component's class name.
 	 * @return void
 	 */
-	protected function register_components( array $components_ids  = null ):void {
+	protected function register_components( array $components_ids = null ): void {
 		if ( empty( $components_ids ) ) {
 			$components_ids = $this->get_component_ids();
 		}
@@ -216,7 +216,7 @@ abstract class Module_Base {
 	 * @param \Elementor\Widgets_Manager $widgets_manager
 	 * @return void
 	 */
-	public function register_widgets( \Elementor\Widgets_Manager $widgets_manager ):void {
+	public function register_widgets( \Elementor\Widgets_Manager $widgets_manager ): void {
 		$widget_ids = $this->get_widget_ids();
 		$namespace = static::namespace_name();
 

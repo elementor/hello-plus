@@ -28,7 +28,8 @@ class Module extends Module_Base {
 	protected function get_component_ids(): array {
 		return [
 			'Plugin_Notice',
-			'Rest_Get_Promotions',
+			'Rest_Controller',
+			'Admin_Menu_Controller',
 		];
 	}
 }

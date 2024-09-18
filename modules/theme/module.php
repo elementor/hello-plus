@@ -202,7 +202,7 @@ class Module extends Module_Base {
 		$elements_manager->add_category(
 			self::HELLO_PLUS_EDITOR_CATEGORY_SLUG,
 			[
-				'title' => esc_html__('Hello+', 'hello-plus'),
+				'title' => esc_html__( 'Hello+', 'hello-plus' ),
 				'icon' => 'fa fa-plug',
 			]
 		);

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="WordPress.Elementor">
-	<description>Hello Plus Theme Coding Standard</description>
+	<description>Elementor Coding Standards</description>
 
 	<arg name="parallel" value="8" />
 
@@ -10,6 +10,15 @@
 	<exclude-pattern>build/</exclude-pattern>
 	<exclude-pattern>node_modules/</exclude-pattern>
 	<exclude-pattern>tests/*.php</exclude-pattern>
+	<exclude-pattern>*.js</exclude-pattern>
+	<exclude-pattern>*.css</exclude-pattern>
+	<exclude-pattern>*.scss</exclude-pattern>
+
+	<rule ref="WordPress-Core">
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
+	</rule>
+
+	<rule ref="WordPress.Security" />
 
 	<rule ref="WordPress-Extra">
 		<exclude name="Generic.Commenting.DocComment.MissingShort" />
@@ -27,8 +36,6 @@
 		<exclude name="WordPress.Arrays.MultipleStatementAlignment" />
 		<exclude name="WordPress.CSRF.NonceVerification.NoNonceVerification" />
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
-		<exclude name="WordPress.Security.NonceVerification.NoNonceVerification"/>
-		<exclude name="WordPress.Security.NonceVerification.Missing"/>
 		<exclude name="WordPress.WP.I18n.MissingTranslatorsComment" />
 		<exclude name="WordPress.WP.I18n.NonSingularStringLiteralSingle" />
 		<exclude name="WordPress.WP.I18n.NonSingularStringLiteralPlural" />
@@ -36,12 +43,6 @@
 		<exclude name="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket" />
 		<exclude name="PEAR.Functions.FunctionCallSignature.MultipleArguments" />
 		<exclude name="PEAR.Functions.FunctionCallSignature.CloseBracketLine" />
-	</rule>
-
-	<rule ref="WordPress.WP.DeprecatedFunctions">
-		<properties>
-			<property name="minimum_supported_version" value="4.7" />
-		</properties>
 	</rule>
 
 	<rule ref="WordPress.NamingConventions.ValidHookName">

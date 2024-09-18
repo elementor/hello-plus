@@ -1,10 +1,14 @@
 <?php
 
-namespace HelloPlus\Modules\Admin\Components;
+namespace HelloPlus\Modules\Admin\Classes\Rest;
 
 use WP_REST_Server;
 
-class Rest_Get_Promotions {
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+class Get_Promotions {
 
 	protected $plugins = [];
 
@@ -107,5 +111,4 @@ class Rest_Get_Promotions {
 
 		return rest_ensure_response( [ 'links' => $action_links_data ] );
 	}
-
 }

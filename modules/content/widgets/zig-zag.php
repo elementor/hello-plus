@@ -6,171 +6,86 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
+use Elementor\Group_Control_Background;
+use Elementor\Group_Control_Box_Shadow;
+use Elementor\Group_Control_Image_Size;
+use Elementor\Group_Control_Typography;
+use Elementor\Icons_Manager;
+use Elementor\Repeater;
+use Elementor\Utils;
+use Elementor\Widget_Base;
+
+use HelloPlus\Modules\Content\Classes\Render\Widget_Zig_Zag_Render;
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
-/**
- * class Zigzag
- **/
 class Zig_Zag extends Widget_Base {
 
-	/**
-	 * @inheritDoc
-	 */
 	public function get_name(): string {
 		return 'zigzag';
 	}
 
-	/**
-	 * Get widget title.
-	 *
-	 * Retrieve list widget title.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @return string Widget title.
-	 */
 	public function get_title(): string {
 		return esc_html__( 'Zig-Zag', 'hello-plus' );
 	}
 
-	/**
-	 * Get widget icon.
-	 *
-	 * Retrieve list widget icon.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @return string Widget icon.
-	 */
-	public function get_icon(): string {
-		return 'eicon-time-line';
-	}
-
-	/**
-	 * Get widget categories.
-	 *
-	 * Retrieve the list of categories the list widget belongs to.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @return array Widget categories.
-	 */
 	public function get_categories(): array {
 		return [ Theme_Module::HELLO_PLUS_EDITOR_CATEGORY_SLUG ];
 	}
 
-	/**
-	 * Get widget keywords.
-	 *
-	 * Retrieve the list of keywords the list widget belongs to.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 * @return array Widget keywords.
-	 */
 	public function get_keywords(): array {
 		return [ 'zigzag', 'content' ];
 	}
 
-	/**
-	 * @return string[]
-	 */
+	public function get_icon(): string {
+		return 'eicon-time-line';
+	}
+
 	public function get_style_depends(): array {
 		return [ 'hello-plus-content' ];
 	}
 
-	/**
-	 * Register zigzag widget controls.
-	 *
-	 * Add input fields to allow the user to customize the widget settings.
-	 *
-	 * @since 1.0.0
-	 * @access protected
-	 */
-	protected function register_controls() {
-		$this->add_layout_section();
-		$this->add_blocks_section();
-		$this->add_style_section();
-		$this->add_background_style_section();
-		$this->add_border_style_section();
-		$this->add_advanced_section();
-		$this->add_motion_effects_section();
-		$this->add_advanced_responsive_section();
-		$this->add_custom_section();
+	protected function render(): void {
+		$render_strategy = new Widget_Zig_Zag_Render( $this );
+
+		$render_strategy->render();
 	}
 
-	private function add_layout_section() {
+	protected function register_controls() {
+		$this->add_content_section();
+		$this->add_style_section();
+	}
+
+	protected function add_content_section() {
+		$this->add_zigzags_content_section();
+	}
+
+	protected function add_style_section() {
+		$this->add_style_zigzags_section();
+		$this->add_box_style_section();
+	}
+
+	private function add_zigzags_content_section() {
 		$this->start_controls_section(
-			'layout_section',
+			'zigzags_content_section',
 			[
-				'label' => esc_html__( 'Layout', 'hello-plus' ),
-				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
-			]
-		);
-
-		$this->add_responsive_control(
-			'image_width',
-			[
-				'label' => esc_html__( 'Image Width', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SELECT,
-				'options' => [
-					'100' => '50%',
-					'50' => '30%',
-				],
-				'devices' => [ 'desktop', 'tablet', 'mobile' ],
-				'desktop_default' => '100',
-				'tablet_default' => '100',
-				'mobile_default' => '100',
-				'selectors' => [
-					'{{WRAPPER}} .zigzag-widget-image-container img' => 'width: {{VALUE}}%;',
-				],
-			]
-		);
-
-
-		$this->add_responsive_control(
-			'content_alignment',
-			[
-				'label' => esc_html__( 'Align Content', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::CHOOSE,
-				'options' => [
-					'flex-start' => [
-						'title' => esc_html__( 'Left', 'hello-plus' ),
-						'icon' => 'eicon-align-start-v',
-					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'hello-plus' ),
-						'icon' => 'eicon-align-center-v',
-					],
-					'flex-end' => [
-						'title' => esc_html__( 'Right', 'hello-plus' ),
-						'icon' => 'eicon-align-end-v',
-					],
-				],
-				'devices' => [ 'desktop', 'tablet', 'mobile' ],
-				'desktop_default' => 'center',
-				'tablet_default' => 'center',
-				'mobile_default' => 'center',
-				'selectors' => [
-					'{{WRAPPER}} .zigzag-text-container' => 'justify-content: {{VALUE}};',
-				],
+				'label' => esc_html__( 'Zigzags', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
 
 		$this->add_control(
-			'first_block_direction',
+			'first_zigzag_direction',
 			[
-				'label' => esc_html__( 'First Image Position', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::CHOOSE,
+				'label' => esc_html__( 'Align First Graphic', 'hello-plus' ),
+				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'row' => [
-						'title' => esc_html__( 'Row', 'hello-plus' ),
+						'title' => esc_html__( 'Left', 'hello-plus' ),
 						'icon' => 'eicon-order-start',
 					],
 					'row-reverse' => [
-						'title' => esc_html__( 'Row Reverse', 'hello-plus' ),
+						'title' => esc_html__( 'Right', 'hello-plus' ),
 						'icon' => 'eicon-order-end',
 					],
 				],
@@ -181,33 +96,16 @@ class Zig_Zag extends Widget_Base {
 		$this->add_control(
 			'important_note',
 			[
-				'label' => '<em>' . esc_html__( 'Note: Image position applies only on desktop.', 'hello-plus' ) . '</em>',
-				'type' => \Elementor\Controls_Manager::HEADING,
-				'separator' => 'default',
+				'label' => esc_html__( 'Note: Graphic alignment does not apply to Mobile', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
 			]
 		);
 
-		$this->end_controls_section();
-	}
-
-	private function add_blocks_section(  ) {
-		$this->start_controls_section(
-			'Blocks_section',
-			[
-				'label' => esc_html__( 'Blocks', 'hello-plus' ),
-				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
-			]
-		);
-
-		/* Start repeater */
-
-		$repeater = new \Elementor\Repeater();
-
-		$repeater->add_control(
+		$this->add_control(
 			'graphic_element',
 			[
 				'label' => esc_html__( 'Graphic Element', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::CHOOSE,
+				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'image' => [
 						'title' => esc_html__( 'Image', 'hello-plus' ),
@@ -219,45 +117,52 @@ class Zig_Zag extends Widget_Base {
 					],
 				],
 				'default' => 'image',
-				'toggle' => true,
+				'toggle' => false,
 			]
 		);
 
-		$repeater->add_control(
-			'graphic_image',
-			[
-				'label' => esc_html__( 'Image', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::MEDIA,
-				'default' => [
-					'url' => \Elementor\Utils::get_placeholder_image_src(),
-				],
-				'condition' => [
-					'graphic_element' => 'image',
-				],
-			]
-		);
+		$this->add_graphic_element_repeater( 'image' );
+
+		$this->add_graphic_element_repeater( 'icon' );
+
+		$this->end_controls_section();
+	}
+
+	private function add_graphic_element_repeater( $type ) {
+		$repeater = new Repeater();
+
+		if ( 'icon' === $type ) {
+			$repeater->add_control(
+				$type . '_graphic_icon',
+				[
+					'label' => esc_html__( 'Icon', 'hello-plus' ),
+					'type' => Controls_Manager::ICONS,
+					'default' => [
+						'value' => 'fas fa-circle',
+						'library' => 'fa-solid',
+					],
+				]
+			);
+		}
+
+		if ( 'image' === $type ) {
+			$repeater->add_control(
+				$type . '_graphic_image',
+				[
+					'label' => esc_html__( 'Image', 'hello-plus' ),
+					'type' => Controls_Manager::MEDIA,
+					'default' => [
+						'url' => Utils::get_placeholder_image_src(),
+					],
+				]
+			);
+		}
 
 		$repeater->add_control(
-			'graphic_icon',
-			[
-				'label' => esc_html__( 'Icon', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::ICONS,
-				'default' => [
-					'value' => 'fas fa-circle',
-					'library' => 'fa-solid',
-				],
-				'condition' => [
-					'graphic_element' => 'icon',
-				],
-			]
-		);
-
-
-		$repeater->add_control(
-			'title',
+			$type . '_title',
 			[
 				'label' => esc_html__( 'Title', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
+				'type' => Controls_Manager::TEXT,
 				'default' => esc_html__( 'Default title', 'hello-plus' ),
 				'label_block' => true,
 				'placeholder' => esc_html__( 'Type your title here', 'hello-plus' ),
@@ -268,10 +173,30 @@ class Zig_Zag extends Widget_Base {
 		);
 
 		$repeater->add_control(
-			'description',
+			$type . '_title_tag',
+			[
+				'label' => esc_html__( 'HTML Tag', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => 'H1',
+					'h2' => 'H2',
+					'h3' => 'H3',
+					'h4' => 'H4',
+					'h5' => 'H5',
+					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'p' => 'p',
+				],
+				'default' => 'h2',
+			]
+		);
+
+		$repeater->add_control(
+			$type . '_description',
 			[
 				'label' => esc_html__( 'Description', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::TEXTAREA,
+				'type' => Controls_Manager::TEXTAREA,
 				'rows' => 6,
 				'default' => esc_html__( 'Default description', 'hello-plus' ),
 				'placeholder' => esc_html__( 'Type your description here', 'hello-plus' ),
@@ -281,120 +206,245 @@ class Zig_Zag extends Widget_Base {
 			]
 		);
 
-		// Add a control for the button text
 		$repeater->add_control(
-			'button_text',
+			$type . '_button_label',
 			[
-				'label' => esc_html__( 'Button Text', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__( 'Learn More', 'hello-plus' ),
-				'dynamic' => [
-					'active' => true,
-				]
+				'label' => esc_html__( 'Button', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
 			]
 		);
 
 		$repeater->add_control(
-			'button_link',
+			$type . '_button_text',
+			[
+				'label' => esc_html__( 'Text', 'hello-plus' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => esc_html__( 'Learn More', 'hello-plus' ),
+				'dynamic' => [
+					'active' => true,
+				],
+			]
+		);
+
+		$repeater->add_control(
+			$type . '_button_link',
 			[
 				'label' => esc_html__( 'Link', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::URL,
+				'type' => Controls_Manager::URL,
 				'dynamic' => [
 					'active' => true,
 				],
 				'default' => [
-					'url' => '#',
+					'url' => '',
+					'is_external' => true,
 				],
 			]
 		);
 
 		$repeater->add_control(
-			'button_icon',
+			$type . '_button_icon',
 			[
 				'label' => esc_html__( 'Icon', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::ICONS,
+				'type' => Controls_Manager::ICONS,
 				'label_block' => false,
 				'skin' => 'inline',
 			]
 		);
 
-
-
-		/* End repeater */
-
 		$this->add_control(
-			'block_items',
+			$type . '_zigzag_items',
 			[
-				'label' => esc_html__( 'Block Items', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::REPEATER,
-				'fields' => $repeater->get_controls(),           /* Use our repeater */
+				'type' => Controls_Manager::REPEATER,
+				'fields' => $repeater->get_controls(),
 				'default' => [
 					[
-						'title' => esc_html__( 'Social media done right', 'hello-plus' ),
-						'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet',
+						$type . '_title' => esc_html__( 'Social media done right', 'hello-plus' ),
+						$type . '_description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet',
 					],
 					[
-						'title' => esc_html__( 'Award-winning  studio', 'hello-plus' ),
-						'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet',
+						$type . '_title' => esc_html__( 'Award-winning  studio', 'hello-plus' ),
+						$type . '_description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet',
 					],
 					[
-						'title' => esc_html__( 'Join Our Community', 'hello-plus' ),
-						'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet',
+						$type . '_title' => esc_html__( 'Join Our Community', 'hello-plus' ),
+						$type . '_description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet',
 					],
 					[
-						'title' => esc_html__( 'Your Perfect Match', 'hello-plus' ),
-						'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet',
+						$type . '_title' => esc_html__( 'Your Perfect Match', 'hello-plus' ),
+						$type . '_description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet',
 					],
 				],
-				'title_field' => '{{{ title }}}',
+				'title_field' => '{{{ ' . $type . '_title }}}',
+				'condition' => [
+					'graphic_element' => $type,
+				],
 			]
 		);
-
-		$this->end_controls_section();
 	}
 
-	private function add_style_section() {
+	private function add_style_zigzags_section() {
 		$this->start_controls_section(
-			'style_section',
+			'style_zigzags_section',
 			[
-				'label' => esc_html__( 'Blocks', 'hello-plus' ),
-				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+				'label' => esc_html__( 'Zigzag', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
 
 		$this->add_control(
-			'style_spacing',
+			'image_label',
 			[
-				'label' => esc_html__( 'Spacing', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::HEADING,
+				'label' => esc_html__( 'Image', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
+				'condition' => [
+					'graphic_element' => 'image',
+				],
 			]
 		);
 
 		$this->add_responsive_control(
-			'space_rows',
+			'image_width',
 			[
-				'label' => esc_html__( 'Space Between Rows', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
+				'label' => esc_html__( 'Image Width', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'50%' => '50%',
+					'30%' => '30%',
+				],
+				'default' => '50%',
+				'devices' => [ 'desktop', 'tablet', 'mobile' ],
+				'selectors' => [
+					'{{WRAPPER}} .e-zigzag' => '--zigzag-image-width: {{VALUE}};',
+				],
+				'condition' => [
+					'graphic_element' => 'image',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'image_position',
+			[
+				'label' => esc_html__( 'Position', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'desktop_default' => 'center center',
+				'tablet_default' => 'center center',
+				'mobile_default' => 'center center',
+				'options' => [
+					'' => esc_html__( 'Default', 'hello-plus' ),
+					'center center' => esc_html__( 'Center Center', 'hello-plus' ),
+					'center left' => esc_html__( 'Center Left', 'hello-plus' ),
+					'center right' => esc_html__( 'Center Right', 'hello-plus' ),
+					'top center' => esc_html__( 'Top Center', 'hello-plus' ),
+					'top left' => esc_html__( 'Top Left', 'hello-plus' ),
+					'top right' => esc_html__( 'Top Right', 'hello-plus' ),
+					'bottom center' => esc_html__( 'Bottom Center', 'hello-plus' ),
+					'bottom left' => esc_html__( 'Bottom Left', 'hello-plus' ),
+					'bottom right' => esc_html__( 'Bottom Right', 'hello-plus' ),
+				],
+				'selectors' => [
+					'{{WRAPPER}} .e-zigzag' => '--zigzag-image-position: {{VALUE}}',
+				],
+				'condition' => [
+					'graphic_element' => 'image',
+				],
+			]
+		);
+
+		$this->add_control(
+			'icon_label',
+			[
+				'label' => esc_html__( 'Icon', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+				'condition' => [
+					'graphic_element' => 'icon',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'icon_width',
+			[
+				'label' => esc_html__( 'Box Width', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'50%' => '50%',
+					'30%' => '30%',
+				],
+				'default' => '50%',
+				'devices' => [ 'desktop', 'tablet', 'mobile' ],
+				'selectors' => [
+					'{{WRAPPER}} .e-zigzag' => '--zigzag-icon-width: {{VALUE}};',
+				],
+				'condition' => [
+					'graphic_element' => 'icon',
+				],
+			]
+		);
+
+		$this->add_control(
+			'icon_zigzag_color',
+			[
+				'label' => esc_html__( 'Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .e-zigzag' => '--zigzag-icon-color: {{VALUE}}',
+				],
+				'condition' => [
+					'graphic_element' => 'icon',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'icon_zigzag_size',
+			[
+				'label' => esc_html__( 'Icon Size', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
-						'max' => 1000,
-						'step' => 5,
+						'max' => 300,
 					],
 					'%' => [
-						'min' => 0,
 						'max' => 100,
 					],
 				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 40,
-				],
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-block-item-container' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .e-zigzag' => '--zigzag-icon-size: {{SIZE}}{{UNIT}};',
 				],
+				'condition' => [
+					'graphic_element' => 'icon',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'content_alignment',
+			[
+				'label' => esc_html__( 'Content Position', 'hello-plus' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'flex-start' => [
+						'title' => esc_html__( 'Start', 'hello-plus' ),
+						'icon' => 'eicon-align-start-v',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'hello-plus' ),
+						'icon' => 'eicon-align-center-v',
+					],
+					'flex-end' => [
+						'title' => esc_html__( 'End', 'hello-plus' ),
+						'icon' => 'eicon-align-end-v',
+					],
+				],
+				'default' => 'center',
+				'selectors' => [
+					'{{WRAPPER}} .e-zigzag' => '--zigzag-text-alignment: {{VALUE}};',
+				],
+				'separator' => 'before',
 			]
 		);
 
@@ -402,8 +452,7 @@ class Zig_Zag extends Widget_Base {
 			'style_heading',
 			[
 				'label' => esc_html__( 'Heading', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::HEADING,
-				'separator' => 'before',
+				'type' => Controls_Manager::HEADING,
 			]
 		);
 
@@ -411,52 +460,18 @@ class Zig_Zag extends Widget_Base {
 			'title_color',
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
+				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-block-item-container h2' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .e-zigzag' => '--zigzag-title-color: {{VALUE}}',
 				],
 			]
 		);
 
 		$this->add_group_control(
-			\Elementor\Group_Control_Typography::get_type(),
+			Group_Control_Typography::get_type(),
 			[
 				'name' => 'title_typography',
-				'selector' => '{{WRAPPER}} .zigzag-block-item-container h2',
-				'fields_options' => [
-					'typography' => ['default' => 'yes'],
-					'font_family' => [
-						'default' => 'Poppins',
-					],
-					'font_size' => [
-						'default' => [
-							'unit' => 'px',
-							'size' => 40,
-						],
-						'tablet_default' => [
-							'unit' => 'px',
-							'size' => 36,
-						],
-						'mobile_default' => [
-							'unit' => 'px',
-							'size' => 32,
-						],
-					],
-					'line_height' => [
-						'default' => [
-							'unit' => 'px',
-							'size' => 58,
-						],
-						'tablet_default' => [
-							'unit' => 'px',
-							'size' => 52,
-						],
-						'mobile_default' => [
-							'unit' => 'px',
-							'size' => 46,
-						],
-					],
-				]
+				'selector' => '{{WRAPPER}} .e-zigzag__title',
 			]
 		);
 
@@ -464,7 +479,7 @@ class Zig_Zag extends Widget_Base {
 			'style_description',
 			[
 				'label' => esc_html__( 'Paragraph', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::HEADING,
+				'type' => Controls_Manager::HEADING,
 				'separator' => 'default',
 			]
 		);
@@ -473,52 +488,39 @@ class Zig_Zag extends Widget_Base {
 			'description_color',
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
+				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-block-item-container p' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .e-zigzag' => '--zigzag-description-color: {{VALUE}}',
 				],
 			]
 		);
 
 		$this->add_group_control(
-			\Elementor\Group_Control_Typography::get_type(),
+			Group_Control_Typography::get_type(),
 			[
 				'name' => 'description_typography',
-				'selector' => '{{WRAPPER}} .zigzag-block-item-container p',
-				'fields_options' => [
-					'typography' => ['default' => 'yes'],
-					'font_family' => [
-						'default' => 'Poppins',
+				'selector' => '{{WRAPPER}} .e-zigzag__description',
+			]
+		);
+
+		$this->add_responsive_control(
+			'elements_gap',
+			[
+				'label' => esc_html__( 'Gap', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 200,
 					],
-					'font_size' => [
-						'default' => [
-							'unit' => 'px',
-							'size' => 18,
-						],
-						'tablet_default' => [
-							'unit' => 'px',
-							'size' => 16,
-						],
-						'mobile_default' => [
-							'unit' => 'px',
-							'size' => 14,
-						],
+					'%' => [
+						'max' => 100,
 					],
-					'line_height' => [
-						'default' => [
-							'unit' => 'px',
-							'size' => 32,
-						],
-						'tablet_default' => [
-							'unit' => 'px',
-							'size' => 28,
-						],
-						'mobile_default' => [
-							'unit' => 'px',
-							'size' => 24,
-						],
-					],
-				]
+				],
+				'selectors' => [
+					'{{WRAPPER}} .e-zigzag' => '--zigzag-elements-gap: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
 			]
 		);
 
@@ -526,76 +528,59 @@ class Zig_Zag extends Widget_Base {
 			'style_button',
 			[
 				'label' => esc_html__( 'Button', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::HEADING,
-				'separator' => 'default',
-			]
-		);
-
-		$this->add_group_control(
-			\Elementor\Group_Control_Typography::get_type(),
-			[
-				'name' => 'button_typography',
-				'selector' => '{{WRAPPER}} .zigzag-button a',
-				'fields_options' => [
-					'typography' => ['default' => 'yes'],
-					'font_family' => [
-						'default' => 'Poppins',
-					],
-					'font_weight' => [
-						'default' => '500',
-					],
-					'font_size' => [
-						'default' => [
-							'unit' => 'px',
-							'size' => 16,
-						],
-						'tablet_default' => [
-							'unit' => 'px',
-							'size' => 14,
-						],
-						'mobile_default' => [
-							'unit' => 'px',
-							'size' => 12,
-						],
-					],
-					'line_height' => [
-						'default' => [
-							'unit' => 'px',
-							'size' => 24,
-						],
-						'tablet_default' => [
-							'unit' => 'px',
-							'size' => 22,
-						],
-						'mobile_default' => [
-							'unit' => 'px',
-							'size' => 20,
-						],
-					],
-					'text_decoration' => [
-						'default' => 'underline',
-					],
-				]
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
 			]
 		);
 
 		$this->add_control(
+			'button_type',
+			[
+				'label' => esc_html__( 'Type', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'link',
+				'options' => [
+					'button' => esc_html__( 'Button', 'hello-plus' ),
+					'link' => esc_html__( 'Link', 'hello-plus' ),
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'button_typography',
+				'selector' => '{{WRAPPER}} .e-zigzag__button',
+				'fields_options' => [
+					'typography' => [ 'default' => 'yes' ],
+				],
+			]
+		);
+
+		$this->add_responsive_control(
 			'button_icon_position',
 			[
 				'label' => esc_html__( 'Icon Position', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::CHOOSE,
+				'type' => Controls_Manager::CHOOSE,
+				'default' => is_rtl() ? 'row' : 'row-reverse',
+				'toggle' => false,
 				'options' => [
-					'left' => [
-						'title' => esc_html__( 'Left', 'hello-plus' ),
+					'row' => [
+						'title' => esc_html__( 'Start', 'hello-plus' ),
 						'icon' => 'eicon-h-align-left',
 					],
-					'right' => [
-						'title' => esc_html__( 'Right', 'hello-plus' ),
+					'row-reverse' => [
+						'title' => esc_html__( 'End', 'hello-plus' ),
 						'icon' => 'eicon-h-align-right',
 					],
 				],
-				'default' => 'right',
-				'toggle' => true,
+				'selectors_dictionary' => [
+					'left' => is_rtl() ? 'row-reverse' : 'row',
+					'right' => is_rtl() ? 'row' : 'row-reverse',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .e-zigzag__button' => 'flex-direction: {{VALUE}};',
+				],
 			]
 		);
 
@@ -603,26 +588,24 @@ class Zig_Zag extends Widget_Base {
 			'button_icon_spacing',
 			[
 				'label' => esc_html__( 'Icon Spacing', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 100,
-						'step' => 2,
+					],
+					'em' => [
+						'max' => 5,
+					],
+					'rem' => [
+						'max' => 5,
 					],
 					'%' => [
-						'min' => 0,
 						'max' => 100,
 					],
 				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 10,
-				],
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-button a .icon-left' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .zigzag-button a .icon-right' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .e-zigzag' => '--zigzag-button-icon-spacing: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -642,34 +625,27 @@ class Zig_Zag extends Widget_Base {
 			'button_text_color',
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'default' => '#000000',
+				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-button a' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .e-zigzag' => '--zigzag-button-text-color: {{VALUE}}',
 				],
 			]
 		);
 
-		$this->add_control(
-			'button_icon_color',
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
 			[
-				'label' => esc_html__( 'Icon Color', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'default' => '#000000', // Default to black if no color is selected
-				'selectors' => [
-					'{{WRAPPER}} .icon-left, {{WRAPPER}} .icon-right' => 'color: {{VALUE}};',
+				'name' => 'button_background',
+				'types' => [ 'classic', 'gradient' ],
+				'exclude' => [ 'image' ],
+				'selector' => '{{WRAPPER}} .e-zigzag__button',
+				'fields_options' => [
+					'background' => [
+						'default' => 'classic',
+					],
 				],
-			]
-		);
-
-		$this->add_control(
-			'button_background_color',
-			[
-				'label' => esc_html__( 'Background Color', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'default' => '#00000000',
-				'selectors' => [
-					'{{WRAPPER}} .zigzag-button a' => 'background-color: {{VALUE}}', // Replace .your-class with .elementor-button-link
+				'condition' => [
+					'button_type' => 'button',
 				],
 			]
 		);
@@ -687,33 +663,27 @@ class Zig_Zag extends Widget_Base {
 			'hover_button_text_color',
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
+				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-button a:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .e-zigzag' => '--zigzag-button-text-color-hover: {{VALUE}}',
 				],
 			]
 		);
 
-		// Button Icon Color on Hover
-		$this->add_control(
-			'hover_button_icon_color',
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
 			[
-				'label' => esc_html__( 'Icon Color', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .icon-left:hover, {{WRAPPER}} .icon-right:hover' => 'color: {{VALUE}}',
+				'name' => 'button_background_hover',
+				'types' => [ 'classic', 'gradient' ],
+				'exclude' => [ 'image' ],
+				'selector' => '{{WRAPPER}} .e-zigzag__button:hover, {{WRAPPER}} .e-zigzag__button:focus',
+				'fields_options' => [
+					'background' => [
+						'default' => 'classic',
+					],
 				],
-			]
-		);
-
-		// Button Background Color on Hover
-		$this->add_control(
-			'hover_button_background_color',
-			[
-				'label' => esc_html__( 'Background Color', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .zigzag-button a:hover' => 'background-color: {{VALUE}}',
+				'condition' => [
+					'button_type' => 'button',
 				],
 			]
 		);
@@ -722,7 +692,7 @@ class Zig_Zag extends Widget_Base {
 			'button_hover_animation',
 			[
 				'label' => esc_html__( 'Hover Animation', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::HOVER_ANIMATION,
+				'type' => Controls_Manager::HOVER_ANIMATION,
 
 			]
 		);
@@ -732,21 +702,18 @@ class Zig_Zag extends Widget_Base {
 		$this->end_controls_tabs();
 
 		$this->add_control(
-			'button_style_divider',
-			[
-				'type' => \Elementor\Controls_Manager::DIVIDER,
-			]
-		);
-
-		$this->add_control(
-			'show_border',
+			'show_button_border',
 			[
 				'label' => esc_html__( 'Border', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'type' => Controls_Manager::SWITCHER,
 				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
 				'label_off' => esc_html__( 'No', 'hello-plus' ),
 				'return_value' => 'yes',
 				'default' => 'no',
+				'separator' => 'before',
+				'condition' => [
+					'button_type' => 'button',
+				],
 			]
 		);
 
@@ -754,7 +721,7 @@ class Zig_Zag extends Widget_Base {
 			'button_border_width',
 			[
 				'label' => __( 'Border Width', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SLIDER,
+				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
 				'range' => [
 					'px' => [
@@ -767,15 +734,11 @@ class Zig_Zag extends Widget_Base {
 						'max' => 100,
 					],
 				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 2,
+				'selectors' => [
+					'{{WRAPPER}} .e-zigzag' => '--zigzag-button-border-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
-					'show_border' => 'yes',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .zigzag-button a' => 'border-width: {{SIZE}}{{UNIT}}; border-style: solid;',
+					'show_button_border' => 'yes',
 				],
 			]
 		);
@@ -784,215 +747,131 @@ class Zig_Zag extends Widget_Base {
 			'button_border_color',
 			[
 				'label' => esc_html__( 'Color', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'default' => '#000000', // Default to black if no color is selected
+				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .zigzag-button a' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .e-zigzag' => '--zigzag-button-border-color: {{VALUE}}',
 				],
 				'condition' => [
-					'show_border' => 'yes',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'button_border_radius',
-			[
-				'label' => __( 'Border Radius', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%', 'em', 'rem' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-						'step' => 1,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .zigzag-button a' => 'border-radius: {{SIZE}}{{UNIT}};',
+					'show_button_border' => 'yes',
 				],
 			]
 		);
 
 		$this->add_control(
-			'show_button_border_shadow',
+			'button_shape',
 			[
-				'label' => esc_html__( 'Box Shadow', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
-				'label_off' => esc_html__( 'No', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => 'no',
-			]
-		);
-
-		$this->add_control(
-			'zigzag_button_box_shadow',
-			[
-				'label' => esc_html__( 'Box Shadow', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::BOX_SHADOW,
-				'condition' => [
-					'show_button_border_shadow' => 'yes',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .zigzag-button a' => 'box-shadow: {{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{SPREAD}}px {{COLOR}};',
-				],
-			]
-		);
-
-		$this->end_controls_section();
-	}
-
-	private function add_border_style_section(  ) {
-		$this->start_controls_section(
-			'border_style_section',
-			[
-				'label' => esc_html__( 'Border', 'hello-plus' ),
-				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
-			]
-		);
-
-		$this->add_control(
-			'show_widget_border',
-			[
-				'label' => esc_html__( 'Border', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Show', 'hello-plus' ),
-				'label_off' => esc_html__( 'Hide', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => 'no',
-			]
-		);
-
-		$this->add_responsive_control(
-			'widget_border_width',
-			[
-				'label' => esc_html__( 'Border Width', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%', 'vw' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 2000,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
-					'vw' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 2,
+				'label' => esc_html__( 'Shape', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'default',
+				'options' => [
+					'default' => esc_html__( 'Default', 'hello-plus' ),
+					'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
+					'round' => esc_html__( 'Round', 'hello-plus' ),
+					'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
 				],
 				'condition' => [
-					'show_widget_border' => 'yes',
+					'button_type' => 'button',
 				],
-				'selectors' => [
-					'{{WRAPPER}} .zigzag-widget-container' => 'border-width: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'widget_border_color',
-			[
-				'label' => esc_html__( 'Border Color', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'condition' => [
-					'show_widget_border' => 'yes',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .zigzag-widget-container' => 'border-color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'widget_border_radius',
-			[
-				'label' => esc_html__( 'Border Radius', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 1000,
-						'step' => 2,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 0,
-				],
-				'condition' => [
-					'show_widget_border' => 'yes',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .zigzag-widget-container' => 'border-radius: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'show_widget_shadow',
-			[
-				'label' => esc_html__( 'Box Shadow', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
-				'label_off' => esc_html__( 'No', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => 'no',
-				'condition' => [
-					'show_widget_border' => 'yes',
-				],
-			]
-		);
-
-		$this->add_control(
-			'widget_box_shadow',
-			[
-				'label' => esc_html__( 'Box Shadow', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::BOX_SHADOW,
-				'condition' => [
-					'show_widget_shadow' => 'yes',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .zigzag-widget-container' => 'box-shadow: {{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{SPREAD}}px {{COLOR}};',
-				],
-			]
-		);
-
-		$this->end_controls_section();
-	}
-
-	private function add_background_style_section(  ) {
-		$this->start_controls_section(
-			'background_style-section',
-			[
-				'label' => esc_html__( 'Background', 'hello-plus' ),
-				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
 
 		$this->add_group_control(
-			\Elementor\Group_Control_Background::get_type(),
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'button_box_shadow',
+				'selector' => '{{WRAPPER}} .e-zigzag__button',
+				'condition' => [
+					'button_type' => 'button',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'button_padding',
+			[
+				'label' => esc_html__( 'Padding', 'hello-plus' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em', 'rem' ],
+				'selectors' => [
+					'{{WRAPPER}} .e-zigzag' => '--zigzag-button-padding-block-end: {{BOTTOM}}{{UNIT}}; --zigzag-button-padding-block-start: {{TOP}}{{UNIT}}; --zigzag-button-padding-inline-end: {{RIGHT}}{{UNIT}}; --zigzag-button-padding-inline-start: {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+				'condition' => [
+					'button_type' => 'button',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'content_width',
+			[
+				'label' => esc_html__( 'Content Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 1600,
+					],
+					'%' => [
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .e-zigzag' => '--zigzag-content-width: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'space_rows',
+			[
+				'label' => esc_html__( 'Space Between', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 200,
+					],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .e-zigzag' => '--zigzag-rows-spacing: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
+	private function add_box_style_section() {
+		$this->start_controls_section(
+			'box_style_section',
+			[
+				'label' => esc_html__( 'Box', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'box_background_label',
+			[
+				'label' => esc_html__( 'Background', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
 			[
 				'name' => 'background',
 				'types' => [ 'classic', 'gradient' ],
-				'exclude' => ['image'],
-				'selector' => '{{WRAPPER}} .zigzag-widget-container',
+				'exclude' => [ 'image' ],
+				'selector' => '{{WRAPPER}} .e-zigzag__item-wrapper',
 
 			]
 		);
@@ -1001,637 +880,27 @@ class Zig_Zag extends Widget_Base {
 			'show_alternate_background',
 			[
 				'label' => esc_html__( 'Alternate Background', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Show', 'hello-plus' ),
-				'label_off' => esc_html__( 'Hide', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
 				'return_value' => 'yes',
 				'default' => 'no',
 			]
 		);
 
 		$this->add_group_control(
-			\Elementor\Group_Control_Background::get_type(),
+			Group_Control_Background::get_type(),
 			[
 				'name' => 'alternate_background',
 				'types' => [ 'classic', 'gradient' ],
-				'exclude' => ['image'],
+				'exclude' => [ 'image' ],
 				'condition' => [
 					'show_alternate_background' => 'yes',
 				],
-				'selector' => '{{WRAPPER}} .zigzag-block-item-container:nth-child(even)',
+				'selector' => '{{WRAPPER}} .e-zigzag__item-wrapper:nth-child(even)',
 			]
 		);
 
 		$this->end_controls_section();
-	}
-
-	private function add_advanced_section() {
-		$this->start_controls_section(
-			'advanced_section',
-			[
-				'label' => esc_html__( 'Layout', 'hello-plus' ),
-				'tab' => \Elementor\Controls_Manager::TAB_ADVANCED,
-			]
-		);
-
-		$this->add_control(
-			'full_width',
-			[
-				'label' => __( 'Full Width', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
-				'label_on' => __( 'Yes', 'hello-plus' ),
-				'label_off' => __( 'No', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => 'yes',
-			]
-		);
-
-		$this->add_responsive_control(
-			'zigzag_width',
-			[
-				'label' => esc_html__( 'Zig-Zag Width', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 1600,
-						'step' => 2,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 1000,
-				],
-
-				'selectors' => [
-					'{{WRAPPER}} .zigzag-widget-container' => 'width: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'full_width!' => 'yes',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'main_content_width',
-			[
-				'label' => esc_html__( 'Content Width', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 500,
-						'step' => 1,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .zigzag-widget-container' => 'padding-right: calc(100% - {{SIZE}}{{UNIT}}); padding-left: calc(100% - {{SIZE}}{{UNIT}});',
-//					'{{WRAPPER}} .zigzag-widget-container' => 'padding-right: calc(500px - {{SIZE}}{{UNIT}}); padding-left: calc(500px - {{SIZE}}{{UNIT}});',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'padding_top',
-			[
-				'label' => esc_html__( 'Top Padding', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 1000,
-						'step' => 1,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .zigzag-widget-container' => 'padding-top: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'padding_bottom',
-			[
-				'label' => esc_html__( 'Bottom Padding', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 1000,
-						'step' => 1,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .zigzag-widget-container' => 'padding-bottom: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'element_spacing',
-			[
-				'label' => esc_html__( 'Element Spacing', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::SELECT,
-				'default' => 'default',
-				'options' => [
-					'default' => esc_html__( 'Default', 'hello-plus' ),
-				],
-				'selectors' => [
-					'{{WRAPPER}} .your-class' => 'margin: {{VALUE}};',
-				],
-			]
-		);
-
-		$this->end_controls_section();
-	}
-
-	private function add_motion_effects_section() {
-		// Motion Effects Section
-		$this->start_controls_section(
-			'zigzag_motion_effects',
-			[
-				'label' => esc_html__('Motion Effects', 'hello-plus'),
-				'tab' => Controls_Manager::TAB_ADVANCED,
-			]
-		);
-
-		$this->add_control(
-			'zigzag_entrance_animation',
-			[
-				'label' => esc_html__( 'Entrance Animation', 'hello-plus' ),
-				'type' => Controls_Manager::ANIMATION,
-				'default' => 'none',
-			]
-		);
-
-		$this->add_control(
-			'zigzag_animation_duration',
-			[
-				'label' => esc_html__('Animation Duration', 'hello-plus'),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'normal',
-				'options' => [
-					'slow' => esc_html__('Slow', 'hello-plus'),
-					'normal' => esc_html__('Normal', 'hello-plus'),
-					'fast' => esc_html__('Fast', 'hello-plus'),
-				],
-				'condition' => [
-					'zigzag_entrance_animation!' => 'none',
-				],
-			]
-		);
-
-		$this->add_control(
-			'zigzag_animation_delay',
-			[
-				'label' => esc_html__('Animation Delay (ms)', 'hello-plus'),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0,
-				'min' => 0,
-				'max' => 3000,
-				'condition' => [
-					'zigzag_entrance_animation!' => 'none',
-				],
-			]
-		);
-
-		$this->end_controls_section();
-	}
-
-	private function add_advanced_responsive_section() {
-		// Responsive Section
-		$this->start_controls_section(
-			'zigzag_advanced_responsive',
-			[
-				'label' => esc_html__( 'Responsive', 'hello-plus' ),
-				'tab' => Controls_Manager::TAB_ADVANCED,
-			]
-		);
-
-		// Responsive controls
-		$this->add_control(
-			'zigzag_responsive_description',
-			[
-				'raw' => esc_html__( 'Responsive visibility will take effect only on preview mode or live page, and not while editing in Elementor.', 'hello-plus' ),
-				'type' => Controls_Manager::RAW_HTML,
-				'content_classes' => 'elementor-descriptor',
-			]
-		);
-
-		// Hide On Desktop control
-		$this->add_control(
-			'zigzag_hide_on_desktop',
-			[
-				'label' => esc_html__( 'Hide On Desktop', 'hello-plus' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
-				'label_off' => esc_html__( 'No', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => 'no',
-			]
-		);
-
-		// Hide On Tablet control
-		$this->add_control(
-			'zigzag_hide_on_tablet',
-			[
-				'label' => esc_html__( 'Hide On Tablet', 'hello-plus' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
-				'label_off' => esc_html__( 'No', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => 'no',
-			]
-		);
-
-		// Hide On Mobile control
-		$this->add_control(
-			'zigzag_hide_on_mobile',
-			[
-				'label' => esc_html__( 'Hide On Mobile', 'hello-plus' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
-				'label_off' => esc_html__( 'No', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => 'no',
-			]
-		);
-
-		$this->end_controls_section();
-	}
-
-	private function add_custom_section(  ) {
-		$this->start_controls_section(
-			'Custom_section',
-			[
-				'label' => esc_html__( 'Custom', 'hello-plus' ),
-				'tab' => \Elementor\Controls_Manager::TAB_ADVANCED,
-			]
-		);
-
-		//CSS ID control
-		$this->add_control(
-			'css_id',
-			[
-				'label' => esc_html__( 'CSS ID', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
-				'dynamic' => [
-					'active' => true,
-				],
-				'default' => '',
-				'title' => esc_html__( 'Add your custom ID without the "#" prefix.', 'hello-plus' ),
-				'separator' => 'before',
-			]
-		);
-
-		// CSS Classes control
-		$this->add_control(
-			'css_classes',
-			[
-				'label' => esc_html__( 'CSS Classes', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
-				'dynamic' => [
-					'active' => true,
-				],
-				'prefix_class' => '',
-				'title' => esc_html__( 'Add your custom class without the dot. e.g: my-class', 'hello-plus' ),
-			]
-		);
-
-		// Custom CSS control
-		$this->add_control(
-			'custom_css',
-			[
-				'label' => esc_html__( 'Custom CSS', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::CODE,
-				'language' => 'css',
-				'rows' => 20,
-				'separator' => 'before',
-			]
-		);
-
-		// Custom Attributes control
-		$this->add_control(
-			'zigzag_custom_attributes',
-			[
-				'label' => esc_html__( 'Custom Attributes', 'hello-plus' ),
-				'type' => \Elementor\Controls_Manager::TEXTAREA,
-				'dynamic' => [
-					'active' => true,
-				],
-				'placeholder' => esc_html__( 'key|value', 'hello-plus' ),
-				'description' => esc_html__( 'Set custom attributes for the wrapper element. Each attribute in a separate line. Separate attribute key from the value using | character.', 'hello-plus' ),
-				'separator' => 'before',
-			]
-		);
-
-		$this->end_controls_section();
-	}
-
-	/**
-	 * Render zigzag widget output on the frontend.
-	 *
-	 * Written in PHP and used to generate the final HTML.
-	 *
-	 * @since 1.0.0
-	 * @access protected
-	 */
-	public function render() {
-		$settings = $this->get_settings_for_display();
-
-/*		// Custom Attributes
-		$custom_attributes = $settings['zigzag_custom_attributes'];
-		$custom_attribute_string = '';
-		if (!empty($custom_attributes)) {
-			$custom_attributes = explode("\n", $custom_attributes);
-			$custom_attributes = array_filter($custom_attributes);
-			foreach ($custom_attributes as $attribute) {
-				if (strpos($attribute, '|') !== false) {
-					list($key, $value) = explode('|', $attribute);
-					$custom_attribute_string .= ' ' . $key . '="' . esc_attr($value) . '"';
-				}
-			}
-		}
-*/
-		$wrapper_classes = 'zigzag-widget-container';
-/*
-		if ( 'yes' === $settings['zigzag_hide_on_desktop'] ) {
-			$wrapper_classes .= ' elementor-hidden-desktop';
-		}
-
-		if ('yes' === $settings['zigzag_hide_on_tablet']) {
-			$wrapper_classes .= ' elementor-hidden-tablet';
-		}
-
-		if ('yes' === $settings['zigzag_hide_on_mobile']) {
-			$wrapper_classes .= ' elementor-hidden-mobile';
-		}
-*/
-		$animation_styles = '';
-		if ( ! empty( $settings['zigzag_entrance_animation'] ) ) {
-			$wrapper_classes .= ' animated ' . esc_attr( $settings['zigzag_entrance_animation'] );
-
-			$animation_duration_map = [
-				'slow' => 2000,
-				'normal' => 1000,
-				'fast' => 500,
-			];
-
-			$animation_duration_setting = $settings['zigzag_animation_duration'];
-
-			if ( is_numeric( $animation_duration_setting ) ) {
-				if ( $animation_duration_setting <= 500 ) {
-					$animation_duration_setting = 'fast';
-				} elseif ( $animation_duration_setting <= 1000 ) {
-					$animation_duration_setting = 'normal';
-				} else {
-					$animation_duration_setting = 'slow';
-				}
-			}
-
-			$animation_duration = $animation_duration_map[ $animation_duration_setting ] ?? $animation_duration_map['normal'];
-			$animation_delay = isset( $settings['zigzag_animation_delay'] ) ? intval( $settings['zigzag_animation_delay'] ) : 0;
-
-			$animation_styles = sprintf( ' style="animation-duration: %dms; animation-delay: %dms;"', $animation_duration, $animation_delay );
-		}
-
-		// Open main widget container
-		echo '<div class="' . esc_attr( $wrapper_classes ) . '"' . $animation_styles . '>';
-
-		$first_block_direction = $settings['first_block_direction'];
-		// Start the loop for the block items
-		foreach ( $settings['block_items'] as $index => $item ) {
-			// Determine if the item is odd or even
-			$is_odd = 0 !== $index % 2;
-
-			// Add a prefix to the CSS class of the item
-			$item_class = $first_block_direction . ( $is_odd ? '-odd' : '-even' );
-
-			// Start block item container
-			echo '<div class="zigzag-block-item-container ' . $item_class . '">';
-			$this->render_graphic_element_container( $item, $settings );
-			$this->render_text_element_container( $item, $settings );
-			echo '</div>';
-		}
-		// Close main widget container
-		echo '</div>';
-	}
-
-	/**
-	 * Render zigzag widget output in the editor.
-	 *
-	 * Written as a Backbone JavaScript template and used to generate the live preview.
-	 *
-	 * @since 1.0.0
-	 * @access protected
-	 */
-	public function _content_template() {
-		?>
-		<#
-		var custom_attributes = settings.zigzag_custom_attributes;
-		var custom_attribute_string = '';
-		if (custom_attributes) {
-		var attributes = custom_attributes.split("\n");
-		_.each(attributes, function(attribute) {
-		if (attribute.includes('|')) {
-		var parts = attribute.split('|');
-		custom_attribute_string += ' ' + parts[0] + '="' + parts[1] + '"';
-		}
-		});
-		}
-
-		var wrapper_classes = 'zigzag-widget-container';
-		if ('yes' === settings.zigzag_hide_on_desktop) {
-		wrapper_classes += ' elementor-hidden-desktop';
-		}
-		if ('yes' === settings.zigzag_hide_on_tablet) {
-		wrapper_classes += ' elementor-hidden-tablet';
-		}
-		if ('yes' === settings.zigzag_hide_on_mobile) {
-		wrapper_classes += ' elementor-hidden-mobile';
-		}
-
-		var animation_styles = '';
-		if (settings.zigzag_entrance_animation) {
-		wrapper_classes += ' animated ' + settings.zigzag_entrance_animation;
-
-		var animation_duration_map = {
-		'slow': 2000,
-		'normal': 1000,
-		'fast': 500,
-		};
-
-		var animation_duration_setting = settings.zigzag_animation_duration;
-		if (_.isNumber(animation_duration_setting)) {
-		if (animation_duration_setting <= 500) {
-		animation_duration_setting = 'fast';
-		} else if (animation_duration_setting <= 1000) {
-		animation_duration_setting = 'normal';
-		} else {
-		animation_duration_setting = 'slow';
-		}
-		}
-
-		var animation_duration = animation_duration_map[animation_duration_setting] || animation_duration_map['normal'];
-		var animation_delay = settings.zigzag_animation_delay;
-
-		animation_styles = ' style="';
-		animation_styles += 'animation-duration: ' + animation_duration + 'ms;';
-		animation_styles += 'animation-delay: ' + animation_delay + 'ms;';
-		animation_styles += '"';
-		}
-		#>
-		<div class="{{{ wrapper_classes }}}"{{{ animation_styles }}}>
-			<#
-			var first_block_direction = settings.first_block_direction;
-			_.each(settings.block_items, function(item, index) {
-			var is_odd = index % 2 == 0;
-			var item_class = first_block_direction + (is_odd ? '-odd' : '-even');
-			#>
-			<div class="zigzag-block-item-container {{ item_class }}">
-				<div class="zigzag-graphic-element-container">
-					<div class="zigzag-widget-image-container">
-						<# if (item.graphic_element === 'image' && item.graphic_image && item.graphic_image.url) { #>
-						<img src="{{{ item.graphic_image.url }}}" alt="{{{ item.graphic_image.alt }}}" title="{{{ item.graphic_image.title }}}" class="my-custom-class">
-						<# } else if (item.graphic_element === 'icon' && item.graphic_icon && item.graphic_icon.value) { #>
-						<div class="hello-plus-zigzag-icon">
-							<i class="{{{ item.graphic_icon.value }}}"></i>
-						</div>
-						<# } else { #>
-						<img src="path/to/default/image.jpg" alt="">
-						<# } #>
-					</div>
-				</div>
-				<div class="zigzag-text-container">
-					<h2>{{{ item.title }}}</h2>
-					<p>{{{ item.description }}}</p>
-					<# if (item.button_text) { #>
-					<div class="zigzag-button">
-						<div class="{{ settings.button_hover_animation ? 'elementor-animation-' + settings.button_hover_animation : '' }}">
-							<a href="{{ item.button_link && item.button_link.url ? item.button_link.url : 'javascript:void(0);' }}">
-								<# if (item.button_icon && item.button_icon.value) { #>
-								<# if (settings.button_icon_position === 'left') { #>
-								<i class="{{ item.button_icon.value }} icon-left" style="color: {{ item.icon_color }}"></i>
-								<# } #>
-								<# } #>
-								{{{ item.button_text }}}
-								<# if (item.button_icon && item.button_icon.value) { #>
-								<# if (settings.button_icon_position === 'right') { #>
-								<i class="{{ item.button_icon.value }} icon-right" style="color: {{ item.icon_color }}"></i>
-								<# } #>
-								<# } #>
-							</a>
-						</div>
-					</div>
-					<# } #>
-				</div>
-			</div>
-			<# }); #>
-		</div>
-		<?php
-	}
-
-	private function render_graphic_element_container( $item, $settings ) {
-		// Start graphic element container
-		echo '<div class="zigzag-graphic-element-container">';
-
-		// Start of the image container
-		echo '<div class="zigzag-widget-image-container">';
-
-		// Graphic Element
-		if ( 'image' === $item['graphic_element'] && ! empty( $item['graphic_image']['url'] ) ) {
-			// Output the image
-			$this->add_render_attribute( 'image', 'src', $item['graphic_image']['url'] );
-			$this->add_render_attribute( 'image', 'alt', \Elementor\Control_Media::get_image_alt( $item['graphic_image'] ) );
-			$this->add_render_attribute( 'image', 'title', \Elementor\Control_Media::get_image_title( $item['graphic_image'] ) );
-//			$this->add_render_attribute( 'image', 'class', 'my-custom-class' );
-			echo \Elementor\Group_Control_Image_Size::get_attachment_image_html( [ 'image' => $item['graphic_image'] ], 'thumbnail', 'image' );
-		} elseif ( 'icon' === $item['graphic_element'] && !empty( $item['graphic_icon']['value'] ) ) {
-			// Output the icon
-			echo '<div class="hello-plus-zigzag-icon">';
-			\Elementor\Icons_Manager::render_icon( $item['graphic_icon'], [ 'aria-hidden' => 'true' ] );
-			echo '</div>';
-
-		} else {
-			// Output a default image
-			echo '<img src="' . HELLO_PLUS_URL . '/screenshot.png' . '" alt="">';
-		}
-
-		// End of the image container
-		echo '</div>';
-
-		// End graphic element container
-		echo '</div>';
-
-	}
-
-	private function render_text_element_container( $item, $settings ) {
-		// Start text and button container
-		echo '<div class="zigzag-text-container">';
-
-		// Title
-		echo '<h2>' . esc_html( $item['title'] ) . '</h2>';
-
-		// Description
-		echo '<p>' . esc_html( $item['description'] ) . '</p>';
-
-
-		// Get the button text, link, and icon from the item
-		$button_text = $item['button_text'] ?? 'Lean More';
-		$button_link = $item['button_link']['url'] ?? '#';
-		$button_icon = $item['button_icon'] ?? '';
-		$icon_color  = $item['icon_color'] ?? ''; // Default to black if no color is selected
-
-		// Get the hover animation for the button
-		$button_hover_animation = $settings['button_hover_animation'] ?? '';
-
-		if ( ! empty( $button_text ) ) :
-			$btn_hover_animation_class = $button_hover_animation ? 'elementor-animation-' . $button_hover_animation : '';
-			?>
-			<div class="zigzag-button">
-				<div class="<?php echo esc_attr( $btn_hover_animation_class ); ?>">
-					<a href="<?php echo ! empty( $button_link ) ? esc_url( $button_link ) : 'javascript:void(0);'; ?>">
-						<?php if ( is_array( $button_icon ) && ! empty( $button_icon['value'] ) ) : ?>
-							<?php if ( $settings['button_icon_position'] === 'left' ) : ?>
-								<i class="<?php echo esc_attr( $button_icon['value'] ); ?> icon-left"
-								   style="color: <?php echo esc_attr( $icon_color ); ?>;"></i>
-							<?php endif; ?>
-						<?php endif; ?>
-						<?php echo esc_html( $button_text ); ?>
-						<?php if ( is_array( $button_icon ) && ! empty( $button_icon['value'] ) ) : ?>
-							<?php if ( $settings['button_icon_position'] === 'right' ) : ?>
-								<i class="<?php echo esc_attr( $button_icon['value'] ); ?> icon-right"
-								   style="color: <?php echo esc_attr( $icon_color ); ?>;"></i>
-							<?php endif; ?>
-						<?php endif; ?>
-					</a>
-				</div>
-
-			</div>
-		<?php endif; ?>
-
-		</div>
-		<?php
 	}
 }
-

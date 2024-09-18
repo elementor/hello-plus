@@ -84,7 +84,11 @@ class Widget_Hero_Render {
 		$button_has_border = $this->settings['show_button_border'];
 		$button_corner_shape = $this->settings['button_shape'] ?? '';
 		$button_type = $this->settings['button_type'] ?? '';
-		$button_classnames = 'e-hero__cta-button';
+		$button_classnames = 'e-hero__button';
+
+		if ( ! empty( $button_type ) ) {
+			$button_classnames .= ' is-type-' . $button_type;
+		}
 
 		if ( $button_hover_animation ) {
 			$button_classnames .= ' elementor-animation-' . $button_hover_animation;
@@ -98,16 +102,16 @@ class Widget_Hero_Render {
 			$button_classnames .= ' has-shape-' . $button_corner_shape;
 		}
 
-		$this->widget->add_render_attribute( 'cta-button', [
+		$this->widget->add_render_attribute( 'button', [
 			'class' => $button_classnames,
 		] );
 		if ( ! empty( $button_link ) ) {
-			$this->widget->add_link_attributes( 'cta-button', $button_link );
+			$this->widget->add_link_attributes( 'button', $button_link );
 		}
 
 		if ( $has_button ) { ?>
 			<div class="e-hero__button-container">
-				<a <?php echo $this->widget->get_render_attribute_string( 'cta-button' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+				<a <?php echo $this->widget->get_render_attribute_string( 'button' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 				<?php
 					Icons_Manager::render_icon( $button_icon,
 						[

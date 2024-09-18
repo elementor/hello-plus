@@ -291,7 +291,7 @@ class Hero extends Widget_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-zigzag' => '--zigzag-title-color: {{VALUE}}',
+					'{{WRAPPER}} .e-hero' => '--hero-heading-color: {{VALUE}}',
 				],
 			]
 		);
@@ -300,7 +300,7 @@ class Hero extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'heading_typography',
-				'selector' => '{{WRAPPER}} .e-zigzag__subheading',
+				'selector' => '{{WRAPPER}} .e-hero__heading',
 			]
 		);
 
@@ -319,7 +319,7 @@ class Hero extends Widget_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					// '{{WRAPPER}} .e-zigzag' => '--zigzag-title-color: {{VALUE}}',
+					'{{WRAPPER}} .e-hero' => '--hero-subheading-color: {{VALUE}}',
 				],
 			]
 		);
@@ -328,7 +328,7 @@ class Hero extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'subheading_typography',
-				'selector' => '{{WRAPPER}} .e-zigzag__subheading',
+				'selector' => '{{WRAPPER}} .e-hero__subheading',
 			]
 		);
 
@@ -357,7 +357,7 @@ class Hero extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'button_typography',
-				'selector' => '{{WRAPPER}} .e-zigzag__button',
+				'selector' => '{{WRAPPER}} .e-hero__button',
 			]
 		);
 
@@ -383,7 +383,7 @@ class Hero extends Widget_Base {
 					'right' => is_rtl() ? 'row' : 'row-reverse',
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .e-zigzag__button' => 'flex-direction: {{VALUE}};',
+					'{{WRAPPER}} .e-hero__button' => 'flex-direction: {{VALUE}};',
 				],
 			]
 		);
@@ -409,7 +409,7 @@ class Hero extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .e-zigzag' => '--zigzag-button-icon-spacing: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .e-hero' => '--hero-button-icon-spacing: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -431,7 +431,7 @@ class Hero extends Widget_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-zigzag' => '--zigzag-button-text-color: {{VALUE}}',
+					'{{WRAPPER}} .e-hero' => '--hero-button-text-color: {{VALUE}}',
 				],
 			]
 		);
@@ -442,7 +442,7 @@ class Hero extends Widget_Base {
 				'name' => 'button_background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				// 'selector' => '{{WRAPPER}} .e-zigzag__button',
+				'selector' => '{{WRAPPER}} .e-hero__button',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
@@ -469,7 +469,7 @@ class Hero extends Widget_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					// '{{WRAPPER}} .e-zigzag' => '--zigzag-button-text-color-hover: {{VALUE}}',
+					'{{WRAPPER}} .e-hero' => '--hero-button-text-color-hover: {{VALUE}}',
 				],
 			]
 		);
@@ -480,7 +480,7 @@ class Hero extends Widget_Base {
 				'name' => 'button_background_hover',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				// 'selector' => '{{WRAPPER}} .e-zigzag__button:hover, {{WRAPPER}} .e-zigzag__button:focus',
+				'selector' => '{{WRAPPER}} .e-hero__button:hover, {{WRAPPER}} .e-hero__button:focus',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
@@ -539,7 +539,7 @@ class Hero extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .e-zigzag' => '--zigzag-button-border-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .e-hero' => '--hero-button-border-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'show_button_border' => 'yes',
@@ -553,7 +553,7 @@ class Hero extends Widget_Base {
 				'label' => esc_html__( 'Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					// '{{WRAPPER}} .e-zigzag' => '--zigzag-button-border-color: {{VALUE}}',
+					'{{WRAPPER}} .e-hero' => '--hero-button-border-color: {{VALUE}}',
 				],
 				'condition' => [
 					'show_button_border' => 'yes',
@@ -583,7 +583,7 @@ class Hero extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'button_box_shadow',
-				// 'selector' => '{{WRAPPER}} .e-zigzag__button',
+				'selector' => '{{WRAPPER}} .e-hero__button',
 				'condition' => [
 					'button_type' => 'button',
 				],
@@ -597,7 +597,7 @@ class Hero extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
 				'selectors' => [
-					// '{{WRAPPER}} .e-zigzag' => '--zigzag-button-padding-block-end: {{BOTTOM}}{{UNIT}}; --zigzag-button-padding-block-start: {{TOP}}{{UNIT}}; --zigzag-button-padding-inline-end: {{RIGHT}}{{UNIT}}; --zigzag-button-padding-inline-start: {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .e-hero' => '--hero-button-padding-block-end: {{BOTTOM}}{{UNIT}}; --hero-button-padding-block-start: {{TOP}}{{UNIT}}; --hero-button-padding-inline-end: {{RIGHT}}{{UNIT}}; --hero-button-padding-inline-start: {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 				'condition' => [
@@ -645,10 +645,10 @@ class Hero extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .e-zigzag' => '--zigzag-content-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .e-hero' => '--hero-image-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
-					'image_full_width' => 'no',
+					'image_full_width!' => 'yes',
 				],
 			]
 		);
@@ -668,7 +668,7 @@ class Hero extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .e-zigzag' => '--zigzag-content-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .e-hero' => '--hero-image-height: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -694,7 +694,7 @@ class Hero extends Widget_Base {
 					'bottom right' => esc_html__( 'Bottom Right', 'hello-plus' ),
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .e-zigzag' => '--zigzag-image-position: {{VALUE}}',
+					'{{WRAPPER}} .e-hero' => '--hero-image-position: {{VALUE}}',
 				],
 			]
 		);

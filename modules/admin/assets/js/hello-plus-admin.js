@@ -1,12 +1,12 @@
 import { createRoot } from 'react-dom/client';
 import { AdminPage } from './pages/admin-page.js';
-import { DashboardProvider } from './providers/dashboard-provider';
+import { AdminProvider } from './providers/admin-provider';
 
 const App = () => {
 	return (
-		<DashboardProvider>
+		<AdminProvider>
 			<AdminPage />
-		</DashboardProvider>
+		</AdminProvider>
 	);
 };
 

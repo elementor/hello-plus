@@ -1,10 +1,11 @@
 import { createContext, useEffect } from 'react';
 import apiFetch from '@wordpress/api-fetch';
 
-export const DashboardContext = createContext();
+export const AdminContext = createContext();
 
-export const DashboardProvider = ( { children } ) => {
+export const AdminProvider = ( { children } ) => {
 	const [ promotionsLinks, setPromotionsLinks ] = React.useState( [] );
+
 	useEffect( () => {
 		apiFetch( { path: '/elementor-hello-plus/v1/promotions' } ).then( ( links ) => {
 			setPromotionsLinks( links.links );
@@ -12,8 +13,8 @@ export const DashboardProvider = ( { children } ) => {
 	}, [] );
 
 	return (
-		<DashboardContext.Provider value={ { promotionsLinks } }>
+		<AdminContext.Provider value={ { promotionsLinks } }>
 			{ children }
-		</DashboardContext.Provider>
+		</AdminContext.Provider>
 	);
 };

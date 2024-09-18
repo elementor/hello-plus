@@ -1,8 +1,8 @@
 import { PromotionLink } from '../link/promotion-link';
-import { useDashboardContext } from '../../hooks/use-dashboard-context';
+import { useAdminContext } from '../../hooks/use-admin-context';
 
 export const PromotionsList = () => {
-	const { promotionsLinks } = useDashboardContext();
+	const { promotionsLinks } = useAdminContext();
 	return (
 		<div className="hello_plus__action_links">
 			{ promotionsLinks.map( ( link, i ) => {

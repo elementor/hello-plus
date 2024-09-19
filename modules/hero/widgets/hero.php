@@ -13,6 +13,7 @@ use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Typography;
 use Elementor\Icons_Manager;
+use Elementor\Plugin;
 use Elementor\Repeater;
 use Elementor\Utils;
 use Elementor\Widget_Base;
@@ -68,6 +69,23 @@ class Hero extends Widget_Base {
 		$this->add_style_image_section();
 		$this->add_style_box_section();
     }
+
+	protected function get_configured_breakpoints( $add_desktop = 'true' ) {
+		$active_devices = Plugin::$instance->breakpoints->get_active_devices_list( [ 'reverse' => true ] );
+		$active_breakpoint_instances = Plugin::$instance->breakpoints->get_active_breakpoints();
+
+		$devices_options = [];
+
+		foreach ( $active_devices as $device_key ) {
+			$device_label = 'desktop' === $device_key ? esc_html__( 'Desktop', 'elementor' ) : $active_breakpoint_instances[ $device_key ]->get_label();
+			$devices_options[ $device_key ] = $device_label;
+		}
+
+		return [
+			'active_devices' => $active_devices,
+			'devices_options' => $devices_options,
+		];
+	}
 
 	protected function add_content_text_section() {
 		$this->start_controls_section(
@@ -725,7 +743,7 @@ class Hero extends Widget_Base {
 				'name' => 'background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .e-zigzag__item-wrapper',
+				'selector' => '{{WRAPPER}} .e-hero',
 
 			]
 		);
@@ -738,8 +756,27 @@ class Hero extends Widget_Base {
 				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
 				'label_off' => esc_html__( 'No', 'hello-plus' ),
 				'return_value' => 'yes',
-				'default' => 'no',
+				'default' => '',
+				'tablet_default' => '',
+				'mobile_default' => '',
 				'separator' => 'before',
+			]
+		);
+
+		$configured_breakpoints = $this->get_configured_breakpoints();
+
+		$this->add_control(
+			'box_full_screen_height_controls',
+			[
+				'label' => esc_html__( 'Apply Full Screen Height on', 'elementor' ),
+				'type' => Controls_Manager::SELECT2,
+				'label_block' => true,
+				'multiple' => true,
+				'options' => $configured_breakpoints['devices_options'],
+				'default' => $configured_breakpoints['active_devices'],
+				'condition' => [
+					'box_full_screen_height' => 'yes',
+				],
 			]
 		);
 

@@ -27,6 +27,13 @@ class Widget_Hero_Render {
 
 	public function render(): void {
 		$layout_classnames = 'e-hero';
+		$layout_full_height_controls = $this->settings['box_full_screen_height_controls'] ?? '';
+
+		if ( ! empty( $layout_full_height_controls ) ) {
+			foreach ( $layout_full_height_controls as $breakpoint ) {
+				$layout_classnames .= ' is-full-height-' . $breakpoint;
+			}
+		}
 
 		$this->widget->add_render_attribute( 'layout', [
 			'class' => $layout_classnames,

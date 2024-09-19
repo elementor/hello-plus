@@ -1,3 +1,5 @@
+@import "./breakpoints";
+
 .e-hero {
 	$transition: all .3s;
 	$corners-shape-default: 8px;
@@ -6,6 +8,13 @@
 	$corners-shape-round: 32px;
 	$breakpoint-tablet-min: 768px;
 	$breakpoint-desktop-min: 1024px;
+
+	--hero-box-height: auto;
+	--hero-box-full-height: 100vh;
+
+	@supports (height: 100dvh) {
+		--hero-box-full-height: 100dvh;
+	}
 
 	--hero-content-position: center;
 	--hero-content-text-align: center;
@@ -42,6 +51,7 @@
 
 	display: flex;
 	flex-direction: column;
+	height: var(--hero-box-height);
 	text-align: var(--hero-content-text-align);
 
 	@media screen and (min-width: $breakpoint-tablet-min) {
@@ -60,6 +70,63 @@
 		--hero-text-default-subheading: 440px;
 		--hero-text-narrow-subheading: 420px;
 		--hero-text-wide-subheading: 528px;
+	}
+
+	@mixin full-height($min: null, $max: null) {
+		$query: null;
+
+		@if $min != null and $max != null {
+			$query: "(min-width: " + $min + ") and (max-width: " + $max + ")";
+		} @else if $max != null {
+			$query: "(max-width: " + $max + ")";
+		} @else if $min != null {
+			$query: "(min-width: " + $min + ")";
+		}
+
+		@if $query != null {
+			@media #{$query} {
+				--hero-box-height: var(--hero-box-full-height, 100vh);
+
+				.e-hero__image {
+					align-items: flex-end;
+					display: flex;
+					flex-grow: 1;
+				}
+			};
+		}
+	}
+
+	&.is-full-height-mobile {
+		@include full-height(null, $screen-mobile-max);
+	}
+
+	&.is-full-height-mobile_extra {
+		@include full-height($screen-mobile-extra-min, $screen-mobile-extra-max);
+	}
+
+	&.is-full-height-tablet {
+		@include full-height($screen-tablet-min, $screen-tablet-max);
+	}
+
+	&.is-full-height-tablet_extra {
+		@include full-height($screen-tablet-extra-min, $screen-tablet-extra-max);
+	}
+
+	&.is-full-height-laptop {
+		@include full-height($screen-laptop-min, $screen-laptop-max);
+	}
+
+	&.is-full-height-desktop {
+
+		@include full-height($screen-desktop-min, null);
+
+		&.is-full-height-widescreen {
+			@include full-height($screen-desktop-min, $screen-desktop-max);
+		}
+	}
+
+	&.is-full-height-widescreen {
+		@include full-height($screen-widescreen-min, null);
 	}
 
 	&__text-container {

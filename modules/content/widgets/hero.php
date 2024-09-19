@@ -1,6 +1,6 @@
 <?php
 
-namespace HelloPlus\Modules\Hero\Widgets;
+namespace HelloPlus\Modules\Content\Widgets;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,7 +18,7 @@ use Elementor\Repeater;
 use Elementor\Utils;
 use Elementor\Widget_Base;
 
-use HelloPlus\Modules\Hero\Classes\Render\Widget_Hero_Render;
+use HelloPlus\Modules\Content\Classes\Render\Widget_Hero_Render;
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
 class Hero extends Widget_Base {

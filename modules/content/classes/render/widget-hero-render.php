@@ -1,6 +1,6 @@
 <?php
 
-namespace HelloPlus\Modules\Hero\Classes\Render;
+namespace HelloPlus\Modules\Content\Classes\Render;
 
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Box_Shadow;
@@ -12,7 +12,7 @@ use Elementor\Repeater;
 use Elementor\Widget_Base;
 use Elementor\Utils;
 
-use HelloPlus\Modules\Hero\Widgets\Hero;
+use HelloPlus\Modules\Content\Widgets\Hero;
 
 
 class Widget_Hero_Render {

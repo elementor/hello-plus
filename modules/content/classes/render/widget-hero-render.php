@@ -59,9 +59,6 @@ class Widget_Hero_Render {
 		$has_subheading = '' !== $subheading_text;
 
 		$text_container_classnames = 'e-hero__text-container';
-		// $text_width = $this->settings['text_width'];
-
-		// $text_container_classnames .= ' has-text-width-' . $text_width;
 
 		$this->widget->add_render_attribute( 'text-container', [
 			'class' => $text_container_classnames,

@@ -1,12 +1,18 @@
 import { createRoot } from 'react-dom/client';
-import { SettingsPage } from './pages/settings-page.js';
+import { AdminPage } from './pages/admin-page.js';
+import { DashboardProvider } from './providers/dashboard-provider';
 
 const App = () => {
-	return <SettingsPage />;
+	return (
+		<DashboardProvider>
+			<AdminPage />
+		</DashboardProvider>
+	);
 };
 
 document.addEventListener( 'DOMContentLoaded', () => {
-	const container = document.getElementById( 'hello-plus-dashboard' );
+	const container = document.getElementById( 'ehp-admin-home' );
+
 	if ( container ) {
 		const root = createRoot( container );
 		root.render( <App /> );

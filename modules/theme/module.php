@@ -7,7 +7,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use HelloPlus\Includes\Module_Base;
-use HelloPlus\Theme;
 
 /**
  * Theme module
@@ -128,12 +127,10 @@ class Module extends Module_Base {
 	 * @return void
 	 */
 	public function scripts_styles() {
-		$min_suffix = Theme::get_min_suffix();
-
 		if ( apply_filters( 'hello_plus_enqueue_theme_style', true ) ) {
 			wp_enqueue_style(
 				'hello-plus',
-				HELLO_PLUS_STYLE_URL . '/theme' . $min_suffix . '.css',
+				HELLO_PLUS_STYLE_URL . '/theme.css',
 				[],
 				HELLO_PLUS_ELEMENTOR_VERSION
 			);
@@ -142,7 +139,7 @@ class Module extends Module_Base {
 		if ( self::display_header_footer() ) {
 			wp_enqueue_style(
 				'hello-plus-header-footer',
-				HELLO_PLUS_STYLE_URL . '/header-footer' . $min_suffix . '.css',
+				HELLO_PLUS_STYLE_URL . '/header-footer.css',
 				[],
 				HELLO_PLUS_ELEMENTOR_VERSION
 			);

@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use HelloPlus\Includes\Module_Base;
 use HelloPlus\Modules\Customizer\Classes\Customizer_Action_Links;
 use HelloPlus\Modules\Customizer\Classes\Customizer_Upsell;
-use HelloPlus\Theme;
+use HelloPlus\Includes\Utils;
 
 /**
  * class Module
@@ -49,8 +49,8 @@ class Module extends Module_Base {
 	 * @return bool
 	 */
 	public function check_hide_title( bool $val ): bool {
-		if ( defined( 'ELEMENTOR_VERSION' ) ) {
-			$current_doc = Theme::elementor()->documents->get( get_the_ID() );
+		if ( Utils::is_elementor_active() ) {
+			$current_doc = Utils::elementor()->documents->get( get_the_ID() );
 			if ( $current_doc && 'yes' === $current_doc->get_settings( 'hide_title' ) ) {
 				$val = false;
 			}
@@ -125,7 +125,7 @@ class Module extends Module_Base {
 	public function enqueue_styles() {
 		wp_enqueue_style(
 			self::CUSTOMIZER_STYLE,
-			HELLO_PLUS_STYLE_URL . '/customizer' . Theme::get_min_suffix() . '.css',
+			HELLO_PLUS_STYLE_URL . '/customizer.css',
 			[],
 			HELLO_PLUS_ELEMENTOR_VERSION
 		);

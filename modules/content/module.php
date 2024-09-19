@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use HelloPlus\Includes\Module_Base;
-use HelloPlus\Theme;
+use HelloPlus\Includes\Utils;
 
 /**
  * class Module
@@ -54,6 +54,14 @@ class Module extends Module_Base {
 		);
 	}
 
+	/**
+	 * Load the Module only if Elementor is active.
+	 *
+	 * @return bool
+	 */
+	public static function is_active(): bool {
+		return Utils::is_elementor_active();
+	}
 
 	protected function register_hooks(): void {
 		parent::register_hooks();

@@ -1,5 +1,5 @@
 <?php
-namespace HelloPlus;
+namespace HelloPlus\Includes;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.

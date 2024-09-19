@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use HelloPlus\Includes\Module_Base;
 use HelloPlus\Modules\Customizer\Classes\Customizer_Action_Links;
 use HelloPlus\Modules\Customizer\Classes\Customizer_Upsell;
-use HelloPlus\Utils;
+use HelloPlus\Includes\Utils;
 
 /**
  * class Module

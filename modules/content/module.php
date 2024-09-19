@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use HelloPlus\Includes\Module_Base;
-use HelloPlus\Utils;
+use HelloPlus\Includes\Utils;
 
 /**
  * class Module

@@ -10,6 +10,10 @@ class Setup_Wizard {
 
 	const SETUP_WIZARD_PAGE_SLUG = 'hello-plus-setup-wizard';
 
+	public static function has_site_wizard_been_completed() {
+		return get_site_option( 'hello_plus_setup_wizard_completed', false );
+	}
+
 	public function register_setup_wizard_page(): void {
 		add_submenu_page(
 			'hello-plus',

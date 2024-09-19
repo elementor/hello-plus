@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-class Get_Promotions {
+class Promotions {
 
 	protected $plugins = [];
 
@@ -23,7 +23,7 @@ class Get_Promotions {
 						'methods' => WP_REST_Server::READABLE,
 						'callback' => [ $this, 'get_promotions' ],
 						'permission_callback' => function () {
-							return current_user_can( 'edit_posts' );
+							return current_user_can( 'manage_options' );
 						},
 					]
 				);

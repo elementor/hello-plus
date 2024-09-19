@@ -56,19 +56,9 @@ final class Theme {
 	public function __wakeup() {
 		_doing_it_wrong(
 			__FUNCTION__,
-			sprintf( 'Unserializing instances of the singleton "%s" class is forbidden.', get_class( $this ) ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			sprintf( 'Deserializing instances of the singleton "%s" class is forbidden.', get_class( $this ) ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			'1.0.0'
 		);
-	}
-
-	/**
-	 * @static
-	 * @access public
-	 *
-	 * @return \Elementor\Plugin
-	 */
-	public static function elementor(): \Elementor\Plugin {
-		return \Elementor\Plugin::$instance;
 	}
 
 	/**

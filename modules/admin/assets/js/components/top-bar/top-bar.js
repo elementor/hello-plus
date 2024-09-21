@@ -1,18 +1,9 @@
 import AppBar from '@elementor/ui/AppBar';
-import Toolbar from '@elementor/ui/Toolbar';
-import { __ } from '@wordpress/i18n';
-import HomeIcon from '@elementor/icons/HomeIcon';
 import HelpIcon from '@elementor/icons/HelpIcon';
 import { TopBarLinks } from './top-bar-links';
-import { TopBarLink } from '../link/top-bar-link';
-
-const home = {
-	label: __( 'Hello+', 'hello-plus' ),
-	hrefStr: '#',
-	children: <HomeIcon />,
-	color: 'primary',
-	aria: 'menu',
-};
+import Stack from '@elementor/ui/Stack';
+import SvgIcon from '@elementor/ui/SvgIcon';
+import { ReactComponent as ElementorNoticeIcon } from '../../../images/elementor-notice-icon.svg';
 
 const adminTopBarLinks = [
 	{
@@ -31,11 +22,13 @@ const adminTopBarLinks = [
 
 export const TopBar = () => {
 	return (
-		<AppBar position="static" elevation={ 6 }>
-			<Toolbar sx={ { alignItems: 'center', backgroundColor: 'background.default', justifyContent: 'space-between' } } padding={ 2 }>
-				<TopBarLink linkData={ home } />
+		<AppBar position="absolute" sx={ { width: 'calc(100% - 160px)', top: 0, right: 0, height: 50, backgroundColor: 'background.default' } }>
+			<Stack direction="row" sx={ { alignItems: 'center', height: 50, px: 2, backgroundColor: 'background.default', justifyContent: 'space-between' } }>
+				<SvgIcon fontSize="medium" color="primary">
+					<ElementorNoticeIcon />
+				</SvgIcon>
 				<TopBarLinks linksData={ adminTopBarLinks } />
-			</Toolbar>
+			</Stack>
 		</AppBar>
 	);
 };

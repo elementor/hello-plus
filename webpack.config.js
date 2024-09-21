@@ -22,6 +22,7 @@ const entryPoints = {
 	'css/hello-plus-admin': path.resolve( modulesDir, 'admin/assets/scss', 'hello-plus-admin.scss' ),
 	'js/hello-plus-notice': path.resolve( modulesDir, 'admin/assets/js', 'hello-plus-notice.js' ),
 	'css/hello-plus-notice': path.resolve( modulesDir, 'admin/assets/scss', 'hello-plus-notice.scss' ),
+	'js/hello-plus-admin-top-bar': path.resolve( modulesDir, 'admin/assets/js', 'hello-plus-topbar.js' ),
 
 	// Content module
 	'js/hello-plus-content': path.resolve( modulesDir, 'content/assets/js', 'hello-plus-content.js' ),

@@ -40,27 +40,6 @@ class Promotions {
 
 		$action_links_data = [];
 
-		if ( ! isset( $plugins['elementor/elementor.php'] ) ) {
-			$action_links_data[] = [
-				'type' => 'install-elementor',
-				'url' => wp_nonce_url(
-					add_query_arg(
-						[
-							'action' => 'install-plugin',
-							'plugin' => 'elementor',
-						],
-						admin_url( 'update.php' )
-					),
-					'install-plugin_elementor'
-				),
-				'alt' => __( 'Elementor', 'hello-plus' ),
-				'title' => __( 'Install Elementor', 'hello-plus' ),
-				'message' => __( 'Create cross-site header & footer using Elementor.', 'hello-plus' ),
-				'button' => __( 'Install Elementor', 'hello-plus' ),
-				'image' => HELLO_PLUS_URL . '/assets/images/elementor.svg',
-			];
-		}
-
 		if ( ! defined( 'ELEMENTOR_VERSION' ) ) {
 			$action_links_data[] = [
 				'type' => 'activate-elementor',
@@ -76,35 +55,45 @@ class Promotions {
 		if ( ! defined( 'ELEMENTOR_PRO_VERSION' ) ) {
 			$action_links_data[] = [
 				'type' => 'go-pro',
-				'image' => HELLO_PLUS_URL . '/assets/images/elementor.svg',
+				'image' => HELLO_PLUS_URL . '/assets/images/go-pro.svg',
 				'url' => 'https://elementor.com/pricing-plugin',
 				'alt' => __( 'Elementor Pro', 'hello-plus' ),
-				'title' => __( 'Go Pro', 'hello-plus' ),
-				'message' => __( 'Unleash Elementor Pro to boost your site.', 'hello-plus' ),
-				'button' => __( 'Yes!', 'hello-plus' ),
+				'title' => __( 'Bring Your Vision To Life', 'hello-plus' ),
+				'message' => __( 'Get complete design flexibility for your website with Elementor Pro’s advanced tools and premium features.', 'hello-plus' ),
+				'button' => __( 'Upgrade Now', 'hello-plus' ),
+				'features' => [
+					__( 'Popup Builder', 'hello-plus' ),
+					__( 'Custom Code & CSS', 'hello-plus' ),
+					__( 'E-commerce Features', 'hello-plus' ),
+					__( 'Collaborative Notes', 'hello-plus' ),
+					__( 'Form Submission', 'hello-plus' ),
+					__( 'Form Integration', 'hello-plus' ),
+					__( 'Customs Attribute ', 'hello-plus' ),
+					__( 'Role Manager', 'hello-plus' ),
+				],
 			];
 		}
 
 		if ( ! defined( 'ELEMENTOR_AI_VERSION' ) ) {
 			$action_links_data[] = [
 				'type' => 'go-ai',
-				'image' => HELLO_PLUS_URL . '/assets/images/elementor.svg',
+				'image' => HELLO_PLUS_URL . '/assets/images/ai.png',
 				'url' => 'https://elementor.com/pricing-ai',
 				'alt' => __( 'Elementor AI', 'hello-plus' ),
 				'title' => __( 'AI Me', 'hello-plus' ),
-				'message' => __( 'Stand on the shoulders of giants.', 'hello-plus' ),
-				'button' => __( 'AI!', 'hello-plus' ),
+				'message' => __( 'Boost creativity with Elementor AI. Craft & enhance copy, create custom CSS & Code, and generate images to elevate your website.', 'hello-plus' ),
+				'button' => __( 'Let\'s Go', 'hello-plus' ),
 			];
 		}
 
 		if ( ! defined( 'ELEMENTOR_IMAGE_OPTIMIZER_VERSION' ) ) {
 			$action_links_data[] = [
 				'type' => 'go-image-optimizer',
-				'image' => HELLO_PLUS_URL . '/assets/images/elementor.svg',
+				'image' => HELLO_PLUS_URL . '/assets/images/image-optimizer.png',
 				'url' => 'https://elementor.com/pricing-plugin',
 				'alt' => __( 'Elementor Image Optimizer', 'hello-plus' ),
 				'title' => __( 'Image Optimizer', 'hello-plus' ),
-				'message' => __( 'Smaller is better! Minimize your site size with Elementor Image Optimizer', 'hello-plus' ),
+				'message' => __( 'Check out this incredibly useful plugin that will compress and optimize your images, giving you leaner, faster websites.', 'hello-plus' ),
 				'button' => __( 'Go Small', 'hello-plus' ),
 			];
 		}

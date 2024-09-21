@@ -20,8 +20,7 @@ export const PromotionLink = ( { image, alt, title, message, button, link, featu
 					{ features.map( ( feature, i ) => {
 					return <Feature key={ i } text={ feature } />;
 				} ) }
-				</Stack>
-				 ) }
+				</Stack> ) }
 		</Paper>
 	);
 };

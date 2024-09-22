@@ -108,6 +108,7 @@ class Plugin_Notice {
 			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-notice.js',
 			[],
 			HELLO_PLUS_ELEMENTOR_VERSION,
+			true
 		);
 
 		wp_localize_script(

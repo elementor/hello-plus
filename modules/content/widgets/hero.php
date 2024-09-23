@@ -60,8 +60,8 @@ class Hero extends Widget_Base {
 		$this->add_content_image_section();
 	}
 
-    protected function add_style_section() {
-        $this->add_style_content_section();
+	protected function add_style_section() {
+    	$this->add_style_content_section();
 		$this->add_style_image_section();
 		$this->add_style_box_section();
 	}

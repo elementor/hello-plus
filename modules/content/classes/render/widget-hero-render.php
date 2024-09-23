@@ -66,7 +66,7 @@ class Widget_Hero_Render {
 				Utils::print_unescaped_internal_string( $heading_output );
 			} ?>
 			<?php if ( $has_subheading ) {
-				$subheading_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $subheading_tag ),  'class="e-hero__subheading"', esc_html( $subheading_text ) );
+				$subheading_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $subheading_tag ), 'class="e-hero__subheading"', esc_html( $subheading_text ) );
 				// Escaped above
 				Utils::print_unescaped_internal_string( $subheading_output );
 			} ?>

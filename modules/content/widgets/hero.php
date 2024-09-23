@@ -58,13 +58,13 @@ class Hero extends Widget_Base {
 		$this->add_content_text_section();
 		$this->add_content_cta_section();
 		$this->add_content_image_section();
-    }
+	}
 
     protected function add_style_section() {
         $this->add_style_content_section();
 		$this->add_style_image_section();
 		$this->add_style_box_section();
-    }
+	}
 
 	protected function get_configured_breakpoints( $add_desktop = 'true' ): array {
 		$elementor_plugin = Theme_Utils::elementor();
@@ -325,7 +325,6 @@ class Hero extends Widget_Base {
 				'type' => Controls_Manager::HEADING,
 			]
 		);
-
 
 		$this->add_control(
 			'subheading_color',
@@ -764,7 +763,7 @@ class Hero extends Widget_Base {
 		$this->add_control(
 			'box_full_screen_height_controls',
 			[
-				'label' => esc_html__( 'Apply Full Screen Height on', 'elementor' ),
+				'label' => esc_html__( 'Apply Full Screen Height on', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT2,
 				'label_block' => true,
 				'multiple' => true,

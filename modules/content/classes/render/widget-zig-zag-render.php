@@ -2,14 +2,12 @@
 
 namespace HelloPlus\Modules\Content\Classes\Render;
 
-use Elementor\Group_Control_Background;
-use Elementor\Group_Control_Box_Shadow;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 use Elementor\Group_Control_Image_Size;
-use Elementor\Group_Control_Typography;
-use Elementor\Controls_Manager;
 use Elementor\Icons_Manager;
-use Elementor\Repeater;
-use Elementor\Widget_Base;
 use Elementor\Utils;
 
 use HelloPlus\Modules\Content\Widgets\Zig_Zag;

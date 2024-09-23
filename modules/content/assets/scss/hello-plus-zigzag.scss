@@ -1,13 +1,11 @@
+@import "./breakpoints";
+
 .e-zigzag {
     $transition: all .3s;
 	$corners-shape-default: 8px;
 	$corners-shape-sharp: 0;
 	$corners-shape-rounded: 12px;
 	$corners-shape-round: 32px;
-
-	$breakpoint-tablet-max: 767px;
-	$breakpoint-tablet-min: 768px;
-	$breakpoint-desktop-min: 1024px;
 
 	--zigzag-button-icon-size: 16px;
 	--zigzag-button-icon-spacing: 10px;
@@ -41,12 +39,12 @@
 	display: flex;
 	flex-direction: column;
 
-	@media screen and (min-width: $breakpoint-tablet-min) {
+	@media screen and (min-width: $screen-tablet-min) {
 		--zigzag-elements-gap: 40px;
 		--zigzag-rows-spacing: 100px;
 	}
 
-	@media screen and (min-width: $breakpoint-desktop-min) {
+	@media screen and (min-width: $screen-desktop-min) {
 		--zigzag-elements-gap: 120px;
 	}
 
@@ -143,14 +141,14 @@
 
 		.row-even & {
 
-			@media screen and (min-width: $breakpoint-tablet-min) {
+			@media screen and (min-width: $screen-tablet-min) {
 				padding-inline-end: var(--zigzag-elements-gap);
 			}
 		}
 
 		.row-odd & {
 
-			@media screen and (min-width: $breakpoint-tablet-min) {
+			@media screen and (min-width: $screen-tablet-min) {
 				padding-inline-start: var(--zigzag-elements-gap);
 			}
 		}
@@ -219,12 +217,12 @@
 			flex-direction: row-reverse;
 		}
 
-		@media screen and (max-width: $breakpoint-tablet-max) {
+		@media screen and (max-width: $screen-tablet-max) {
 			gap: var(--zigzag-elements-gap);
 		}
 	}
 
-	@media screen and (max-width: $breakpoint-tablet-max) {
+	@media screen and (max-width: $screen-tablet-max) {
 		.e-zigzag__item-container {
 			flex-direction: column;
 		}

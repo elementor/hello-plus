@@ -9,9 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Box_Shadow;
-use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Typography;
-use Elementor\Icons_Manager;
 use Elementor\Repeater;
 use Elementor\Utils;
 use Elementor\Widget_Base;
@@ -42,7 +40,7 @@ class Zig_Zag extends Widget_Base {
 	}
 
 	public function get_style_depends(): array {
-		return [ 'hello-plus-content' ];
+		return [ 'hello-plus-zigzag' ];
 	}
 
 	protected function render(): void {
@@ -286,7 +284,7 @@ class Zig_Zag extends Widget_Base {
 		$this->start_controls_section(
 			'style_zigzags_section',
 			[
-				'label' => esc_html__( 'Zigzag', 'hello-plus' ),
+				'label' => esc_html__( 'Zigzags', 'hello-plus' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);

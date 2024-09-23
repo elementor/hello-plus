@@ -12,7 +12,6 @@ use Elementor\{
 	Modules\Library\Documents\Library_Document
 };
 use HelloPlus\Includes\Utils as Theme_Utils;
-use WP_Post;
 use WP_Query;
 
 /**
@@ -96,14 +95,16 @@ abstract class Document_Base extends Library_Document {
 	 * Retrieve the template-document post.
 	 * There should be only one, so return null if not found, or found too many.
 	 *
-	 * @return ?WP_Post
+	 * @return ?int
 	 */
-	public static function get_document_post(): ?WP_Post {
+	public static function get_document_post(): ?int {
 		static $posts = null;
 
 		if ( is_null( $posts ) ) {
 			$args  = array(
 				'post_type' => 'elementor_library',
+				'fields' => 'ids',
+				'lazy_load_term_meta' => true,
 				'tax_query' => [
 					[
 						'taxonomy' => self::TAXONOMY_TYPE_SLUG,

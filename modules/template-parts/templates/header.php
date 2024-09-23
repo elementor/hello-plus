@@ -11,7 +11,7 @@ use HelloPlus\Modules\TemplateParts\Classes\Header;
 
 // Header template is validated earlier, so if we got this far, there is only one template-document post:
 $header_doc_post = Header::get_document_post();
-$header = Theme_Utils::elementor()->documents->get( $header_doc_post->ID );
+$header = Theme_Utils::elementor()->documents->get( $header_doc_post );
 
 ?>
 <!DOCTYPE html>

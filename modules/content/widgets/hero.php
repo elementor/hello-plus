@@ -2,7 +2,6 @@
 
 namespace HelloPlus\Modules\Content\Widgets;
 
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -10,13 +9,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Box_Shadow;
-use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Typography;
-use Elementor\Icons_Manager;
-use Elementor\Plugin;
-use Elementor\Repeater;
-use Elementor\Utils;
+use Elementor\Utils as Elementor_Utils;
 use Elementor\Widget_Base;
+use HelloPlus\Includes\Utils as Theme_Utils;
 
 use HelloPlus\Modules\Content\Classes\Render\Widget_Hero_Render;
 use HelloPlus\Modules\Theme\Module as Theme_Module;
@@ -70,9 +66,10 @@ class Hero extends Widget_Base {
 		$this->add_style_box_section();
     }
 
-	protected function get_configured_breakpoints( $add_desktop = 'true' ) {
-		$active_devices = Plugin::$instance->breakpoints->get_active_devices_list( [ 'reverse' => true ] );
-		$active_breakpoint_instances = Plugin::$instance->breakpoints->get_active_breakpoints();
+	protected function get_configured_breakpoints( $add_desktop = 'true' ): array {
+		$elementor_plugin = Theme_Utils::elementor();
+		$active_devices = $elementor_plugin->breakpoints->get_active_devices_list( [ 'reverse' => true ] );
+		$active_breakpoint_instances = $elementor_plugin->breakpoints->get_active_breakpoints();
 
 		$devices_options = [];
 
@@ -150,7 +147,6 @@ class Hero extends Widget_Base {
 				'label' => esc_html__( 'HTML Tag', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'h1' => 'H1',
 					'h2' => 'H2',
 					'h3' => 'H3',
 					'h4' => 'H4',
@@ -231,7 +227,7 @@ class Hero extends Widget_Base {
 				'label' => esc_html__( 'Choose Image', 'hello-plus' ),
 				'type' => Controls_Manager::MEDIA,
 				'default' => [
-					'url' => Utils::get_placeholder_image_src(),
+					'url' => Elementor_Utils::get_placeholder_image_src(),
 				],
 			]
 		);

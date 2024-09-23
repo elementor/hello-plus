@@ -284,7 +284,7 @@ class Zig_Zag extends Widget_Base {
 		$this->start_controls_section(
 			'style_zigzags_section',
 			[
-				'label' => esc_html__( 'Zigzag', 'hello-plus' ),
+				'label' => esc_html__( 'Zigzags', 'hello-plus' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);

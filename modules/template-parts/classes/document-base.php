@@ -50,23 +50,9 @@ abstract class Document_Base extends Library_Document {
 		return '.ehp-' . $this->get_main_id();
 	}
 
-//	protected static function get_editor_panel_categories(): array {
-//		return [ Module::HELLO_PLUS_EDITOR_CATEGORY_SLUG ];
-//	}
-
-// TODO: which controls do we need?
-	protected function register_controls() {
-		parent::register_controls();
-
-		Post::register_style_controls( $this );
-
-		$this->update_control(
-			'section_page_style',
-			[
-				'label' => esc_html__( 'Style', 'elementor-pro' ),
-			]
-		);
-	}
+	//	protected static function get_editor_panel_categories(): array {
+	//		return [ Module::HELLO_PLUS_EDITOR_CATEGORY_SLUG ];
+	//	}
 
 	protected function get_remote_library_config(): array {
 		$config = parent::get_remote_library_config();

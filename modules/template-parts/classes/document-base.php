@@ -50,11 +50,11 @@ abstract class Document_Base extends Library_Document {
 		return '.ehp-' . $this->get_main_id();
 	}
 
-	/*
-	protected static function get_editor_panel_categories(): array {
-		return [ Module::HELLO_PLUS_EDITOR_CATEGORY_SLUG ];
-	}
-	*/
+	//phpcs:disable
+//	protected static function get_editor_panel_categories(): array {
+//		return [ Module::HELLO_PLUS_EDITOR_CATEGORY_SLUG ];
+//	}
+	//phpcs:enable
 
 	protected function get_remote_library_config(): array {
 		$config = parent::get_remote_library_config();

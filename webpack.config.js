@@ -25,9 +25,9 @@ const entryPoints = {
 
 	// Content module
 	'js/hello-plus-content': path.resolve( modulesDir, 'content/assets/js', 'hello-plus-content.js' ),
-	'css/hello-plus-content': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-zigzag.scss' ),
+	'css/hello-plus-zigzag': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-zigzag.scss' ),
 	'css/hello-plus-hero': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-hero.scss' ),
-	'css/hello-plus-hero': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-cta.scss' ),
+	'css/hello-plus-cta': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-cta.scss' ),
 
 	// Theme module
 	'css/theme': path.resolve( modulesDir, 'theme/assets/scss', 'theme.scss' ),

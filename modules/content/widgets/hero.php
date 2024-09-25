@@ -2,7 +2,6 @@
 
 namespace HelloPlus\Modules\Content\Widgets;
 
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -17,6 +16,9 @@ use Elementor\Plugin;
 use Elementor\Repeater;
 use Elementor\Utils;
 use Elementor\Widget_Base;
+
+use Elementor\Utils as Elementor_Utils;
+use HelloPlus\Includes\Utils as Theme_Utils;
 
 use HelloPlus\Modules\Content\Base\Traits\Shared_Content_Traits;
 use HelloPlus\Modules\Content\Classes\Render\Widget_Hero_Render;
@@ -65,13 +67,13 @@ class Hero extends Widget_Base {
 		$this->add_content_text_section();
 		$this->add_content_cta_section();
 		$this->add_content_image_section();
-    }
+	}
 
-    protected function add_style_section() {
-        $this->add_style_content_section();
+	protected function add_style_section() {
+		$this->add_style_content_section();
 		$this->add_style_image_section();
 		$this->add_style_box_section();
-    }
+	}
 
 	protected function add_content_text_section() {
 		$this->start_controls_section(
@@ -136,7 +138,6 @@ class Hero extends Widget_Base {
 				'label' => esc_html__( 'HTML Tag', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'h1' => 'H1',
 					'h2' => 'H2',
 					'h3' => 'H3',
 					'h4' => 'H4',
@@ -217,7 +218,7 @@ class Hero extends Widget_Base {
 				'label' => esc_html__( 'Choose Image', 'hello-plus' ),
 				'type' => Controls_Manager::MEDIA,
 				'default' => [
-					'url' => Utils::get_placeholder_image_src(),
+					'url' => Elementor_Utils::get_placeholder_image_src(),
 				],
 			]
 		);
@@ -315,7 +316,6 @@ class Hero extends Widget_Base {
 				'type' => Controls_Manager::HEADING,
 			]
 		);
-
 
 		$this->add_control(
 			'subheading_color',
@@ -754,7 +754,7 @@ class Hero extends Widget_Base {
 		$this->add_control(
 			'box_full_screen_height_controls',
 			[
-				'label' => esc_html__( 'Apply Full Screen Height on', 'elementor' ),
+				'label' => esc_html__( 'Apply Full Screen Height on', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT2,
 				'label_block' => true,
 				'multiple' => true,

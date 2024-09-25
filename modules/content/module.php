@@ -49,7 +49,7 @@ class Module extends Module_Base {
 		);
 
 		wp_enqueue_style(
-			'hello-plus-content',
+			'hello-plus-zigzag',
 			HELLO_PLUS_STYLE_URL . 'hello-plus-zigzag.css',
 			[],
 			HELLO_PLUS_ELEMENTOR_VERSION

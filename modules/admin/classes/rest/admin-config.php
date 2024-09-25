@@ -40,39 +40,30 @@ class Admin_Config {
 	}
 
 	public function get_site_parts( array $config ) {
-		$site_pages = [
+		$last_five_pages_query = new \WP_Query(
 			[
-				'title' => __( 'Home Page', 'hello-plus' ),
-				'link' => get_edit_post_link( get_option( 'page_on_front' ) ),
-			],
-		];
+				'posts_per_page' => 5,
+				'post_type' => 'page',
+				'post_status' => 'publish',
+				'orderby' => 'post_date',
+				'order' => 'DESC',
+				'fields' => 'ids',
+				'no_found_rows' => true,
+				'lazy_load_term_meta' => true,
+				'update_post_meta_cache' => false,
+			]
+		);
 
-		if ( Kits_Library::get_about_page_id() ) {
-			$site_pages[] = [
-				'title' => __( 'About', 'hello-plus' ),
-				'link' => get_edit_post_link( Kits_Library::get_about_page_id() ),
-			];
-		}
+		$site_pages = [];
 
-		if ( Kits_Library::get_services_page_id() ) {
-			$site_pages[] = [
-				'title' => __( 'Services', 'hello-plus' ),
-				'link' => get_edit_post_link( Kits_Library::get_services_page_id() ),
-			];
-		}
-
-		if ( Kits_Library::get_work_page_id() ) {
-			$site_pages[] = [
-				'title' => __( 'Work', 'hello-plus' ),
-				'link' => get_edit_post_link( Kits_Library::get_work_page_id() ),
-			];
-		}
-
-		if ( Kits_Library::get_contact_page_id() ) {
-			$site_pages[] = [
-				'title' => __( 'Contact', 'hello-plus' ),
-				'link' => get_edit_post_link( Kits_Library::get_contact_page_id() ),
-			];
+		if ( $last_five_pages_query->have_posts() ) {
+			while ( $last_five_pages_query->have_posts() ) {
+				$last_five_pages_query->the_post();
+				$site_pages[] = [
+					'title' => get_the_title(),
+					'link' => get_edit_post_link( get_the_ID() ),
+				];
+			}
 		}
 
 		$general = [

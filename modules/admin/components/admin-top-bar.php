@@ -42,6 +42,10 @@ class Admin_Top_Bar {
 	}
 
 	public function __construct() {
+		if ( ! is_admin() ) {
+			return;
+		}
+
 		add_action( 'current_screen', function () {
 			if ( ! $this->is_top_bar_active() ) {
 				return;

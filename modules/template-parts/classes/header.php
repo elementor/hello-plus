@@ -18,16 +18,6 @@ class Header extends Document_Base {
 		return 'ehp-header';
 	}
 
-	/**
-	 * Get document title.
-	 *
-	 * Retrieve the document title.
-	 *
-	 * @access public
-	 * @static
-	 *
-	 * @return string Document title.
-	 */
 	public static function get_title(): string {
 		return esc_html__( 'Hello+ Header', 'hello-plus' );
 	}

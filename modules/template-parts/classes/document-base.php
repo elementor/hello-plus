@@ -7,7 +7,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use Elementor\{
-	Core\DocumentTypes\Post,
 	TemplateLibrary\Source_Local,
 	Modules\Library\Documents\Library_Document
 };

@@ -20,16 +20,6 @@ class Footer extends Document_Base {
 		return 'ehp-footer';
 	}
 
-	/**
-	 * Get document title.
-	 *
-	 * Retrieve the document title.
-	 *
-	 * @access public
-	 * @static
-	 *
-	 * @return string Document title.
-	 */
 	public static function get_title(): string {
 		return esc_html__( 'Hello+ Footer', 'hello-plus' );
 	}

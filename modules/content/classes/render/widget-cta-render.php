@@ -28,11 +28,16 @@ class Widget_CTA_Render {
 	public function render(): void {
 		$layout_classnames = 'e-cta';
 		$layout_full_height_controls = $this->settings['box_full_screen_height_controls'] ?? '';
+		$elements_position = $this->settings['elements_position'];
 
 		if ( ! empty( $layout_full_height_controls ) ) {
 			foreach ( $layout_full_height_controls as $breakpoint ) {
 				$layout_classnames .= ' is-full-height-' . $breakpoint;
 			}
+		}
+
+		if ( ! empty( $elements_position ) ) {
+			$layout_classnames .= ' has-elements-position-' . $elements_position;
 		}
 
 		$this->widget->add_render_attribute( 'layout', [
@@ -84,11 +89,13 @@ class Widget_CTA_Render {
 		$has_primary_button = '' !== $this->settings['primary_cta_button_text'];
 		$has_secondary_button = '' !== $this->settings['secondary_cta_button_text'];
 
-		// $this->widget->add_render_attribute( 'ctas-container', [
-		// 	'class' => $ctas_container_classnames,
-		// ] );
+		$ctas_container_classnames = 'e-cta__ctas-container';
+
+		$this->widget->add_render_attribute( 'ctas-container', [
+			'class' => $ctas_container_classnames,
+		] );
 		?>
-			<div <?php echo $this->widget->get_render_attribute_string( 'text-container' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+			<div <?php echo $this->widget->get_render_attribute_string( 'ctas-container' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<?php if ( $has_primary_button ) {
 				$this->render_button( 'primary' );
 			} ?>

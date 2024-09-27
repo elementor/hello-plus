@@ -55,12 +55,6 @@ class CTA extends Widget_Base {
 		$render_strategy->render();
 	}
 
-	public static function get_configuration() {
-		$config = $this->get_configuration();
-
-		$config['cta_button']['primary']['has_label'] = true;
-	}
-
 	protected function register_controls() {
 		$this->add_content_section();
 		$this->add_style_section();
@@ -274,8 +268,8 @@ class CTA extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'text_position',
+		$this->add_control(
+			'elements_position',
 			[
 				'label' => esc_html__( 'Position', 'hello-plus' ),
 				'type' => Controls_Manager::CHOOSE,
@@ -292,9 +286,6 @@ class CTA extends Widget_Base {
 				'default' => 'start',
 				'tablet_default' => 'start',
 				'mobile_default' => 'start',
-				'selectors' => [
-					// '{{WRAPPER}} .e-hero' => '--hero-content-position: {{VALUE}}; --hero-content-text-align: {{VALUE}};',
-				],
 			]
 		);
 
@@ -312,7 +303,7 @@ class CTA extends Widget_Base {
 				'tablet_default' => 'default',
 				'mobile_default' => 'default',
 				'selectors' => [
-					// '{{WRAPPER}} .e-hero' => '--hero-text-heading-width: var(--hero-text-{{VALUE}}-heading); --hero-text-subheading-width: var(--hero-text-{{VALUE}}-subheading);',
+					'{{WRAPPER}} .e-cta' => '--cta-text-heading-width: var(--cta-text-{{VALUE}}-heading); --cta-text-description-width: var(--cta-text-{{VALUE}}-description);',
 				],
 			]
 		);
@@ -331,7 +322,7 @@ class CTA extends Widget_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					// '{{WRAPPER}} .e-hero' => '--hero-heading-color: {{VALUE}}',
+					'{{WRAPPER}} .e-cta' => '--cta-heading-color: {{VALUE}}',
 				],
 			]
 		);
@@ -340,7 +331,7 @@ class CTA extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'heading_typography',
-				'selector' => '{{WRAPPER}} .e-hero__heading',
+				'selector' => '{{WRAPPER}} .e-cta__heading',
 			]
 		);
 
@@ -359,7 +350,7 @@ class CTA extends Widget_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					// '{{WRAPPER}} .e-hero' => '--hero-subheading-color: {{VALUE}}',
+					'{{WRAPPER}} .e-cta' => '--cta-description-color: {{VALUE}}',
 				],
 			]
 		);
@@ -368,7 +359,7 @@ class CTA extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'description_typography',
-				'selector' => '{{WRAPPER}} .e-hero__subheading',
+				'selector' => '{{WRAPPER}} .e-cta__description',
 			]
 		);
 
@@ -387,7 +378,7 @@ class CTA extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .e-hero' => '--hero-button-icon-spacing: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .e-cta' => '--cta-text-gap: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -411,23 +402,23 @@ class CTA extends Widget_Base {
 				'type' => Controls_Manager::CHOOSE,
 				'description' => esc_html__( 'Position controls Desktop layout', 'hello-plus' ),
 				'options' => [
-					'start' => [
+					'flex-start' => [
 						'title' => esc_html__( 'Start', 'hello-plus' ),
 						'icon' => 'eicon-align-start-v',
 					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'hello-plus' ),
-						'icon' => 'eicon-align-center-v',
+					'flex-end' => [
+						'title' => esc_html__( 'End', 'hello-plus' ),
+						'icon' => 'eicon-align-end-v',
 					],
 				],
-				'default' => 'start',
-				'tablet_default' => 'start',
-				'mobile_default' => 'start',
+				'default' => 'flex-start',
+				'tablet_default' => 'flex-start',
+				'mobile_default' => 'flex-start',
 				'selectors' => [
-					// '{{WRAPPER}} .e-hero' => '--hero-content-position: {{VALUE}}; --hero-content-text-align: {{VALUE}};',
+					'{{WRAPPER}} .e-cta' => '--cta-buttons-position: {{VALUE}};',
 				],
 				'condition' => [
-					'text_position' => 'start',
+					'elements_position' => 'start',
 				],
 			]
 		);
@@ -450,7 +441,7 @@ class CTA extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .e-hero' => '--hero-image-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .e-cta' => '--cta-buttons-space-between: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'secondary_cta_show' => 'yes',
@@ -487,7 +478,7 @@ class CTA extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'primary_button_typography',
-				'selector' => '{{WRAPPER}} .e-hero__button',
+				'selector' => '{{WRAPPER}} .e-cta__button--primary',
 			]
 		);
 
@@ -513,7 +504,7 @@ class CTA extends Widget_Base {
 					'right' => is_rtl() ? 'row' : 'row-reverse',
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .e-hero__button' => 'flex-direction: {{VALUE}};',
+					'{{WRAPPER}} .e-cta__button--primary' => 'flex-direction: {{VALUE}};',
 				],
 				'condition' => [
 					'primary_cta_button_icon[value]!' => '',
@@ -542,7 +533,7 @@ class CTA extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .e-hero' => '--hero-button-icon-spacing: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .e-cta' => '--cta-button-primary-icon-spacing: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'primary_cta_button_icon[value]!' => '',
@@ -567,7 +558,7 @@ class CTA extends Widget_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					// '{{WRAPPER}} .e-hero' => '--hero-button-text-color: {{VALUE}}',
+					'{{WRAPPER}} .e-cta' => '--cta-button-primary-text-color: {{VALUE}}',
 				],
 			]
 		);
@@ -578,7 +569,7 @@ class CTA extends Widget_Base {
 				'name' => 'primary_button_background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .e-hero__button',
+				'selector' => '{{WRAPPER}} .e-cta__button--primary',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
@@ -605,7 +596,7 @@ class CTA extends Widget_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					// '{{WRAPPER}} .e-hero' => '--hero-button-text-color-hover: {{VALUE}}',
+					'{{WRAPPER}} .e-cta' => '--cta-button-primary-text-color-hover: {{VALUE}}',
 				],
 			]
 		);
@@ -616,7 +607,7 @@ class CTA extends Widget_Base {
 				'name' => 'primary_button_background_hover',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .e-hero__button:hover, {{WRAPPER}} .e-hero__button:focus',
+				'selector' => '{{WRAPPER}} .e-cta__button--primary:hover, {{WRAPPER}} .e-cta__button--primary:focus',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
@@ -675,10 +666,10 @@ class CTA extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .e-hero' => '--hero-button-border-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .e-cta' => '--cta-button-primary-border-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
-					'show_button_border' => 'yes',
+					'primary_show_button_border' => 'yes',
 				],
 			]
 		);
@@ -689,7 +680,7 @@ class CTA extends Widget_Base {
 				'label' => esc_html__( 'Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-hero' => '--hero-button-border-color: {{VALUE}}',
+					'{{WRAPPER}} .e-cta' => '--cta-button-primary-border-color: {{VALUE}}',
 				],
 				'condition' => [
 					'primary_show_button_border' => 'yes',
@@ -719,7 +710,7 @@ class CTA extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'primary_button_box_shadow',
-				'selector' => '{{WRAPPER}} .e-hero__button',
+				'selector' => '{{WRAPPER}} .e-cta__button--primary',
 				'condition' => [
 					'primary_button_type' => 'button',
 				],
@@ -733,7 +724,7 @@ class CTA extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
 				'selectors' => [
-					'{{WRAPPER}} .e-hero' => '--hero-button-padding-block-end: {{BOTTOM}}{{UNIT}}; --hero-button-padding-block-start: {{TOP}}{{UNIT}}; --hero-button-padding-inline-end: {{RIGHT}}{{UNIT}}; --hero-button-padding-inline-start: {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .e-cta' => '--cta-button-primary-padding-block-end: {{BOTTOM}}{{UNIT}}; --cta-button-primary-padding-block-start: {{TOP}}{{UNIT}}; --cta-button-primary-padding-inline-end: {{RIGHT}}{{UNIT}}; --cta-button-primary-padding-inline-start: {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 				'condition' => [
@@ -775,7 +766,7 @@ class CTA extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'secondary_button_typography',
-				'selector' => '{{WRAPPER}} .e-hero__button',
+				'selector' => '{{WRAPPER}} .e-cta__button--secondary',
 				'condition' => [
 					'secondary_cta_show' => 'yes',
 				],
@@ -804,7 +795,7 @@ class CTA extends Widget_Base {
 					'right' => is_rtl() ? 'row' : 'row-reverse',
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .e-hero__button' => 'flex-direction: {{VALUE}};',
+					'{{WRAPPER}} .e-cta__button--secondary' => 'flex-direction: {{VALUE}};',
 				],
 				'condition' => [
 					'secondary_cta_show' => 'yes',
@@ -834,7 +825,7 @@ class CTA extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .e-hero' => '--hero-button-icon-spacing: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .e-cta' => '--cta-button-secondary-icon-spacing: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'secondary_cta_show' => 'yes',
@@ -865,7 +856,7 @@ class CTA extends Widget_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					// '{{WRAPPER}} .e-hero' => '--hero-button-text-color: {{VALUE}}',
+					'{{WRAPPER}} .e-cta' => '--cta-button-secondary-text-color: {{VALUE}}',
 				],
 			]
 		);
@@ -876,7 +867,7 @@ class CTA extends Widget_Base {
 				'name' => 'secondary_button_background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .e-hero__button',
+				'selector' => '{{WRAPPER}} .e-cta__button--secondary',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
@@ -903,7 +894,7 @@ class CTA extends Widget_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					// '{{WRAPPER}} .e-hero' => '--hero-button-text-color-hover: {{VALUE}}',
+					'{{WRAPPER}} .e-cta' => '--cta-button-secondary-text-color-hover: {{VALUE}}',
 				],
 			]
 		);
@@ -914,7 +905,7 @@ class CTA extends Widget_Base {
 				'name' => 'secondary_button_background_hover',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .e-hero__button:hover, {{WRAPPER}} .e-hero__button:focus',
+				'selector' => '{{WRAPPER}} .e-cta__button--secondary:hover, {{WRAPPER}} .e-cta__button--secondary:focus',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
@@ -947,7 +938,7 @@ class CTA extends Widget_Base {
 				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
 				'label_off' => esc_html__( 'No', 'hello-plus' ),
 				'return_value' => 'yes',
-				'default' => 'no',
+				'default' => 'yes',
 				'separator' => 'before',
 				'condition' => [
 					'secondary_cta_show' => 'yes',
@@ -974,11 +965,11 @@ class CTA extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .e-hero' => '--hero-button-border-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .e-cta' => '--cta-button-secondary-border-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'secondary_cta_show' => 'yes',
-					'show_button_border' => 'yes',
+					'secondary_button_type' => 'button',
 				],
 			]
 		);
@@ -989,11 +980,11 @@ class CTA extends Widget_Base {
 				'label' => esc_html__( 'Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-hero' => '--hero-button-border-color: {{VALUE}}',
+					'{{WRAPPER}} .e-cta' => '--cta-button-secondary-border-color: {{VALUE}}',
 				],
 				'condition' => [
 					'secondary_cta_show' => 'yes',
-					'secondary_show_button_border' => 'yes',
+					'secondary_button_type' => 'button',
 				],
 			]
 		);
@@ -1021,7 +1012,7 @@ class CTA extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'secondary_button_box_shadow',
-				'selector' => '{{WRAPPER}} .e-hero__button',
+				'selector' => '{{WRAPPER}} .e-cta__button--secondary',
 				'condition' => [
 					'secondary_cta_show' => 'yes',
 					'secondary_button_type' => 'button',
@@ -1036,7 +1027,7 @@ class CTA extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
 				'selectors' => [
-					'{{WRAPPER}} .e-hero' => '--hero-button-padding-block-end: {{BOTTOM}}{{UNIT}}; --hero-button-padding-block-start: {{TOP}}{{UNIT}}; --hero-button-padding-inline-end: {{RIGHT}}{{UNIT}}; --hero-button-padding-inline-start: {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .e-cta' => '--cta-button-secondary-padding-block-end: {{BOTTOM}}{{UNIT}}; --cta-button-secondary-padding-block-start: {{TOP}}{{UNIT}}; --cta-button-secondary-padding-inline-end: {{RIGHT}}{{UNIT}}; --cta-button-secondary-padding-inline-start: {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 				'condition' => [
@@ -1070,7 +1061,7 @@ class CTA extends Widget_Base {
 				'name' => 'background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .e-hero',
+				'selector' => '{{WRAPPER}} .e-cta',
 
 			]
 		);
@@ -1090,7 +1081,7 @@ class CTA extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .e-zigzag' => '--zigzag-content-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .e-cta' => '--cta-content-width: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -1111,7 +1102,7 @@ class CTA extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .e-zigzag' => '--zigzag-content-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .e-cta' => '--cta-elements-gap: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]

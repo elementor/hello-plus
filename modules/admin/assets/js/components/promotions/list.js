@@ -1,13 +1,15 @@
 import { PromotionLink } from '../link/promotion-link';
-import { useDashboardContext } from '../../hooks/use-dashboard-context';
+import { useAdminContext } from '../../hooks/use-admin-context';
+import Stack from '@elementor/ui/Stack';
 
 export const PromotionsList = () => {
-	const { promotionsLinks } = useDashboardContext();
+	const { promotionsLinks } = useAdminContext();
+
 	return (
-		<div className="hello_plus__action_links">
+		<Stack direction="column" gap={ 2 }>
 			{ promotionsLinks.map( ( link, i ) => {
 				return <PromotionLink key={ i } { ...link } />;
 			} ) }
-		</div>
+		</Stack>
 	);
 };

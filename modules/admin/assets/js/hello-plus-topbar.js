@@ -1,17 +1,17 @@
-import { createRoot } from 'react-dom/client';
-import { AdminPage } from './pages/admin-page.js';
 import { AdminProvider } from './providers/admin-provider';
+import { createRoot } from 'react-dom/client';
+import { TopBar } from './components/top-bar/top-bar';
 
 const App = () => {
 	return (
 		<AdminProvider>
-			<AdminPage />
+			<TopBar />
 		</AdminProvider>
 	);
 };
 
 document.addEventListener( 'DOMContentLoaded', () => {
-	const container = document.getElementById( 'ehp-admin-home' );
+	const container = document.getElementById( 'ehp-admin-top-bar-root' );
 
 	if ( container ) {
 		const root = createRoot( container );

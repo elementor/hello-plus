@@ -72,13 +72,6 @@ class Admin_Menu_Controller {
 		);
 
 		wp_set_script_translations( $handle, 'hello-plus' );
-
-		wp_enqueue_style(
-			$handle,
-			HELLO_PLUS_STYLE_URL . "$handle.css",
-			[ 'wp-components' ],
-			$script_asset['version']
-		);
 	}
 
 	public function render(): void {

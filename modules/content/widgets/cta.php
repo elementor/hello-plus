@@ -423,8 +423,8 @@ class CTA extends Widget_Base {
 			]
 		);
 
-		$this->add_primary_cta_button_controls();
-		$this->add_secondary_cta_button_controls();
+		$this->add_cta_button_controls( 'primary' );
+		$this->add_cta_button_controls( 'secondary' );
 
 		$this->add_responsive_control(
 			'cta_space_between',
@@ -452,17 +452,20 @@ class CTA extends Widget_Base {
 		$this->end_controls_section();
 	}
 
-	protected function add_primary_cta_button_controls() {
+	protected function add_cta_button_controls( $type ) {
+		$label = 'primary' === $type ? 'Primary CTA' : 'Secondary CTA';
+		$show_button_border_default = 'primary' === $type ? 'no' : 'yes';
+
 		$this->add_control(
-			'primary_button_label',
+			$type . '_button_label',
 			[
-				'label' => esc_html__( 'Primary CTA', 'hello-plus' ),
+				'label' => esc_html__( $label, 'hello-plus' ),
 				'type' => Controls_Manager::HEADING,
 			]
 		);
 
 		$this->add_control(
-			'primary_button_type',
+			$type . '_button_type',
 			[
 				'label' => esc_html__( 'Type', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
@@ -477,13 +480,13 @@ class CTA extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'primary_button_typography',
-				'selector' => '{{WRAPPER}} .e-cta__button--primary',
+				'name' => $type . '_button_typography',
+				'selector' => '{{WRAPPER}} .e-cta__button--' . $type,
 			]
 		);
 
 		$this->add_responsive_control(
-			'primary_button_icon_position',
+			$type . '_button_icon_position',
 			[
 				'label' => esc_html__( 'Icon Position', 'hello-plus' ),
 				'type' => Controls_Manager::CHOOSE,
@@ -504,16 +507,16 @@ class CTA extends Widget_Base {
 					'right' => is_rtl() ? 'row' : 'row-reverse',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-cta__button--primary' => 'flex-direction: {{VALUE}};',
+					'{{WRAPPER}} .e-cta__button--' . $type => 'flex-direction: {{VALUE}};',
 				],
 				'condition' => [
-					'primary_cta_button_icon[value]!' => '',
+					$type . '_cta_button_icon[value]!' => '',
 				],
 			]
 		);
 
 		$this->add_control(
-			'primary_button_icon_spacing',
+			$type . '_button_icon_spacing',
 			[
 				'label' => esc_html__( 'Icon Spacing', 'hello-plus' ),
 				'type' => Controls_Manager::SLIDER,
@@ -533,32 +536,32 @@ class CTA extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-cta' => '--cta-button-primary-icon-spacing: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .e-cta' => '--cta-button-' . $type . '-icon-spacing: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
-					'primary_cta_button_icon[value]!' => '',
+					$type . '_cta_button_icon[value]!' => '',
 				],
 			]
 		);
 
 		$this->start_controls_tabs(
-			'primary_button_style'
+			$type . '_button_style'
 		);
 
 		$this->start_controls_tab(
-			'primary_button_normal_tab',
+			$type . '_button_normal_tab',
 			[
 				'label' => esc_html__( 'Normal', 'hello-plus' ),
 			]
 		);
 
 		$this->add_control(
-			'primary_button_text_color',
+			$type . '_button_text_color',
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-cta' => '--cta-button-primary-text-color: {{VALUE}}',
+					'{{WRAPPER}} .e-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
 				],
 			]
 		);
@@ -566,17 +569,17 @@ class CTA extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Background::get_type(),
 			[
-				'name' => 'primary_button_background',
+				'name' => $type . '_button_background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .e-cta__button--primary',
+				'selector' => '{{WRAPPER}} .e-cta__button--' . $type,
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
 					],
 				],
 				'condition' => [
-					'primary_button_type' => 'button',
+					$type . '_button_type' => 'button',
 				],
 			]
 		);
@@ -584,19 +587,19 @@ class CTA extends Widget_Base {
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
-			'primary_button_hover_tab',
+			$type . '_button_hover_tab',
 			[
 				'label' => esc_html__( 'Hover', 'hello-plus' ),
 			]
 		);
 
 		$this->add_control(
-			'primary_hover_button_text_color',
+			$type . '_hover_button_text_color',
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-cta' => '--cta-button-primary-text-color-hover: {{VALUE}}',
+					'{{WRAPPER}} .e-cta' => '--cta-button-' . $type . '-text-color-hover: {{VALUE}}',
 				],
 			]
 		);
@@ -604,23 +607,23 @@ class CTA extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Background::get_type(),
 			[
-				'name' => 'primary_button_background_hover',
+				'name' => $type . '_button_background_hover',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .e-cta__button--primary:hover, {{WRAPPER}} .e-cta__button--primary:focus',
+				'selector' => '{{WRAPPER}} .e-cta__button--' . $type . ':hover, {{WRAPPER}} .e-cta__button--' . $type . ':focus',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
 					],
 				],
 				'condition' => [
-					'primary_button_type' => 'button',
+					$type . '_button_type' => 'button',
 				],
 			]
 		);
 
 		$this->add_control(
-			'primary_button_hover_animation',
+			$type . '_button_hover_animation',
 			[
 				'label' => esc_html__( 'Hover Animation', 'hello-plus' ),
 				'type' => Controls_Manager::HOVER_ANIMATION,
@@ -633,23 +636,23 @@ class CTA extends Widget_Base {
 		$this->end_controls_tabs();
 
 		$this->add_control(
-			'primary_show_button_border',
+			$type . '_show_button_border',
 			[
 				'label' => esc_html__( 'Border', 'hello-plus' ),
 				'type' => Controls_Manager::SWITCHER,
 				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
 				'label_off' => esc_html__( 'No', 'hello-plus' ),
 				'return_value' => 'yes',
-				'default' => 'no',
+				'default' => $show_button_border_default,
 				'separator' => 'before',
 				'condition' => [
-					'primary_button_type' => 'button',
+					$type . '_button_type' => 'button',
 				],
 			]
 		);
 
 		$this->add_control(
-			'primary_button_border_width',
+			$type . '_button_border_width',
 			[
 				'label' => __( 'Border Width', 'hello-plus' ),
 				'type' => Controls_Manager::SLIDER,
@@ -666,30 +669,30 @@ class CTA extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-cta' => '--cta-button-primary-border-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .e-cta' => '--cta-button-' . $type . '-border-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
-					'primary_show_button_border' => 'yes',
+					$type . '_show_button_border' => 'yes',
 				],
 			]
 		);
 
 		$this->add_control(
-			'primary_button_border_color',
+			$type . '_button_border_color',
 			[
 				'label' => esc_html__( 'Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-cta' => '--cta-button-primary-border-color: {{VALUE}}',
+					'{{WRAPPER}} .e-cta' => '--cta-button-' . $type . '-border-color: {{VALUE}}',
 				],
 				'condition' => [
-					'primary_show_button_border' => 'yes',
+					$type . '_show_button_border' => 'yes',
 				],
 			]
 		);
 
 		$this->add_control(
-			'primary_button_shape',
+			$type . '_button_shape',
 			[
 				'label' => esc_html__( 'Shape', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
@@ -701,7 +704,7 @@ class CTA extends Widget_Base {
 					'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
 				],
 				'condition' => [
-					'primary_button_type' => 'button',
+					$type . '_button_type' => 'button',
 				],
 			]
 		);
@@ -709,330 +712,26 @@ class CTA extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
 			[
-				'name' => 'primary_button_box_shadow',
-				'selector' => '{{WRAPPER}} .e-cta__button--primary',
+				'name' => $type . '_button_box_shadow',
+				'selector' => '{{WRAPPER}} .e-cta__button--' . $type,
 				'condition' => [
-					'primary_button_type' => 'button',
+					$type . '_button_type' => 'button',
 				],
 			]
 		);
 
 		$this->add_responsive_control(
-			'primary_button_padding',
+			$type . '_button_padding',
 			[
 				'label' => esc_html__( 'Padding', 'hello-plus' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
 				'selectors' => [
-					'{{WRAPPER}} .e-cta' => '--cta-button-primary-padding-block-end: {{BOTTOM}}{{UNIT}}; --cta-button-primary-padding-block-start: {{TOP}}{{UNIT}}; --cta-button-primary-padding-inline-end: {{RIGHT}}{{UNIT}}; --cta-button-primary-padding-inline-start: {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .e-cta' => '--cta-button-' . $type . '-padding-block-end: {{BOTTOM}}{{UNIT}}; --cta-button-' . $type . '-padding-block-start: {{TOP}}{{UNIT}}; --cta-button-' . $type . '-padding-inline-end: {{RIGHT}}{{UNIT}}; --cta-button-' . $type . '-padding-inline-start: {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 				'condition' => [
-					'primary_button_type' => 'button',
-				],
-			]
-		);
-	}
-
-	protected function add_secondary_cta_button_controls() {
-		$this->add_control(
-			'secondary_button_label',
-			[
-				'label' => esc_html__( 'Secondary CTA', 'hello-plus' ),
-				'type' => Controls_Manager::HEADING,
-				'condition' => [
-					'secondary_cta_show' => 'yes',
-				],
-			]
-		);
-
-		$this->add_control(
-			'secondary_button_type',
-			[
-				'label' => esc_html__( 'Type', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'button',
-				'options' => [
-					'button' => esc_html__( 'Button', 'hello-plus' ),
-					'link' => esc_html__( 'Link', 'hello-plus' ),
-				],
-				'condition' => [
-					'secondary_cta_show' => 'yes',
-				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => 'secondary_button_typography',
-				'selector' => '{{WRAPPER}} .e-cta__button--secondary',
-				'condition' => [
-					'secondary_cta_show' => 'yes',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'secondary_button_icon_position',
-			[
-				'label' => esc_html__( 'Icon Position', 'hello-plus' ),
-				'type' => Controls_Manager::CHOOSE,
-				'default' => is_rtl() ? 'row' : 'row-reverse',
-				'toggle' => false,
-				'options' => [
-					'row' => [
-						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => 'eicon-h-align-left',
-					],
-					'row-reverse' => [
-						'title' => esc_html__( 'End', 'hello-plus' ),
-						'icon' => 'eicon-h-align-right',
-					],
-				],
-				'selectors_dictionary' => [
-					'left' => is_rtl() ? 'row-reverse' : 'row',
-					'right' => is_rtl() ? 'row' : 'row-reverse',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .e-cta__button--secondary' => 'flex-direction: {{VALUE}};',
-				],
-				'condition' => [
-					'secondary_cta_show' => 'yes',
-					'secondary_cta_button_icon[value]!' => '',
-				],
-			]
-		);
-
-		$this->add_control(
-			'secondary_button_icon_spacing',
-			[
-				'label' => esc_html__( 'Icon Spacing', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
-				'range' => [
-					'px' => [
-						'max' => 100,
-					],
-					'em' => [
-						'max' => 5,
-					],
-					'rem' => [
-						'max' => 5,
-					],
-					'%' => [
-						'max' => 100,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .e-cta' => '--cta-button-secondary-icon-spacing: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'secondary_cta_show' => 'yes',
-					'secondary_cta_button_icon[value]!' => '',
-				],
-			]
-		);
-
-		$this->start_controls_tabs(
-			'secondary_button_style',
-			[
-				'condition' => [
-					'secondary_cta_show' => 'yes',
-				],
-			]
-		);
-
-		$this->start_controls_tab(
-			'secondary_button_normal_tab',
-			[
-				'label' => esc_html__( 'Normal', 'hello-plus' ),
-			]
-		);
-
-		$this->add_control(
-			'secondary_button_text_color',
-			[
-				'label' => esc_html__( 'Text Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .e-cta' => '--cta-button-secondary-text-color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Background::get_type(),
-			[
-				'name' => 'secondary_button_background',
-				'types' => [ 'classic', 'gradient' ],
-				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .e-cta__button--secondary',
-				'fields_options' => [
-					'background' => [
-						'default' => 'classic',
-					],
-				],
-				'condition' => [
-					'secondary_button_type' => 'button',
-				],
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->start_controls_tab(
-			'secondary_button_hover_tab',
-			[
-				'label' => esc_html__( 'Hover', 'hello-plus' ),
-			]
-		);
-
-		$this->add_control(
-			'secondary_hover_button_text_color',
-			[
-				'label' => esc_html__( 'Text Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .e-cta' => '--cta-button-secondary-text-color-hover: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Background::get_type(),
-			[
-				'name' => 'secondary_button_background_hover',
-				'types' => [ 'classic', 'gradient' ],
-				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .e-cta__button--secondary:hover, {{WRAPPER}} .e-cta__button--secondary:focus',
-				'fields_options' => [
-					'background' => [
-						'default' => 'classic',
-					],
-				],
-				'condition' => [
-					'secondary_button_type' => 'button',
-				],
-			]
-		);
-
-		$this->add_control(
-			'secondary_button_hover_animation',
-			[
-				'label' => esc_html__( 'Hover Animation', 'hello-plus' ),
-				'type' => Controls_Manager::HOVER_ANIMATION,
-
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->end_controls_tabs();
-
-		$this->add_control(
-			'secondary_show_button_border',
-			[
-				'label' => esc_html__( 'Border', 'hello-plus' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
-				'label_off' => esc_html__( 'No', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => 'yes',
-				'separator' => 'before',
-				'condition' => [
-					'secondary_cta_show' => 'yes',
-					'secondary_button_type' => 'button',
-				],
-			]
-		);
-
-		$this->add_control(
-			'secondary_button_border_width',
-			[
-				'label' => __( 'Border Width', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%', 'em', 'rem' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-						'step' => 2,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .e-cta' => '--cta-button-secondary-border-width: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'secondary_cta_show' => 'yes',
-					'secondary_button_type' => 'button',
-				],
-			]
-		);
-
-		$this->add_control(
-			'secondary_button_border_color',
-			[
-				'label' => esc_html__( 'Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .e-cta' => '--cta-button-secondary-border-color: {{VALUE}}',
-				],
-				'condition' => [
-					'secondary_cta_show' => 'yes',
-					'secondary_button_type' => 'button',
-				],
-			]
-		);
-
-		$this->add_control(
-			'secondary_button_shape',
-			[
-				'label' => esc_html__( 'Shape', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'default',
-				'options' => [
-					'default' => esc_html__( 'Default', 'hello-plus' ),
-					'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
-					'round' => esc_html__( 'Round', 'hello-plus' ),
-					'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
-				],
-				'condition' => [
-					'secondary_cta_show' => 'yes',
-					'secondary_button_type' => 'button',
-				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Box_Shadow::get_type(),
-			[
-				'name' => 'secondary_button_box_shadow',
-				'selector' => '{{WRAPPER}} .e-cta__button--secondary',
-				'condition' => [
-					'secondary_cta_show' => 'yes',
-					'secondary_button_type' => 'button',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'secondary_button_padding',
-			[
-				'label' => esc_html__( 'Padding', 'hello-plus' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em', 'rem' ],
-				'selectors' => [
-					'{{WRAPPER}} .e-cta' => '--cta-button-secondary-padding-block-end: {{BOTTOM}}{{UNIT}}; --cta-button-secondary-padding-block-start: {{TOP}}{{UNIT}}; --cta-button-secondary-padding-inline-end: {{RIGHT}}{{UNIT}}; --cta-button-secondary-padding-inline-start: {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before',
-				'condition' => [
-					'secondary_cta_show' => 'yes',
-					'secondary_button_type' => 'button',
+					$type . '_button_type' => 'button',
 				],
 			]
 		);

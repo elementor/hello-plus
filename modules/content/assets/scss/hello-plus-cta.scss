@@ -30,17 +30,21 @@
 	--cta-text-wide-description: 240px;
 
 	--cta-button-primary-background-color: #0052FF;
-	--cta-button-primary-icon-spacing: 16px;
+	--cta-button-primary-icon-spacing: 10px;
+	--cta-button-primary-icon-size: 16px;
 	--cta-button-primary-text-color: #FFFFFF;
 	--cta-button-primary-text-color-hover: #555963;
-	--cta-button-primary-border-width: 2px;
-	--cta-button-primary-border-color: #555963;
+	--cta-button-primary-border-width: 0;
+	--cta-button-primary-border-color: transparent;
 	--cta-button-primary-padding-block-end: 8px;
 	--cta-button-primary-padding-block-start: 8px;
 	--cta-button-primary-padding-inline-end: 16px;
 	--cta-button-primary-padding-inline-start: 16px;
+	--cta-button-primary-border-radius: 0;
 
-	--cta-button-secondary-icon-spacing: 16px;
+	--cta-button-secondary-background-color: transparent;
+	--cta-button-secondary-icon-spacing: 10px;
+	--cta-button-secondary-icon-size: 16px;
 	--cta-button-secondary-text-color: #555963;
 	--cta-button-secondary-text-color-hover: #555963;
 	--cta-button-secondary-border-width: 2px;
@@ -50,6 +54,19 @@
 	--cta-button-secondary-padding-inline-end: 16px;
 	--cta-button-secondary-padding-inline-start: 16px;
 	--cta-button-secondary-border-radius: #{$corners-shape-default};
+
+	--cta-button-text-color: var(--cta-button-primary-text-color);
+	--cta-button-text-color-hover: var(--cta-button-primary-text-color-hover);
+	--cta-button-border-color: var(--cta-button-primary-border-color);
+	--cta-button-background-color: var(--cta-button-primary-background-color);
+	--cta-button-padding-block-end: var(--cta-button-primary-padding-block-end);
+	--cta-button-padding-block-start: var(--cta-button-primary-padding-block-start);
+	--cta-button-padding-inline-end: var(--cta-button-primary-padding-inline-end);
+	--cta-button-padding-inline-start: var(--cta-button-primary-padding-inline-start);
+	--cta-button-border-width: var(--cta-button-primary-border-width);
+	--cta-button-border-radius: var(--cta-button-primary-border-radius);
+	--cta-button-icon-spacing: var(--cta-button-primary-icon-spacing);
+	--cta-button-icon-size: var(--cta-button-primary-icon-size);
 
 	display: flex;
 	justify-content: center;
@@ -114,7 +131,6 @@
 	}
 
 	&.is-full-height-desktop {
-
 		@include full-height($screen-desktop-min, null);
 
 		&.is-full-height-widescreen {
@@ -167,6 +183,13 @@
 		}
 	}
 
+	&__button-icon {
+		fill: currentColor;
+		height: var(--cta-button-icon-size);
+		width: var(--cta-button-icon-size);
+	}
+
+	&__button,
 	&__button {
 		align-items: center;
 		display: flex;
@@ -181,72 +204,53 @@
 			transition: $transition;
 		}
 
-		&--primary,
-		&--primary:not([href]):not([tabindex]) {
-			color: var(--cta-button-primary-text-color);
+		&.has-border {
+			border-color: var(--cta-button-border-color);
+			border-style: solid;
+			border-width: var(--cta-button-border-width);
+			border-radius: var(--cta-button-border-radius);
+		}
 
-			&:hover,
-			&:focus {
-				color: var(--cta-button-primary-text-color-hover);
+		&.is-type {
+
+			&-button {
+				background-color: var(--cta-button-background-color);
+				padding-block-end: var(--cta-button-padding-block-end);
+				padding-block-start: var(--cta-button-padding-block-start);
+				padding-inline-end: var(--cta-button-padding-inline-end);
+				padding-inline-start: var(--cta-button-padding-inline-start);
 			}
 
-			&.has-border {
-				border-color: var(--cta-button-primary-border-color);
-				border-style: solid;
-				border-width: var(--cta-button-primary-border-width);
-				border-radius: var(--cta-button-primary-border-radius);
+			&-link,
+			&-link:not([href]):not([tabindex]) {
+				text-decoration: underline;
 			}
 
-			&.is-type {
+			&-button,
+			&-link,
+			&-button:not([href]):not([tabindex]),
+			&-link:not([href]):not([tabindex]) {
+				color: var(--cta-button-text-color);
 
-				&-button {
-					background-color: var(--cta-button-primary-background-color);
-					padding-block-end: var(--cta-button-primary-padding-block-end);
-					padding-block-start: var(--cta-button-primary-padding-block-start);
-					padding-inline-end: var(--cta-button-primary-padding-inline-end);
-					padding-inline-start: var(--cta-button-primary-padding-inline-start);
-					text-decoration: none;
-				}
-	
-				&-link,
-				&-link:not([href]):not([tabindex]) {
-					text-decoration: underline;
+				&:hover,
+				&:focus {
+					color: var(--cta-button-text-color-hover);
 				}
 			}
 		}
 
-		&--secondary,
-		&--secondary:not([href]):not([tabindex])  {
-			color: var(--cta-button-secondary-text-color);
-
-			&:hover,
-			&:focus {
-				color: var(--cta-button-secondary-text-color-hover);
-			}
-
-			&.has-border {
-				border-color: var(--cta-button-secondary-border-color);
-				border-style: solid;
-				border-width: var(--cta-button-secondary-border-width);
-				border-radius: var(--cta-button-secondary-border-radius);
-			}
-
-			&.is-type {
-
-				&-button {
-					background-color: var(--cta-button-secondary-background-color);
-					padding-block-end: var(--cta-button-secondary-padding-block-end);
-					padding-block-start: var(--cta-button-secondary-padding-block-start);
-					padding-inline-end: var(--cta-button-secondary-padding-inline-end);
-					padding-inline-start: var(--cta-button-secondary-padding-inline-start);
-					text-decoration: none;
-				}
-	
-				&-link,
-				&-link:not([href]):not([tabindex]) {
-					text-decoration: underline;
-				}
-			}
+		&--secondary {
+			--cta-button-text-color: var(--cta-button-secondary-text-color);
+			--cta-button-text-color-hover: var(--cta-button-secondary-text-color-hover);
+			--cta-button-border-color: var(--cta-button-secondary-border-color);
+			--cta-button-background-color: var(--cta-button-secondary-background-color);
+			--cta-button-padding-block-end: var(--cta-button-secondary-padding-block-end);
+			--cta-button-padding-block-start: var(--cta-button-secondary-padding-block-start);
+			--cta-button-padding-inline-end: var(--cta-button-secondary-padding-inline-end);
+			--cta-button-padding-inline-start: var(--cta-button-secondary-padding-inline-start);
+			--cta-button-border-width: var(--cta-button-secondary-border-width);
+			--cta-button-border-radius: var(--cta-button-secondary-border-radius);
+			--cta-button-icon-spacing: var(--cta-button-secondary-icon-spacing);
 		}
 
 		&.has-shape {

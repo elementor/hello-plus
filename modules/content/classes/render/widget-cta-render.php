@@ -86,8 +86,10 @@ class Widget_CTA_Render {
 	}
 
 	protected function render_ctas_container() {
-		$has_primary_button = '' !== $this->settings['primary_cta_button_text'];
-		$has_secondary_button = '' !== $this->settings['secondary_cta_button_text'];
+		$primary_cta_button_text = $this->settings['primary_cta_button_text'];
+		$secondary_cta_button_text = $this->settings['secondary_cta_button_text'];
+		$has_primary_button = ! empty( $primary_cta_button_text );
+		$has_secondary_button = ! empty( $secondary_cta_button_text );
 
 		$ctas_container_classnames = 'e-cta__ctas-container';
 
@@ -136,8 +138,8 @@ class Widget_CTA_Render {
 			'class' => $button_classnames,
 		] );
 
-		if ( ! empty( $primary_button_link ) ) {
-			$this->widget->add_link_attributes( 'primary-button', $primary_button_link );
+		if ( ! empty( $button_link ) ) {
+			$this->widget->add_link_attributes( $type . '-button', $button_link );
 		}
 
 		?>

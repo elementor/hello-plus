@@ -143,13 +143,15 @@
 	}
 
 	&__ctas-container {
+		align-items: center;
 		flex-grow: 1;
 		display: flex;
 		flex-direction: column;
 		gap: var(--cta-buttons-space-between);
 
 		@media screen and (min-width: $screen-desktop-min) {
-			align-items: var(--cta-buttons-position);
+			align-items: flex-start;
+			justify-content: var(--cta-buttons-position);
 		}
 	}
 

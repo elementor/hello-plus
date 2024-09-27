@@ -6,7 +6,7 @@ use Elementor\Plugin;
 
 trait Shared_Content_Traits {
 
-	protected function get_configured_breakpoints( $add_desktop = 'true' ) {
+	protected function get_configured_breakpoints() {
 		$active_devices = Plugin::$instance->breakpoints->get_active_devices_list( [ 'reverse' => true ] );
 		$active_breakpoint_instances = Plugin::$instance->breakpoints->get_active_breakpoints();
 

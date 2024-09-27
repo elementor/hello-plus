@@ -77,7 +77,7 @@ class Widget_CTA_Render {
 				Utils::print_unescaped_internal_string( $heading_output );
 			} ?>
 			<?php if ( $has_description ) {
-				$description_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $description_tag ),  'class="e-cta__description"', esc_html( $description_text ) );
+				$description_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $description_tag ), 'class="e-cta__description"', esc_html( $description_text ) );
 				// Escaped above
 				Utils::print_unescaped_internal_string( $description_output );
 			} ?>

@@ -79,7 +79,7 @@ class CTA extends Widget_Base {
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
-		
+
 		$this->add_control(
 			'heading_text',
 			[
@@ -220,7 +220,7 @@ class CTA extends Widget_Base {
 					'active' => true,
 				],
 				'condition' => [
-					'secondary_cta_show' => 'yes'
+					'secondary_cta_show' => 'yes',
 				],
 			]
 		);
@@ -238,7 +238,7 @@ class CTA extends Widget_Base {
 					'is_external' => true,
 				],
 				'condition' => [
-					'secondary_cta_show' => 'yes'
+					'secondary_cta_show' => 'yes',
 				],
 			]
 		);
@@ -251,7 +251,7 @@ class CTA extends Widget_Base {
 				'label_block' => false,
 				'skin' => 'inline',
 				'condition' => [
-					'secondary_cta_show' => 'yes'
+					'secondary_cta_show' => 'yes',
 				],
 			]
 		);
@@ -342,7 +342,6 @@ class CTA extends Widget_Base {
 				'type' => Controls_Manager::HEADING,
 			]
 		);
-
 
 		$this->add_control(
 			'description_color',
@@ -453,13 +452,13 @@ class CTA extends Widget_Base {
 	}
 
 	protected function add_cta_button_controls( $type ) {
-		$label = 'primary' === $type ? 'Primary CTA' : 'Secondary CTA';
+		$label = 'primary' === $type ? esc_html__( 'Primary CTA', 'hello-plus' ) : esc_html__( 'Secondary CTA', 'hello-plus' );
 		$show_button_border_default = 'primary' === $type ? 'no' : 'yes';
 
 		$this->add_control(
 			$type . '_button_label',
 			[
-				'label' => esc_html__( $label, 'hello-plus' ),
+				'label' => $label,
 				'type' => Controls_Manager::HEADING,
 			]
 		);
@@ -827,7 +826,7 @@ class CTA extends Widget_Base {
 		$this->add_control(
 			'box_full_screen_height_controls',
 			[
-				'label' => esc_html__( 'Apply Full Screen Height on', 'elementor' ),
+				'label' => esc_html__( 'Apply Full Screen Height on', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT2,
 				'label_block' => true,
 				'multiple' => true,

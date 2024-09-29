@@ -12,7 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 class Admin_Config {
+
 	public function __construct() {
+
 		add_action(
 			'rest_api_init',
 			function () {

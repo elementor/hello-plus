@@ -31,6 +31,7 @@ class Module extends Module_Base {
 			'Rest_Controller',
 			'Admin_Menu_Controller',
 			'Admin_Top_Bar',
+			'Scripts_Controller',
 		];
 	}
 }

@@ -23,6 +23,7 @@ const entryPoints = {
 	'js/hello-plus-notice': path.resolve( modulesDir, 'admin/assets/js', 'hello-plus-notice.js' ),
 	'css/hello-plus-notice': path.resolve( modulesDir, 'admin/assets/scss', 'hello-plus-notice.scss' ),
 	'js/hello-plus-admin-top-bar': path.resolve( modulesDir, 'admin/assets/js', 'hello-plus-topbar.js' ),
+	'js/hello-plus-onboarding': path.resolve( modulesDir, 'admin/assets/js', 'hello-plus-onboarding.js' ),
 
 	// Content module:
 	//Zigzag:

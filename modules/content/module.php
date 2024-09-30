@@ -40,14 +40,6 @@ class Module extends Module_Base {
 	}
 
 	public function enqueue(): void {
-		wp_enqueue_script(
-			'hello-plus-content',
-			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-content.js',
-			[],
-			HELLO_PLUS_ELEMENTOR_VERSION,
-			true
-		);
-
 		wp_enqueue_style(
 			'hello-plus-zigzag',
 			HELLO_PLUS_STYLE_URL . 'hello-plus-zigzag.css',

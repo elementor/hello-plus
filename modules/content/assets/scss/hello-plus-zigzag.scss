@@ -1,7 +1,7 @@
 @import "./breakpoints";
 @import "./variables";
 
-.e-zigzag {
+.ehp-zigzag {
 	--zigzag-button-icon-size: 16px;
 	--zigzag-button-icon-spacing: 10px;
 	--zigzag-button-text-color: #555963;
@@ -218,12 +218,12 @@
 	}
 
 	@media screen and (max-width: $screen-tablet-max) {
-		.e-zigzag__item-container {
+		.ehp-zigzag__item-container {
 			flex-direction: column;
 		}
 
-		.e-zigzag__graphic-element-container,
-		.e-zigzag__text-container {
+		.ehp-zigzag__graphic-element-container,
+		.ehp-zigzag__text-container {
 			width: 100%;
 		}
 	}

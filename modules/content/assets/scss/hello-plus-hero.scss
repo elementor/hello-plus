@@ -1,7 +1,7 @@
 @import "./breakpoints";
 @import "./variables";
 
-.e-hero {
+.ehp-hero {
 	--hero-box-height: auto;
 	--hero-box-full-height: 100vh;
 
@@ -80,7 +80,7 @@
 			@media #{$query} {
 				--hero-box-height: var(--hero-box-full-height, 100vh);
 
-				.e-hero__image {
+				.ehp-hero__image {
 					align-items: flex-end;
 					display: flex;
 					flex-grow: 1;

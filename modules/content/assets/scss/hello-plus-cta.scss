@@ -1,7 +1,7 @@
 @import "./breakpoints";
 @import "./variables";
 
-.e-cta {
+.ehp-cta {
 	--cta-box-height: auto;
 	--cta-box-full-height: 100vh;
 
@@ -179,8 +179,8 @@
 		flex-direction: column;
 		gap: var(--cta-text-gap);
 
-		.e-cta__heading,
-		.e-cta__description {
+		.ehp-cta__heading,
+		.ehp-cta__description {
 			text-align: center;
 		}
 	}
@@ -280,12 +280,12 @@
 		&-center {
 
 			@media screen and (min-width: $screen-desktop-min) {
-				.e-cta__elements-container {
+				.ehp-cta__elements-container {
 					flex-direction: column;
 				}
 
 
-				.e-cta__ctas-container {
+				.ehp-cta__ctas-container {
 					align-items: center;
 				}
 			}
@@ -294,19 +294,19 @@
 		&-start {
 
 			@media screen and (min-width: $screen-desktop-min) {
-				.e-cta__elements-container {
+				.ehp-cta__elements-container {
 					flex-direction: row;
 				}
 
-				.e-cta__ctas-container {
+				.ehp-cta__ctas-container {
 					align-items: flex-end;
 				}
 
-				.e-cta__text-container {
+				.ehp-cta__text-container {
 					align-items: start;
 
-					.e-cta__heading,
-					.e-cta__description {
+					.ehp-cta__heading,
+					.ehp-cta__description {
 						text-align: start;
 					}
 				}

@@ -17,6 +17,10 @@ use HelloPlus\Modules\Content\Widgets\CTA;
 
 class Widget_CTA_Render {
 	protected CTA $widget;
+	const LAYOUT_CLASSNAME = 'ehp-cta';
+	const TEXT_CONTAINER_CLASSNAME = 'ehp-cta__text-container';
+	const CTAS_CONTAINER_CLASSNAME = 'ehp-cta__ctas-container';
+	const BUTTON_CLASSNAME = 'ehp-cta__button';
 
 	protected array $settings;
 
@@ -26,7 +30,7 @@ class Widget_CTA_Render {
 	}
 
 	public function render(): void {
-		$layout_classnames = 'e-cta';
+		$layout_classnames = self::LAYOUT_CLASSNAME;
 		$layout_full_height_controls = $this->settings['box_full_screen_height_controls'] ?? '';
 		$elements_position = $this->settings['elements_position'];
 
@@ -45,7 +49,7 @@ class Widget_CTA_Render {
 		] );
 		?>
 		<div <?php echo $this->widget->get_render_attribute_string( 'layout' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-			<div class="e-cta__elements-container">
+			<div class="ehp-cta__elements-container">
 				<?php
 					$this->render_text_container();
 					$this->render_ctas_container();
@@ -64,7 +68,7 @@ class Widget_CTA_Render {
 		$description_tag = $this->settings['description_tag'];
 		$has_description = '' !== $description_text;
 
-		$text_container_classnames = 'e-cta__text-container';
+		$text_container_classnames = self::TEXT_CONTAINER_CLASSNAME;
 
 		$this->widget->add_render_attribute( 'text-container', [
 			'class' => $text_container_classnames,
@@ -72,12 +76,12 @@ class Widget_CTA_Render {
 		?>
 		<div <?php echo $this->widget->get_render_attribute_string( 'text-container' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<?php if ( $has_heading ) {
-				$heading_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $heading_tag ), 'class="e-cta__heading"', esc_html( $heading_text ) );
+				$heading_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $heading_tag ), 'class="ehp-cta__heading"', esc_html( $heading_text ) );
 				// Escaped above
 				Utils::print_unescaped_internal_string( $heading_output );
 			} ?>
 			<?php if ( $has_description ) {
-				$description_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $description_tag ), 'class="e-cta__description"', esc_html( $description_text ) );
+				$description_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $description_tag ), 'class="ehp-cta__description"', esc_html( $description_text ) );
 				// Escaped above
 				Utils::print_unescaped_internal_string( $description_output );
 			} ?>
@@ -91,7 +95,7 @@ class Widget_CTA_Render {
 		$has_primary_button = ! empty( $primary_cta_button_text );
 		$has_secondary_button = ! empty( $secondary_cta_button_text );
 
-		$ctas_container_classnames = 'e-cta__ctas-container';
+		$ctas_container_classnames = self::CTAS_CONTAINER_CLASSNAME;
 
 		$this->widget->add_render_attribute( 'ctas-container', [
 			'class' => $ctas_container_classnames,
@@ -116,7 +120,9 @@ class Widget_CTA_Render {
 		$button_has_border = $this->settings[ $type . '_show_button_border' ];
 		$button_corner_shape = $this->settings[ $type . '_button_shape' ] ?? '';
 		$button_type = $this->settings[ $type . '_button_type' ] ?? '';
-		$button_classnames = 'e-cta__button e-cta__button--' . $type;
+		$button_classnames = self::BUTTON_CLASSNAME;
+		
+		$button_classnames .= ' ehp-cta__button--' . $type;
 
 		if ( ! empty( $button_type ) ) {
 			$button_classnames .= ' is-type-' . $button_type;
@@ -148,7 +154,7 @@ class Widget_CTA_Render {
 				Icons_Manager::render_icon( $button_icon,
 					[
 						'aria-hidden' => 'true',
-						'class' => 'e-cta__button-icon',
+						'class' => 'ehp-cta__button-icon',
 					]
 				);
 			?>

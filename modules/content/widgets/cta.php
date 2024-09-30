@@ -9,12 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Box_Shadow;
-use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Typography;
-use Elementor\Icons_Manager;
-use Elementor\Plugin;
-use Elementor\Repeater;
-use Elementor\Utils;
 use Elementor\Widget_Base;
 
 use HelloPlus\Modules\Content\Base\Traits\Shared_Content_Traits;
@@ -303,7 +298,7 @@ class CTA extends Widget_Base {
 				'tablet_default' => 'default',
 				'mobile_default' => 'default',
 				'selectors' => [
-					'{{WRAPPER}} .e-cta' => '--cta-text-heading-width: var(--cta-text-{{VALUE}}-heading); --cta-text-description-width: var(--cta-text-{{VALUE}}-description);',
+					'{{WRAPPER}} .ehp-cta' => '--cta-text-heading-width: var(--cta-text-{{VALUE}}-heading); --cta-text-description-width: var(--cta-text-{{VALUE}}-description);',
 				],
 			]
 		);
@@ -322,7 +317,7 @@ class CTA extends Widget_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-cta' => '--cta-heading-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-cta' => '--cta-heading-color: {{VALUE}}',
 				],
 			]
 		);
@@ -331,7 +326,7 @@ class CTA extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'heading_typography',
-				'selector' => '{{WRAPPER}} .e-cta__heading',
+				'selector' => '{{WRAPPER}} .ehp-cta__heading',
 			]
 		);
 
@@ -349,7 +344,7 @@ class CTA extends Widget_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-cta' => '--cta-description-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-cta' => '--cta-description-color: {{VALUE}}',
 				],
 			]
 		);
@@ -358,7 +353,7 @@ class CTA extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'description_typography',
-				'selector' => '{{WRAPPER}} .e-cta__description',
+				'selector' => '{{WRAPPER}} .ehp-cta__description',
 			]
 		);
 
@@ -377,7 +372,7 @@ class CTA extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-cta' => '--cta-text-gap: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-cta' => '--cta-text-gap: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -414,7 +409,7 @@ class CTA extends Widget_Base {
 				'tablet_default' => 'flex-start',
 				'mobile_default' => 'flex-start',
 				'selectors' => [
-					'{{WRAPPER}} .e-cta' => '--cta-buttons-position: {{VALUE}};',
+					'{{WRAPPER}} .ehp-cta' => '--cta-buttons-position: {{VALUE}};',
 				],
 				'condition' => [
 					'elements_position' => 'start',
@@ -440,7 +435,7 @@ class CTA extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-cta' => '--cta-buttons-space-between: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-cta' => '--cta-buttons-space-between: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'secondary_cta_show' => 'yes',
@@ -480,7 +475,7 @@ class CTA extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => $type . '_button_typography',
-				'selector' => '{{WRAPPER}} .e-cta__button--' . $type,
+				'selector' => '{{WRAPPER}} .ehp-cta__button--' . $type,
 			]
 		);
 
@@ -506,7 +501,7 @@ class CTA extends Widget_Base {
 					'right' => is_rtl() ? 'row' : 'row-reverse',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-cta__button--' . $type => 'flex-direction: {{VALUE}};',
+					'{{WRAPPER}} .ehp-cta__button--' . $type => 'flex-direction: {{VALUE}};',
 				],
 				'condition' => [
 					$type . '_cta_button_icon[value]!' => '',
@@ -535,7 +530,7 @@ class CTA extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-cta' => '--cta-button-' . $type . '-icon-spacing: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-icon-spacing: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					$type . '_cta_button_icon[value]!' => '',
@@ -560,7 +555,7 @@ class CTA extends Widget_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
 				],
 			]
 		);
@@ -571,7 +566,7 @@ class CTA extends Widget_Base {
 				'name' => $type . '_button_background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .e-cta__button--' . $type,
+				'selector' => '{{WRAPPER}} .ehp-cta__button--' . $type,
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
@@ -598,7 +593,7 @@ class CTA extends Widget_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-cta' => '--cta-button-' . $type . '-text-color-hover: {{VALUE}}',
+					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color-hover: {{VALUE}}',
 				],
 			]
 		);
@@ -609,7 +604,7 @@ class CTA extends Widget_Base {
 				'name' => $type . '_button_background_hover',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .e-cta__button--' . $type . ':hover, {{WRAPPER}} .e-cta__button--' . $type . ':focus',
+				'selector' => '{{WRAPPER}} .ehp-cta__button--' . $type . ':hover, {{WRAPPER}} .ehp-cta__button--' . $type . ':focus',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
@@ -668,7 +663,7 @@ class CTA extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-cta' => '--cta-button-' . $type . '-border-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-border-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					$type . '_show_button_border' => 'yes',
@@ -682,7 +677,7 @@ class CTA extends Widget_Base {
 				'label' => esc_html__( 'Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-cta' => '--cta-button-' . $type . '-border-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-border-color: {{VALUE}}',
 				],
 				'condition' => [
 					$type . '_show_button_border' => 'yes',
@@ -712,7 +707,7 @@ class CTA extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => $type . '_button_box_shadow',
-				'selector' => '{{WRAPPER}} .e-cta__button--' . $type,
+				'selector' => '{{WRAPPER}} .ehp-cta__button--' . $type,
 				'condition' => [
 					$type . '_button_type' => 'button',
 				],
@@ -726,7 +721,7 @@ class CTA extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
 				'selectors' => [
-					'{{WRAPPER}} .e-cta' => '--cta-button-' . $type . '-padding-block-end: {{BOTTOM}}{{UNIT}}; --cta-button-' . $type . '-padding-block-start: {{TOP}}{{UNIT}}; --cta-button-' . $type . '-padding-inline-end: {{RIGHT}}{{UNIT}}; --cta-button-' . $type . '-padding-inline-start: {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-padding-block-end: {{BOTTOM}}{{UNIT}}; --cta-button-' . $type . '-padding-block-start: {{TOP}}{{UNIT}}; --cta-button-' . $type . '-padding-inline-end: {{RIGHT}}{{UNIT}}; --cta-button-' . $type . '-padding-inline-start: {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 				'condition' => [
@@ -759,7 +754,7 @@ class CTA extends Widget_Base {
 				'name' => 'background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .e-cta',
+				'selector' => '{{WRAPPER}} .ehp-cta',
 
 			]
 		);
@@ -779,7 +774,7 @@ class CTA extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-cta' => '--cta-content-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-cta' => '--cta-content-width: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -800,7 +795,7 @@ class CTA extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-cta' => '--cta-elements-gap: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-cta' => '--cta-elements-gap: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]

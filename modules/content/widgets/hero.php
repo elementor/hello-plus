@@ -9,16 +9,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Box_Shadow;
-use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Typography;
-use Elementor\Icons_Manager;
-use Elementor\Plugin;
-use Elementor\Repeater;
-use Elementor\Utils;
 use Elementor\Widget_Base;
 
 use Elementor\Utils as Elementor_Utils;
-use HelloPlus\Includes\Utils as Theme_Utils;
 
 use HelloPlus\Modules\Content\Base\Traits\Shared_Content_Traits;
 use HelloPlus\Modules\Content\Classes\Render\Widget_Hero_Render;
@@ -258,7 +252,7 @@ class Hero extends Widget_Base {
 				'tablet_default' => 'center',
 				'mobile_default' => 'center',
 				'selectors' => [
-					'{{WRAPPER}} .e-hero' => '--hero-content-position: {{VALUE}}; --hero-content-text-align: {{VALUE}};',
+					'{{WRAPPER}} .ehp-hero' => '--hero-content-position: {{VALUE}}; --hero-content-text-align: {{VALUE}};',
 				],
 			]
 		);
@@ -277,7 +271,7 @@ class Hero extends Widget_Base {
 				'tablet_default' => 'default',
 				'mobile_default' => 'default',
 				'selectors' => [
-					'{{WRAPPER}} .e-hero' => '--hero-text-heading-width: var(--hero-text-{{VALUE}}-heading); --hero-text-subheading-width: var(--hero-text-{{VALUE}}-subheading);',
+					'{{WRAPPER}} .ehp-hero' => '--hero-text-heading-width: var(--hero-text-{{VALUE}}-heading); --hero-text-subheading-width: var(--hero-text-{{VALUE}}-subheading);',
 				],
 			]
 		);
@@ -296,7 +290,7 @@ class Hero extends Widget_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-hero' => '--hero-heading-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-hero' => '--hero-heading-color: {{VALUE}}',
 				],
 			]
 		);
@@ -305,7 +299,7 @@ class Hero extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'heading_typography',
-				'selector' => '{{WRAPPER}} .e-hero__heading',
+				'selector' => '{{WRAPPER}} .ehp-hero__heading',
 			]
 		);
 
@@ -323,7 +317,7 @@ class Hero extends Widget_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-hero' => '--hero-subheading-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-hero' => '--hero-subheading-color: {{VALUE}}',
 				],
 			]
 		);
@@ -332,7 +326,7 @@ class Hero extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'subheading_typography',
-				'selector' => '{{WRAPPER}} .e-hero__subheading',
+				'selector' => '{{WRAPPER}} .ehp-hero__subheading',
 			]
 		);
 
@@ -361,7 +355,7 @@ class Hero extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'button_typography',
-				'selector' => '{{WRAPPER}} .e-hero__button',
+				'selector' => '{{WRAPPER}} .ehp-hero__button',
 			]
 		);
 
@@ -387,7 +381,7 @@ class Hero extends Widget_Base {
 					'right' => is_rtl() ? 'row' : 'row-reverse',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-hero__button' => 'flex-direction: {{VALUE}};',
+					'{{WRAPPER}} .ehp-hero__button' => 'flex-direction: {{VALUE}};',
 				],
 			]
 		);
@@ -413,7 +407,7 @@ class Hero extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-hero' => '--hero-button-icon-spacing: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-hero' => '--hero-button-icon-spacing: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -435,7 +429,7 @@ class Hero extends Widget_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-hero' => '--hero-button-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-hero' => '--hero-button-text-color: {{VALUE}}',
 				],
 			]
 		);
@@ -446,7 +440,7 @@ class Hero extends Widget_Base {
 				'name' => 'button_background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .e-hero__button',
+				'selector' => '{{WRAPPER}} .ehp-hero__button',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
@@ -473,7 +467,7 @@ class Hero extends Widget_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-hero' => '--hero-button-text-color-hover: {{VALUE}}',
+					'{{WRAPPER}} .ehp-hero' => '--hero-button-text-color-hover: {{VALUE}}',
 				],
 			]
 		);
@@ -484,7 +478,7 @@ class Hero extends Widget_Base {
 				'name' => 'button_background_hover',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .e-hero__button:hover, {{WRAPPER}} .e-hero__button:focus',
+				'selector' => '{{WRAPPER}} .ehp-hero__button:hover, {{WRAPPER}} .ehp-hero__button:focus',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
@@ -543,7 +537,7 @@ class Hero extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-hero' => '--hero-button-border-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-hero' => '--hero-button-border-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'show_button_border' => 'yes',
@@ -557,7 +551,7 @@ class Hero extends Widget_Base {
 				'label' => esc_html__( 'Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-hero' => '--hero-button-border-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-hero' => '--hero-button-border-color: {{VALUE}}',
 				],
 				'condition' => [
 					'show_button_border' => 'yes',
@@ -587,7 +581,7 @@ class Hero extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'button_box_shadow',
-				'selector' => '{{WRAPPER}} .e-hero__button',
+				'selector' => '{{WRAPPER}} .ehp-hero__button',
 				'condition' => [
 					'button_type' => 'button',
 				],
@@ -601,7 +595,7 @@ class Hero extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
 				'selectors' => [
-					'{{WRAPPER}} .e-hero' => '--hero-button-padding-block-end: {{BOTTOM}}{{UNIT}}; --hero-button-padding-block-start: {{TOP}}{{UNIT}}; --hero-button-padding-inline-end: {{RIGHT}}{{UNIT}}; --hero-button-padding-inline-start: {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-hero' => '--hero-button-padding-block-end: {{BOTTOM}}{{UNIT}}; --hero-button-padding-block-start: {{TOP}}{{UNIT}}; --hero-button-padding-inline-end: {{RIGHT}}{{UNIT}}; --hero-button-padding-inline-start: {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 				'condition' => [
@@ -649,7 +643,7 @@ class Hero extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-hero' => '--hero-image-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-hero' => '--hero-image-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'image_full_width!' => 'yes',
@@ -672,7 +666,7 @@ class Hero extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-hero' => '--hero-image-height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-hero' => '--hero-image-height: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -698,7 +692,7 @@ class Hero extends Widget_Base {
 					'bottom right' => esc_html__( 'Bottom Right', 'hello-plus' ),
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-hero' => '--hero-image-position: {{VALUE}}',
+					'{{WRAPPER}} .ehp-hero' => '--hero-image-position: {{VALUE}}',
 				],
 			]
 		);
@@ -729,7 +723,7 @@ class Hero extends Widget_Base {
 				'name' => 'background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .e-hero',
+				'selector' => '{{WRAPPER}} .ehp-hero',
 
 			]
 		);

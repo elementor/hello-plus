@@ -2,13 +2,13 @@
 
 namespace HelloPlus\Modules\Content\Base\Traits;
 
-use Elementor\Plugin;
+use HelloPlus\Includes\Utils as Theme_Utils;
 
 trait Shared_Content_Traits {
 
 	protected function get_configured_breakpoints() {
-		$active_devices = Plugin::$instance->breakpoints->get_active_devices_list( [ 'reverse' => true ] );
-		$active_breakpoint_instances = Plugin::$instance->breakpoints->get_active_breakpoints();
+		$active_devices = Theme_Utils::elementor()->breakpoints->get_active_devices_list( [ 'reverse' => true ] );
+		$active_breakpoint_instances = Theme_Utils::elementor()->breakpoints->get_active_breakpoints();
 
 		$devices_options = [];
 

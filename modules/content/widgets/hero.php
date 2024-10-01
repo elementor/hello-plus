@@ -11,6 +11,7 @@ use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Widget_Base;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 
 use Elementor\Utils as Elementor_Utils;
 
@@ -118,7 +119,7 @@ class Hero extends Widget_Base {
 				'label' => esc_html__( 'Subheading', 'hello-plus' ),
 				'type' => Controls_Manager::TEXTAREA,
 				'rows' => 6,
-				'default' => esc_html__( '360 digital marketing agency that gets results', 'hello-plus' ),
+				'default' => esc_html__( 'Schedule a free consultation with our team and let’s make things happen!', 'hello-plus' ),
 				'placeholder' => esc_html__( 'Type your description here', 'hello-plus' ),
 				'dynamic' => [
 					'active' => true,
@@ -162,7 +163,7 @@ class Hero extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text', 'hello-plus' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => esc_html__( 'Learn More', 'hello-plus' ),
+				'default' => esc_html__( 'Contact us', 'hello-plus' ),
 				'dynamic' => [
 					'active' => true,
 				],
@@ -289,6 +290,7 @@ class Hero extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#28292B',
 				'selectors' => [
 					'{{WRAPPER}} .ehp-hero' => '--hero-heading-color: {{VALUE}}',
 				],
@@ -300,6 +302,9 @@ class Hero extends Widget_Base {
 			[
 				'name' => 'heading_typography',
 				'selector' => '{{WRAPPER}} .ehp-hero__heading',
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
 			]
 		);
 
@@ -308,6 +313,7 @@ class Hero extends Widget_Base {
 			[
 				'label' => esc_html__( 'Subheading', 'hello-plus' ),
 				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
 			]
 		);
 
@@ -316,6 +322,7 @@ class Hero extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#28292B',
 				'selectors' => [
 					'{{WRAPPER}} .ehp-hero' => '--hero-subheading-color: {{VALUE}}',
 				],
@@ -327,6 +334,48 @@ class Hero extends Widget_Base {
 			[
 				'name' => 'subheading_typography',
 				'selector' => '{{WRAPPER}} .ehp-hero__subheading',
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'content_gap',
+			[
+				'label' => esc_html__( 'Gap', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 100,
+					],
+					'em' => [
+						'max' => 5,
+					],
+					'rem' => [
+						'max' => 5,
+					],
+					'%' => [
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'size' => 40,
+					'unit' => 'px',
+				],
+				'tablet_default' => [
+					'size' => 28,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 20,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-hero' => '--hero-content-text-gap: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
 			]
 		);
 
@@ -335,6 +384,7 @@ class Hero extends Widget_Base {
 			[
 				'label' => esc_html__( 'CTA Button', 'hello-plus' ),
 				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
 			]
 		);
 
@@ -356,6 +406,9 @@ class Hero extends Widget_Base {
 			[
 				'name' => 'button_typography',
 				'selector' => '{{WRAPPER}} .ehp-hero__button',
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_ACCENT,
+				],
 			]
 		);
 
@@ -428,6 +481,7 @@ class Hero extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .ehp-hero' => '--hero-button-text-color: {{VALUE}}',
 				],
@@ -444,6 +498,9 @@ class Hero extends Widget_Base {
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
+					],
+					'color' => [
+						'default' => '#0052FF',
 					],
 				],
 				'condition' => [
@@ -466,6 +523,7 @@ class Hero extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .ehp-hero' => '--hero-button-text-color-hover: {{VALUE}}',
 				],
@@ -482,6 +540,9 @@ class Hero extends Widget_Base {
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
+					],
+					'color' => [
+						'default' => '#0052FF',
 					],
 				],
 				'condition' => [
@@ -550,6 +611,7 @@ class Hero extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#555963',
 				'selectors' => [
 					'{{WRAPPER}} .ehp-hero' => '--hero-button-border-color: {{VALUE}}',
 				],
@@ -642,6 +704,10 @@ class Hero extends Widget_Base {
 						'max' => 100,
 					],
 				],
+				'default' => [
+					'size' => 1304,
+					'unit' => 'px',
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-hero' => '--hero-image-width: {{SIZE}}{{UNIT}};',
 				],
@@ -709,11 +775,24 @@ class Hero extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'style_box_padding',
+			[
+				'label' => esc_html__( 'Padding', 'hello-plus' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em', 'rem' ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-hero' => '--hero-box-padding-block-end: {{BOTTOM}}{{UNIT}}; --hero-box-padding-block-start: {{TOP}}{{UNIT}}; --hero-box-padding-inline-end: {{RIGHT}}{{UNIT}}; --hero-box-padding-inline-start: {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
 		$this->add_control(
 			'box_background_label',
 			[
 				'label' => esc_html__( 'Background', 'hello-plus' ),
 				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
 			]
 		);
 

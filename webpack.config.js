@@ -29,6 +29,9 @@ const entryPoints = {
 	'css/hello-plus-hero': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-hero.scss' ),
 	'css/hello-plus-cta': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-cta.scss' ),
 
+	// Header module
+	'css/hello-plus-header': path.resolve( modulesDir, 'header/assets/scss', 'hello-plus-header.scss' ),
+
 	// Theme module
 	'css/theme': path.resolve( modulesDir, 'theme/assets/scss', 'theme.scss' ),
 	'css/header-footer': path.resolve( modulesDir, 'theme/assets/scss', 'header-footer.scss' ),

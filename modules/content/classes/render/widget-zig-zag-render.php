@@ -38,17 +38,17 @@ class Widget_Zig_Zag_Render {
 		?>
 		<div <?php echo $this->widget->get_render_attribute_string( 'layout' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<?php
-			$remainder = 'row' === $first_zigzag_direction ? 0 : 1;
+			$remainder = 'right' === $first_zigzag_direction ? 0 : 1;
 
 			$graphic_element = $this->settings['graphic_element'];
 			$repeater = 'image' === $graphic_element ? $this->settings['image_zigzag_items'] : $this->settings['icon_zigzag_items'];
 
 			foreach ( $repeater as $key => $item ) {
-				$is_odd = $remainder !== $key % 2;
+				$is_even = $remainder === $key % 2;
 
 				$item_class = self::ITEM_CLASSNAME;
 
-				$item_class .= ' row' . ( $is_odd ? '-even' : '-odd' );
+				$item_class .= ' row' . ( $is_even ? '-even' : '-odd' );
 
 				$this->widget->add_render_attribute( 'zigzag-item-' . $key, [
 					'class' => $item_class,

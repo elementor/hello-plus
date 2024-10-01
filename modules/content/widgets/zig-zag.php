@@ -268,16 +268,16 @@ class Zig_Zag extends Widget_Base {
 				'label' => esc_html__( 'Align First Graphic', 'hello-plus' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
-					'row' => [
+					'left' => [
 						'title' => esc_html__( 'Left', 'hello-plus' ),
 						'icon' => 'eicon-order-start',
 					],
-					'row-reverse' => [
+					'right' => [
 						'title' => esc_html__( 'Right', 'hello-plus' ),
 						'icon' => 'eicon-order-end',
 					],
 				],
-				'default' => 'row',
+				'default' => 'left',
 				'description' => esc_html__( 'Zigzag content will be stacked on smaller screens.', 'hello-plus' ),
 			]
 		);

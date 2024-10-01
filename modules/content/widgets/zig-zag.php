@@ -13,6 +13,7 @@ use Elementor\Group_Control_Typography;
 use Elementor\Repeater;
 use Elementor\Utils;
 use Elementor\Widget_Base;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 
 use HelloPlus\Modules\Content\Classes\Render\Widget_Zig_Zag_Render;
 use HelloPlus\Modules\Theme\Module as Theme_Module;
@@ -379,6 +380,7 @@ class Zig_Zag extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#28292B',
 				'selectors' => [
 					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-icon-color: {{VALUE}}',
 				],
@@ -451,6 +453,8 @@ class Zig_Zag extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#151516',
+
 				'selectors' => [
 					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-title-color: {{VALUE}}',
 				],
@@ -462,6 +466,9 @@ class Zig_Zag extends Widget_Base {
 			[
 				'name' => 'title_typography',
 				'selector' => '{{WRAPPER}} .ehp-zigzag__title',
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
 			]
 		);
 
@@ -479,6 +486,7 @@ class Zig_Zag extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#151516',
 				'selectors' => [
 					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-description-color: {{VALUE}}',
 				],
@@ -490,6 +498,9 @@ class Zig_Zag extends Widget_Base {
 			[
 				'name' => 'description_typography',
 				'selector' => '{{WRAPPER}} .ehp-zigzag__description',
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_TEXT,
+				],
 			]
 		);
 
@@ -541,8 +552,8 @@ class Zig_Zag extends Widget_Base {
 			[
 				'name' => 'button_typography',
 				'selector' => '{{WRAPPER}} .ehp-zigzag__button',
-				'fields_options' => [
-					'typography' => [ 'default' => 'yes' ],
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_ACCENT,
 				],
 			]
 		);
@@ -616,6 +627,7 @@ class Zig_Zag extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#555963',
 				'selectors' => [
 					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-button-text-color: {{VALUE}}',
 				],
@@ -654,6 +666,7 @@ class Zig_Zag extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#555963',
 				'selectors' => [
 					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-button-text-color-hover: {{VALUE}}',
 				],

@@ -24,13 +24,10 @@ const entryPoints = {
 	'css/hello-plus-notice': path.resolve( modulesDir, 'admin/assets/scss', 'hello-plus-notice.scss' ),
 	'js/hello-plus-admin-top-bar': path.resolve( modulesDir, 'admin/assets/js', 'hello-plus-topbar.js' ),
 
-	// Content module:
-	//Zigzag:
-	'js/hello-plus-zigzag': path.resolve( modulesDir, 'content/assets/js', 'hello-plus-zigzag.js' ),
+	// Content module
 	'css/hello-plus-zigzag': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-zigzag.scss' ),
-	// Hero:
-	'js/hello-plus-hero': path.resolve( modulesDir, 'content/assets/js', 'hello-plus-hero.js' ),
 	'css/hello-plus-hero': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-hero.scss' ),
+	'css/hello-plus-cta': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-cta.scss' ),
 
 	// Theme module
 	'css/theme': path.resolve( modulesDir, 'theme/assets/scss', 'theme.scss' ),

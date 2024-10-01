@@ -1,14 +1,7 @@
 @import "./breakpoints";
+@import "./variables";
 
-.e-hero {
-	$transition: all .3s;
-	$corners-shape-default: 8px;
-	$corners-shape-sharp: 0;
-	$corners-shape-rounded: 12px;
-	$corners-shape-round: 32px;
-	$breakpoint-tablet-min: 768px;
-	$breakpoint-desktop-min: 1024px;
-
+.ehp-hero {
 	--hero-box-height: auto;
 	--hero-box-full-height: 100vh;
 
@@ -54,7 +47,7 @@
 	height: var(--hero-box-height);
 	text-align: var(--hero-content-text-align);
 
-	@media screen and (min-width: $breakpoint-tablet-min) {
+	@media screen and (min-width: $screen-tablet-min) {
 		--hero-text-default-heading: 512px;
 		--hero-text-narrow-heading: 408px;
 		--hero-text-wide-heading: 640px;
@@ -63,7 +56,7 @@
 		--hero-text-wide-subheading: 440px;
 	}
 
-	@media screen and (min-width: $breakpoint-desktop-min) {
+	@media screen and (min-width: $screen-desktop-min) {
 		--hero-text-default-heading: 800px;
 		--hero-text-narrow-heading: 640px;
 		--hero-text-wide-heading: 960px;
@@ -87,7 +80,7 @@
 			@media #{$query} {
 				--hero-box-height: var(--hero-box-full-height, 100vh);
 
-				.e-hero__image {
+				.ehp-hero__image {
 					align-items: flex-end;
 					display: flex;
 					flex-grow: 1;
@@ -223,11 +216,11 @@
 	&__subheading {
 		margin-bottom: 20px;
 
-		@media screen and (min-width: $breakpoint-tablet-min) {
+		@media screen and (min-width: $screen-tablet-min) {
 			margin-bottom: 28px;
 		}
 	
-		@media screen and (min-width: $breakpoint-desktop-min) {
+		@media screen and (min-width: $screen-desktop-min) {
 			margin-bottom: 40px;
 		}
 	}

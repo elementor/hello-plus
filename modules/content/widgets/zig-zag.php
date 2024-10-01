@@ -313,7 +313,7 @@ class Zig_Zag extends Widget_Base {
 				'default' => '50%',
 				'devices' => [ 'desktop', 'tablet', 'mobile' ],
 				'selectors' => [
-					'{{WRAPPER}} .e-zigzag' => '--zigzag-image-width: {{VALUE}};',
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-image-width: {{VALUE}};',
 				],
 				'condition' => [
 					'graphic_element' => 'image',
@@ -342,7 +342,7 @@ class Zig_Zag extends Widget_Base {
 					'bottom right' => esc_html__( 'Bottom Right', 'hello-plus' ),
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-zigzag' => '--zigzag-image-position: {{VALUE}}',
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-image-position: {{VALUE}}',
 				],
 				'condition' => [
 					'graphic_element' => 'image',
@@ -374,7 +374,7 @@ class Zig_Zag extends Widget_Base {
 				'default' => '50%',
 				'devices' => [ 'desktop', 'tablet', 'mobile' ],
 				'selectors' => [
-					'{{WRAPPER}} .e-zigzag' => '--zigzag-icon-width: {{VALUE}};',
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-icon-width: {{VALUE}};',
 				],
 				'condition' => [
 					'graphic_element' => 'icon',
@@ -388,7 +388,7 @@ class Zig_Zag extends Widget_Base {
 				'label' => esc_html__( 'Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-zigzag' => '--zigzag-icon-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-icon-color: {{VALUE}}',
 				],
 				'condition' => [
 					'graphic_element' => 'icon',
@@ -411,7 +411,7 @@ class Zig_Zag extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-zigzag' => '--zigzag-icon-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-icon-size: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'graphic_element' => 'icon',
@@ -440,7 +440,7 @@ class Zig_Zag extends Widget_Base {
 				],
 				'default' => 'center',
 				'selectors' => [
-					'{{WRAPPER}} .e-zigzag' => '--zigzag-text-alignment: {{VALUE}};',
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-text-alignment: {{VALUE}};',
 				],
 				'separator' => 'before',
 			]
@@ -460,7 +460,7 @@ class Zig_Zag extends Widget_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-zigzag' => '--zigzag-title-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-title-color: {{VALUE}}',
 				],
 			]
 		);
@@ -469,7 +469,7 @@ class Zig_Zag extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'title_typography',
-				'selector' => '{{WRAPPER}} .e-zigzag__title',
+				'selector' => '{{WRAPPER}} .ehp-zigzag__title',
 			]
 		);
 
@@ -488,7 +488,7 @@ class Zig_Zag extends Widget_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-zigzag' => '--zigzag-description-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-description-color: {{VALUE}}',
 				],
 			]
 		);
@@ -497,7 +497,7 @@ class Zig_Zag extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'description_typography',
-				'selector' => '{{WRAPPER}} .e-zigzag__description',
+				'selector' => '{{WRAPPER}} .ehp-zigzag__description',
 			]
 		);
 
@@ -516,7 +516,7 @@ class Zig_Zag extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-zigzag' => '--zigzag-elements-gap: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-elements-gap: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -548,7 +548,7 @@ class Zig_Zag extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'button_typography',
-				'selector' => '{{WRAPPER}} .e-zigzag__button',
+				'selector' => '{{WRAPPER}} .ehp-zigzag__button',
 				'fields_options' => [
 					'typography' => [ 'default' => 'yes' ],
 				],
@@ -577,7 +577,7 @@ class Zig_Zag extends Widget_Base {
 					'right' => is_rtl() ? 'row' : 'row-reverse',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-zigzag__button' => 'flex-direction: {{VALUE}};',
+					'{{WRAPPER}} .ehp-zigzag__button' => 'flex-direction: {{VALUE}};',
 				],
 			]
 		);
@@ -603,7 +603,7 @@ class Zig_Zag extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-zigzag' => '--zigzag-button-icon-spacing: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-button-icon-spacing: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -625,7 +625,7 @@ class Zig_Zag extends Widget_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-zigzag' => '--zigzag-button-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-button-text-color: {{VALUE}}',
 				],
 			]
 		);
@@ -636,7 +636,7 @@ class Zig_Zag extends Widget_Base {
 				'name' => 'button_background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .e-zigzag__button',
+				'selector' => '{{WRAPPER}} .ehp-zigzag__button',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
@@ -663,7 +663,7 @@ class Zig_Zag extends Widget_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-zigzag' => '--zigzag-button-text-color-hover: {{VALUE}}',
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-button-text-color-hover: {{VALUE}}',
 				],
 			]
 		);
@@ -674,7 +674,7 @@ class Zig_Zag extends Widget_Base {
 				'name' => 'button_background_hover',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .e-zigzag__button:hover, {{WRAPPER}} .e-zigzag__button:focus',
+				'selector' => '{{WRAPPER}} .ehp-zigzag__button:hover, {{WRAPPER}} .ehp-zigzag__button:focus',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
@@ -733,7 +733,7 @@ class Zig_Zag extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-zigzag' => '--zigzag-button-border-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-button-border-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'show_button_border' => 'yes',
@@ -747,7 +747,7 @@ class Zig_Zag extends Widget_Base {
 				'label' => esc_html__( 'Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .e-zigzag' => '--zigzag-button-border-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-button-border-color: {{VALUE}}',
 				],
 				'condition' => [
 					'show_button_border' => 'yes',
@@ -777,7 +777,7 @@ class Zig_Zag extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'button_box_shadow',
-				'selector' => '{{WRAPPER}} .e-zigzag__button',
+				'selector' => '{{WRAPPER}} .ehp-zigzag__button',
 				'condition' => [
 					'button_type' => 'button',
 				],
@@ -791,7 +791,7 @@ class Zig_Zag extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
 				'selectors' => [
-					'{{WRAPPER}} .e-zigzag' => '--zigzag-button-padding-block-end: {{BOTTOM}}{{UNIT}}; --zigzag-button-padding-block-start: {{TOP}}{{UNIT}}; --zigzag-button-padding-inline-end: {{RIGHT}}{{UNIT}}; --zigzag-button-padding-inline-start: {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-button-padding-block-end: {{BOTTOM}}{{UNIT}}; --zigzag-button-padding-block-start: {{TOP}}{{UNIT}}; --zigzag-button-padding-inline-end: {{RIGHT}}{{UNIT}}; --zigzag-button-padding-inline-start: {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 				'condition' => [
@@ -815,7 +815,7 @@ class Zig_Zag extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-zigzag' => '--zigzag-content-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-content-width: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -838,7 +838,7 @@ class Zig_Zag extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-zigzag' => '--zigzag-rows-spacing: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-rows-spacing: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -869,7 +869,7 @@ class Zig_Zag extends Widget_Base {
 				'name' => 'background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .e-zigzag__item-wrapper',
+				'selector' => '{{WRAPPER}} .ehp-zigzag__item-wrapper',
 
 			]
 		);
@@ -895,7 +895,7 @@ class Zig_Zag extends Widget_Base {
 				'condition' => [
 					'show_alternate_background' => 'yes',
 				],
-				'selector' => '{{WRAPPER}} .e-zigzag__item-wrapper:nth-child(even)',
+				'selector' => '{{WRAPPER}} .ehp-zigzag__item-wrapper:nth-child(even)',
 			]
 		);
 

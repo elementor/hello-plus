@@ -35,18 +35,11 @@ class Module extends Module_Base {
 		return [
 			'Zig_Zag',
 			'Hero',
+			'CTA',
 		];
 	}
 
 	public function enqueue(): void {
-		wp_enqueue_script(
-			'hello-plus-zigzag',
-			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-zigzag.js',
-			[],
-			HELLO_PLUS_ELEMENTOR_VERSION,
-			true
-		);
-
 		wp_enqueue_style(
 			'hello-plus-zigzag',
 			HELLO_PLUS_STYLE_URL . 'hello-plus-zigzag.css',
@@ -54,17 +47,16 @@ class Module extends Module_Base {
 			HELLO_PLUS_ELEMENTOR_VERSION
 		);
 
-		wp_enqueue_script(
-			'hello-plus-hero',
-			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-hero.js',
-			[],
-			HELLO_PLUS_ELEMENTOR_VERSION,
-			true
-		);
-
 		wp_enqueue_style(
 			'hello-plus-hero',
 			HELLO_PLUS_STYLE_URL . 'hello-plus-hero.css',
+			[],
+			HELLO_PLUS_ELEMENTOR_VERSION
+		);
+
+		wp_enqueue_style(
+			'hello-plus-cta',
+			HELLO_PLUS_STYLE_URL . 'hello-plus-cta.css',
 			[],
 			HELLO_PLUS_ELEMENTOR_VERSION
 		);

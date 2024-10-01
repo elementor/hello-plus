@@ -8,7 +8,7 @@ use HelloPlus\Modules\Admin\Classes\Rest\Onboarding_Settings;
 use HelloPlus\Modules\Admin\Classes\Rest\Promotions;
 
 
-class Rest_Controller {
+class Api_Controller {
 
 	protected $endpoints = [];
 

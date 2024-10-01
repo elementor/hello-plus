@@ -2,7 +2,7 @@
 
 namespace HelloPlus\Modules\Admin\Classes\Rest;
 
-use HelloPlus\Modules\Admin\Classes\Elementor\Elementor_Helper;
+use HelloPlus\Includes\Utils;
 use WP_REST_Server;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -33,7 +33,7 @@ class Promotions {
 	}
 
 	public function get_promotions() {
-		if ( ! Elementor_Helper::is_elementor_installed() ) {
+		if ( ! Utils::is_elementor_installed() ) {
 			$action_links_data[] = [
 				'type' => 'install-elementor',
 				'url' => wp_nonce_url(
@@ -54,7 +54,7 @@ class Promotions {
 			];
 		}
 
-		if ( ! Elementor_Helper::is_elementor_active() ) {
+		if ( ! Utils::is_elementor_active() ) {
 			$action_links_data[] = [
 				'type' => 'activate-elementor',
 				'image' => HELLO_PLUS_URL . '/assets/images/elementor.svg',

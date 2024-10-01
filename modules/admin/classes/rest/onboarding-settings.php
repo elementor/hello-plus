@@ -2,7 +2,7 @@
 
 namespace HelloPlus\Modules\Admin\Classes\Rest;
 
-use HelloPlus\Modules\Admin\Classes\Elementor\Elementor_Helper;
+use HelloPlus\Includes\Utils;
 use WP_REST_Server;
 
 class Onboarding_Settings {
@@ -35,8 +35,8 @@ class Onboarding_Settings {
 			[
 				'settings' => [
 					'nonce' => $nonce,
-					'elementorInstalled' => Elementor_Helper::is_elementor_installed(),
-					'elementorActive' => Elementor_Helper::is_elementor_active(),
+					'elementorInstalled' => Utils::is_elementor_installed(),
+					'elementorActive' => Utils::is_elementor_active(),
 				],
 			]
 		);

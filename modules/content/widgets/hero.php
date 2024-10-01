@@ -524,17 +524,17 @@ class Hero extends Widget_Base {
 			[
 				'label' => __( 'Border Width', 'hello-plus' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%', 'em', 'rem' ],
+				'size_units' => [ 'px' ],
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 100,
-						'step' => 2,
+						'max' => 10,
+						'step' => 1,
 					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
+				],
+				'default' => [
+					'size' => 1,
+					'unit' => 'px',
 				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-hero' => '--hero-button-border-width: {{SIZE}}{{UNIT}};',

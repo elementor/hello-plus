@@ -222,8 +222,20 @@
 			flex-direction: column;
 		}
 
+		&.has-direction-row-reverse {
+
+			.ehp-zigzag__graphic-element-container {
+				order: 2;
+			}
+
+			.ehp-zigzag__text-container {
+				order: 1;
+			}
+		}
+
 		.ehp-zigzag__graphic-element-container,
 		.ehp-zigzag__text-container {
+			padding-inline: 0;
 			width: 100%;
 		}
 	}

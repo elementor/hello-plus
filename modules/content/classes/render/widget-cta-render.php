@@ -121,7 +121,7 @@ class Widget_CTA_Render {
 		$button_corner_shape = $this->settings[ $type . '_button_shape' ] ?? '';
 		$button_type = $this->settings[ $type . '_button_type' ] ?? '';
 		$button_classnames = self::BUTTON_CLASSNAME;
-		
+
 		$button_classnames .= ' ehp-cta__button--' . $type;
 
 		if ( ! empty( $button_type ) ) {

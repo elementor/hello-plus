@@ -7,7 +7,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use Elementor\Controls_Manager;
+use Elementor\Group_Control_Background;
+use Elementor\Group_Control_Box_Shadow;
+use Elementor\Group_Control_Typography;
 use Elementor\Widget_Base;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 
 use HelloPlus\Modules\Header\Classes\Render\Widget_Header_Render;
 use HelloPlus\Modules\Theme\Module as Theme_Module;
@@ -53,18 +57,23 @@ class Header extends Widget_Base {
 	}
 
 	protected function add_content_section() {
-		$this->add_site_logo_section();
+		$this->add_content_site_logo_section();
+		$this->add_content_navigation_section();
+		$this->add_content_cta_section();
 	}
 
 	protected function add_style_section() {
-		// controls here
+		$this->add_style_site_identity_section();
+		$this->add_style_navigation_section();
+		$this->add_style_cta_section();
+		$this->add_style_box_section();
 	}
 
 	protected function add_advanced_section() {
 		// controls here
 	}
 
-	protected function add_site_logo_section() {
+	protected function add_content_site_logo_section() {
 		$this->start_controls_section(
 			'site_logo_label',
 			[
@@ -133,7 +142,7 @@ class Header extends Widget_Base {
 			[
 				'type' => Controls_Manager::ALERT,
 				'alert_type' => 'info',
-				'content' => esc_html__( 'Go to', 'hello-plus' ) . ' <a href="">' . esc_html__( 'Site Identity > Site Description', 'hello-plus' ) . '</a>' . esc_html__( ' to edit the Site Title', 'hello-plus' ),
+				'content' => esc_html__( 'Go to', 'hello-plus' ) . ' <a href="#" onclick="elementorPro.modules.themeBuilder.openSiteIdentity( event )" >' . esc_html__( 'Site Identity > Site Description', 'hello-plus' ) . '</a>' . esc_html__( ' to edit the Site Title', 'hello-plus' ),
 				'condition' => [
 					'site_logo_brand_select' => 'title',
 				]
@@ -164,11 +173,1245 @@ class Header extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+	}
 
+	protected function add_content_navigation_section() {
+		$this->start_controls_section(
+			'section_navigation',
+			[
+				'label' => esc_html__( 'Navigation', 'hello-plus' ),
+			]
+		);
+
+		$this->add_control(
+			'navigation_menu_name',
+			[
+				'label' => esc_html__( 'Menu Name', 'hello-plus' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => esc_html__( 'Menu', 'hello-plus' ),
+			]
+		);
+
+		$menus = $this->get_available_menus();
+
+		if ( ! empty( $menus ) ) {
+			$this->add_control(
+				'navigation_menu',
+				[
+					'label' => esc_html__( 'Menu', 'hello-plus' ),
+					'type' => Controls_Manager::SELECT,
+					'options' => $menus,
+					'default' => array_keys( $menus )[0],
+					'save_default' => true,
+					'separator' => 'after',
+					'description' => sprintf(
+						/* translators: 1: Link opening tag, 2: Link closing tag. */
+						esc_html__( 'Go to the %1$sMenus screen%2$s to manage your menus.', 'hello-plus' ),
+						sprintf( '<a href="%s" target="_blank">', admin_url( 'nav-menus.php' ) ),
+						'</a>'
+					),
+				]
+			);
+
+			$this->add_control(
+				'navigation_icon_label',
+				[
+					'label' => esc_html__( 'Responsive Toggle Icon', 'hello-plus' ),
+					'type' => Controls_Manager::HEADING,
+					'separator' => 'before',
+				]
+			);
+
+			$this->add_control(
+				'navigation_menu_icon',
+				[
+					'label' => esc_html__( 'Menu', 'hello-plus' ),
+					'type' => Controls_Manager::ICONS,
+					'skin' => 'inline',
+					'label_block' => false,
+					'default' => [
+						'value' => 'fas fa-bars',
+						'library' => 'fa-solid',
+					],
+					'exclude_inline_options' => [ 'none' ],
+				]
+			);
+
+			$this->add_control(
+				'navigation_menu_close_button',
+				[
+					'label' => esc_html__( 'Close Button', 'hello-plus' ),
+					'type' => Controls_Manager::ICONS,
+					'skin' => 'inline',
+					'label_block' => false,
+					'default' => [
+						'value' => 'fa fa-close',
+						'library' => 'fa-solid',
+					],
+					'exclude_inline_options' => [ 'none' ],
+				]
+			);
+
+			$this->add_control(
+				'navigation_breakpoint',
+				[
+					'label' => esc_html__( 'Breakpoint', 'hello-plus' ),
+					'type' => Controls_Manager::SELECT,
+					'options' => [
+						'mobile-portrait' => 'Mobile Portrait (> 767px)',
+						'tablet-portrait' => 'Tablet Portrait (> 1024px)',
+						'none' => 'none',
+					],
+					'default' => 'mobile-portrait',
+					'separator' => 'after',
+					// 'selectors' => [
+					// 	'{{WRAPPER}} .ehp-zigzag' => '--zigzag-image-width: {{VALUE}};',
+					// ],
+				]
+			);
+
+			$this->add_control(
+				'navigation_menu_submenu_icon',
+				[
+					'label' => esc_html__( 'Submenu Indicator Icon', 'hello-plus' ),
+					'type' => Controls_Manager::ICONS,
+					'skin' => 'inline',
+					'label_block' => false,
+					'default' => [
+						'value' => 'fas fa-caret-down',
+						'library' => 'fa-solid',
+					],
+					'exclude_inline_options' => [ 'svg' ],
+				]
+			);
+		} else {
+			$this->add_control(
+				'menu',
+				[
+					'type' => Controls_Manager::ALERT,
+					'alert_type' => 'info',
+					'heading' => esc_html__( 'There are no menus in your site.', 'hello-plus' ),
+					'content' => sprintf(
+						/* translators: 1: Link opening tag, 2: Link closing tag. */
+						esc_html__( 'Add and manage menus from %1$sMy menus%2$s ', 'hello-plus' ),
+						sprintf( '<a href="%s" target="_blank">', admin_url( 'nav-menus.php?action=edit&menu=0' ) ),
+						'</a>'
+					),
+					'separator' => 'after',
+				]
+			);
+		}
+
+		$this->end_controls_section();
+	}
+
+	protected function add_content_cta_section() {
+		$this->start_controls_section(
+			'content_cta',
+			[
+				'label' => esc_html__( 'Call to Action', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_control(
+			'primary_cta_button_text',
+			[
+				'label' => esc_html__( 'Primary CTA', 'hello-plus' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => esc_html__( 'Schedule Now', 'hello-plus' ),
+				'dynamic' => [
+					'active' => true,
+				],
+			]
+		);
+
+		$this->add_control(
+			'primary_cta_button_link',
+			[
+				'label' => esc_html__( 'Link', 'hello-plus' ),
+				'type' => Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				],
+				'default' => [
+					'url' => '',
+					'is_external' => true,
+				],
+			]
+		);
+
+		$this->add_control(
+			'primary_cta_button_icon',
+			[
+				'label' => esc_html__( 'Icon', 'hello-plus' ),
+				'type' => Controls_Manager::ICONS,
+				'label_block' => false,
+				'skin' => 'inline',
+			]
+		);
+
+		$this->add_control(
+			'secondary_cta_show',
+			[
+				'label' => esc_html__( 'Secondary CTA', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Show', 'hello-plus' ),
+				'label_off' => esc_html__( 'Hide', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'secondary_cta_button_text',
+			[
+				'label' => esc_html__( 'Primary CTA', 'hello-plus' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => esc_html__( 'Schedule Now', 'hello-plus' ),
+				'dynamic' => [
+					'active' => true,
+				],
+				'condition' => [
+					'secondary_cta_show' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'secondary_cta_button_link',
+			[
+				'label' => esc_html__( 'Link', 'hello-plus' ),
+				'type' => Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				],
+				'default' => [
+					'url' => '',
+					'is_external' => true,
+				],
+				'condition' => [
+					'secondary_cta_show' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'secondary_cta_button_icon',
+			[
+				'label' => esc_html__( 'Icon', 'hello-plus' ),
+				'type' => Controls_Manager::ICONS,
+				'label_block' => false,
+				'skin' => 'inline',
+				'condition' => [
+					'secondary_cta_show' => 'yes',
+				],
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
+	protected function add_style_site_identity_section() {
+		$this->start_controls_section(
+			'section_site_identity',
+			[
+				'label' => esc_html__( 'Site Identity', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_responsive_control(
+			'style_align_logo',
+			[
+				'label' => esc_html__( 'Align Logo', 'hello-plus' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'flex-start' => [
+						'title' => esc_html__( 'Start', 'hello-plus' ),
+						'icon' => 'eicon-align-start-h',
+					],
+					'center' => [
+						'title' => esc_html__( 'End', 'hello-plus' ),
+						'icon' => 'eicon-align-center-h',
+					],
+				],
+				'default' => 'flex-start',
+				'tablet_default' => 'flex-start',
+				'mobile_default' => 'flex-start',
+				'selectors' => [
+					// '{{WRAPPER}} .ehp-cta' => '--cta-buttons-position: {{VALUE}};',
+				],
+				'condition' => [
+					'site_logo_brand_select' => 'logo',
+				],
+			]
+		);
+
+		$this->add_control(
+			'style_logo_width',
+			[
+				'label' => __( 'Logo Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 68,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					// '{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-border-width: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'site_logo_brand_select' => 'logo',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'style_align_title',
+			[
+				'label' => esc_html__( 'Align Site Title', 'hello-plus' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'flex-start' => [
+						'title' => esc_html__( 'Start', 'hello-plus' ),
+						'icon' => 'eicon-align-start-h',
+					],
+					'center' => [
+						'title' => esc_html__( 'End', 'hello-plus' ),
+						'icon' => 'eicon-align-center-h',
+					],
+				],
+				'default' => 'flex-start',
+				'tablet_default' => 'flex-start',
+				'mobile_default' => 'flex-start',
+				'selectors' => [
+					// '{{WRAPPER}} .ehp-cta' => '--cta-buttons-position: {{VALUE}};',
+				],
+				'condition' => [
+					'site_logo_brand_select' => 'title',
+				],
+			]
+		);
+
+		$this->add_control(
+			'style_title_color',
+			[
+				'label' => esc_html__( 'Text Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#0052FF',
+				'selectors' => [
+					// '{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-border-color: {{VALUE}}',
+				],
+				'condition' => [
+					'site_logo_brand_select' => 'title',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'style_title_typography',
+				'selector' => '{{WRAPPER}} .ehp-cta__heading',
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
+	protected function add_style_navigation_section() {
+		$this->start_controls_section(
+			'section_navigation_style',
+			[
+				'label' => esc_html__( 'Navigation', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'style_navigation_typography',
+				'selector' => '{{WRAPPER}} .ehp-cta__heading',
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_ACCENT,
+				],
+			]
+		);
+
+		$this->start_controls_tabs(
+			'style_navigation_tabs'
+		);
+
+		$this->start_controls_tab(
+			'navigation_normal_tab',
+			[
+				'label' => esc_html__( 'Normal', 'hello-plus' ),
+			]
+		);
+
+		$this->add_control(
+			'style_navigation_text_color',
+			[
+				'label' => esc_html__( 'Text Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#555963',
+				'selectors' => [
+					// '{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'navigation_hover_tab',
+			[
+				'label' => esc_html__( 'Hover', 'hello-plus' ),
+			]
+		);
+
+		$this->add_control(
+			'style_navigation_text_color_hover',
+			[
+				'label' => esc_html__( 'Text Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#555963',
+				'selectors' => [
+					// '{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'style_navigation_pointer_hover',
+			[
+				'label' => esc_html__( 'Pointer', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'none',
+				'options' => [
+					'none' => esc_html__( 'None', 'hello-plus' ),
+					'underline' => esc_html__( 'Underline', 'hello-plus' ),
+					'highlight' => esc_html__( 'Highlight', 'hello-plus' ),
+				],
+			]
+		);
+
+		$this->add_control(
+			'style_navigation_hover_underline_color',
+			[
+				'label' => esc_html__( 'Underline Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#555963',
+				'selectors' => [
+					// '{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
+				],
+				'condition' => [
+					'style_navigation_pointer_hover' => 'underline',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'style_navigation_hover_underline_width',
+			[
+				'label' => esc_html__( 'Underline Width', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'default',
+				'options' => [
+					'default' => esc_html__( 'Default', 'hello-plus' ),
+					'thin' => esc_html__( 'Thin', 'hello-plus' ),
+					'thick' => esc_html__( 'Thick', 'hello-plus' ),
+				],
+				'condition' => [
+					'style_navigation_pointer_hover' => 'underline',
+				],
+			]
+		);
+
+		$this->add_control(
+			'style_navigation_hover_highlight_color',
+			[
+				'label' => esc_html__( 'Highlight Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#555963',
+				'selectors' => [
+					// '{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
+				],
+				'condition' => [
+					'style_navigation_pointer_hover' => 'highlight',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'style_navigation_hover_highlight_width',
+			[
+				'label' => esc_html__( 'Highlight Width', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'default',
+				'options' => [
+					'default' => esc_html__( 'Default', 'hello-plus' ),
+					'thin' => esc_html__( 'Thin', 'hello-plus' ),
+					'thick' => esc_html__( 'Thick', 'hello-plus' ),
+				],
+				'condition' => [
+					'style_navigation_pointer_hover' => 'highlight',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'navigation_active_tab',
+			[
+				'label' => esc_html__( 'Active', 'hello-plus' ),
+			]
+		);
+
+		$this->add_control(
+			'style_navigation_text_color_active',
+			[
+				'label' => esc_html__( 'Text Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#555963',
+				'selectors' => [
+					// '{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'style_navigation_focus_active',
+			[
+				'label' => esc_html__( 'Focus Animation', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'none',
+				'options' => [
+					'none' => esc_html__( 'None', 'hello-plus' ),
+					'underline' => esc_html__( 'Underline', 'hello-plus' ),
+					'highlight' => esc_html__( 'Highlight', 'hello-plus' ),
+				],
+			]
+		);
+
+		$this->add_control(
+			'style_navigation_active_underline_color',
+			[
+				'label' => esc_html__( 'Underline Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#555963',
+				'selectors' => [
+					// '{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
+				],
+				'condition' => [
+					'style_navigation_focus_active' => 'underline',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'style_navigation_active_underline_width',
+			[
+				'label' => esc_html__( 'Underline Width', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'default',
+				'options' => [
+					'default' => esc_html__( 'Default', 'hello-plus' ),
+					'thin' => esc_html__( 'Thin', 'hello-plus' ),
+					'thick' => esc_html__( 'Thick', 'hello-plus' ),
+				],
+				'condition' => [
+					'style_navigation_focus_active' => 'underline',
+				],
+			]
+		);
+
+		$this->add_control(
+			'style_navigation_active_highlight_color',
+			[
+				'label' => esc_html__( 'Highlight Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#555963',
+				'selectors' => [
+					// '{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
+				],
+				'condition' => [
+					'style_navigation_focus_active' => 'highlight',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'style_navigation_active_highlight_width',
+			[
+				'label' => esc_html__( 'Highlight Width', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'default',
+				'options' => [
+					'default' => esc_html__( 'Default', 'hello-plus' ),
+					'thin' => esc_html__( 'Thin', 'hello-plus' ),
+					'thick' => esc_html__( 'Thick', 'hello-plus' ),
+				],
+				'condition' => [
+					'style_navigation_focus_active' => 'highlight',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_control(
+			'style_submenu_label',
+			[
+				'label' => esc_html__( 'Submenu', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'style_submenu_layout',
+			[
+				'label' => esc_html__( 'Layout', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'horizontal' => 'Horizontal',
+					'vertical' => 'Vertical',
+				],
+				'default' => 'horizontal',
+				'selectors' => [
+					// '{{WRAPPER}} .ehp-cta' => '--cta-text-heading-width: var(--cta-text-{{VALUE}}-heading); --cta-text-description-width: var(--cta-text-{{VALUE}}-description);',
+				],
+			]
+		);
+
+		$this->add_control(
+			'style_submenu_shape',
+			[
+				'label' => esc_html__( 'Shape', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'default' => 'Default',
+					'sharp' => 'Sharp',
+					'rounded' => 'Rounded',
+					'round' => 'Round',
+				],
+				'default' => 'default',
+				'selectors' => [
+					// '{{WRAPPER}} .ehp-cta' => '--cta-text-heading-width: var(--cta-text-{{VALUE}}-heading); --cta-text-description-width: var(--cta-text-{{VALUE}}-description);',
+				],
+			]
+		);
+
+		$this->add_control(
+			'style_responsive_menu_label',
+			[
+				'label' => esc_html__( 'Responsive Menu', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+				'description' => 'To preview, select a responsive viewport icon.',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'style_responsive_menu_align',
+			[
+				'label' => esc_html__( 'Text Align', 'hello-plus' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'flex-start' => [
+						'title' => esc_html__( 'Start', 'hello-plus' ),
+						'icon' => 'eicon-align-start-h',
+					],
+					'center' => [
+						'title' => esc_html__( 'End', 'hello-plus' ),
+						'icon' => 'eicon-align-center-h',
+					],
+				],
+				'default' => 'flex-start',
+				'selectors' => [
+					// '{{WRAPPER}} .ehp-cta' => '--cta-buttons-position: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'style_responsive_menu_divider',
+			[
+				'label' => esc_html__( 'Divider', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'style_responsive_menu_divider_color',
+			[
+				'label' => esc_html__( 'Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E0E1E2',
+				'selectors' => [
+					// '{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
+				],
+				'condition' => [
+					'style_responsive_menu_divider' => 'yes',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'style_responsive_menu_divider_width',
+			[
+				'label' => esc_html__( 'Weight', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 1,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					// '{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-border-width: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'style_responsive_menu_divider' => 'yes',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'style_responsive_menu_icon_size',
+			[
+				'label' => esc_html__( 'Toggle Icon Size', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					// '{{WRAPPER}} .ehp-cta' => '--cta-content-width: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->start_controls_tabs(
+			'style_toggle_icon_tabs'
+		);
+
+		$this->start_controls_tab(
+			'toggle_icon_tabs_normal',
+			[
+				'label' => esc_html__( 'Normal', 'hello-plus' ),
+			]
+		);
+
+		$this->add_control(
+			'style_toggle_icon_color',
+			[
+				'label' => esc_html__( 'Toggle Icon Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#555963',
+				'selectors' => [
+					// '{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'toggle_icon_tabs_active',
+			[
+				'label' => esc_html__( 'Active', 'hello-plus' ),
+			]
+		);
+
+		$this->add_control(
+			'style_toggle_icon_color_active',
+			[
+				'label' => esc_html__( 'Toggle Icon Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#555963',
+				'selectors' => [
+					// '{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->end_controls_section();
+	}
+
+	protected function add_style_cta_section() {
+		$this->start_controls_section(
+			'style_cta',
+			[
+				'label' => esc_html__( 'Call to Action', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_cta_button_controls( 'primary' );
+
+		$this->add_cta_button_controls( 'secondary', true );
+
+		$this->end_controls_section();
+	}
+
+	protected function add_style_box_section() {
+		$this->start_controls_section(
+			'style_box_section',
+			[
+				'label' => esc_html__( 'Box', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'box_background_label',
+			[
+				'label' => esc_html__( 'Background', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
+			[
+				'name' => 'background',
+				'types' => [ 'classic', 'gradient' ],
+				'exclude' => [ 'image' ],
+				'selector' => '{{WRAPPER}} .ehp-cta',
+				'fields_options' => [
+					'background' => [
+						'default' => 'classic',
+					],
+					'color' => [
+						'default' => '#F6F7F8',
+					],
+				],
+			]
+		);
+
+		$this->add_control(
+			'show_box_border',
+			[
+				'label' => esc_html__( 'Border', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'box_border_width',
+			[
+				'label' => __( 'Border Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 10,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 1,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					// '{{WRAPPER}} .ehp-hero' => '--hero-button-border-width: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'show_box_border' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'box_border_color',
+			[
+				'label' => esc_html__( 'Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#555963',
+				'selectors' => [
+					// '{{WRAPPER}} .ehp-hero' => '--hero-button-border-color: {{VALUE}}',
+				],
+				'condition' => [
+					'show_box_border' => 'yes',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'box_box_shadow',
+				'selector' => '{{WRAPPER}} .ehp-hero__button',
+			]
+		);
+
+		$this->add_responsive_control(
+			'box_padding',
+			[
+				'label' => esc_html__( 'Padding', 'hello-plus' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em', 'rem' ],
+				'selectors' => [
+					// '{{WRAPPER}} .ehp-hero' => '--hero-button-padding-block-end: {{BOTTOM}}{{UNIT}}; --hero-button-padding-block-start: {{TOP}}{{UNIT}}; --hero-button-padding-inline-end: {{RIGHT}}{{UNIT}}; --hero-button-padding-inline-start: {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
+	protected function add_cta_button_controls( string $type, bool $add_condition = false ) {
+		$label = 'primary' === $type ? esc_html__( 'Primary CTA', 'hello-plus' ) : esc_html__( 'Secondary CTA', 'hello-plus' );
+		$show_button_border_default = 'primary' === $type ? 'no' : 'yes';
+
+		$add_type_condition = $add_condition ? [
+			$type . '_cta_show' => 'yes',
+		] : [];
+
+		$this->add_control(
+			$type . '_button_label',
+			[
+				'label' => $label,
+				'type' => Controls_Manager::HEADING,
+				'condition' => $add_type_condition,
+			]
+		);
+
+		$this->add_control(
+			$type . '_button_type',
+			[
+				'label' => esc_html__( 'Type', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'button',
+				'options' => [
+					'button' => esc_html__( 'Button', 'hello-plus' ),
+					'link' => esc_html__( 'Link', 'hello-plus' ),
+				],
+				'condition' => $add_type_condition,
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => $type . '_button_typography',
+				'selector' => '{{WRAPPER}} .ehp-cta__button--' . $type,
+				'condition' => $add_type_condition,
+			]
+		);
+
+		$this->add_responsive_control(
+			$type . '_button_icon_position',
+			[
+				'label' => esc_html__( 'Icon Position', 'hello-plus' ),
+				'type' => Controls_Manager::CHOOSE,
+				'default' => is_rtl() ? 'row' : 'row-reverse',
+				'toggle' => false,
+				'options' => [
+					'row' => [
+						'title' => esc_html__( 'Start', 'hello-plus' ),
+						'icon' => 'eicon-h-align-left',
+					],
+					'row-reverse' => [
+						'title' => esc_html__( 'End', 'hello-plus' ),
+						'icon' => 'eicon-h-align-right',
+					],
+				],
+				'selectors_dictionary' => [
+					'left' => is_rtl() ? 'row-reverse' : 'row',
+					'right' => is_rtl() ? 'row' : 'row-reverse',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta__button--' . $type => 'flex-direction: {{VALUE}};',
+				],
+				'condition' => array_merge([
+					$type . '_cta_button_icon[value]!' => '',
+				], $add_type_condition),
+			]
+		);
+
+		$this->add_control(
+			$type . '_button_icon_spacing',
+			[
+				'label' => esc_html__( 'Icon Spacing', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 100,
+					],
+					'em' => [
+						'max' => 5,
+					],
+					'rem' => [
+						'max' => 5,
+					],
+					'%' => [
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-icon-spacing: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => array_merge([
+					$type . '_cta_button_icon[value]!' => '',
+				], $add_type_condition),
+			]
+		);
+
+		$this->start_controls_tabs(
+			$type . '_button_style'
+		);
+
+		$this->start_controls_tab(
+			$type . '_button_normal_tab',
+			[
+				'label' => esc_html__( 'Normal', 'hello-plus' ),
+				'condition' => $add_type_condition,
+			]
+		);
+
+		$this->add_control(
+			$type . '_button_text_color',
+			[
+				'label' => esc_html__( 'Text Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
+				],
+				'condition' => $add_type_condition,
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
+			[
+				'name' => $type . '_button_background',
+				'types' => [ 'classic', 'gradient' ],
+				'exclude' => [ 'image' ],
+				'selector' => '{{WRAPPER}} .ehp-cta__button--' . $type,
+				'fields_options' => [
+					'background' => [
+						'default' => 'classic',
+					],
+				],
+				'condition' => array_merge([
+					$type . '_button_type' => 'button',
+				], $add_type_condition),
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			$type . '_button_hover_tab',
+			[
+				'label' => esc_html__( 'Hover', 'hello-plus' ),
+				'condition' => $add_type_condition,
+			]
+		);
+
+		$this->add_control(
+			$type . '_hover_button_text_color',
+			[
+				'label' => esc_html__( 'Text Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color-hover: {{VALUE}}',
+				],
+				'condition' => $add_type_condition,
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
+			[
+				'name' => $type . '_button_background_hover',
+				'types' => [ 'classic', 'gradient' ],
+				'exclude' => [ 'image' ],
+				'selector' => '{{WRAPPER}} .ehp-cta__button--' . $type . ':hover, {{WRAPPER}} .ehp-cta__button--' . $type . ':focus',
+				'fields_options' => [
+					'background' => [
+						'default' => 'classic',
+					],
+				],
+				'condition' => array_merge([
+					$type . '_button_type' => 'button',
+				], $add_type_condition),
+			]
+		);
+
+		$this->add_control(
+			$type . '_button_hover_animation',
+			[
+				'label' => esc_html__( 'Hover Animation', 'hello-plus' ),
+				'type' => Controls_Manager::HOVER_ANIMATION,
+				'condition' => $add_type_condition,
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_control(
+			$type . '_show_button_border',
+			[
+				'label' => esc_html__( 'Border', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => $show_button_border_default,
+				'separator' => 'before',
+				'condition' => array_merge([
+					$type . '_button_type' => 'button',
+				], $add_type_condition),
+			]
+		);
+
+		$this->add_control(
+			$type . '_button_border_width',
+			[
+				'label' => __( 'Border Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 10,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 1,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-border-width: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => array_merge([
+					$type . '_show_button_border' => 'yes',
+				], $add_type_condition),
+			]
+		);
+
+		$this->add_control(
+			$type . '_button_border_color',
+			[
+				'label' => esc_html__( 'Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-border-color: {{VALUE}}',
+				],
+				'condition' => array_merge([
+					$type . '_show_button_border' => 'yes',
+				], $add_type_condition),
+			]
+		);
+
+		$this->add_control(
+			$type . '_button_shape',
+			[
+				'label' => esc_html__( 'Shape', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'default',
+				'options' => [
+					'default' => esc_html__( 'Default', 'hello-plus' ),
+					'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
+					'round' => esc_html__( 'Round', 'hello-plus' ),
+					'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
+				],
+				'condition' => array_merge([
+					$type . '_button_type' => 'button',
+				], $add_type_condition),
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => $type . '_button_box_shadow',
+				'selector' => '{{WRAPPER}} .ehp-cta__button--' . $type,
+				'condition' => array_merge([
+					$type . '_button_type' => 'button',
+				], $add_type_condition),
+			]
+		);
+
+		$this->add_responsive_control(
+			$type . '_button_padding',
+			[
+				'label' => esc_html__( 'Padding', 'hello-plus' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em', 'rem' ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-padding-block-end: {{BOTTOM}}{{UNIT}}; --cta-button-' . $type . '-padding-block-start: {{TOP}}{{UNIT}}; --cta-button-' . $type . '-padding-inline-end: {{RIGHT}}{{UNIT}}; --cta-button-' . $type . '-padding-inline-start: {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+				'condition' => array_merge([
+					$type . '_button_type' => 'button',
+				], $add_type_condition),
+			]
+		);
 	}
 
 	private function get_site_logo(): string {
 		$site_logo = Plugin::elementor()->dynamic_tags->get_tag_data_content( null, 'site-logo' );
 		return $site_logo['url'] ?? Utils::get_placeholder_image_src();
+	}
+
+	private function get_available_menus() {
+		$menus = wp_get_nav_menus();
+
+		$options = [];
+
+		foreach ( $menus as $menu ) {
+			$options[ $menu->slug ] = $menu->name;
+		}
+
+		return $options;
 	}
 }

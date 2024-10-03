@@ -10,16 +10,19 @@ use Elementor\Controls_Manager;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
+use Elementor\Utils;
 use Elementor\Widget_Base;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use HelloPlus\Includes\Utils as Theme_Utils;
 
 use HelloPlus\Modules\Header\Classes\Render\Widget_Header_Render;
+use ElementorPro\Modules\ThemeBuilder\Classes\Control_Media_Preview;
+
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
-use ElementorPro\Modules\ThemeBuilder\Classes\Control_Media_Preview;
-use ElementorPro\Plugin;
-
 class Header extends Widget_Base {
+	const TAB_ADVANCED = 'advanced-tab-header';
+
 	public function get_name(): string {
 		return 'header';
 	}
@@ -70,7 +73,13 @@ class Header extends Widget_Base {
 	}
 
 	protected function add_advanced_section() {
-		// controls here
+		Controls_Manager::add_tab(
+			static::TAB_ADVANCED,
+			esc_html__( 'Advanced', 'elementor' )
+		);
+
+		$this->add_advanced_behavior_section();
+		$this->add_advanced_custom_section();
 	}
 
 	protected function add_content_site_logo_section() {
@@ -104,7 +113,7 @@ class Header extends Widget_Base {
 				'type' => Control_Media_Preview::CONTROL_TYPE,
 				'src' => $this->get_site_logo(),
 				'dynamic' => [
-					'default' => Plugin::elementor()->dynamic_tags->tag_data_to_tag_text( null, 'site-logo' ),
+					'default' => Theme_Utils::elementor()->dynamic_tags->tag_data_to_tag_text( null, 'site-logo' ),
 				],
 				'condition' => [
 					'site_logo_brand_select' => 'logo',
@@ -1398,8 +1407,354 @@ class Header extends Widget_Base {
 		);
 	}
 
+	private function add_advanced_behavior_section(): void {
+		$this->start_controls_section(
+			'advanced_behavior_section',
+			[
+				'label' => esc_html__( 'Behavior', 'elementor' ),
+				'tab' => static::TAB_ADVANCED,
+			]
+		);
+
+		$this->add_control(
+			'behavior_float',
+			[
+				'label' => esc_html__( 'Float', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+			]
+		);
+
+		$this->add_responsive_control(
+			'behavior_float_offset',
+			[
+				'label' => esc_html__( 'Offset', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'size' => 16,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					// '{{WRAPPER}} .ehp-hero' => '--hero-image-width: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'behavior_float' => 'yes',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'behavior_float_width',
+			[
+				'label' => esc_html__( 'Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 1140,
+					],
+				],
+				'default' => [
+					'size' => 1140,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					// '{{WRAPPER}} .ehp-hero' => '--hero-image-width: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'behavior_float' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'behavior_float_shape',
+			[
+				'label' => esc_html__( 'Shape', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'default',
+				'options' => [
+					'default' => esc_html__( 'Default', 'hello-plus' ),
+					'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
+					'round' => esc_html__( 'Round', 'hello-plus' ),
+					'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
+				],
+				'condition' => [
+					'behavior_float' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'behavior_onscroll_label',
+			[
+				'label' => esc_html__( 'On Scroll', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'behavior_onscroll_select',
+			[
+				'label' => esc_html__( 'Sticky', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'scroll-up',
+				'options' => [
+					'scroll-up' => esc_html__( 'On Scroll Up', 'hello-plus' ),
+					'always' => esc_html__( 'Always', 'hello-plus' ),
+					'none' => esc_html__( 'None', 'hello-plus' ),
+				],
+			]
+		);
+
+		$this->add_control(
+			'behavior_sticky_scale_logo',
+			[
+				'label' => esc_html__( 'Scale Site Logo', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'yes',
+				'condition' => [
+					'behavior_onscroll_select' => 'always',
+					'site_logo_brand_select' => 'site-logo',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'behavior_sticky_width',
+			[
+				'label' => esc_html__( 'Logo Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 100,
+					],
+					'%' => [
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'size' => 34,
+					'unit' => 'px',
+				],
+				'tablet_default' => [
+					'size' => 28,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 24,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-hero' => '--hero-image-height: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'behavior_sticky_scale_logo' => 'yes',
+					'site_logo_brand_select' => 'site-logo',
+				],
+			]
+		);
+
+		$this->add_control(
+			'behavior_sticky_scale_title',
+			[
+				'label' => esc_html__( 'Scale Site Title', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'yes',
+				'condition' => [
+					'behavior_onscroll_select' => 'always',
+					'site_logo_brand_select' => 'site-title',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'behavior_sticky_scale_title_size',
+			[
+				'label' => esc_html__( 'Font Size', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'size' => 20,
+					'unit' => 'px',
+				],
+				'tablet_default' => [
+					'size' => 20,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 20,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					// '{{WRAPPER}} .ehp-hero' => '--hero-content-text-gap: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'behavior_sticky_scale_title' => 'yes',
+					'site_logo_brand_select' => 'site-title',
+				],
+			]
+		);
+
+		$this->add_control(
+			'behavior_sticky_scale_title_weight',
+			[
+				'label' => esc_html__( 'Font Weight', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => '800',
+				'options' => [
+					'100' =>  esc_html__( '100', 'hello-plus' ),
+					'200' =>  esc_html__( '200', 'hello-plus' ),
+					'300' =>  esc_html__( '300', 'hello-plus' ),
+					'400' =>  esc_html__( '400', 'hello-plus' ),
+					'500' =>  esc_html__( '500', 'hello-plus' ),
+					'600' =>  esc_html__( '600', 'hello-plus' ),
+					'700' =>  esc_html__( '700', 'hello-plus' ),
+					'800' =>  esc_html__( '800', 'hello-plus' ),
+					'900' =>  esc_html__( '900', 'hello-plus' ),
+				],
+				'condition' => [
+					'behavior_sticky_scale_title' => 'yes',
+					'site_logo_brand_select' => 'site-title',
+				],
+			]
+		);
+
+		$this->add_control(
+			'behavior_sticky_change_bg',
+			[
+				'label' => esc_html__( 'Change Background Color', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+				'condition' => [
+					'behavior_onscroll_select' => 'always',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
+			[
+				'name' => 'behavior_sticky_bg',
+				'types' => [ 'classic', 'gradient' ],
+				'exclude' => [ 'image' ],
+				'selector' => '{{WRAPPER}} .ehp-hero__button',
+				'fields_options' => [
+					'background' => [
+						'default' => 'classic',
+					],
+					'color' => [
+						'default' => '#FFFFFF',
+					],
+				],
+				'condition' => [
+					'behavior_sticky_change_bg' => 'yes',
+				],
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
+	private function add_advanced_custom_section(): void {
+		$this->start_controls_section(
+			'advanced_responsive_section',
+			[
+				'label' => esc_html__( 'Responsive', 'elementor' ),
+				'tab' => static::TAB_ADVANCED,
+			]
+		);
+
+		$this->add_control(
+			'responsive_description',
+			[
+				'raw' => __( 'Responsive visibility will take effect only on preview mode or live page, and not while editing in Elementor.', 'elementor' ),
+				'type' => Controls_Manager::RAW_HTML,
+				'content_classes' => 'elementor-descriptor',
+			]
+		);
+
+		$this->add_hidden_device_controls();
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'advanced_custom_controls_section',
+			[
+				'label' => esc_html__( 'CSS', 'elementor' ),
+				'tab' => static::TAB_ADVANCED,
+			]
+		);
+
+		$this->add_control(
+			'advanced_custom_css_id',
+			[
+				'label' => esc_html__( 'CSS ID', 'elementor' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => '',
+				'ai' => [
+					'active' => false,
+				],
+				'dynamic' => [
+					'active' => true,
+				],
+				'title' => esc_html__( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'elementor' ),
+				'style_transfer' => false,
+			]
+		);
+
+		$this->add_control(
+			'advanced_custom_css_classes',
+			[
+				'label' => esc_html__( 'CSS Classes', 'elementor' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => '',
+				'ai' => [
+					'active' => false,
+				],
+				'dynamic' => [
+					'active' => true,
+				],
+				'title' => esc_html__( 'Add your custom class WITHOUT the dot. e.g: my-class', 'elementor' ),
+			]
+		);
+
+		$this->end_controls_section();
+
+		Theme_Utils::elementor()->controls_manager->add_custom_css_controls( $this, static::TAB_ADVANCED );
+
+		Theme_Utils::elementor()->controls_manager->add_custom_attributes_controls( $this, static::TAB_ADVANCED );
+
+	}
+
 	private function get_site_logo(): string {
-		$site_logo = Plugin::elementor()->dynamic_tags->get_tag_data_content( null, 'site-logo' );
+		$site_logo = Theme_Utils::elementor()->dynamic_tags->get_tag_data_content( null, 'site-logo' );
 		return $site_logo['url'] ?? Utils::get_placeholder_image_src();
 	}
 

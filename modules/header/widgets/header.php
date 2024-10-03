@@ -274,7 +274,7 @@ class Header extends Widget_Base {
 					'default' => 'mobile-portrait',
 					'separator' => 'after',
 					'selectors' => [
-						// '{{WRAPPER}} .ehp-zigzag' => '--zigzag-image-width: {{VALUE}};',
+						'{{WRAPPER}} .ehp-zigzag' => '--zigzag-image-width: {{VALUE}};',
 					],
 				]
 			);
@@ -450,7 +450,7 @@ class Header extends Widget_Base {
 				'tablet_default' => 'flex-start',
 				'mobile_default' => 'flex-start',
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-cta' => '--cta-buttons-position: {{VALUE}};',
+					'{{WRAPPER}} .ehp-cta' => '--cta-buttons-position: {{VALUE}};',
 				],
 				'condition' => [
 					'site_logo_brand_select' => 'logo',
@@ -476,7 +476,7 @@ class Header extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-border-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-cta' => '--cta-button--border-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'site_logo_brand_select' => 'logo',
@@ -503,7 +503,7 @@ class Header extends Widget_Base {
 				'tablet_default' => 'flex-start',
 				'mobile_default' => 'flex-start',
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-cta' => '--cta-buttons-position: {{VALUE}};',
+					'{{WRAPPER}} .ehp-cta' => '--cta-buttons-position: {{VALUE}};',
 				],
 				'condition' => [
 					'site_logo_brand_select' => 'title',
@@ -518,7 +518,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#0052FF',
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-border-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-cta' => '--cta-button--border-color: {{VALUE}}',
 				],
 				'condition' => [
 					'site_logo_brand_select' => 'title',
@@ -578,7 +578,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#555963',
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
 				],
 			]
 		);
@@ -599,7 +599,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#555963',
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
 				],
 			]
 		);
@@ -625,7 +625,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#555963',
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
 				],
 				'condition' => [
 					'style_navigation_pointer_hover' => 'underline',
@@ -657,7 +657,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#555963',
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
 				],
 				'condition' => [
 					'style_navigation_pointer_hover' => 'highlight',
@@ -698,7 +698,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#555963',
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
 				],
 			]
 		);
@@ -724,7 +724,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#555963',
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
 				],
 				'condition' => [
 					'style_navigation_focus_active' => 'underline',
@@ -756,7 +756,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#555963',
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
 				],
 				'condition' => [
 					'style_navigation_focus_active' => 'highlight',
@@ -805,7 +805,7 @@ class Header extends Widget_Base {
 				],
 				'default' => 'horizontal',
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-cta' => '--cta-text-heading-width: var(--cta-text-{{VALUE}}-heading); --cta-text-description-width: var(--cta-text-{{VALUE}}-description);',
+					'{{WRAPPER}} .ehp-cta' => '--cta-text-heading-width: var(--cta-text-{{VALUE}}-heading); --cta-text-description-width: var(--cta-text-{{VALUE}}-description);',
 				],
 			]
 		);
@@ -823,7 +823,7 @@ class Header extends Widget_Base {
 				],
 				'default' => 'default',
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-cta' => '--cta-text-heading-width: var(--cta-text-{{VALUE}}-heading); --cta-text-description-width: var(--cta-text-{{VALUE}}-description);',
+					'{{WRAPPER}} .ehp-cta' => '--cta-text-heading-width: var(--cta-text-{{VALUE}}-heading); --cta-text-description-width: var(--cta-text-{{VALUE}}-description);',
 				],
 			]
 		);
@@ -855,7 +855,7 @@ class Header extends Widget_Base {
 				],
 				'default' => 'flex-start',
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-cta' => '--cta-buttons-position: {{VALUE}};',
+					'{{WRAPPER}} .ehp-cta' => '--cta-buttons-position: {{VALUE}};',
 				],
 			]
 		);
@@ -880,7 +880,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#E0E1E2',
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
 				],
 				'condition' => [
 					'style_responsive_menu_divider' => 'yes',
@@ -906,7 +906,7 @@ class Header extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-border-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-cta' => '--cta-button-border-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'style_responsive_menu_divider' => 'yes',
@@ -926,7 +926,7 @@ class Header extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-cta' => '--cta-content-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-cta' => '--cta-content-width: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -950,7 +950,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#555963',
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
 				],
 			]
 		);
@@ -971,7 +971,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#555963',
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
 				],
 			]
 		);
@@ -1065,7 +1065,7 @@ class Header extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-hero' => '--hero-button-border-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-hero' => '--hero-button-border-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'show_box_border' => 'yes',
@@ -1080,7 +1080,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#555963',
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-hero' => '--hero-button-border-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-hero' => '--hero-button-border-color: {{VALUE}}',
 				],
 				'condition' => [
 					'show_box_border' => 'yes',
@@ -1103,7 +1103,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-hero' => '--hero-button-padding-block-end: {{BOTTOM}}{{UNIT}}; --hero-button-padding-block-start: {{TOP}}{{UNIT}}; --hero-button-padding-inline-end: {{RIGHT}}{{UNIT}}; --hero-button-padding-inline-start: {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-hero' => '--hero-button-padding-block-end: {{BOTTOM}}{{UNIT}}; --hero-button-padding-block-start: {{TOP}}{{UNIT}}; --hero-button-padding-inline-end: {{RIGHT}}{{UNIT}}; --hero-button-padding-inline-start: {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -1444,7 +1444,7 @@ class Header extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-hero' => '--hero-image-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-hero' => '--hero-image-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'behavior_float' => 'yes',
@@ -1469,7 +1469,7 @@ class Header extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-hero' => '--hero-image-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-hero' => '--hero-image-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'behavior_float' => 'yes',
@@ -1610,7 +1610,7 @@ class Header extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-hero' => '--hero-content-text-gap: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-hero' => '--hero-content-text-gap: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'behavior_sticky_scale_title' => 'yes',

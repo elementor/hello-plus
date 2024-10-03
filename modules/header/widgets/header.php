@@ -75,7 +75,7 @@ class Header extends Widget_Base {
 	protected function add_advanced_section() {
 		Controls_Manager::add_tab(
 			static::TAB_ADVANCED,
-			esc_html__( 'Advanced', 'elementor' )
+			esc_html__( 'Advanced', 'hello-plus' )
 		);
 
 		$this->add_advanced_behavior_section();
@@ -117,7 +117,7 @@ class Header extends Widget_Base {
 				],
 				'condition' => [
 					'site_logo_brand_select' => 'logo',
-				]
+				],
 			],
 			[
 				'recursive' => true,
@@ -135,7 +135,7 @@ class Header extends Widget_Base {
 				'event' => 'elementorProSiteLogo:change',
 				'condition' => [
 					'site_logo_brand_select' => 'logo',
-				]
+				],
 			],
 			[
 				'position' => [
@@ -154,7 +154,7 @@ class Header extends Widget_Base {
 				'content' => esc_html__( 'Go to', 'hello-plus' ) . ' <a href="#" onclick="elementorPro.modules.themeBuilder.openSiteIdentity( event )" >' . esc_html__( 'Site Identity > Site Description', 'hello-plus' ) . '</a>' . esc_html__( ' to edit the Site Title', 'hello-plus' ),
 				'condition' => [
 					'site_logo_brand_select' => 'title',
-				]
+				],
 			]
 		);
 
@@ -177,7 +177,7 @@ class Header extends Widget_Base {
 				'default' => 'h2',
 				'condition' => [
 					'site_logo_brand_select' => 'title',
-				]
+				],
 			]
 		);
 
@@ -273,9 +273,9 @@ class Header extends Widget_Base {
 					],
 					'default' => 'mobile-portrait',
 					'separator' => 'after',
-					// 'selectors' => [
-					// 	'{{WRAPPER}} .ehp-zigzag' => '--zigzag-image-width: {{VALUE}};',
-					// ],
+					'selectors' => [
+						// '{{WRAPPER}} .ehp-zigzag' => '--zigzag-image-width: {{VALUE}};',
+					],
 				]
 			);
 
@@ -1411,7 +1411,7 @@ class Header extends Widget_Base {
 		$this->start_controls_section(
 			'advanced_behavior_section',
 			[
-				'label' => esc_html__( 'Behavior', 'elementor' ),
+				'label' => esc_html__( 'Behavior', 'hello-plus' ),
 				'tab' => static::TAB_ADVANCED,
 			]
 		);
@@ -1626,15 +1626,15 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'default' => '800',
 				'options' => [
-					'100' =>  esc_html__( '100', 'hello-plus' ),
-					'200' =>  esc_html__( '200', 'hello-plus' ),
-					'300' =>  esc_html__( '300', 'hello-plus' ),
-					'400' =>  esc_html__( '400', 'hello-plus' ),
-					'500' =>  esc_html__( '500', 'hello-plus' ),
-					'600' =>  esc_html__( '600', 'hello-plus' ),
-					'700' =>  esc_html__( '700', 'hello-plus' ),
-					'800' =>  esc_html__( '800', 'hello-plus' ),
-					'900' =>  esc_html__( '900', 'hello-plus' ),
+					'100' => esc_html__( '100', 'hello-plus' ),
+					'200' => esc_html__( '200', 'hello-plus' ),
+					'300' => esc_html__( '300', 'hello-plus' ),
+					'400' => esc_html__( '400', 'hello-plus' ),
+					'500' => esc_html__( '500', 'hello-plus' ),
+					'600' => esc_html__( '600', 'hello-plus' ),
+					'700' => esc_html__( '700', 'hello-plus' ),
+					'800' => esc_html__( '800', 'hello-plus' ),
+					'900' => esc_html__( '900', 'hello-plus' ),
 				],
 				'condition' => [
 					'behavior_sticky_scale_title' => 'yes',
@@ -1686,7 +1686,7 @@ class Header extends Widget_Base {
 		$this->start_controls_section(
 			'advanced_responsive_section',
 			[
-				'label' => esc_html__( 'Responsive', 'elementor' ),
+				'label' => esc_html__( 'Responsive', 'hello-plus' ),
 				'tab' => static::TAB_ADVANCED,
 			]
 		);
@@ -1694,7 +1694,7 @@ class Header extends Widget_Base {
 		$this->add_control(
 			'responsive_description',
 			[
-				'raw' => __( 'Responsive visibility will take effect only on preview mode or live page, and not while editing in Elementor.', 'elementor' ),
+				'raw' => __( 'Responsive visibility will take effect only on preview mode or live page, and not while editing in Elementor.', 'hello-plus' ),
 				'type' => Controls_Manager::RAW_HTML,
 				'content_classes' => 'elementor-descriptor',
 			]
@@ -1707,7 +1707,7 @@ class Header extends Widget_Base {
 		$this->start_controls_section(
 			'advanced_custom_controls_section',
 			[
-				'label' => esc_html__( 'CSS', 'elementor' ),
+				'label' => esc_html__( 'CSS', 'hello-plus' ),
 				'tab' => static::TAB_ADVANCED,
 			]
 		);
@@ -1715,7 +1715,7 @@ class Header extends Widget_Base {
 		$this->add_control(
 			'advanced_custom_css_id',
 			[
-				'label' => esc_html__( 'CSS ID', 'elementor' ),
+				'label' => esc_html__( 'CSS ID', 'hello-plus' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => '',
 				'ai' => [
@@ -1724,7 +1724,7 @@ class Header extends Widget_Base {
 				'dynamic' => [
 					'active' => true,
 				],
-				'title' => esc_html__( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'elementor' ),
+				'title' => esc_html__( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'hello-plus' ),
 				'style_transfer' => false,
 			]
 		);
@@ -1732,7 +1732,7 @@ class Header extends Widget_Base {
 		$this->add_control(
 			'advanced_custom_css_classes',
 			[
-				'label' => esc_html__( 'CSS Classes', 'elementor' ),
+				'label' => esc_html__( 'CSS Classes', 'hello-plus' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => '',
 				'ai' => [
@@ -1741,7 +1741,7 @@ class Header extends Widget_Base {
 				'dynamic' => [
 					'active' => true,
 				],
-				'title' => esc_html__( 'Add your custom class WITHOUT the dot. e.g: my-class', 'elementor' ),
+				'title' => esc_html__( 'Add your custom class WITHOUT the dot. e.g: my-class', 'hello-plus' ),
 			]
 		);
 
@@ -1750,7 +1750,6 @@ class Header extends Widget_Base {
 		Theme_Utils::elementor()->controls_manager->add_custom_css_controls( $this, static::TAB_ADVANCED );
 
 		Theme_Utils::elementor()->controls_manager->add_custom_attributes_controls( $this, static::TAB_ADVANCED );
-
 	}
 
 	private function get_site_logo(): string {

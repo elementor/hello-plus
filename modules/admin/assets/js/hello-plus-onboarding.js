@@ -1,6 +1,7 @@
 import { AdminProvider } from './providers/admin-provider';
 import { createRoot } from 'react-dom/client';
 import { OnboardingPage } from './pages/onboarding-page';
+import {Modal} from "@elementor/ui";
 
 const App = () => {
 	return (

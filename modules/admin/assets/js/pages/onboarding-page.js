@@ -6,6 +6,10 @@ import { useCallback, useState } from 'react';
 import Alert from '@elementor/ui/Alert';
 import { useAdminContext } from '../hooks/use-admin-context';
 import { useGetCurrentStep } from '../hooks/use-get-current-step';
+import { Navigation } from '../components/onboarding/navigation';
+import {TwoCol} from "../layouts/two-col";
+import Stack from "@elementor/ui/Stack";
+import Typography from "@elementor/ui/Typography";
 
 export const OnboardingPage = () => {
 	const [ message, setMessage ] = useState( '' );
@@ -56,10 +60,26 @@ export const OnboardingPage = () => {
 
 	return (
 		<ThemeProvider colorScheme="auto">
-			{ message && <Alert severity={ severity }>{ message }</Alert> }
-			<Box p={ 1 }>
-				{ buttonText && <Button onClick={ onClick }>{ buttonText }</Button> }
-			</Box>
+			<Navigation />
+			<TwoCol>
+				<Stack>
+					<Box>
+						<Typography variant="h6">
+							{__('Welcome! Let’s create your website.', 'hello-plus')}
+						</Typography>
+						<Typography variant="body1">
+							{__('Welcome! Let’s create your website.', 'hello-plus')}
+						</Typography>
+					</Box>
+					{ message && <Alert severity={ severity }>{ message }</Alert> }
+					<Box p={ 1 }>
+						{ buttonText && <Button onClick={ onClick }>{ buttonText }</Button> }
+					</Box>
+				</Stack>
+				<Stack />
+
+			</TwoCol>
+
 		</ThemeProvider>
 	);
 };

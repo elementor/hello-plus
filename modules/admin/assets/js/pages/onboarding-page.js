@@ -7,13 +7,29 @@ import Alert from '@elementor/ui/Alert';
 import { useAdminContext } from '../hooks/use-admin-context';
 import { useGetCurrentStep } from '../hooks/use-get-current-step';
 import { Navigation } from '../components/onboarding/navigation';
-import {TwoCol} from "../layouts/two-col";
-import Stack from "@elementor/ui/Stack";
-import Typography from "@elementor/ui/Typography";
+import { TwoCol } from '../layouts/two-col';
+import Stack from '@elementor/ui/Stack';
+import Typography from '@elementor/ui/Typography';
+import Modal from '@elementor/ui/Modal';
+import { TopBar } from '../components/top-bar/top-bar';
+import { TopBarLinks } from '../components/top-bar/top-bar-links';
+import { TopBarContent } from '../components/top-bar/top-bar-content';
+
+const style = {
+	position: 'fixed',
+	top: 0,
+	left: 0,
+	width: '100%',
+	height: '100%',
+	background: 'white',
+	boxShadow: 24,
+	p: 4,
+};
 
 export const OnboardingPage = () => {
 	const [ message, setMessage ] = useState( '' );
 	const [ severity, setSeverity ] = useState( 'info' );
+	const [ open, setOpen ] = useState( true );
 
 	const { onboardingSettings: { nonce } = {} } = useAdminContext();
 	const { step, buttonText } = useGetCurrentStep();
@@ -60,25 +76,29 @@ export const OnboardingPage = () => {
 
 	return (
 		<ThemeProvider colorScheme="auto">
-			<Navigation />
-			<TwoCol>
-				<Stack>
-					<Box>
-						<Typography variant="h6">
-							{__('Welcome! Let’s create your website.', 'hello-plus')}
-						</Typography>
-						<Typography variant="body1">
-							{__('Welcome! Let’s create your website.', 'hello-plus')}
-						</Typography>
-					</Box>
-					{ message && <Alert severity={ severity }>{ message }</Alert> }
-					<Box p={ 1 }>
-						{ buttonText && <Button onClick={ onClick }>{ buttonText }</Button> }
-					</Box>
-				</Stack>
-				<Stack />
-
-			</TwoCol>
+			<Modal open={ open } sx={ { zIndex: 100000 } } >
+				<Box style={ style }>
+					<TopBarContent />
+					<Navigation />
+					<TwoCol>
+						<Stack>
+							<Box>
+								<Typography variant="h6">
+									{ __( 'Welcome! Let’s create your website.', 'hello-plus' ) }
+								</Typography>
+								<Typography variant="body1">
+									{ __( 'Welcome! Let’s create your website.', 'hello-plus' ) }
+								</Typography>
+							</Box>
+							{ message && <Alert severity={ severity }>{ message }</Alert> }
+							<Box p={ 1 }>
+								{ buttonText && <Button onClick={ onClick }>{ buttonText }</Button> }
+							</Box>
+						</Stack>
+						<Stack />
+					</TwoCol>
+				</Box>
+			</Modal>
 
 		</ThemeProvider>
 	);

@@ -26,6 +26,6 @@ class Setup_Wizard {
 	}
 
 	public function render_setup_wizard_page(): void {
-		echo '<div id="ehp-admin-setup-wizard">Setup Wizard Page Content</div>';
+		echo '<div id="ehp-admin-onboarding"></div>';
 	}
 }

@@ -6,6 +6,7 @@ export const AdminContext = createContext();
 export const AdminProvider = ( { children } ) => {
 	const [ promotionsLinks, setPromotionsLinks ] = React.useState( [] );
 	const [ adminSettings, setAdminSettings ] = React.useState( {} );
+	const [ onboardingSettings, setOnboardingSettings ] = React.useState( {} );
 
 	useEffect( () => {
 		apiFetch( { path: '/elementor-hello-plus/v1/promotions' } ).then( ( links ) => {
@@ -19,8 +20,14 @@ export const AdminProvider = ( { children } ) => {
 		} );
 	}, [] );
 
+	useEffect( () => {
+		apiFetch( { path: '/elementor-hello-plus/v1/onboarding-settings' } ).then( ( settings ) => {
+			setOnboardingSettings( settings.settings );
+		} );
+	}, [] );
+
 	return (
-		<AdminContext.Provider value={ { promotionsLinks, adminSettings } }>
+		<AdminContext.Provider value={ { promotionsLinks, adminSettings, onboardingSettings } }>
 			{ children }
 		</AdminContext.Provider>
 	);

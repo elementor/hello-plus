@@ -46,40 +46,11 @@ class Admin_Menu_Controller {
 		$kits_library->register_kits_library_page();
 	}
 
-	public function enqueue_scripts() {
-		$screen = get_current_screen();
-
-		if ( 'toplevel_page_' . self::MENU_PAGE_SLUG !== $screen->id ) {
-			return;
-		}
-
-		$handle = 'hello-plus-admin';
-		$asset_path = HELLO_PLUS_SCRIPTS_PATH . 'hello-plus-admin.asset.php';
-		$asset_url = HELLO_PLUS_SCRIPTS_URL;
-
-		if ( ! file_exists( $asset_path ) ) {
-			throw new \Error( 'You need to run `npm run build` for the "hello-plus" first.' );
-		}
-
-		$script_asset = require $asset_path;
-
-		wp_enqueue_script(
-			$handle,
-			HELLO_PLUS_SCRIPTS_URL . "$handle.js",
-			$script_asset['dependencies'],
-			$script_asset['version'],
-			true
-		);
-
-		wp_set_script_translations( $handle, 'hello-plus' );
-	}
-
 	public function render(): void {
 		echo '<div id="ehp-admin-home"></div>';
 	}
 
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 	}
 }

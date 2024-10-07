@@ -16,7 +16,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use HelloPlus\Includes\Utils as Theme_Utils;
 
 use HelloPlus\Modules\Header\Classes\Render\Widget_Header_Render;
-use ElementorPro\Modules\ThemeBuilder\Classes\Control_Media_Preview;
+use HelloPlus\Modules\Theme\Classes\Control_Media_Preview;
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
@@ -112,9 +112,6 @@ class Header extends Widget_Base {
 				'label' => esc_html__( 'Site Logo', 'hello-plus' ),
 				'type' => Control_Media_Preview::CONTROL_TYPE,
 				'src' => $this->get_site_logo(),
-				'dynamic' => [
-					'default' => Theme_Utils::elementor()->dynamic_tags->tag_data_to_tag_text( null, 'site-logo' ),
-				],
 				'condition' => [
 					'site_logo_brand_select' => 'logo',
 				],

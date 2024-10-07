@@ -418,7 +418,7 @@ class CTA extends Widget_Base {
 		);
 
 		$this->add_cta_button_controls( 'primary' );
-		$this->add_cta_button_controls( 'secondary' );
+		$this->add_cta_button_controls( 'secondary', true );
 
 		$this->add_responsive_control(
 			'cta_space_between',
@@ -446,15 +446,20 @@ class CTA extends Widget_Base {
 		$this->end_controls_section();
 	}
 
-	protected function add_cta_button_controls( $type ) {
+	protected function add_cta_button_controls( string $type, bool $add_condition = false ) {
 		$label = 'primary' === $type ? esc_html__( 'Primary CTA', 'hello-plus' ) : esc_html__( 'Secondary CTA', 'hello-plus' );
 		$show_button_border_default = 'primary' === $type ? 'no' : 'yes';
+
+		$add_type_condition = $add_condition ? [
+			$type . '_cta_show' => 'yes',
+		] : [];
 
 		$this->add_control(
 			$type . '_button_label',
 			[
 				'label' => $label,
 				'type' => Controls_Manager::HEADING,
+				'condition' => $add_type_condition,
 			]
 		);
 
@@ -467,6 +472,7 @@ class CTA extends Widget_Base {
 				'options' => [
 					'button' => esc_html__( 'Button', 'hello-plus' ),
 					'link' => esc_html__( 'Link', 'hello-plus' ),
+					'condition' => $add_type_condition,
 				],
 			]
 		);
@@ -476,6 +482,7 @@ class CTA extends Widget_Base {
 			[
 				'name' => $type . '_button_typography',
 				'selector' => '{{WRAPPER}} .ehp-cta__button--' . $type,
+				'condition' => $add_type_condition,
 			]
 		);
 
@@ -503,9 +510,9 @@ class CTA extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .ehp-cta__button--' . $type => 'flex-direction: {{VALUE}};',
 				],
-				'condition' => [
+				'condition' => array_merge([
 					$type . '_cta_button_icon[value]!' => '',
-				],
+				], $add_type_condition),
 			]
 		);
 
@@ -532,9 +539,9 @@ class CTA extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-icon-spacing: {{SIZE}}{{UNIT}};',
 				],
-				'condition' => [
+				'condition' => array_merge([
 					$type . '_cta_button_icon[value]!' => '',
-				],
+				], $add_type_condition),
 			]
 		);
 
@@ -546,7 +553,8 @@ class CTA extends Widget_Base {
 			$type . '_button_normal_tab',
 			[
 				'label' => esc_html__( 'Normal', 'hello-plus' ),
-			]
+			],
+			'condition' => $add_type_condition,
 		);
 
 		$this->add_control(
@@ -557,6 +565,7 @@ class CTA extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
 				],
+				'condition' => $add_type_condition,
 			]
 		);
 
@@ -572,9 +581,9 @@ class CTA extends Widget_Base {
 						'default' => 'classic',
 					],
 				],
-				'condition' => [
+				'condition' => array_merge([
 					$type . '_button_type' => 'button',
-				],
+				], $add_type_condition),
 			]
 		);
 
@@ -584,7 +593,8 @@ class CTA extends Widget_Base {
 			$type . '_button_hover_tab',
 			[
 				'label' => esc_html__( 'Hover', 'hello-plus' ),
-			]
+			],
+			'condition' => $add_type_condition,
 		);
 
 		$this->add_control(
@@ -595,6 +605,7 @@ class CTA extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color-hover: {{VALUE}}',
 				],
+				'condition' => $add_type_condition,
 			]
 		);
 
@@ -610,9 +621,9 @@ class CTA extends Widget_Base {
 						'default' => 'classic',
 					],
 				],
-				'condition' => [
+				'condition' => array_merge([
 					$type . '_button_type' => 'button',
-				],
+				], $add_type_condition),
 			]
 		);
 
@@ -621,7 +632,7 @@ class CTA extends Widget_Base {
 			[
 				'label' => esc_html__( 'Hover Animation', 'hello-plus' ),
 				'type' => Controls_Manager::HOVER_ANIMATION,
-
+				'condition' => $add_type_condition,
 			]
 		);
 
@@ -639,9 +650,9 @@ class CTA extends Widget_Base {
 				'return_value' => 'yes',
 				'default' => $show_button_border_default,
 				'separator' => 'before',
-				'condition' => [
+				'condition' => array_merge([
 					$type . '_button_type' => 'button',
-				],
+				], $add_type_condition),
 			]
 		);
 
@@ -665,9 +676,9 @@ class CTA extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-border-width: {{SIZE}}{{UNIT}};',
 				],
-				'condition' => [
+				'condition' => array_merge([
 					$type . '_show_button_border' => 'yes',
-				],
+				], $add_type_condition),
 			]
 		);
 
@@ -679,9 +690,9 @@ class CTA extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-border-color: {{VALUE}}',
 				],
-				'condition' => [
+				'condition' => array_merge([
 					$type . '_show_button_border' => 'yes',
-				],
+				], $add_type_condition),
 			]
 		);
 
@@ -697,9 +708,9 @@ class CTA extends Widget_Base {
 					'round' => esc_html__( 'Round', 'hello-plus' ),
 					'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
 				],
-				'condition' => [
+				'condition' => array_merge([
 					$type . '_button_type' => 'button',
-				],
+				], $add_type_condition),
 			]
 		);
 
@@ -708,9 +719,9 @@ class CTA extends Widget_Base {
 			[
 				'name' => $type . '_button_box_shadow',
 				'selector' => '{{WRAPPER}} .ehp-cta__button--' . $type,
-				'condition' => [
+				'condition' => array_merge([
 					$type . '_button_type' => 'button',
-				],
+				], $add_type_condition),
 			]
 		);
 
@@ -724,9 +735,9 @@ class CTA extends Widget_Base {
 					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-padding-block-end: {{BOTTOM}}{{UNIT}}; --cta-button-' . $type . '-padding-block-start: {{TOP}}{{UNIT}}; --cta-button-' . $type . '-padding-inline-end: {{RIGHT}}{{UNIT}}; --cta-button-' . $type . '-padding-inline-start: {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
-				'condition' => [
+				'condition' => array_merge([
 					$type . '_button_type' => 'button',
-				],
+				], $add_type_condition),
 			]
 		);
 	}

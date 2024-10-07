@@ -1,3 +1,18 @@
 .ehp-header {
-	// Your styles here
+	--header-logo-width: 68px;
+	--header-site-title-color: #0052FF;
+
+	&__site-logo {
+
+		img {
+			width: var(--header-logo-width);
+		}
+	}
+
+	&__site-title {
+		color: var(--header-site-title-color);
+		font-size: 40px;
+		font-weight: 600;
+		line-height: 68px;
+	}
 }

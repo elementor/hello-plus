@@ -15,12 +15,15 @@ use Elementor\Widget_Base;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use HelloPlus\Includes\Utils as Theme_Utils;
 
+use HelloPlus\Modules\Header\Base\Traits\Shared_Header_Traits;
 use HelloPlus\Modules\Header\Classes\Render\Widget_Header_Render;
 use HelloPlus\Modules\Theme\Classes\Control_Media_Preview;
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
 class Header extends Widget_Base {
+	use Shared_Header_Traits;
+
 	const TAB_ADVANCED = 'advanced-tab-header';
 
 	public function get_name(): string {
@@ -106,18 +109,22 @@ class Header extends Widget_Base {
 			]
 		);
 
+		// TODO: fix this
+		// This shouldn't be dynamic
 		$this->add_control(
 			'site_logo_image',
 			[
-				'label' => esc_html__( 'Site Logo', 'hello-plus' ),
-				'type' => Control_Media_Preview::CONTROL_TYPE,
-				'src' => $this->get_site_logo(),
+				'label' => esc_html__( 'Site Logo', 'elementor-pro' ),
+				'type' => Controls_Manager::MEDIA,
+				'default' => [
+					'url' => $this->get_site_logo(),
+				],
+				'dynamic' => [
+					'active' => true,
+				],
 				'condition' => [
 					'site_logo_brand_select' => 'logo',
 				],
-			],
-			[
-				'recursive' => true,
 			]
 		);
 
@@ -373,9 +380,9 @@ class Header extends Widget_Base {
 		$this->add_control(
 			'secondary_cta_button_text',
 			[
-				'label' => esc_html__( 'Primary CTA', 'hello-plus' ),
+				'label' => esc_html__( 'Secondary CTA', 'hello-plus' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => esc_html__( 'Schedule Now', 'hello-plus' ),
+				'default' => esc_html__( 'Contact Us', 'hello-plus' ),
 				'dynamic' => [
 					'active' => true,
 				],
@@ -455,7 +462,7 @@ class Header extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'style_logo_width',
 			[
 				'label' => __( 'Logo Width', 'hello-plus' ),
@@ -472,8 +479,16 @@ class Header extends Widget_Base {
 					'size' => 68,
 					'unit' => 'px',
 				],
+				'tablet_default' => [
+					'size' => 68,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 68,
+					'unit' => 'px',
+				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button--border-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-header' => '--header-logo-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'site_logo_brand_select' => 'logo',
@@ -515,7 +530,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#0052FF',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button--border-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-site-title-color: {{VALUE}}',
 				],
 				'condition' => [
 					'site_logo_brand_select' => 'title',
@@ -527,9 +542,12 @@ class Header extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'style_title_typography',
-				'selector' => '{{WRAPPER}} .ehp-cta__heading',
+				'selector' => '{{WRAPPER}} .ehp-header__site-title',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+				'condition' => [
+					'site_logo_brand_select' => 'title',
 				],
 			]
 		);
@@ -1109,8 +1127,11 @@ class Header extends Widget_Base {
 	}
 
 	protected function add_cta_button_controls( string $type, bool $add_condition = false ) {
-		$label = 'primary' === $type ? esc_html__( 'Primary CTA', 'hello-plus' ) : esc_html__( 'Secondary CTA', 'hello-plus' );
-		$show_button_border_default = 'primary' === $type ? 'no' : 'yes';
+		$is_primary = 'primary' === $type;
+		$label = $is_primary ? esc_html__( 'Primary CTA', 'hello-plus' ) : esc_html__( 'Secondary CTA', 'hello-plus' );
+		$show_button_border_default = $is_primary ? 'no' : 'yes';
+		$text_color_default = $is_primary ? '#ffffff' : '#555963';
+		$background_color_default = $is_primary ? '#0052FF' : '#F6F7F8';
 
 		$add_type_condition = $add_condition ? [
 			$type . '_cta_show' => 'yes',
@@ -1144,6 +1165,9 @@ class Header extends Widget_Base {
 			[
 				'name' => $type . '_button_typography',
 				'selector' => '{{WRAPPER}} .ehp-cta__button--' . $type,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_ACCENT,
+				],
 				'condition' => $add_type_condition,
 			]
 		);
@@ -1224,6 +1248,7 @@ class Header extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => $text_color_default,
 				'selectors' => [
 					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
 				],
@@ -1241,6 +1266,9 @@ class Header extends Widget_Base {
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
+					],
+					'color' => [
+						'default' => $background_color_default,
 					],
 				],
 				'condition' => array_merge([
@@ -1264,6 +1292,7 @@ class Header extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => $text_color_default,
 				'selectors' => [
 					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color-hover: {{VALUE}}',
 				],
@@ -1281,6 +1310,9 @@ class Header extends Widget_Base {
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
+					],
+					'color' => [
+						'default' => $background_color_default,
 					],
 				],
 				'condition' => array_merge([
@@ -1747,11 +1779,6 @@ class Header extends Widget_Base {
 		Theme_Utils::elementor()->controls_manager->add_custom_css_controls( $this, static::TAB_ADVANCED );
 
 		Theme_Utils::elementor()->controls_manager->add_custom_attributes_controls( $this, static::TAB_ADVANCED );
-	}
-
-	private function get_site_logo(): string {
-		$site_logo = Theme_Utils::elementor()->dynamic_tags->get_tag_data_content( null, 'site-logo' );
-		return $site_logo['url'] ?? Utils::get_placeholder_image_src();
 	}
 
 	private function get_available_menus() {

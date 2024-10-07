@@ -226,9 +226,6 @@
 
 			&-link,
 			&-link:not([href]):not([tabindex]) {
-				--cta-button-text-color: #555963;
-				--cta-button-text-color-hover: #555963;
-
 				text-decoration: underline;
 			}
 

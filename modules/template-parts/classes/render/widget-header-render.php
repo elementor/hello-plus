@@ -31,7 +31,7 @@ class Widget_Header_Render {
 		$layout_classnames = self::LAYOUT_CLASSNAME;
 		$custom_classes = $this->settings['advanced_custom_css_classes'] ?? '';
 
-		if ( $custom_classes ) {
+		if ( '' !== $custom_classes ) {
 			$layout_classnames .= ' ' . $custom_classes;
 		}
 

@@ -82,15 +82,82 @@ class Widget_Header_Render {
 	}
 
 	public function render_navigation(): void {
-		$navigation_classnames = 'ehp-header__navigation';
+		$available_menus = $this->get_available_menus();
 
-		$this->widget->add_render_attribute( 'navigation', [
-			'class' => $navigation_classnames,
+		if ( ! $available_menus ) {
+			return;
+		}
+
+		$settings = $this->settings;// $this->get_active_settings();
+		$submenu_layout = $this->settings['style_submenu_layout'] ?? 'horizontal';
+
+		$args = [
+			'echo' => false,
+			'menu' => $settings['navigation_menu'],
+			'menu_class' => 'elementor-nav-menu',
+			'menu_id' => '123', // 'menu-' . $this->get_nav_menu_index() . '-' . $this->get_id(),
+			'fallback_cb' => '__return_empty_string',
+			'container' => '',
+		];
+
+		if ( 'vertical' === $submenu_layout ) {
+			$args['menu_class'] .= ' sm-vertical';
+		}
+
+		// General Menu.
+		$menu_html = wp_nav_menu( $args );
+
+		if ( empty( $menu_html ) ) {
+			return;
+		}
+
+		if ( $settings['navigation_menu_name'] ) {
+			$this->widget->add_render_attribute( 'main-menu', 'aria-label', $settings['navigation_menu_name'] );
+		}
+
+		if ( 'dropdown' !== $submenu_layout ) :
+			$this->widget->add_render_attribute( 'main-menu', 'class', [
+				'elementor-nav-menu--main',
+				'elementor-nav-menu__container',
+				'elementor-nav-menu--layout-' . $submenu_layout,
+				'ehp-header__navigation',
+			] );
+			?>
+			<nav <?php $this->widget->print_render_attribute_string( 'main-menu' ); ?>>
+				<?php
+					// PHPCS - escaped by WordPress with "wp_nav_menu"
+					echo $menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				?>
+			</nav>
+			<?php
+		endif;
+		$this->render_menu_toggle();
+	}
+
+	private function render_menu_toggle() {
+		$toggle_icon = $this->settings['navigation_menu_icon'];
+
+		$this->widget->add_render_attribute( 'button-toggle', [
+			'class' => 'ehp-header__button-toggle',
+			'role' => 'button',
+			'tabindex' => '0',
+			'aria-label' => esc_html__( 'Menu Toggle', 'hello-plus' ),
+			'aria-expanded' => 'false',
 		] );
+
 		?>
-		<div <?php echo $this->widget->get_render_attribute_string( 'navigation' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-			Navigation
-		</div>
+		<button <?php $this->widget->print_render_attribute_string( 'button-toggle' ); ?>>
+			<?php
+				Icons_Manager::render_icon( $toggle_icon,
+					[
+						'aria-hidden' => 'true',
+						'class' => 'ehp-header__toggle-icon',
+						'role' => 'presentation',
+					]
+				);
+			?>
+			<span class="elementor-screen-only"><?php echo esc_html__( 'Menu', 'hello-plus' ); ?></span>
+		</button>
 		<?php
 	}
 

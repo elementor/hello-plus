@@ -6,6 +6,7 @@
 	--header-site-title-color: #0052FF;
 	--header-buttons-space-between: 16px;
 	--header-logo-order: 0;
+	--header-navigation-breakpoint: 767px;
 
 	--header-button-primary-background-color: #0052FF;
 	--header-button-primary-icon-spacing: 10px;
@@ -45,6 +46,9 @@
 	--header-button-border-radius: var(--header-button-primary-border-radius);
 	--header-button-icon-spacing: var(--header-button-primary-icon-spacing);
 	--header-button-icon-size: var(--header-button-primary-icon-size);
+
+	--header-toggle-icon-color: #555963;
+	--header-toggle-icon-size: 22px;
 
 	display: flex;
 
@@ -165,5 +169,33 @@
 
 	&__navigation {
 		order: 1;
+	}
+
+	&__button-toggle {
+		background: none;
+		border: none;
+		cursor: pointer;
+		display: none;
+		padding: 0;
+
+		&:hover,
+		&:focus {
+			background: none;
+		}
+
+		@media screen and (max-width: var(--header-navigation-breakpoint)) {
+			display: flex;	
+		}
+
+		svg {
+			color: var(--header-toggle-icon-color);
+			height: var(--header-toggle-icon-size);
+			width: var(--header-toggle-icon-size);
+		}
+
+		i {
+			color: var(--header-toggle-icon-color);
+			font-size: var(--header-toggle-icon-size);
+		}
 	}
 }

@@ -251,21 +251,6 @@ class Header extends Widget_Base {
 			);
 
 			$this->add_control(
-				'navigation_menu_close_button',
-				[
-					'label' => esc_html__( 'Close Button', 'hello-plus' ),
-					'type' => Controls_Manager::ICONS,
-					'skin' => 'inline',
-					'label_block' => false,
-					'default' => [
-						'value' => 'fa fa-close',
-						'library' => 'fa-solid',
-					],
-					'exclude_inline_options' => [ 'none' ],
-				]
-			);
-
-			$this->add_control(
 				'navigation_breakpoint',
 				[
 					'label' => esc_html__( 'Breakpoint', 'hello-plus' ),
@@ -278,7 +263,7 @@ class Header extends Widget_Base {
 					'default' => 'mobile-portrait',
 					'separator' => 'after',
 					'selectors' => [
-						'{{WRAPPER}} .ehp-zigzag' => '--zigzag-image-width: {{VALUE}};',
+						'{{WRAPPER}} .ehp-header' => '--header-navigation-breakpoint: {{VALUE}};',
 					],
 				]
 			);
@@ -940,10 +925,21 @@ class Header extends Widget_Base {
 						'max' => 100,
 					],
 				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-content-width: {{SIZE}}{{UNIT}};',
+				'default' => [
+					'size' => 22,
+					'unit' => 'px',
 				],
-				'separator' => 'before',
+				'tablet_default' => [
+					'size' => 22,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 22,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-toggle-icon-size: {{SIZE}}{{UNIT}};',
+				],
 			]
 		);
 
@@ -965,7 +961,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#555963',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-toggle-icon-color: {{VALUE}}',
 				],
 			]
 		);
@@ -1779,17 +1775,5 @@ class Header extends Widget_Base {
 		Theme_Utils::elementor()->controls_manager->add_custom_css_controls( $this, static::TAB_ADVANCED );
 
 		Theme_Utils::elementor()->controls_manager->add_custom_attributes_controls( $this, static::TAB_ADVANCED );
-	}
-
-	private function get_available_menus() {
-		$menus = wp_get_nav_menus();
-
-		$options = [];
-
-		foreach ( $menus as $menu ) {
-			$options[ $menu->slug ] = $menu->name;
-		}
-
-		return $options;
 	}
 }

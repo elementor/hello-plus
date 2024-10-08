@@ -22,4 +22,20 @@ trait Shared_Header_Traits {
 
         return $site_title ?? '';
     }
+
+    private function get_available_menus() {
+		$menus = wp_get_nav_menus();
+
+		$options = [];
+
+		foreach ( $menus as $menu ) {
+			$options[ $menu->slug ] = $menu->name;
+		}
+
+		return $options;
+	}
+
+	protected function get_nav_menu_index() {
+		return $this->nav_menu_index++;
+	}
 }

@@ -94,7 +94,7 @@ class Header extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'site_logo_brand_select',
 			[
 				'label' => esc_html__( 'Brand', 'hello-plus' ),
@@ -114,7 +114,7 @@ class Header extends Widget_Base {
 		$this->add_control(
 			'site_logo_image',
 			[
-				'label' => esc_html__( 'Site Logo', 'elementor-pro' ),
+				'label' => esc_html__( 'Choose Image', 'elementor-pro' ),
 				'type' => Controls_Manager::MEDIA,
 				'default' => [
 					'url' => $this->get_site_logo(),
@@ -441,20 +441,20 @@ class Header extends Widget_Base {
 				'label' => esc_html__( 'Align Logo', 'hello-plus' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
-					'flex-start' => [
+					'0' => [
 						'title' => esc_html__( 'Start', 'hello-plus' ),
 						'icon' => 'eicon-align-start-h',
 					],
-					'center' => [
+					'2' => [
 						'title' => esc_html__( 'End', 'hello-plus' ),
 						'icon' => 'eicon-align-center-h',
 					],
 				],
-				'default' => 'flex-start',
-				'tablet_default' => 'flex-start',
-				'mobile_default' => 'flex-start',
+				'default' => '0',
+				'tablet_default' => '0',
+				'mobile_default' => '0',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-buttons-position: {{VALUE}};',
+					'{{WRAPPER}} .ehp-header' => '--header-logo-order: {{VALUE}};',
 				],
 				'condition' => [
 					'site_logo_brand_select' => 'logo',
@@ -502,20 +502,20 @@ class Header extends Widget_Base {
 				'label' => esc_html__( 'Align Site Title', 'hello-plus' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
-					'flex-start' => [
+					'0' => [
 						'title' => esc_html__( 'Start', 'hello-plus' ),
 						'icon' => 'eicon-align-start-h',
 					],
-					'center' => [
+					'2' => [
 						'title' => esc_html__( 'End', 'hello-plus' ),
 						'icon' => 'eicon-align-center-h',
 					],
 				],
-				'default' => 'flex-start',
-				'tablet_default' => 'flex-start',
-				'mobile_default' => 'flex-start',
+				'default' => '0',
+				'tablet_default' => '0',
+				'mobile_default' => '0',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-buttons-position: {{VALUE}};',
+					'{{WRAPPER}} .ehp-header' => '--header-logo-order: {{VALUE}};',
 				],
 				'condition' => [
 					'site_logo_brand_select' => 'title',
@@ -1164,7 +1164,7 @@ class Header extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => $type . '_button_typography',
-				'selector' => '{{WRAPPER}} .ehp-cta__button--' . $type,
+				'selector' => '{{WRAPPER}} .ehp-header__button--' . $type,
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_ACCENT,
 				],
@@ -1194,7 +1194,7 @@ class Header extends Widget_Base {
 					'right' => is_rtl() ? 'row' : 'row-reverse',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta__button--' . $type => 'flex-direction: {{VALUE}};',
+					'{{WRAPPER}} .ehp-header__button--' . $type => 'flex-direction: {{VALUE}};',
 				],
 				'condition' => array_merge([
 					$type . '_cta_button_icon[value]!' => '',
@@ -1223,7 +1223,7 @@ class Header extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-icon-spacing: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-header' => '--header-button-' . $type . '-icon-spacing: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => array_merge([
 					$type . '_cta_button_icon[value]!' => '',
@@ -1250,7 +1250,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => $text_color_default,
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-button-' . $type . '-text-color: {{VALUE}}',
 				],
 				'condition' => $add_type_condition,
 			]
@@ -1262,7 +1262,7 @@ class Header extends Widget_Base {
 				'name' => $type . '_button_background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .ehp-cta__button--' . $type,
+				'selector' => '{{WRAPPER}} .ehp-header__button--' . $type,
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
@@ -1294,7 +1294,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => $text_color_default,
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color-hover: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-button-' . $type . '-text-color-hover: {{VALUE}}',
 				],
 				'condition' => $add_type_condition,
 			]
@@ -1306,7 +1306,7 @@ class Header extends Widget_Base {
 				'name' => $type . '_button_background_hover',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .ehp-cta__button--' . $type . ':hover, {{WRAPPER}} .ehp-cta__button--' . $type . ':focus',
+				'selector' => '{{WRAPPER}} .ehp-header__button--' . $type . ':hover, {{WRAPPER}} .ehp-header__button--' . $type . ':focus',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
@@ -1368,7 +1368,7 @@ class Header extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-border-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-header' => '--header-button-' . $type . '-border-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => array_merge([
 					$type . '_show_button_border' => 'yes',
@@ -1382,7 +1382,7 @@ class Header extends Widget_Base {
 				'label' => esc_html__( 'Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-border-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-button-' . $type . '-border-color: {{VALUE}}',
 				],
 				'condition' => array_merge([
 					$type . '_show_button_border' => 'yes',
@@ -1412,7 +1412,7 @@ class Header extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => $type . '_button_box_shadow',
-				'selector' => '{{WRAPPER}} .ehp-cta__button--' . $type,
+				'selector' => '{{WRAPPER}} .ehp-header__button--' . $type,
 				'condition' => array_merge([
 					$type . '_button_type' => 'button',
 				], $add_type_condition),
@@ -1426,7 +1426,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-padding-block-end: {{BOTTOM}}{{UNIT}}; --cta-button-' . $type . '-padding-block-start: {{TOP}}{{UNIT}}; --cta-button-' . $type . '-padding-inline-end: {{RIGHT}}{{UNIT}}; --cta-button-' . $type . '-padding-inline-start: {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-header' => '--header-button-' . $type . '-padding-block-end: {{BOTTOM}}{{UNIT}}; --header-button-' . $type . '-padding-block-start: {{TOP}}{{UNIT}}; --header-button-' . $type . '-padding-inline-end: {{RIGHT}}{{UNIT}}; --header-button-' . $type . '-padding-inline-start: {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 				'condition' => array_merge([

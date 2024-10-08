@@ -1,6 +1,63 @@
+@import "./breakpoints";
+@import "./variables";
+
 .ehp-header {
 	--header-logo-width: 68px;
 	--header-site-title-color: #0052FF;
+	--header-buttons-space-between: 16px;
+	--header-logo-order: 0;
+
+	--header-button-primary-background-color: #0052FF;
+	--header-button-primary-icon-spacing: 10px;
+	--header-button-primary-icon-size: 16px;
+	--header-button-primary-text-color: #FFFFFF;
+	--header-button-primary-text-color-hover: #FFFFFF;
+	--header-button-primary-border-width: 0;
+	--header-button-primary-border-color: transparent;
+	--header-button-primary-padding-block-end: 8px;
+	--header-button-primary-padding-block-start: 8px;
+	--header-button-primary-padding-inline-end: 16px;
+	--header-button-primary-padding-inline-start: 16px;
+	--header-button-primary-border-radius: 0;
+
+	--header-button-secondary-background-color: transparent;
+	--header-button-secondary-icon-spacing: 10px;
+	--header-button-secondary-icon-size: 16px;
+	--header-button-secondary-text-color: #555963;
+	--header-button-secondary-text-color-hover: #555963;
+	--header-button-secondary-border-width: 2px;
+	--header-button-secondary-border-color: #555963;
+	--header-button-secondary-padding-block-end: 8px;
+	--header-button-secondary-padding-block-start: 8px;
+	--header-button-secondary-padding-inline-end: 16px;
+	--header-button-secondary-padding-inline-start: 16px;
+	--header-button-secondary-border-radius: #{$corners-shape-default};
+
+	--header-button-text-color: var(--header-button-primary-text-color);
+	--header-button-text-color-hover: var(--header-button-primary-text-color-hover);
+	--header-button-border-color: var(--header-button-primary-border-color);
+	--header-button-background-color: var(--header-button-primary-background-color);
+	--header-button-padding-block-end: var(--header-button-primary-padding-block-end);
+	--header-button-padding-block-start: var(--header-button-primary-padding-block-start);
+	--header-button-padding-inline-end: var(--header-button-primary-padding-inline-end);
+	--header-button-padding-inline-start: var(--header-button-primary-padding-inline-start);
+	--header-button-border-width: var(--header-button-primary-border-width);
+	--header-button-border-radius: var(--header-button-primary-border-radius);
+	--header-button-icon-spacing: var(--header-button-primary-icon-spacing);
+	--header-button-icon-size: var(--header-button-primary-icon-size);
+
+	display: flex;
+
+	&__elements-container {
+		align-items: center;
+		display: flex;
+		flex-grow: 1;
+		justify-content: space-between;
+	}
+
+	&__site-link {
+		order: var(--header-logo-order);
+	}
 
 	&__site-logo {
 
@@ -14,5 +71,99 @@
 		font-size: 40px;
 		font-weight: 600;
 		line-height: 68px;
+	}
+
+	&__ctas-container {
+		align-items: center;
+		display: flex;
+		gap: var(--header-buttons-space-between);
+		order: 3;
+	}
+
+	&__button {
+		align-items: center;
+		display: flex;
+		font-weight: 500;
+		font-size: 16px;
+		gap: var(--header-button-icon-spacing);
+		text-decoration: none;
+		transition: $transition;
+
+		&:hover,
+		&:focus {
+			transition: $transition;
+		}
+
+		&.has-border {
+			border-color: var(--header-button-border-color);
+			border-style: solid;
+			border-width: var(--header-button-border-width);
+			border-radius: var(--header-button-border-radius);
+		}
+
+		&.is-type {
+
+			&-button {
+				background-color: var(--header-button-background-color);
+				padding-block-end: var(--header-button-padding-block-end);
+				padding-block-start: var(--header-button-padding-block-start);
+				padding-inline-end: var(--header-button-padding-inline-end);
+				padding-inline-start: var(--header-button-padding-inline-start);
+			}
+
+			&-link,
+			&-link:not([href]):not([tabindex]) {
+				text-decoration: underline;
+			}
+
+			&-button,
+			&-link,
+			&-button:not([href]):not([tabindex]),
+			&-link:not([href]):not([tabindex]) {
+				color: var(--header-button-text-color);
+
+				&:hover,
+				&:focus {
+					color: var(--header-button-text-color-hover);
+				}
+			}
+		}
+
+		&--secondary {
+			--header-button-text-color: var(--header-button-secondary-text-color);
+			--header-button-text-color-hover: var(--header-button-secondary-text-color-hover);
+			--header-button-border-color: var(--header-button-secondary-border-color);
+			--header-button-background-color: var(--header-button-secondary-background-color);
+			--header-button-padding-block-end: var(--header-button-secondary-padding-block-end);
+			--header-button-padding-block-start: var(--header-button-secondary-padding-block-start);
+			--header-button-padding-inline-end: var(--header-button-secondary-padding-inline-end);
+			--header-button-padding-inline-start: var(--header-button-secondary-padding-inline-start);
+			--header-button-border-width: var(--header-button-secondary-border-width);
+			--header-button-border-radius: var(--header-button-secondary-border-radius);
+			--header-button-icon-spacing: var(--header-button-secondary-icon-spacing);
+		}
+
+		&.has-shape {
+
+			&-sharp {
+				border-radius: $corners-shape-sharp;
+			}
+
+			&-rounded {
+				border-radius: $corners-shape-rounded;
+			}
+
+			&-round {
+				border-radius: $corners-shape-round;
+			}
+
+			&-default {
+				border-radius: $corners-shape-default;
+			}
+		}
+	}
+
+	&__navigation {
+		order: 1;
 	}
 }

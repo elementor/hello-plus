@@ -164,7 +164,6 @@ final class Theme {
 			'Admin',
 			'Content',
 			'TemplateParts',
-			'Header',
 		];
 
 		foreach ( $modules_list as $module_name ) {

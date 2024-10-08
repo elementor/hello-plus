@@ -1,8 +1,8 @@
 <?php
 
-namespace HelloPlus\Modules\Header\Classes\Render;
+namespace HelloPlus\Modules\TemplateParts\Classes\Render;
 
-use HelloPlus\Modules\Header\Widgets\Header;
+use HelloPlus\Modules\TemplateParts\Widgets\Header;
 
 class Widget_Header_Render {
 	protected Header $widget;

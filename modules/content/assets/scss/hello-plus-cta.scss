@@ -12,7 +12,7 @@
 	--cta-content-direction: start;
 	--cta-content-text-align: start;
 	--cta-buttons-position: flex-start;
-	--cta-elements-gap: 20px;
+	--cta-elements-gap: 60px;
 	--cta-text-gap: 20px;
 	--cta-buttons-space-between: 16px;
 	--cta-content-width: 1304px;
@@ -143,15 +143,15 @@
 	}
 
 	&__ctas-container {
-		align-items: center;
 		flex-grow: 1;
 		display: flex;
 		flex-direction: column;
 		gap: var(--cta-buttons-space-between);
-
-		@media screen and (min-width: $screen-desktop-min) {
-			align-items: flex-start;
-			justify-content: var(--cta-buttons-position);
+		justify-content: center;
+		
+		@media screen and (min-width: $screen-tablet-min) {
+			flex-direction: row;
+			justify-content: flex-start;
 		}
 	}
 
@@ -198,6 +198,7 @@
 		font-weight: 500;
 		font-size: 16px;
 		gap: var(--cta-button-icon-spacing);
+		justify-content: center;
 		text-decoration: none;
 		transition: $transition;
 
@@ -279,19 +280,21 @@
 			
 		&-center {
 
-			@media screen and (min-width: $screen-desktop-min) {
-				.ehp-cta__elements-container {
-					flex-direction: column;
-				}
-
-
-				.ehp-cta__ctas-container {
-					align-items: center;
-				}
+			.ehp-cta__ctas-container {
+				justify-content: center;
 			}
 		}
 
 		&-start {
+
+			.ehp-cta__text-container {
+				align-items: start;
+
+				.ehp-cta__heading,
+				.ehp-cta__description {
+					text-align: start;
+				}
+			}
 
 			@media screen and (min-width: $screen-desktop-min) {
 				.ehp-cta__elements-container {
@@ -299,16 +302,8 @@
 				}
 
 				.ehp-cta__ctas-container {
-					align-items: flex-end;
-				}
-
-				.ehp-cta__text-container {
-					align-items: start;
-
-					.ehp-cta__heading,
-					.ehp-cta__description {
-						text-align: start;
-					}
+					align-items: var(--cta-buttons-position);
+					justify-content: flex-end;
 				}
 			}
 		}

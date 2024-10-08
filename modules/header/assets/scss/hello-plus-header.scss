@@ -183,8 +183,19 @@
 			background: none;
 		}
 
-		@media screen and (max-width: var(--header-navigation-breakpoint)) {
-			display: flex;	
+		&.has-navigation-breakpoint {
+			
+			&-mobile-portrait {
+				@media screen and (max-width: $screen-mobile-max) {
+					display: flex;	
+				}
+			}
+
+			&-tablet-portrait {
+				@media screen and (max-width: $screen-tablet-max) {
+					display: flex;	
+				}
+			}
 		}
 
 		svg {

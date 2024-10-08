@@ -88,21 +88,17 @@ class Widget_Header_Render {
 			return;
 		}
 
-		$settings = $this->settings;// $this->get_active_settings();
+		$settings = $this->settings;
 		$submenu_layout = $this->settings['style_submenu_layout'] ?? 'horizontal';
 
 		$args = [
 			'echo' => false,
 			'menu' => $settings['navigation_menu'],
-			'menu_class' => 'elementor-nav-menu',
+			'menu_class' => 'ehp-header__menu',
 			'menu_id' => '123', // 'menu-' . $this->get_nav_menu_index() . '-' . $this->get_id(),
 			'fallback_cb' => '__return_empty_string',
 			'container' => '',
 		];
-
-		if ( 'vertical' === $submenu_layout ) {
-			$args['menu_class'] .= ' sm-vertical';
-		}
 
 		// General Menu.
 		$menu_html = wp_nav_menu( $args );
@@ -115,30 +111,33 @@ class Widget_Header_Render {
 			$this->widget->add_render_attribute( 'main-menu', 'aria-label', $settings['navigation_menu_name'] );
 		}
 
-		if ( 'dropdown' !== $submenu_layout ) :
-			$this->widget->add_render_attribute( 'main-menu', 'class', [
-				'elementor-nav-menu--main',
-				'elementor-nav-menu__container',
-				'elementor-nav-menu--layout-' . $submenu_layout,
-				'ehp-header__navigation',
-			] );
-			?>
-			<nav <?php $this->widget->print_render_attribute_string( 'main-menu' ); ?>>
-				<?php
-					// PHPCS - escaped by WordPress with "wp_nav_menu"
-					echo $menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				?>
-			</nav>
+		$this->widget->add_render_attribute( 'main-menu', 'class', [
+			' has-submenu-layout-' . $submenu_layout,
+			'ehp-header__navigation',
+		] );
+		?>
+		<nav <?php $this->widget->print_render_attribute_string( 'main-menu' ); ?>>
 			<?php
-		endif;
+				// PHPCS - escaped by WordPress with "wp_nav_menu"
+				echo $menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			?>
+		</nav>
+		<?php
 		$this->render_menu_toggle();
 	}
 
 	private function render_menu_toggle() {
 		$toggle_icon = $this->settings['navigation_menu_icon'];
+		$navigation_breakpoint = $this->settings['navigation_breakpoint'] ?? '';
+
+		$toggle_classname = 'ehp-header__button-toggle';
+
+		if ( ! empty( $navigation_breakpoint ) ) {
+			$toggle_classname .= ' has-navigation-breakpoint-' . $navigation_breakpoint;
+		}
 
 		$this->widget->add_render_attribute( 'button-toggle', [
-			'class' => 'ehp-header__button-toggle',
+			'class' => $toggle_classname,
 			'role' => 'button',
 			'tabindex' => '0',
 			'aria-label' => esc_html__( 'Menu Toggle', 'hello-plus' ),

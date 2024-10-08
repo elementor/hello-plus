@@ -84,9 +84,21 @@ class Widget_Header_Render {
 
 	public function render_navigation(): void {
 		$available_menus = $this->get_available_menus();
+		$menu_classname = 'ehp-header__menu';
 
 		if ( ! $available_menus ) {
 			return;
+		}
+
+		$pointer_hover_type = $this->settings['style_navigation_pointer_hover'] ?? '';
+		$focus_active_type = $this->settings['style_navigation_focus_active'] ?? '';
+
+		if ( 'none' !== $pointer_hover_type ) {
+			$menu_classname .= ' has-pointer-hover-' . $pointer_hover_type;
+		}
+
+		if ( 'none' !== $focus_active_type ) {
+			$menu_classname .= ' has-focus-active-' . $focus_active_type;
 		}
 
 		$settings = $this->settings;
@@ -95,8 +107,8 @@ class Widget_Header_Render {
 		$args = [
 			'echo' => false,
 			'menu' => $settings['navigation_menu'],
-			'menu_class' => 'ehp-header__menu',
-			'menu_id' => '123', // 'menu-' . $this->get_nav_menu_index() . '-' . $this->get_id(),
+			'menu_class' => $menu_classname,
+			'menu_id' => 'menu-' . $this->get_nav_menu_index() . '-' . $this->widget->get_id(),
 			'fallback_cb' => '__return_empty_string',
 			'container' => '',
 		];

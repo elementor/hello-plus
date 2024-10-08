@@ -553,7 +553,7 @@ class Header extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'style_navigation_typography',
-				'selector' => '{{WRAPPER}} .ehp-cta__heading',
+				'selector' => '{{WRAPPER}} .ehp-hader__menu .menu-item a',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_ACCENT,
 				],
@@ -578,7 +578,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#555963',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-menu-item-color: {{VALUE}}',
 				],
 			]
 		);
@@ -599,7 +599,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#555963',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-menu-item-color-hover: {{VALUE}}',
 				],
 			]
 		);
@@ -625,7 +625,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#555963',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-pointer-hover-underline-color: {{VALUE}}',
 				],
 				'condition' => [
 					'style_navigation_pointer_hover' => 'underline',
@@ -638,11 +638,14 @@ class Header extends Widget_Base {
 			[
 				'label' => esc_html__( 'Underline Width', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => 'default',
+				'default' => '3px',
 				'options' => [
-					'default' => esc_html__( 'Default', 'hello-plus' ),
-					'thin' => esc_html__( 'Thin', 'hello-plus' ),
-					'thick' => esc_html__( 'Thick', 'hello-plus' ),
+					'3px' => esc_html__( 'Default', 'hello-plus' ),
+					'1px' => esc_html__( 'Thin', 'hello-plus' ),
+					'5px' => esc_html__( 'Thick', 'hello-plus' ),
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-pointer-hover-underline-width: {{VALUE}}',
 				],
 				'condition' => [
 					'style_navigation_pointer_hover' => 'underline',
@@ -655,9 +658,9 @@ class Header extends Widget_Base {
 			[
 				'label' => esc_html__( 'Highlight Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#555963',
+				'default' => '#E0EAFF',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-pointer-hover-highlight-bg-color: {{VALUE}}',
 				],
 				'condition' => [
 					'style_navigation_pointer_hover' => 'highlight',
@@ -675,6 +678,10 @@ class Header extends Widget_Base {
 					'default' => esc_html__( 'Default', 'hello-plus' ),
 					'thin' => esc_html__( 'Thin', 'hello-plus' ),
 					'thick' => esc_html__( 'Thick', 'hello-plus' ),
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-pointer-hover-highlight-padding-inline: var(--header-pointer-hover-highlight-padding-inline-{{VALUE}}); --header-pointer-hover-highlight-padding-block: var(--header-pointer-hover-highlight-padding-block-{{VALUE}});',
+
 				],
 				'condition' => [
 					'style_navigation_pointer_hover' => 'highlight',
@@ -698,7 +705,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#555963',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-menu-item-color-active: {{VALUE}}',
 				],
 			]
 		);
@@ -784,6 +791,37 @@ class Header extends Widget_Base {
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
+
+		$this->add_responsive_control(
+			'menu_item_spacing',
+			[
+				'label' => __( 'Menu Item Spacing', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 32,
+					'unit' => 'px',
+				],
+				'tablet_default' => [
+					'size' => 32,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 32,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-menu-item-spacing: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
 
 		$this->add_control(
 			'style_submenu_label',

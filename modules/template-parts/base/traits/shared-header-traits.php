@@ -5,6 +5,7 @@ namespace HelloPlus\Modules\TemplateParts\Base\Traits;
 use HelloPlus\Includes\Utils as Theme_Utils;
 
 trait Shared_Header_Traits {
+	protected $nav_menu_index = 1;
 
 	protected function get_site_logo(): string {
 		$site_logo = Theme_Utils::elementor()->dynamic_tags->get_tag_data_content( null, 'site-logo' );

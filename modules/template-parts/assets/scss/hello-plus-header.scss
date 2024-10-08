@@ -7,6 +7,7 @@
 	--header-buttons-space-between: 16px;
 	--header-logo-order: 0;
 	--header-navigation-breakpoint: 767px;
+	--header-menu-item-spacing: 32px;
 
 	--header-button-primary-background-color: #0052FF;
 	--header-button-primary-icon-spacing: 10px;
@@ -49,6 +50,22 @@
 
 	--header-toggle-icon-color: #555963;
 	--header-toggle-icon-size: 22px;
+
+	--header-menu-item-color: #555963;
+	--header-menu-item-color-hover: #555963;
+	--header-menu-item-color-active: #555963;
+
+	--header-pointer-hover-underline-width: 2px;
+	--header-pointer-hover-underline-color: #0052FF;
+	--header-pointer-hover-highlight-bg-color: #E0EAFF;
+	--header-pointer-hover-highlight-padding-inline-default: 8px;
+	--header-pointer-hover-highlight-padding-block-default: 4px;--header-pointer-hover-highlight-padding-inline-thin: 6px;
+	--header-pointer-hover-highlight-padding-block-thin: 2px;
+	--header-pointer-hover-highlight-padding-inline-thick: 8px;
+	--header-pointer-hover-highlight-padding-block-thick: 8px;
+
+	--header-pointer-hover-highlight-padding-inline: var(--header-pointer-hover-highlight-padding-inline-default);
+	--header-pointer-hover-highlight-padding-block: var(--header-pointer-hover-highlight-padding-block-default);
 
 	display: flex;
 
@@ -207,6 +224,73 @@
 		i {
 			color: var(--header-toggle-icon-color);
 			font-size: var(--header-toggle-icon-size);
+		}
+	}
+
+	&__menu {
+		align-items: center;
+		display: flex;
+		gap: var(--header-menu-item-spacing);
+		list-style-type: none;
+		padding: 0;
+
+		& .sub-menu {
+			display: none;
+		}
+
+		& .menu-item {
+
+			& a {
+				color: var(--header-menu-item-color);
+				transition: $transition;
+
+				&:hover,
+				&:focus {
+					color: var(--header-menu-item-color-hover);
+					transition: $transition;
+				}
+			}
+
+			&.is-active {
+
+				& a {
+					color: var(--header-menu-item-color-active);
+				}
+			}
+		}
+
+		&.has-pointer-hover {
+
+			&-underline {
+
+				.menu-item {
+
+					a {
+
+						&:hover,
+						&:focus {
+							border-bottom: var(--header-pointer-hover-underline-width) solid var(--header-pointer-hover-underline-color);
+						}
+					}
+				}
+			}
+
+			&-highlight {
+
+				.menu-item {
+
+					a {
+						border-radius: 8px;
+						padding-inline: var(--header-pointer-hover-highlight-padding-inline);
+						padding-block: var(--header-pointer-hover-highlight-padding-block);
+
+						&:hover,
+						&:focus {
+							background-color: var(--header-pointer-hover-highlight-bg-color);
+						}
+					}
+				}
+			}
 		}
 	}
 }

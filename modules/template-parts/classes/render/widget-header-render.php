@@ -1,14 +1,15 @@
 <?php
 
-namespace HelloPlus\Modules\Header\Classes\Render;
+namespace HelloPlus\Modules\TemplateParts\Classes\Render;
 
 use Elementor\Group_Control_Image_Size;
 use Elementor\Icons_Manager;
 use Elementor\Utils;
 
-use HelloPlus\Modules\Header\Base\Traits\Shared_Header_Traits;
+use HelloPlus\Modules\TemplateParts\Base\Traits\Shared_Header_Traits;
 use HelloPlus\Includes\Utils as Theme_Utils;
-use HelloPlus\Modules\Header\Widgets\Header;
+
+use HelloPlus\Modules\TemplateParts\Widgets\Header;
 
 class Widget_Header_Render {
 	protected Header $widget;

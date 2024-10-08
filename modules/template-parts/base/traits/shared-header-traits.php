@@ -1,6 +1,6 @@
 <?php
 
-namespace HelloPlus\Modules\Header\Base\Traits;
+namespace HelloPlus\Modules\TemplateParts\Base\Traits;
 
 use HelloPlus\Includes\Utils as Theme_Utils;
 

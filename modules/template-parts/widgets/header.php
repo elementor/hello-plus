@@ -1,6 +1,6 @@
 <?php
 
-namespace HelloPlus\Modules\Header\Widgets;
+namespace HelloPlus\Modules\TemplateParts\Widgets;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -15,8 +15,8 @@ use Elementor\Widget_Base;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use HelloPlus\Includes\Utils as Theme_Utils;
 
-use HelloPlus\Modules\Header\Base\Traits\Shared_Header_Traits;
-use HelloPlus\Modules\Header\Classes\Render\Widget_Header_Render;
+use HelloPlus\Modules\TemplateParts\Base\Traits\Shared_Header_Traits;
+use HelloPlus\Modules\TemplateParts\Classes\Render\Widget_Header_Render;
 use HelloPlus\Modules\Theme\Classes\Control_Media_Preview;
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;

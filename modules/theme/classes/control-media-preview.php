@@ -31,5 +31,4 @@ class Control_Media_Preview extends Control_Media {
 		</div>
 		<?php
 	}
-
 }

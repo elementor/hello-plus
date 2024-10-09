@@ -26,14 +26,7 @@ class Widget_Header_Render {
 
 	public function render(): void {
 		$layout_classnames = self::LAYOUT_CLASSNAME;
-		$custom_classes = $this->settings['advanced_custom_css_classes'] ?? '';
-
-		if ( '' !== $custom_classes ) {
-			$layout_classnames .= ' ' . $custom_classes;
-		}
-
 		$this->widget->add_render_attribute( 'layout', [
-			'id' => $this->settings['advanced_custom_css_id'],
 			'class' => $layout_classnames,
 		] );
 		?>

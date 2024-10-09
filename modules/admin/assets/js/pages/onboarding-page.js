@@ -11,8 +11,7 @@ import { TwoCol } from '../layouts/two-col';
 import Stack from '@elementor/ui/Stack';
 import Typography from '@elementor/ui/Typography';
 import Modal from '@elementor/ui/Modal';
-import { TopBar } from '../components/top-bar/top-bar';
-import { TopBarLinks } from '../components/top-bar/top-bar-links';
+
 import { TopBarContent } from '../components/top-bar/top-bar-content';
 
 const style = {
@@ -78,10 +77,10 @@ export const OnboardingPage = () => {
 		<ThemeProvider colorScheme="auto">
 			<Modal open={ open } sx={ { zIndex: 100000 } } >
 				<Box style={ style }>
-					<TopBarContent />
-					<Navigation />
-					<TwoCol>
-						<Stack>
+					<TopBarContent sx={ { borderBottom: '1px solid var(--divider-divider, rgba(0, 0, 0, 0.12))' } } iconSize="small" />
+					<Stack direction="column" spacing={ 4 } alignItems="center" justifyContent="center">
+						<Navigation />
+						<Stack alignItems="center" justifyContent="center">
 							<Box>
 								<Typography variant="h6">
 									{ __( 'Welcome! Let’s create your website.', 'hello-plus' ) }
@@ -95,8 +94,7 @@ export const OnboardingPage = () => {
 								{ buttonText && <Button onClick={ onClick }>{ buttonText }</Button> }
 							</Box>
 						</Stack>
-						<Stack />
-					</TwoCol>
+					</Stack>
 				</Box>
 			</Modal>
 

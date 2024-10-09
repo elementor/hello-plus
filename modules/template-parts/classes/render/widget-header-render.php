@@ -103,8 +103,20 @@ class Widget_Header_Render {
 			'container' => '',
 		];
 
+		// Add custom filter to handle Nav Menu HTML output.
+		add_filter( 'nav_menu_link_attributes', [ $this, 'handle_link_classes' ], 10, 4 );
+		add_filter( 'nav_menu_submenu_css_class', [ $this, 'handle_sub_menu_classes' ] );
+		add_filter( 'walker_nav_menu_start_el', [ $this, 'add_svg_icon_to_menu_item' ], 10, 4 );
+		add_filter( 'nav_menu_item_id', '__return_empty_string' );
+
 		// General Menu.
 		$menu_html = wp_nav_menu( $args );
+
+		// Remove all our custom filters.
+		remove_filter( 'nav_menu_link_attributes', [ $this, 'handle_link_classes' ] );
+		remove_filter( 'nav_menu_submenu_css_class', [ $this, 'handle_sub_menu_classes' ] );
+		remove_filter( 'walker_nav_menu_start_el', [ $this, 'add_svg_icon_to_menu_item' ] );
+		remove_filter( 'nav_menu_item_id', '__return_empty_string' );
 
 		if ( empty( $menu_html ) ) {
 			return;
@@ -239,5 +251,57 @@ class Widget_Header_Render {
 
 	public function get_link_url(): array {
 		return [ 'url' => $this->widget->get_site_url() ];
+	}
+
+	public function handle_link_classes( $atts, $item, $args, $depth ) {
+		$classes = $depth ? 'ehp-header__sub-item' : 'ehp-header__item';
+		$is_anchor = false !== strpos( $atts['href'], '#' );
+
+		if ( ! $is_anchor && in_array( 'current-menu-item', $item->classes ) ) {
+			$classes .= ' is-item-active';
+		}
+
+		if ( $is_anchor ) {
+			$classes .= ' is-item-anchor';
+		}
+
+		if ( empty( $atts['class'] ) ) {
+			$atts['class'] = $classes;
+		} else {
+			$atts['class'] .= ' ' . $classes;
+		}
+
+		return $atts;
+	}
+
+	public function handle_sub_menu_classes( $classes ) {
+		$submenu_layout = $this->settings['style_submenu_layout'] ?? 'horizontal';
+		$submenu_shape = $this->settings['style_submenu_shape'] ?? 'default';
+
+		$dropdown_classnames = 'ehp-header__dropdown';
+		$dropdown_classnames .= ' has-layout-' . $submenu_layout;
+		$dropdown_classnames .= ' has-shape-' . $submenu_shape;
+
+		$classes[] = $dropdown_classnames;
+
+		return $classes;
+	}
+
+	function add_svg_icon_to_menu_item( $item_output, $item, $depth, $args ) {
+
+		if ( in_array( 'menu-item-has-children', $item->classes ) ) {
+			$submenu_icon = $this->settings['navigation_menu_submenu_icon'];
+
+			$svg_icon = Icons_Manager::try_get_icon_html( $submenu_icon,
+				[
+					'aria-hidden' => 'true',
+					'class' => 'ehp-header__submenu-toggle-icon',
+				]
+			);
+	
+			$item_output = str_replace( '</a>', $svg_icon . '</a>', $item_output );
+		}
+	
+		return $item_output;
 	}
 }

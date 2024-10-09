@@ -882,7 +882,7 @@ class Header extends Widget_Base {
 				],
 				'default' => 'flex-start',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-buttons-position: {{VALUE}};',
+					'{{WRAPPER}} .ehp-header' => '--header-dropdown-text-align: {{VALUE}};',
 				],
 			]
 		);

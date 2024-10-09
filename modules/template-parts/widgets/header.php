@@ -20,13 +20,10 @@ use HelloPlus\Modules\TemplateParts\Classes\{
 	Render\Widget_Header_Render
 };
 
-use HelloPlus\Includes\Utils as Theme_Utils;
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
 class Header extends Widget_Base {
 	use Shared_Header_Traits;
-
-	const TAB_ADVANCED = 'advanced-tab-header';
 
 	public function get_name(): string {
 		return 'header';
@@ -59,32 +56,22 @@ class Header extends Widget_Base {
 	}
 
 	protected function register_controls() {
-		$this->add_content_section();
-		$this->add_style_section();
-		$this->add_advanced_section();
+		$this->add_content_tab();
+		$this->add_style_tab();
 	}
 
-	protected function add_content_section() {
+	protected function add_content_tab() {
 		$this->add_content_site_logo_section();
 		$this->add_content_navigation_section();
 		$this->add_content_cta_section();
 	}
 
-	protected function add_style_section() {
+	protected function add_style_tab() {
 		$this->add_style_site_identity_section();
 		$this->add_style_navigation_section();
 		$this->add_style_cta_section();
 		$this->add_style_box_section();
-	}
-
-	protected function add_advanced_section() {
-		Controls_Manager::add_tab(
-			static::TAB_ADVANCED,
-			esc_html__( 'Advanced', 'hello-plus' )
-		);
-
-		$this->add_advanced_behavior_section();
-		$this->add_advanced_custom_section();
+		$this->add_style_behavior_section();
 	}
 
 	protected function add_content_site_logo_section() {
@@ -1467,12 +1454,12 @@ class Header extends Widget_Base {
 		);
 	}
 
-	private function add_advanced_behavior_section(): void {
+	private function add_style_behavior_section(): void {
 		$this->start_controls_section(
 			'advanced_behavior_section',
 			[
 				'label' => esc_html__( 'Behavior', 'hello-plus' ),
-				'tab' => static::TAB_ADVANCED,
+				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
 
@@ -1740,75 +1727,5 @@ class Header extends Widget_Base {
 		);
 
 		$this->end_controls_section();
-	}
-
-	private function add_advanced_custom_section(): void {
-		$this->start_controls_section(
-			'advanced_responsive_section',
-			[
-				'label' => esc_html__( 'Responsive', 'hello-plus' ),
-				'tab' => static::TAB_ADVANCED,
-			]
-		);
-
-		$this->add_control(
-			'responsive_description',
-			[
-				'raw' => __( 'Responsive visibility will take effect only on preview mode or live page, and not while editing in Elementor.', 'hello-plus' ),
-				'type' => Controls_Manager::RAW_HTML,
-				'content_classes' => 'elementor-descriptor',
-			]
-		);
-
-		$this->add_hidden_device_controls();
-
-		$this->end_controls_section();
-
-		$this->start_controls_section(
-			'advanced_custom_controls_section',
-			[
-				'label' => esc_html__( 'CSS', 'hello-plus' ),
-				'tab' => static::TAB_ADVANCED,
-			]
-		);
-
-		$this->add_control(
-			'advanced_custom_css_id',
-			[
-				'label' => esc_html__( 'CSS ID', 'hello-plus' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => '',
-				'ai' => [
-					'active' => false,
-				],
-				'dynamic' => [
-					'active' => true,
-				],
-				'title' => esc_html__( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'hello-plus' ),
-				'style_transfer' => false,
-			]
-		);
-
-		$this->add_control(
-			'advanced_custom_css_classes',
-			[
-				'label' => esc_html__( 'CSS Classes', 'hello-plus' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => '',
-				'ai' => [
-					'active' => false,
-				],
-				'dynamic' => [
-					'active' => true,
-				],
-				'title' => esc_html__( 'Add your custom class WITHOUT the dot. e.g: my-class', 'hello-plus' ),
-			]
-		);
-
-		$this->end_controls_section();
-
-		Theme_Utils::elementor()->controls_manager->add_custom_css_controls( $this, static::TAB_ADVANCED );
-
-		Theme_Utils::elementor()->controls_manager->add_custom_attributes_controls( $this, static::TAB_ADVANCED );
 	}
 }

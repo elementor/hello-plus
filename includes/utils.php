@@ -9,23 +9,28 @@ if ( ! defined( 'ABSPATH' ) ) {
  * class Utils
  **/
 class Utils {
-	/**
-	 * @static
-	 * @access public
-	 *
-	 * @return \Elementor\Plugin
-	 */
+
+	private static $elementor_installed = null;
+
+	private static $elementor_active = null;
+
 	public static function elementor(): \Elementor\Plugin {
 		return \Elementor\Plugin::$instance;
 	}
 
-	/**
-	 * @static
-	 * @access public
-	 *
-	 * @return bool
-	 */
 	public static function is_elementor_active(): bool {
-		return defined( 'ELEMENTOR_VERSION' );
+		if ( null === self::$elementor_active ) {
+			self::$elementor_active = defined( 'ELEMENTOR_VERSION' );
+		}
+
+		return self::$elementor_active;
+	}
+
+	public static function is_elementor_installed() {
+		if ( null === self::$elementor_installed ) {
+			self::$elementor_installed = file_exists( WP_PLUGIN_DIR . '/elementor/elementor.php' );
+		}
+
+		return self::$elementor_installed;
 	}
 }

@@ -12,6 +12,7 @@ export const LinkWithIconAndTitle = ( {
 		onClick = () => {},
 	} ) => {
 	const linkTitleText = linkTitle || __( 'Customize', 'hello-plus' );
+
 	return (
 		<Stack direction="row" gap={ 1 } sx={ { alignContent: 'flex-start' } }>
 			<Icon fontSize="tiny" color="secondary" sx={ { pt: 0.2 } } />

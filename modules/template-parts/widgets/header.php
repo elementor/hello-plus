@@ -681,7 +681,6 @@ class Header extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-header' => '--header-pointer-hover-highlight-padding-inline: var(--header-pointer-hover-highlight-padding-inline-{{VALUE}}); --header-pointer-hover-highlight-padding-block: var(--header-pointer-hover-highlight-padding-block-{{VALUE}});',
-
 				],
 				'condition' => [
 					'style_navigation_pointer_hover' => 'highlight',
@@ -731,7 +730,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#555963',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-focus-active-underline-color: {{VALUE}}',
 				],
 				'condition' => [
 					'style_navigation_focus_active' => 'underline',
@@ -744,11 +743,14 @@ class Header extends Widget_Base {
 			[
 				'label' => esc_html__( 'Underline Width', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => 'default',
+				'default' => '3px',
 				'options' => [
-					'default' => esc_html__( 'Default', 'hello-plus' ),
-					'thin' => esc_html__( 'Thin', 'hello-plus' ),
-					'thick' => esc_html__( 'Thick', 'hello-plus' ),
+					'3px' => esc_html__( 'Default', 'hello-plus' ),
+					'1px' => esc_html__( 'Thin', 'hello-plus' ),
+					'5px' => esc_html__( 'Thick', 'hello-plus' ),
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-focus-active-underline-width: {{VALUE}}',
 				],
 				'condition' => [
 					'style_navigation_focus_active' => 'underline',
@@ -763,7 +765,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#555963',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-focus-active-highlight-bg-color: {{VALUE}}',
 				],
 				'condition' => [
 					'style_navigation_focus_active' => 'highlight',
@@ -781,6 +783,9 @@ class Header extends Widget_Base {
 					'default' => esc_html__( 'Default', 'hello-plus' ),
 					'thin' => esc_html__( 'Thin', 'hello-plus' ),
 					'thick' => esc_html__( 'Thick', 'hello-plus' ),
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-focus-active-highlight-padding-inline: var(--header-focus-active-highlight-padding-inline-{{VALUE}}); --header-focus-active-highlight-padding-block: var(--header-focus-active-highlight-padding-block-{{VALUE}});',
 				],
 				'condition' => [
 					'style_navigation_focus_active' => 'highlight',

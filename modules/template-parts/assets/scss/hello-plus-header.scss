@@ -67,6 +67,18 @@
 	--header-pointer-hover-highlight-padding-inline: var(--header-pointer-hover-highlight-padding-inline-default);
 	--header-pointer-hover-highlight-padding-block: var(--header-pointer-hover-highlight-padding-block-default);
 
+	--header-focus-active-underline-width: 2px;
+	--header-focus-active-underline-color: #0052FF;
+	--header-focus-active-highlight-bg-color: #E0EAFF;
+	--header-focus-active-highlight-padding-inline-default: 8px;
+	--header-focus-active-highlight-padding-block-default: 4px;--header-focus-active-highlight-padding-inline-thin: 6px;
+	--header-focus-active-highlight-padding-block-thin: 2px;
+	--header-focus-active-highlight-padding-inline-thick: 8px;
+	--header-focus-active-highlight-padding-block-thick: 8px;
+
+	--header-focus-active-highlight-padding-inline: var(--header-focus-active-highlight-padding-inline-default);
+	--header-focus-active-highlight-padding-block: var(--header-focus-active-highlight-padding-block-default);
+
 	display: flex;
 
 	&__elements-container {
@@ -251,7 +263,7 @@
 				}
 			}
 
-			&.is-active {
+			&.current-menu-item {
 
 				& a {
 					color: var(--header-menu-item-color-active);
@@ -265,11 +277,18 @@
 
 				.menu-item {
 
-					a {
+					a:hover,
+					a:focus {
+						position: relative;
 
-						&:hover,
-						&:focus {
-							border-bottom: var(--header-pointer-hover-underline-width) solid var(--header-pointer-hover-underline-color);
+						&:after {
+							background-color: var(--header-pointer-hover-underline-color);
+							bottom: -5px;
+							height: var(--header-pointer-hover-underline-width);
+							content: "";
+							left: 0;
+							position: absolute;
+							width: 100%;
 						}
 					}
 				}
@@ -287,6 +306,46 @@
 						&:hover,
 						&:focus {
 							background-color: var(--header-pointer-hover-highlight-bg-color);
+						}
+					}
+				}
+			}
+		}
+
+		&.has-focus-active {
+
+			&-underline {
+				
+				.menu-item.current-menu-item {
+
+					a {
+						position: relative;
+
+						&:after {
+							background-color: var(--header-focus-active-underline-color);
+							bottom: -5px;
+							height: var(--header-focus-active-underline-width);
+							content: "";
+							left: 0;
+							position: absolute;
+							width: 100%;
+						}
+					}
+				}
+			}
+
+			&-highlight {
+
+				.menu-item.current-menu-item {
+
+					a {
+						border-radius: 8px;
+						padding-inline: var(--header-focus-active-highlight-padding-inline);
+						padding-block: var(--header-focus-active-highlight-padding-block);
+
+						&:hover,
+						&:focus {
+							background-color: var(--header-focus-active-highlight-bg-color);
 						}
 					}
 				}

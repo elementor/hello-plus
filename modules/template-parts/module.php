@@ -31,6 +31,24 @@ class Module extends Module_Base {
 	}
 
 	/**
+	 * @inheritDoc
+	 */
+	protected function get_widget_ids(): array {
+		return [
+			'Header',
+		];
+	}
+
+	public function enqueue(): void {
+		wp_enqueue_style(
+			'hello-plus-header',
+			HELLO_PLUS_STYLE_URL . 'hello-plus-header.css',
+			[],
+			HELLO_PLUS_ELEMENTOR_VERSION
+		);
+	}
+
+	/**
 	 * @return bool
 	 */
 	public static function is_active(): bool {
@@ -40,5 +58,8 @@ class Module extends Module_Base {
 	/**
 	 * @inheritDoc
 	 */
-	protected function register_hooks(): void {}
+	protected function register_hooks(): void {
+		parent::register_hooks();
+		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue' ] );
+	}
 }

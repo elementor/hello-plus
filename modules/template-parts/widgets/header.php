@@ -6,19 +6,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use Elementor\Controls_Manager;
-use Elementor\Group_Control_Background;
-use Elementor\Group_Control_Box_Shadow;
-use Elementor\Group_Control_Typography;
-use Elementor\Utils;
-use Elementor\Widget_Base;
+use Elementor\{
+	Widget_Base,
+	Controls_Manager,
+	Group_Control_Background,
+	Group_Control_Box_Shadow,
+	Group_Control_Typography
+};
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+
+use HelloPlus\Modules\TemplateParts\Classes\{
+	Traits\Shared_Header_Traits,
+	Render\Widget_Header_Render
+};
+
 use HelloPlus\Includes\Utils as Theme_Utils;
-
-use HelloPlus\Modules\TemplateParts\Base\Traits\Shared_Header_Traits;
-use HelloPlus\Modules\TemplateParts\Classes\Render\Widget_Header_Render;
-use HelloPlus\Modules\Theme\Classes\Control_Media_Preview;
-
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
 class Header extends Widget_Base {
@@ -100,8 +102,8 @@ class Header extends Widget_Base {
 				'label' => esc_html__( 'Brand', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'logo' => 'Site Logo',
-					'title' => 'Site Title',
+					'logo' => esc_html__( 'Site Logo' , 'hello-plus' ),
+					'title' => esc_html__( 'Site Title', 'hello-plus' )
 				],
 				'default' => 'logo',
 				'tablet_default' => 'logo',
@@ -109,18 +111,13 @@ class Header extends Widget_Base {
 			]
 		);
 
-		// TODO: fix this
-		// This shouldn't be dynamic
 		$this->add_control(
 			'site_logo_image',
 			[
 				'label' => esc_html__( 'Choose Image', 'elementor-pro' ),
 				'type' => Controls_Manager::MEDIA,
 				'default' => [
-					'url' => $this->get_site_logo(),
-				],
-				'dynamic' => [
-					'active' => true,
+					'url' => $this->get_site_logo_url(),
 				],
 				'condition' => [
 					'site_logo_brand_select' => 'logo',

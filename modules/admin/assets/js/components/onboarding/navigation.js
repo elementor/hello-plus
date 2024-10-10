@@ -1,39 +1,26 @@
-import Stack from '@elementor/ui/Stack';
 import Box from '@elementor/ui/Box';
 import { __ } from '@wordpress/i18n';
-import Typography from '@elementor/ui/Typography';
+import Step from '@elementor/ui/Step';
+import StepLabel from '@elementor/ui/StepLabel';
+import Stepper from '@elementor/ui/Stepper';
+import { useGetCurrentStep } from '../../hooks/use-get-current-step';
 
 export const Navigation = () => {
-	const steps = [
-		{
-		text: __( 'Get Started', 'hello-plus' ),
-		number: 1,
-		},
-		{
-			text: __( 'Choose a Kit', 'hello-plus' ),
-			number: 2,
-		},
-		{
-			text: __( 'Ready to Go', 'hello-plus' ),
-			number: 3,
-		},
-	];
+	const { step } = useGetCurrentStep();
+
+	const steps = [ __( 'Get Started', 'hello-plus' ), __( 'Choose a Kit', 'hello-plus' ), __( 'Ready to Go', 'hello-plus' ) ];
+
 	return (
-		<Stack direction="row" sx={ { width: '100%', justifyContent: "space-evenly" } }>
-			{ steps.map( ( step ) => {
-				return (
-					<Stack
-						direction="row"
-						key={ step.number }
-						sx={ {alignItems: 'center' } }
-						spacing={ 1 }
-						p={2}
-					>
-						<Typography variant="body1">{ step.number }</Typography>
-						<Typography variant="body2">{ step.text }</Typography>
-					</Stack>
-				);
-			} ) }
-		</Stack>
+		<Box sx={ { width: '100%' } }>
+			<Stepper activeStep={ step }>
+				{ steps.map( ( label, index ) => {
+					return (
+						<Step key={ label } completed={ index < step } active={ index === step } >
+							<StepLabel >{ label }</StepLabel>
+						</Step>
+					);
+				} ) }
+			</Stepper>
+		</Box>
 	);
 };

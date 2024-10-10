@@ -1,18 +1,16 @@
-import Button from '@elementor/ui/Button';
 import Box from '@elementor/ui/Box';
 import { ThemeProvider } from '@elementor/ui/styles';
 import { __ } from '@wordpress/i18n';
 import { useCallback, useState } from 'react';
-import Alert from '@elementor/ui/Alert';
 import { useAdminContext } from '../hooks/use-admin-context';
 import { useGetCurrentStep } from '../hooks/use-get-current-step';
-import { Navigation } from '../components/onboarding/navigation';
-import { TwoCol } from '../layouts/two-col';
-import Stack from '@elementor/ui/Stack';
-import Typography from '@elementor/ui/Typography';
 import Modal from '@elementor/ui/Modal';
 
 import { TopBarContent } from '../components/top-bar/top-bar-content';
+import { GetStarted } from '../components/onboarding/screens/get-started';
+import Spinner from '../components/spinner/spinner';
+import { InstallKit } from '../components/onboarding/screens/install-kit';
+import { ReadyToGo } from '../components/onboarding/screens/ready-to-go';
 
 const style = {
 	position: 'fixed',
@@ -29,21 +27,22 @@ export const OnboardingPage = () => {
 	const [ message, setMessage ] = useState( '' );
 	const [ severity, setSeverity ] = useState( 'info' );
 	const [ open, setOpen ] = useState( true );
+	const [ loading, setLoading ] = useState( false );
 
-	const { onboardingSettings: { nonce } = {} } = useAdminContext();
-	const { step, buttonText } = useGetCurrentStep();
+	const { onboardingSettings: { nonce, modalCloseRedirectUrl } = {} } = useAdminContext();
+	const { stepAction, buttonText, step } = useGetCurrentStep();
 
 	const onClick = useCallback( async () => {
 		setMessage( '' );
 
 		const data = {
-			step,
+			step: stepAction,
 			_wpnonce: nonce,
 			slug: 'elementor',
 		};
 
 		try {
-			switch ( step ) {
+			switch ( stepAction ) {
 				case 'install-elementor':
 					setMessage( __( 'Installing Elementor plugin…', 'hello-plus' ) );
 					const response = await wp.ajax.post( 'hello_plus_setup_wizard', data );
@@ -71,30 +70,21 @@ export const OnboardingPage = () => {
 			setMessage( error.errorMessage );
 			setSeverity( 'error' );
 		}
-	}, [ nonce, step ] );
+	}, [ nonce, stepAction ] );
+
+	const onClose = () => {
+		window.location.href = modalCloseRedirectUrl;
+	};
 
 	return (
 		<ThemeProvider colorScheme="auto">
 			<Modal open={ open } sx={ { zIndex: 100000 } } >
-				<Box style={ style }>
-					<TopBarContent sx={ { borderBottom: '1px solid var(--divider-divider, rgba(0, 0, 0, 0.12))' } } iconSize="small" />
-					<Stack direction="column" spacing={ 4 } alignItems="center" justifyContent="center">
-						<Navigation />
-						<Stack alignItems="center" justifyContent="center">
-							<Box>
-								<Typography variant="h6">
-									{ __( 'Welcome! Let’s create your website.', 'hello-plus' ) }
-								</Typography>
-								<Typography variant="body1">
-									{ __( 'Welcome! Let’s create your website.', 'hello-plus' ) }
-								</Typography>
-							</Box>
-							{ message && <Alert severity={ severity }>{ message }</Alert> }
-							<Box p={ 1 }>
-								{ buttonText && <Button onClick={ onClick }>{ buttonText }</Button> }
-							</Box>
-						</Stack>
-					</Stack>
+				<Box style={ { ...style, display: 'flex', flexDirection: 'column' } }>
+					<TopBarContent onClose={ onClose } sx={ { borderBottom: '1px solid var(--divider-divider, rgba(0, 0, 0, 0.12))', mb: 4 } } iconSize="small" />
+					{ 0 === step && ! loading && ( <GetStarted severity={ severity } message={ message } buttonText={ buttonText } onClick={ onClick } /> ) }
+					{ 1 === step && ! loading && ( <InstallKit severity={ severity } message={ message } onClick={ onClick } /> ) }
+					{ 2 === step && ! loading && ( <ReadyToGo severity={ severity } message={ message } onClick={ onClick } /> ) }
+					{ loading && <Spinner /> }
 				</Box>
 			</Modal>
 

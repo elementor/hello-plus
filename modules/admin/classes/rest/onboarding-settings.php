@@ -37,6 +37,7 @@ class Onboarding_Settings {
 					'nonce' => $nonce,
 					'elementorInstalled' => Utils::is_elementor_installed(),
 					'elementorActive' => Utils::is_elementor_active(),
+					'modalCloseRedirectUrl' => admin_url( 'admin.php?page=hello-plus' ),
 				],
 			]
 		);

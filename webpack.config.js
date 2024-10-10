@@ -25,13 +25,10 @@ const entryPoints = {
 	'js/hello-plus-admin-top-bar': path.resolve( modulesDir, 'admin/assets/js', 'hello-plus-topbar.js' ),
 	'js/hello-plus-onboarding': path.resolve( modulesDir, 'admin/assets/js', 'hello-plus-onboarding.js' ),
 
-	// Content module:
-	//Zigzag:
-	'js/hello-plus-zigzag': path.resolve( modulesDir, 'content/assets/js', 'hello-plus-zigzag.js' ),
+	// Content module
 	'css/hello-plus-zigzag': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-zigzag.scss' ),
-	// Hero:
-	'js/hello-plus-hero': path.resolve( modulesDir, 'content/assets/js', 'hello-plus-hero.js' ),
 	'css/hello-plus-hero': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-hero.scss' ),
+	'css/hello-plus-cta': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-cta.scss' ),
 
 	// Theme module
 	'css/theme': path.resolve( modulesDir, 'theme/assets/scss', 'theme.scss' ),

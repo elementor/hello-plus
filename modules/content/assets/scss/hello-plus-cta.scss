@@ -1,0 +1,311 @@
+@import "./breakpoints";
+@import "./variables";
+
+.ehp-cta {
+	--cta-box-height: auto;
+	--cta-box-full-height: 100vh;
+
+	@supports (height: 100dvh) {
+		--cta-box-full-height: 100dvh;
+	}
+
+	--cta-content-direction: start;
+	--cta-content-text-align: start;
+	--cta-buttons-position: flex-start;
+	--cta-elements-gap: 60px;
+	--cta-text-gap: 20px;
+	--cta-buttons-space-between: 16px;
+	--cta-content-width: 1304px;
+
+	--cta-heading-color: #28292B;
+	--cta-description-color: #28292B;
+
+	--cta-text-heading-width: 100%;
+	--cta-text-description-width: 100%;
+	--cta-text-default-heading: 252px;
+	--cta-text-narrow-heading: 224px;
+	--cta-text-wide-heading: 280px;
+	--cta-text-default-description: 216px;
+	--cta-text-narrow-description: 200px;
+	--cta-text-wide-description: 240px;
+
+	--cta-button-primary-background-color: #0052FF;
+	--cta-button-primary-icon-spacing: 10px;
+	--cta-button-primary-icon-size: 16px;
+	--cta-button-primary-text-color: #FFFFFF;
+	--cta-button-primary-text-color-hover: #555963;
+	--cta-button-primary-border-width: 0;
+	--cta-button-primary-border-color: transparent;
+	--cta-button-primary-padding-block-end: 8px;
+	--cta-button-primary-padding-block-start: 8px;
+	--cta-button-primary-padding-inline-end: 16px;
+	--cta-button-primary-padding-inline-start: 16px;
+	--cta-button-primary-border-radius: 0;
+
+	--cta-button-secondary-background-color: transparent;
+	--cta-button-secondary-icon-spacing: 10px;
+	--cta-button-secondary-icon-size: 16px;
+	--cta-button-secondary-text-color: #555963;
+	--cta-button-secondary-text-color-hover: #555963;
+	--cta-button-secondary-border-width: 2px;
+	--cta-button-secondary-border-color: #555963;
+	--cta-button-secondary-padding-block-end: 8px;
+	--cta-button-secondary-padding-block-start: 8px;
+	--cta-button-secondary-padding-inline-end: 16px;
+	--cta-button-secondary-padding-inline-start: 16px;
+	--cta-button-secondary-border-radius: #{$corners-shape-default};
+
+	--cta-button-text-color: var(--cta-button-primary-text-color);
+	--cta-button-text-color-hover: var(--cta-button-primary-text-color-hover);
+	--cta-button-border-color: var(--cta-button-primary-border-color);
+	--cta-button-background-color: var(--cta-button-primary-background-color);
+	--cta-button-padding-block-end: var(--cta-button-primary-padding-block-end);
+	--cta-button-padding-block-start: var(--cta-button-primary-padding-block-start);
+	--cta-button-padding-inline-end: var(--cta-button-primary-padding-inline-end);
+	--cta-button-padding-inline-start: var(--cta-button-primary-padding-inline-start);
+	--cta-button-border-width: var(--cta-button-primary-border-width);
+	--cta-button-border-radius: var(--cta-button-primary-border-radius);
+	--cta-button-icon-spacing: var(--cta-button-primary-icon-spacing);
+	--cta-button-icon-size: var(--cta-button-primary-icon-size);
+
+	display: flex;
+	justify-content: center;
+	height: var(--cta-box-height);
+
+	@media screen and (min-width: $screen-tablet-min) {
+		--cta-text-default-heading: 512px;
+		--cta-text-narrow-heading: 408px;
+		--cta-text-wide-heading: 640px;
+		--cta-text-default-description: 352px;
+		--cta-text-narrow-description: 280px;
+		--cta-text-wide-description: 440px;
+	}
+
+	@media screen and (min-width: $screen-desktop-min) {
+		--cta-text-default-heading: 800px;
+		--cta-text-narrow-heading: 640px;
+		--cta-text-wide-heading: 960px;
+		--cta-text-default-description: 440px;
+		--cta-text-narrow-description: 420px;
+		--cta-text-wide-description: 528px;
+	}
+
+	@mixin full-height($min: null, $max: null) {
+		$query: null;
+
+		@if $min != null and $max != null {
+			$query: "(min-width: " + $min + ") and (max-width: " + $max + ")";
+		} @else if $max != null {
+			$query: "(max-width: " + $max + ")";
+		} @else if $min != null {
+			$query: "(min-width: " + $min + ")";
+		}
+
+		@if $query != null {
+			@media #{$query} {
+				--cta-box-height: var(--cta-box-full-height, 100vh);
+
+				align-items: center;
+			};
+		}
+	}
+
+	&.is-full-height-mobile {
+		@include full-height(null, $screen-mobile-max);
+	}
+
+	&.is-full-height-mobile_extra {
+		@include full-height($screen-mobile-extra-min, $screen-mobile-extra-max);
+	}
+
+	&.is-full-height-tablet {
+		@include full-height($screen-tablet-min, $screen-tablet-max);
+	}
+
+	&.is-full-height-tablet_extra {
+		@include full-height($screen-tablet-extra-min, $screen-tablet-extra-max);
+	}
+
+	&.is-full-height-laptop {
+		@include full-height($screen-laptop-min, $screen-laptop-max);
+	}
+
+	&.is-full-height-desktop {
+		@include full-height($screen-desktop-min, null);
+
+		&.is-full-height-widescreen {
+			@include full-height($screen-desktop-min, $screen-desktop-max);
+		}
+	}
+
+	&.is-full-height-widescreen {
+		@include full-height($screen-widescreen-min, null);
+	}
+
+	&__ctas-container {
+		flex-grow: 1;
+		display: flex;
+		flex-direction: column;
+		gap: var(--cta-buttons-space-between);
+		justify-content: center;
+		
+		@media screen and (min-width: $screen-tablet-min) {
+			flex-direction: row;
+			justify-content: flex-start;
+		}
+	}
+
+	&__elements-container {
+		display: flex;
+		flex-direction: column;
+		gap: var(--cta-elements-gap);
+		max-width: var(--cta-content-width);
+		width: 100%;
+	}
+
+	&__heading {
+		color: var(--cta-heading-color);
+		max-width: var(--cta-text-heading-width);
+	}
+
+	&__description {
+		color: var(--cta-description-color);
+		max-width: var(--cta-text-description-width);
+	}
+
+	&__text-container {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		gap: var(--cta-text-gap);
+
+		.ehp-cta__heading,
+		.ehp-cta__description {
+			text-align: center;
+		}
+	}
+
+	&__button-icon {
+		fill: currentColor;
+		height: var(--cta-button-icon-size);
+		width: var(--cta-button-icon-size);
+	}
+
+	&__button,
+	&__button {
+		align-items: center;
+		display: flex;
+		font-weight: 500;
+		font-size: 16px;
+		gap: var(--cta-button-icon-spacing);
+		justify-content: center;
+		text-decoration: none;
+		transition: $transition;
+
+		&:hover,
+		&:focus {
+			transition: $transition;
+		}
+
+		&.has-border {
+			border-color: var(--cta-button-border-color);
+			border-style: solid;
+			border-width: var(--cta-button-border-width);
+			border-radius: var(--cta-button-border-radius);
+		}
+
+		&.is-type {
+
+			&-button {
+				background-color: var(--cta-button-background-color);
+				padding-block-end: var(--cta-button-padding-block-end);
+				padding-block-start: var(--cta-button-padding-block-start);
+				padding-inline-end: var(--cta-button-padding-inline-end);
+				padding-inline-start: var(--cta-button-padding-inline-start);
+			}
+
+			&-link,
+			&-link:not([href]):not([tabindex]) {
+				text-decoration: underline;
+			}
+
+			&-button,
+			&-link,
+			&-button:not([href]):not([tabindex]),
+			&-link:not([href]):not([tabindex]) {
+				color: var(--cta-button-text-color);
+
+				&:hover,
+				&:focus {
+					color: var(--cta-button-text-color-hover);
+				}
+			}
+		}
+
+		&--secondary {
+			--cta-button-text-color: var(--cta-button-secondary-text-color);
+			--cta-button-text-color-hover: var(--cta-button-secondary-text-color-hover);
+			--cta-button-border-color: var(--cta-button-secondary-border-color);
+			--cta-button-background-color: var(--cta-button-secondary-background-color);
+			--cta-button-padding-block-end: var(--cta-button-secondary-padding-block-end);
+			--cta-button-padding-block-start: var(--cta-button-secondary-padding-block-start);
+			--cta-button-padding-inline-end: var(--cta-button-secondary-padding-inline-end);
+			--cta-button-padding-inline-start: var(--cta-button-secondary-padding-inline-start);
+			--cta-button-border-width: var(--cta-button-secondary-border-width);
+			--cta-button-border-radius: var(--cta-button-secondary-border-radius);
+			--cta-button-icon-spacing: var(--cta-button-secondary-icon-spacing);
+		}
+
+		&.has-shape {
+
+			&-sharp {
+				border-radius: $corners-shape-sharp;
+			}
+
+			&-rounded {
+				border-radius: $corners-shape-rounded;
+			}
+
+			&-round {
+				border-radius: $corners-shape-round;
+			}
+
+			&-default {
+				border-radius: $corners-shape-default;
+			}
+		}
+	}
+
+	&.has-elements-position {
+			
+		&-center {
+
+			.ehp-cta__ctas-container {
+				justify-content: center;
+			}
+		}
+
+		&-start {
+
+			.ehp-cta__text-container {
+				align-items: start;
+
+				.ehp-cta__heading,
+				.ehp-cta__description {
+					text-align: start;
+				}
+			}
+
+			@media screen and (min-width: $screen-desktop-min) {
+				.ehp-cta__elements-container {
+					flex-direction: row;
+				}
+
+				.ehp-cta__ctas-container {
+					align-items: var(--cta-buttons-position);
+					justify-content: flex-end;
+				}
+			}
+		}
+	}
+}

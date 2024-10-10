@@ -12,6 +12,10 @@ use HelloPlus\Modules\Content\Widgets\Hero;
 
 class Widget_Hero_Render {
 	protected Hero $widget;
+	const LAYOUT_CLASSNAME = 'ehp-hero';
+	const TEXT_CONTAINER_CLASSNAME = 'ehp-hero__text-container';
+	const BUTTON_CLASSNAME = 'ehp-hero__button';
+	const IMAGE_CLASSNAME = 'ehp-hero__image';
 
 	protected array $settings;
 
@@ -21,7 +25,7 @@ class Widget_Hero_Render {
 	}
 
 	public function render(): void {
-		$layout_classnames = 'e-hero';
+		$layout_classnames = self::LAYOUT_CLASSNAME;
 		$layout_full_height_controls = $this->settings['box_full_screen_height_controls'] ?? '';
 
 		if ( ! empty( $layout_full_height_controls ) ) {
@@ -53,7 +57,7 @@ class Widget_Hero_Render {
 		$subheading_tag = $this->settings['subheading_tag'];
 		$has_subheading = '' !== $subheading_text;
 
-		$text_container_classnames = 'e-hero__text-container';
+		$text_container_classnames = self::TEXT_CONTAINER_CLASSNAME;
 
 		$this->widget->add_render_attribute( 'text-container', [
 			'class' => $text_container_classnames,
@@ -61,12 +65,12 @@ class Widget_Hero_Render {
 		?>
 		<div <?php echo $this->widget->get_render_attribute_string( 'text-container' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<?php if ( $has_heading ) {
-				$heading_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $heading_tag ), 'class="e-hero__heading"', esc_html( $heading_text ) );
+				$heading_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $heading_tag ), 'class="ehp-hero__heading"', esc_html( $heading_text ) );
 				// Escaped above
 				Utils::print_unescaped_internal_string( $heading_output );
 			} ?>
 			<?php if ( $has_subheading ) {
-				$subheading_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $subheading_tag ), 'class="e-hero__subheading"', esc_html( $subheading_text ) );
+				$subheading_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $subheading_tag ), 'class="ehp-hero__subheading"', esc_html( $subheading_text ) );
 				// Escaped above
 				Utils::print_unescaped_internal_string( $subheading_output );
 			} ?>
@@ -83,7 +87,7 @@ class Widget_Hero_Render {
 		$button_has_border = $this->settings['show_button_border'];
 		$button_corner_shape = $this->settings['button_shape'] ?? '';
 		$button_type = $this->settings['button_type'] ?? '';
-		$button_classnames = 'e-hero__button';
+		$button_classnames = self::BUTTON_CLASSNAME;
 
 		if ( ! empty( $button_type ) ) {
 			$button_classnames .= ' is-type-' . $button_type;
@@ -109,13 +113,13 @@ class Widget_Hero_Render {
 		}
 
 		if ( $has_button ) { ?>
-			<div class="e-hero__button-container">
+			<div class="ehp-hero__button-container">
 				<a <?php echo $this->widget->get_render_attribute_string( 'button' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 				<?php
 					Icons_Manager::render_icon( $button_icon,
 						[
 							'aria-hidden' => 'true',
-							'class' => 'e-hero__button-icon',
+							'class' => 'ehp-hero__button-icon',
 						]
 					);
 				?>
@@ -128,9 +132,10 @@ class Widget_Hero_Render {
 	public function render_image() {
 		$image = $this->settings['image'];
 		$has_image = ! empty( $image['url'] );
+		$image_classnames = self::IMAGE_CLASSNAME;
 
 		$this->widget->add_render_attribute( 'image', [
-			'class' => 'e-hero__image',
+			'class' => $image_classnames,
 		] );
 		?>
 		<div <?php echo $this->widget->get_render_attribute_string( 'image' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>

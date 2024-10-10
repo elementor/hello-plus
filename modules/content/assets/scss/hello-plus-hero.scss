@@ -1,14 +1,7 @@
 @import "./breakpoints";
+@import "./variables";
 
-.e-hero {
-	$transition: all .3s;
-	$corners-shape-default: 8px;
-	$corners-shape-sharp: 0;
-	$corners-shape-rounded: 12px;
-	$corners-shape-round: 32px;
-	$breakpoint-tablet-min: 768px;
-	$breakpoint-desktop-min: 1024px;
-
+.ehp-hero {
 	--hero-box-height: auto;
 	--hero-box-full-height: 100vh;
 
@@ -18,6 +11,7 @@
 
 	--hero-content-position: center;
 	--hero-content-text-align: center;
+	--hero-content-text-gap: 20px;
 
 	--hero-text-heading-width: 100%;
 	--hero-text-subheading-width: 100%;
@@ -37,13 +31,18 @@
 	--hero-button-text-color: #ffffff;
 	--hero-button-text-color-hover: #ffffff;
 	--hero-button-border-width: 1px;
-	--hero-button-border-color: #000000;
+	--hero-button-border-color: #28292B;
 	--hero-button-border-radius: 0;
 	--hero-button-background-color: #0052FF;
 	--hero-button-padding-block-end: 8px;
 	--hero-button-padding-block-start: 8px;
 	--hero-button-padding-inline-end: 16px;
 	--hero-button-padding-inline-start: 16px;
+
+	--hero-box-padding-block-end: 0;
+	--hero-box-padding-block-start: 0;
+	--hero-box-padding-inline-end: 0;
+	--hero-box-padding-inline-start: 0;
 
 	--hero-image-width: 100%;
 	--hero-image-height: 380px;
@@ -53,8 +52,12 @@
 	flex-direction: column;
 	height: var(--hero-box-height);
 	text-align: var(--hero-content-text-align);
+	padding-block-end: var(--hero-box-padding-block-end);
+	padding-block-start: var(--hero-box-padding-block-start);
+	padding-inline-end: var(--hero-box-padding-inline-end);
+	padding-inline-start: var(--hero-box-padding-inline-start);
 
-	@media screen and (min-width: $breakpoint-tablet-min) {
+	@media screen and (min-width: $screen-tablet-min) {
 		--hero-text-default-heading: 512px;
 		--hero-text-narrow-heading: 408px;
 		--hero-text-wide-heading: 640px;
@@ -63,7 +66,7 @@
 		--hero-text-wide-subheading: 440px;
 	}
 
-	@media screen and (min-width: $breakpoint-desktop-min) {
+	@media screen and (min-width: $screen-desktop-min) {
 		--hero-text-default-heading: 800px;
 		--hero-text-narrow-heading: 640px;
 		--hero-text-wide-heading: 960px;
@@ -87,7 +90,7 @@
 			@media #{$query} {
 				--hero-box-height: var(--hero-box-full-height, 100vh);
 
-				.e-hero__image {
+				.ehp-hero__image {
 					align-items: flex-end;
 					display: flex;
 					flex-grow: 1;
@@ -221,15 +224,7 @@
 
 	&__heading,
 	&__subheading {
-		margin-bottom: 20px;
-
-		@media screen and (min-width: $breakpoint-tablet-min) {
-			margin-bottom: 28px;
-		}
-	
-		@media screen and (min-width: $breakpoint-desktop-min) {
-			margin-bottom: 40px;
-		}
+		margin-bottom: var(--hero-content-text-gap);
 	}
 
 	&__image {

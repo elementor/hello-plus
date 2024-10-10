@@ -1,12 +1,7 @@
 @import "./breakpoints";
+@import "./variables";
 
-.e-zigzag {
-    $transition: all .3s;
-	$corners-shape-default: 8px;
-	$corners-shape-sharp: 0;
-	$corners-shape-rounded: 12px;
-	$corners-shape-round: 32px;
-
+.ehp-zigzag {
 	--zigzag-button-icon-size: 16px;
 	--zigzag-button-icon-spacing: 10px;
 	--zigzag-button-text-color: #555963;
@@ -223,12 +218,24 @@
 	}
 
 	@media screen and (max-width: $screen-tablet-max) {
-		.e-zigzag__item-container {
+		.ehp-zigzag__item-container {
 			flex-direction: column;
 		}
 
-		.e-zigzag__graphic-element-container,
-		.e-zigzag__text-container {
+		&.has-direction-right {
+
+			.ehp-zigzag__graphic-element-container {
+				order: 2;
+			}
+
+			.ehp-zigzag__text-container {
+				order: 1;
+			}
+		}
+
+		.ehp-zigzag__graphic-element-container,
+		.ehp-zigzag__text-container {
+			padding-inline: 0;
 			width: 100%;
 		}
 	}

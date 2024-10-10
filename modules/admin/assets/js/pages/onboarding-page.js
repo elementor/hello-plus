@@ -2,6 +2,7 @@ import Box from '@elementor/ui/Box';
 import { ThemeProvider } from '@elementor/ui/styles';
 import { __ } from '@wordpress/i18n';
 import { useCallback, useState } from 'react';
+
 import { useAdminContext } from '../hooks/use-admin-context';
 import { useGetCurrentStep } from '../hooks/use-get-current-step';
 import Modal from '@elementor/ui/Modal';
@@ -26,7 +27,6 @@ const style = {
 export const OnboardingPage = () => {
 	const [ message, setMessage ] = useState( '' );
 	const [ severity, setSeverity ] = useState( 'info' );
-	const [ open, setOpen ] = useState( true );
 	const [ loading, setLoading ] = useState( false );
 
 	const { onboardingSettings: { nonce, modalCloseRedirectUrl } = {} } = useAdminContext();
@@ -78,7 +78,7 @@ export const OnboardingPage = () => {
 
 	return (
 		<ThemeProvider colorScheme="auto">
-			<Modal open={ open } sx={ { zIndex: 100000 } } >
+			<Modal open sx={ { zIndex: 100000 } } >
 				<Box style={ { ...style, display: 'flex', flexDirection: 'column' } }>
 					<TopBarContent onClose={ onClose } sx={ { borderBottom: '1px solid var(--divider-divider, rgba(0, 0, 0, 0.12))', mb: 4 } } iconSize="small" />
 					{ 0 === step && ! loading && ( <GetStarted severity={ severity } message={ message } buttonText={ buttonText } onClick={ onClick } /> ) }
@@ -87,7 +87,6 @@ export const OnboardingPage = () => {
 					{ loading && <Spinner /> }
 				</Box>
 			</Modal>
-
 		</ThemeProvider>
 	);
 };

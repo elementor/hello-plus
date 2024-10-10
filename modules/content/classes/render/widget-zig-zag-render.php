@@ -14,6 +14,10 @@ use HelloPlus\Modules\Content\Widgets\Zig_Zag;
 
 class Widget_Zig_Zag_Render {
 	protected Zig_Zag $widget;
+	const LAYOUT_CLASSNAME = 'ehp-zigzag';
+	const ITEM_CLASSNAME = 'ehp-zigzag__item-container';
+	const GRAPHIC_ELEMENT_CLASSNAME = 'ehp-zigzag__graphic-element-container';
+	const BUTTON_CLASSNAME = 'ehp-zigzag__button';
 
 	protected array $settings;
 
@@ -23,7 +27,10 @@ class Widget_Zig_Zag_Render {
 	}
 
 	public function render(): void {
-		$layout_classnames = 'e-zigzag';
+		$layout_classnames = self::LAYOUT_CLASSNAME;
+
+		$first_zigzag_direction = $this->settings['first_zigzag_direction'];
+		$layout_classnames .= ' has-direction-' . $first_zigzag_direction;
 
 		$this->widget->add_render_attribute( 'layout', [
 			'class' => $layout_classnames,
@@ -31,23 +38,23 @@ class Widget_Zig_Zag_Render {
 		?>
 		<div <?php echo $this->widget->get_render_attribute_string( 'layout' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<?php
-			$remainder = 'row' === $this->settings['first_zigzag_direction'] ? 0 : 1;
+			$remainder = 'right' === $first_zigzag_direction ? 0 : 1;
 
 			$graphic_element = $this->settings['graphic_element'];
 			$repeater = 'image' === $graphic_element ? $this->settings['image_zigzag_items'] : $this->settings['icon_zigzag_items'];
 
 			foreach ( $repeater as $key => $item ) {
-				$is_odd = $remainder !== $key % 2;
+				$is_even = $remainder === $key % 2;
 
-				$item_class = 'e-zigzag__item-container ';
+				$item_class = self::ITEM_CLASSNAME;
 
-				$item_class .= 'row' . ( $is_odd ? '-odd' : '-even' );
+				$item_class .= ' row' . ( $is_even ? '-even' : '-odd' );
 
 				$this->widget->add_render_attribute( 'zigzag-item-' . $key, [
 					'class' => $item_class,
 				] );
 				?>
-				<div class="e-zigzag__item-wrapper">
+				<div class="ehp-zigzag__item-wrapper">
 					<div <?php echo $this->widget->get_render_attribute_string( 'zigzag-item-' . $key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 						<?php
 							$this->render_graphic_element_container( $item, $key );
@@ -64,7 +71,7 @@ class Widget_Zig_Zag_Render {
 	private function render_graphic_element_container( $item, $key ) {
 		$graphic_element = $this->settings['graphic_element'];
 
-		$graphic_element_classnames = 'e-zigzag__graphic-element-container';
+		$graphic_element_classnames = self::GRAPHIC_ELEMENT_CLASSNAME;
 
 		$is_icon = 'icon' === $graphic_element && ! empty( $item['icon_graphic_icon'] );
 		$is_image = 'image' === $graphic_element && ! empty( $item['image_graphic_image']['url'] );
@@ -97,14 +104,14 @@ class Widget_Zig_Zag_Render {
 		$button_icon = $item[ $graphic_element . '_button_icon' ] ?? '';
 		$has_button = ! empty( $button_text );
 
-		$title_tag = $item[ $graphic_element . '_title_tag' ] ?? 'h2';
+		$title_tag = $this->settings['zigzag_title_tag'] ?? 'h2';
 		$title_text = $item[ $graphic_element . '_title' ] ?? '';
 		$has_title = ! empty( $title_text );
 
 		$description_text = $item[ $graphic_element . '_description' ] ?? '';
 		$has_description = ! empty( $description_text );
 
-		$button_classnames = 'e-zigzag__button';
+		$button_classnames = self::BUTTON_CLASSNAME;
 		$button_hover_animation = $this->settings['button_hover_animation'] ?? '';
 		$button_has_border = $this->settings['show_button_border'];
 		$button_corner_shape = $this->settings['button_shape'] ?? '';
@@ -112,10 +119,10 @@ class Widget_Zig_Zag_Render {
 
 		$is_graphic_image = 'image' === $graphic_element;
 		$is_graphic_icon = 'icon' === $graphic_element;
-		$text_container_classnames = 'e-zigzag__text-container';
+		$text_container_classnames = 'ehp-zigzag__text-container';
 
 		$this->widget->add_render_attribute( 'description-' . $key, [
-			'class' => 'e-zigzag__description',
+			'class' => 'ehp-zigzag__description',
 		] );
 
 		if ( ! empty( $button_type ) ) {
@@ -154,7 +161,7 @@ class Widget_Zig_Zag_Render {
 		?>
 		<div <?php echo $this->widget->get_render_attribute_string( 'text-container-' . $key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<?php if ( $has_title ) {
-				$title_output = sprintf( '<%1$s %2$s %3$s>%4$s</%1$s>', Utils::validate_html_tag( $title_tag ), $this->widget->get_render_attribute_string( 'heading' ), 'class="e-zigzag__title"', esc_html( $title_text ) );
+				$title_output = sprintf( '<%1$s %2$s %3$s>%4$s</%1$s>', Utils::validate_html_tag( $title_tag ), $this->widget->get_render_attribute_string( 'heading' ), 'class="ehp-zigzag__title"', esc_html( $title_text ) );
 				// Escaped above
 				Utils::print_unescaped_internal_string( $title_output );
 			} ?>
@@ -162,13 +169,13 @@ class Widget_Zig_Zag_Render {
 				<p <?php echo $this->widget->get_render_attribute_string( 'description-' . $key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php echo esc_html( $description_text ); ?></p>
 			<?php } ?>
 			<?php if ( $has_button ) { ?>
-				<div class="e-zigzag__button-container">
+				<div class="ehp-zigzag__button-container">
 					<a <?php echo $this->widget->get_render_attribute_string( 'button-link-' . $key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 					<?php
 						Icons_Manager::render_icon( $button_icon,
 							[
 								'aria-hidden' => 'true',
-								'class' => 'e-zigzag__button-icon',
+								'class' => 'ehp-zigzag__button-icon',
 							]
 						);
 					?>

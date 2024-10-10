@@ -6,8 +6,17 @@ import { ColumnLinkGroup } from '../linkGroup/column-link-group';
 import PhotoIcon from '@elementor/icons/PhotoIcon';
 import BrushIcon from '@elementor/icons/BrushIcon';
 import UnderlineIcon from '@elementor/icons/UnderlineIcon';
+import { useAdminContext } from '../../hooks/use-admin-context';
+
+const linksIcons = {
+	site_logo: PhotoIcon,
+	site_colors: BrushIcon,
+	site_fonts: UnderlineIcon,
+};
 
 export const QuickLinks = () => {
+	const { adminSettings: { quickLinks = [] } = {} } = useAdminContext();
+
 	return (
 		<BaseAdminPaper>
 			<Typography variant="h6">{ __( 'Quick links', 'hello-plus' ) }</Typography>
@@ -15,10 +24,12 @@ export const QuickLinks = () => {
 				{ __( 'These quick actions will get your site airborne in a flash.', 'hello-plus' ) }
 			</Typography>
 			<Stack direction="row" gap={ 9 }>
-				<ColumnLinkGroup links={ [ { title: __( 'Site Name', 'hello-plus' ) } ] } />
-				<ColumnLinkGroup links={ [ { title: __( 'Site Logo', 'hello-plus' ), Icon: PhotoIcon } ] } />
-				<ColumnLinkGroup links={ [ { title: __( 'Site Colors', 'hello-plus' ), Icon: BrushIcon } ] } />
-				<ColumnLinkGroup links={ [ { title: __( 'Site Fonts', 'hello-plus' ), Icon: UnderlineIcon } ] } />
+				{ Object.keys( quickLinks ).map( ( key ) => {
+					return (
+						<ColumnLinkGroup key={ key } links={ [ { ...quickLinks[ key ], Icon: linksIcons[ key ] } ] } />
+					);
+				} ) }
+
 			</Stack>
 		</BaseAdminPaper>
 	);

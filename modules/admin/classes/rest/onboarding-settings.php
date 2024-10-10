@@ -7,6 +7,8 @@ use WP_REST_Server;
 
 class Onboarding_Settings {
 
+	const KITS_ENDPOINT = 'https://ms-8874.elementor.com/api/v1/kits-library/kits';
+
 	public function __construct() {
 
 		add_action(
@@ -28,6 +30,20 @@ class Onboarding_Settings {
 		);
 	}
 
+	public function get_kits() {
+		$kits = get_transient( 'e_hello_plus_kits' );
+
+		if ( ! $kits ) {
+			$kits = wp_remote_get( self::KITS_ENDPOINT );
+			$kits = wp_remote_retrieve_body( $kits );
+			$kits = json_decode( $kits, true );
+			$kits = array_slice( $kits, 0, 8 );
+			set_transient( 'e_hello_plus_kits', $kits, 24 * HOUR_IN_SECONDS );
+		}
+
+		return $kits;
+	}
+
 	public function get_onboarding_settings() {
 		$nonce = wp_create_nonce( 'updates' );
 
@@ -37,6 +53,8 @@ class Onboarding_Settings {
 					'nonce' => $nonce,
 					'elementorInstalled' => Utils::is_elementor_installed(),
 					'elementorActive' => Utils::is_elementor_active(),
+					'modalCloseRedirectUrl' => admin_url( 'admin.php?page=hello-plus' ),
+					'kits' => $this->get_kits(),
 				],
 			]
 		);

@@ -14,6 +14,13 @@ class Setup_Wizard {
 		check_ajax_referer( 'updates', 'nonce' );
 
 		$step = filter_input( INPUT_POST, 'step', FILTER_UNSAFE_RAW );
+		$allow_tracking = filter_input( INPUT_POST, 'allowTracking', FILTER_VALIDATE_BOOLEAN );
+
+		if ( $allow_tracking ) {
+			update_option( 'elementor_allow_tracking', true );
+		} else {
+			delete_option( 'elementor_allow_tracking' );
+		}
 
 		switch ( $step ) {
 			case 'install-elementor':

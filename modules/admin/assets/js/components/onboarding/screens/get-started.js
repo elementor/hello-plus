@@ -8,7 +8,7 @@ import Checkbox from '@elementor/ui/Checkbox';
 import Link from '@elementor/ui/Link';
 import { __ } from '@wordpress/i18n';
 
-export const GetStarted = ( { message, buttonText, onClick, severity } ) => {
+export const GetStarted = ( { message, buttonText, onClick, severity, allowTracking, setAllowTracking } ) => {
 	return (
 		<>
 			<Stack direction="column" alignItems="center" justifyContent="center">
@@ -36,7 +36,7 @@ export const GetStarted = ( { message, buttonText, onClick, severity } ) => {
 			<Stack direction="column" alignItems="center" justifyContent="center" sx={ { marginTop: 'auto', pb: 4 } }>
 				<Stack sx={ { maxWidth: 'fit-content' } } alignItems="center" justifyContent="center">
 					<Stack direction="row" alignItems="center" justifyContent="center" >
-						<Checkbox sx={ { p: 0.5 } } size="small" defaultChecked color="default" />
+						<Checkbox sx={ { p: 0.5 } } size="small" checked={ allowTracking } onClick={ () => setAllowTracking( ! allowTracking ) } color="default" />
 						<Typography variant="body1" align="center" color="text.tertiary">
 							{ __( 'Become a super contributor by sharing non-sensitive plugin data to help us improve the tools you use every day.', 'hello-plus' ) }
 						</Typography>

@@ -20,7 +20,7 @@ export const useGetCurrentStep = () => {
 		if ( elementorInstalled && elementorActive ) {
 			setStepAction( 'install-kit' );
 			setButtonText( __( 'Install Kit', 'hello-plus' ) );
-			setStep( 0 );
+			setStep( 1 );
 		}
 	}, [ elementorInstalled, elementorActive ] );
 

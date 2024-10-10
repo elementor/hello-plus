@@ -109,7 +109,7 @@ class Admin_Config {
 	}
 
 	public function get_open_homepage_with_tab( $action ) {
-		return get_edit_post_link( get_option( 'page_on_front' ), 'admin' ) . '&action=elementor&active-document=34&tab=' . $action;
+		return get_edit_post_link( get_option( 'page_on_front' ), 'admin' ) . '&action=elementor&active-document=34&active-tab=' . $action;
 	}
 
 	public function get_quicklinks( $config ) {

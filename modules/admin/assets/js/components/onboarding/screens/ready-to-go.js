@@ -1,12 +1,10 @@
 import Stack from '@elementor/ui/Stack';
 import { Navigation } from '../navigation';
 import Typography from '@elementor/ui/Typography';
-import Alert from '@elementor/ui/Alert';
-import Box from '@elementor/ui/Box';
 import Button from '@elementor/ui/Button';
 import { __ } from '@wordpress/i18n';
 
-export const ReadyToGo = ( { message, buttonText, onClick, severity } ) => {
+export const ReadyToGo = ( { modalCloseRedirectUrl } ) => {
 	return (
 		<Stack direction="column" alignItems="center" justifyContent="center">
 			<Stack sx={ { maxWidth: 662 } } alignItems="center" justifyContent="center" gap={ 4 }>
@@ -23,10 +21,18 @@ export const ReadyToGo = ( { message, buttonText, onClick, severity } ) => {
 							)
 						}
 					</Typography>
-					{ message && <Alert severity={ severity }>{ message }</Alert> }
-					<Box p={ 1 } mt={ 6 }>
-						{ buttonText && <Button variant="contained" onClick={ onClick }>{ buttonText }</Button> }
-					</Box>
+					<Stack direction="row" gap={ 1 } mt={ 5 }>
+						<Button variant="outlined" color="primary" onClick={ () => {
+							window.location.href = modalCloseRedirectUrl;
+						} }>
+							{ __( 'Customize my site', 'hello-plus' ) }
+						</Button>
+						<Button variant="contained" color="primary" onClick={ () => {
+							window.location.href = '/';
+						} }>
+							{ __( 'View my site', 'hello-plus' ) }
+						</Button>
+					</Stack>
 				</Stack>
 			</Stack>
 		</Stack>

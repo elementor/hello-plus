@@ -534,7 +534,7 @@ class Header extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'style_navigation_typography',
-				'selector' => '{{WRAPPER}} .ehp-hader__menu .menu-item a',
+				'selector' => '{{WRAPPER}} .ehp-header__item',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_ACCENT,
 				],
@@ -904,7 +904,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#E0E1E2',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-dropdown-divider-color: {{VALUE}}',
 				],
 				'condition' => [
 					'style_responsive_menu_divider' => 'yes',

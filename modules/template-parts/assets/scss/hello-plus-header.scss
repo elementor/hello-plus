@@ -84,8 +84,8 @@
 	--header-focus-active-highlight-padding-inline: var(--header-focus-active-highlight-padding-inline-default);
 	--header-focus-active-highlight-padding-block: var(--header-focus-active-highlight-padding-block-default);
 
-	--header-dropdown-item-spacing: 32px;
 	--header-dropdown-text-align: flex-start;
+	--header-dropdown-divider-color: #E0E1E2;
 
 	--header-box-padding-block-start: 16px;
 	--header-box-padding-block-end: 16px;
@@ -256,26 +256,17 @@
 
 	&__dropdown {
 		background-color: inherit;
-		display: none;
-		gap: var(--header-dropdown-item-spacing);
+		display: flex;
+		gap: var(--header-menu-item-spacing);
 		left: -16px;
 		list-style: none;
-		padding: 16px 32px;
+		padding: 0;
 		position: absolute;
 		top: calc(100% + var(--header-box-padding-block-end));
 		width: auto;
 
 		.menu-item {
 			flex-grow: 1;
-		}
-
-		&.has-layout-horizontal {
-			flex-direction: row;
-		}
-
-		&.has-layout-vertical {
-			align-items: var(--header-dropdown-text-align);
-			flex-direction: column;
 		}
 
 		&.has-shape {
@@ -298,7 +289,7 @@
 		}
 	}
 
-	&__sub-item {
+	&__item--sub-level {
 		white-space: nowrap;
 	}
 
@@ -330,18 +321,6 @@
 				color: var(--header-menu-item-color-active);
 			}
 		}
-
-		&.menu-item-has-children {
-
-			&:hover,
-			&:focus {
-
-				.ehp-header__dropdown {
-					// TODO: to this in JS
-					display: flex;
-				}
-			}
-		}
 	}
 
 	&__menu {
@@ -350,41 +329,6 @@
 		gap: var(--header-menu-item-spacing);
 		list-style-type: none;
 		padding: 0;
-
-		&.has-pointer-hover {
-
-			&-underline {
-
-				.ehp-header__item:hover,
-				.ehp-header__item:focus {
-					position: relative;
-
-					&:after {
-						background-color: var(--header-pointer-hover-underline-color);
-						bottom: -5px;
-						height: var(--header-pointer-hover-underline-width);
-						content: "";
-						left: 0;
-						position: absolute;
-						width: 100%;
-					}
-				}
-			}
-
-			&-highlight {
-
-				.ehp-header__item {
-					border-radius: 8px;
-					padding-inline: var(--header-pointer-hover-highlight-padding-inline);
-					padding-block: var(--header-pointer-hover-highlight-padding-block);
-
-					&:hover,
-					&:focus {
-						background-color: var(--header-pointer-hover-highlight-bg-color);
-					}
-				}
-			}
-		}
 
 		&.has-focus-active {
 
@@ -442,11 +386,13 @@
 			}
 
 			&__dropdown {
+				align-items: var(--header-dropdown-text-align);
 				border-radius: unset;
 				flex-direction: column;
 				left: unset;
 				top: unset;
 				position: relative;
+				width: 100%;
 			}
 
 			&__navigation {
@@ -475,14 +421,31 @@
 			}
 
 			&__menu {
+				align-items: var(--header-dropdown-text-align);
 				display: flex;
 				flex-direction: column;
+
+				&.has-responsive-divider {
+
+					& > .menu-item {
+						border-bottom: 1px solid var(--header-dropdown-divider-color);
+						padding-block-end: var(--header-menu-item-spacing);
+						width: 100%;
+					}
+				}
 			}
 		}
 
 		.menu-item.menu-item-has-children {
+			align-items: var(--header-dropdown-text-align);
 			display: flex;
 			flex-direction: column;
+			margin-bottom: var(--header-menu-item-spacing);
+			width: 100%;
+			
+			& .ehp-header__item--top-level {
+				margin-bottom: var(--header-menu-item-spacing);
+			}
 		}
 	}
 
@@ -500,6 +463,56 @@
 
 			&__ghost-element {
 				display: none;
+			}
+
+			&__dropdown {
+				padding: 16px 32px;
+
+				&.has-layout-horizontal {
+					flex-direction: row;
+				}
+		
+				&.has-layout-vertical {
+					flex-direction: column;
+				}
+			}
+
+			&__menu {
+
+				&.has-pointer-hover {
+
+					&-underline {
+		
+						.ehp-header__item:hover,
+						.ehp-header__item:focus {
+							position: relative;
+		
+							&:after {
+								background-color: var(--header-pointer-hover-underline-color);
+								bottom: -5px;
+								height: var(--header-pointer-hover-underline-width);
+								content: "";
+								left: 0;
+								position: absolute;
+								width: 100%;
+							}
+						}
+					}
+		
+					&-highlight {
+		
+						.ehp-header__item {
+							border-radius: 8px;
+							padding-inline: var(--header-pointer-hover-highlight-padding-inline);
+							padding-block: var(--header-pointer-hover-highlight-padding-block);
+		
+							&:hover,
+							&:focus {
+								background-color: var(--header-pointer-hover-highlight-bg-color);
+							}
+						}
+					}
+				}
 			}
 		}
 	}

@@ -265,7 +265,7 @@ class Widget_Header_Render {
 	}
 
 	public function handle_link_classes( $atts, $item, $args, $depth ) {
-		$classes = $depth ? 'ehp-header__sub-item' : 'ehp-header__item';
+		$classes = $depth ? 'ehp-header__item ehp-header__item--sub-level' : 'ehp-header__item ehp-header__item--top-level';
 		$is_anchor = false !== strpos( $atts['href'], '#' );
 
 		if ( ! $is_anchor && in_array( 'current-menu-item', $item->classes ) ) {

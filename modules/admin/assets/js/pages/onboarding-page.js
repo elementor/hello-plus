@@ -1,30 +1,54 @@
-import Button from '@elementor/ui/Button';
 import Box from '@elementor/ui/Box';
 import { ThemeProvider } from '@elementor/ui/styles';
 import { __ } from '@wordpress/i18n';
 import { useCallback, useState } from 'react';
-import Alert from '@elementor/ui/Alert';
+
 import { useAdminContext } from '../hooks/use-admin-context';
 import { useGetCurrentStep } from '../hooks/use-get-current-step';
+import Modal from '@elementor/ui/Modal';
+
+import { TopBarContent } from '../components/top-bar/top-bar-content';
+import { GetStarted } from '../components/onboarding/screens/get-started';
+import Spinner from '../components/spinner/spinner';
+import { InstallKit } from '../components/onboarding/screens/install-kit';
+import { ReadyToGo } from '../components/onboarding/screens/ready-to-go';
+import { Preview } from '../components/onboarding/screens/preview';
+
+const style = {
+	position: 'fixed',
+	top: 0,
+	left: 0,
+	width: '100%',
+	height: '100%',
+	background: 'white',
+	boxShadow: 24,
+	p: 4,
+};
 
 export const OnboardingPage = () => {
 	const [ message, setMessage ] = useState( '' );
 	const [ severity, setSeverity ] = useState( 'info' );
+	const [ loading, setLoading ] = useState( false );
+	const [ previewKit, setPreviewKit ] = useState( null );
+	const [ allowTracking, setAllowTracking ] = useState( true );
 
-	const { onboardingSettings: { nonce } = {} } = useAdminContext();
-	const { step, buttonText } = useGetCurrentStep();
+	const { onboardingSettings: { nonce, modalCloseRedirectUrl, kits } = {} } = useAdminContext();
+	const { stepAction, buttonText, step, setStep } = useGetCurrentStep();
 
 	const onClick = useCallback( async () => {
 		setMessage( '' );
 
 		const data = {
-			step,
+			step: stepAction,
 			_wpnonce: nonce,
 			slug: 'elementor',
+			allowTracking,
 		};
 
+		setLoading( true );
+
 		try {
-			switch ( step ) {
+			switch ( stepAction ) {
 				case 'install-elementor':
 					setMessage( __( 'Installing Elementor plugin…', 'hello-plus' ) );
 					const response = await wp.ajax.post( 'hello_plus_setup_wizard', data );
@@ -36,14 +60,20 @@ export const OnboardingPage = () => {
 						if ( activate.ok ) {
 							setSeverity( 'success' );
 							setMessage( __( 'Elementor plugin has been installed and activated' ) );
+						} else {
+							throw new Error( __( 'Failed to activate Elementor plugin', 'hello-plus' ) );
 						}
 					}
+
+					setStep( 1 );
+					setMessage( '' );
 					break;
 				case 'activate-elementor':
 					setMessage( __( 'Activating Elementor plugin…', 'hello-plus' ) );
 					await wp.ajax.post( 'hello_plus_setup_wizard', data );
-					setMessage( __( 'Elementor plugin has been activated.' ) );
 					data.slug = 'elementor';
+					setStep( 1 );
+					setMessage( '' );
 					break;
 				case 'install-kit':
 					break;
@@ -51,15 +81,29 @@ export const OnboardingPage = () => {
 		} catch ( error ) {
 			setMessage( error.errorMessage );
 			setSeverity( 'error' );
+		} finally {
+			setLoading( false );
 		}
-	}, [ nonce, step ] );
+	}, [ allowTracking, nonce, setStep, stepAction ] );
+
+	const onClose = () => {
+		window.location.href = modalCloseRedirectUrl;
+	};
 
 	return (
 		<ThemeProvider colorScheme="auto">
-			{ message && <Alert severity={ severity }>{ message }</Alert> }
-			<Box p={ 1 }>
-				{ buttonText && <Button onClick={ onClick }>{ buttonText }</Button> }
-			</Box>
+			<Modal open sx={ { zIndex: 100000 } } >
+				<Box style={ { ...style, display: 'flex', flexDirection: 'column' } }>
+					{ ! previewKit && ( <TopBarContent onClose={ onClose } sx={ { borderBottom: '1px solid var(--divider-divider, rgba(0, 0, 0, 0.12))', mb: 4 } } iconSize="small" /> ) }
+					{ 0 === step && ! loading && ! previewKit && (
+						<GetStarted allowTracking={ allowTracking } setAllowTracking={ setAllowTracking } severity={ severity } message={ message } buttonText={ buttonText } onClick={ onClick } />
+					) }
+					{ 1 === step && ! loading && ! previewKit && ( <InstallKit setPreviewKit={ setPreviewKit } severity={ severity } message={ message } onClick={ onClick } kits={ kits } /> ) }
+					{ 2 === step && ! loading && ! previewKit && ( <ReadyToGo modalCloseRedirectUrl={ modalCloseRedirectUrl } /> ) }
+					{ previewKit && <Preview slug={ previewKit } setStep={ setStep } setPreviewKit={ setPreviewKit } title="Title" /> }
+					{ loading && <Spinner /> }
+				</Box>
+			</Modal>
 		</ThemeProvider>
 	);
 };

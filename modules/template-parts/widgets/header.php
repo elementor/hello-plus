@@ -246,9 +246,6 @@ class Header extends Widget_Base {
 					],
 					'default' => 'mobile-portrait',
 					'separator' => 'after',
-					'selectors' => [
-						'{{WRAPPER}} .ehp-header' => '--header-navigation-breakpoint: {{VALUE}};',
-					],
 				]
 			);
 
@@ -415,7 +412,7 @@ class Header extends Widget_Base {
 						'icon' => 'eicon-align-start-h',
 					],
 					'2' => [
-						'title' => esc_html__( 'End', 'hello-plus' ),
+						'title' => esc_html__( 'Center', 'hello-plus' ),
 						'icon' => 'eicon-align-center-h',
 					],
 				],
@@ -1060,7 +1057,7 @@ class Header extends Widget_Base {
 				'name' => 'background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .ehp-cta',
+				'selector' => '{{WRAPPER}} .ehp-header, {{WRAPPER}} .ehp-header__dropdown, {{WRAPPER}} .ehp-header__navigation',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
@@ -1103,7 +1100,7 @@ class Header extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-button-border-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-header' => '--header-box-border-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'show_box_border' => 'yes',
@@ -1118,7 +1115,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#555963',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-button-border-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-box-border-color: {{VALUE}}',
 				],
 				'condition' => [
 					'show_box_border' => 'yes',
@@ -1130,7 +1127,7 @@ class Header extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'box_box_shadow',
-				'selector' => '{{WRAPPER}} .ehp-hero__button',
+				'selector' => '{{WRAPPER}} .ehp-header',
 			]
 		);
 
@@ -1140,8 +1137,15 @@ class Header extends Widget_Base {
 				'label' => esc_html__( 'Padding', 'hello-plus' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
+				'default' => [
+					'top' => 16,
+					'right' => 32,
+					'bottom' => 16,
+					'left' => 32,
+					'unit' => 'px',
+				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-button-padding-block-end: {{BOTTOM}}{{UNIT}}; --hero-button-padding-block-start: {{TOP}}{{UNIT}}; --hero-button-padding-inline-end: {{RIGHT}}{{UNIT}}; --hero-button-padding-inline-start: {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-header' => '--header-box-padding-block-end: {{BOTTOM}}{{UNIT}}; --header-box-padding-block-start: {{TOP}}{{UNIT}}; --header-box-padding-inline-end: {{RIGHT}}{{UNIT}}; --header-box-padding-inline-start: {{LEFT}}{{UNIT}};',
 				],
 			]
 		);

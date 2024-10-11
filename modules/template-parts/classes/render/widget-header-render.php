@@ -26,6 +26,17 @@ class Widget_Header_Render {
 
 	public function render(): void {
 		$layout_classnames = self::LAYOUT_CLASSNAME;
+		$navigation_breakpoint = $this->settings['navigation_breakpoint'] ?? '';
+		$box_border = $this->settings['show_box_border'] ?? '';
+
+		if ( ! empty( $navigation_breakpoint ) ) {
+			$layout_classnames .= ' has-navigation-breakpoint-' . $navigation_breakpoint;
+		}
+
+		if ( 'yes' === $box_border ) {
+			$layout_classnames .= ' has-box-border';
+		}
+
 		$this->widget->add_render_attribute( 'layout', [
 			'class' => $layout_classnames,
 		] );
@@ -60,9 +71,7 @@ class Widget_Header_Render {
 		?>
 		<a <?php echo $this->widget->get_render_attribute_string( 'site-link' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<?php if ( $site_logo_image ) { ?>
-				<div class="ehp-header__site-logo">
-					<?php Group_Control_Image_Size::print_attachment_image_html( $this->settings, 'site_logo_image' ); ?>
-				</div>
+				<?php Group_Control_Image_Size::print_attachment_image_html( $this->settings, 'site_logo_image' ); ?>
 			<?php } else {
 				$site_title_output = sprintf( '<%1$s %2$s %3$s>%4$s</%1$s>', Utils::validate_html_tag( $site_title_tag ), $this->widget->get_render_attribute_string( 'heading' ), 'class="ehp-header__site-title"', esc_html( $site_title_text ) );
 				// Escaped above
@@ -82,6 +91,7 @@ class Widget_Header_Render {
 
 		$pointer_hover_type = $this->settings['style_navigation_pointer_hover'] ?? '';
 		$focus_active_type = $this->settings['style_navigation_focus_active'] ?? '';
+		$has_responsive_divider = $this->settings['style_responsive_menu_divider'];
 
 		if ( 'none' !== $pointer_hover_type ) {
 			$menu_classname .= ' has-pointer-hover-' . $pointer_hover_type;
@@ -89,6 +99,10 @@ class Widget_Header_Render {
 
 		if ( 'none' !== $focus_active_type ) {
 			$menu_classname .= ' has-focus-active-' . $focus_active_type;
+		}
+
+		if ( 'yes' === $has_responsive_divider ) {
+			$menu_classname .= ' has-responsive-divider';
 		}
 
 		$settings = $this->settings;
@@ -131,10 +145,13 @@ class Widget_Header_Render {
 			'ehp-header__navigation',
 		] );
 		?>
+		<span class="ehp-header__ghost-element"></span>
+
 		<nav <?php $this->widget->print_render_attribute_string( 'main-menu' ); ?>>
 			<?php
 				// PHPCS - escaped by WordPress with "wp_nav_menu"
 				echo $menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				$this->render_ctas_container();
 			?>
 		</nav>
 		<?php
@@ -143,13 +160,7 @@ class Widget_Header_Render {
 
 	private function render_menu_toggle() {
 		$toggle_icon = $this->settings['navigation_menu_icon'];
-		$navigation_breakpoint = $this->settings['navigation_breakpoint'] ?? '';
-
 		$toggle_classname = 'ehp-header__button-toggle';
-
-		if ( ! empty( $navigation_breakpoint ) ) {
-			$toggle_classname .= ' has-navigation-breakpoint-' . $navigation_breakpoint;
-		}
 
 		$this->widget->add_render_attribute( 'button-toggle', [
 			'class' => $toggle_classname,
@@ -175,7 +186,7 @@ class Widget_Header_Render {
 		<?php
 	}
 
-	public function render_ctas_container(): void {
+	protected function render_ctas_container() {
 		$primary_cta_button_text = $this->settings['primary_cta_button_text'];
 		$secondary_cta_button_text = $this->settings['secondary_cta_button_text'];
 		$has_primary_button = ! empty( $primary_cta_button_text );

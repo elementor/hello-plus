@@ -16,9 +16,9 @@ export const Welcome = () => {
 			</Typography>
 			<Stack gap={ 1 } direction="row">
 				{
-					welcome.map( ( { title, link, variant } ) => {
+					welcome.map( ( { title, link, variant, color } ) => {
 						return (
-							<Button key={ title } href={ link } variant={ variant } >{ title }</Button>
+							<Button key={ title } href={ link } variant={ variant } color={ color } >{ title }</Button>
 						);
 					} )
 				}

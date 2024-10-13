@@ -298,7 +298,7 @@ class Widget_Header_Render {
 		return $classes;
 	}
 
-	function add_svg_icon_to_menu_item( $item_output, $item, $depth, $args ) {
+	public function add_svg_icon_to_menu_item( $item_output, $item, $depth, $args ) {
 
 		if ( in_array( 'menu-item-has-children', $item->classes ) ) {
 			$submenu_icon = $this->settings['navigation_menu_submenu_icon'];
@@ -309,10 +309,10 @@ class Widget_Header_Render {
 					'class' => 'ehp-header__submenu-toggle-icon',
 				]
 			);
-	
+
 			$item_output = str_replace( '</a>', $svg_icon . '</a>', $item_output );
 		}
-	
+
 		return $item_output;
 	}
 }

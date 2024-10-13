@@ -89,8 +89,8 @@ class Header extends Widget_Base {
 				'label' => esc_html__( 'Brand', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'logo' => esc_html__( 'Site Logo' , 'hello-plus' ),
-					'title' => esc_html__( 'Site Title', 'hello-plus' )
+					'logo' => esc_html__( 'Site Logo', 'hello-plus' ),
+					'title' => esc_html__( 'Site Title', 'hello-plus' ),
 				],
 				'default' => 'logo',
 				'tablet_default' => 'logo',
@@ -101,7 +101,7 @@ class Header extends Widget_Base {
 		$this->add_control(
 			'site_logo_image',
 			[
-				'label' => esc_html__( 'Choose Image', 'elementor-pro' ),
+				'label' => esc_html__( 'Choose Image', 'hello-plus' ),
 				'type' => Controls_Manager::MEDIA,
 				'default' => [
 					'url' => $this->get_site_logo_url(),

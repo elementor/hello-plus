@@ -46,6 +46,14 @@ class Module extends Module_Base {
 			[],
 			HELLO_PLUS_ELEMENTOR_VERSION
 		);
+
+		wp_enqueue_script(
+			'hello-plus-header',
+			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-header.js',
+			[ 'jquery' ],
+			HELLO_PLUS_ELEMENTOR_VERSION,
+			true
+		);
 	}
 
 	/**

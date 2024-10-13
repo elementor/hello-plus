@@ -120,7 +120,7 @@ class Widget_Header_Render {
 		// Add custom filter to handle Nav Menu HTML output.
 		add_filter( 'nav_menu_link_attributes', [ $this, 'handle_link_classes' ], 10, 4 );
 		add_filter( 'nav_menu_submenu_css_class', [ $this, 'handle_sub_menu_classes' ] );
-		add_filter( 'walker_nav_menu_start_el', [ $this, 'add_svg_icon_to_menu_item' ], 10, 4 );
+		add_filter( 'walker_nav_menu_start_el', [ $this, 'handle_walker_menu_start_el' ], 10, 4 );
 		add_filter( 'nav_menu_item_id', '__return_empty_string' );
 
 		// General Menu.
@@ -129,7 +129,7 @@ class Widget_Header_Render {
 		// Remove all our custom filters.
 		remove_filter( 'nav_menu_link_attributes', [ $this, 'handle_link_classes' ] );
 		remove_filter( 'nav_menu_submenu_css_class', [ $this, 'handle_sub_menu_classes' ] );
-		remove_filter( 'walker_nav_menu_start_el', [ $this, 'add_svg_icon_to_menu_item' ] );
+		remove_filter( 'walker_nav_menu_start_el', [ $this, 'handle_walker_menu_start_el' ] );
 		remove_filter( 'nav_menu_item_id', '__return_empty_string' );
 
 		if ( empty( $menu_html ) ) {
@@ -176,11 +176,12 @@ class Widget_Header_Render {
 				Icons_Manager::render_icon( $toggle_icon,
 					[
 						'aria-hidden' => 'true',
-						'class' => 'ehp-header__toggle-icon',
+						'class' => 'ehp-header__toggle-icon ehp-header__toggle-icon--open',
 						'role' => 'presentation',
 					]
 				);
 			?>
+			<i class="eicon-close ehp-header__toggle-icon ehp-header__toggle-icon--close"></i>
 			<span class="elementor-screen-only"><?php echo esc_html__( 'Menu', 'hello-plus' ); ?></span>
 		</button>
 		<?php
@@ -298,7 +299,7 @@ class Widget_Header_Render {
 		return $classes;
 	}
 
-	public function add_svg_icon_to_menu_item( $item_output, $item, $depth, $args ) {
+	public function handle_walker_menu_start_el( $item_output, $item, $depth, $args ) {
 
 		if ( in_array( 'menu-item-has-children', $item->classes ) ) {
 			$submenu_icon = $this->settings['navigation_menu_submenu_icon'];

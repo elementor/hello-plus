@@ -9,10 +9,10 @@ class elementorHelloPlusHeaderHandler {
         this.settings = {
             selectors: {
                 main: '.ehp-header',
-                buttonToggle: '.ehp-header__button-toggle',
-				menuHasChildren: '.menu-item-has-children',
-				itemSubMenu: '.menu-item-has-children a',
+                navigationToggle: '.ehp-header__button-toggle',
+				dropdownToggle: '.ehp-header__dropdown-toggle',
 				navigation: '.ehp-header__navigation',
+				dropdown: '.ehp-header__dropdown',
             },
 			constants: {
 				mobilePortrait: 767,
@@ -28,27 +28,28 @@ class elementorHelloPlusHeaderHandler {
         this.elements = {
             window,
             main: document.querySelector( this.settings.selectors.main ),
-            buttonToggle: document.querySelector( this.settings.selectors.buttonToggle ),
-			menuHasChildren: document.querySelectorAll( this.settings.selectors.menuHasChildren ),
-			itemSubMenu: document.querySelectorAll( this.settings.selectors.itemSubMenu ),
+            navigationToggle: document.querySelector( this.settings.selectors.navigationToggle ),
+			dropdownToggle: document.querySelectorAll( this.settings.selectors.dropdownToggle ),
 			navigation: document.querySelector( this.settings.selectors.navigation ),
+			dropdown: document.querySelector( this.settings.selectors.dropdown ),
         };
     }
 
     bindEvents() {
-		if ( this.elements.buttonToggle ) {
-			this.elements.buttonToggle.addEventListener( 'click', () => this.toggleNavigation() );
+		if ( this.elements.navigationToggle ) {
+			this.elements.navigationToggle.addEventListener( 'click', () => this.toggleNavigation() );
 		}
 
-		if ( this.elements.itemSubMenu.length > 0 ) {
-			this.elements.itemSubMenu.forEach( ( item ) => {
-				item.addEventListener( 'click', ( event ) => this.toggleSubMenu( event ) );
+		if ( this.elements.dropdownToggle.length > 0 ) {
+			this.elements.dropdownToggle.forEach( ( menuItem ) => {
+				menuItem.addEventListener( 'click', ( event ) => this.toggleSubMenu( event ) );
 			} );
 		}
 
-		window.addEventListener( 'resize', () => this.onResize() );
-
-		this.onInit();
+		if ( this.elements.main ) {
+			window.addEventListener( 'resize', () => this.onResize() );
+			this.onInit();
+		}
     }
 
 	onInit() {
@@ -61,15 +62,14 @@ class elementorHelloPlusHeaderHandler {
 	}
 
 	handleAriaAttributesDropdown() {
-		this.elements.menuHasChildren.forEach( ( item ) => {
-			item.querySelector( 'a' ).setAttribute( 'aria-expanded', 'false' );
-			item.querySelector( '.sub-menu' ).setAttribute( 'aria-hidden', 'true' );
+		this.elements.dropdownToggle.forEach( ( item ) => {
+			item.nextElementSibling.setAttribute( 'aria-hidden', 'true' );
 		} );
 	}
 
 	handleAriaAttributesMenu() {
 		if ( this.isResponsiveBreakpoint() ) {
-			this.elements.buttonToggle.setAttribute( 'aria-expanded', 'false' );
+			this.elements.navigationToggle.setAttribute( 'aria-expanded', 'false' );
 			this.elements.navigation.setAttribute( 'aria-hidden', 'true' );
 		}
 	}
@@ -81,12 +81,20 @@ class elementorHelloPlusHeaderHandler {
 		const ariaHidden = subMenu.getAttribute( 'aria-hidden' );
 
 		if ( 'true' === ariaHidden ) {
-			itemTarget.setAttribute( 'aria-expanded', 'true' );
-			subMenu.setAttribute( 'aria-hidden', 'false' );
+			this.openSubMenu( itemTarget, subMenu );
 		} else {
-			itemTarget.setAttribute( 'aria-expanded', 'false' );
-			subMenu.setAttribute( 'aria-hidden', 'true' );
+			this.closeSubMenu( itemTarget, subMenu );
 		}
+	}
+
+	openSubMenu( itemTarget, subMenu ) {
+		itemTarget.setAttribute( 'aria-expanded', 'true' );
+		subMenu.setAttribute( 'aria-hidden', 'false' );
+	}
+
+	closeSubMenu( itemTarget, subMenu ) {
+		itemTarget.setAttribute( 'aria-expanded', 'false' );
+		subMenu.setAttribute( 'aria-hidden', 'true' );
 	}
 
 	isResponsiveBreakpoint() {
@@ -113,10 +121,10 @@ class elementorHelloPlusHeaderHandler {
 
 		if ( 'true' === isNavigationHidden ) {
 			this.elements.navigation.setAttribute( 'aria-hidden', 'false' );
-			this.elements.buttonToggle.setAttribute( 'aria-expanded', 'true' );
+			this.elements.navigationToggle.setAttribute( 'aria-expanded', 'true' );
 		} else {
 			this.elements.navigation.setAttribute( 'aria-hidden', 'true' );
-			this.elements.buttonToggle.setAttribute( 'aria-expanded', 'false' );
+			this.elements.navigationToggle.setAttribute( 'aria-expanded', 'false' );
 		}
     }
 }

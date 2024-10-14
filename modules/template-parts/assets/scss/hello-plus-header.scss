@@ -302,6 +302,7 @@
 		position: absolute;
 		top: calc(100% + var(--header-box-padding-block-end));
 		width: auto;
+		z-index: 9;
 
 		.menu-item {
 			flex-grow: 1;
@@ -351,6 +352,17 @@
 				transform: rotate(180deg);
 				transition: $transition;
 			}
+		}
+	}
+
+	&__dropdown-toggle {
+		border: unset;
+		border-radius: unset;
+		padding: unset;
+
+		&:hover,
+		&:focus {
+			background: unset;
 		}
 	}
 

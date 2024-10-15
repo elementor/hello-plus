@@ -120,7 +120,7 @@ class Header extends Widget_Base {
 				'show_label' => false,
 				'button_type' => 'default elementor-button-center',
 				'text' => esc_html__( 'Change Site Logo', 'hello-plus' ),
-				'event' => 'elementorProSiteLogo:change',
+				'event' => 'helloPlusLogo:change',
 				'condition' => [
 					'site_logo_brand_select' => 'logo',
 				],
@@ -1500,7 +1500,7 @@ class Header extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-image-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-header' => '--header-float-offset: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'behavior_float' => 'yes',
@@ -1525,7 +1525,7 @@ class Header extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-image-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-header' => '--header-float-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'behavior_float' => 'yes',
@@ -1560,7 +1560,8 @@ class Header extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		// TODO: check if this needs to be responsive
+		$this->add_control(
 			'behavior_onscroll_select',
 			[
 				'label' => esc_html__( 'Sticky', 'hello-plus' ),
@@ -1583,9 +1584,20 @@ class Header extends Widget_Base {
 				'label_off' => esc_html__( 'No', 'hello-plus' ),
 				'return_value' => 'yes',
 				'default' => 'yes',
-				'condition' => [
-					'behavior_onscroll_select' => 'always',
-					'site_logo_brand_select' => 'site-logo',
+				'conditions' => [
+					'relation' => 'and',
+					'terms' => [
+						[
+							'name' => 'behavior_onscroll_select',
+							'operator' => '==',
+							'value' => 'always',
+						],
+						[
+							'name' => 'site_logo_brand_select',
+							'operator' => '==',
+							'value' => 'logo',
+						],
+					],
 				],
 			]
 		);
@@ -1619,9 +1631,25 @@ class Header extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .ehp-hero' => '--hero-image-height: {{SIZE}}{{UNIT}};',
 				],
-				'condition' => [
-					'behavior_sticky_scale_logo' => 'yes',
-					'site_logo_brand_select' => 'site-logo',
+				'conditions' => [
+					'relation' => 'and',
+					'terms' => [
+						[
+							'name' => 'behavior_onscroll_select',
+							'operator' => '==',
+							'value' => 'always',
+						],
+						[
+							'name' => 'behavior_sticky_scale_logo',
+							'operator' => '==',
+							'value' => 'yes',
+						],
+						[
+							'name' => 'site_logo_brand_select',
+							'operator' => '==',
+							'value' => 'logo',
+						],
+					],
 				],
 			]
 		);
@@ -1635,9 +1663,20 @@ class Header extends Widget_Base {
 				'label_off' => esc_html__( 'No', 'hello-plus' ),
 				'return_value' => 'yes',
 				'default' => 'yes',
-				'condition' => [
-					'behavior_onscroll_select' => 'always',
-					'site_logo_brand_select' => 'site-title',
+				'conditions' => [
+					'relation' => 'and',
+					'terms' => [
+						[
+							'name' => 'behavior_onscroll_select',
+							'operator' => '==',
+							'value' => 'always',
+						],
+						[
+							'name' => 'site_logo_brand_select',
+							'operator' => '==',
+							'value' => 'title',
+						],
+					],
 				],
 			]
 		);
@@ -1668,9 +1707,25 @@ class Header extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .ehp-hero' => '--hero-content-text-gap: {{SIZE}}{{UNIT}};',
 				],
-				'condition' => [
-					'behavior_sticky_scale_title' => 'yes',
-					'site_logo_brand_select' => 'site-title',
+				'conditions' => [
+					'relation' => 'and',
+					'terms' => [
+						[
+							'name' => 'behavior_onscroll_select',
+							'operator' => '==',
+							'value' => 'always',
+						],
+						[
+							'name' => 'behavior_sticky_scale_title',
+							'operator' => '==',
+							'value' => 'yes',
+						],
+						[
+							'name' => 'site_logo_brand_select',
+							'operator' => '==',
+							'value' => 'title',
+						],
+					],
 				],
 			]
 		);
@@ -1692,9 +1747,25 @@ class Header extends Widget_Base {
 					'800' => esc_html__( '800', 'hello-plus' ),
 					'900' => esc_html__( '900', 'hello-plus' ),
 				],
-				'condition' => [
-					'behavior_sticky_scale_title' => 'yes',
-					'site_logo_brand_select' => 'site-title',
+				'conditions' => [
+					'relation' => 'and',
+					'terms' => [
+						[
+							'name' => 'behavior_onscroll_select',
+							'operator' => '==',
+							'value' => 'always',
+						],
+						[
+							'name' => 'behavior_sticky_scale_title',
+							'operator' => '==',
+							'value' => 'yes',
+						],
+						[
+							'name' => 'site_logo_brand_select',
+							'operator' => '==',
+							'value' => 'title',
+						],
+					],
 				],
 			]
 		);

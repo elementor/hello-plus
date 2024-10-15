@@ -28,6 +28,9 @@ class Widget_Header_Render {
 		$layout_classnames = self::LAYOUT_CLASSNAME;
 		$navigation_breakpoint = $this->settings['navigation_breakpoint'] ?? '';
 		$box_border = $this->settings['show_box_border'] ?? '';
+		$behavior_float = $this->settings['behavior_float'];
+		$behavior_float_shape = $this->settings['behavior_float_shape'];
+		$behavior_on_scroll = $this->settings['behavior_onscroll_select'];
 
 		if ( ! empty( $navigation_breakpoint ) ) {
 			$layout_classnames .= ' has-navigation-breakpoint-' . $navigation_breakpoint;
@@ -37,8 +40,22 @@ class Widget_Header_Render {
 			$layout_classnames .= ' has-box-border';
 		}
 
+		if ( 'yes' === $behavior_float ) {
+			$layout_classnames .= ' has-behavior-float';
+		}
+
+		if ( ! empty( $behavior_float_shape ) ) {
+			$layout_classnames .= ' has-shape-' . $behavior_float_shape;
+		}
+
+		if ( ! empty( $behavior_on_scroll ) ) {
+			$layout_classnames .= ' has-behavior-onscroll-' . $behavior_on_scroll;
+		}
+
 		$this->widget->add_render_attribute( 'layout', [
 			'class' => $layout_classnames,
+			'data-scroll-behavior' => $behavior_on_scroll,
+			'data-behavior-float' => $behavior_float,
 		] );
 		?>
 		<div <?php echo $this->widget->get_render_attribute_string( 'layout' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>

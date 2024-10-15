@@ -56,6 +56,10 @@ class Module extends Module_Base {
 		);
 	}
 
+	public function get_script_depends(): array {
+		return [ 'hello-plus-header' ];
+	}
+
 	/**
 	 * @return bool
 	 */

@@ -328,7 +328,7 @@ class Widget_Header_Render {
 				]
 			);
 
-			$item_output = '<button type="button" class="ehp-header__item ehp-header__dropdown-toggle" aria-expanded="false">' . esc_html($item->title) . $svg_icon . '</button>';
+			$item_output = '<button type="button" class="ehp-header__item ehp-header__dropdown-toggle" aria-expanded="false">' . esc_html( $item->title ) . $svg_icon . '</button>';
 		}
 
 		return $item_output;

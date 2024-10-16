@@ -1057,7 +1057,7 @@ class Header extends Widget_Base {
 				'name' => 'background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .ehp-header, {{WRAPPER}} .ehp-header__dropdown, {{WRAPPER}} .ehp-header__navigation',
+				'selector' => '{{WRAPPER}} .ehp-header, {{WRAPPER}} .ehp-header .ehp-header__dropdown',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
@@ -1629,7 +1629,7 @@ class Header extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-image-height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-header' => '--header-logo-width-sticky: {{SIZE}}{{UNIT}};',
 				],
 				'conditions' => [
 					'relation' => 'and',
@@ -1705,7 +1705,7 @@ class Header extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-content-text-gap: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-header' => '--header-title-size-sticky: {{SIZE}}{{UNIT}};',
 				],
 				'conditions' => [
 					'relation' => 'and',
@@ -1746,6 +1746,9 @@ class Header extends Widget_Base {
 					'700' => esc_html__( '700', 'hello-plus' ),
 					'800' => esc_html__( '800', 'hello-plus' ),
 					'900' => esc_html__( '900', 'hello-plus' ),
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-title-weight-sticky: {{VALUE}};',
 				],
 				'conditions' => [
 					'relation' => 'and',
@@ -1791,7 +1794,7 @@ class Header extends Widget_Base {
 				'name' => 'behavior_sticky_bg',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .ehp-hero__button',
+				'selector' => '{{WRAPPER}} .ehp-header.scroll-down, {{WRAPPER}} .ehp-header.scroll-down .ehp-header__dropdown',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',

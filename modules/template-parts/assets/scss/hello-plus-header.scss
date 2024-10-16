@@ -8,11 +8,14 @@
 	$submenu-shape-round: 52px;
 
 	--header-logo-width: 68px;
+	--header-logo-width-sticky: 34px;
 	--header-site-title-color: #0052FF;
 	--header-buttons-space-between: 16px;
 	--header-logo-order: 0;
 	--header-navigation-breakpoint: 767px;
 	--header-menu-item-spacing: 32px;
+	--header-title-size-sticky: 20px;
+	--header-title-weight-sticky: 800;
 
 	--header-wp-admin-bar-height: 0;
 	--header-float-offset: 0px;
@@ -181,9 +184,8 @@
 
 	&__site-title {
 		color: var(--header-site-title-color);
-		font-size: 40px;
 		font-weight: 600;
-		line-height: 68px;
+		margin: 0;
 	}
 
 	&__ctas-container {
@@ -326,7 +328,6 @@
 	}
 
 	&__dropdown {
-		background-color: inherit;
 		display: flex;
 		gap: var(--header-menu-item-spacing);
 		left: -16px;
@@ -466,6 +467,30 @@
 		height: 10px;
 		transition: $transition;
 		width: 10px;
+	}
+
+	&.has-behavior-onscroll-always {
+		transition: $transition;
+
+		.ehp-header__site-link img,
+		.ehp-header__site-title {
+			transition: $transition;
+		}
+		
+		&.scroll-down {
+			transition: $transition;
+			
+			.ehp-header__site-link img {
+				width: var(--header-logo-width-sticky);
+				transition: $transition;
+			}
+
+			.ehp-header__site-title {
+				font-size: var(--header-title-size-sticky);
+				font-weight: var(--header-title-weight-sticky);
+				transition: $transition;
+			}
+		}
 	}
 
 	@mixin responsive_styles_mobile() {

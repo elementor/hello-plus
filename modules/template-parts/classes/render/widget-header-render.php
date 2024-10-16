@@ -286,7 +286,7 @@ class Widget_Header_Render {
 		$classes = $depth ? 'ehp-header__item ehp-header__item--sub-level' : 'ehp-header__item ehp-header__item--top-level';
 		$is_anchor = false !== strpos( $atts['href'], '#' );
 
-		if ( ! $is_anchor && in_array( 'current-menu-item', $item->classes ) ) {
+		if ( ! $is_anchor && in_array( 'current-menu-item', $item->classes, true ) ) {
 			$classes .= ' is-item-active';
 		}
 
@@ -316,9 +316,9 @@ class Widget_Header_Render {
 		return $classes;
 	}
 
-	public function handle_walker_menu_start_el( $item_output, $item, $depth, $args ) {
+	public function handle_walker_menu_start_el( $item_output, $item ) {
 
-		if ( in_array( 'menu-item-has-children', $item->classes ) ) {
+		if ( in_array( 'menu-item-has-children', $item->classes, true ) ) {
 			$submenu_icon = $this->settings['navigation_menu_submenu_icon'];
 
 			$svg_icon = Icons_Manager::try_get_icon_html( $submenu_icon,

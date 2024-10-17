@@ -230,7 +230,6 @@ class Footer extends Widget_Base {
 			]
 		);
 
-		// TODO: check why the defaults are not working
 		$this->add_control(
 			'footer_icons',
 			[

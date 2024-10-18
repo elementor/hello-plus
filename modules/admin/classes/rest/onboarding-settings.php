@@ -43,7 +43,8 @@ class Onboarding_Settings {
 
 				set_transient( 'e_hello_plus_kits', $kits, 24 * HOUR_IN_SECONDS );
 			} catch ( \Exception $e ) {
-				// do nothing for now
+				// just to avoid linting errors
+				error_log( $e->getMessage() );
 			}
 		}
 

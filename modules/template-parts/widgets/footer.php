@@ -173,8 +173,6 @@ class Footer extends Widget_Base {
 					'h4' => 'H4',
 					'h5' => 'H5',
 					'h6' => 'H6',
-					'div' => 'div',
-					'span' => 'span',
 					'p' => 'p',
 				],
 				'default' => 'p',
@@ -212,10 +210,9 @@ class Footer extends Widget_Base {
 				'label' => esc_html__( 'Icon', 'elementor' ),
 				'type' => Controls_Manager::ICONS,
 				'default' => [
-					'value' => 'fab fa-instagram',
+					'value' => 'fas fa-plus',
 					'library' => 'fa-solid',
 				],
-				'fa4compatibility' => 'icon',
 			]
 		);
 
@@ -289,8 +286,6 @@ class Footer extends Widget_Base {
 					'h4' => 'H4',
 					'h5' => 'H5',
 					'h6' => 'H6',
-					'div' => 'div',
-					'span' => 'span',
 					'p' => 'p',
 				],
 				'default' => 'p',
@@ -336,8 +331,6 @@ class Footer extends Widget_Base {
 					'h4' => 'H4',
 					'h5' => 'H5',
 					'h6' => 'H6',
-					'div' => 'div',
-					'span' => 'span',
 					'p' => 'p',
 				],
 				'default' => 'h6',
@@ -421,8 +414,6 @@ class Footer extends Widget_Base {
 					'h4' => 'H4',
 					'h5' => 'H5',
 					'h6' => 'H6',
-					'div' => 'div',
-					'span' => 'span',
 					'p' => 'p',
 				],
 				'default' => 'h6',
@@ -455,8 +446,6 @@ class Footer extends Widget_Base {
 					'h4' => 'H4',
 					'h5' => 'H5',
 					'h6' => 'H6',
-					'div' => 'div',
-					'span' => 'span',
 					'p' => 'p',
 				],
 				'default' => 'p',
@@ -555,7 +544,9 @@ class Footer extends Widget_Base {
 				'name' => 'site_title_typography',
 				'label' => esc_html__( 'Typography', 'hello-plus' ),
 				'selector' => '{{WRAPPER}} .ehp-footer__site-title',
-				'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
 				'condition' => [
 					'site_logo_brand_select' => 'title',
 				],
@@ -576,7 +567,7 @@ class Footer extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333',
+				'default' => '#28292B',
 				'selectors' => [
 					'{{WRAPPER}} .ehp-footer' => '--footer-description-color: {{VALUE}}',
 				],
@@ -589,7 +580,9 @@ class Footer extends Widget_Base {
 				'name' => 'footer_description_typography',
 				'label' => esc_html__( 'Typography', 'hello-plus' ),
 				'selector' => '{{WRAPPER}} .ehp-footer__description',
-				'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_TEXT,
+				],
 			]
 		);
 
@@ -675,7 +668,6 @@ class Footer extends Widget_Base {
 
 		$this->end_controls_tabs();
 
-		// copyright heading
 		$this->add_control(
 			'footer_copyright_heading',
 			[
@@ -703,7 +695,9 @@ class Footer extends Widget_Base {
 				'name' => 'footer_copyright_typography',
 				'label' => esc_html__( 'Typography', 'hello-plus' ),
 				'selector' => '{{WRAPPER}} .ehp-footer__copyright',
-				'default' => Global_Typography::TYPOGRAPHY_TEXT,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_TEXT,
+				],
 			]
 		);
 
@@ -745,7 +739,9 @@ class Footer extends Widget_Base {
 				'name' => 'footer_menu_heading_typography',
 				'label' => esc_html__( 'Typography', 'hello-plus' ),
 				'selector' => '{{WRAPPER}} .ehp-footer__menu-heading',
-				'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
+				],
 			]
 		);
 
@@ -764,7 +760,9 @@ class Footer extends Widget_Base {
 				'name' => 'footer_menu_items_typography',
 				'label' => esc_html__( 'Typography', 'hello-plus' ),
 				'selector' => '{{WRAPPER}} .ehp-footer__menu-item',
-				'default' => Global_Typography::TYPOGRAPHY_ACCENT,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_ACCENT,
+				],
 			]
 		);
 
@@ -813,7 +811,7 @@ class Footer extends Widget_Base {
 		);
 
 		$this->add_control(
-			'style_navigation_pointer_hover',
+			'style_navigation_hover_animation',
 			[
 				'label' => esc_html__( 'Hover Animation', 'hello-plus' ),
 				'type' => Controls_Manager::HOVER_ANIMATION,
@@ -849,8 +847,9 @@ class Footer extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-footer__menu-item' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-footer' => '--footer-menu-item-spacing: {{SIZE}}{{UNIT}};',
 				],
+				'separator' => 'before',
 			]
 		);
 
@@ -892,7 +891,9 @@ class Footer extends Widget_Base {
 				'name' => 'footer_contact_heading_typography',
 				'label' => esc_html__( 'Typography', 'hello-plus' ),
 				'selector' => '{{WRAPPER}} .ehp-footer__contact-heading',
-				'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
+				],
 			]
 		);
 
@@ -923,7 +924,9 @@ class Footer extends Widget_Base {
 				'name' => 'footer_contact_information_typography',
 				'label' => esc_html__( 'Typography', 'hello-plus' ),
 				'selector' => '{{WRAPPER}} .ehp-footer__contact-information',
-				'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
+				],
 			]
 		);
 
@@ -954,6 +957,14 @@ class Footer extends Widget_Base {
 				'label' => esc_html__( 'Background', 'hello-plus' ),
 				'types' => [ 'classic', 'gradient' ],
 				'selector' => '{{WRAPPER}} .ehp-footer',
+				'fields_options' => [
+					'background' => [
+						'default' => 'classic',
+					],
+					'color' => [
+						'default' => '#F6F7F8',
+					],
+				],
 			]
 		);
 
@@ -1013,7 +1024,7 @@ class Footer extends Widget_Base {
 					'wide' => esc_html__( 'Wide', 'hello-plus' ),
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-footer' => '--footer-vertical-gap: var(--footer-vertical-gap-{{VALUE}});',
+					'{{WRAPPER}} .ehp-footer' => '--footer-vertical-gap-content: var(--footer-vertical-gap-content-{{VALUE}}); --footer-vertical-gap-copyright: var(--footer-vertical-gap-copyright-{{VALUE}});',
 				],
 			]
 		);
@@ -1032,7 +1043,7 @@ class Footer extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-footer' => '--footer-box-padding-inline: var(--footer-box-padding-inline-{{VALUE}}); --footer-box-padding-block: var(--footer-box-padding-block-{{VALUE}});',
+					'{{WRAPPER}} .ehp-footer' => '--footer-box-padding-block-end: {{BOTTOM}}{{UNIT}}; --footer-box-padding-block-start: {{TOP}}{{UNIT}}; --footer-box-padding-inline-end: {{RIGHT}}{{UNIT}}; --footer-box-padding-inline-start: {{LEFT}}{{UNIT}};',
 				],
 			]
 		);

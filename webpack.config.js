@@ -32,6 +32,7 @@ const entryPoints = {
 
 	// Template Parts module
 	'css/hello-plus-header': path.resolve( modulesDir, 'template-parts/assets/scss', 'hello-plus-header.scss' ),
+	'css/hello-plus-footer': path.resolve( modulesDir, 'template-parts/assets/scss', 'hello-plus-footer.scss' ),
 	'js/hello-plus-header': path.resolve( modulesDir, 'template-parts/assets/js', 'hello-plus-header.js' ),
 
 	// Theme module

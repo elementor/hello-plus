@@ -48,6 +48,13 @@ class Module extends Module_Base {
 			HELLO_PLUS_ELEMENTOR_VERSION
 		);
 
+		wp_enqueue_style(
+			'hello-plus-footer',
+			HELLO_PLUS_STYLE_URL . 'hello-plus-footer.css',
+			[],
+			HELLO_PLUS_ELEMENTOR_VERSION
+		);
+
 		wp_enqueue_script(
 			'hello-plus-header',
 			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-header.js',

@@ -6,8 +6,6 @@ import DialogHeader from '@elementor/ui/DialogHeader';
 import DialogTitle from '@elementor/ui/DialogTitle';
 import Button from '@elementor/ui/Button';
 import { __ } from '@wordpress/i18n';
-import Link from '@elementor/ui/Link';
-import { useEffect, useRef } from 'react';
 
 export const DialogModal = (
 	{

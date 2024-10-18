@@ -2,14 +2,14 @@ import { DialogModal } from '../../dialog/dialog';
 import { __ } from '@wordpress/i18n';
 import { useEffect } from 'react';
 
-export default function ConnectDialog( { onError, onClose, onSuccess, connectUrl, pageId } ) {
+export default function ConnectDialog( { onClose, onSuccess, connectUrl } ) {
 	useEffect( () => {
 		elementorCommon.elements.$window.on( 'elementor/connect/success/cb1', onSuccess );
 
 		return () => {
 			elementorCommon.elements.$window.off( 'elementor/connect/success/cb1', onSuccess );
 		};
-	}, [] );
+	}, [ onSuccess ] );
 
 	return (
 		<DialogModal

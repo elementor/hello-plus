@@ -33,7 +33,7 @@ export const Preview = ( { kit, setPreviewKit } ) => {
 			{ showConnectDialog && ( <ConnectDialog
 				pageId={ slug }
 				onClose={ () => setShowConnectDialog( false ) }
-				onSuccess={ ( e, data ) => {
+				onSuccess={ () => {
 					setShowConnectDialog( false );
 					setShowApplyKitDialog( true );
 				} }

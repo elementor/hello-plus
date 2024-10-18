@@ -4,7 +4,7 @@ import Typography from '@elementor/ui/Typography';
 import Alert from '@elementor/ui/Alert';
 import { __ } from '@wordpress/i18n';
 import Grid from '@elementor/ui/Grid';
-import Image from '@elementor/ui/Image';
+import { PreviewWithImage } from '../../preview/preview-with-image';
 
 export const InstallKit = ( { message, kits = [], setPreviewKit, severity } ) => {
 	return (
@@ -28,12 +28,9 @@ export const InstallKit = ( { message, kits = [], setPreviewKit, severity } ) =>
 					<Grid container rowSpacing={ 3 } columnSpacing={ 5 } >
 						{ kits.map( ( kit ) => (
 							<Grid key={ kit._id } item xs={ 12 } sm={ 6 } md={ 3 }>
-								<Stack direction="column" gap={ 2 } >
-									<Typography variant="body2" sx={ { height: 40 } }>{ kit.title }</Typography>
-									<Image src={ kit.thumbnail } alt={ kit.title } sx={ { cursor: 'pointer', borderRadius: 1 } } onClick={ () => {
-										setPreviewKit( 'english-pub-hp' );
-									} } />
-								</Stack>
+								<PreviewWithImage { ...kit } onClick={ () => {
+									setPreviewKit( kit );
+								} } />
 							</Grid>
 						) ) }
 					</Grid>

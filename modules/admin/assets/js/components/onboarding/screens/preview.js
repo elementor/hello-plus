@@ -1,42 +1,88 @@
-import Stack from '@elementor/ui/Stack';
 import Box from '@elementor/ui/Box';
-import Typography from '@elementor/ui/Typography';
-import { __ } from '@wordpress/i18n';
-import ChevronRightIcon from '@elementor/icons/ChevronRightIcon';
-import Button from '@elementor/ui/Button';
+import Spinner from '../../spinner/spinner';
+import { useEffect, useState } from 'react';
+import { useAdminContext } from '../../../hooks/use-admin-context';
+import ConnectDialog from '../kits/connect-dialog';
+import { ApplyKitDialog } from '../kits/apply-kit-dialog';
+import { TobBarPreview } from '../../top-bar/top-bar-preview';
+import { Overview } from './overview';
 
-export const Preview = ( { slug, title, setPreviewKit, setStep } ) => {
+export const Preview = ( { kit, setPreviewKit } ) => {
+	const [ isLoading, setIsLoading ] = useState( true );
+	const [ showConnectDialog, setShowConnectDialog ] = useState( false );
+	const [ showApplyKitDialog, setShowApplyKitDialog ] = useState( false );
+	const [ isOverview, setIsOverview ] = useState( false );
+	const {
+		setStep,
+		elementorKitSettings,
+	} = useAdminContext();
+
+	const { manifest: { site = '', name, description, content: { page = {} } }, title } = kit;
+	const [ previewUrl, setPreviewUrl ] = useState( site );
+
+	const pages = Object.entries( page );
+
+	const { library_connect_url: libraryUrl, is_library_connected: isConnected } = elementorKitSettings;
+
+	useEffect( () => {
+		setIsLoading( true );
+	}, [ site ] );
+
 	return (
 		<>
-			<Stack direction="row" sx={ { alignItems: 'center', height: 50, px: 2, backgroundColor: 'background.default', justifyContent: 'space-between' } }>
-				<Stack
-					direction="row"
-					spacing={ 1 }
-					alignItems="center"
-					sx={ { borderRight: '1px solid var(--divider-divider, rgba(0, 0, 0, 0.12))', width: 'fit-content', p: 2, cursor: 'pointer' } }
-					onClick={ () => setPreviewKit( '' ) }
-				>
-					<ChevronRightIcon sx={ { transform: 'rotate(180deg)' } } color="action" />
-					<Typography variant="subtitle1" color="action">{ __( 'Back to Wizard', 'hello-plus' ) }</Typography>
-				</Stack>
-				<Stack direction="row" gap={ 1 }>
-					<Button variant="outlined" color="primary">
-						{ __( 'Overview', 'hello-plus' ) }
-					</Button>
-					<Button variant="contained" color="primary" onClick={ () => {
-						setPreviewKit( '' );
+			{ showConnectDialog && ( <ConnectDialog
+				pageId={ slug }
+				onClose={ () => setShowConnectDialog( false ) }
+				onSuccess={ ( e, data ) => {
+					setShowConnectDialog( false );
+					setShowApplyKitDialog( true );
+				} }
+				onError={ ( message ) => setError( { message } ) }
+				connectUrl={ libraryUrl.replace( '%%page%%', name ) + '&mode=popup&callback_id=cb1' }
+			/> ) }
+			{
+				showApplyKitDialog && ( <ApplyKitDialog
+					title={ title }
+					startImportProcess={ () => {
 						setStep( 2 );
-					} }>
-						{ __( 'Apply Kit', 'hello-plus' ) }
-					</Button>
-				</Stack>
-			</Stack>
+						setPreviewKit( null );
+					} }
+					onClose={ () => setShowApplyKitDialog( false ) }
+				/> )
+			}
+			<TobBarPreview
+				onClickBack={ () => setPreviewKit( null ) }
+				onClickRightButton={ () => {
+					if ( isConnected ) {
+						setShowApplyKitDialog( true );
+					} else {
+						setShowConnectDialog( true );
+					}
+				} }
+				overview={ isOverview }
+				onClickLeftButton={ () => {
+					setIsOverview( ! isOverview );
+				} }
+			/>
 			<Box sx={ { position: 'relative', width: '100%', height: '100%' } }>
-				<iframe
-					src={ `https://library.elementor.com/${ slug }/` }
+				{ isLoading && <Spinner /> }
+				{ ! isOverview && ( <iframe
+					src={ previewUrl }
 					style={ { position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' } }
 					title={ title }
-				/>
+					onLoad={ () => setIsLoading( false ) }
+				/> ) }
+				{ isOverview && ( <Overview
+					setIsOverview={ setIsOverview }
+					setIsLoading={ setIsLoading }
+					setPreviewUrl={ setPreviewUrl }
+					title={ title }
+					description={ description }
+					pages={ pages }
+					kit={ kit }
+					/>
+				) }
+
 			</Box>
 		</>
 

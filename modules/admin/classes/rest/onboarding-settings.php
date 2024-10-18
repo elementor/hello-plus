@@ -6,8 +6,8 @@ use HelloPlus\Includes\Utils;
 use WP_REST_Server;
 
 class Onboarding_Settings {
-
-	const KITS_ENDPOINT = 'https://ms-8874.elementor.com/api/v1/kits-library/kits';
+	const DEFAULT_BASE_ENDPOINT = 'https://my.elementor.com/api/v1/kits-library/kits/';
+	const FALLBACK_BASE_ENDPOINT = 'https://ms-8874.elementor.com/api/v1/kits-library/kits/';
 
 	public function __construct() {
 
@@ -34,14 +34,35 @@ class Onboarding_Settings {
 		$kits = get_transient( 'e_hello_plus_kits' );
 
 		if ( ! $kits ) {
-			$kits = wp_remote_get( self::KITS_ENDPOINT );
-			$kits = wp_remote_retrieve_body( $kits );
-			$kits = json_decode( $kits, true );
-			$kits = array_slice( $kits, 0, 8 );
-			set_transient( 'e_hello_plus_kits', $kits, 24 * HOUR_IN_SECONDS );
+			try {
+				$kits = $this->call_and_check( self::DEFAULT_BASE_ENDPOINT );
+				$kits = array_slice( $kits, - 8 );
+				foreach ( $kits as &$kit) {
+					$kit['manifest'] = $this->call_and_check( self::DEFAULT_BASE_ENDPOINT . $kit['_id'] . '/manifest' );
+				}
+
+				set_transient( 'e_hello_plus_kits', $kits, 24 * HOUR_IN_SECONDS );
+			} catch ( \Exception $e ) {
+				// do nothing
+			}
 		}
 
 		return $kits;
+	}
+
+	public function call_and_check( $url ) {
+		$response = wp_remote_get( $url );
+		if ( is_wp_error( $response ) ) {
+			throw new \Exception( "Error when calling $url: message {$response->get_error_message()}" );
+		}
+		$response_code = wp_remote_retrieve_response_code( $response );
+
+		if ( 200 !== $response_code ) {
+			throw new \Exception( "Unexpected response code, expecting 200, got $response_code" );
+		}
+
+		$response_body = wp_remote_retrieve_body( $response );
+		return json_decode( $response_body, true );
 	}
 
 	public function get_onboarding_settings() {
@@ -58,5 +79,29 @@ class Onboarding_Settings {
 				],
 			]
 		);
+	}
+
+	public function get_connect_data(  ) {
+		/** @var ConnectModule $connect */
+		$connect = Plugin::$instance->common->get_component( 'connect' );
+
+		/** @var Kit_Library $kit_library */
+		$kit_library = $connect->get_app( 'kit-library' );
+
+		Plugin::$instance->app->set_settings( 'kit-library', [
+			'has_access_to_module' => current_user_can( 'administrator' ),
+			'subscription_plans' => $this->apply_filter_subscription_plans( $connect->get_subscription_plans( 'kit-library' ) ),
+			'is_pro' => false,
+			'is_library_connected' => $kit_library->is_connected(),
+			'library_connect_url'  => $kit_library->get_admin_url( 'authorize', [
+				'utm_source' => 'kit-library',
+				'utm_medium' => 'wp-dash',
+				'utm_campaign' => 'library-connect',
+				'utm_term' => '%%page%%', // Will be replaced in the frontend.
+			] ),
+			'access_level' => ConnectModule::ACCESS_LEVEL_CORE,
+			'access_tier' => ConnectModule::ACCESS_TIER_FREE,
+			'app_url' => Plugin::$instance->app->get_base_url() . '#/' . $this->get_name(),
+		] );
 	}
 }

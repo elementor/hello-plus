@@ -3,10 +3,10 @@ import { __ } from '@wordpress/i18n';
 import Step from '@elementor/ui/Step';
 import StepLabel from '@elementor/ui/StepLabel';
 import Stepper from '@elementor/ui/Stepper';
-import { useGetCurrentStep } from '../../hooks/use-get-current-step';
+import { useAdminContext } from '../../hooks/use-admin-context';
 
 export const Navigation = () => {
-	const { step } = useGetCurrentStep();
+	const { step } = useAdminContext();
 
 	const steps = [ __( 'Get Started', 'hello-plus' ), __( 'Choose a Kit', 'hello-plus' ), __( 'Ready to Go', 'hello-plus' ) ];
 

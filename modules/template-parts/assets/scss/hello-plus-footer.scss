@@ -3,6 +3,7 @@
 
 .ehp-footer {
 	--footer-logo-width: 68px;
+	--footer-title-color: #28292B;
 	--footer-description-color: #28292B;
 	--footer-copyright-color: #28292B;
 	--footer-menu-heading-color: #28292B;
@@ -25,10 +26,10 @@
 	--footer-icon-color: #28292B;
 	--footer-icon-color-hover: #555963;
 
-	--footer-box-padding-block-start: 100px;
-	--footer-box-padding-block-end: 100px;
-	--footer-box-padding-inline-start: 100px;
-	--footer-box-padding-inline-end: 100px;
+	--footer-box-padding-block-start: 40px;
+	--footer-box-padding-block-end: 40px;
+	--footer-box-padding-inline-start: 40px;
+	--footer-box-padding-inline-end: 40px;
 
 	--footer-vertical-gap-content-default: 20px;
 	--footer-vertical-gap-copyright-default: 60px;
@@ -43,6 +44,20 @@
 	--footer-text-width-narrow: 204px;
 	--footer-text-width-wide: 500px;
 	--footer-text-width: var(--footer-text-width-default);
+
+	@media screen and (min-width: $screen-tablet-min) {
+		--footer-box-padding-block-start: 60px;
+		--footer-box-padding-block-end: 60px;
+		--footer-box-padding-inline-start: 60px;
+		--footer-box-padding-inline-end: 60px;
+	}
+
+	@media screen and (min-width: $screen-desktop-min) {
+		--footer-box-padding-block-start: 100px;
+		--footer-box-padding-block-end: 100px;
+		--footer-box-padding-inline-start: 100px;
+		--footer-box-padding-inline-end: 100px;
+	}
 
 	display: flex;
 	flex-direction: column;
@@ -98,10 +113,16 @@
 	&__site-link {
 		align-items: center;
 		display: flex;
+		margin: 0;
 
 		img {
 			width: var(--footer-logo-width);
 		}
+	}
+
+	&__site-title {
+		color: var(--footer-title-color);
+		margin: 0;
 	}
 
 	&__description {

@@ -1042,6 +1042,20 @@ class Footer extends Widget_Base {
 					'left' => 100,
 					'unit' => 'px',
 				],
+				'tablet_default' => [
+					'top' => 60,
+					'right' => 60,
+					'bottom' => 60,
+					'left' => 60,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'top' => 40,
+					'right' => 40,
+					'bottom' => 40,
+					'left' => 40,
+					'unit' => 'px',
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-footer' => '--footer-box-padding-block-end: {{BOTTOM}}{{UNIT}}; --footer-box-padding-block-start: {{TOP}}{{UNIT}}; --footer-box-padding-inline-end: {{RIGHT}}{{UNIT}}; --footer-box-padding-inline-start: {{LEFT}}{{UNIT}};',
 				],

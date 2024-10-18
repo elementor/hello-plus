@@ -33,12 +33,14 @@ class Widget_Footer_Render {
 		] );
 		?>
 		<div <?php echo $this->widget->get_render_attribute_string( 'layout' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-			<?php
-				$this->render_side_content();
-				$this->render_navigation();
-				$this->render_contact();
-				$this->render_copyright();
-			?>
+			<div class="ehp-footer__row">
+				<?php
+					$this->render_side_content();
+					$this->render_navigation();
+					$this->render_contact();
+				?>
+			</div>
+			<?php $this->render_copyright(); ?>
 		</div>
 		<?php
 	}
@@ -174,17 +176,19 @@ class Widget_Footer_Render {
 			'class' => 'ehp-footer__navigation'
 		] );
 		?>
-		<nav <?php $this->widget->print_render_attribute_string( 'main-menu' ); ?>>
-			<?php if ( $has_menu_heading ) {
-				$menu_heading_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $menu_heading_tag ), 'class="ehp-footer__menu-heading"', esc_html( $menu_heading ) );
-				// Escaped above
-				Utils::print_unescaped_internal_string( $menu_heading_output );
-			} ?>
-			<?php
-				// PHPCS - escaped by WordPress with "wp_nav_menu"
-				echo $menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			?>
-		</nav>
+		<div class="ehp-footer__nav-container">
+			<nav <?php $this->widget->print_render_attribute_string( 'main-menu' ); ?>>
+				<?php if ( $has_menu_heading ) {
+					$menu_heading_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $menu_heading_tag ), 'class="ehp-footer__menu-heading"', esc_html( $menu_heading ) );
+					// Escaped above
+					Utils::print_unescaped_internal_string( $menu_heading_output );
+				} ?>
+				<?php
+					// PHPCS - escaped by WordPress with "wp_nav_menu"
+					echo $menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				?>
+			</nav>
+		</div>
 		<?php
 	}
 
@@ -201,17 +205,19 @@ class Widget_Footer_Render {
 			'class' => 'ehp-footer__contact',
 		] );
 		?>
-		<div <?php echo $this->widget->get_render_attribute_string( 'contact' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-			<?php if ( $has_contact ) {
-				$contact_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $contact_tag ), 'class="ehp-footer__contact-heading"', esc_html( $contact_text ) );
-				// Escaped above
-				Utils::print_unescaped_internal_string( $contact_output );
-			} ?>
-			<?php if ( $has_contact_information ) {
-				$contact_information_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $contact_information_tag ), 'class="ehp-footer__contact-information"', wp_kses_post( nl2br( esc_html( $contact_information_text ) ) ) );
-				// Escaped above
-				Utils::print_unescaped_internal_string( $contact_information_output );
-			} ?>
+		<div class="ehp-footer__contact-container">
+			<div <?php echo $this->widget->get_render_attribute_string( 'contact' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+				<?php if ( $has_contact ) {
+					$contact_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $contact_tag ), 'class="ehp-footer__contact-heading"', esc_html( $contact_text ) );
+					// Escaped above
+					Utils::print_unescaped_internal_string( $contact_output );
+				} ?>
+				<?php if ( $has_contact_information ) {
+					$contact_information_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $contact_information_tag ), 'class="ehp-footer__contact-information"', wp_kses_post( nl2br( esc_html( $contact_information_text ) ) ) );
+					// Escaped above
+					Utils::print_unescaped_internal_string( $contact_information_output );
+				} ?>
+			</div>
 		</div>
 		<?php
 	}

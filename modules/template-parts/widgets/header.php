@@ -6,22 +6,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use Elementor\Controls_Manager;
-use Elementor\Group_Control_Background;
-use Elementor\Group_Control_Box_Shadow;
-use Elementor\Group_Control_Typography;
-use Elementor\Utils;
-use Elementor\Widget_Base;
+use Elementor\{
+	Widget_Base,
+	Controls_Manager,
+	Group_Control_Background,
+	Group_Control_Box_Shadow,
+	Group_Control_Typography
+};
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
-use HelloPlus\Includes\Utils as Theme_Utils;
 
-use HelloPlus\Modules\TemplateParts\Classes\Render\Widget_Header_Render;
-use HelloPlus\Modules\Theme\Classes\Control_Media_Preview;
+use HelloPlus\Modules\TemplateParts\Classes\{
+	Traits\Shared_Header_Traits,
+	Render\Widget_Header_Render
+};
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
 class Header extends Widget_Base {
-	const TAB_ADVANCED = 'advanced-tab-header';
+	use Shared_Header_Traits;
 
 	public function get_name(): string {
 		return 'header';
@@ -54,32 +56,22 @@ class Header extends Widget_Base {
 	}
 
 	protected function register_controls() {
-		$this->add_content_section();
-		$this->add_style_section();
-		$this->add_advanced_section();
+		$this->add_content_tab();
+		$this->add_style_tab();
 	}
 
-	protected function add_content_section() {
+	protected function add_content_tab() {
 		$this->add_content_site_logo_section();
 		$this->add_content_navigation_section();
 		$this->add_content_cta_section();
 	}
 
-	protected function add_style_section() {
+	protected function add_style_tab() {
 		$this->add_style_site_identity_section();
 		$this->add_style_navigation_section();
 		$this->add_style_cta_section();
 		$this->add_style_box_section();
-	}
-
-	protected function add_advanced_section() {
-		Controls_Manager::add_tab(
-			static::TAB_ADVANCED,
-			esc_html__( 'Advanced', 'hello-plus' )
-		);
-
-		$this->add_advanced_behavior_section();
-		$this->add_advanced_custom_section();
+		$this->add_style_behavior_section();
 	}
 
 	protected function add_content_site_logo_section() {
@@ -91,14 +83,14 @@ class Header extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'site_logo_brand_select',
 			[
 				'label' => esc_html__( 'Brand', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'logo' => 'Site Logo',
-					'title' => 'Site Title',
+					'logo' => esc_html__( 'Site Logo', 'hello-plus' ),
+					'title' => esc_html__( 'Site Title', 'hello-plus' ),
 				],
 				'default' => 'logo',
 				'tablet_default' => 'logo',
@@ -109,15 +101,14 @@ class Header extends Widget_Base {
 		$this->add_control(
 			'site_logo_image',
 			[
-				'label' => esc_html__( 'Site Logo', 'hello-plus' ),
-				'type' => Control_Media_Preview::CONTROL_TYPE,
-				'src' => $this->get_site_logo(),
+				'label' => esc_html__( 'Choose Image', 'hello-plus' ),
+				'type' => Controls_Manager::MEDIA,
+				'default' => [
+					'url' => $this->get_site_logo_url(),
+				],
 				'condition' => [
 					'site_logo_brand_select' => 'logo',
 				],
-			],
-			[
-				'recursive' => true,
 			]
 		);
 
@@ -129,7 +120,7 @@ class Header extends Widget_Base {
 				'show_label' => false,
 				'button_type' => 'default elementor-button-center',
 				'text' => esc_html__( 'Change Site Logo', 'hello-plus' ),
-				'event' => 'elementorProSiteLogo:change',
+				'event' => 'helloPlusLogo:change',
 				'condition' => [
 					'site_logo_brand_select' => 'logo',
 				],
@@ -244,21 +235,6 @@ class Header extends Widget_Base {
 			);
 
 			$this->add_control(
-				'navigation_menu_close_button',
-				[
-					'label' => esc_html__( 'Close Button', 'hello-plus' ),
-					'type' => Controls_Manager::ICONS,
-					'skin' => 'inline',
-					'label_block' => false,
-					'default' => [
-						'value' => 'fa fa-close',
-						'library' => 'fa-solid',
-					],
-					'exclude_inline_options' => [ 'none' ],
-				]
-			);
-
-			$this->add_control(
 				'navigation_breakpoint',
 				[
 					'label' => esc_html__( 'Breakpoint', 'hello-plus' ),
@@ -270,9 +246,6 @@ class Header extends Widget_Base {
 					],
 					'default' => 'mobile-portrait',
 					'separator' => 'after',
-					'selectors' => [
-						'{{WRAPPER}} .ehp-zigzag' => '--zigzag-image-width: {{VALUE}};',
-					],
 				]
 			);
 
@@ -373,9 +346,9 @@ class Header extends Widget_Base {
 		$this->add_control(
 			'secondary_cta_button_text',
 			[
-				'label' => esc_html__( 'Primary CTA', 'hello-plus' ),
+				'label' => esc_html__( 'Secondary CTA', 'hello-plus' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => esc_html__( 'Schedule Now', 'hello-plus' ),
+				'default' => esc_html__( 'Contact Us', 'hello-plus' ),
 				'dynamic' => [
 					'active' => true,
 				],
@@ -434,20 +407,20 @@ class Header extends Widget_Base {
 				'label' => esc_html__( 'Align Logo', 'hello-plus' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
-					'flex-start' => [
+					'0' => [
 						'title' => esc_html__( 'Start', 'hello-plus' ),
 						'icon' => 'eicon-align-start-h',
 					],
-					'center' => [
-						'title' => esc_html__( 'End', 'hello-plus' ),
+					'2' => [
+						'title' => esc_html__( 'Center', 'hello-plus' ),
 						'icon' => 'eicon-align-center-h',
 					],
 				],
-				'default' => 'flex-start',
-				'tablet_default' => 'flex-start',
-				'mobile_default' => 'flex-start',
+				'default' => '0',
+				'tablet_default' => '0',
+				'mobile_default' => '0',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-buttons-position: {{VALUE}};',
+					'{{WRAPPER}} .ehp-header' => '--header-logo-order: {{VALUE}};',
 				],
 				'condition' => [
 					'site_logo_brand_select' => 'logo',
@@ -455,7 +428,7 @@ class Header extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'style_logo_width',
 			[
 				'label' => __( 'Logo Width', 'hello-plus' ),
@@ -472,8 +445,16 @@ class Header extends Widget_Base {
 					'size' => 68,
 					'unit' => 'px',
 				],
+				'tablet_default' => [
+					'size' => 68,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 68,
+					'unit' => 'px',
+				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button--border-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-header' => '--header-logo-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'site_logo_brand_select' => 'logo',
@@ -487,20 +468,20 @@ class Header extends Widget_Base {
 				'label' => esc_html__( 'Align Site Title', 'hello-plus' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
-					'flex-start' => [
+					'0' => [
 						'title' => esc_html__( 'Start', 'hello-plus' ),
 						'icon' => 'eicon-align-start-h',
 					],
-					'center' => [
+					'2' => [
 						'title' => esc_html__( 'End', 'hello-plus' ),
 						'icon' => 'eicon-align-center-h',
 					],
 				],
-				'default' => 'flex-start',
-				'tablet_default' => 'flex-start',
-				'mobile_default' => 'flex-start',
+				'default' => '0',
+				'tablet_default' => '0',
+				'mobile_default' => '0',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-buttons-position: {{VALUE}};',
+					'{{WRAPPER}} .ehp-header' => '--header-logo-order: {{VALUE}};',
 				],
 				'condition' => [
 					'site_logo_brand_select' => 'title',
@@ -515,7 +496,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#0052FF',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button--border-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-site-title-color: {{VALUE}}',
 				],
 				'condition' => [
 					'site_logo_brand_select' => 'title',
@@ -527,9 +508,12 @@ class Header extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'style_title_typography',
-				'selector' => '{{WRAPPER}} .ehp-cta__heading',
+				'selector' => '{{WRAPPER}} .ehp-header__site-title',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+				'condition' => [
+					'site_logo_brand_select' => 'title',
 				],
 			]
 		);
@@ -550,7 +534,7 @@ class Header extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'style_navigation_typography',
-				'selector' => '{{WRAPPER}} .ehp-cta__heading',
+				'selector' => '{{WRAPPER}} .ehp-header__item',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_ACCENT,
 				],
@@ -575,7 +559,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#555963',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-menu-item-color: {{VALUE}}',
 				],
 			]
 		);
@@ -596,7 +580,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#555963',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-menu-item-color-hover: {{VALUE}}',
 				],
 			]
 		);
@@ -622,7 +606,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#555963',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-pointer-hover-underline-color: {{VALUE}}',
 				],
 				'condition' => [
 					'style_navigation_pointer_hover' => 'underline',
@@ -635,11 +619,14 @@ class Header extends Widget_Base {
 			[
 				'label' => esc_html__( 'Underline Width', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => 'default',
+				'default' => '3px',
 				'options' => [
-					'default' => esc_html__( 'Default', 'hello-plus' ),
-					'thin' => esc_html__( 'Thin', 'hello-plus' ),
-					'thick' => esc_html__( 'Thick', 'hello-plus' ),
+					'3px' => esc_html__( 'Default', 'hello-plus' ),
+					'1px' => esc_html__( 'Thin', 'hello-plus' ),
+					'5px' => esc_html__( 'Thick', 'hello-plus' ),
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-pointer-hover-underline-width: {{VALUE}}',
 				],
 				'condition' => [
 					'style_navigation_pointer_hover' => 'underline',
@@ -652,9 +639,9 @@ class Header extends Widget_Base {
 			[
 				'label' => esc_html__( 'Highlight Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#555963',
+				'default' => '#E0EAFF',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-pointer-hover-highlight-bg-color: {{VALUE}}',
 				],
 				'condition' => [
 					'style_navigation_pointer_hover' => 'highlight',
@@ -672,6 +659,9 @@ class Header extends Widget_Base {
 					'default' => esc_html__( 'Default', 'hello-plus' ),
 					'thin' => esc_html__( 'Thin', 'hello-plus' ),
 					'thick' => esc_html__( 'Thick', 'hello-plus' ),
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-pointer-hover-highlight-padding-inline: var(--header-pointer-hover-highlight-padding-inline-{{VALUE}}); --header-pointer-hover-highlight-padding-block: var(--header-pointer-hover-highlight-padding-block-{{VALUE}});',
 				],
 				'condition' => [
 					'style_navigation_pointer_hover' => 'highlight',
@@ -695,7 +685,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#555963',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-menu-item-color-active: {{VALUE}}',
 				],
 			]
 		);
@@ -721,7 +711,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#555963',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-focus-active-underline-color: {{VALUE}}',
 				],
 				'condition' => [
 					'style_navigation_focus_active' => 'underline',
@@ -734,11 +724,14 @@ class Header extends Widget_Base {
 			[
 				'label' => esc_html__( 'Underline Width', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => 'default',
+				'default' => '3px',
 				'options' => [
-					'default' => esc_html__( 'Default', 'hello-plus' ),
-					'thin' => esc_html__( 'Thin', 'hello-plus' ),
-					'thick' => esc_html__( 'Thick', 'hello-plus' ),
+					'3px' => esc_html__( 'Default', 'hello-plus' ),
+					'1px' => esc_html__( 'Thin', 'hello-plus' ),
+					'5px' => esc_html__( 'Thick', 'hello-plus' ),
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-focus-active-underline-width: {{VALUE}}',
 				],
 				'condition' => [
 					'style_navigation_focus_active' => 'underline',
@@ -753,7 +746,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#555963',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-focus-active-highlight-bg-color: {{VALUE}}',
 				],
 				'condition' => [
 					'style_navigation_focus_active' => 'highlight',
@@ -772,6 +765,9 @@ class Header extends Widget_Base {
 					'thin' => esc_html__( 'Thin', 'hello-plus' ),
 					'thick' => esc_html__( 'Thick', 'hello-plus' ),
 				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-focus-active-highlight-padding-inline: var(--header-focus-active-highlight-padding-inline-{{VALUE}}); --header-focus-active-highlight-padding-block: var(--header-focus-active-highlight-padding-block-{{VALUE}});',
+				],
 				'condition' => [
 					'style_navigation_focus_active' => 'highlight',
 				],
@@ -781,6 +777,37 @@ class Header extends Widget_Base {
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
+
+		$this->add_responsive_control(
+			'menu_item_spacing',
+			[
+				'label' => __( 'Menu Item Spacing', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 32,
+					'unit' => 'px',
+				],
+				'tablet_default' => [
+					'size' => 32,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 32,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-menu-item-spacing: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
 
 		$this->add_control(
 			'style_submenu_label',
@@ -852,7 +879,7 @@ class Header extends Widget_Base {
 				],
 				'default' => 'flex-start',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-buttons-position: {{VALUE}};',
+					'{{WRAPPER}} .ehp-header' => '--header-dropdown-text-align: {{VALUE}};',
 				],
 			]
 		);
@@ -877,7 +904,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#E0E1E2',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-dropdown-divider-color: {{VALUE}}',
 				],
 				'condition' => [
 					'style_responsive_menu_divider' => 'yes',
@@ -922,10 +949,21 @@ class Header extends Widget_Base {
 						'max' => 100,
 					],
 				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-content-width: {{SIZE}}{{UNIT}};',
+				'default' => [
+					'size' => 22,
+					'unit' => 'px',
 				],
-				'separator' => 'before',
+				'tablet_default' => [
+					'size' => 22,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 22,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-toggle-icon-size: {{SIZE}}{{UNIT}};',
+				],
 			]
 		);
 
@@ -947,7 +985,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#555963',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-toggle-icon-color: {{VALUE}}',
 				],
 			]
 		);
@@ -1019,7 +1057,7 @@ class Header extends Widget_Base {
 				'name' => 'background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .ehp-cta',
+				'selector' => '{{WRAPPER}} .ehp-header, {{WRAPPER}} .ehp-header .ehp-header__dropdown',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
@@ -1062,7 +1100,7 @@ class Header extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-button-border-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-header' => '--header-box-border-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'show_box_border' => 'yes',
@@ -1077,7 +1115,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#555963',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-button-border-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-box-border-color: {{VALUE}}',
 				],
 				'condition' => [
 					'show_box_border' => 'yes',
@@ -1089,7 +1127,7 @@ class Header extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'box_box_shadow',
-				'selector' => '{{WRAPPER}} .ehp-hero__button',
+				'selector' => '{{WRAPPER}} .ehp-header',
 			]
 		);
 
@@ -1099,8 +1137,15 @@ class Header extends Widget_Base {
 				'label' => esc_html__( 'Padding', 'hello-plus' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
+				'default' => [
+					'top' => 16,
+					'right' => 32,
+					'bottom' => 16,
+					'left' => 32,
+					'unit' => 'px',
+				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-button-padding-block-end: {{BOTTOM}}{{UNIT}}; --hero-button-padding-block-start: {{TOP}}{{UNIT}}; --hero-button-padding-inline-end: {{RIGHT}}{{UNIT}}; --hero-button-padding-inline-start: {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-header' => '--header-box-padding-block-end: {{BOTTOM}}{{UNIT}}; --header-box-padding-block-start: {{TOP}}{{UNIT}}; --header-box-padding-inline-end: {{RIGHT}}{{UNIT}}; --header-box-padding-inline-start: {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -1109,8 +1154,11 @@ class Header extends Widget_Base {
 	}
 
 	protected function add_cta_button_controls( string $type, bool $add_condition = false ) {
-		$label = 'primary' === $type ? esc_html__( 'Primary CTA', 'hello-plus' ) : esc_html__( 'Secondary CTA', 'hello-plus' );
-		$show_button_border_default = 'primary' === $type ? 'no' : 'yes';
+		$is_primary = 'primary' === $type;
+		$label = $is_primary ? esc_html__( 'Primary CTA', 'hello-plus' ) : esc_html__( 'Secondary CTA', 'hello-plus' );
+		$show_button_border_default = $is_primary ? 'no' : 'yes';
+		$text_color_default = $is_primary ? '#ffffff' : '#555963';
+		$background_color_default = $is_primary ? '#0052FF' : '#F6F7F8';
 
 		$add_type_condition = $add_condition ? [
 			$type . '_cta_show' => 'yes',
@@ -1143,7 +1191,10 @@ class Header extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => $type . '_button_typography',
-				'selector' => '{{WRAPPER}} .ehp-cta__button--' . $type,
+				'selector' => '{{WRAPPER}} .ehp-header__button--' . $type,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_ACCENT,
+				],
 				'condition' => $add_type_condition,
 			]
 		);
@@ -1170,7 +1221,7 @@ class Header extends Widget_Base {
 					'right' => is_rtl() ? 'row' : 'row-reverse',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta__button--' . $type => 'flex-direction: {{VALUE}};',
+					'{{WRAPPER}} .ehp-header__button--' . $type => 'flex-direction: {{VALUE}};',
 				],
 				'condition' => array_merge([
 					$type . '_cta_button_icon[value]!' => '',
@@ -1199,7 +1250,7 @@ class Header extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-icon-spacing: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-header' => '--header-button-' . $type . '-icon-spacing: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => array_merge([
 					$type . '_cta_button_icon[value]!' => '',
@@ -1224,8 +1275,9 @@ class Header extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => $text_color_default,
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-button-' . $type . '-text-color: {{VALUE}}',
 				],
 				'condition' => $add_type_condition,
 			]
@@ -1237,10 +1289,13 @@ class Header extends Widget_Base {
 				'name' => $type . '_button_background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .ehp-cta__button--' . $type,
+				'selector' => '{{WRAPPER}} .ehp-header__button--' . $type,
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
+					],
+					'color' => [
+						'default' => $background_color_default,
 					],
 				],
 				'condition' => array_merge([
@@ -1264,8 +1319,9 @@ class Header extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => $text_color_default,
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color-hover: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-button-' . $type . '-text-color-hover: {{VALUE}}',
 				],
 				'condition' => $add_type_condition,
 			]
@@ -1277,10 +1333,13 @@ class Header extends Widget_Base {
 				'name' => $type . '_button_background_hover',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .ehp-cta__button--' . $type . ':hover, {{WRAPPER}} .ehp-cta__button--' . $type . ':focus',
+				'selector' => '{{WRAPPER}} .ehp-header__button--' . $type . ':hover, {{WRAPPER}} .ehp-header__button--' . $type . ':focus',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
+					],
+					'color' => [
+						'default' => $background_color_default,
 					],
 				],
 				'condition' => array_merge([
@@ -1336,7 +1395,7 @@ class Header extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-border-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-header' => '--header-button-' . $type . '-border-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => array_merge([
 					$type . '_show_button_border' => 'yes',
@@ -1350,7 +1409,7 @@ class Header extends Widget_Base {
 				'label' => esc_html__( 'Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-border-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-button-' . $type . '-border-color: {{VALUE}}',
 				],
 				'condition' => array_merge([
 					$type . '_show_button_border' => 'yes',
@@ -1380,7 +1439,7 @@ class Header extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => $type . '_button_box_shadow',
-				'selector' => '{{WRAPPER}} .ehp-cta__button--' . $type,
+				'selector' => '{{WRAPPER}} .ehp-header__button--' . $type,
 				'condition' => array_merge([
 					$type . '_button_type' => 'button',
 				], $add_type_condition),
@@ -1394,7 +1453,7 @@ class Header extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-padding-block-end: {{BOTTOM}}{{UNIT}}; --cta-button-' . $type . '-padding-block-start: {{TOP}}{{UNIT}}; --cta-button-' . $type . '-padding-inline-end: {{RIGHT}}{{UNIT}}; --cta-button-' . $type . '-padding-inline-start: {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-header' => '--header-button-' . $type . '-padding-block-end: {{BOTTOM}}{{UNIT}}; --header-button-' . $type . '-padding-block-start: {{TOP}}{{UNIT}}; --header-button-' . $type . '-padding-inline-end: {{RIGHT}}{{UNIT}}; --header-button-' . $type . '-padding-inline-start: {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 				'condition' => array_merge([
@@ -1404,12 +1463,12 @@ class Header extends Widget_Base {
 		);
 	}
 
-	private function add_advanced_behavior_section(): void {
+	private function add_style_behavior_section(): void {
 		$this->start_controls_section(
 			'advanced_behavior_section',
 			[
 				'label' => esc_html__( 'Behavior', 'hello-plus' ),
-				'tab' => static::TAB_ADVANCED,
+				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
 
@@ -1441,7 +1500,7 @@ class Header extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-image-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-header' => '--header-float-offset: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'behavior_float' => 'yes',
@@ -1466,7 +1525,7 @@ class Header extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-image-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-header' => '--header-float-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'behavior_float' => 'yes',
@@ -1501,7 +1560,8 @@ class Header extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		// TODO: check if this needs to be responsive
+		$this->add_control(
 			'behavior_onscroll_select',
 			[
 				'label' => esc_html__( 'Sticky', 'hello-plus' ),
@@ -1524,9 +1584,20 @@ class Header extends Widget_Base {
 				'label_off' => esc_html__( 'No', 'hello-plus' ),
 				'return_value' => 'yes',
 				'default' => 'yes',
-				'condition' => [
-					'behavior_onscroll_select' => 'always',
-					'site_logo_brand_select' => 'site-logo',
+				'conditions' => [
+					'relation' => 'and',
+					'terms' => [
+						[
+							'name' => 'behavior_onscroll_select',
+							'operator' => '==',
+							'value' => 'always',
+						],
+						[
+							'name' => 'site_logo_brand_select',
+							'operator' => '==',
+							'value' => 'logo',
+						],
+					],
 				],
 			]
 		);
@@ -1558,11 +1629,27 @@ class Header extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-image-height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-header' => '--header-logo-width-sticky: {{SIZE}}{{UNIT}};',
 				],
-				'condition' => [
-					'behavior_sticky_scale_logo' => 'yes',
-					'site_logo_brand_select' => 'site-logo',
+				'conditions' => [
+					'relation' => 'and',
+					'terms' => [
+						[
+							'name' => 'behavior_onscroll_select',
+							'operator' => '==',
+							'value' => 'always',
+						],
+						[
+							'name' => 'behavior_sticky_scale_logo',
+							'operator' => '==',
+							'value' => 'yes',
+						],
+						[
+							'name' => 'site_logo_brand_select',
+							'operator' => '==',
+							'value' => 'logo',
+						],
+					],
 				],
 			]
 		);
@@ -1576,9 +1663,20 @@ class Header extends Widget_Base {
 				'label_off' => esc_html__( 'No', 'hello-plus' ),
 				'return_value' => 'yes',
 				'default' => 'yes',
-				'condition' => [
-					'behavior_onscroll_select' => 'always',
-					'site_logo_brand_select' => 'site-title',
+				'conditions' => [
+					'relation' => 'and',
+					'terms' => [
+						[
+							'name' => 'behavior_onscroll_select',
+							'operator' => '==',
+							'value' => 'always',
+						],
+						[
+							'name' => 'site_logo_brand_select',
+							'operator' => '==',
+							'value' => 'title',
+						],
+					],
 				],
 			]
 		);
@@ -1607,11 +1705,27 @@ class Header extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-content-text-gap: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-header' => '--header-title-size-sticky: {{SIZE}}{{UNIT}};',
 				],
-				'condition' => [
-					'behavior_sticky_scale_title' => 'yes',
-					'site_logo_brand_select' => 'site-title',
+				'conditions' => [
+					'relation' => 'and',
+					'terms' => [
+						[
+							'name' => 'behavior_onscroll_select',
+							'operator' => '==',
+							'value' => 'always',
+						],
+						[
+							'name' => 'behavior_sticky_scale_title',
+							'operator' => '==',
+							'value' => 'yes',
+						],
+						[
+							'name' => 'site_logo_brand_select',
+							'operator' => '==',
+							'value' => 'title',
+						],
+					],
 				],
 			]
 		);
@@ -1633,9 +1747,28 @@ class Header extends Widget_Base {
 					'800' => esc_html__( '800', 'hello-plus' ),
 					'900' => esc_html__( '900', 'hello-plus' ),
 				],
-				'condition' => [
-					'behavior_sticky_scale_title' => 'yes',
-					'site_logo_brand_select' => 'site-title',
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-title-weight-sticky: {{VALUE}};',
+				],
+				'conditions' => [
+					'relation' => 'and',
+					'terms' => [
+						[
+							'name' => 'behavior_onscroll_select',
+							'operator' => '==',
+							'value' => 'always',
+						],
+						[
+							'name' => 'behavior_sticky_scale_title',
+							'operator' => '==',
+							'value' => 'yes',
+						],
+						[
+							'name' => 'site_logo_brand_select',
+							'operator' => '==',
+							'value' => 'title',
+						],
+					],
 				],
 			]
 		);
@@ -1661,7 +1794,7 @@ class Header extends Widget_Base {
 				'name' => 'behavior_sticky_bg',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .ehp-hero__button',
+				'selector' => '{{WRAPPER}} .ehp-header.scroll-down, {{WRAPPER}} .ehp-header.scroll-down .ehp-header__dropdown',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
@@ -1677,92 +1810,5 @@ class Header extends Widget_Base {
 		);
 
 		$this->end_controls_section();
-	}
-
-	private function add_advanced_custom_section(): void {
-		$this->start_controls_section(
-			'advanced_responsive_section',
-			[
-				'label' => esc_html__( 'Responsive', 'hello-plus' ),
-				'tab' => static::TAB_ADVANCED,
-			]
-		);
-
-		$this->add_control(
-			'responsive_description',
-			[
-				'raw' => __( 'Responsive visibility will take effect only on preview mode or live page, and not while editing in Elementor.', 'hello-plus' ),
-				'type' => Controls_Manager::RAW_HTML,
-				'content_classes' => 'elementor-descriptor',
-			]
-		);
-
-		$this->add_hidden_device_controls();
-
-		$this->end_controls_section();
-
-		$this->start_controls_section(
-			'advanced_custom_controls_section',
-			[
-				'label' => esc_html__( 'CSS', 'hello-plus' ),
-				'tab' => static::TAB_ADVANCED,
-			]
-		);
-
-		$this->add_control(
-			'advanced_custom_css_id',
-			[
-				'label' => esc_html__( 'CSS ID', 'hello-plus' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => '',
-				'ai' => [
-					'active' => false,
-				],
-				'dynamic' => [
-					'active' => true,
-				],
-				'title' => esc_html__( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'hello-plus' ),
-				'style_transfer' => false,
-			]
-		);
-
-		$this->add_control(
-			'advanced_custom_css_classes',
-			[
-				'label' => esc_html__( 'CSS Classes', 'hello-plus' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => '',
-				'ai' => [
-					'active' => false,
-				],
-				'dynamic' => [
-					'active' => true,
-				],
-				'title' => esc_html__( 'Add your custom class WITHOUT the dot. e.g: my-class', 'hello-plus' ),
-			]
-		);
-
-		$this->end_controls_section();
-
-		Theme_Utils::elementor()->controls_manager->add_custom_css_controls( $this, static::TAB_ADVANCED );
-
-		Theme_Utils::elementor()->controls_manager->add_custom_attributes_controls( $this, static::TAB_ADVANCED );
-	}
-
-	private function get_site_logo(): string {
-		$site_logo = Theme_Utils::elementor()->dynamic_tags->get_tag_data_content( null, 'site-logo' );
-		return $site_logo['url'] ?? Utils::get_placeholder_image_src();
-	}
-
-	private function get_available_menus() {
-		$menus = wp_get_nav_menus();
-
-		$options = [];
-
-		foreach ( $menus as $menu ) {
-			$options[ $menu->slug ] = $menu->name;
-		}
-
-		return $options;
 	}
 }

@@ -143,7 +143,7 @@ class Header extends Widget_Base {
 			[
 				'type' => Controls_Manager::ALERT,
 				'alert_type' => 'info',
-				'content' => esc_html__( 'Go to', 'hello-plus' ) . ' <a href="#" onclick="elementorPro.modules.themeBuilder.openSiteIdentity( event )" >' . esc_html__( 'Site Identity > Site Description', 'hello-plus' ) . '</a>' . esc_html__( ' to edit the Site Title', 'hello-plus' ),
+				'content' => esc_html__( 'Go to', 'hello-plus' ) . ' <a href="#" onclick="helloPlusLogo.openSiteIdentity( event )" >' . esc_html__( 'Site Identity > Site Description', 'hello-plus' ) . '</a>' . esc_html__( ' to edit the Site Title', 'hello-plus' ),
 				'condition' => [
 					'site_logo_brand_select' => 'title',
 				],

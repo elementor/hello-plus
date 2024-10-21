@@ -148,11 +148,13 @@ class Admin_Config {
 				'title' => __( 'Edit home page', 'hello-plus' ),
 				'variant' => 'contained',
 				'link' => get_edit_post_link( get_option( 'page_on_front' ), 'admin' ) . '&action=elementor',
+				'color' => 'primary',
 			],
 			[
 				'title' => __( 'View site', 'hello-plus' ),
 				'variant' => 'outlined',
 				'link' => get_site_url(),
+				'color' => 'secondary',
 			],
 		];
 
@@ -162,6 +164,7 @@ class Admin_Config {
 				'title' => __( 'Run setup wizard', 'hello-plus' ),
 				'variant' => 'contained',
 				'link' => admin_url( 'admin.php?page=hello-plus-setup-wizard' ),
+				'color' => 'primary',
 			];
 		}
 

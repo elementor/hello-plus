@@ -13,7 +13,7 @@ export const AdminPage = () => {
 		<ThemeProvider colorScheme="auto">
 			<Box className="hello_plus__notices" component="div">
 			</Box>
-			<Box p={ 1 }>
+			<Box>
 				<GridWithActionLinks>
 					<Stack direction="column" gap={ 2 }>
 						<Welcome />

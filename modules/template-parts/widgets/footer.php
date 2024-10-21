@@ -48,7 +48,15 @@ class Footer extends Widget_Base {
 	}
 
 	public function get_style_depends(): array {
-		return [ 'hello-plus-footer' ];
+		$widget_name = $this->get_name();
+
+		$style_depends = Theme_Utils::elementor()->experiments->is_feature_active( 'e_font_icon_svg' )
+			? parent::get_style_depends()
+			: [ 'elementor-icons-fa-solid', 'elementor-icons-fa-brands', 'elementor-icons-fa-regular' ];
+
+		$style_depends[] = "widget-{$widget_name}";
+
+		return $style_depends;
 	}
 
 	protected function render(): void {

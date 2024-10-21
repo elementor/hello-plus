@@ -24,7 +24,7 @@ class Widget_Footer_Render {
 		$layout_classnames = self::LAYOUT_CLASSNAME;
 		$box_border = $this->settings['footer_box_border'] ?? '';
 
-        if ( 'yes' === $box_border ) {
+		if ( 'yes' === $box_border ) {
 			$layout_classnames .= ' has-box-border';
 		}
 
@@ -62,7 +62,7 @@ class Widget_Footer_Render {
 		<?php
 	}
 
-    public function render_site_link(): void {
+	public function render_site_link(): void {
 		$site_logo_image = $this->settings['site_logo_image'];
 		$site_title_text = $this->widget->get_site_title();
 		$site_title_tag = $this->settings['site_logo_title_tag'] ?? 'h2';
@@ -92,7 +92,7 @@ class Widget_Footer_Render {
 
 	public function render_social_icons(): void {
 		$icons = $this->settings['footer_icons'] ?? [];
-		$icon_hover_animation = $this->settings[ 'social_icons_hover_animation' ] ?? '';
+		$icon_hover_animation = $this->settings['social_icons_hover_animation'] ?? '';
 		$footer_icons_classnames = 'ehp-footer__social-icons';
 
 		if ( empty( $icons ) ) {
@@ -161,7 +161,7 @@ class Widget_Footer_Render {
 		add_filter( 'nav_menu_link_attributes', [ $this, 'handle_link_classes' ], 10, 4 );
 
 		$menu_html = wp_nav_menu( $args );
-		
+
 		remove_filter( 'nav_menu_link_attributes', [ $this, 'handle_link_classes' ] );
 
 		if ( empty( $menu_html ) ) {
@@ -173,7 +173,7 @@ class Widget_Footer_Render {
 		}
 
 		$this->widget->add_render_attribute( 'main-menu', [
-			'class' => 'ehp-footer__navigation'
+			'class' => 'ehp-footer__navigation',
 		] );
 		?>
 		<div class="ehp-footer__nav-container">
@@ -238,7 +238,7 @@ class Widget_Footer_Render {
 		<?php
 	}
 
-    public function get_link_url(): array {
+	public function get_link_url(): array {
 		return [ 'url' => $this->widget->get_site_url() ];
 	}
 
@@ -267,5 +267,4 @@ class Widget_Footer_Render {
 
 		return $atts;
 	}
-
 }

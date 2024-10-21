@@ -215,7 +215,7 @@ class Footer extends Widget_Base {
 		$repeater->add_control(
 			'footer_selected_icon',
 			[
-				'label' => esc_html__( 'Icon', 'elementor' ),
+				'label' => esc_html__( 'Icon', 'hello-plus' ),
 				'type' => Controls_Manager::ICONS,
 				'default' => [
 					'value' => 'fas fa-plus',
@@ -227,7 +227,7 @@ class Footer extends Widget_Base {
 		$repeater->add_control(
 			'footer_icon_link',
 			[
-				'label' => esc_html__( 'Link', 'elementor' ),
+				'label' => esc_html__( 'Link', 'hello-plus' ),
 				'type' => Controls_Manager::URL,
 				'dynamic' => [
 					'active' => true,
@@ -264,7 +264,8 @@ class Footer extends Widget_Base {
 						],
 					],
 				],
-				'title_field' => '{{{ elementor.helpers.renderIcon( this, footer_selected_icon, {}, "i", "panel" ) || \'<i class="{{ icon }}" aria-hidden="true"></i>\' }}} {{{ footer_icon_text }}}',			]
+				'title_field' => '{{{ elementor.helpers.renderIcon( this, footer_selected_icon, {}, "i", "panel" ) || \'<i class="{{ icon }}" aria-hidden="true"></i>\' }}} {{{ footer_icon_text }}}',
+			]
 		);
 
 		$this->add_control(
@@ -356,14 +357,13 @@ class Footer extends Widget_Base {
 					'options' => $menus,
 					'default' => array_keys( $menus )[0],
 					'save_default' => true,
-					'separator' => 'after',
+					'separator' => 'before',
 					'description' => sprintf(
 						/* translators: 1: Link opening tag, 2: Link closing tag. */
 						esc_html__( 'Go to the %1$sMenus screen%2$s to manage your menus.', 'hello-plus' ),
 						sprintf( '<a href="%s" target="_blank">', admin_url( 'nav-menus.php' ) ),
 						'</a>'
 					),
-					'separator' => 'before',
 				]
 			);
 		} else {

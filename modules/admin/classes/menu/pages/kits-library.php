@@ -43,7 +43,7 @@ class Kits_Library {
 
 	public function register_kits_library_page(): void {
 		add_submenu_page(
-			'hello-plus',
+			'hello-biz',
 			__( 'Kits Library', 'hello-plus' ),
 			__( 'Kits Library', 'hello-plus' ),
 			'manage_options',

@@ -2,6 +2,10 @@
 
 namespace HelloPlus\Modules\Admin\Classes\Rest;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 use HelloPlus\Includes\Utils;
 use WP_REST_Server;
 

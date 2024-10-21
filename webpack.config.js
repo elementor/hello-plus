@@ -18,11 +18,8 @@ const entryPoints = {
 	'css/customizer': path.resolve( modulesDir, 'customizer/assets/scss', 'customizer.scss' ),
 
 	// Admin module:
-	'js/hello-plus-admin': path.resolve( modulesDir, 'admin/assets/js', 'hello-plus-admin.js' ),
-	'css/hello-plus-admin': path.resolve( modulesDir, 'admin/assets/scss', 'hello-plus-admin.scss' ),
 	'js/hello-plus-notice': path.resolve( modulesDir, 'admin/assets/js', 'hello-plus-notice.js' ),
 	'css/hello-plus-notice': path.resolve( modulesDir, 'admin/assets/scss', 'hello-plus-notice.scss' ),
-	'js/hello-plus-admin-top-bar': path.resolve( modulesDir, 'admin/assets/js', 'hello-plus-topbar.js' ),
 	'js/hello-plus-onboarding': path.resolve( modulesDir, 'admin/assets/js', 'hello-plus-onboarding.js' ),
 
 	// Content module

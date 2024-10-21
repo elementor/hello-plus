@@ -29,8 +29,6 @@ class Module extends Module_Base {
 		return [
 			'Plugin_Notice',
 			'Api_Controller',
-			'Admin_Menu_Controller',
-			'Admin_Top_Bar',
 			'Scripts_Controller',
 		];
 	}

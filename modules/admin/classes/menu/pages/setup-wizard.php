@@ -16,7 +16,7 @@ class Setup_Wizard {
 
 	public function register_setup_wizard_page(): void {
 		add_submenu_page(
-			'hello-plus',
+			'hello-biz',
 			__( 'Setup Wizard', 'hello-plus' ),
 			__( 'Setup Wizard', 'hello-plus' ),
 			'manage_options',

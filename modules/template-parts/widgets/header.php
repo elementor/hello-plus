@@ -49,6 +49,10 @@ class Header extends Widget_Base {
 		return [ 'hello-plus-header' ];
 	}
 
+	public function get_script_depends(): array {
+		return [ 'hello-plus-header' ];
+	}
+
 	protected function render(): void {
 		$render_strategy = new Widget_Header_Render( $this );
 

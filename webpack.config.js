@@ -10,16 +10,7 @@ const path = require( 'path' );
 const modulesDir = process.cwd() + '/modules/';
 
 const entryPoints = {
-	// Editor:
-	'js/hello-plus-editor': path.resolve( process.cwd(), 'assets/dev/js/editor', 'hello-plus-editor.js' ),
-	'js/hello-plus-frontend': path.resolve( process.cwd(), 'assets/dev/js/frontend', 'hello-plus-frontend.js' ),
-
-	// Customizer module:
-	'css/customizer': path.resolve( modulesDir, 'customizer/assets/scss', 'customizer.scss' ),
-
 	// Admin module:
-	'js/hello-plus-notice': path.resolve( modulesDir, 'admin/assets/js', 'hello-plus-notice.js' ),
-	'css/hello-plus-notice': path.resolve( modulesDir, 'admin/assets/scss', 'hello-plus-notice.scss' ),
 	'js/hello-plus-onboarding': path.resolve( modulesDir, 'admin/assets/js', 'hello-plus-onboarding.js' ),
 
 	// Content module
@@ -29,12 +20,10 @@ const entryPoints = {
 
 	// Template Parts module
 	'css/hello-plus-header': path.resolve( modulesDir, 'template-parts/assets/scss', 'hello-plus-header.scss' ),
+	'js/hello-plus-header': path.resolve( modulesDir, 'template-parts/assets/js', 'hello-plus-header.js' ),
+	'js/hello-plus-header-editor': path.resolve( modulesDir, 'template-parts/assets/js', 'hello-plus-header-editor.js' ),
 
 	// Theme module
-	'css/theme': path.resolve( modulesDir, 'theme/assets/scss', 'theme.scss' ),
-	'css/header-footer': path.resolve( modulesDir, 'theme/assets/scss', 'header-footer.scss' ),
-	'css/editor': path.resolve( modulesDir, 'theme/assets/scss', 'editor.scss' ),
-	'css/classic-editor': path.resolve( modulesDir, 'theme/assets/scss', 'classic-editor.scss' ),
 };
 
 module.exports = {

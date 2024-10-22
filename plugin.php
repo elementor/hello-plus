@@ -14,12 +14,12 @@ use HelloPlus\Modules\Admin\Classes\Menu\Pages\Setup_Wizard;
  *
  * @package HelloPlus
  */
-final class Theme {
+final class Plugin {
 
 	/**
-	 * @var ?Theme
+	 * @var ?Plugin
 	 */
-	private static ?Theme $instance = null;
+	private static ?Plugin $instance = null;
 
 	/**
 	 * @var Module_Base[]
@@ -61,18 +61,6 @@ final class Theme {
 			'1.0.0'
 		);
 	}
-
-	/**
-	 * @static
-	 * @access public
-	 *
-	 * @return string
-	 * @deprecated just delete. no replacement required, resolved by the build scripts
-	 */
-	public static function get_min_suffix(): string {
-		return '';
-	}
-
 	/**
 	 * @param $class_name
 	 *
@@ -116,9 +104,9 @@ final class Theme {
 	/**
 	 * Singleton
 	 *
-	 * @return Theme
+	 * @return Plugin
 	 */
-	public static function instance(): Theme {
+	public static function instance(): Plugin {
 		if ( is_null( self::$instance ) ) {
 			self::$instance = new self();
 		}
@@ -154,25 +142,6 @@ final class Theme {
 	}
 
 	/**
-	 * Activate the theme
-	 *
-	 * @return void
-	 */
-	public function activate() {
-		if ( ! Setup_Wizard::has_site_wizard_been_completed() ) {
-			set_transient( 'hello_plus_redirect_to_setup_wizard', true );
-		}
-	}
-
-	public function redirect_on_first_activation() {
-		if ( get_transient( 'hello_plus_redirect_to_setup_wizard' ) ) {
-			delete_transient( 'hello_plus_redirect_to_setup_wizard' );
-			wp_safe_redirect( admin_url( 'admin.php?page=' . Setup_Wizard::SETUP_WIZARD_PAGE_SLUG ) );
-			exit;
-		}
-	}
-
-	/**
 	 * Initialize all Modules
 	 *
 	 * @return void
@@ -180,7 +149,6 @@ final class Theme {
 	private function init_modules() {
 		$modules_list = [
 			'Theme',
-			'Customizer',
 			'Admin',
 			'Content',
 			'TemplateParts',
@@ -207,9 +175,6 @@ final class Theme {
 		if ( ! $autoloader_registered ) {
 			$autoloader_registered = spl_autoload_register( [ $this, 'autoload' ] );
 		}
-
-		add_action( 'after_switch_theme', [ $this, 'activate' ] );
-		add_action( 'admin_init', [ $this, 'redirect_on_first_activation' ] );
 
 		$this->init_modules();
 	}

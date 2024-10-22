@@ -13,15 +13,15 @@ export default function ConnectDialog( { onClose, onSuccess, connectUrl } ) {
 
 	return (
 		<DialogModal
-			title={ __( 'Connect to Template Library', 'elementor' ) }
-			text={ __( 'Access this template and our entire library by creating a free personal account', 'elementor' ) }
-			approveButtonText={ __( 'Get Started', 'elementor' ) }
+			title={ __( 'Connect to Template Library', 'hello-plus' ) }
+			text={ __( 'Access this template and our entire library by creating a free personal account', 'hello-plus' ) }
+			approveButtonText={ __( 'Get Started', 'hello-plus' ) }
 			approveButtonUrl={ connectUrl }
 			approveButtonOnClick={ () => {
 
 			} }
 			approveButtonColor="primary"
-			dismissButtonText={ __( 'Cancel', 'elementor' ) }
+			dismissButtonText={ __( 'Cancel', 'hello-plus' ) }
 			dismissButtonOnClick={ () => onClose() }
 			onClose={ () => onClose() }
 		/>

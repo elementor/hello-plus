@@ -1,5 +1,4 @@
 import AppBar from '@elementor/ui/AppBar';
-import HelpIcon from '@elementor/icons/HelpIcon';
 import { TopBarContent } from './top-bar-content';
 
 export const TopBar = () => {

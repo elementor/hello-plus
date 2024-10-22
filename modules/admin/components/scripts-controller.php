@@ -6,8 +6,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use HelloPlus\Modules\Admin\Classes\Elementor\Elementor_Helper;
-
 class Scripts_Controller {
 
 	public function __construct() {
@@ -17,12 +15,12 @@ class Scripts_Controller {
 	public function enqueue_hello_plus_onboarding_scripts() {
 		$screen = get_current_screen();
 
-		if ( 'hello_page_hello-plus-setup-wizard' !== $screen->id ) {
+		if ( 'hello-biz_page_hello-plus-setup-wizard' !== $screen->id ) {
 			return;
 		}
 
 		$handle = 'hello-plus-onboarding';
-		$asset_path = HELLO_PLUS_SCRIPTS_PATH . 'hello-plus-admin.asset.php';
+		$asset_path = HELLO_PLUS_SCRIPTS_PATH . 'hello-plus-onboarding.asset.php';
 		$asset_url = HELLO_PLUS_SCRIPTS_URL;
 
 		if ( ! file_exists( $asset_path ) ) {

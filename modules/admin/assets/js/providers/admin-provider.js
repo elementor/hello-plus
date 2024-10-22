@@ -1,33 +1,70 @@
-import { createContext, useEffect } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import apiFetch from '@wordpress/api-fetch';
+import { __ } from '@wordpress/i18n';
 
 export const AdminContext = createContext();
 
 export const AdminProvider = ( { children } ) => {
+	const [ isLoading, setIsLoading ] = React.useState( true );
 	const [ promotionsLinks, setPromotionsLinks ] = React.useState( [] );
 	const [ adminSettings, setAdminSettings ] = React.useState( {} );
 	const [ onboardingSettings, setOnboardingSettings ] = React.useState( {} );
+	const [ elementorKitSettings, setElementorKitSettings ] = React.useState( {} );
+	const [ stepAction, setStepAction ] = useState( '' );
+	const [ step, setStep ] = useState( 0 );
+	const [ buttonText, setButtonText ] = useState( '' );
+	const { elementorInstalled, elementorActive } = onboardingSettings;
+	const { elementorAppConfig } = window;
 
 	useEffect( () => {
-		apiFetch( { path: '/elementor-hello-plus/v1/promotions' } ).then( ( links ) => {
+		if ( elementorAppConfig ) {
+			setElementorKitSettings( elementorAppConfig[ 'kit-library' ] );
+		}
+	}, [ elementorAppConfig ] );
+
+	useEffect( () => {
+		if ( false === elementorInstalled ) {
+			setStepAction( 'install-elementor' );
+			setButtonText( __( 'Start building my website', 'hello-plus' ) );
+		}
+		if ( elementorInstalled && false === elementorActive ) {
+			setStepAction( 'activate-elementor' );
+			setButtonText( __( 'Start building my website', 'hello-plus' ) );
+		}
+		if ( elementorInstalled && elementorActive ) {
+			setStepAction( 'install-kit' );
+			setButtonText( __( 'Install Kit', 'hello-plus' ) );
+			setStep( 1 );
+		}
+	}, [ elementorInstalled, elementorActive ] );
+
+	useEffect( () => {
+		Promise.all( [
+			apiFetch( { path: '/elementor-hello-plus/v1/promotions' } ),
+			apiFetch( { path: '/elementor-hello-plus/v1/admin-settings' } ),
+			apiFetch( { path: '/elementor-hello-plus/v1/onboarding-settings' } ),
+		] ).then( ( [ links, settings, onboarding ] ) => {
 			setPromotionsLinks( links.links );
-		} );
-	}, [] );
-
-	useEffect( () => {
-		apiFetch( { path: '/elementor-hello-plus/v1/admin-settings' } ).then( ( settings ) => {
 			setAdminSettings( settings.config );
-		} );
-	}, [] );
-
-	useEffect( () => {
-		apiFetch( { path: '/elementor-hello-plus/v1/onboarding-settings' } ).then( ( settings ) => {
-			setOnboardingSettings( settings.settings );
+			setOnboardingSettings( onboarding.settings );
+		} ).finally( () => {
+			setIsLoading( false );
 		} );
 	}, [] );
 
 	return (
-		<AdminContext.Provider value={ { promotionsLinks, adminSettings, onboardingSettings } }>
+		<AdminContext.Provider value={ {
+			promotionsLinks,
+			adminSettings,
+			onboardingSettings,
+			stepAction,
+			setStepAction,
+			buttonText,
+			step,
+			setStep,
+			isLoading,
+			elementorKitSettings,
+		} }>
 			{ children }
 		</AdminContext.Provider>
 	);

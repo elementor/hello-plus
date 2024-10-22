@@ -45,7 +45,7 @@ class Module extends Module_Base {
 			'hello-plus-header',
 			HELLO_PLUS_STYLE_URL . 'hello-plus-header.css',
 			[],
-			HELLO_PLUS_ELEMENTOR_VERSION
+			HELLO_PLUS_VERSION
 		);
 
 		wp_enqueue_style(
@@ -59,7 +59,7 @@ class Module extends Module_Base {
 			'hello-plus-header',
 			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-header.js',
 			[ 'jquery' ],
-			HELLO_PLUS_ELEMENTOR_VERSION,
+			HELLO_PLUS_VERSION,
 			true
 		);
 	}
@@ -69,7 +69,7 @@ class Module extends Module_Base {
 			'hello-plus-template-parts-editor',
 			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-template-parts-editor.js',
 			[ 'elementor-editor' ],
-			HELLO_PLUS_ELEMENTOR_VERSION,
+			HELLO_PLUS_VERSION,
 			true
 		);
 	}

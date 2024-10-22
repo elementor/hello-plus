@@ -4,7 +4,6 @@ import { __ } from '@wordpress/i18n';
 import { useCallback, useState } from 'react';
 
 import { useAdminContext } from '../hooks/use-admin-context';
-import { useGetCurrentStep } from '../hooks/use-get-current-step';
 import Modal from '@elementor/ui/Modal';
 
 import { TopBarContent } from '../components/top-bar/top-bar-content';
@@ -28,12 +27,18 @@ const style = {
 export const OnboardingPage = () => {
 	const [ message, setMessage ] = useState( '' );
 	const [ severity, setSeverity ] = useState( 'info' );
-	const [ loading, setLoading ] = useState( false );
 	const [ previewKit, setPreviewKit ] = useState( null );
 	const [ allowTracking, setAllowTracking ] = useState( true );
 
-	const { onboardingSettings: { nonce, modalCloseRedirectUrl, kits } = {} } = useAdminContext();
-	const { stepAction, buttonText, step, setStep } = useGetCurrentStep();
+	const {
+		isLoading,
+		setIsLoading,
+		stepAction,
+		buttonText,
+		step,
+		setStep,
+		onboardingSettings: { nonce, modalCloseRedirectUrl, kits } = {},
+	} = useAdminContext();
 
 	const onClick = useCallback( async () => {
 		setMessage( '' );
@@ -45,7 +50,7 @@ export const OnboardingPage = () => {
 			allowTracking,
 		};
 
-		setLoading( true );
+		setIsLoading( true );
 
 		try {
 			switch ( stepAction ) {
@@ -82,9 +87,9 @@ export const OnboardingPage = () => {
 			setMessage( error.errorMessage );
 			setSeverity( 'error' );
 		} finally {
-			setLoading( false );
+			setIsLoading( false );
 		}
-	}, [ allowTracking, nonce, setStep, stepAction ] );
+	}, [ allowTracking, nonce, setIsLoading, setStep, stepAction ] );
 
 	const onClose = () => {
 		window.location.href = modalCloseRedirectUrl;
@@ -95,13 +100,13 @@ export const OnboardingPage = () => {
 			<Modal open sx={ { zIndex: 100000 } } >
 				<Box style={ { ...style, display: 'flex', flexDirection: 'column' } }>
 					{ ! previewKit && ( <TopBarContent onClose={ onClose } sx={ { borderBottom: '1px solid var(--divider-divider, rgba(0, 0, 0, 0.12))', mb: 4 } } iconSize="small" /> ) }
-					{ 0 === step && ! loading && ! previewKit && (
+					{ 0 === step && ! isLoading && ! previewKit && (
 						<GetStarted allowTracking={ allowTracking } setAllowTracking={ setAllowTracking } severity={ severity } message={ message } buttonText={ buttonText } onClick={ onClick } />
 					) }
-					{ 1 === step && ! loading && ! previewKit && ( <InstallKit setPreviewKit={ setPreviewKit } severity={ severity } message={ message } onClick={ onClick } kits={ kits } /> ) }
-					{ 2 === step && ! loading && ! previewKit && ( <ReadyToGo modalCloseRedirectUrl={ modalCloseRedirectUrl } /> ) }
-					{ previewKit && <Preview slug={ previewKit } setStep={ setStep } setPreviewKit={ setPreviewKit } title="Title" /> }
-					{ loading && <Spinner /> }
+					{ 1 === step && ! isLoading && ! previewKit && ( <InstallKit setPreviewKit={ setPreviewKit } severity={ severity } message={ message } onClick={ onClick } kits={ kits } /> ) }
+					{ 2 === step && ! isLoading && ! previewKit && ( <ReadyToGo modalCloseRedirectUrl={ modalCloseRedirectUrl } /> ) }
+					{ previewKit && <Preview kit={ previewKit } setPreviewKit={ setPreviewKit } /> }
+					{ isLoading && <Spinner /> }
 				</Box>
 			</Modal>
 		</ThemeProvider>

@@ -6,11 +6,13 @@ use Elementor\Group_Control_Image_Size;
 use Elementor\Icons_Manager;
 use Elementor\Utils;
 
+use \HelloPlus\Modules\TemplateParts\Classes\Traits\Shared_Header_Traits;
 use HelloPlus\Modules\TemplateParts\Widgets\Header;
 
 class Widget_Header_Render {
 
 	protected Header $widget;
+	use Shared_Header_Traits;
 
 	const LAYOUT_CLASSNAME = 'ehp-header';
 	const SITE_LINK_CLASSNAME = 'ehp-header__site-link';
@@ -71,7 +73,8 @@ class Widget_Header_Render {
 	}
 
 	public function render_site_link(): void {
-		$site_logo_image = $this->settings['site_logo_image'];
+		$site_logo_brand_select = $this->settings['site_logo_brand_select'];
+
 		$site_title_text = $this->widget->get_site_title();
 		$site_title_tag = $this->settings['site_logo_title_tag'] ?? 'h2';
 		$site_link_classnames = self::SITE_LINK_CLASSNAME;
@@ -87,9 +90,10 @@ class Widget_Header_Render {
 		}
 		?>
 		<a <?php echo $this->widget->get_render_attribute_string( 'site-link' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-			<?php if ( $site_logo_image ) { ?>
-				<?php Group_Control_Image_Size::print_attachment_image_html( $this->settings, 'site_logo_image' ); ?>
-			<?php } else {
+			<?php if ( 'logo' === $site_logo_brand_select ) {
+				Group_Control_Image_Size::print_attachment_image_html( $this->settings, 'site_logo_image' );
+			} ?>
+			<?php if ( 'title' === $site_logo_brand_select ) {
 				$site_title_output = sprintf( '<%1$s %2$s %3$s>%4$s</%1$s>', Utils::validate_html_tag( $site_title_tag ), $this->widget->get_render_attribute_string( 'heading' ), 'class="ehp-header__site-title"', esc_html( $site_title_text ) );
 				// Escaped above
 				Utils::print_unescaped_internal_string( $site_title_output );

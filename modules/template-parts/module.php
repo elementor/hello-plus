@@ -41,8 +41,22 @@ class Module extends Module_Base {
 
 	public function enqueue(): void {
 		wp_enqueue_style(
+			'hello-plus-template-parts-preview',
+			HELLO_PLUS_STYLE_URL . 'hello-plus-template-parts-preview.css',
+			[],
+			HELLO_PLUS_ELEMENTOR_VERSION
+		);
+
+		wp_enqueue_style(
 			'hello-plus-header',
 			HELLO_PLUS_STYLE_URL . 'hello-plus-header.css',
+			[],
+			HELLO_PLUS_ELEMENTOR_VERSION
+		);
+
+		wp_enqueue_style(
+			'hello-plus-footer',
+			HELLO_PLUS_STYLE_URL . 'hello-plus-footer.css',
 			[],
 			HELLO_PLUS_ELEMENTOR_VERSION
 		);

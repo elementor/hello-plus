@@ -54,7 +54,7 @@ class Footer extends Widget_Base {
 			? parent::get_style_depends()
 			: [ 'elementor-icons-fa-solid', 'elementor-icons-fa-brands', 'elementor-icons-fa-regular' ];
 
-		$style_depends[] = "widget-{$widget_name}";
+		$style_depends[] = "hello-plus-{$widget_name}";
 
 		return $style_depends;
 	}

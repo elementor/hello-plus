@@ -44,21 +44,21 @@ class Module extends Module_Base {
 			'hello-plus-zigzag',
 			HELLO_PLUS_STYLE_URL . 'hello-plus-zigzag.css',
 			[],
-			HELLO_PLUS_ELEMENTOR_VERSION
+			HELLO_PLUS_VERSION
 		);
 
 		wp_enqueue_style(
 			'hello-plus-hero',
 			HELLO_PLUS_STYLE_URL . 'hello-plus-hero.css',
 			[],
-			HELLO_PLUS_ELEMENTOR_VERSION
+			HELLO_PLUS_VERSION
 		);
 
 		wp_enqueue_style(
 			'hello-plus-cta',
 			HELLO_PLUS_STYLE_URL . 'hello-plus-cta.css',
 			[],
-			HELLO_PLUS_ELEMENTOR_VERSION
+			HELLO_PLUS_VERSION
 		);
 	}
 

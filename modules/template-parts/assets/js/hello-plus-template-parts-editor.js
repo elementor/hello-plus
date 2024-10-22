@@ -9,4 +9,5 @@ export default class helloPlusLogo {
 	}
 }
 
-new helloPlusLogo();
+const HelloPlusLogoClass = new helloPlusLogo();
+window.helloPlusLogo = HelloPlusLogoClass;

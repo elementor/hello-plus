@@ -22,7 +22,7 @@ export const ReadyToGo = ( { modalCloseRedirectUrl } ) => {
 						}
 					</Typography>
 					<Stack direction="row" gap={ 1 } mt={ 5 }>
-						<Button variant="outlined" color="primary" onClick={ () => {
+						<Button variant="outlined" color="secondary" onClick={ () => {
 							window.location.href = modalCloseRedirectUrl;
 						} }>
 							{ __( 'Customize my site', 'hello-plus' ) }

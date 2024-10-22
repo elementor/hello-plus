@@ -100,14 +100,14 @@ class Plugin_Notice {
 			'hello-plus-notice-style',
 			HELLO_PLUS_STYLE_URL . 'hello-plus-notice.css',
 			[],
-			HELLO_PLUS_ELEMENTOR_VERSION
+			HELLO_PLUS_VERSION
 		);
 
 		wp_enqueue_script(
 			'hello-plus-notice',
 			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-notice.js',
 			[],
-			HELLO_PLUS_ELEMENTOR_VERSION,
+			HELLO_PLUS_VERSION,
 			true
 		);
 

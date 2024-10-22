@@ -10,10 +10,6 @@ const path = require( 'path' );
 const modulesDir = process.cwd() + '/modules/';
 
 const entryPoints = {
-	// Editor:
-	'js/hello-plus-editor': path.resolve( process.cwd(), 'assets/dev/js/editor', 'hello-plus-editor.js' ),
-	'js/hello-plus-frontend': path.resolve( process.cwd(), 'assets/dev/js/frontend', 'hello-plus-frontend.js' ),
-
 	// Admin module:
 	'js/hello-plus-onboarding': path.resolve( modulesDir, 'admin/assets/js', 'hello-plus-onboarding.js' ),
 

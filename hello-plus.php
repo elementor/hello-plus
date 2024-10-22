@@ -28,9 +28,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'HELLO_PLUS_ELEMENTOR_VERSION', '0.0.1' );
-define( 'HELLO_PLUS_PATH', get_template_directory() );
-define( 'HELLO_PLUS_URL', get_template_directory_uri() );
+define( 'HELLO_PLUS_VERSION', '0.0.1' );
+
+define( 'HELLO_PLUS__FILE__', __FILE__ );
+define( 'HELLO_PLUS_PLUGIN_BASE', plugin_basename( HELLO_PLUS__FILE__ ) );
+define( 'HELLO_PLUS_PATH', plugin_dir_path( HELLO_PLUS__FILE__ ) );
+define( 'HELLO_PLUS_URL', plugins_url( '', HELLO_PLUS__FILE__ ) );
 define( 'HELLO_PLUS_ASSETS_PATH', HELLO_PLUS_PATH . '/build/' );
 define( 'HELLO_PLUS_ASSETS_URL', HELLO_PLUS_URL . '/build/' );
 define( 'HELLO_PLUS_SCRIPTS_PATH', HELLO_PLUS_ASSETS_PATH . 'js/' );
@@ -43,6 +46,6 @@ if ( ! isset( $content_width ) ) {
 }
 
 // Init the Theme class
-require HELLO_PLUS_PATH . '/theme.php';
+require HELLO_PLUS_PATH . '/plugin.php';
 
 Plugin::instance();

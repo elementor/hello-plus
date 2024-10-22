@@ -35,7 +35,6 @@ class Theme_Integration {
 		//add_action( 'after_switch_theme', [ $this, 'activate' ] );
 		//add_action( 'admin_init', [ $this, 'redirect_on_first_activation' ] );
 
-
 		add_action( 'hello_plus_theme/redirect_on_first_activation', [ $this, 'activate' ] );
 		add_action( 'hello_plus_theme/after_switch_theme', [ $this, 'redirect_on_first_activation' ] );
 	}

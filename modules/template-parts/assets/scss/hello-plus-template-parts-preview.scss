@@ -1,5 +1,5 @@
 /**
-* Contact Buttons has position: fixed, therefore the container results as `empty`
+* Elements that have position: fixed, therefore the container results as `empty`
 * and it's not visible in the preview when the aside is hidden.
 */
 .elementor-element:has(.ehp-header) {

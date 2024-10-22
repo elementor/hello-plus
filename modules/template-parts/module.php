@@ -39,14 +39,16 @@ class Module extends Module_Base {
 		];
 	}
 
-	public function enqueue(): void {
-		wp_enqueue_style(
+	public function register_frontend_styles(): void {
+		wp_register_style(
 			'hello-plus-header',
 			HELLO_PLUS_STYLE_URL . 'hello-plus-header.css',
-			[],
+			[ 'elementor-frontend' ],
 			HELLO_PLUS_ELEMENTOR_VERSION
 		);
+	}
 
+	public function enqueue(): void {
 		wp_enqueue_script(
 			'hello-plus-header',
 			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-header.js',
@@ -78,6 +80,7 @@ class Module extends Module_Base {
 	 */
 	protected function register_hooks(): void {
 		parent::register_hooks();
+		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_frontend_styles' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue' ] );
 		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'editor_enqueue' ] );
 	}

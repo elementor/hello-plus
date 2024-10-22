@@ -1,11 +1,28 @@
 <?php
 /**
- * Theme functions and definitions
+ * Plugin Name: Hello Plus
+ * Description: Puts the PLUS in Elementor's Hello+ themes
+ * Plugin URI: https://elementor.com
+ * Author: Elementor.com
+ * Version: 0.0.1
+ * Author URI: https://elementor.com
+ *
+ * Text Domain: hello-plus
  *
  * @package HelloPlus
+ *
+ * Hello+ is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * Hello+ is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
  */
 
-use HelloPlus\Theme;
+use HelloPlus\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -28,4 +45,4 @@ if ( ! isset( $content_width ) ) {
 // Init the Theme class
 require HELLO_PLUS_PATH . '/theme.php';
 
-Theme::instance();
+Plugin::instance();

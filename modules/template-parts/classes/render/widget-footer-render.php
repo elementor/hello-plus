@@ -32,7 +32,7 @@ class Widget_Footer_Render {
 			'class' => $layout_classnames,
 		] );
 		?>
-		<div <?php echo $this->widget->print_render_attribute_string( 'layout' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<div <?php $this->widget->print_render_attribute_string( 'layout' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<div class="ehp-footer__row">
 				<?php
 					$this->render_side_content();
@@ -78,7 +78,7 @@ class Widget_Footer_Render {
 			$this->widget->add_link_attributes( 'site-link', $site_link );
 		}
 		?>
-		<a <?php echo $this->widget->print_render_attribute_string( 'site-link' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<a <?php $this->widget->print_render_attribute_string( 'site-link' ); ?>>
 			<?php if ( $site_logo_image ) { ?>
 				<?php Group_Control_Image_Size::print_attachment_image_html( $this->settings, 'site_logo_image' ); ?>
 			<?php } else {
@@ -103,7 +103,7 @@ class Widget_Footer_Render {
 			'class' => $footer_icons_classnames,
 		] );
 		?>
-		<div <?php echo $this->widget->print_render_attribute_string( 'icons' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<div <?php $this->widget->print_render_attribute_string( 'icons' ); ?>>
 			<?php
 			foreach ( $icons as $key => $icon ) {
 				$link = $icon['footer_icon_link'];
@@ -125,7 +125,7 @@ class Widget_Footer_Render {
 				?>
 
 				<?php if ( ! empty( $text ) ) : ?>
-					<a <?php echo $this->widget->print_render_attribute_string( 'icon-' . $key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+					<a <?php $this->widget->print_render_attribute_string( 'icon-' . $key ); ?>>
 						<?php if ( ! empty( $selected_icon['value'] ) ) : ?>
 							<?php Icons_Manager::render_icon( $selected_icon, [ 'aria-hidden' => 'true' ] ); ?>
 						<?php endif; ?>
@@ -206,7 +206,7 @@ class Widget_Footer_Render {
 		] );
 		?>
 		<div class="ehp-footer__contact-container">
-			<div <?php echo $this->widget->print_render_attribute_string( 'contact' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+			<div <?php $this->widget->print_render_attribute_string( 'contact' ); ?>>
 				<?php if ( $has_contact ) {
 					$contact_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $contact_tag ), 'class="ehp-footer__contact-heading"', esc_html( $contact_text ) );
 					// Escaped above

@@ -35,7 +35,7 @@ define( 'HELLO_PLUS_PLUGIN_BASE', plugin_basename( HELLO_PLUS__FILE__ ) );
 define( 'HELLO_PLUS_PATH', plugin_dir_path( HELLO_PLUS__FILE__ ) );
 define( 'HELLO_PLUS_URL', plugins_url( '', HELLO_PLUS__FILE__ ) );
 define( 'HELLO_PLUS_ASSETS_PATH', HELLO_PLUS_PATH . '/build/' );
-define( 'HELLO_PLUS_ASSETS_URL', HELLO_PLUS_URL . '/build/' );
+define( 'HELLO_PLUS_ASSETS_URL', HELLO_PLUS_URL . 'build/' );
 define( 'HELLO_PLUS_SCRIPTS_PATH', HELLO_PLUS_ASSETS_PATH . 'js/' );
 define( 'HELLO_PLUS_SCRIPTS_URL', HELLO_PLUS_ASSETS_URL . 'js/' );
 define( 'HELLO_PLUS_STYLE_PATH', HELLO_PLUS_ASSETS_PATH . 'css/' );

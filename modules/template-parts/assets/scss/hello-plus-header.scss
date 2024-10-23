@@ -370,7 +370,8 @@
 		white-space: nowrap;
 	}
 
-	&__item {
+	&__item,
+	&__item[type="button"] {
 		color: var(--header-menu-item-color);
 		transition: $transition;
 
@@ -389,7 +390,7 @@
 		}
 	}
 
-	&__dropdown-toggle {
+	&__dropdown-toggle[type="button"] {
 		border: unset;
 		border-radius: unset;
 		padding: unset;

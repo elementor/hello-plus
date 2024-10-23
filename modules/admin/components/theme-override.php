@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Theme_Override {
 
 	public function __construct() {
-		add_filter( 'hello-biz/rest/admin-config', [ $this, 'override_admin_config' ] );
+		add_filter( 'hello-plus/rest/admin-config', [ $this, 'override_admin_config' ] );
 	}
 
 	public function override_admin_config( $config ) {

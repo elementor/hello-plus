@@ -41,26 +41,33 @@ class Module extends Module_Base {
 	}
 
 	public function enqueue(): void {
-		wp_enqueue_style(
+		wp_enqueue_style( 'hello-plus-header' );
+		wp_enqueue_style( 'hello-plus-footer' );
+		wp_enqueue_script( 'hello-plus-header' );
+	}
+	public function register_scripts(): void {
+		wp_register_script(
+			'hello-plus-header',
+			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-header.js',
+			[ 'elementor-frontend' ],
+			HELLO_PLUS_VERSION,
+			true
+		);
+	}
+
+	public function register_styles(): void {
+		wp_register_style(
 			'hello-plus-header',
 			HELLO_PLUS_STYLE_URL . 'hello-plus-header.css',
-			[],
+			[ 'elementor-frontend' ],
 			HELLO_PLUS_VERSION
 		);
 
-		wp_enqueue_style(
+		wp_register_style(
 			'hello-plus-footer',
 			HELLO_PLUS_STYLE_URL . 'hello-plus-footer.css',
-			[],
-			HELLO_PLUS_ELEMENTOR_VERSION
-		);
-
-		wp_enqueue_script(
-			'hello-plus-header',
-			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-header.js',
-			[ 'jquery' ],
-			HELLO_PLUS_VERSION,
-			true
+			[ 'elementor-frontend' ],
+			HELLO_PLUS_VERSION
 		);
 	}
 
@@ -86,7 +93,9 @@ class Module extends Module_Base {
 	 */
 	protected function register_hooks(): void {
 		parent::register_hooks();
-		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue' ] );
+//		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue' ] );
 		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'editor_enqueue' ] );
+		add_action( 'elementor/frontend/after_register_scripts', [ $this, 'register_scripts' ] );
+		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_styles' ] );
 	}
 }

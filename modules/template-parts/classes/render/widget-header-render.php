@@ -6,13 +6,11 @@ use Elementor\Group_Control_Image_Size;
 use Elementor\Icons_Manager;
 use Elementor\Utils;
 
-use \HelloPlus\Modules\TemplateParts\Classes\Traits\Shared_Header_Traits;
 use HelloPlus\Modules\TemplateParts\Widgets\Header;
 
 class Widget_Header_Render {
 
 	protected Header $widget;
-	use Shared_Header_Traits;
 
 	const LAYOUT_CLASSNAME = 'ehp-header';
 	const SITE_LINK_CLASSNAME = 'ehp-header__site-link';

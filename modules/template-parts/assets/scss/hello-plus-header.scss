@@ -503,6 +503,7 @@
 
 			&__dropdown {
 				align-items: var(--header-dropdown-text-align);
+				background-color: transparent !important; // Override the default background color
 				border-radius: unset;
 				flex-direction: column;
 				left: unset;
@@ -518,7 +519,7 @@
 				padding-inline-start: var(--header-box-padding-inline-start);
 				padding-inline-end: var(--header-box-padding-inline-end);
 				position: absolute;
-				top: 100%;
+				top: calc(100% + var(--header-box-padding-block-end));
 				width: calc(100% + var(--header-box-padding-inline-start) + var(--header-box-padding-inline-end));
 
 				.ehp-header__ctas-container {
@@ -575,6 +576,7 @@
 		.ehp-header {
 			&__navigation {
 				align-items: center;
+				background: none !important; // Override the default background color
 				display: flex;
 
 				& > .ehp-header__ctas-container {

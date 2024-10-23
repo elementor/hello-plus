@@ -1066,7 +1066,7 @@ class Header extends Widget_Base {
 				'name' => 'background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .ehp-header, {{WRAPPER}} .ehp-header .ehp-header__dropdown',
+				'selector' => '{{WRAPPER}} .ehp-header, {{WRAPPER}} .ehp-header .ehp-header__dropdown, {{WRAPPER}} .ehp-header .ehp-header__navigation',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',

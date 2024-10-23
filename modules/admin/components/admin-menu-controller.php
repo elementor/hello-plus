@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Admin_Menu_Controller {
 
 	public function __construct() {
-		add_action( 'admin_menu', array( $this, 'admin_menu' ), 11 );
+		add_action( 'hello-plus/admin-menu', array( $this, 'admin_menu' ) );
 	}
 
 	public function admin_menu() {

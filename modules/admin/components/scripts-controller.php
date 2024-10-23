@@ -15,7 +15,7 @@ class Scripts_Controller {
 	public function enqueue_hello_plus_onboarding_scripts() {
 		$screen = get_current_screen();
 
-		if ( 'hello-biz_page_hello-plus-setup-wizard' !== $screen->id ) {
+		if ( 'hello_page_hello-plus-setup-wizard' !== $screen->id ) {
 			return;
 		}
 

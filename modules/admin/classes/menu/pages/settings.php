@@ -12,7 +12,7 @@ class Settings {
 
 	public function register_settings_page(): void {
 		add_submenu_page(
-			'hello-biz',
+			'hello-plus',
 			__( 'Settings', 'hello-plus' ),
 			__( 'Settings', 'hello-plus' ),
 			'manage_options',

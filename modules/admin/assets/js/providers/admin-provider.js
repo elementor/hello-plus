@@ -6,8 +6,6 @@ export const AdminContext = createContext();
 
 export const AdminProvider = ( { children } ) => {
 	const [ isLoading, setIsLoading ] = React.useState( true );
-	const [ promotionsLinks, setPromotionsLinks ] = React.useState( [] );
-	const [ adminSettings, setAdminSettings ] = React.useState( {} );
 	const [ onboardingSettings, setOnboardingSettings ] = React.useState( {} );
 	const [ elementorKitSettings, setElementorKitSettings ] = React.useState( {} );
 	const [ stepAction, setStepAction ] = useState( '' );
@@ -40,12 +38,8 @@ export const AdminProvider = ( { children } ) => {
 
 	useEffect( () => {
 		Promise.all( [
-			apiFetch( { path: '/elementor-hello-plus/v1/promotions' } ),
-			apiFetch( { path: '/elementor-hello-plus/v1/admin-settings' } ),
 			apiFetch( { path: '/elementor-hello-plus/v1/onboarding-settings' } ),
-		] ).then( ( [ links, settings, onboarding ] ) => {
-			setPromotionsLinks( links.links );
-			setAdminSettings( settings.config );
+		] ).then( ( [ onboarding ] ) => {
 			setOnboardingSettings( onboarding.settings );
 		} ).finally( () => {
 			setIsLoading( false );
@@ -54,8 +48,6 @@ export const AdminProvider = ( { children } ) => {
 
 	return (
 		<AdminContext.Provider value={ {
-			promotionsLinks,
-			adminSettings,
 			onboardingSettings,
 			stepAction,
 			setStepAction,

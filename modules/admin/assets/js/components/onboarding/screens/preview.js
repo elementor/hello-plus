@@ -6,6 +6,7 @@ import ConnectDialog from '../kits/connect-dialog';
 import { ApplyKitDialog } from '../kits/apply-kit-dialog';
 import { TobBarPreview } from '../../top-bar/top-bar-preview';
 import { Overview } from './overview';
+import apiFetch from '@wordpress/api-fetch';
 
 export const Preview = ( { kit, setPreviewKit } ) => {
 	const [ isLoading, setIsLoading ] = useState( true );
@@ -16,6 +17,8 @@ export const Preview = ( { kit, setPreviewKit } ) => {
 		setStep,
 		elementorKitSettings,
 	} = useAdminContext();
+
+	console.log( kit );
 
 	const { manifest: { site = '', name, description, content: { page = {} } }, title } = kit;
 	const [ previewUrl, setPreviewUrl ] = useState( site );
@@ -43,9 +46,15 @@ export const Preview = ( { kit, setPreviewKit } ) => {
 			{
 				showApplyKitDialog && ( <ApplyKitDialog
 					title={ title }
-					startImportProcess={ () => {
-						setStep( 2 );
-						setPreviewKit( null );
+					startImportProcess={ async () => {
+						const response = await apiFetch( { path: '/elementor/v1/kits/download-link/' + kit._id } );
+
+						const url = '/import/process' +
+							`?id=${ kit._id }` +
+							`&file_url=${ encodeURIComponent( response.data.download_link ) }` +
+							`&nonce=${ response.meta.nonce }&referrer=kit-library&action_type=apply-all`;
+
+						window.location.href = `/wp-admin/admin.php?page=elementor-app&ver=3.26.0#${ url }`;
 					} }
 					onClose={ () => setShowApplyKitDialog( false ) }
 				/> )

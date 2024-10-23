@@ -40,11 +40,9 @@ class Module extends Module_Base {
 		];
 	}
 
-	public function enqueue(): void {
-		wp_enqueue_style( 'hello-plus-header' );
-		wp_enqueue_style( 'hello-plus-footer' );
-		wp_enqueue_script( 'hello-plus-header' );
-	}
+	/**
+	 * @return void
+	 */
 	public function register_scripts(): void {
 		wp_register_script(
 			'hello-plus-header',
@@ -55,6 +53,9 @@ class Module extends Module_Base {
 		);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function register_styles(): void {
 		wp_register_style(
 			'hello-plus-header',
@@ -71,6 +72,9 @@ class Module extends Module_Base {
 		);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function editor_enqueue(): void {
 		wp_enqueue_script(
 			'hello-plus-template-parts-editor',
@@ -93,7 +97,6 @@ class Module extends Module_Base {
 	 */
 	protected function register_hooks(): void {
 		parent::register_hooks();
-		// add_action( 'wp_enqueue_scripts', [ $this, 'enqueue' ] );
 		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'editor_enqueue' ] );
 		add_action( 'elementor/frontend/after_register_scripts', [ $this, 'register_scripts' ] );
 		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_styles' ] );

@@ -276,7 +276,7 @@ class Widget_Header_Render {
 					]
 				);
 			?>
-			<?php esc_html_e( $button_text ); ?>
+			<?php esc_html_e( $button_text, 'hello-plus' ); ?>
 		</a>
 		<?php
 	}

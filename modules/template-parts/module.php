@@ -93,7 +93,7 @@ class Module extends Module_Base {
 	 */
 	protected function register_hooks(): void {
 		parent::register_hooks();
-//		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue' ] );
+		// add_action( 'wp_enqueue_scripts', [ $this, 'enqueue' ] );
 		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'editor_enqueue' ] );
 		add_action( 'elementor/frontend/after_register_scripts', [ $this, 'register_scripts' ] );
 		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_styles' ] );

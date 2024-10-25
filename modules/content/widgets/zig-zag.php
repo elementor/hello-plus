@@ -278,7 +278,7 @@ class Zig_Zag extends Widget_Base {
 					],
 				],
 				'default' => 'left',
-				'description' => esc_html__( 'Zigzag content will be stacked on smaller screens.', 'hello-plus' ),
+				'description' => esc_html__( 'Content will be stacked on smaller screens', 'hello-plus' ),
 			]
 		);
 
@@ -475,7 +475,7 @@ class Zig_Zag extends Widget_Base {
 		$this->add_control(
 			'style_description',
 			[
-				'label' => esc_html__( 'Paragraph', 'hello-plus' ),
+				'label' => esc_html__( 'Description', 'hello-plus' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'default',
 			]

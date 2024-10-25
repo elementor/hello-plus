@@ -1,24 +1,28 @@
 <?php
-
 namespace HelloPlus\Modules\TemplateParts\Classes\Render;
 
-use Elementor\Group_Control_Image_Size;
-use Elementor\Icons_Manager;
-use Elementor\Utils;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+use Elementor\{
+	Group_Control_Image_Size,
+	Icons_Manager,
+	Utils
+};
 
 use HelloPlus\Modules\TemplateParts\Widgets\Footer;
 
+/**
+ * class Widget_Footer_Render
+ */
 class Widget_Footer_Render {
-	protected Footer $widget;
 	const LAYOUT_CLASSNAME = 'ehp-footer';
 	const SITE_LINK_CLASSNAME = 'ehp-footer__site-link';
 
-	protected array $settings;
+	protected Footer $widget;
 
-	public function __construct( Footer $widget ) {
-		$this->widget = $widget;
-		$this->settings = $widget->get_settings_for_display();
-	}
+	protected array $settings;
 
 	public function render(): void {
 		$layout_classnames = self::LAYOUT_CLASSNAME;
@@ -266,5 +270,10 @@ class Widget_Footer_Render {
 		}
 
 		return $atts;
+	}
+
+	public function __construct( Footer $widget ) {
+		$this->widget = $widget;
+		$this->settings = $widget->get_settings_for_display();
 	}
 }

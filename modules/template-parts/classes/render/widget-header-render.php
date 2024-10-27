@@ -2,27 +2,30 @@
 
 namespace HelloPlus\Modules\TemplateParts\Classes\Render;
 
-use Elementor\Group_Control_Image_Size;
-use Elementor\Icons_Manager;
-use Elementor\Utils;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+use Elementor\{
+	Group_Control_Image_Size,
+	Icons_Manager,
+	Utils
+};
 
 use HelloPlus\Modules\TemplateParts\Widgets\Header;
 
+/**
+ * class Widget_Header_Render
+ */
 class Widget_Header_Render {
-
-	protected Header $widget;
-
 	const LAYOUT_CLASSNAME = 'ehp-header';
 	const SITE_LINK_CLASSNAME = 'ehp-header__site-link';
 	const CTAS_CONTAINER_CLASSNAME = 'ehp-header__ctas-container';
 	const BUTTON_CLASSNAME = 'ehp-header__button';
 
-	protected array $settings;
+	protected Header $widget;
 
-	public function __construct( Header $widget ) {
-		$this->widget = $widget;
-		$this->settings = $widget->get_settings_for_display();
-	}
+	protected array $settings;
 
 	public function render(): void {
 		$layout_classnames = self::LAYOUT_CLASSNAME;
@@ -58,7 +61,7 @@ class Widget_Header_Render {
 			'data-behavior-float' => $behavior_float,
 		] );
 		?>
-		<div <?php echo $this->widget->get_render_attribute_string( 'layout' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<div <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
 			<div class="ehp-header__elements-container">
 				<?php
 					$this->render_site_link();
@@ -87,7 +90,7 @@ class Widget_Header_Render {
 			$this->widget->add_link_attributes( 'site-link', $site_link );
 		}
 		?>
-		<a <?php echo $this->widget->get_render_attribute_string( 'site-link' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<a <?php $this->widget->print_render_attribute_string( 'site-link' ); ?>>
 			<?php if ( 'logo' === $site_logo_brand_select ) {
 				Group_Control_Image_Size::print_attachment_image_html( $this->settings, 'site_logo_image' );
 			} ?>
@@ -201,7 +204,7 @@ class Widget_Header_Render {
 				);
 			?>
 			<i class="eicon-close ehp-header__toggle-icon ehp-header__toggle-icon--close"></i>
-			<span class="elementor-screen-only"><?php echo esc_html__( 'Menu', 'hello-plus' ); ?></span>
+			<span class="elementor-screen-only"><?php esc_html_e( 'Menu', 'hello-plus' ); ?></span>
 		</button>
 		<?php
 	}
@@ -218,7 +221,7 @@ class Widget_Header_Render {
 			'class' => $ctas_container_classnames,
 		] );
 		?>
-			<div <?php echo $this->widget->get_render_attribute_string( 'ctas-container' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+			<div <?php $this->widget->print_render_attribute_string( 'ctas-container' ); ?>>
 			<?php if ( $has_primary_button ) {
 				$this->render_button( 'primary' );
 			} ?>
@@ -266,7 +269,7 @@ class Widget_Header_Render {
 		}
 
 		?>
-		<a <?php echo $this->widget->get_render_attribute_string( $type . '-button' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<a <?php $this->widget->print_render_attribute_string( $type . '-button' ); ?>>
 			<?php
 				Icons_Manager::render_icon( $button_icon,
 					[
@@ -334,5 +337,10 @@ class Widget_Header_Render {
 		}
 
 		return $item_output;
+	}
+
+	public function __construct( Header $widget ) {
+		$this->widget = $widget;
+		$this->settings = $widget->get_settings_for_display();
 	}
 }

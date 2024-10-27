@@ -2,6 +2,10 @@
 
 namespace HelloPlus\Modules\Admin\Classes\Onboarding;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 class Install_Elementor {
 
 	public function install_and_activate() {

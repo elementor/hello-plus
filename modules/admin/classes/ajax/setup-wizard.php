@@ -2,6 +2,10 @@
 
 namespace HelloPlus\Modules\Admin\Classes\Ajax;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 use HelloPlus\Modules\Admin\Classes\Onboarding\Install_Elementor;
 
 class Setup_Wizard {

@@ -2,6 +2,10 @@
 
 namespace HelloPlus\Modules\Admin\Classes\Rest;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 use HelloPlus\Includes\Utils;
 use WP_REST_Server;
 
@@ -44,7 +48,7 @@ class Onboarding_Settings {
 				set_transient( 'e_hello_plus_kits', $kits, 24 * HOUR_IN_SECONDS );
 			} catch ( \Exception $e ) {
 				// just to avoid linting errors
-				error_log( $e->getMessage() );
+				error_log( $e->getMessage() ); //phpcs:ignore
 			}
 		}
 

@@ -81,6 +81,7 @@ class Onboarding_Settings {
 					'elementorActive' => Utils::is_elementor_active(),
 					'modalCloseRedirectUrl' => admin_url( 'admin.php?page=hello-plus' ),
 					'kits' => $this->get_kits(),
+					'applyKitBaseUrl' => admin_url( 'admin.php?page=elementor-app' )
 				],
 			]
 		);

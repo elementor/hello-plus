@@ -14,11 +14,9 @@ export const Preview = ( { kit, setPreviewKit } ) => {
 	const [ showApplyKitDialog, setShowApplyKitDialog ] = useState( false );
 	const [ isOverview, setIsOverview ] = useState( false );
 	const {
-		setStep,
+		onboardingSettings: { applyKitBaseUrl },
 		elementorKitSettings,
 	} = useAdminContext();
-
-	console.log( kit );
 
 	const { manifest: { site = '', name, description, content: { page = {} } }, title } = kit;
 	const [ previewUrl, setPreviewUrl ] = useState( site );
@@ -45,16 +43,24 @@ export const Preview = ( { kit, setPreviewKit } ) => {
 			/> ) }
 			{
 				showApplyKitDialog && ( <ApplyKitDialog
+					isLoading={ isLoading }
 					title={ title }
 					startImportProcess={ async () => {
-						const response = await apiFetch( { path: '/elementor/v1/kits/download-link/' + kit._id } );
+						try {
+							setIsLoading( true );
+							const response = await apiFetch( { path: '/elementor/v1/kits/download-link/' + kit._id } );
 
-						const url = '/import/process' +
-							`?id=${ kit._id }` +
-							`&file_url=${ encodeURIComponent( response.data.download_link ) }` +
-							`&nonce=${ response.meta.nonce }&referrer=kit-library&action_type=apply-all`;
+							const url = '/import/process' +
+								`?id=${ kit._id }` +
+								`&file_url=${ encodeURIComponent( response.data.download_link ) }` +
+								`&nonce=${ response.meta.nonce }&referrer=kit-library&action_type=apply-all`;
 
-						window.location.href = `/wp-admin/admin.php?page=elementor-app&ver=3.26.0#${ url }`;
+							window.location.href = `${ applyKitBaseUrl }#${ url }`;
+						} catch ( err ) {
+							console.log( err );
+						} finally {
+							setIsLoading( false );
+						}
 					} }
 					onClose={ () => setShowApplyKitDialog( false ) }
 				/> )

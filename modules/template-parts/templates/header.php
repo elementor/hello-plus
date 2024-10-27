@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use HelloPlus\Includes\Utils as Theme_Utils;
 use Elementor\Utils as Elementor_Utils;
-use HelloPlus\Modules\TemplateParts\Classes\Header;
+use HelloPlus\Modules\TemplateParts\Documents\Header;
 
 // Header template is validated earlier, so if we got this far, there is only one template-document post:
 $header_doc_post = Header::get_document_post();

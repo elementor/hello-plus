@@ -7,9 +7,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use HelloPlus\Includes\Utils;
+use HelloPlus\Modules\Admin\Classes\Menu\Pages\Setup_Wizard;
 use WP_REST_Server;
 
 class Onboarding_Settings {
+	// ToDo: replace with the actual kit ids.
+	protected array $kits_ids = [
+		'60bcabe2810f3b0019c900be',
+		'60bcad9b3d876b001906ef12',
+		'60bdd89ff13c4300122bf236',
+		'60bde05315d1580012c373f4',
+		'60bde51115d1580012c373f5',
+		'60bdeffbf13c4300122bf239',
+		'60bdf4c4f13c4300122bf23b',
+		'60bdf76d15d1580012c373f6',
+	];
+
 	const DEFAULT_BASE_ENDPOINT = 'https://my.elementor.com/api/v1/kits-library/kits/';
 	const FALLBACK_BASE_ENDPOINT = 'https://ms-8874.elementor.com/api/v1/kits-library/kits/';
 
@@ -39,16 +52,16 @@ class Onboarding_Settings {
 
 		if ( ! $kits ) {
 			try {
-				$kits = $this->call_and_check( self::DEFAULT_BASE_ENDPOINT );
-				$kits = array_slice( $kits, - 8 );
-				foreach ( $kits as &$kit ) {
-					$kit['manifest'] = $this->call_and_check( self::DEFAULT_BASE_ENDPOINT . $kit['_id'] . '/manifest' );
+				$kits = [];
+				foreach ( $this->kits_ids as $kit_id ) {
+					$kit = $this->call_and_check( self::DEFAULT_BASE_ENDPOINT . $kit_id );
+					$kit['manifest'] = $this->call_and_check( self::DEFAULT_BASE_ENDPOINT . $kit_id . '/manifest' );
+					$kits[] = $kit;
 				}
 
 				set_transient( 'e_hello_plus_kits', $kits, 24 * HOUR_IN_SECONDS );
 			} catch ( \Exception $e ) {
-				// just to avoid linting errors
-				error_log( $e->getMessage() );
+				$kits = [];
 			}
 		}
 
@@ -57,16 +70,25 @@ class Onboarding_Settings {
 
 	public function call_and_check( $url ) {
 		$response = wp_remote_get( $url );
+
 		if ( is_wp_error( $response ) ) {
+			if ( strpos( $url, self::DEFAULT_BASE_ENDPOINT ) === 0 ) {
+				return $this->call_and_check( str_replace( self::DEFAULT_BASE_ENDPOINT, self::FALLBACK_BASE_ENDPOINT, $url ) );
+			}
 			throw new \Exception( esc_html( "Error when calling $url: message {$response->get_error_message()}" ) );
 		}
+
 		$response_code = wp_remote_retrieve_response_code( $response );
 
 		if ( 200 !== $response_code ) {
+			if ( strpos( $url, self::DEFAULT_BASE_ENDPOINT ) === 0 ) {
+				return $this->call_and_check( str_replace( self::DEFAULT_BASE_ENDPOINT, self::FALLBACK_BASE_ENDPOINT, $url ) );
+			}
 			throw new \Exception( esc_html( "Error when calling $url: response code $response_code" ) );
 		}
 
 		$response_body = wp_remote_retrieve_body( $response );
+
 		return json_decode( $response_body, true );
 	}
 
@@ -81,7 +103,9 @@ class Onboarding_Settings {
 					'elementorActive' => Utils::is_elementor_active(),
 					'modalCloseRedirectUrl' => admin_url( 'admin.php?page=hello-plus' ),
 					'kits' => $this->get_kits(),
-					'applyKitBaseUrl' => admin_url( 'admin.php?page=elementor-app' )
+					'applyKitBaseUrl' => admin_url( 'admin.php?page=elementor-app' ),
+					'wizardCompleted' => Setup_Wizard::has_site_wizard_been_completed(),
+					'returnUrl' => admin_url( 'admin.php?page=hello-plus-setup-wizard' ),
 				],
 			]
 		);

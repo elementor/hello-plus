@@ -31,10 +31,7 @@ class Theme_Integration {
 	}
 
 	public function __construct() {
-		// the original hooks:
-		//add_action( 'after_switch_theme', [ $this, 'activate' ] );
-		//add_action( 'admin_init', [ $this, 'redirect_on_first_activation' ] );
-
+		register_activation_hook( HELLO_PLUS_PLUGIN_BASE, [ __CLASS__, 'activate' ] );
 		add_action( 'hello_plus_theme/redirect_on_first_activation', [ $this, 'activate' ] );
 		add_action( 'hello_plus_theme/after_switch_theme', [ $this, 'redirect_on_first_activation' ] );
 	}

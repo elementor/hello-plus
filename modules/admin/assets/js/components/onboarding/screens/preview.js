@@ -14,7 +14,7 @@ export const Preview = ( { kit, setPreviewKit } ) => {
 	const [ showApplyKitDialog, setShowApplyKitDialog ] = useState( false );
 	const [ isOverview, setIsOverview ] = useState( false );
 	const {
-		onboardingSettings: { applyKitBaseUrl },
+		onboardingSettings: { applyKitBaseUrl, returnUrl },
 		elementorKitSettings,
 	} = useAdminContext();
 
@@ -32,7 +32,6 @@ export const Preview = ( { kit, setPreviewKit } ) => {
 	return (
 		<>
 			{ showConnectDialog && ( <ConnectDialog
-				pageId={ slug }
 				onClose={ () => setShowConnectDialog( false ) }
 				onSuccess={ () => {
 					setShowConnectDialog( false );
@@ -52,12 +51,12 @@ export const Preview = ( { kit, setPreviewKit } ) => {
 
 							const url = '/import/process' +
 								`?id=${ kit._id }` +
-								`&file_url=${ encodeURIComponent( response.data.download_link ) }` +
+								`&file_url=${ encodeURIComponent( response.data.download_link ) }&return_to=${ encodeURIComponent( returnUrl ) }` +
 								`&nonce=${ response.meta.nonce }&referrer=kit-library&action_type=apply-all`;
 
 							window.location.href = `${ applyKitBaseUrl }#${ url }`;
 						} catch ( err ) {
-							console.log( err );
+							console.log( err, 'error' ); // eslint-disable-line no-console
 						} finally {
 							setIsLoading( false );
 						}

@@ -39,25 +39,25 @@ class Module extends Module_Base {
 		];
 	}
 
-	public function enqueue(): void {
-		wp_enqueue_style(
+	public function register_styles(): void {
+		wp_register_style(
 			'hello-plus-zigzag',
 			HELLO_PLUS_STYLE_URL . 'hello-plus-zigzag.css',
-			[],
+			['elementor-frontend'],
 			HELLO_PLUS_VERSION
 		);
 
-		wp_enqueue_style(
+		wp_register_style(
 			'hello-plus-hero',
 			HELLO_PLUS_STYLE_URL . 'hello-plus-hero.css',
-			[],
+			['elementor-frontend'],
 			HELLO_PLUS_VERSION
 		);
 
-		wp_enqueue_style(
+		wp_register_style(
 			'hello-plus-cta',
 			HELLO_PLUS_STYLE_URL . 'hello-plus-cta.css',
-			[],
+			['elementor-frontend'],
 			HELLO_PLUS_VERSION
 		);
 	}
@@ -73,6 +73,6 @@ class Module extends Module_Base {
 
 	protected function register_hooks(): void {
 		parent::register_hooks();
-		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue' ] );
+		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_styles' ] );
 	}
 }

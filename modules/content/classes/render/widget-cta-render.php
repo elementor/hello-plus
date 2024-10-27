@@ -102,12 +102,14 @@ class Widget_CTA_Render {
 		] );
 		?>
 			<div <?php echo $this->widget->get_render_attribute_string( 'ctas-container' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-			<?php if ( $has_primary_button ) {
-				$this->render_button( 'primary' );
-			} ?>
-			<?php if ( $has_secondary_button ) {
-				$this->render_button( 'secondary' );
-			} ?>
+				<div class="ehp-cta__buttons-wrapper">
+					<?php if ( $has_primary_button ) {
+						$this->render_button( 'primary' );
+					} ?>
+					<?php if ( $has_secondary_button ) {
+						$this->render_button( 'secondary' );
+					} ?>
+				</div>
 			</div>
 		<?php
 	}

@@ -68,9 +68,18 @@
 	--cta-button-icon-spacing: var(--cta-button-primary-icon-spacing);
 	--cta-button-icon-size: var(--cta-button-primary-icon-size);
 
+	--cta-box-padding-block-end: 60px;
+	--cta-box-padding-block-start: 60px;
+	--cta-box-padding-inline-end: 60px;
+	--cta-box-padding-inline-start: 60px;
+
 	display: flex;
 	justify-content: center;
 	height: var(--cta-box-height);
+	padding-block-end: var(--cta-box-padding-block-end);
+	padding-block-start: var(--cta-box-padding-block-start);
+	padding-inline-end: var(--cta-box-padding-inline-end);
+	padding-inline-start: var(--cta-box-padding-inline-start);
 
 	@media screen and (min-width: $screen-tablet-min) {
 		--cta-text-default-heading: 512px;
@@ -144,12 +153,16 @@
 
 	&__ctas-container {
 		flex-grow: 1;
+	}
+
+	&__buttons-wrapper {
 		display: flex;
-		flex-direction: column;
 		gap: var(--cta-buttons-space-between);
+		flex-direction: column;
 		justify-content: center;
-		
+
 		@media screen and (min-width: $screen-tablet-min) {
+			align-items: center;
 			flex-direction: row;
 			justify-content: flex-start;
 		}
@@ -226,6 +239,7 @@
 
 			&-link,
 			&-link:not([href]):not([tabindex]) {
+				align-self: center;
 				text-decoration: underline;
 			}
 
@@ -280,7 +294,7 @@
 			
 		&-center {
 
-			.ehp-cta__ctas-container {
+			.ehp-cta__buttons-wrapper {
 				justify-content: center;
 			}
 		}
@@ -301,7 +315,7 @@
 					flex-direction: row;
 				}
 
-				.ehp-cta__ctas-container {
+				.ehp-cta__buttons-wrapper {
 					align-items: var(--cta-buttons-position);
 					justify-content: flex-end;
 				}

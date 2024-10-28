@@ -133,20 +133,6 @@
 		&.is-graphic-icon {
 			width: calc(100% - var(--zigzag-icon-width));
 		}
-
-		.row-even & {
-
-			@media screen and (min-width: $screen-tablet-min) {
-				padding-inline-end: var(--zigzag-elements-gap);
-			}
-		}
-
-		.row-odd & {
-
-			@media screen and (min-width: $screen-tablet-min) {
-				padding-inline-start: var(--zigzag-elements-gap);
-			}
-		}
 	}
 
 	&__title {
@@ -200,6 +186,7 @@
 
 	&__item-container {
 		display: flex;
+		gap: var(--zigzag-elements-gap);
 		padding-block: calc(var(--zigzag-rows-spacing) / 2);
 		max-width: var(--zigzag-content-width);
 		width: 100%;

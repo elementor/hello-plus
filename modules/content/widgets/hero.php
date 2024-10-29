@@ -775,24 +775,11 @@ class Hero extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'style_box_padding',
-			[
-				'label' => esc_html__( 'Padding', 'hello-plus' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em', 'rem' ],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-box-padding-block-end: {{BOTTOM}}{{UNIT}}; --hero-box-padding-block-start: {{TOP}}{{UNIT}}; --hero-box-padding-inline-end: {{RIGHT}}{{UNIT}}; --hero-box-padding-inline-start: {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
-
 		$this->add_control(
 			'box_background_label',
 			[
 				'label' => esc_html__( 'Background', 'hello-plus' ),
 				'type' => Controls_Manager::HEADING,
-				'separator' => 'before',
 			]
 		);
 
@@ -803,7 +790,31 @@ class Hero extends Widget_Base {
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
 				'selector' => '{{WRAPPER}} .ehp-hero',
+				'fields_options' => [
+					'background' => [
+						'default' => 'classic',
+					],
+				],
+			]
+		);
 
+		$this->add_responsive_control(
+			'style_box_padding',
+			[
+				'label' => esc_html__( 'Padding', 'hello-plus' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em', 'rem' ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-hero' => '--hero-box-padding-block-end: {{BOTTOM}}{{UNIT}}; --hero-box-padding-block-start: {{TOP}}{{UNIT}}; --hero-box-padding-inline-end: {{RIGHT}}{{UNIT}}; --hero-box-padding-inline-start: {{LEFT}}{{UNIT}};',
+				],
+				'default' => [
+					'top' => 60,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+					'unit' => 'px',
+				],
+				'separator' => 'before',
 			]
 		);
 

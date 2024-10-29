@@ -1,5 +1,5 @@
 <?php
-use HelloPlus\Modules\TemplateParts\Classes\Footer;
+use HelloPlus\Modules\TemplateParts\Documents\Footer;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.

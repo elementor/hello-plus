@@ -19,6 +19,7 @@ const entryPoints = {
 	'css/hello-plus-cta': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-cta.scss' ),
 
 	// Template Parts module
+	'css/hello-plus-template-parts-preview': path.resolve( modulesDir, 'template-parts/assets/scss', 'hello-plus-template-parts-preview.scss' ),
 	'css/hello-plus-header': path.resolve( modulesDir, 'template-parts/assets/scss', 'hello-plus-header.scss' ),
 	'css/hello-plus-footer': path.resolve( modulesDir, 'template-parts/assets/scss', 'hello-plus-footer.scss' ),
 	'js/hello-plus-header': path.resolve( modulesDir, 'template-parts/assets/js', 'hello-plus-header.js' ),

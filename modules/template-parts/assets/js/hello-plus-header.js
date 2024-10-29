@@ -206,6 +206,6 @@ class elementorHelloPlusHeaderHandler {
     }
 }
 
-document.addEventListener( 'DOMContentLoaded', () => {
-    new elementorHelloPlusHeaderHandler();
+window.addEventListener( 'elementor/frontend/init', () => {
+	elementorFrontend.hooks.addAction( 'frontend/element_ready/header.default', () => new elementorHelloPlusHeaderHandler() );
 } );

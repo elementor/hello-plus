@@ -24,11 +24,11 @@ use HelloPlus\Modules\TemplateParts\Classes\{
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
-class Footer extends Widget_Base {
+class Emp_Footer extends Widget_Base {
 	use Shared_Header_Traits;
 
 	public function get_name(): string {
-		return 'footer';
+		return 'emp-footer';
 	}
 
 	public function get_title(): string {

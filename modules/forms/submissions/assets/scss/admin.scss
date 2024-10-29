@@ -1,0 +1,205 @@
+$wordpress-border-color: #7e8993;
+
+.e-form-submissions-list-table {
+	@media screen and (max-width: 782px) {
+		/* Don't judge me... (need to override WordPress style). */
+		&.wp-list-table tr:not(.inline-edit-row):not(.no-items) > td.bulk-checkbox-column:not(.check-column) {
+			width: 2.2em !important;
+		}
+	}
+
+	.bulk-checkbox-column {
+		padding: 9px 0 0 3px;
+		width: 2.2em;
+	}
+
+	.column-actions {
+		width: 11%;
+
+		i {
+			font-size: 15px;
+		}
+	}
+
+	.column-id {
+		width: 7%;
+	}
+
+	.column-page {
+		width: 17%;
+		@include ellipsis();
+	}
+
+	.column-date {
+		width: 17%;
+	}
+
+	.column-form {
+		width: 20%;
+	}
+}
+
+.e-form-submissions-referer-icon {
+	font-size: 18px;
+}
+
+.e-form-submissions-main {
+	.postbox {
+		border: none;
+	}
+
+	.postbox-header {
+		border: 1px solid $gray-light;
+		border-block-end: none;
+		padding: 8px;
+	}
+
+	&__header {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+}
+
+#e-form-submissions {
+	.eicon-success {
+		color: $success;
+	}
+
+	.eicon-error {
+		color: $danger;
+	}
+
+	.misc-pub-section {
+		line-height: 1.3rem;
+	}
+}
+
+#e-form-submissions .e-form-submissions-item-table {
+	border: none;
+	border-collapse: collapse;
+
+	td:first-child {
+		width: 150px;
+		background: $gray-lightest;
+		font-weight: 700;
+
+		@media screen and (max-width: 782px) {
+			/* Must set !important because wordpress set also !important. */
+			width: 90px !important;
+		}
+	}
+
+	td {
+		border: 1px solid $gray-light;
+		padding: 15px;
+	}
+
+	input:not([type=checkbox]):not([type=radio]), textarea, select {
+		width: 100%;
+		max-width: 400px;
+	}
+}
+
+#e-form-submissions {
+	.e-export-button {
+		margin-inline-start: 15px;
+
+		@media screen and (max-width: 782px) {
+			display: none;
+		}
+	}
+
+	.tablenav .actions {
+		select {
+			width: 10rem;
+		}
+
+		.select2-container {
+			float: left;
+			margin-right: 6px;
+
+			.select2-selection__arrow {
+				height: 30px;
+			}
+
+			.select2-selection--single {
+				height: 30px;
+				border: 1px solid $wordpress-border-color;
+			}
+		}
+	}
+}
+
+input[type="search"].select2-search__field {
+	line-height: 1;
+}
+
+.e-form-submissions-search {
+	position: relative;
+
+	&__spinner {
+		position: absolute;
+		@include end( 12px );
+		font-size: 11px;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		color: var(--wp-admin-theme-color-darker-20, #005a87);
+	}
+
+	&:focus-within, &:hover {
+		.e-form-submissions-search__spinner {
+			@include end( 30px );
+		}
+	}
+}
+
+.e-form-submissions-action-log {
+	&--success {
+		.e-form-submissions-action-log__message {
+			background: $success-bg;
+			border-color: $success;
+		}
+	}
+
+	&--error {
+		.e-form-submissions-action-log__message {
+			background: $danger-bg;
+			border-color: $danger;
+		}
+	}
+
+	&:not(:last-child) {
+		border-block-end: 1px solid $gray-light;
+	}
+
+	&__label {
+		display: inline-block;
+		padding-inline-end: 15px;
+	}
+
+	&__icon {
+		display: inline-block;
+		padding-inline-end: 3px;
+	}
+
+	&__date {
+		font-size: 12px;
+		color: $gray;
+	}
+
+	&__message {
+		padding: 10px;
+		font-size: 12px;
+		color: $gray-darker;
+		background: $gray-lighter;
+		border-inline-start: 4px solid $gray;
+	}
+}
+
+.e-form-submissions-value-label:not(:last-child) {
+	display: block;
+	margin-block-end: 10px;
+}

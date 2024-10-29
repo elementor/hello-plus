@@ -16,6 +16,7 @@ use Elementor\Widget_Base;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use HelloPlus\Includes\Utils as Theme_Utils;
 
+use HelloPlus\Modules\TemplateParts\Documents\Footer_Document;
 use HelloPlus\Modules\Theme\Classes\Control_Media_Preview;
 use HelloPlus\Modules\TemplateParts\Classes\{
 	Traits\Shared_Header_Traits,
@@ -24,8 +25,7 @@ use HelloPlus\Modules\TemplateParts\Classes\{
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
-class Footer extends Widget_Base {
-	use Shared_Header_Traits;
+class Footer extends Abstract_Ehp_Widget {
 
 	public function get_name(): string {
 		return 'footer';
@@ -67,6 +67,7 @@ class Footer extends Widget_Base {
 	protected function register_controls(): void {
 		$this->add_content_section();
 		$this->add_style_section();
+		$this->add_advanced_tab();
 	}
 
 	public function add_content_section(): void {
@@ -1070,5 +1071,9 @@ class Footer extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+	}
+
+	public function get_advanced_tab_id() {
+		return Footer_Document::get_advanced_tab_id();
 	}
 }

@@ -15,8 +15,8 @@ class Document {
 
 	private function get_documents_list(): array {
 		return [
-			'Header',
-			'Footer',
+			'Header_Document',
+			'Footer_Document',
 		];
 	}
 	/**
@@ -30,9 +30,14 @@ class Document {
 		$documents = $this->get_documents_list();
 
 		foreach ( $documents as $document ) {
+			/** @var \HelloPlus\Modules\TemplateParts\Documents\Document_Base $doc_class */
 			$doc_class = '\HelloPlus\Modules\TemplateParts\Documents\\' . $document;
+
+			$doc_class::register();
+
 			// add the doc type to Elementor documents:
 			$documents_manager->register_document_type( $doc_class::get_type(), $doc_class );
+
 			$doc_class::register_hooks();
 		}
 	}

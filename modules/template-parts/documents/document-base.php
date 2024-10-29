@@ -6,10 +6,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use Elementor\{
+
+use Elementor\{Controls_Manager,
 	TemplateLibrary\Source_Local,
-	Modules\Library\Documents\Library_Document
-};
+	Modules\Library\Documents\Library_Document,
+	Utils as ElementorUtils};
 use HelloPlus\Includes\Utils as Theme_Utils;
 use WP_Query;
 
@@ -42,6 +43,29 @@ abstract class Document_Base extends Library_Document {
 		} else {
 			// PHPCS - the method get_content is safe.
 			echo $this->get_content(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
+	}
+
+	public static function register(  ) {
+		add_filter( 'elementor/widget/common/register_css_attributes_control', function ( $common_controls ) {
+			if ( static::is_creating_document() || static::is_editing_existing_document() ) {
+				return false;
+			}
+
+			return $common_controls;
+		} );
+
+		if ( static::is_creating_document() || static::is_editing_existing_document() ) {
+			Controls_Manager::add_tab(
+				Header_Document::get_advanced_tab_id(),
+				esc_html__( 'Advanced', 'elementor' )
+			);
+
+			Controls_Manager::add_tab(
+				Footer_Document::get_advanced_tab_id(),
+				esc_html__( 'Advanced', 'elementor' )
+			);
+
 		}
 	}
 
@@ -78,6 +102,31 @@ abstract class Document_Base extends Library_Document {
 		return HELLO_PLUS_PATH . '/modules/template-parts/templates/';
 	}
 
+	public static function get_advanced_tab_id() {
+		return 'advanced-tab-' . static::get_type();
+	}
+
+	public static function is_editing_existing_document() {
+		$action = ElementorUtils::get_super_global_value( $_GET, 'action' );
+		$post_id = ElementorUtils::get_super_global_value( $_GET, 'post' );
+		error_log( 'is_editing_existing_document: ' . $action . ' ' . $post_id );
+		return 'elementor' === $action && static::is_current_doc_meta_key( $post_id );
+	}
+
+	public static function is_creating_document() {
+		$action = ElementorUtils::get_super_global_value( $_POST, 'action' ); //phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$post_id = ElementorUtils::get_super_global_value( $_POST, 'editor_post_id' ); //phpcs:ignore WordPress.Security.NonceVerification.Missing
+
+		return 'elementor_ajax' === $action && static::is_current_doc_meta_key( $post_id );
+	}
+
+	public static function is_current_doc_meta_key( $post_id ) {
+		error_log(
+			'is_current_doc_meta_key: ' . get_post_meta( $post_id, \Elementor\Core\Base\Document::TYPE_META_KEY, true )  . ' ' . static::get_type()
+		);
+		return static::get_type() === get_post_meta( $post_id, \Elementor\Core\Base\Document::TYPE_META_KEY, true );
+	}
+
 	/**
 	 * Retrieve the template-document post.
 	 * There should be only one, so return null if not found, or found too many.
@@ -88,21 +137,22 @@ abstract class Document_Base extends Library_Document {
 		static $posts = null;
 
 		if ( is_null( $posts ) ) {
-			$args  = array(
+			$args = array(
 				'post_type' => 'elementor_library',
 				'fields' => 'ids',
 				'lazy_load_term_meta' => true,
 				'tax_query' => [
 					[
 						'taxonomy' => self::TAXONOMY_TYPE_SLUG,
-						'field'    => 'slug',
-						'terms'    => static::get_type(),
+						'field' => 'slug',
+						'terms' => static::get_type(),
 					],
 				],
 			);
 			$query = new WP_Query( $args );
 			$posts = $query->posts;
 		}
+
 		return ( 1 !== count( $posts ) ) ? null : $posts[0];
 	}
 

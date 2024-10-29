@@ -7,42 +7,45 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * class Footer
+ * class Header
  **/
-class Footer extends Document_Base {
-	const LOCATION = 'footer';
+class Header_Document extends Document_Base {
 
 	public static function get_template_hook(): string {
-		return 'get_footer';
+		return 'get_header';
 	}
 
 	public static function get_type(): string {
-		return 'ehp-footer';
+		return 'ehp-header';
 	}
 
 	public static function get_title(): string {
-		return esc_html__( 'Hello+ Footer', 'hello-plus' );
+		return esc_html__( 'Hello+ Header', 'hello-plus' );
 	}
 
 	public static function get_plural_title(): string {
-		return esc_html__( 'Hello+ Footers', 'hello-plus' );
+		return esc_html__( 'Hello+ Headers', 'hello-plus' );
+	}
+
+	protected static function get_site_editor_icon(): string {
+		return 'eicon-header';
 	}
 
 	public static function get_template( $name, $args ) {
-		require static::get_templates_path() . 'footer.php';
+		require static::get_templates_path() . 'header.php';
 
 		$templates = [];
 		$name = (string) $name;
 		if ( '' !== $name ) {
-			$templates[] = "footer-{$name}.php";
+			$templates[] = "header-{$name}.php";
 		}
 
-		$templates[] = 'footer.php';
+		$templates[] = 'header.php';
 
 		// Avoid running wp_head hooks again
-		remove_all_actions( 'wp_footer' );
+		remove_all_actions( 'wp_head' );
 		ob_start();
-		// It causes a `require_once` so, in the hook itself it will not be required again.
+		// It causes a `require_once` so, in the get_header itself it will not be required again.
 		locate_template( $templates, true );
 		ob_get_clean();
 	}

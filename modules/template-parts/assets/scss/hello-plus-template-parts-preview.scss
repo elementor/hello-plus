@@ -8,3 +8,13 @@
 		display: block;
 	}
 }
+.elementor-tab-control-advanced-tab-ehp-footer,
+.elementor-tab-control-advanced-tab-ehp-header {
+	span:before {
+		content: '\e916';
+	}
+
+	& + .elementor-tab-control-advanced {
+		display: none;
+	}
+}

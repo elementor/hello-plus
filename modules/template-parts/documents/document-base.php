@@ -46,7 +46,7 @@ abstract class Document_Base extends Library_Document {
 		}
 	}
 
-	public static function register(  ) {
+	public static function register() {
 		add_filter( 'elementor/widget/common/register_css_attributes_control', function ( $common_controls ) {
 			if ( static::is_creating_document() || static::is_editing_existing_document() ) {
 				return false;
@@ -58,12 +58,12 @@ abstract class Document_Base extends Library_Document {
 		if ( static::is_creating_document() || static::is_editing_existing_document() ) {
 			Controls_Manager::add_tab(
 				Header_Document::get_advanced_tab_id(),
-				esc_html__( 'Advanced', 'elementor' )
+				esc_html__( 'Advanced', 'hello-plus' )
 			);
 
 			Controls_Manager::add_tab(
 				Footer_Document::get_advanced_tab_id(),
-				esc_html__( 'Advanced', 'elementor' )
+				esc_html__( 'Advanced', 'hello-plus' )
 			);
 
 		}

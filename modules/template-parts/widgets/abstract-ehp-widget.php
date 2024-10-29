@@ -17,13 +17,13 @@ abstract class Abstract_Ehp_Widget extends Widget_Base {
 
 		Controls_Manager::add_tab(
 			$advanced_tab_id,
-			esc_html__( 'Advanced', 'elementor' )
+			esc_html__( 'Advanced', 'hello-plus' )
 		);
 
 		$this->start_controls_section(
 			'advanced_custom_controls_section',
 			[
-				'label' => esc_html__( 'CSS', 'elementor' ),
+				'label' => esc_html__( 'CSS', 'hello-plus' ),
 				'tab' => $advanced_tab_id,
 			]
 		);
@@ -31,7 +31,7 @@ abstract class Abstract_Ehp_Widget extends Widget_Base {
 		$this->add_control(
 			'advanced_custom_css_id',
 			[
-				'label' => esc_html__( 'CSS ID', 'elementor' ),
+				'label' => esc_html__( 'CSS ID', 'hello-plus' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => '',
 				'ai' => [
@@ -40,7 +40,7 @@ abstract class Abstract_Ehp_Widget extends Widget_Base {
 				'dynamic' => [
 					'active' => true,
 				],
-				'title' => esc_html__( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'elementor' ),
+				'title' => esc_html__( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'hello-plus' ),
 				'style_transfer' => false,
 			]
 		);
@@ -48,7 +48,7 @@ abstract class Abstract_Ehp_Widget extends Widget_Base {
 		$this->add_control(
 			'advanced_custom_css_classes',
 			[
-				'label' => esc_html__( 'CSS Classes', 'elementor' ),
+				'label' => esc_html__( 'CSS Classes', 'hello-plus' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => '',
 				'ai' => [
@@ -57,7 +57,7 @@ abstract class Abstract_Ehp_Widget extends Widget_Base {
 				'dynamic' => [
 					'active' => true,
 				],
-				'title' => esc_html__( 'Add your custom class WITHOUT the dot. e.g: my-class', 'elementor' ),
+				'title' => esc_html__( 'Add your custom class WITHOUT the dot. e.g: my-class', 'hello-plus' ),
 			]
 		);
 

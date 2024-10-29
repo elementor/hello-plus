@@ -464,10 +464,11 @@
 	}
 
 	&__submenu-toggle-icon {
-		margin-left: 8px;
-		height: 10px;
+		fill: currentColor;
+		margin-left: 4px;
+		height: 12px;
 		transition: $transition;
-		width: 10px;
+		width: 12px;
 	}
 
 	&.has-behavior-onscroll-always {

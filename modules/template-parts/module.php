@@ -84,20 +84,12 @@ class Module extends Module_Base {
 			HELLO_PLUS_VERSION,
 			true
 		);
-
-		wp_enqueue_script(
-			'hello-plus-header',
-			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-header.js',
-			[ 'elementor-editor' ],
-			HELLO_PLUS_VERSION,
-			true
-		);
 	}
 
 	/**
 	 * @return void
 	 */
-	public function register_preview_styles(): void {
+	public function enqueue_editor_styles(): void {
 		wp_register_style(
 			'hello-plus-template-parts-preview',
 			HELLO_PLUS_STYLE_URL . 'hello-plus-template-parts-preview.css',
@@ -120,7 +112,7 @@ class Module extends Module_Base {
 		parent::register_hooks();
 		add_action( 'elementor/frontend/after_register_scripts', [ $this, 'register_scripts' ] );
 		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_styles' ] );
-		add_action( 'elementor/editor/after_enqueue_styles', [ $this, 'register_preview_styles' ] );
+		add_action( 'elementor/editor/after_enqueue_styles', [ $this, 'enqueue_editor_styles' ] );
 		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'editor_enqueue' ] );
 	}
 }

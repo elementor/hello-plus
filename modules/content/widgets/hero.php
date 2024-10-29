@@ -12,6 +12,7 @@ use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Widget_Base;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 
 use Elementor\Utils as Elementor_Utils;
 
@@ -290,7 +291,9 @@ class Hero extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#28292B',
+				'global' => [
+					'default' => Global_Colors::COLOR_PRIMARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-hero' => '--hero-heading-color: {{VALUE}}',
 				],
@@ -322,7 +325,9 @@ class Hero extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#28292B',
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-hero' => '--hero-subheading-color: {{VALUE}}',
 				],
@@ -481,7 +486,9 @@ class Hero extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFFFFF',
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-hero' => '--hero-button-text-color: {{VALUE}}',
 				],
@@ -500,7 +507,9 @@ class Hero extends Widget_Base {
 						'default' => 'classic',
 					],
 					'color' => [
-						'default' => '#0052FF',
+						'global' => [
+							'default' => Global_Colors::COLOR_ACCENT,
+						],
 					],
 				],
 				'condition' => [

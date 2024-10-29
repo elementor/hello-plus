@@ -434,7 +434,7 @@ class Zig_Zag extends Widget_Base {
 				],
 				'default' => 'center',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-text-alignment: {{VALUE}};',
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-content-position: {{VALUE}};',
 				],
 				'separator' => 'before',
 			]
@@ -740,8 +740,20 @@ class Zig_Zag extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-button-border-width: {{SIZE}}{{UNIT}};',
 				],
-				'condition' => [
-					'show_button_border' => 'yes',
+				'conditions' => [
+					'relation' => 'and',
+					'terms' => [
+						[
+							'name' => 'show_button_border',
+							'operator' => '==',
+							'value' => 'yes',
+						],
+						[
+							'name' => 'button_type',
+							'operator' => '==',
+							'value' => 'button',
+						],
+					],
 				],
 			]
 		);
@@ -755,8 +767,20 @@ class Zig_Zag extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-button-border-color: {{VALUE}}',
 				],
-				'condition' => [
-					'show_button_border' => 'yes',
+				'conditions' => [
+					'relation' => 'and',
+					'terms' => [
+						[
+							'name' => 'show_button_border',
+							'operator' => '==',
+							'value' => 'yes',
+						],
+						[
+							'name' => 'button_type',
+							'operator' => '==',
+							'value' => 'button',
+						],
+					],
 				],
 			]
 		);
@@ -919,6 +943,26 @@ class Zig_Zag extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-rows-spacing: {{SIZE}}{{UNIT}};',
 				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'box_padding',
+			[
+				'label' => esc_html__( 'Padding', 'hello-plus' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-box-padding-block-end: {{BOTTOM}}{{UNIT}}; --zigzag-box-padding-block-start: {{TOP}}{{UNIT}}; --zigzag-box-padding-inline-end: {{RIGHT}}{{UNIT}}; --zigzag-box-padding-inline-start: {{LEFT}}{{UNIT}};',
+				],
+				'default' => [
+					'top' => 60,
+					'right' => 0,
+					'bottom' => 60,
+					'left' => 0,
+					'isLinked' => true,
+				],
+				'separator' => 'before',
 			]
 		);
 

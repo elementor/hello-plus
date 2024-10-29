@@ -2,8 +2,10 @@
 
 namespace HelloPlus\Modules\TemplateParts;
 
+use Elementor\Controls_Manager;
 use HelloPlus\Includes\Module_Base;
 use HelloPlus\Includes\Utils;
+use HelloPlus\Modules\TemplateParts\Classes\Control_Media_Preview;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -105,6 +107,10 @@ class Module extends Module_Base {
 		return Utils::is_elementor_active();
 	}
 
+	public function register_controls( Controls_Manager $controls_manager ) {
+		$controls_manager->register( new Control_Media_Preview() );
+	}
+
 	/**
 	 * @inheritDoc
 	 */
@@ -114,5 +120,6 @@ class Module extends Module_Base {
 		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_styles' ] );
 		add_action( 'elementor/editor/after_enqueue_styles', [ $this, 'enqueue_editor_styles' ] );
 		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'enqueue_editor_scripts' ] );
+		add_action( 'elementor/controls/register', [ $this, 'register_controls' ] );
 	}
 }

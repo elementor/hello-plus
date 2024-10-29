@@ -39,7 +39,7 @@ class Footer_Document extends Document_Base {
 
 		$templates[] = 'footer.php';
 
-		// Avoid running wp_head hooks again
+		// Avoid running wp_footer hooks again
 		remove_all_actions( 'wp_footer' );
 		ob_start();
 		// It causes a `require_once` so, in the hook itself it will not be required again.

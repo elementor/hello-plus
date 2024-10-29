@@ -73,12 +73,6 @@ abstract class Document_Base extends Library_Document {
 		return '.ehp-' . $this->get_main_id();
 	}
 
-	//phpcs:disable
-//	protected static function get_editor_panel_categories(): array {
-//		return [ Module::HELLO_PLUS_EDITOR_CATEGORY_SLUG ];
-//	}
-	//phpcs:enable
-
 	protected function get_remote_library_config(): array {
 		$config = parent::get_remote_library_config();
 
@@ -109,7 +103,7 @@ abstract class Document_Base extends Library_Document {
 	public static function is_editing_existing_document() {
 		$action = ElementorUtils::get_super_global_value( $_GET, 'action' );
 		$post_id = ElementorUtils::get_super_global_value( $_GET, 'post' );
-		error_log( 'is_editing_existing_document: ' . $action . ' ' . $post_id );
+
 		return 'elementor' === $action && static::is_current_doc_meta_key( $post_id );
 	}
 
@@ -121,9 +115,6 @@ abstract class Document_Base extends Library_Document {
 	}
 
 	public static function is_current_doc_meta_key( $post_id ) {
-		error_log(
-			'is_current_doc_meta_key: ' . get_post_meta( $post_id, \Elementor\Core\Base\Document::TYPE_META_KEY, true )  . ' ' . static::get_type()
-		);
 		return static::get_type() === get_post_meta( $post_id, \Elementor\Core\Base\Document::TYPE_META_KEY, true );
 	}
 

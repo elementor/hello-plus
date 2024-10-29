@@ -72,16 +72,29 @@ class Module extends Module_Base {
 		);
 	}
 
+
 	/**
 	 * @return void
 	 */
-	public function editor_enqueue(): void {
+	public function enqueue_editor_scripts(): void {
 		wp_enqueue_script(
 			'hello-plus-template-parts-editor',
 			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-template-parts-editor.js',
 			[ 'elementor-editor' ],
 			HELLO_PLUS_VERSION,
 			true
+		);
+	}
+
+	/**
+	 * @return void
+	 */
+	public function enqueue_editor_styles(): void {
+		wp_enqueue_style(
+			'hello-plus-template-parts-preview',
+			HELLO_PLUS_STYLE_URL . 'hello-plus-template-parts-preview.css',
+			[],
+			HELLO_PLUS_VERSION
 		);
 	}
 
@@ -97,8 +110,9 @@ class Module extends Module_Base {
 	 */
 	protected function register_hooks(): void {
 		parent::register_hooks();
-		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'editor_enqueue' ] );
 		add_action( 'elementor/frontend/after_register_scripts', [ $this, 'register_scripts' ] );
 		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_styles' ] );
+		add_action( 'elementor/editor/after_enqueue_styles', [ $this, 'enqueue_editor_styles' ] );
+		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'enqueue_editor_scripts' ] );
 	}
 }

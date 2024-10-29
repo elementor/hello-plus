@@ -1,6 +1,6 @@
 <?php
 
-namespace HelloPlus\Modules\TemplateParts\Classes;
+namespace HelloPlus\Modules\TemplateParts\Documents;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -30,7 +30,7 @@ abstract class Document_Base extends Library_Document {
 		$properties['support_page_layout'] = false;
 		$properties['allow_closing_remote_library'] = false;
 
-		return $properties;
+		return apply_filters( 'hello-plus/template-parts/document/properties', $properties );
 	}
 
 	public function print_content() {

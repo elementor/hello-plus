@@ -11,7 +11,7 @@ use Elementor\{
 	Utils
 };
 
-use HelloPlus\Modules\TemplateParts\Widgets\EMP_Footer;
+use HelloPlus\Modules\TemplateParts\Widgets\Ehp_Footer;
 
 /**
  * class Widget_Footer_Render
@@ -20,7 +20,7 @@ class Widget_Footer_Render {
 	const LAYOUT_CLASSNAME = 'ehp-footer';
 	const SITE_LINK_CLASSNAME = 'ehp-footer__site-link';
 
-	protected Emp_Footer $widget;
+	protected Ehp_Footer $widget;
 
 	protected array $settings;
 
@@ -272,7 +272,7 @@ class Widget_Footer_Render {
 		return $atts;
 	}
 
-	public function __construct( EMP_Footer $widget ) {
+	public function __construct( Ehp_Footer $widget ) {
 		$this->widget = $widget;
 		$this->settings = $widget->get_settings_for_display();
 	}

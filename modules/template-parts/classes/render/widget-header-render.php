@@ -12,7 +12,7 @@ use Elementor\{
 	Utils
 };
 
-use HelloPlus\Modules\TemplateParts\Widgets\EMP_Header;
+use HelloPlus\Modules\TemplateParts\Widgets\Ehp_Header;
 
 /**
  * class Widget_Header_Render
@@ -23,7 +23,7 @@ class Widget_Header_Render {
 	const CTAS_CONTAINER_CLASSNAME = 'ehp-header__ctas-container';
 	const BUTTON_CLASSNAME = 'ehp-header__button';
 
-	protected Emp_Header $widget;
+	protected Ehp_Header $widget;
 
 	protected array $settings;
 
@@ -339,7 +339,7 @@ class Widget_Header_Render {
 		return $item_output;
 	}
 
-	public function __construct( EMP_Header $widget ) {
+	public function __construct( Ehp_Header $widget ) {
 		$this->widget = $widget;
 		$this->settings = $widget->get_settings_for_display();
 	}

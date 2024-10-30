@@ -23,7 +23,7 @@ use HelloPlus\Modules\TemplateParts\Classes\{
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
-class Emp_Header extends Widget_Base {
+class Ehp_Header extends Widget_Base {
 	use Shared_Header_Traits;
 
 	public function get_name(): string {

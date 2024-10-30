@@ -37,8 +37,8 @@ class Module extends Module_Base {
 	 */
 	protected function get_widget_ids(): array {
 		return [
-			'Header',
-			'Footer',
+			'Ehp_Header',
+			'Ehp_Footer',
 		];
 	}
 

@@ -23,11 +23,11 @@ use HelloPlus\Modules\TemplateParts\Classes\{
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
-class Header extends Widget_Base {
+class Ehp_Header extends Widget_Base {
 	use Shared_Header_Traits;
 
 	public function get_name(): string {
-		return 'header';
+		return 'emp-header';
 	}
 
 	public function get_title(): string {

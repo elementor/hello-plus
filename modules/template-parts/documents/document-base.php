@@ -27,7 +27,7 @@ abstract class Document_Base extends Library_Document {
 		$properties['support_conditions'] = true;
 		$properties['support_lazyload'] = false;
 		$properties['condition_type'] = 'general';
-		$properties['allow_adding_widgets'] = true;
+		$properties['allow_adding_widgets'] = false;
 		$properties['support_page_layout'] = false;
 		$properties['allow_closing_remote_library'] = false;
 
@@ -57,12 +57,12 @@ abstract class Document_Base extends Library_Document {
 
 		if ( static::is_creating_document() || static::is_editing_existing_document() ) {
 			Controls_Manager::add_tab(
-				Header_Document::get_advanced_tab_id(),
+				Header::get_advanced_tab_id(),
 				esc_html__( 'Advanced', 'hello-plus' )
 			);
 
 			Controls_Manager::add_tab(
-				Footer_Document::get_advanced_tab_id(),
+				Footer::get_advanced_tab_id(),
 				esc_html__( 'Advanced', 'hello-plus' )
 			);
 

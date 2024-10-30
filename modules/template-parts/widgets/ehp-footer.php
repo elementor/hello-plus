@@ -14,7 +14,7 @@ use Elementor\Repeater;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use HelloPlus\Includes\Utils as Theme_Utils;
 
-use HelloPlus\Modules\TemplateParts\Documents\Footer_Document;
+use HelloPlus\Modules\TemplateParts\Documents\Footer;
 use HelloPlus\Modules\TemplateParts\Classes\{
 	Render\Widget_Footer_Render
 };
@@ -1071,6 +1071,6 @@ class Ehp_Footer extends Abstract_Ehp_Widget {
 	}
 
 	public function get_advanced_tab_id() {
-		return Footer_Document::get_advanced_tab_id();
+		return Footer::get_advanced_tab_id();
 	}
 }

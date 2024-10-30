@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use HelloPlus\Modules\TemplateParts\Documents\Header_Document;
+use HelloPlus\Modules\TemplateParts\Documents\Header;
 use Elementor\{
 	Controls_Manager,
 	Group_Control_Background,
@@ -1821,6 +1821,6 @@ class Ehp_Header extends Abstract_Ehp_Widget {
 	}
 
 	public function get_advanced_tab_id() {
-		return Header_Document::get_advanced_tab_id();
+		return Header::get_advanced_tab_id();
 	}
 }

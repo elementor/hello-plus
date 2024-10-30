@@ -3,11 +3,11 @@
 namespace HelloPlus\Modules\TemplateParts\Widgets;
 
 use Elementor\Controls_Manager;
-use Elementor\Plugin;
 use Elementor\Widget_Base;
 use HelloPlus\Modules\TemplateParts\Classes\Traits\Shared_Header_Traits;
+use HelloPlus\Includes\Utils as Theme_Utils;
 
-abstract class Abstract_Ehp_Widget extends Widget_Base {
+abstract class Ehp_Widget_Base extends Widget_Base {
 	use Shared_Header_Traits;
 
 	abstract public function get_advanced_tab_id();
@@ -20,6 +20,14 @@ abstract class Abstract_Ehp_Widget extends Widget_Base {
 			esc_html__( 'Advanced', 'hello-plus' )
 		);
 
+		$this->add_basic_css_controls_section( $advanced_tab_id );
+
+		$elementor_plugin = Theme_Utils::elementor();
+		$elementor_plugin->controls_manager->add_custom_css_controls( $this, $advanced_tab_id );
+		$elementor_plugin->controls_manager->add_custom_attributes_controls( $this, $advanced_tab_id );
+	}
+
+	protected function add_basic_css_controls_section( $advanced_tab_id ) {
 		$this->start_controls_section(
 			'advanced_custom_controls_section',
 			[
@@ -62,9 +70,5 @@ abstract class Abstract_Ehp_Widget extends Widget_Base {
 		);
 
 		$this->end_controls_section();
-
-		Plugin::$instance->controls_manager->add_custom_css_controls( $this, $advanced_tab_id );
-
-		Plugin::$instance->controls_manager->add_custom_attributes_controls( $this, $advanced_tab_id );
 	}
 }

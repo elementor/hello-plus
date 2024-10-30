@@ -22,7 +22,7 @@ use HelloPlus\Modules\TemplateParts\Classes\{
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
 
-class Ehp_Footer extends Abstract_Ehp_Widget {
+class Ehp_Footer extends Ehp_Widget_Base {
 
 	public function get_name(): string {
 		return 'emp-footer';

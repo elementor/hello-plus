@@ -11,14 +11,14 @@
 		"lint:js": "wp-scripts lint-js"
 	},
 	"devDependencies": {
+		"@elementor/eslint-plugin": "^1.0.0",
 		"@wordpress/scripts": "^27.1.0",
 		"eslint-plugin-babel": "^5.3.1",
 		"eslint-plugin-no-jquery": "^3.0.2",
 		"eslint-plugin-react": "^7.35.2",
 		"path": "^0.12.7",
 		"webpack-cli": "^5.1.4",
-		"webpack-remove-empty-scripts": "^1.0.4",
-		"@elementor/eslint-plugin": "^1.0.0"
+		"webpack-remove-empty-scripts": "^1.0.4"
 	},
 	"dependencies": {
 		"@elementor/icons": "1.12.0",

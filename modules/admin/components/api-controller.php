@@ -12,13 +12,20 @@ use HelloPlus\Modules\Admin\Classes\Rest\Onboarding_Settings;
 
 class Api_Controller {
 
-	protected $endpoints = [];
+	protected static $endpoints = [];
 
-	protected $ajax_classes = [];
+	protected static $ajax_classes = [];
 
 	public function __construct() {
-		$this->endpoints['onboarding-settings'] = new Onboarding_Settings();
+		self::$endpoints['onboarding-settings'] = new Onboarding_Settings();
 
-		$this->ajax_classes['setup-wizard'] = new Setup_Wizard();
+		self::$ajax_classes['setup-wizard'] = new Setup_Wizard();
+	}
+
+	public static function get_endpoint( string $endpoint ) {
+		if ( ! isset( self::$endpoints[ $endpoint ] ) ) {
+			throw new \Exception( esc_html__( 'Endpoint not found', 'hello-plus' ) );
+		}
+		return self::$endpoints[ $endpoint ];
 	}
 }

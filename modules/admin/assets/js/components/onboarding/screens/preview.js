@@ -6,6 +6,7 @@ import ConnectDialog from '../kits/connect-dialog';
 import { ApplyKitDialog } from '../kits/apply-kit-dialog';
 import { TobBarPreview } from '../../top-bar/top-bar-preview';
 import { Overview } from './overview';
+import apiFetch from '@wordpress/api-fetch';
 
 export const Preview = ( { kit, setPreviewKit } ) => {
 	const [ isLoading, setIsLoading ] = useState( true );
@@ -13,7 +14,7 @@ export const Preview = ( { kit, setPreviewKit } ) => {
 	const [ showApplyKitDialog, setShowApplyKitDialog ] = useState( false );
 	const [ isOverview, setIsOverview ] = useState( false );
 	const {
-		setStep,
+		onboardingSettings: { applyKitBaseUrl, returnUrl },
 		elementorKitSettings,
 	} = useAdminContext();
 
@@ -31,7 +32,6 @@ export const Preview = ( { kit, setPreviewKit } ) => {
 	return (
 		<>
 			{ showConnectDialog && ( <ConnectDialog
-				pageId={ slug }
 				onClose={ () => setShowConnectDialog( false ) }
 				onSuccess={ () => {
 					setShowConnectDialog( false );
@@ -42,10 +42,24 @@ export const Preview = ( { kit, setPreviewKit } ) => {
 			/> ) }
 			{
 				showApplyKitDialog && ( <ApplyKitDialog
+					isLoading={ isLoading }
 					title={ title }
-					startImportProcess={ () => {
-						setStep( 2 );
-						setPreviewKit( null );
+					startImportProcess={ async () => {
+						try {
+							setIsLoading( true );
+							const response = await apiFetch( { path: '/elementor/v1/kits/download-link/' + kit._id } );
+
+							const url = '/import/process' +
+								`?id=${ kit._id }` +
+								`&file_url=${ encodeURIComponent( response.data.download_link ) }&return_to=${ encodeURIComponent( returnUrl ) }` +
+								`&nonce=${ response.meta.nonce }&referrer=kit-library&action_type=apply-all`;
+
+							window.location.href = `${ applyKitBaseUrl }#${ url }`;
+						} catch ( err ) {
+							console.log( err, 'error' ); // eslint-disable-line no-console
+						} finally {
+							setIsLoading( false );
+						}
 					} }
 					onClose={ () => setShowApplyKitDialog( false ) }
 				/> )

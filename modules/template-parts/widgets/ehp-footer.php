@@ -11,24 +11,21 @@ use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Repeater;
-use Elementor\Utils;
-use Elementor\Widget_Base;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use HelloPlus\Includes\Utils as Theme_Utils;
 
 use HelloPlus\Modules\TemplateParts\Documents\Footer_Document;
-use HelloPlus\Modules\Theme\Classes\Control_Media_Preview;
 use HelloPlus\Modules\TemplateParts\Classes\{
-	Traits\Shared_Header_Traits,
 	Render\Widget_Footer_Render
 };
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
-class Footer extends Abstract_Ehp_Widget {
+
+class Ehp_Footer extends Abstract_Ehp_Widget {
 
 	public function get_name(): string {
-		return 'footer';
+		return 'emp-footer';
 	}
 
 	public function get_title(): string {

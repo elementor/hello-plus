@@ -27,7 +27,7 @@ abstract class Document_Base extends Library_Document {
 		$properties['support_conditions'] = true;
 		$properties['support_lazyload'] = false;
 		$properties['condition_type'] = 'general';
-		$properties['allow_adding_widgets'] = false;
+		$properties['allow_adding_widgets'] = true;
 		$properties['support_page_layout'] = false;
 		$properties['allow_closing_remote_library'] = false;
 

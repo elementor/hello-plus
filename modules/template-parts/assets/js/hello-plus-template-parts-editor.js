@@ -12,7 +12,7 @@ export default class helloPlusLogo {
 	hideAdvancedTab( sectionName, editor ) {
 		const widgetType = editor?.model?.get( 'widgetType' ) || '';
 
-		if ( 'header' === ! widgetType || 'footer' === ! widgetType ) {
+		if ( widgetType.startsWith( 'ehp-' ) ) {
 			return;
 		}
 

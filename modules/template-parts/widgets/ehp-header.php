@@ -22,10 +22,10 @@ use HelloPlus\Modules\TemplateParts\Classes\{
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
-class Header extends Abstract_Ehp_Widget {
+class Ehp_Header extends Abstract_Ehp_Widget {
 
 	public function get_name(): string {
-		return 'header';
+		return 'emp-header';
 	}
 
 	public function get_title(): string {

@@ -149,7 +149,7 @@ abstract class Document_Base extends Library_Document {
 	 *
 	 * @return bool
 	 */
-	public static function register_css_attributes_control ( bool $common_controls, \Elementor\Widget_Common $common_widget ): bool {
+	public static function register_css_attributes_control( bool $common_controls, \Elementor\Widget_Common $common_widget ): bool {
 		if ( static::is_creating_document() || static::is_editing_existing_document() ) {
 			return false;
 		}

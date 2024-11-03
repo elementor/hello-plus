@@ -7,10 +7,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-use Elementor\{Controls_Manager,
+use Elementor\{
+	Controls_Manager,
 	TemplateLibrary\Source_Local,
 	Modules\Library\Documents\Library_Document,
-	Utils as ElementorUtils};
+	Utils as ElementorUtils
+};
 use HelloPlus\Includes\Utils as Theme_Utils;
 use WP_Query;
 
@@ -47,25 +49,11 @@ abstract class Document_Base extends Library_Document {
 	}
 
 	public static function register() {
-		add_filter( 'elementor/widget/common/register_css_attributes_control', function ( $common_controls ) {
-			if ( static::is_creating_document() || static::is_editing_existing_document() ) {
-				return false;
-			}
-
-			return $common_controls;
-		} );
-
 		if ( static::is_creating_document() || static::is_editing_existing_document() ) {
 			Controls_Manager::add_tab(
-				Header::get_advanced_tab_id(),
+				static::get_advanced_tab_id(),
 				esc_html__( 'Advanced', 'hello-plus' )
 			);
-
-			Controls_Manager::add_tab(
-				Footer::get_advanced_tab_id(),
-				esc_html__( 'Advanced', 'hello-plus' )
-			);
-
 		}
 	}
 
@@ -100,21 +88,21 @@ abstract class Document_Base extends Library_Document {
 		return 'advanced-tab-' . static::get_type();
 	}
 
-	public static function is_editing_existing_document() {
+	public static function is_editing_existing_document(): bool {
 		$action = ElementorUtils::get_super_global_value( $_GET, 'action' );
 		$post_id = ElementorUtils::get_super_global_value( $_GET, 'post' );
 
 		return 'elementor' === $action && static::is_current_doc_meta_key( $post_id );
 	}
 
-	public static function is_creating_document() {
+	public static function is_creating_document(): bool {
 		$action = ElementorUtils::get_super_global_value( $_POST, 'action' ); //phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$post_id = ElementorUtils::get_super_global_value( $_POST, 'editor_post_id' ); //phpcs:ignore WordPress.Security.NonceVerification.Missing
 
 		return 'elementor_ajax' === $action && static::is_current_doc_meta_key( $post_id );
 	}
 
-	public static function is_current_doc_meta_key( $post_id ) {
+	public static function is_current_doc_meta_key( $post_id ): bool {
 		return static::get_type() === get_post_meta( $post_id, \Elementor\Core\Base\Document::TYPE_META_KEY, true );
 	}
 
@@ -152,6 +140,21 @@ abstract class Document_Base extends Library_Document {
 		}
 
 		add_action( static::get_template_hook(), [ static::get_class_full_name(), 'get_template' ], 10, 2 );
+		add_filter( 'elementor/widget/common/register_css_attributes_control', [ static::get_class_full_name(), 'register_css_attributes_control' ], 10, 2 );
+	}
+
+	/**
+	 * @param bool $common_controls
+	 * @param \Elementor\Widget_Common $common_widget
+	 *
+	 * @return bool
+	 */
+	public static function register_css_attributes_control ( bool $common_controls, \Elementor\Widget_Common $common_widget ): bool {
+		if ( static::is_creating_document() || static::is_editing_existing_document() ) {
+			return false;
+		}
+
+		return $common_controls;
 	}
 
 	/**

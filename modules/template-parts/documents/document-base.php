@@ -89,8 +89,8 @@ abstract class Document_Base extends Library_Document {
 	}
 
 	public static function is_editing_existing_document(): bool {
-		$action = ElementorUtils::get_super_global_value( $_GET, 'action' );
-		$post_id = ElementorUtils::get_super_global_value( $_GET, 'post' );
+		$action = ElementorUtils::get_super_global_value( $_GET, 'action' ); //phpcs: ignore WordPress.Security.NonceVerification.Recommended -- Nonce verification is not required.
+		$post_id = ElementorUtils::get_super_global_value( $_GET, 'post' ); //phpcs: ignore WordPress.Security.NonceVerification.Recommended -- Nonce verification is not required.
 
 		return 'elementor' === $action && static::is_current_doc_meta_key( $post_id );
 	}

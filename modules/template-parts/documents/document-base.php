@@ -30,6 +30,7 @@ abstract class Document_Base extends Library_Document {
 		$properties['support_lazyload'] = false;
 		$properties['condition_type'] = 'general';
 		$properties['allow_adding_widgets'] = false;
+		$properties['show_navigator'] = false;
 		$properties['support_page_layout'] = false;
 		$properties['allow_closing_remote_library'] = false;
 
@@ -51,7 +52,12 @@ abstract class Document_Base extends Library_Document {
 	public static function register() {
 		if ( static::is_creating_document() || static::is_editing_existing_document() ) {
 			Controls_Manager::add_tab(
-				static::get_advanced_tab_id(),
+				Header::get_advanced_tab_id(),
+				esc_html__( 'Advanced', 'hello-plus' )
+			);
+
+			Controls_Manager::add_tab(
+				Footer::get_advanced_tab_id(),
 				esc_html__( 'Advanced', 'hello-plus' )
 			);
 		}
@@ -140,7 +146,7 @@ abstract class Document_Base extends Library_Document {
 		}
 
 		add_action( static::get_template_hook(), [ static::get_class_full_name(), 'get_template' ], 10, 2 );
-		add_filter( 'elementor/widget/common/register_css_attributes_control', [ static::get_class_full_name(), 'register_css_attributes_control' ], 10, 2 );
+		add_filter( 'elementor/widget/common/register_css_attributes_control', [ static::get_class_full_name(), 'register_css_attributes_control' ] );
 	}
 
 	/**
@@ -149,7 +155,7 @@ abstract class Document_Base extends Library_Document {
 	 *
 	 * @return bool
 	 */
-	public static function register_css_attributes_control( bool $common_controls, \Elementor\Widget_Common $common_widget ): bool {
+	public static function register_css_attributes_control( bool $common_controls ): bool {
 		if ( static::is_creating_document() || static::is_editing_existing_document() ) {
 			return false;
 		}

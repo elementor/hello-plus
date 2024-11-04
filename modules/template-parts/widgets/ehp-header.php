@@ -14,6 +14,7 @@ use Elementor\{
 	Group_Control_Typography
 };
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 
 use HelloPlus\Modules\TemplateParts\Classes\{
 	Render\Widget_Header_Render,
@@ -502,7 +503,9 @@ class Ehp_Header extends Ehp_Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#0052FF',
+				'global' => [
+					'default' => Global_Colors::COLOR_PRIMARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-header' => '--header-site-title-color: {{VALUE}}',
 				],
@@ -565,7 +568,9 @@ class Ehp_Header extends Ehp_Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#555963',
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-header' => '--header-menu-item-color: {{VALUE}}',
 				],
@@ -586,7 +591,9 @@ class Ehp_Header extends Ehp_Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#555963',
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-header' => '--header-menu-item-color-hover: {{VALUE}}',
 				],
@@ -612,7 +619,9 @@ class Ehp_Header extends Ehp_Widget_Base {
 			[
 				'label' => esc_html__( 'Underline Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#555963',
+				'global' => [
+					'default' => Global_Colors::COLOR_ACCENT,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-header' => '--header-pointer-hover-underline-color: {{VALUE}}',
 				],
@@ -647,7 +656,9 @@ class Ehp_Header extends Ehp_Widget_Base {
 			[
 				'label' => esc_html__( 'Highlight Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#E0EAFF',
+				'global' => [
+					'default' => Global_Colors::COLOR_PRIMARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-header' => '--header-pointer-hover-highlight-bg-color: {{VALUE}}',
 				],
@@ -691,7 +702,9 @@ class Ehp_Header extends Ehp_Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#555963',
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-header' => '--header-menu-item-color-active: {{VALUE}}',
 				],
@@ -717,7 +730,9 @@ class Ehp_Header extends Ehp_Widget_Base {
 			[
 				'label' => esc_html__( 'Underline Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#555963',
+				'global' => [
+					'default' => Global_Colors::COLOR_ACCENT,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-header' => '--header-focus-active-underline-color: {{VALUE}}',
 				],
@@ -752,7 +767,9 @@ class Ehp_Header extends Ehp_Widget_Base {
 			[
 				'label' => esc_html__( 'Highlight Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#555963',
+				'global' => [
+					'default' => Global_Colors::COLOR_ACCENT,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-header' => '--header-focus-active-highlight-bg-color: {{VALUE}}',
 				],
@@ -910,7 +927,9 @@ class Ehp_Header extends Ehp_Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#E0E1E2',
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-header' => '--header-dropdown-divider-color: {{VALUE}}',
 				],
@@ -991,7 +1010,9 @@ class Ehp_Header extends Ehp_Widget_Base {
 			[
 				'label' => esc_html__( 'Toggle Icon Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#555963',
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-header' => '--header-toggle-icon-color: {{VALUE}}',
 				],
@@ -1012,7 +1033,9 @@ class Ehp_Header extends Ehp_Widget_Base {
 			[
 				'label' => esc_html__( 'Toggle Icon Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#555963',
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
 				],
@@ -1121,7 +1144,9 @@ class Ehp_Header extends Ehp_Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#555963',
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-header' => '--header-box-border-color: {{VALUE}}',
 				],
@@ -1165,8 +1190,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 		$is_primary = 'primary' === $type;
 		$label = $is_primary ? esc_html__( 'Primary CTA', 'hello-plus' ) : esc_html__( 'Secondary CTA', 'hello-plus' );
 		$show_button_border_default = $is_primary ? 'no' : 'yes';
-		$text_color_default = $is_primary ? '#ffffff' : '#555963';
-		$background_color_default = $is_primary ? '#0052FF' : '#F6F7F8';
+		$background_color_default = $is_primary ? Global_Colors::COLOR_ACCENT : '';
 
 		$add_type_condition = $add_condition ? [
 			$type . '_cta_show' => 'yes',
@@ -1283,7 +1307,9 @@ class Ehp_Header extends Ehp_Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => $text_color_default,
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-header' => '--header-button-' . $type . '-text-color: {{VALUE}}',
 				],
@@ -1303,7 +1329,9 @@ class Ehp_Header extends Ehp_Widget_Base {
 						'default' => 'classic',
 					],
 					'color' => [
-						'default' => $background_color_default,
+						'global' => [
+							'default' => $background_color_default,
+						],
 					],
 				],
 				'condition' => array_merge([
@@ -1327,7 +1355,9 @@ class Ehp_Header extends Ehp_Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => $text_color_default,
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-header' => '--header-button-' . $type . '-text-color-hover: {{VALUE}}',
 				],
@@ -1347,7 +1377,9 @@ class Ehp_Header extends Ehp_Widget_Base {
 						'default' => 'classic',
 					],
 					'color' => [
-						'default' => $background_color_default,
+						'global' => [
+							'default' => $background_color_default,
+						],
 					],
 				],
 				'condition' => array_merge([
@@ -1416,6 +1448,9 @@ class Ehp_Header extends Ehp_Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-header' => '--header-button-' . $type . '-border-color: {{VALUE}}',
 				],
@@ -1808,7 +1843,9 @@ class Ehp_Header extends Ehp_Widget_Base {
 						'default' => 'classic',
 					],
 					'color' => [
-						'default' => '#FFFFFF',
+						'global' => [
+							'default' => Global_Colors::COLOR_ACCENT,
+						],
 					],
 				],
 				'condition' => [

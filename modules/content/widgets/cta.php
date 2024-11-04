@@ -12,6 +12,7 @@ use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Widget_Base;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 
 use HelloPlus\Modules\Content\Base\Traits\Shared_Content_Traits;
 use HelloPlus\Modules\Content\Classes\Render\Widget_CTA_Render;
@@ -325,7 +326,9 @@ class CTA extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#28292B',
+				'global' => [
+					'default' => Global_Colors::COLOR_PRIMARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-cta' => '--cta-heading-color: {{VALUE}}',
 				],
@@ -356,7 +359,9 @@ class CTA extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#28292B',
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-cta' => '--cta-description-color: {{VALUE}}',
 				],
@@ -491,8 +496,7 @@ class CTA extends Widget_Base {
 		$is_primary = 'primary' === $type;
 		$label = $is_primary ? esc_html__( 'Primary CTA', 'hello-plus' ) : esc_html__( 'Secondary CTA', 'hello-plus' );
 		$show_button_border_default = $is_primary ? 'no' : 'yes';
-		$text_color_default = $is_primary ? '#ffffff' : '#555963';
-		$background_color_default = $is_primary ? '#0052FF' : '#F6F7F8';
+		$background_color_default = $is_primary ? Global_Colors::COLOR_ACCENT : '';
 
 		$add_type_condition = $add_condition ? [
 			$type . '_cta_show' => 'yes',
@@ -609,7 +613,9 @@ class CTA extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => $text_color_default,
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
 				],
@@ -629,7 +635,9 @@ class CTA extends Widget_Base {
 						'default' => 'classic',
 					],
 					'color' => [
-						'default' => $background_color_default,
+						'global' => [
+							'default' => $background_color_default,
+						],
 					],
 				],
 				'condition' => array_merge([
@@ -653,7 +661,9 @@ class CTA extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => $text_color_default,
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color-hover: {{VALUE}}',
 				],
@@ -673,7 +683,9 @@ class CTA extends Widget_Base {
 						'default' => 'classic',
 					],
 					'color' => [
-						'default' => $background_color_default,
+						'global' => [
+							'default' => $background_color_default,
+						],
 					],
 				],
 				'condition' => array_merge([
@@ -742,7 +754,9 @@ class CTA extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#555963',
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-border-color: {{VALUE}}',
 				],

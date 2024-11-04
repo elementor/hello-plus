@@ -294,25 +294,6 @@ class CTA extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'text_width',
-			[
-				'label' => esc_html__( 'Text Width', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'default' => 'Default',
-					'narrow' => 'Narrow',
-					'wide' => 'Wide',
-				],
-				'default' => 'default',
-				'tablet_default' => 'default',
-				'mobile_default' => 'default',
-				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-text-heading-width: var(--cta-text-{{VALUE}}-heading); --cta-text-description-width: var(--cta-text-{{VALUE}}-description);',
-				],
-			]
-		);
-
 		$this->add_control(
 			'heading_label',
 			[
@@ -342,6 +323,38 @@ class CTA extends Widget_Base {
 				'selector' => '{{WRAPPER}} .ehp-cta__heading',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'text_width_heading',
+			[
+				'label' => esc_html__( 'Text Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 1200,
+					],
+					'%' => [
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'size' => 800,
+					'unit' => 'px',
+				],
+				'tablet_default' => [
+					'size' => 800,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 800,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-text-width-heading: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -379,34 +392,34 @@ class CTA extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'text_gap',
+		$this->add_responsive_control(
+			'text_width_description',
 			[
-				'label' => esc_html__( 'Gap', 'hello-plus' ),
+				'label' => esc_html__( 'Text Width', 'hello-plus' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'max' => 100,
+						'max' => 1200,
 					],
 					'%' => [
 						'max' => 100,
 					],
 				],
 				'default' => [
-					'size' => 20,
+					'size' => 440,
 					'unit' => 'px',
 				],
 				'tablet_default' => [
-					'size' => 20,
+					'size' => 440,
 					'unit' => 'px',
 				],
 				'mobile_default' => [
-					'size' => 20,
+					'size' => 440,
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-text-gap: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-cta' => '--cta-text-width-description: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -887,19 +900,19 @@ class CTA extends Widget_Base {
 					],
 				],
 				'default' => [
-					'size' => 60,
+					'size' => 40,
 					'unit' => 'px',
 				],
 				'tablet_default' => [
-					'size' => 60,
+					'size' => 40,
 					'unit' => 'px',
 				],
 				'mobile_default' => [
-					'size' => 60,
+					'size' => 40,
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-elements-gap: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-cta' => '--cta-elements-spacing: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]

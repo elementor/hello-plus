@@ -10,7 +10,13 @@ use HelloPlus\Includes\Utils as Theme_Utils;
 abstract class Ehp_Widget_Base extends Widget_Base {
 	use Shared_Header_Traits;
 
-	abstract public function get_advanced_tab_id();
+    public function get_stack( $with_common_controls = true ): array {
+        return parent::get_stack( false );
+    }
+
+    protected function get_advanced_tab_id(): string {
+        return 'advanced-tab-' . $this->get_name();
+    }
 
 	protected function add_advanced_tab() {
 		$advanced_tab_id = $this->get_advanced_tab_id();
@@ -20,19 +26,19 @@ abstract class Ehp_Widget_Base extends Widget_Base {
 			esc_html__( 'Advanced', 'hello-plus' )
 		);
 
-		$this->add_basic_css_controls_section( $advanced_tab_id );
+		$this->add_basic_css_controls_section();
 
 		$elementor_plugin = Theme_Utils::elementor();
 		$elementor_plugin->controls_manager->add_custom_css_controls( $this, $advanced_tab_id );
 		$elementor_plugin->controls_manager->add_custom_attributes_controls( $this, $advanced_tab_id );
 	}
 
-	protected function add_basic_css_controls_section( $advanced_tab_id ) {
+	protected function add_basic_css_controls_section() {
 		$this->start_controls_section(
 			'advanced_custom_controls_section',
 			[
 				'label' => esc_html__( 'CSS', 'hello-plus' ),
-				'tab' => $advanced_tab_id,
+				'tab' => $this->get_advanced_tab_id(),
 			]
 		);
 

@@ -1,7 +1,7 @@
 export default class helloPlusLogo {
 	constructor() {
 		elementor.channels.editor.on( 'helloPlusLogo:change', this.openSiteIdentity );
-		elementor.channels.editor.on( 'section:activated', this.hideAdvancedTab.bind( this ) );
+		elementor.hooks.addFilter( 'elements/widget/controls/common/default', this.resetCommonControls.bind( this ) );
 	}
 
 	async openSiteIdentity() {
@@ -9,18 +9,12 @@ export default class helloPlusLogo {
 		$e.route( 'panel/global/settings-site-identity' );
 	}
 
-	hideAdvancedTab( sectionName, editor ) {
-		const widgetType = editor?.model?.get( 'widgetType' ) || '';
-
+	resetCommonControls( commonControls, widgetType ) {
 		if ( widgetType.startsWith( 'ehp-' ) ) {
-			return;
+			return null;
 		}
 
-		const advancedTab = editor?.el.querySelector( '.elementor-tab-control-advanced' ) || false;
-
-		if ( advancedTab ) {
-			advancedTab.style.display = 'none';
-		}
+		return commonControls;
 	}
 }
 

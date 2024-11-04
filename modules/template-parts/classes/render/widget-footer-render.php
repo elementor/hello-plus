@@ -27,14 +27,27 @@ class Widget_Footer_Render {
 	public function render(): void {
 		$layout_classnames = self::LAYOUT_CLASSNAME;
 		$box_border = $this->settings['footer_box_border'] ?? '';
+		$advanced_css_id = $this->settings['advanced_custom_css_id'];
+		$advanced_css_classes = $this->settings['advanced_custom_css_classes'];
 
 		if ( 'yes' === $box_border ) {
 			$layout_classnames .= ' has-box-border';
 		}
 
-		$this->widget->add_render_attribute( 'layout', [
+		if ( ! empty( $advanced_css_classes ) ) {
+			$layout_classnames .= ' ' . $advanced_css_classes;
+		}
+
+		$render_attributes = [
 			'class' => $layout_classnames,
-		] );
+		];
+
+		if ( ! empty( $advanced_css_id ) ) {
+			$render_attributes['id'] = $advanced_css_id;
+		}
+
+		$this->widget->add_render_attribute( 'layout', $render_attributes );
+
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'layout' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<div class="ehp-footer__row">

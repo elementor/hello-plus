@@ -27,7 +27,7 @@ use HelloPlus\Modules\Theme\Module as Theme_Module;
 class Ehp_Footer extends Ehp_Widget_Base {
 
 	public function get_name(): string {
-		return 'emp-footer';
+		return 'ehp-footer';
 	}
 
 	public function get_title(): string {
@@ -1132,7 +1132,4 @@ class Ehp_Footer extends Ehp_Widget_Base {
 		$this->end_controls_section();
 	}
 
-	public function get_advanced_tab_id() {
-		return Footer::get_advanced_tab_id();
-	}
 }

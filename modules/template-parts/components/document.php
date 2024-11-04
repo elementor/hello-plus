@@ -36,7 +36,7 @@ class Document {
 			$documents_manager->register_document_type( $doc_class::get_type(), $doc_class );
 
 			/** @var \HelloPlus\Modules\TemplateParts\Documents\Document_Base $doc_class */
-			$doc_class::register();
+//			$doc_class::register();
 
 			$doc_class::register_hooks();
 		}

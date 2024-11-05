@@ -302,6 +302,7 @@ class Zig_Zag extends Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'50%' => '50%',
+					'40%' => '40%',
 					'30%' => '30%',
 				],
 				'default' => '50%',

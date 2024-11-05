@@ -202,7 +202,7 @@ class Ehp_Footer extends Widget_Base {
 		$repeater->add_control(
 			'footer_icon_text',
 			[
-				'label' => esc_html__( 'Text', 'hello-plus' ),
+				'label' => esc_html__( 'Accessible Name', 'hello-plus' ),
 				'type' => Controls_Manager::TEXT,
 				'label_block' => true,
 				'placeholder' => esc_html__( 'Type your text here', 'hello-plus' ),
@@ -317,7 +317,7 @@ class Ehp_Footer extends Widget_Base {
 		$this->add_control(
 			'footer_menu_heading',
 			[
-				'label' => esc_html__( 'Menu Heading', 'hello-plus' ),
+				'label' => esc_html__( 'Heading', 'hello-plus' ),
 				'type' => Controls_Manager::TEXTAREA,
 				'rows' => 6,
 				'default' => esc_html__( 'Quick Links', 'hello-plus' ),
@@ -400,7 +400,7 @@ class Ehp_Footer extends Widget_Base {
 		$this->add_control(
 			'footer_contact_heading',
 			[
-				'label' => esc_html__( 'Contact Heading', 'hello-plus' ),
+				'label' => esc_html__( 'Heading', 'hello-plus' ),
 				'type' => Controls_Manager::TEXTAREA,
 				'rows' => 6,
 				'default' => esc_html__( 'Get in touch', 'hello-plus' ),
@@ -986,6 +986,7 @@ class Ehp_Footer extends Widget_Base {
 				'label' => esc_html__( 'Background', 'hello-plus' ),
 				'types' => [ 'classic', 'gradient' ],
 				'selector' => '{{WRAPPER}} .ehp-footer',
+				'exclude' => [ 'image' ],
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',

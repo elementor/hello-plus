@@ -152,6 +152,7 @@ final class Plugin {
 			'Admin',
 			'Content',
 			'TemplateParts',
+			'Forms',
 		];
 
 		foreach ( $modules_list as $module_name ) {

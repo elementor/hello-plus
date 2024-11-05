@@ -258,20 +258,15 @@ class Module extends Module_Base {
 
 		$this->add_component( 'recaptcha', new Classes\Recaptcha_Handler() );
 		$this->add_component( 'recaptcha_v3', new Classes\Recaptcha_V3_Handler() );
-		$this->add_component( 'honeypot', new Classes\Honeypot_Handler() );
 
 		// Akismet
 		if ( class_exists( '\Akismet' ) && API::is_licence_has_feature( static::AKISMET_LICENSE_FEATURE_NAME, API::BC_VALIDATION_CALLBACK ) ) {
 			$this->add_component( 'akismet', new Classes\Akismet() );
 		}
 
-		if ( API::is_licence_has_feature( Form_Submissions_Component::NAME, API::BC_VALIDATION_CALLBACK ) ) {
-			$this->register_submissions_component();
-		} else {
-			add_action( 'elementor/admin/menu/register', function( $admin_menu ) {
-				$admin_menu->register( Form_Submissions_Component::PAGE_ID, new Submissions_Promotion_Menu_Item() );
-			}, 9 /* After "Settings" */ );
-		}
+		add_action( 'elementor/admin/menu/register', function( $admin_menu ) {
+			$admin_menu->register( Form_Submissions_Component::PAGE_ID, new Submissions_Promotion_Menu_Item() );
+		}, 9 /* After "Settings" */ );
 
 		// Initialize registrars.
 		$this->actions_registrar = new Form_Actions_Registrar();
@@ -308,6 +303,6 @@ class Module extends Module_Base {
 	}
 
 	protected function get_component_ids(): array {
-		// TODO: Implement get_component_ids() method.
+		return [];
 	}
 }

@@ -2,7 +2,7 @@
 
 namespace HelloPlus\Modules\Admin\Classes\Menu\Pages;
 
-use HelloPlus\Modules\Admin\Components\Api_Controller;
+use HelloPlus\Modules\Admin\Module;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -29,7 +29,8 @@ class Setup_Wizard {
 				/**
 				 * @var \HelloPlus\Modules\Admin\Classes\Rest\Onboarding_Settings $onboarding_rest
 				 */
-				$onboarding_rest = Api_Controller::get_endpoint( 'onboarding-settings' );
+				$onboarding_rest = Module::instance()->get_component( 'Api_Controller' )->get_endpoint( 'onboarding-settings' );
+
 				$kits = $onboarding_rest->get_kits();
 
 				$kit = array_filter( $kits, function ( $k ) use ( $kit_name ) {

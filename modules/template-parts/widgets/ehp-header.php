@@ -82,7 +82,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 		$this->start_controls_section(
 			'site_logo_label',
 			[
-				'label' => esc_html__( 'Site Logo', 'hello-plus' ),
+				'label' => esc_html__( 'Site Identity', 'hello-plus' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -94,7 +94,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'logo' => esc_html__( 'Site Logo', 'hello-plus' ),
-					'title' => esc_html__( 'Site Title', 'hello-plus' ),
+					'title' => esc_html__( 'Site Name', 'hello-plus' ),
 				],
 				'default' => 'logo',
 				'tablet_default' => 'logo',
@@ -147,7 +147,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 			[
 				'type' => Controls_Manager::ALERT,
 				'alert_type' => 'info',
-				'content' => esc_html__( 'Go to', 'hello-plus' ) . ' <a href="#" onclick="helloPlusLogo.openSiteIdentity( event )" >' . esc_html__( 'Site Identity > Site Description', 'hello-plus' ) . '</a>' . esc_html__( ' to edit the Site Title', 'hello-plus' ),
+				'content' => esc_html__( 'Go to', 'hello-plus' ) . ' <a href="#" onclick="helloPlusLogo.openSiteIdentity( event )" >' . esc_html__( 'Site Identity > Site Description', 'hello-plus' ) . '</a>' . esc_html__( ' to edit the Site Name', 'hello-plus' ),
 				'condition' => [
 					'site_logo_brand_select' => 'title',
 				],
@@ -191,7 +191,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 		$this->add_control(
 			'navigation_menu_name',
 			[
-				'label' => esc_html__( 'Menu Name', 'hello-plus' ),
+				'label' => esc_html__( 'Accessible Name', 'hello-plus' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => esc_html__( 'Menu', 'hello-plus' ),
 			]
@@ -409,27 +409,27 @@ class Ehp_Header extends Ehp_Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'style_align_logo',
 			[
 				'label' => esc_html__( 'Align Logo', 'hello-plus' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
-					'0' => [
+					'start' => [
 						'title' => esc_html__( 'Start', 'hello-plus' ),
 						'icon' => 'eicon-align-start-h',
 					],
-					'2' => [
+					'center' => [
 						'title' => esc_html__( 'Center', 'hello-plus' ),
 						'icon' => 'eicon-align-center-h',
 					],
 				],
-				'default' => '0',
-				'tablet_default' => '0',
-				'mobile_default' => '0',
-				'selectors' => [
-					'{{WRAPPER}} .ehp-header' => '--header-logo-order: {{VALUE}};',
-				],
+				'default' => 'start',
+				'tablet_default' => 'start',
+				'mobile_default' => 'start',
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .ehp-header' => '--header-logo-order: {{VALUE}};',
+				// ],
 				'condition' => [
 					'site_logo_brand_select' => 'logo',
 				],
@@ -473,24 +473,24 @@ class Ehp_Header extends Ehp_Widget_Base {
 		$this->add_responsive_control(
 			'style_align_title',
 			[
-				'label' => esc_html__( 'Align Site Title', 'hello-plus' ),
+				'label' => esc_html__( 'Align Site Name', 'hello-plus' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
-					'0' => [
+					'start' => [
 						'title' => esc_html__( 'Start', 'hello-plus' ),
 						'icon' => 'eicon-align-start-h',
 					],
-					'2' => [
-						'title' => esc_html__( 'End', 'hello-plus' ),
+					'center' => [
+						'title' => esc_html__( 'Center', 'hello-plus' ),
 						'icon' => 'eicon-align-center-h',
 					],
 				],
-				'default' => '0',
-				'tablet_default' => '0',
-				'mobile_default' => '0',
-				'selectors' => [
-					'{{WRAPPER}} .ehp-header' => '--header-logo-order: {{VALUE}};',
-				],
+				'default' => 'start',
+				'tablet_default' => 'start',
+				'mobile_default' => 'start',
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .ehp-header' => '--header-logo-order: {{VALUE}};',
+				// ],
 				'condition' => [
 					'site_logo_brand_select' => 'title',
 				],
@@ -852,9 +852,6 @@ class Ehp_Header extends Ehp_Widget_Base {
 					'vertical' => 'Vertical',
 				],
 				'default' => 'horizontal',
-				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-text-heading-width: var(--cta-text-{{VALUE}}-heading); --cta-text-description-width: var(--cta-text-{{VALUE}}-description);',
-				],
 			]
 		);
 
@@ -870,9 +867,6 @@ class Ehp_Header extends Ehp_Widget_Base {
 					'round' => 'Round',
 				],
 				'default' => 'default',
-				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-text-heading-width: var(--cta-text-{{VALUE}}-heading); --cta-text-description-width: var(--cta-text-{{VALUE}}-description);',
-				],
 			]
 		);
 
@@ -881,8 +875,16 @@ class Ehp_Header extends Ehp_Widget_Base {
 			[
 				'label' => esc_html__( 'Responsive Menu', 'hello-plus' ),
 				'type' => Controls_Manager::HEADING,
-				'description' => 'To preview, select a responsive viewport icon.',
 				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'style_responsive_menu_alert',
+			[
+				'type' => Controls_Manager::ALERT,
+				'alert_type' => 'info',
+				'content' => esc_html__( 'To preview, select a responsive viewport icon.', 'hello-plus' ),
 			]
 		);
 
@@ -956,7 +958,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-border-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-header' => '--header-dropdown-divider-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'style_responsive_menu_divider' => 'yes',
@@ -1036,7 +1038,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 					'default' => Global_Colors::COLOR_TEXT,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-header' => '--header-toggle-icon-color-active: {{VALUE}}',
 				],
 			]
 		);
@@ -1218,18 +1220,6 @@ class Ehp_Header extends Ehp_Widget_Base {
 			]
 		);
 
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => $type . '_button_typography',
-				'selector' => '{{WRAPPER}} .ehp-header__button--' . $type,
-				'global' => [
-					'default' => Global_Typography::TYPOGRAPHY_ACCENT,
-				],
-				'condition' => $add_type_condition,
-			]
-		);
-
 		$this->add_responsive_control(
 			$type . '_button_icon_position',
 			[
@@ -1286,6 +1276,18 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'condition' => array_merge([
 					$type . '_cta_button_icon[value]!' => '',
 				], $add_type_condition),
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => $type . '_button_typography',
+				'selector' => '{{WRAPPER}} .ehp-header__button--' . $type,
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_ACCENT,
+				],
+				'condition' => $add_type_condition,
 			]
 		);
 
@@ -1699,7 +1701,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 		$this->add_control(
 			'behavior_sticky_scale_title',
 			[
-				'label' => esc_html__( 'Scale Site Title', 'hello-plus' ),
+				'label' => esc_html__( 'Scale Site Name', 'hello-plus' ),
 				'type' => Controls_Manager::SWITCHER,
 				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
 				'label_off' => esc_html__( 'No', 'hello-plus' ),

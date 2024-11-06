@@ -17,7 +17,9 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use HelloPlus\Includes\Utils as Theme_Utils;
 
 use HelloPlus\Modules\TemplateParts\Classes\{
-	Render\Widget_Footer_Render
+	Render\Widget_Footer_Render,
+	Traits\Shared_Header_Traits,
+	Control_Media_Preview,
 };
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
@@ -108,14 +110,18 @@ class Ehp_Footer extends Ehp_Widget_Base {
 		$this->add_control(
 			'site_logo_image',
 			[
-				'label' => esc_html__( 'Choose Image', 'hello-plus' ),
-				'type' => Controls_Manager::MEDIA,
+				'label' => esc_html__( 'Site Logo', 'hello-plus' ),
+				'type' => Control_Media_Preview::CONTROL_TYPE,
+				'src' => $this->get_site_logo_url(),
 				'default' => [
 					'url' => $this->get_site_logo_url(),
 				],
 				'condition' => [
 					'site_logo_brand_select' => 'logo',
 				],
+			],
+			[
+				'recursive' => true,
 			]
 		);
 

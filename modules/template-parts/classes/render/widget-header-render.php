@@ -34,6 +34,8 @@ class Widget_Header_Render {
 		$behavior_float = $this->settings['behavior_float'];
 		$behavior_float_shape = $this->settings['behavior_float_shape'];
 		$behavior_on_scroll = $this->settings['behavior_onscroll_select'];
+		$align_logo = $this->settings['style_align_logo'];
+		$align_title = $this->settings['style_align_title'];
 
 		if ( ! empty( $navigation_breakpoint ) ) {
 			$layout_classnames .= ' has-navigation-breakpoint-' . $navigation_breakpoint;
@@ -53,6 +55,14 @@ class Widget_Header_Render {
 
 		if ( ! empty( $behavior_on_scroll ) ) {
 			$layout_classnames .= ' has-behavior-onscroll-' . $behavior_on_scroll;
+		}
+
+		if ( ! empty( $align_logo ) ) {
+			$layout_classnames .= ' has-align-link-' . $align_logo;
+		}
+
+		if ( ! empty( $align_title ) ) {
+			$layout_classnames .= ' has-align-link-' . $align_title;
 		}
 
 		$render_attributes = [
@@ -190,7 +200,7 @@ class Widget_Header_Render {
 			'ehp-header__navigation',
 		] );
 		?>
-		<span class="ehp-header__ghost-element"></span>
+		<!-- <span class="ehp-header__ghost-element"></span> -->
 
 		<nav <?php $this->widget->print_render_attribute_string( 'main-menu' ); ?>>
 			<?php

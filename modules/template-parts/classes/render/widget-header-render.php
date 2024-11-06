@@ -34,8 +34,6 @@ class Widget_Header_Render {
 		$behavior_float = $this->settings['behavior_float'];
 		$behavior_float_shape = $this->settings['behavior_float_shape'];
 		$behavior_on_scroll = $this->settings['behavior_onscroll_select'];
-		$advanced_css_id = $this->settings['advanced_custom_css_id'];
-		$advanced_css_classes = $this->settings['advanced_custom_css_classes'];
 
 		if ( ! empty( $navigation_breakpoint ) ) {
 			$layout_classnames .= ' has-navigation-breakpoint-' . $navigation_breakpoint;
@@ -57,21 +55,16 @@ class Widget_Header_Render {
 			$layout_classnames .= ' has-behavior-onscroll-' . $behavior_on_scroll;
 		}
 
-		if ( ! empty( $advanced_css_classes ) ) {
-			$layout_classnames .= ' ' . $advanced_css_classes;
-		}
-
 		$render_attributes = [
 			'class' => $layout_classnames,
 			'data-scroll-behavior' => $behavior_on_scroll,
 			'data-behavior-float' => $behavior_float,
 		];
 
-		if ( ! empty( $advanced_css_id ) ) {
-			$render_attributes['id'] = $advanced_css_id;
-		}
-
 		$this->widget->add_render_attribute( 'layout', $render_attributes );
+
+		$this->maybe_add_advanced_attributes();
+
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
 			<div class="ehp-header__elements-container">
@@ -83,6 +76,21 @@ class Widget_Header_Render {
 			</div>
 		</div>
 		<?php
+	}
+
+	protected function maybe_add_advanced_attributes() {
+		$advanced_css_id = $this->settings['advanced_custom_css_id'];
+		$advanced_css_classes = $this->settings['advanced_custom_css_classes'];
+
+		$wrapper_render_attributes = [];
+		if ( ! empty( $advanced_css_classes ) ) {
+			$wrapper_render_attributes['class'] = $advanced_css_classes;
+		}
+
+		if ( ! empty( $advanced_css_id ) ) {
+			$wrapper_render_attributes['id'] = $advanced_css_id;
+		}
+		$this->widget->add_render_attribute( '_wrapper', $wrapper_render_attributes );
 	}
 
 	public function render_site_link(): void {

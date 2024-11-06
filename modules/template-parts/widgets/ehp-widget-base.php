@@ -14,12 +14,8 @@ abstract class Ehp_Widget_Base extends Widget_Base {
         return parent::get_stack( false );
     }
 
-    protected function get_advanced_tab_id(): string {
-        return 'advanced-tab-' . $this->get_name();
-    }
-
-	protected function add_advanced_tab() {
-		$advanced_tab_id = $this->get_advanced_tab_id();
+ 	protected function add_advanced_tab(): void {
+		$advanced_tab_id = Controls_Manager::TAB_ADVANCED;
 
 		Controls_Manager::add_tab(
 			$advanced_tab_id,
@@ -33,12 +29,12 @@ abstract class Ehp_Widget_Base extends Widget_Base {
 		$elementor_plugin->controls_manager->add_custom_attributes_controls( $this, $advanced_tab_id );
 	}
 
-	protected function add_basic_css_controls_section() {
+	protected function add_basic_css_controls_section(): void {
 		$this->start_controls_section(
 			'advanced_custom_controls_section',
 			[
 				'label' => esc_html__( 'CSS', 'hello-plus' ),
-				'tab' => $this->get_advanced_tab_id(),
+				'tab' => Controls_Manager::TAB_ADVANCED,
 			]
 		);
 

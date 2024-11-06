@@ -27,26 +27,18 @@ class Widget_Footer_Render {
 	public function render(): void {
 		$layout_classnames = self::LAYOUT_CLASSNAME;
 		$box_border = $this->settings['footer_box_border'] ?? '';
-		$advanced_css_id = $this->settings['advanced_custom_css_id'];
-		$advanced_css_classes = $this->settings['advanced_custom_css_classes'];
 
 		if ( 'yes' === $box_border ) {
 			$layout_classnames .= ' has-box-border';
-		}
-
-		if ( ! empty( $advanced_css_classes ) ) {
-			$layout_classnames .= ' ' . $advanced_css_classes;
 		}
 
 		$render_attributes = [
 			'class' => $layout_classnames,
 		];
 
-		if ( ! empty( $advanced_css_id ) ) {
-			$render_attributes['id'] = $advanced_css_id;
-		}
-
 		$this->widget->add_render_attribute( 'layout', $render_attributes );
+
+		$this->maybe_add_advanced_attributes();
 
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'layout' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
@@ -60,6 +52,22 @@ class Widget_Footer_Render {
 			<?php $this->render_copyright(); ?>
 		</div>
 		<?php
+	}
+
+
+	protected function maybe_add_advanced_attributes() {
+		$advanced_css_id = $this->settings['advanced_custom_css_id'];
+		$advanced_css_classes = $this->settings['advanced_custom_css_classes'];
+
+		$wrapper_render_attributes = [];
+		if ( ! empty( $advanced_css_classes ) ) {
+			$wrapper_render_attributes['class'] = $advanced_css_classes;
+		}
+
+		if ( ! empty( $advanced_css_id ) ) {
+			$wrapper_render_attributes['id'] = $advanced_css_id;
+		}
+		$this->widget->add_render_attribute( '_wrapper', $wrapper_render_attributes );
 	}
 
 	public function render_side_content(): void {

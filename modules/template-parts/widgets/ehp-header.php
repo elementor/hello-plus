@@ -7,28 +7,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use Elementor\{
-	Widget_Base,
 	Controls_Manager,
 	Group_Control_Background,
 	Group_Control_Box_Shadow,
-	Group_Control_Typography,
+	Group_Control_Typography
 };
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 
 use HelloPlus\Modules\TemplateParts\Classes\{
-	Traits\Shared_Header_Traits,
 	Render\Widget_Header_Render,
 	Control_Media_Preview,
 };
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
-class Ehp_Header extends Widget_Base {
-	use Shared_Header_Traits;
+class Ehp_Header extends Ehp_Widget_Base {
 
 	public function get_name(): string {
-		return 'emp-header';
+		return 'ehp-header';
 	}
 
 	public function get_title(): string {
@@ -64,6 +61,7 @@ class Ehp_Header extends Widget_Base {
 	protected function register_controls() {
 		$this->add_content_tab();
 		$this->add_style_tab();
+		$this->add_advanced_tab();
 	}
 
 	protected function add_content_tab() {

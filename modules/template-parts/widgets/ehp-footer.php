@@ -11,26 +11,22 @@ use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Repeater;
-use Elementor\Utils;
-use Elementor\Widget_Base;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 
 use HelloPlus\Includes\Utils as Theme_Utils;
 
-use HelloPlus\Modules\Theme\Classes\Control_Media_Preview;
 use HelloPlus\Modules\TemplateParts\Classes\{
-	Traits\Shared_Header_Traits,
 	Render\Widget_Footer_Render
 };
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
-class Ehp_Footer extends Widget_Base {
-	use Shared_Header_Traits;
+
+class Ehp_Footer extends Ehp_Widget_Base {
 
 	public function get_name(): string {
-		return 'emp-footer';
+		return 'ehp-footer';
 	}
 
 	public function get_title(): string {
@@ -69,6 +65,7 @@ class Ehp_Footer extends Widget_Base {
 	protected function register_controls(): void {
 		$this->add_content_section();
 		$this->add_style_section();
+		$this->add_advanced_tab();
 	}
 
 	public function add_content_section(): void {

@@ -7,8 +7,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use Elementor\{
+	Controls_Manager,
 	TemplateLibrary\Source_Local,
-	Modules\Library\Documents\Library_Document
+	Modules\Library\Documents\Library_Document,
+	Utils as ElementorUtils
 };
 use HelloPlus\Includes\Utils as Theme_Utils;
 use WP_Query;
@@ -27,6 +29,7 @@ abstract class Document_Base extends Library_Document {
 		$properties['support_lazyload'] = false;
 		$properties['condition_type'] = 'general';
 		$properties['allow_adding_widgets'] = false;
+		$properties['show_navigator'] = false;
 		$properties['support_page_layout'] = false;
 		$properties['allow_closing_remote_library'] = false;
 
@@ -48,12 +51,6 @@ abstract class Document_Base extends Library_Document {
 	public function get_css_wrapper_selector(): string {
 		return '.ehp-' . $this->get_main_id();
 	}
-
-	//phpcs:disable
-//	protected static function get_editor_panel_categories(): array {
-//		return [ Module::HELLO_PLUS_EDITOR_CATEGORY_SLUG ];
-//	}
-	//phpcs:enable
 
 	protected function get_remote_library_config(): array {
 		$config = parent::get_remote_library_config();
@@ -99,6 +96,7 @@ abstract class Document_Base extends Library_Document {
 		);
 		$query = new WP_Query( $args );
 		$posts = $query->posts;
+
 		return ( 1 !== count( $posts ) ) ? null : $posts[0];
 	}
 

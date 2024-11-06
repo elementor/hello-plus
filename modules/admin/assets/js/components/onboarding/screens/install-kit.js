@@ -9,7 +9,7 @@ import { PreviewWithImage } from '../../preview/preview-with-image';
 export const InstallKit = ( { message, kits = [], setPreviewKit, severity } ) => {
 	return (
 		<Stack direction="column" alignItems="center" justifyContent="center">
-			<Stack sx={ { maxWidth: 662 } } alignItems="center" justifyContent="center" gap={ 4 }>
+			<Stack sx={ { maxWidth: 900 } } alignItems="center" justifyContent="center" gap={ 4 }>
 				<Navigation />
 				<Stack alignItems="center" justifyContent="center" gap={ 4 }>
 					<Typography variant="h4" align="center" px={ 2 }>

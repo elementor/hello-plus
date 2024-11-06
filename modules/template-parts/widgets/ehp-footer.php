@@ -1131,5 +1131,4 @@ class Ehp_Footer extends Ehp_Widget_Base {
 
 		$this->end_controls_section();
 	}
-
 }

@@ -10,11 +10,11 @@ use HelloPlus\Includes\Utils as Theme_Utils;
 abstract class Ehp_Widget_Base extends Widget_Base {
 	use Shared_Header_Traits;
 
-    public function get_stack( $with_common_controls = true ): array {
-        return parent::get_stack( false );
-    }
+	public function get_stack( $with_common_controls = true ): array {
+		return parent::get_stack( false );
+	}
 
- 	protected function add_advanced_tab(): void {
+	protected function add_advanced_tab(): void {
 		$advanced_tab_id = Controls_Manager::TAB_ADVANCED;
 
 		Controls_Manager::add_tab(

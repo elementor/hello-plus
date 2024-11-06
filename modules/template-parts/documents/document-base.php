@@ -6,7 +6,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-
 use Elementor\{
 	Controls_Manager,
 	TemplateLibrary\Source_Local,

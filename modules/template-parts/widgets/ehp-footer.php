@@ -16,7 +16,6 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 
 use HelloPlus\Includes\Utils as Theme_Utils;
 
-use HelloPlus\Modules\TemplateParts\Documents\Footer;
 use HelloPlus\Modules\TemplateParts\Classes\{
 	Render\Widget_Footer_Render
 };

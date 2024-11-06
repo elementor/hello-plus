@@ -12,6 +12,7 @@ use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Widget_Base;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 
 use Elementor\Utils as Elementor_Utils;
 
@@ -258,25 +259,6 @@ class Hero extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'text_width',
-			[
-				'label' => esc_html__( 'Text Width', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'default' => 'Default',
-					'narrow' => 'Narrow',
-					'wide' => 'Wide',
-				],
-				'default' => 'default',
-				'tablet_default' => 'default',
-				'mobile_default' => 'default',
-				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-text-heading-width: var(--hero-text-{{VALUE}}-heading); --hero-text-subheading-width: var(--hero-text-{{VALUE}}-subheading);',
-				],
-			]
-		);
-
 		$this->add_control(
 			'heading_label',
 			[
@@ -290,7 +272,9 @@ class Hero extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#28292B',
+				'global' => [
+					'default' => Global_Colors::COLOR_PRIMARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-hero' => '--hero-heading-color: {{VALUE}}',
 				],
@@ -304,6 +288,38 @@ class Hero extends Widget_Base {
 				'selector' => '{{WRAPPER}} .ehp-hero__heading',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'text_width_heading',
+			[
+				'label' => esc_html__( 'Text Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 1200,
+					],
+					'%' => [
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'size' => 800,
+					'unit' => 'px',
+				],
+				'tablet_default' => [
+					'size' => 800,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 800,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-hero' => '--hero-text-width-heading: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -322,7 +338,9 @@ class Hero extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#28292B',
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-hero' => '--hero-subheading-color: {{VALUE}}',
 				],
@@ -341,41 +359,34 @@ class Hero extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'content_gap',
+			'text_width_subheading',
 			[
-				'label' => esc_html__( 'Gap', 'hello-plus' ),
+				'label' => esc_html__( 'Text Width', 'hello-plus' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'max' => 100,
-					],
-					'em' => [
-						'max' => 5,
-					],
-					'rem' => [
-						'max' => 5,
+						'max' => 1200,
 					],
 					'%' => [
 						'max' => 100,
 					],
 				],
 				'default' => [
-					'size' => 40,
+					'size' => 800,
 					'unit' => 'px',
 				],
 				'tablet_default' => [
-					'size' => 28,
+					'size' => 800,
 					'unit' => 'px',
 				],
 				'mobile_default' => [
-					'size' => 20,
+					'size' => 800,
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-content-text-gap: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-hero' => '--hero-text-width-subheading: {{SIZE}}{{UNIT}};',
 				],
-				'separator' => 'before',
 			]
 		);
 
@@ -481,7 +492,9 @@ class Hero extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFFFFF',
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-hero' => '--hero-button-text-color: {{VALUE}}',
 				],
@@ -500,7 +513,9 @@ class Hero extends Widget_Base {
 						'default' => 'classic',
 					],
 					'color' => [
-						'default' => '#0052FF',
+						'global' => [
+							'default' => Global_Colors::COLOR_ACCENT,
+						],
 					],
 				],
 				'condition' => [
@@ -523,7 +538,9 @@ class Hero extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFFFFF',
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-hero' => '--hero-button-text-color-hover: {{VALUE}}',
 				],
@@ -611,7 +628,9 @@ class Hero extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#555963',
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-hero' => '--hero-button-border-color: {{VALUE}}',
 				],
@@ -795,6 +814,45 @@ class Hero extends Widget_Base {
 						'default' => 'classic',
 					],
 				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'content_gap',
+			[
+				'label' => esc_html__( 'Element Spacing', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 100,
+					],
+					'em' => [
+						'max' => 5,
+					],
+					'rem' => [
+						'max' => 5,
+					],
+					'%' => [
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'size' => 40,
+					'unit' => 'px',
+				],
+				'tablet_default' => [
+					'size' => 28,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 20,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-hero' => '--hero-content-text-gap: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
 			]
 		);
 

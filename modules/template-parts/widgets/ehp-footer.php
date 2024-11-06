@@ -12,6 +12,8 @@ use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Repeater;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+
 use HelloPlus\Includes\Utils as Theme_Utils;
 
 use HelloPlus\Modules\TemplateParts\Documents\Footer;
@@ -198,7 +200,7 @@ class Ehp_Footer extends Abstract_Ehp_Widget {
 		$repeater->add_control(
 			'footer_icon_text',
 			[
-				'label' => esc_html__( 'Text', 'hello-plus' ),
+				'label' => esc_html__( 'Accessible Name', 'hello-plus' ),
 				'type' => Controls_Manager::TEXT,
 				'label_block' => true,
 				'placeholder' => esc_html__( 'Type your text here', 'hello-plus' ),
@@ -313,7 +315,7 @@ class Ehp_Footer extends Abstract_Ehp_Widget {
 		$this->add_control(
 			'footer_menu_heading',
 			[
-				'label' => esc_html__( 'Menu Heading', 'hello-plus' ),
+				'label' => esc_html__( 'Heading', 'hello-plus' ),
 				'type' => Controls_Manager::TEXTAREA,
 				'rows' => 6,
 				'default' => esc_html__( 'Quick Links', 'hello-plus' ),
@@ -396,7 +398,7 @@ class Ehp_Footer extends Abstract_Ehp_Widget {
 		$this->add_control(
 			'footer_contact_heading',
 			[
-				'label' => esc_html__( 'Contact Heading', 'hello-plus' ),
+				'label' => esc_html__( 'Heading', 'hello-plus' ),
 				'type' => Controls_Manager::TEXTAREA,
 				'rows' => 6,
 				'default' => esc_html__( 'Get in touch', 'hello-plus' ),
@@ -533,7 +535,9 @@ class Ehp_Footer extends Abstract_Ehp_Widget {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333',
+				'global' => [
+					'default' => Global_Colors::COLOR_PRIMARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-footer' => '--footer-title-color: {{VALUE}}',
 				],
@@ -572,7 +576,9 @@ class Ehp_Footer extends Abstract_Ehp_Widget {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#28292B',
+				'global' => [
+					'default' => Global_Colors::COLOR_PRIMARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-footer' => '--footer-description-color: {{VALUE}}',
 				],
@@ -633,7 +639,9 @@ class Ehp_Footer extends Abstract_Ehp_Widget {
 			[
 				'label' => esc_html__( 'Icon Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#28292B',
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-footer' => '--footer-icon-color: {{VALUE}}',
 				],
@@ -654,7 +662,9 @@ class Ehp_Footer extends Abstract_Ehp_Widget {
 			[
 				'label' => esc_html__( 'Icon Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#555963',
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-footer' => '--footer-icon-color-hover: {{VALUE}}',
 				],
@@ -687,7 +697,9 @@ class Ehp_Footer extends Abstract_Ehp_Widget {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#28292B',
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-footer' => '--footer-copyright-color: {{VALUE}}',
 				],
@@ -731,7 +743,9 @@ class Ehp_Footer extends Abstract_Ehp_Widget {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#28292B',
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-footer' => '--footer-menu-heading-color: {{VALUE}}',
 				],
@@ -787,7 +801,9 @@ class Ehp_Footer extends Abstract_Ehp_Widget {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#28292B',
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-footer' => '--footer-menu-item-color: {{VALUE}}',
 				],
@@ -808,7 +824,9 @@ class Ehp_Footer extends Abstract_Ehp_Widget {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#555963',
+				'global' => [
+					'default' => Global_Colors::COLOR_ACCENT,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-footer' => '--footer-menu-item-color-hover: {{VALUE}}',
 				],
@@ -883,7 +901,9 @@ class Ehp_Footer extends Abstract_Ehp_Widget {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#28292B',
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-footer' => '--footer-contact-heading-color: {{VALUE}}',
 				],
@@ -916,7 +936,9 @@ class Ehp_Footer extends Abstract_Ehp_Widget {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#28292B',
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-footer' => '--footer-contact-information-color: {{VALUE}}',
 				],
@@ -962,12 +984,10 @@ class Ehp_Footer extends Abstract_Ehp_Widget {
 				'label' => esc_html__( 'Background', 'hello-plus' ),
 				'types' => [ 'classic', 'gradient' ],
 				'selector' => '{{WRAPPER}} .ehp-footer',
+				'exclude' => [ 'image' ],
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
-					],
-					'color' => [
-						'default' => '#F6F7F8',
 					],
 				],
 			]
@@ -983,6 +1003,49 @@ class Ehp_Footer extends Abstract_Ehp_Widget {
 				'return_value' => 'yes',
 				'default' => 'no',
 				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'footer_box_border_width',
+			[
+				'label' => __( 'Border Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 10,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 1,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-footer' => '--footer-box-border-width: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'footer_box_border' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'footer_box_border_color',
+			[
+				'label' => esc_html__( 'Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-footer' => '--footer-box-border-color: {{VALUE}}',
+				],
+				'condition' => [
+					'footer_box_border' => 'yes',
+				],
 			]
 		);
 

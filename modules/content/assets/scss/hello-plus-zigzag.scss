@@ -98,6 +98,7 @@
 
 			&-link,
 			&-link:not([href]):not([tabindex]) {
+				background: none;
 				text-decoration: underline;
 			}
 		}
@@ -150,7 +151,7 @@
 	}
 
 	&__graphic-element-container {
-		align-items: center;
+		align-items: var(--zigzag-content-position);
 		display: flex;
 
 		&.has-image {

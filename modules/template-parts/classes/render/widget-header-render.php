@@ -69,9 +69,9 @@ class Widget_Header_Render {
 		<div <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
 			<div class="ehp-header__elements-container">
 				<?php
-					$this->render_site_link();
-					$this->render_navigation();
-					$this->render_ctas_container();
+				$this->render_site_link();
+				$this->render_navigation();
+				$this->render_ctas_container();
 				?>
 			</div>
 		</div>
@@ -94,6 +94,7 @@ class Widget_Header_Render {
 			return;
 		}
 		$this->widget->add_render_attribute( '_wrapper', $wrapper_render_attributes );
+	}
 
 	public function render_site_link(): void {
 		$site_logo_brand_select = $this->settings['site_logo_brand_select'];
@@ -193,9 +194,9 @@ class Widget_Header_Render {
 
 		<nav <?php $this->widget->print_render_attribute_string( 'main-menu' ); ?>>
 			<?php
-				// PHPCS - escaped by WordPress with "wp_nav_menu"
-				echo $menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				$this->render_ctas_container();
+			// PHPCS - escaped by WordPress with "wp_nav_menu"
+			echo $menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			$this->render_ctas_container();
 			?>
 		</nav>
 		<?php
@@ -217,13 +218,13 @@ class Widget_Header_Render {
 		?>
 		<button <?php $this->widget->print_render_attribute_string( 'button-toggle' ); ?>>
 			<?php
-				Icons_Manager::render_icon( $toggle_icon,
-					[
-						'aria-hidden' => 'true',
-						'class' => 'ehp-header__toggle-icon ehp-header__toggle-icon--open',
-						'role' => 'presentation',
-					]
-				);
+			Icons_Manager::render_icon( $toggle_icon,
+				[
+					'aria-hidden' => 'true',
+					'class' => 'ehp-header__toggle-icon ehp-header__toggle-icon--open',
+					'role' => 'presentation',
+				]
+			);
 			?>
 			<i class="eicon-close ehp-header__toggle-icon ehp-header__toggle-icon--close"></i>
 			<span class="elementor-screen-only"><?php esc_html_e( 'Menu', 'hello-plus' ); ?></span>
@@ -243,14 +244,14 @@ class Widget_Header_Render {
 			'class' => $ctas_container_classnames,
 		] );
 		?>
-			<div <?php $this->widget->print_render_attribute_string( 'ctas-container' ); ?>>
+		<div <?php $this->widget->print_render_attribute_string( 'ctas-container' ); ?>>
 			<?php if ( $has_primary_button ) {
 				$this->render_button( 'primary' );
 			} ?>
 			<?php if ( $has_secondary_button ) {
 				$this->render_button( 'secondary' );
 			} ?>
-			</div>
+		</div>
 		<?php
 	}
 
@@ -282,7 +283,7 @@ class Widget_Header_Render {
 			$button_classnames .= ' has-shape-' . $button_corner_shape;
 		}
 
-		$this->widget->add_render_attribute(  $type . '-button', [
+		$this->widget->add_render_attribute( $type . '-button', [
 			'class' => $button_classnames,
 		] );
 
@@ -293,12 +294,12 @@ class Widget_Header_Render {
 		?>
 		<a <?php $this->widget->print_render_attribute_string( $type . '-button' ); ?>>
 			<?php
-				Icons_Manager::render_icon( $button_icon,
-					[
-						'aria-hidden' => 'true',
-						'class' => 'ehp-header__button-icon',
-					]
-				);
+			Icons_Manager::render_icon( $button_icon,
+				[
+					'aria-hidden' => 'true',
+					'class' => 'ehp-header__button-icon',
+				]
+			);
 			?>
 			<?php echo esc_html( $button_text ); ?>
 		</a>

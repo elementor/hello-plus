@@ -16,7 +16,7 @@
 	--zigzag-wrapper-border-width: 2px;
 	--zigzag-wrapper-border-color: #000000;
 	--zigzag-wrapper-border-radius: 0;
-	--zigzag-text-alignment: center;
+	--zigzag-content-position: center;
 	--zigzag-image-width: 50%;
 	--zigzag-icon-width: 50%;
 	--zigzag-image-position: center center;
@@ -28,6 +28,11 @@
 	--zigzag-content-width: 1304px;
 	--zigzag-icon-size: 256px;
 	--zigzag-icon-color: #555963;
+
+	--zigzag-box-padding-block-start: 60px;
+	--zigzag-box-padding-block-end: 60px;
+	--zigzag-box-padding-inline-start: 0;
+	--zigzag-box-padding-inline-end: 0;
 
 	align-items: center;
 	background-color: transparent;
@@ -93,6 +98,7 @@
 
 			&-link,
 			&-link:not([href]):not([tabindex]) {
+				background: none;
 				text-decoration: underline;
 			}
 		}
@@ -124,7 +130,7 @@
 	&__text-container {
 		display: flex;
 		flex-direction: column;
-		justify-content: var(--zigzag-text-alignment);
+		justify-content: var(--zigzag-content-position);
 		
 		&.is-graphic-image {
 			width: calc(100% - var(--zigzag-image-width));
@@ -145,7 +151,7 @@
 	}
 
 	&__graphic-element-container {
-		align-items: center;
+		align-items: var(--zigzag-content-position);
 		display: flex;
 
 		&.has-image {
@@ -160,7 +166,6 @@
 		}
 
 		&.has-icon {
-			align-items: center;
 			color: var(--zigzag-icon-color);
 			display: flex;
 			justify-content: center;
@@ -178,16 +183,12 @@
 		}
 	}
 
-	&__item-wrapper {
-		display: flex;
-		justify-content: center;
-		width: 100%;
-	}
-
 	&__item-container {
 		display: flex;
 		gap: var(--zigzag-elements-gap);
 		padding-block: calc(var(--zigzag-rows-spacing) / 2);
+		padding-inline-start: var(--zigzag-box-padding-inline-start);
+		padding-inline-end: var(--zigzag-box-padding-inline-end);
 		max-width: var(--zigzag-content-width);
 		width: 100%;
 	
@@ -201,6 +202,26 @@
 
 		@media screen and (max-width: $screen-tablet-max) {
 			gap: var(--zigzag-elements-gap);
+		}
+	}
+
+	&__item-wrapper {
+		display: flex;
+		justify-content: center;
+		width: 100%;
+
+		&:first-of-type {
+
+			.ehp-zigzag__item-container {
+				padding-block-start: var(--zigzag-box-padding-block-start);
+			}
+		}
+
+		&:last-of-type {
+
+			.ehp-zigzag__item-container {
+				padding-block-end: var(--zigzag-box-padding-block-end);
+			}
 		}
 	}
 

@@ -12,7 +12,7 @@ use Elementor\{
 	Utils
 };
 
-use HelloPlus\Modules\TemplateParts\Widgets\Header;
+use HelloPlus\Modules\TemplateParts\Widgets\Ehp_Header;
 
 /**
  * class Widget_Header_Render
@@ -23,7 +23,7 @@ class Widget_Header_Render {
 	const CTAS_CONTAINER_CLASSNAME = 'ehp-header__ctas-container';
 	const BUTTON_CLASSNAME = 'ehp-header__button';
 
-	protected Header $widget;
+	protected Ehp_Header $widget;
 
 	protected array $settings;
 
@@ -55,22 +55,45 @@ class Widget_Header_Render {
 			$layout_classnames .= ' has-behavior-onscroll-' . $behavior_on_scroll;
 		}
 
-		$this->widget->add_render_attribute( 'layout', [
+		$render_attributes = [
 			'class' => $layout_classnames,
 			'data-scroll-behavior' => $behavior_on_scroll,
 			'data-behavior-float' => $behavior_float,
-		] );
+		];
+
+		$this->widget->add_render_attribute( 'layout', $render_attributes );
+
+		$this->maybe_add_advanced_attributes();
+
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
 			<div class="ehp-header__elements-container">
 				<?php
-					$this->render_site_link();
-					$this->render_navigation();
-					$this->render_ctas_container();
+				$this->render_site_link();
+				$this->render_navigation();
+				$this->render_ctas_container();
 				?>
 			</div>
 		</div>
 		<?php
+	}
+
+	protected function maybe_add_advanced_attributes() {
+		$advanced_css_id = $this->settings['advanced_custom_css_id'];
+		$advanced_css_classes = $this->settings['advanced_custom_css_classes'];
+
+		$wrapper_render_attributes = [];
+		if ( ! empty( $advanced_css_classes ) ) {
+			$wrapper_render_attributes['class'] = $advanced_css_classes;
+		}
+
+		if ( ! empty( $advanced_css_id ) ) {
+			$wrapper_render_attributes['id'] = $advanced_css_id;
+		}
+		if ( empty( $wrapper_render_attributes ) ) {
+			return;
+		}
+		$this->widget->add_render_attribute( '_wrapper', $wrapper_render_attributes );
 	}
 
 	public function render_site_link(): void {
@@ -171,9 +194,9 @@ class Widget_Header_Render {
 
 		<nav <?php $this->widget->print_render_attribute_string( 'main-menu' ); ?>>
 			<?php
-				// PHPCS - escaped by WordPress with "wp_nav_menu"
-				echo $menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				$this->render_ctas_container();
+			// PHPCS - escaped by WordPress with "wp_nav_menu"
+			echo $menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			$this->render_ctas_container();
 			?>
 		</nav>
 		<?php
@@ -195,13 +218,13 @@ class Widget_Header_Render {
 		?>
 		<button <?php $this->widget->print_render_attribute_string( 'button-toggle' ); ?>>
 			<?php
-				Icons_Manager::render_icon( $toggle_icon,
-					[
-						'aria-hidden' => 'true',
-						'class' => 'ehp-header__toggle-icon ehp-header__toggle-icon--open',
-						'role' => 'presentation',
-					]
-				);
+			Icons_Manager::render_icon( $toggle_icon,
+				[
+					'aria-hidden' => 'true',
+					'class' => 'ehp-header__toggle-icon ehp-header__toggle-icon--open',
+					'role' => 'presentation',
+				]
+			);
 			?>
 			<i class="eicon-close ehp-header__toggle-icon ehp-header__toggle-icon--close"></i>
 			<span class="elementor-screen-only"><?php esc_html_e( 'Menu', 'hello-plus' ); ?></span>
@@ -221,14 +244,14 @@ class Widget_Header_Render {
 			'class' => $ctas_container_classnames,
 		] );
 		?>
-			<div <?php $this->widget->print_render_attribute_string( 'ctas-container' ); ?>>
+		<div <?php $this->widget->print_render_attribute_string( 'ctas-container' ); ?>>
 			<?php if ( $has_primary_button ) {
 				$this->render_button( 'primary' );
 			} ?>
 			<?php if ( $has_secondary_button ) {
 				$this->render_button( 'secondary' );
 			} ?>
-			</div>
+		</div>
 		<?php
 	}
 
@@ -260,7 +283,7 @@ class Widget_Header_Render {
 			$button_classnames .= ' has-shape-' . $button_corner_shape;
 		}
 
-		$this->widget->add_render_attribute(  $type . '-button', [
+		$this->widget->add_render_attribute( $type . '-button', [
 			'class' => $button_classnames,
 		] );
 
@@ -271,12 +294,12 @@ class Widget_Header_Render {
 		?>
 		<a <?php $this->widget->print_render_attribute_string( $type . '-button' ); ?>>
 			<?php
-				Icons_Manager::render_icon( $button_icon,
-					[
-						'aria-hidden' => 'true',
-						'class' => 'ehp-header__button-icon',
-					]
-				);
+			Icons_Manager::render_icon( $button_icon,
+				[
+					'aria-hidden' => 'true',
+					'class' => 'ehp-header__button-icon',
+				]
+			);
 			?>
 			<?php echo esc_html( $button_text ); ?>
 		</a>
@@ -339,7 +362,7 @@ class Widget_Header_Render {
 		return $item_output;
 	}
 
-	public function __construct( Header $widget ) {
+	public function __construct( Ehp_Header $widget ) {
 		$this->widget = $widget;
 		$this->settings = $widget->get_settings_for_display();
 	}

@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Control_Media_Preview extends Control_Media {
 
-	const CONTROL_TYPE = 'media-preview';
+	const CONTROL_TYPE = 'ehp-media-preview';
 
 	public function get_type() {
 		return self::CONTROL_TYPE;

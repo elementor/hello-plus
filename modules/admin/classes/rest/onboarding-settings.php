@@ -85,7 +85,7 @@ class Onboarding_Settings {
 			if ( strpos( $url, self::DEFAULT_BASE_ENDPOINT ) === 0 ) {
 				return $this->call_and_check( str_replace( self::DEFAULT_BASE_ENDPOINT, self::FALLBACK_BASE_ENDPOINT, $url ) );
 			}
-			
+
 			throw new \Exception( esc_html( "Error when calling $url: response code $response_code" ) );
 		}
 

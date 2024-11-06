@@ -67,6 +67,9 @@ class Widget_Footer_Render {
 		if ( ! empty( $advanced_css_id ) ) {
 			$wrapper_render_attributes['id'] = $advanced_css_id;
 		}
+		if ( empty( $wrapper_render_attributes ) ) {
+			return;
+		}
 		$this->widget->add_render_attribute( '_wrapper', $wrapper_render_attributes );
 	}
 

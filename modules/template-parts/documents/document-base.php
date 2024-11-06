@@ -49,20 +49,6 @@ abstract class Document_Base extends Library_Document {
 		}
 	}
 
-	public static function register() {
-		if ( static::is_creating_document() || static::is_editing_existing_document() ) {
-			Controls_Manager::add_tab(
-				Header::get_advanced_tab_id(),
-				esc_html__( 'Advanced', 'hello-plus' )
-			);
-
-			Controls_Manager::add_tab(
-				Footer::get_advanced_tab_id(),
-				esc_html__( 'Advanced', 'hello-plus' )
-			);
-		}
-	}
-
 	public function get_css_wrapper_selector(): string {
 		return '.ehp-' . $this->get_main_id();
 	}
@@ -88,28 +74,6 @@ abstract class Document_Base extends Library_Document {
 
 	protected static function get_templates_path(): string {
 		return HELLO_PLUS_PATH . '/modules/template-parts/templates/';
-	}
-
-	public static function get_advanced_tab_id() {
-		return 'advanced-tab-' . static::get_type();
-	}
-
-	public static function is_editing_existing_document(): bool {
-		$action = ElementorUtils::get_super_global_value( $_GET, 'action' ); //phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verification is not required.
-		$post_id = ElementorUtils::get_super_global_value( $_GET, 'post' ); //phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verification is not required.
-
-		return 'elementor' === $action && static::is_current_doc_meta_key( $post_id );
-	}
-
-	public static function is_creating_document(): bool {
-		$action = ElementorUtils::get_super_global_value( $_POST, 'action' ); //phpcs:ignore WordPress.Security.NonceVerification.Missing
-		$post_id = ElementorUtils::get_super_global_value( $_POST, 'editor_post_id' ); //phpcs:ignore WordPress.Security.NonceVerification.Missing
-
-		return 'elementor_ajax' === $action && static::is_current_doc_meta_key( $post_id );
-	}
-
-	public static function is_current_doc_meta_key( $post_id ): bool {
-		return static::get_type() === get_post_meta( $post_id, \Elementor\Core\Base\Document::TYPE_META_KEY, true );
 	}
 
 	/**
@@ -146,21 +110,6 @@ abstract class Document_Base extends Library_Document {
 		}
 
 		add_action( static::get_template_hook(), [ static::get_class_full_name(), 'get_template' ], 10, 2 );
-		add_filter( 'elementor/widget/common/register_css_attributes_control', [ static::get_class_full_name(), 'register_css_attributes_control' ] );
-	}
-
-	/**
-	 * @param bool $common_controls
-	 * @param \Elementor\Widget_Common $common_widget
-	 *
-	 * @return bool
-	 */
-	public static function register_css_attributes_control( bool $common_controls ): bool {
-		if ( static::is_creating_document() || static::is_editing_existing_document() ) {
-			return false;
-		}
-
-		return $common_controls;
 	}
 
 	/**

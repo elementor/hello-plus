@@ -55,11 +55,16 @@ class Widget_Header_Render {
 			$layout_classnames .= ' has-behavior-onscroll-' . $behavior_on_scroll;
 		}
 
-		$this->widget->add_render_attribute( 'layout', [
+		$render_attributes = [
 			'class' => $layout_classnames,
 			'data-scroll-behavior' => $behavior_on_scroll,
 			'data-behavior-float' => $behavior_float,
-		] );
+		];
+
+		$this->widget->add_render_attribute( 'layout', $render_attributes );
+
+		$this->maybe_add_advanced_attributes();
+
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
 			<div class="ehp-header__elements-container">
@@ -71,6 +76,21 @@ class Widget_Header_Render {
 			</div>
 		</div>
 		<?php
+	}
+
+	protected function maybe_add_advanced_attributes() {
+		$advanced_css_id = $this->settings['advanced_custom_css_id'];
+		$advanced_css_classes = $this->settings['advanced_custom_css_classes'];
+
+		$wrapper_render_attributes = [];
+		if ( ! empty( $advanced_css_classes ) ) {
+			$wrapper_render_attributes['class'] = $advanced_css_classes;
+		}
+
+		if ( ! empty( $advanced_css_id ) ) {
+			$wrapper_render_attributes['id'] = $advanced_css_id;
+		}
+		$this->widget->add_render_attribute( '_wrapper', $wrapper_render_attributes );
 	}
 
 	public function render_site_link(): void {

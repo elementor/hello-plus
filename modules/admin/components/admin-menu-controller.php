@@ -13,7 +13,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Admin_Menu_Controller {
 
 	public function __construct() {
-		add_action( 'hello-plus-theme/admin-menu', array( $this, 'admin_menu' ) );
+		add_action( 'hello-plus-theme/admin-menu', [ $this, 'admin_menu'] 
+ );
 	}
 
 	public function admin_menu() {

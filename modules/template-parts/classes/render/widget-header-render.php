@@ -90,8 +90,10 @@ class Widget_Header_Render {
 		if ( ! empty( $advanced_css_id ) ) {
 			$wrapper_render_attributes['id'] = $advanced_css_id;
 		}
+		if ( empty( $wrapper_render_attributes ) ) {
+			return;
+		}
 		$this->widget->add_render_attribute( '_wrapper', $wrapper_render_attributes );
-	}
 
 	public function render_site_link(): void {
 		$site_logo_brand_select = $this->settings['site_logo_brand_select'];

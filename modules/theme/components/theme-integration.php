@@ -31,7 +31,7 @@ class Theme_Integration {
 	}
 
 	public function __construct() {
-		register_activation_hook( HELLO_PLUS_PLUGIN_BASE, [ __CLASS__, 'activate' ] );
+		register_activation_hook( HELLO_PLUS_PLUGIN_BASE, [ $this, 'activate' ] );
 		add_action( 'hello_plus_theme/redirect_on_first_activation', [ $this, 'activate' ] );
 		add_action( 'hello_plus_theme/after_switch_theme', [ $this, 'redirect_on_first_activation' ] );
 	}

@@ -99,7 +99,7 @@ class Ehp_Footer extends Ehp_Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'logo' => 'Site Logo',
-					'title' => 'Site Title',
+					'title' => 'Site Name',
 				],
 				'default' => 'logo',
 				'tablet_default' => 'logo',
@@ -152,7 +152,7 @@ class Ehp_Footer extends Ehp_Widget_Base {
 			[
 				'type' => Controls_Manager::ALERT,
 				'alert_type' => 'info',
-				'content' => esc_html__( 'Go to', 'hello-plus' ) . ' <a href="#" onclick="helloPlusLogo.openSiteIdentity( event )" >' . esc_html__( 'Site Identity > Site Description', 'hello-plus' ) . '</a>' . esc_html__( ' to edit the Site Title', 'hello-plus' ),
+				'content' => esc_html__( 'Go to', 'hello-plus' ) . ' <a href="#" onclick="helloPlusLogo.openSiteIdentity( event )" >' . esc_html__( 'Site Identity > Site Description', 'hello-plus' ) . '</a>' . esc_html__( ' to edit the Site Name', 'hello-plus' ),
 				'condition' => [
 					'site_logo_brand_select' => 'title',
 				],
@@ -527,7 +527,7 @@ class Ehp_Footer extends Ehp_Widget_Base {
 		$this->add_control(
 			'site_title_heading',
 			[
-				'label' => esc_html__( 'Site Title', 'hello-plus' ),
+				'label' => esc_html__( 'Site Name', 'hello-plus' ),
 				'type' => Controls_Manager::HEADING,
 				'condition' => [
 					'site_logo_brand_select' => 'title',

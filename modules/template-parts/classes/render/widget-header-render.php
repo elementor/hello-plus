@@ -210,7 +210,6 @@ class Widget_Header_Render {
 			'ehp-header__navigation',
 		] );
 		?>
-		<!-- <span class="ehp-header__ghost-element"></span> -->
 
 		<nav <?php $this->widget->print_render_attribute_string( 'main-menu' ); ?>>
 			<?php

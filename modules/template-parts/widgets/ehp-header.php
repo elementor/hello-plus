@@ -486,7 +486,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'style_align_title',
 			[
 				'label' => esc_html__( 'Align Site Name', 'hello-plus' ),

@@ -238,6 +238,13 @@ class Ehp_Header extends Ehp_Widget_Base {
 						'value' => 'fas fa-bars',
 						'library' => 'fa-solid',
 					],
+					'recommended' => [
+						'fa-solid' => [
+							'ellipsis-v',
+							'ellipsis-h',
+							'bars',
+						],
+					],
 					'exclude_inline_options' => [ 'none' ],
 				]
 			);
@@ -267,6 +274,18 @@ class Ehp_Header extends Ehp_Widget_Base {
 					'default' => [
 						'value' => 'fas fa-caret-down',
 						'library' => 'fa-solid',
+					],
+					'recommended' => [
+						'fa-solid' => [
+							'caret-down',
+							'chevron-down',
+							'angle-down',
+							'chevron-circle-down',
+							'caret-square-down',
+						],
+						'fa-regular' => [
+							'caret-square-down',
+						],
 					],
 					'exclude_inline_options' => [ 'svg' ],
 				]
@@ -427,9 +446,6 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'default' => 'start',
 				'tablet_default' => 'start',
 				'mobile_default' => 'start',
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .ehp-header' => '--header-logo-order: {{VALUE}};',
-				// ],
 				'condition' => [
 					'site_logo_brand_select' => 'logo',
 				],
@@ -488,9 +504,6 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'default' => 'start',
 				'tablet_default' => 'start',
 				'mobile_default' => 'start',
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .ehp-header' => '--header-logo-order: {{VALUE}};',
-				// ],
 				'condition' => [
 					'site_logo_brand_select' => 'title',
 				],
@@ -1063,6 +1076,47 @@ class Ehp_Header extends Ehp_Widget_Base {
 
 		$this->add_cta_button_controls( 'secondary', true );
 
+		$this->add_control(
+			'cta_responsive_width',
+			[
+				'label' => esc_html__( 'Responsive Width', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'default',
+				'options' => [
+					'default' => esc_html__( 'Default', 'hello-plus' ),
+					'stretch' => esc_html__( 'Stretch', 'hello-plus' ),
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'cta_button_spacing',
+			[
+				'label' => esc_html__( 'Space Between', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 16,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-buttons-space-between: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'secondary_cta_show' => 'yes',
+				],
+				'separator' => 'before',
+			]
+		);
+
 		$this->end_controls_section();
 	}
 
@@ -1604,7 +1658,6 @@ class Ehp_Header extends Ehp_Widget_Base {
 			]
 		);
 
-		// TODO: check if this needs to be responsive
 		$this->add_control(
 			'behavior_onscroll_select',
 			[

@@ -41,7 +41,7 @@ class Widget_Footer_Render {
 		$this->maybe_add_advanced_attributes();
 
 		?>
-		<div <?php $this->widget->print_render_attribute_string( 'layout' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<footer <?php $this->widget->print_render_attribute_string( 'layout' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<div class="ehp-footer__row">
 				<?php
 					$this->render_side_content();
@@ -50,7 +50,7 @@ class Widget_Footer_Render {
 				?>
 			</div>
 			<?php $this->render_copyright(); ?>
-		</div>
+		</footer>
 		<?php
 	}
 

@@ -209,5 +209,5 @@ class elementorHelloPlusHeaderHandler {
 }
 
 window.addEventListener( 'elementor/frontend/init', () => {
-	elementorFrontend.hooks.addAction( 'frontend/element_ready/emp-header.default', () => new elementorHelloPlusHeaderHandler() );
+	elementorFrontend.hooks.addAction( 'frontend/element_ready/ehp-header.default', () => new elementorHelloPlusHeaderHandler() );
 } );

@@ -67,7 +67,6 @@ class Ehp_Footer extends Ehp_Widget_Base {
 	protected function register_controls(): void {
 		$this->add_content_section();
 		$this->add_style_section();
-		$this->add_advanced_tab();
 	}
 
 	public function add_content_section(): void {

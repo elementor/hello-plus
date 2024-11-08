@@ -75,7 +75,11 @@ class Ehp_Header extends Ehp_Widget_Base {
 		$this->add_style_navigation_section();
 		$this->add_style_cta_section();
 		$this->add_style_box_section();
-		$this->add_style_behavior_section();
+	}
+
+	protected function add_advanced_tab(): void {
+		$this->add_advanced_behavior_section();
+		parent::add_advanced_tab();
 	}
 
 	protected function add_content_site_logo_section() {
@@ -1561,12 +1565,12 @@ class Ehp_Header extends Ehp_Widget_Base {
 		);
 	}
 
-	private function add_style_behavior_section(): void {
+	private function add_advanced_behavior_section(): void {
 		$this->start_controls_section(
 			'advanced_behavior_section',
 			[
 				'label' => esc_html__( 'Behavior', 'hello-plus' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'tab' => Controls_Manager::TAB_ADVANCED,
 			]
 		);
 

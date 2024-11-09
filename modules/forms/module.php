@@ -1,4 +1,5 @@
 <?php
+
 namespace HelloPlus\Modules\Forms;
 
 use Elementor\Controls_Manager;
@@ -32,21 +33,21 @@ class Module extends Module_Base {
 	 */
 	public $fields_registrar;
 
-	const ACTIVITY_LOG_LICENSE_FEATURE_NAME = 'activity-log';
-	const CF7DB_LICENSE_FEATURE_NAME = 'cf7db';
-	const AKISMET_LICENSE_FEATURE_NAME = 'akismet';
-
-	const WIDGET_NAME_CLASS_NAME_MAP = [
-		'form' => 'Form',
-		'login' => 'Login',
-	];
 
 	public static function get_name(): string {
 		return 'forms';
 	}
 
+	protected function get_widget_ids(): array {
+		return [
+			'Form',
+		];
+	}
+
 	public function get_widgets() {
-		return WIDGET_NAME_CLASS_NAME_MAP;
+		return [
+			'form' => 'Form',
+		];
 	}
 
 	/**
@@ -124,126 +125,29 @@ class Module extends Module_Base {
 		return $integration->handle_panel_request( $data );
 	}
 
-	/**
-	 * @deprecated 3.5.0 Use `fields_registrar->register()` instead.
-	 */
-	public function add_form_field_type( $type, $instance ) {
-		Plugin::elementor()->modules_manager->get_modules( 'dev-tools' )->deprecation->deprecated_function(
-			__METHOD__,
-			'3.5.0',
-			'fields_registrar->register()'
-		);
-
-		$this->fields_registrar->register( $instance, $type );
-	}
-
-	/**
-	 * @deprecated 3.5.0 Use `actions_registrar->register()` instead.
-	 */
-	public function add_form_action( $id, $instance ) {
-		Plugin::elementor()->modules_manager->get_modules( 'dev-tools' )->deprecation->deprecated_function(
-			__METHOD__,
-			'3.5.0',
-			'actions_registrar->register()'
-		);
-
-		$this->actions_registrar->register( $instance, $id );
-	}
-
-	/**
-	 * @deprecated 3.5.0 Use `actions_registrar->get()` instead.
-	 */
-	public function get_form_actions( $id = null ) {
-		Plugin::elementor()->modules_manager->get_modules( 'dev-tools' )->deprecation->deprecated_function(
-			__METHOD__,
-			'3.5.0',
-			'actions_registrar->get()'
-		);
-
-		return $this->actions_registrar->get( $id );
-	}
-
 	public function register_ajax_actions( Ajax $ajax ) {
 		$ajax->register_ajax_action( 'pro_forms_panel_action_data', [ $this, 'forms_panel_action_data' ] );
 	}
 
-	/**
-	 * Register submissions
-	 */
-	private function register_submissions_component() {
-		$name = Form_Submissions_Component::NAME;
+	public function enqueue_editor_scripts() {
 
-		if ( is_admin() ) {
-			add_action( 'elementor/admin/after_create_settings/' . Settings::PAGE_ID, [ $this, 'register_submissions_admin_fields' ] );
-		}
-
-		if ( '1' === get_option( 'elementor_' . $name ) ) {
-			return;
-		}
-
-		if ( current_user_can( 'manage_options' ) ) {
-			add_action( 'admin_notices', [ $this, 'register_submissions_admin_notice' ] );
-		}
-
-		$this->add_component( $name, new Form_Submissions_Component() );
-	}
-
-	public function register_submissions_admin_fields( Settings $settings ) {
-		$settings->add_field(
-			Settings::TAB_ADVANCED,
-			Settings::TAB_ADVANCED,
-			Form_Submissions_Component::NAME,
-			[
-				'label' => esc_html__( 'Form Submissions', 'elementor-pro' ),
-				'field_args' => [
-					'type' => 'select',
-					'std' => '',
-					'options' => [
-						'' => esc_html__( 'Enable', 'elementor-pro' ),
-						'1' => esc_html__( 'Disable', 'elementor-pro' ),
-					],
-					'desc' => esc_html__( 'Never lose another submission! Using “Actions After Submit” you can now choose to save all submissions to an internal database.', 'elementor-pro' ),
-				],
-			],
+		wp_enqueue_script(
+			'hello-plus-forms-editor',
+			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-forms-editor.js',
+			[ 'elementor-editor' ],
+			HELLO_PLUS_VERSION,
+			true
 		);
 	}
 
-	public function register_submissions_admin_notice() {
-		$notice_id = 'elementor-pro-forms-submissions';
-		if ( User::is_user_notice_viewed( $notice_id ) ) {
-			return;
-		}
-
-		$is_new_site = Upgrade_Manager::install_compare( '3.25.0', '>=' );
-		if ( $is_new_site ) {
-			return;
-		}
-
-		/**
-		 * @var Admin_Notices $admin_notices
-		 */
-		$admin_notices = Plugin::elementor()->admin->get_component( 'admin-notices' );
-
-		$dismiss_url = add_query_arg( [
-			'action' => 'elementor_set_admin_notice_viewed',
-			'notice_id' => esc_attr( $notice_id ),
-		], admin_url( 'admin-post.php' ) );
-
-		$admin_notices->print_admin_notice( [
-			'id' => $notice_id,
-			'title' => esc_html__( 'Form Submissions now activated by default on all websites', 'elementor-pro' ),
-			'description' => sprintf(
-				esc_html__( 'The Form Submissions feature, previously located under the Features tab in Elementor, is now enabled by default on all websites. If you prefer to disable this feature, you can do so by navigating to %1$sSettings → Advanced%2$s.', 'elementor-pro' ),
-				'<a href="' . esc_url( admin_url( 'admin.php?page=elementor-settings#tab-' . Settings::TAB_ADVANCED ) ) . '"><strong>',
-				'</strong></a>'
-			),
-			'button' => [
-				'text' => esc_html__( 'Got it! Keep it enabled', 'elementor-pro' ),
-				'classes' => [ 'e-notice-dismiss' ],
-				'url' => esc_url_raw( $dismiss_url ),
-				'type' => 'cta',
-			],
-		] );
+	public function register_scripts() {
+		wp_enqueue_script(
+			'hello-plus-forms-editor-fe',
+			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-forms-editor-fe.js',
+			[ 'elementor-frontend', 'elementor-common' ],
+			HELLO_PLUS_VERSION,
+			true
+		);
 	}
 
 	/**
@@ -252,12 +156,11 @@ class Module extends Module_Base {
 	public function __construct() {
 		parent::__construct();
 
+		add_action( 'elementor/frontend/after_register_scripts', [ $this, 'register_scripts' ] );
 		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_styles' ] );
 		add_action( 'elementor/controls/register', [ $this, 'register_controls' ] );
 		add_action( 'elementor/ajax/register_actions', [ $this, 'register_ajax_actions' ] );
-
-		$this->add_component( 'recaptcha', new Classes\Recaptcha_Handler() );
-		$this->add_component( 'recaptcha_v3', new Classes\Recaptcha_V3_Handler() );
+		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'enqueue_editor_scripts' ] );
 
 		// Initialize registrars.
 		$this->actions_registrar = new Form_Actions_Registrar();
@@ -273,9 +176,10 @@ class Module extends Module_Base {
 			 * Fires when the form is submitted. This hook allows developers
 			 * to add functionality after form submission.
 			 *
+			 * @param Module $this An instance of the form module.
+			 *
 			 * @since 2.0.0
 			 *
-			 * @param Module $this An instance of the form module.
 			 */
 			do_action( 'elementor_pro/forms/form_submitted', $this );
 		}

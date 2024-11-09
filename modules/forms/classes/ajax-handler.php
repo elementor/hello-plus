@@ -1,7 +1,7 @@
 <?php
 namespace HelloPlus\Modules\Forms\Classes;
 
-use HelloPlus\Core\Utils;
+use HelloPlus\Includes\Utils;
 use HelloPlus\Modules\Forms\Module;
 use HelloPlus\Plugin;
 
@@ -71,11 +71,11 @@ class Ajax_Handler {
 		}
 
 		// Make the post as global post for dynamic values.
-		Plugin::elementor()->db->switch_to_post( $queried_id );
+		Utils::elementor()->db->switch_to_post( $queried_id );
 
 		$form_id = $post_data['form_id'];
 
-		$elementor = Plugin::elementor();
+		$elementor = Utils::elementor();
 		$document = $elementor->documents->get( $post_id );
 		$form = null;
 		$template_id = null;
@@ -85,7 +85,7 @@ class Ajax_Handler {
 		}
 
 		if ( ! empty( $form['templateID'] ) ) {
-			$template = Plugin::elementor()->documents->get( $form['templateID'] );
+			$template = Utils::elementor()->documents->get( $form['templateID'] );
 
 			if ( ! $template ) {
 				return false;

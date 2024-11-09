@@ -1,7 +1,7 @@
-export default class extends elementorModules.Module {
+export default class Forms extends elementorModules.Module {
 	constructor() {
 		super();
-
+		console.log( 'frontend' );
 		elementorFrontend.elementsHandler.attachHandler( 'form', [
 			() => import( /* webpackChunkName: 'form' */ './handlers/form-steps' ),
 			() => import( /* webpackChunkName: 'form' */ './handlers/form-sender' ),
@@ -18,3 +18,9 @@ export default class extends elementorModules.Module {
 		] );
 	}
 }
+
+elementorCommon.elements.$window.on( 'elementor/frontend/init', () => {
+	console.log( 'init' );
+	new Forms();
+}	);
+

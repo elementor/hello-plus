@@ -99,13 +99,15 @@ class Recaptcha_Handler {
 	}
 
 	public function register_scripts() {
-		$script_name = static::get_script_name();
-		$src = 'https://www.google.com/recaptcha/api.js?render=explicit';
-		wp_register_script( $script_name, $src, [], HELLO_PLUS_VERSION, true );
+		add_action( 'wp_enqueue_scripts', function () {
+			$script_name = static::get_script_name();
+			$src = 'https://www.google.com/recaptcha/api.js?render=explicit';
+			wp_register_script( $script_name, $src, [], HELLO_PLUS_VERSION, true );
+		} );
 	}
 
 	public function enqueue_scripts() {
-		if ( Plugin::elementor()->preview->is_preview_mode() ) {
+		if ( Utils::elementor()->preview->is_preview_mode() ) {
 			return;
 		}
 		$script_name = static::get_script_name();

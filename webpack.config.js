@@ -24,6 +24,8 @@ const entryPoints = {
 	'css/hello-plus-footer': path.resolve( modulesDir, 'template-parts/assets/scss', 'hello-plus-footer.scss' ),
 	'js/hello-plus-header': path.resolve( modulesDir, 'template-parts/assets/js', 'hello-plus-header.js' ),
 	'js/hello-plus-template-parts-editor': path.resolve( modulesDir, 'template-parts/assets/js', 'hello-plus-template-parts-editor.js' ),
+	'js/hello-plus-forms-editor': path.resolve( modulesDir, 'forms/assets/js', 'editor.js' ),
+	'js/hello-plus-forms-editor-fe': path.resolve( modulesDir, 'forms/assets/js/frontend', 'frontend.js' ),
 
 	// Theme module
 };

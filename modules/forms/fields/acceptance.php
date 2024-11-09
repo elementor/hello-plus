@@ -2,6 +2,7 @@
 namespace HelloPlus\Modules\Forms\Fields;
 
 use Elementor\Controls_Manager;
+use HelloPlus\Includes\Utils;
 use HelloPlus\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -19,7 +20,7 @@ class Acceptance extends Field_Base {
 	}
 
 	public function update_controls( $widget ) {
-		$elementor = Plugin::elementor();
+		$elementor = Utils::elementor();
 
 		$control_data = $elementor->controls_manager->get_control_from_stack( $widget->get_unique_name(), 'form_fields' );
 

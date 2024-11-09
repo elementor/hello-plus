@@ -13,7 +13,6 @@ class Form_Actions_Registrar extends Registrar {
 
 	const FEATURE_NAME_CLASS_NAME_MAP = [
 		'email' => 'Email',
-		'email2' => 'Email2',
 		'redirect' => 'Redirect',
 	];
 

@@ -2,7 +2,8 @@
 namespace HelloPlus\Modules\Forms\Classes;
 
 use Elementor\Utils;
-use HelloPlus\Base\Base_Widget;
+use Elementor\Widget_Base;
+
 use HelloPlus\Modules\Forms\Module;
 use Elementor\Icons_Manager;
 
@@ -10,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-abstract class Form_Base extends Base_Widget {
+abstract class Form_Base extends Widget_Base {
 
 	public function on_export( $element ) {
 		/** @var \HelloPlus\Modules\Forms\Classes\Action_Base[] $actions */

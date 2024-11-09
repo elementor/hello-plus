@@ -1,6 +1,8 @@
 import RepeaterRowView from './fields-repeater-row';
 
-module.exports = class extends elementor.modules.controls.Repeater {
+console.log( 'wqeq', elementor.modules.controls.Repeater );
+
+export default class extends elementor.modules.controls.Repeater {
 	className() {
 		let classes = super.className();
 
@@ -100,4 +102,4 @@ module.exports = class extends elementor.modules.controls.Repeater {
 			childView.toggleStepField( true );
 		}
 	}
-};
+}

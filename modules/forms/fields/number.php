@@ -2,6 +2,7 @@
 namespace HelloPlus\Modules\Forms\Fields;
 
 use Elementor\Widget_Base;
+use HelloPlus\Includes\Utils;
 use HelloPlus\Modules\Forms\Classes;
 use Elementor\Controls_Manager;
 use HelloPlus\Plugin;
@@ -39,7 +40,7 @@ class Number extends Field_Base {
 	 * @param Widget_Base $widget
 	 */
 	public function update_controls( $widget ) {
-		$elementor = Plugin::elementor();
+		$elementor = Utils::elementor();
 
 		$control_data = $elementor->controls_manager->get_control_from_stack( $widget->get_unique_name(), 'form_fields' );
 

@@ -1,6 +1,7 @@
 <?php
 namespace HelloPlus\Modules\Forms\Fields;
 
+use HelloPlus\Includes\Utils;
 use HelloPlus\Modules\Forms\Classes;
 use Elementor\Controls_Manager;
 use HelloPlus\Plugin;
@@ -28,7 +29,7 @@ class Time extends Field_Base {
 	}
 
 	public function update_controls( $widget ) {
-		$elementor = Plugin::elementor();
+		$elementor = Utils::elementor();
 
 		$control_data = $elementor->controls_manager->get_control_from_stack( $widget->get_unique_name(), 'form_fields' );
 

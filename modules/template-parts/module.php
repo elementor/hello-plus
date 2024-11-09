@@ -52,7 +52,7 @@ class Module extends Module_Base {
 			'hello-plus-footer',
 			HELLO_PLUS_STYLE_URL . 'hello-plus-footer.css',
 			[],
-			HELLO_PLUS_ELEMENTOR_VERSION
+			HELLO_PLUS_VERSION
 		);
 
 		wp_enqueue_script(

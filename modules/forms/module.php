@@ -259,30 +259,9 @@ class Module extends Module_Base {
 		$this->add_component( 'recaptcha', new Classes\Recaptcha_Handler() );
 		$this->add_component( 'recaptcha_v3', new Classes\Recaptcha_V3_Handler() );
 
-		// Akismet
-		if ( class_exists( '\Akismet' ) && API::is_licence_has_feature( static::AKISMET_LICENSE_FEATURE_NAME, API::BC_VALIDATION_CALLBACK ) ) {
-			$this->add_component( 'akismet', new Classes\Akismet() );
-		}
-
-		add_action( 'elementor/admin/menu/register', function( $admin_menu ) {
-			$admin_menu->register( Form_Submissions_Component::PAGE_ID, new Submissions_Promotion_Menu_Item() );
-		}, 9 /* After "Settings" */ );
-
 		// Initialize registrars.
 		$this->actions_registrar = new Form_Actions_Registrar();
 		$this->fields_registrar = new Form_Fields_Registrar();
-
-		// Add Actions as components, that runs manually in the Ajax_Handler
-
-		// Activity Log
-		if ( function_exists( 'aal_insert_log' ) && API::is_licence_has_feature( static::ACTIVITY_LOG_LICENSE_FEATURE_NAME, API::BC_VALIDATION_CALLBACK ) ) {
-			$this->add_component( 'activity_log', new Actions\Activity_Log() );
-		}
-
-		// Contact Form to Database
-		if ( function_exists( 'CF7DBPlugin_init' ) && API::is_licence_has_feature( static::CF7DB_LICENSE_FEATURE_NAME, API::BC_VALIDATION_CALLBACK ) ) {
-			$this->add_component( 'cf7db', new Actions\CF7DB() );
-		}
 
 		// Ajax Handler
 		if ( Classes\Ajax_Handler::is_form_submitted() ) {

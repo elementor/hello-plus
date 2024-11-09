@@ -2,7 +2,6 @@
 
 namespace HelloPlus\Modules\Forms\Registrars;
 
-use HelloPlus\Core\Utils\Registrar;
 use HelloPlus\Modules\Forms\Fields;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -37,17 +36,5 @@ class Form_Fields_Registrar extends Registrar {
 		$this->register( new Fields\Number() );
 		$this->register( new Fields\Acceptance() );
 
-		/**
-		 * Elementor Pro form fields registration.
-		 *
-		 * Fires when a new form field is registered. This hook allows developers to
-		 * register new form fields.
-		 *
-		 * @since 3.5.0
-		 *
-		 * @param Form_Actions_Registrar $this An instance of form fields registration
-		 *                                     manager.
-		 */
-		do_action( 'elementor_pro/forms/fields/register', $this );
 	}
 }

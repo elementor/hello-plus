@@ -1,24 +1,28 @@
 <?php
-
 namespace HelloPlus\Modules\TemplateParts\Classes\Render;
 
-use Elementor\Group_Control_Image_Size;
-use Elementor\Icons_Manager;
-use Elementor\Utils;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
-use HelloPlus\Modules\TemplateParts\Widgets\Footer;
+use Elementor\{
+	Group_Control_Image_Size,
+	Icons_Manager,
+	Utils
+};
 
+use HelloPlus\Modules\TemplateParts\Widgets\Ehp_Footer;
+
+/**
+ * class Widget_Footer_Render
+ */
 class Widget_Footer_Render {
-	protected Footer $widget;
 	const LAYOUT_CLASSNAME = 'ehp-footer';
 	const SITE_LINK_CLASSNAME = 'ehp-footer__site-link';
 
-	protected array $settings;
+	protected Ehp_Footer $widget;
 
-	public function __construct( Footer $widget ) {
-		$this->widget = $widget;
-		$this->settings = $widget->get_settings_for_display();
-	}
+	protected array $settings;
 
 	public function render(): void {
 		$layout_classnames = self::LAYOUT_CLASSNAME;
@@ -28,9 +32,14 @@ class Widget_Footer_Render {
 			$layout_classnames .= ' has-box-border';
 		}
 
-		$this->widget->add_render_attribute( 'layout', [
+		$render_attributes = [
 			'class' => $layout_classnames,
-		] );
+		];
+
+		$this->widget->add_render_attribute( 'layout', $render_attributes );
+
+		$this->maybe_add_advanced_attributes();
+
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'layout' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<div class="ehp-footer__row">
@@ -43,6 +52,25 @@ class Widget_Footer_Render {
 			<?php $this->render_copyright(); ?>
 		</div>
 		<?php
+	}
+
+
+	protected function maybe_add_advanced_attributes() {
+		$advanced_css_id = $this->settings['advanced_custom_css_id'];
+		$advanced_css_classes = $this->settings['advanced_custom_css_classes'];
+
+		$wrapper_render_attributes = [];
+		if ( ! empty( $advanced_css_classes ) ) {
+			$wrapper_render_attributes['class'] = $advanced_css_classes;
+		}
+
+		if ( ! empty( $advanced_css_id ) ) {
+			$wrapper_render_attributes['id'] = $advanced_css_id;
+		}
+		if ( empty( $wrapper_render_attributes ) ) {
+			return;
+		}
+		$this->widget->add_render_attribute( '_wrapper', $wrapper_render_attributes );
 	}
 
 	public function render_side_content(): void {
@@ -266,5 +294,10 @@ class Widget_Footer_Render {
 		}
 
 		return $atts;
+	}
+
+	public function __construct( Ehp_Footer $widget ) {
+		$this->widget = $widget;
+		$this->settings = $widget->get_settings_for_display();
 	}
 }

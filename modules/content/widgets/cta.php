@@ -12,6 +12,7 @@ use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Widget_Base;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 
 use HelloPlus\Modules\Content\Base\Traits\Shared_Content_Traits;
 use HelloPlus\Modules\Content\Classes\Render\Widget_CTA_Render;
@@ -157,9 +158,17 @@ class CTA extends Widget_Base {
 		);
 
 		$this->add_control(
-			'primary_cta_button_text',
+			'primary_cta_heading',
 			[
 				'label' => esc_html__( 'Primary CTA', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+			]
+		);
+
+		$this->add_control(
+			'primary_cta_button_text',
+			[
+				'label' => esc_html__( 'Text', 'hello-plus' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => esc_html__( 'Schedule Now', 'hello-plus' ),
 				'dynamic' => [
@@ -201,7 +210,7 @@ class CTA extends Widget_Base {
 				'label_on' => esc_html__( 'Show', 'hello-plus' ),
 				'label_off' => esc_html__( 'Hide', 'hello-plus' ),
 				'return_value' => 'yes',
-				'default' => 'no',
+				'default' => 'yes',
 				'separator' => 'before',
 			]
 		);
@@ -209,7 +218,7 @@ class CTA extends Widget_Base {
 		$this->add_control(
 			'secondary_cta_button_text',
 			[
-				'label' => esc_html__( 'Secondary CTA', 'hello-plus' ),
+				'label' => esc_html__( 'Text', 'hello-plus' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => esc_html__( 'Contact Us', 'hello-plus' ),
 				'dynamic' => [
@@ -285,25 +294,6 @@ class CTA extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'text_width',
-			[
-				'label' => esc_html__( 'Text Width', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'default' => 'Default',
-					'narrow' => 'Narrow',
-					'wide' => 'Wide',
-				],
-				'default' => 'default',
-				'tablet_default' => 'default',
-				'mobile_default' => 'default',
-				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-text-heading-width: var(--cta-text-{{VALUE}}-heading); --cta-text-description-width: var(--cta-text-{{VALUE}}-description);',
-				],
-			]
-		);
-
 		$this->add_control(
 			'heading_label',
 			[
@@ -317,7 +307,9 @@ class CTA extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#28292B',
+				'global' => [
+					'default' => Global_Colors::COLOR_PRIMARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-cta' => '--cta-heading-color: {{VALUE}}',
 				],
@@ -330,7 +322,39 @@ class CTA extends Widget_Base {
 				'name' => 'heading_typography',
 				'selector' => '{{WRAPPER}} .ehp-cta__heading',
 				'global' => [
-					'default' => Global_Typography::TYPOGRAPHY_ACCENT,
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'text_width_heading',
+			[
+				'label' => esc_html__( 'Text Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 1200,
+					],
+					'%' => [
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'size' => 800,
+					'unit' => 'px',
+				],
+				'tablet_default' => [
+					'size' => 800,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 800,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-text-width-heading: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -348,7 +372,9 @@ class CTA extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#28292B',
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-cta' => '--cta-description-color: {{VALUE}}',
 				],
@@ -366,34 +392,34 @@ class CTA extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'text_gap',
+		$this->add_responsive_control(
+			'text_width_description',
 			[
-				'label' => esc_html__( 'Gap', 'hello-plus' ),
+				'label' => esc_html__( 'Text Width', 'hello-plus' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'max' => 100,
+						'max' => 1200,
 					],
 					'%' => [
 						'max' => 100,
 					],
 				],
 				'default' => [
-					'size' => 20,
+					'size' => 440,
 					'unit' => 'px',
 				],
 				'tablet_default' => [
-					'size' => 20,
+					'size' => 440,
 					'unit' => 'px',
 				],
 				'mobile_default' => [
-					'size' => 20,
+					'size' => 440,
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-text-gap: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-cta' => '--cta-text-width-description: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -413,9 +439,8 @@ class CTA extends Widget_Base {
 		$this->add_control(
 			'cta_position',
 			[
-				'label' => esc_html__( 'Position', 'hello-plus' ),
+				'label' => esc_html__( 'Desktop Position', 'hello-plus' ),
 				'type' => Controls_Manager::CHOOSE,
-				'description' => esc_html__( 'Position controls Desktop layout', 'hello-plus' ),
 				'options' => [
 					'flex-start' => [
 						'title' => esc_html__( 'Start', 'hello-plus' ),
@@ -484,8 +509,7 @@ class CTA extends Widget_Base {
 		$is_primary = 'primary' === $type;
 		$label = $is_primary ? esc_html__( 'Primary CTA', 'hello-plus' ) : esc_html__( 'Secondary CTA', 'hello-plus' );
 		$show_button_border_default = $is_primary ? 'no' : 'yes';
-		$text_color_default = $is_primary ? '#ffffff' : '#555963';
-		$background_color_default = $is_primary ? '#0052FF' : '#F6F7F8';
+		$background_color_default = $is_primary ? Global_Colors::COLOR_ACCENT : '';
 
 		$add_type_condition = $add_condition ? [
 			$type . '_cta_show' => 'yes',
@@ -602,7 +626,9 @@ class CTA extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => $text_color_default,
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
 				],
@@ -622,7 +648,9 @@ class CTA extends Widget_Base {
 						'default' => 'classic',
 					],
 					'color' => [
-						'default' => $background_color_default,
+						'global' => [
+							'default' => $background_color_default,
+						],
 					],
 				],
 				'condition' => array_merge([
@@ -646,7 +674,9 @@ class CTA extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => $text_color_default,
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color-hover: {{VALUE}}',
 				],
@@ -666,7 +696,9 @@ class CTA extends Widget_Base {
 						'default' => 'classic',
 					],
 					'color' => [
-						'default' => $background_color_default,
+						'global' => [
+							'default' => $background_color_default,
+						],
 					],
 				],
 				'condition' => array_merge([
@@ -735,7 +767,9 @@ class CTA extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#555963',
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-border-color: {{VALUE}}',
 				],
@@ -815,7 +849,14 @@ class CTA extends Widget_Base {
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
 				'selector' => '{{WRAPPER}} .ehp-cta',
-
+				'fields_options' => [
+					'background' => [
+						'default' => 'classic',
+					],
+					'color' => [
+						'default' => '#F6F7F8',
+					],
+				],
 			]
 		);
 
@@ -859,19 +900,39 @@ class CTA extends Widget_Base {
 					],
 				],
 				'default' => [
-					'size' => 60,
+					'size' => 40,
 					'unit' => 'px',
 				],
 				'tablet_default' => [
-					'size' => 60,
+					'size' => 40,
 					'unit' => 'px',
 				],
 				'mobile_default' => [
-					'size' => 60,
+					'size' => 40,
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-elements-gap: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-cta' => '--cta-elements-spacing: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'box_padding',
+			[
+				'label' => esc_html__( 'Padding', 'hello-plus' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em', 'rem' ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-box-padding-block-end: {{BOTTOM}}{{UNIT}}; --cta-box-padding-block-start: {{TOP}}{{UNIT}}; --cta-box-padding-inline-end: {{RIGHT}}{{UNIT}}; --cta-box-padding-inline-start: {{LEFT}}{{UNIT}};',
+				],
+				'default' => [
+					'top' => '60',
+					'right' => '60',
+					'bottom' => '60',
+					'left' => '60',
+					'unit' => 'px',
 				],
 				'separator' => 'before',
 			]

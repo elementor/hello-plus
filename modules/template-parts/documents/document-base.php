@@ -1,14 +1,16 @@
 <?php
 
-namespace HelloPlus\Modules\TemplateParts\Classes;
+namespace HelloPlus\Modules\TemplateParts\Documents;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
 use Elementor\{
+	Controls_Manager,
 	TemplateLibrary\Source_Local,
-	Modules\Library\Documents\Library_Document
+	Modules\Library\Documents\Library_Document,
+	Utils as ElementorUtils
 };
 use HelloPlus\Includes\Utils as Theme_Utils;
 use WP_Query;
@@ -27,10 +29,11 @@ abstract class Document_Base extends Library_Document {
 		$properties['support_lazyload'] = false;
 		$properties['condition_type'] = 'general';
 		$properties['allow_adding_widgets'] = false;
+		$properties['show_navigator'] = false;
 		$properties['support_page_layout'] = false;
 		$properties['allow_closing_remote_library'] = false;
 
-		return $properties;
+		return apply_filters( 'hello-plus/template-parts/document/properties', $properties );
 	}
 
 	public function print_content() {
@@ -48,12 +51,6 @@ abstract class Document_Base extends Library_Document {
 	public function get_css_wrapper_selector(): string {
 		return '.ehp-' . $this->get_main_id();
 	}
-
-	//phpcs:disable
-//	protected static function get_editor_panel_categories(): array {
-//		return [ Module::HELLO_PLUS_EDITOR_CATEGORY_SLUG ];
-//	}
-	//phpcs:enable
 
 	protected function get_remote_library_config(): array {
 		$config = parent::get_remote_library_config();
@@ -85,24 +82,21 @@ abstract class Document_Base extends Library_Document {
 	 * @return ?int
 	 */
 	public static function get_document_post(): ?int {
-		static $posts = null;
-
-		if ( is_null( $posts ) ) {
-			$args  = array(
-				'post_type' => 'elementor_library',
-				'fields' => 'ids',
-				'lazy_load_term_meta' => true,
-				'tax_query' => [
-					[
-						'taxonomy' => self::TAXONOMY_TYPE_SLUG,
-						'field'    => 'slug',
-						'terms'    => static::get_type(),
-					],
+		$args  = array(
+			'post_type' => 'elementor_library',
+			'fields' => 'ids',
+			'lazy_load_term_meta' => true,
+			'tax_query' => [
+				[
+					'taxonomy' => self::TAXONOMY_TYPE_SLUG,
+					'field'    => 'slug',
+					'terms'    => static::get_type(),
 				],
-			);
-			$query = new WP_Query( $args );
-			$posts = $query->posts;
-		}
+			],
+		);
+		$query = new WP_Query( $args );
+		$posts = $query->posts;
+
 		return ( 1 !== count( $posts ) ) ? null : $posts[0];
 	}
 

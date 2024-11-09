@@ -1,6 +1,6 @@
 <?php
 
-namespace HelloPlus\Modules\TemplateParts\Classes;
+namespace HelloPlus\Modules\TemplateParts\Documents;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -10,6 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * class Header
  **/
 class Header extends Document_Base {
+
 	public static function get_template_hook(): string {
 		return 'get_header';
 	}

@@ -12,22 +12,15 @@
 	--cta-content-direction: start;
 	--cta-content-text-align: start;
 	--cta-buttons-position: flex-start;
-	--cta-elements-gap: 60px;
-	--cta-text-gap: 20px;
+	--cta-elements-spacing: 40px;
 	--cta-buttons-space-between: 16px;
 	--cta-content-width: 1304px;
 
 	--cta-heading-color: #28292B;
 	--cta-description-color: #28292B;
 
-	--cta-text-heading-width: 100%;
-	--cta-text-description-width: 100%;
-	--cta-text-default-heading: 252px;
-	--cta-text-narrow-heading: 224px;
-	--cta-text-wide-heading: 280px;
-	--cta-text-default-description: 216px;
-	--cta-text-narrow-description: 200px;
-	--cta-text-wide-description: 240px;
+	--cta-text-width-heading: 800px;
+	--cta-text-width-description: 440px;
 
 	--cta-button-primary-background-color: #0052FF;
 	--cta-button-primary-icon-spacing: 10px;
@@ -68,27 +61,18 @@
 	--cta-button-icon-spacing: var(--cta-button-primary-icon-spacing);
 	--cta-button-icon-size: var(--cta-button-primary-icon-size);
 
+	--cta-box-padding-block-end: 60px;
+	--cta-box-padding-block-start: 60px;
+	--cta-box-padding-inline-end: 60px;
+	--cta-box-padding-inline-start: 60px;
+
 	display: flex;
 	justify-content: center;
 	height: var(--cta-box-height);
-
-	@media screen and (min-width: $screen-tablet-min) {
-		--cta-text-default-heading: 512px;
-		--cta-text-narrow-heading: 408px;
-		--cta-text-wide-heading: 640px;
-		--cta-text-default-description: 352px;
-		--cta-text-narrow-description: 280px;
-		--cta-text-wide-description: 440px;
-	}
-
-	@media screen and (min-width: $screen-desktop-min) {
-		--cta-text-default-heading: 800px;
-		--cta-text-narrow-heading: 640px;
-		--cta-text-wide-heading: 960px;
-		--cta-text-default-description: 440px;
-		--cta-text-narrow-description: 420px;
-		--cta-text-wide-description: 528px;
-	}
+	padding-block-end: var(--cta-box-padding-block-end);
+	padding-block-start: var(--cta-box-padding-block-start);
+	padding-inline-end: var(--cta-box-padding-inline-end);
+	padding-inline-start: var(--cta-box-padding-inline-start);
 
 	@mixin full-height($min: null, $max: null) {
 		$query: null;
@@ -144,12 +128,16 @@
 
 	&__ctas-container {
 		flex-grow: 1;
+	}
+
+	&__buttons-wrapper {
 		display: flex;
-		flex-direction: column;
 		gap: var(--cta-buttons-space-between);
+		flex-direction: column;
 		justify-content: center;
-		
+
 		@media screen and (min-width: $screen-tablet-min) {
+			align-items: center;
 			flex-direction: row;
 			justify-content: flex-start;
 		}
@@ -158,26 +146,28 @@
 	&__elements-container {
 		display: flex;
 		flex-direction: column;
-		gap: var(--cta-elements-gap);
+		gap: var(--cta-elements-spacing);
 		max-width: var(--cta-content-width);
 		width: 100%;
 	}
 
 	&__heading {
 		color: var(--cta-heading-color);
-		max-width: var(--cta-text-heading-width);
+		margin: 0;
+		max-width: var(--cta-text-width-heading);
 	}
 
 	&__description {
 		color: var(--cta-description-color);
-		max-width: var(--cta-text-description-width);
+		margin: 0;
+		max-width: var(--cta-text-width-description);
 	}
 
 	&__text-container {
 		align-items: center;
 		display: flex;
 		flex-direction: column;
-		gap: var(--cta-text-gap);
+		gap: var(--cta-elements-spacing);
 
 		.ehp-cta__heading,
 		.ehp-cta__description {
@@ -226,6 +216,7 @@
 
 			&-link,
 			&-link:not([href]):not([tabindex]) {
+				align-self: center;
 				text-decoration: underline;
 			}
 
@@ -280,7 +271,7 @@
 			
 		&-center {
 
-			.ehp-cta__ctas-container {
+			.ehp-cta__buttons-wrapper {
 				justify-content: center;
 			}
 		}
@@ -303,6 +294,11 @@
 
 				.ehp-cta__ctas-container {
 					align-items: var(--cta-buttons-position);
+					display: flex;
+					justify-content: flex-end;
+				}
+
+				.ehp-cta__buttons-wrapper {
 					justify-content: flex-end;
 				}
 			}

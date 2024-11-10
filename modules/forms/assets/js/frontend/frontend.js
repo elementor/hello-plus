@@ -2,13 +2,13 @@ export default class Forms extends elementorModules.Module {
 	constructor() {
 		super();
 		console.log( 'frontend' );
-		elementorFrontend.elementsHandler.attachHandler( 'form', [
-			() => import( /* webpackChunkName: 'form' */ './handlers/form-steps' ),
-			() => import( /* webpackChunkName: 'form' */ './handlers/form-sender' ),
-			() => import( /* webpackChunkName: 'form' */ './handlers/form-redirect' ),
-			() => import( /* webpackChunkName: 'form' */ './handlers/fields/date' ),
-			() => import( /* webpackChunkName: 'form' */ './handlers/recaptcha' ),
-			() => import( /* webpackChunkName: 'form' */ './handlers/fields/time' ),
+		elementorFrontend.elementsHandler.attachHandler( 'form-lite', [
+			() => import( /* webpackChunkName: 'form-lite' */ './handlers/form-steps' ),
+			() => import( /* webpackChunkName: 'form-lite' */ './handlers/form-sender' ),
+			() => import( /* webpackChunkName: 'form-lite' */ './handlers/form-redirect' ),
+			() => import( /* webpackChunkName: 'form-lite' */ './handlers/fields/date' ),
+			() => import( /* webpackChunkName: 'form-lite' */ './handlers/recaptcha' ),
+			() => import( /* webpackChunkName: 'form-lite' */ './handlers/fields/time' ),
 		] );
 
 		elementorFrontend.elementsHandler.attachHandler( 'subscribe', [
@@ -20,7 +20,6 @@ export default class Forms extends elementorModules.Module {
 }
 
 elementorCommon.elements.$window.on( 'elementor/frontend/init', () => {
-	console.log( 'init' );
 	new Forms();
 }	);
 

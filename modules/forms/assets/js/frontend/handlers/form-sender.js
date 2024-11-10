@@ -1,6 +1,7 @@
 export default elementorModules.frontend.handlers.Base.extend( {
 
 	getDefaultSettings() {
+		console.log( 'getDefaultSettings' );
 		return {
 			selectors: {
 				form: '.elementor-form',
@@ -23,34 +24,6 @@ export default elementorModules.frontend.handlers.Base.extend( {
 
 	bindEvents() {
 		this.elements.$form.on( 'submit', this.handleSubmit );
-		const $fileInput = this.elements.$form.find( 'input[type=file]' );
-		if ( $fileInput.length ) {
-			$fileInput.on( 'change', this.validateFileSize );
-		}
-	},
-
-	validateFileSize( event ) {
-		const $field = jQuery( event.currentTarget ),
-			files = $field[ 0 ].files;
-
-		if ( ! files.length ) {
-			return;
-		}
-
-		const maxSize = parseInt( $field.attr( 'data-maxsize' ) ) * 1024 * 1024,
-			maxSizeMessage = $field.attr( 'data-maxsize-message' );
-
-		const filesArray = Array.prototype.slice.call( files );
-		filesArray.forEach( ( file ) => {
-			if ( maxSize < file.size ) {
-				$field.parent()
-					.addClass( 'elementor-error' )
-					.append( '<span class="elementor-message elementor-message-danger elementor-help-inline elementor-form-help-inline" role="alert">' + maxSizeMessage + '</span>' )
-					.find( ':input' ).attr( 'aria-invalid', 'true' );
-
-				this.elements.$form.trigger( 'error' );
-			}
-		} );
 	},
 
 	beforeSend() {

@@ -144,7 +144,7 @@ class Module extends Module_Base {
 		wp_enqueue_script(
 			'hello-plus-forms-editor-fe',
 			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-forms-editor-fe.js',
-			[ 'elementor-frontend', 'elementor-common' ],
+			[ 'elementor-frontend', 'elementor-common', 'elementor-frontend-modules' ],
 			HELLO_PLUS_VERSION,
 			true
 		);

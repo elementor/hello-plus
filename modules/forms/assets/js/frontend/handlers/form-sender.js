@@ -1,14 +1,13 @@
 export default elementorModules.frontend.handlers.Base.extend( {
 
 	getDefaultSettings() {
-		console.log( 'getDefaultSettings' );
 		return {
 			selectors: {
-				form: '.elementor-form',
+				form: '.elementor-form-lite',
 				submitButton: '[type="submit"]',
 			},
-			action: 'elementor_pro_forms_send_form',
-			ajaxUrl: elementorProFrontend.config.ajaxurl,
+			action: 'hello_plus_forms_lite_send_form',
+			ajaxUrl: elementorFrontendConfig.urls.ajaxurl,
 		};
 	},
 

@@ -19,6 +19,6 @@ module.exports = elementorModules.editor.utils.Module.extend( {
 	},
 
 	onInit() {
-		elementor.hooks.addFilter( 'elementor_pro/forms/content_template/field/tel', this.renderField, 10, 4 );
+		elementor.hooks.addFilter( 'hello_plus/forms/content_template/field/tel', this.renderField, 10, 4 );
 	},
 } );

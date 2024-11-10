@@ -31,17 +31,17 @@ class Ajax_Handler {
 
 	public static function is_form_submitted() {
 		// PHPCS - No nonce is required, all visitors may send the form.
-		return wp_doing_ajax() && isset( $_POST['action'] ) && 'elementor_pro_forms_send_form' === $_POST['action']; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		return wp_doing_ajax() && isset( $_POST['action'] ) && 'hello_plus_forms_lite_send_form' === $_POST['action']; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 	}
 
 	public static function get_default_messages() {
 		return [
-			self::SUCCESS => esc_html__( 'Your submission was successful.', 'elementor-pro' ),
-			self::ERROR => esc_html__( 'Your submission failed because of an error.', 'elementor-pro' ),
-			self::FIELD_REQUIRED => esc_html__( 'This field is required.', 'elementor-pro' ),
-			self::INVALID_FORM => esc_html__( 'Your submission failed because the form is invalid.', 'elementor-pro' ),
-			self::SERVER_ERROR => esc_html__( 'Your submission failed because of a server error.', 'elementor-pro' ),
-			self::SUBSCRIBER_ALREADY_EXISTS => esc_html__( 'Subscriber already exists.', 'elementor-pro' ),
+			self::SUCCESS => esc_html__( 'Your submission was successful.', 'hello-plus' ),
+			self::ERROR => esc_html__( 'Your submission failed because of an error.', 'hello-plus' ),
+			self::FIELD_REQUIRED => esc_html__( 'This field is required.', 'hello-plus' ),
+			self::INVALID_FORM => esc_html__( 'Your submission failed because the form is invalid.', 'hello-plus' ),
+			self::SERVER_ERROR => esc_html__( 'Your submission failed because of a server error.', 'hello-plus' ),
+			self::SUBSCRIBER_ALREADY_EXISTS => esc_html__( 'Subscriber already exists.', 'hello-plus' ),
 		];
 	}
 
@@ -55,7 +55,7 @@ class Ajax_Handler {
 
 		$default_messages = self::get_default_messages();
 
-		return isset( $default_messages[ $id ] ) ? $default_messages[ $id ] : esc_html__( 'Unknown error.', 'elementor-pro' );
+		return isset( $default_messages[ $id ] ) ? $default_messages[ $id ] : esc_html__( 'Unknown error.', 'hello-plus' );
 	}
 
 	public function ajax_send_form() {
@@ -138,20 +138,7 @@ class Ajax_Handler {
 		$actions = $module->actions_registrar->get();
 		$errors = array_merge( $this->messages['error'], $this->messages['admin_error'] );
 
-		/**
-		 * Filters the record before it sent to actions after submit.
-		 *
-		 * @since 3.3.0
-		 *
-		 * @param Form_Record $record The form record.
-		 * @param Ajax_Handler $this The class that handle the submission of the record
-		 */
-		$record = apply_filters( 'elementor_pro/forms/record/actions_before', $record, $this );
-
 		foreach ( $actions as $action ) {
-			if ( ! in_array( $action->get_name(), $form['settings']['submit_actions'], true ) ) {
-				continue;
-			}
 
 			$exception = null;
 
@@ -172,41 +159,7 @@ class Ajax_Handler {
 			}
 
 			$errors = array_merge( $this->messages['error'], $this->messages['admin_error'] );
-
-			/**
-			 * After form actions run.
-			 *
-			 * Fires after Elementor forms run actions. This hook allows
-			 * developers to add functionality after certain actions run.
-			 *
-			 * @param Action_Base     $action    An instance of form action.
-			 * @param \Exception|null $exception An instance of the exception.
-			 */
-			do_action( 'elementor_pro/forms/actions/after_run', $action, $exception );
 		}
-
-		$activity_log = $module->get_component( 'activity_log' );
-		if ( $activity_log ) {
-			$activity_log->run( $record, $this );
-		}
-
-		$cf7db = $module->get_component( 'cf7db' );
-		if ( $cf7db ) {
-			$cf7db->run( $record, $this );
-		}
-
-		/**
-		 * New Elementor form record.
-		 *
-		 * Fires before a new form record is sent by ajax. This hook allows
-		 * developers to add functionality before a new form record is sent.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param Form_Record  $record An instance of the form record.
-		 * @param Ajax_Handler $this   An instance of the ajax handler.
-		 */
-		do_action( 'elementor_pro/forms/new_record', $record, $this );
 
 		$this->send();
 	}
@@ -249,8 +202,8 @@ class Ajax_Handler {
 		return $this;
 	}
 
-	public function set_success( $bool ) {
-		$this->is_success = $bool;
+	public function set_success( $is_success ) {
+		$this->is_success = $is_success;
 
 		return $this;
 	}
@@ -267,11 +220,11 @@ class Ajax_Handler {
 			$this->add_error_message( $this->get_default_message( self::INVALID_FORM, $this->current_form['settings'] ) );
 		}
 
-		$post_id = Utils::_unstable_get_super_global_value( $_POST, 'post_id' ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$post_id = Utils::unstable_get_super_global_value( $_POST, 'post_id' ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 
 		$error_msg = implode( '<br>', $this->messages['error'] );
 		if ( current_user_can( 'edit_post', $post_id ) && ! empty( $this->messages['admin_error'] ) ) {
-			$this->add_admin_error_message( esc_html__( 'This message is not visible to site visitors.', 'elementor-pro' ) );
+			$this->add_admin_error_message( esc_html__( 'This message is not visible to site visitors.', 'hello-plus' ) );
 			$error_msg .= '<div class="elementor-forms-admin-errors">' . implode( '<br>', $this->messages['admin_error'] ) . '</div>';
 		}
 
@@ -299,12 +252,12 @@ class Ajax_Handler {
 		$errors_diff = array_diff( $current_errors, $errors );
 
 		if ( count( $errors_diff ) > 0 ) {
-			throw new \Exception( implode( ', ', $errors_diff ) );
+			throw new \Exception( esc_html( implode( ', ', $errors_diff ) ) );
 		}
 	}
 
 	public function __construct() {
-		add_action( 'wp_ajax_elementor_pro_forms_send_form', [ $this, 'ajax_send_form' ] );
-		add_action( 'wp_ajax_nopriv_elementor_pro_forms_send_form', [ $this, 'ajax_send_form' ] );
+		add_action( 'wp_ajax_hello_plus_forms_lite_send_form', [ $this, 'ajax_send_form' ] );
+		add_action( 'wp_ajax_nopriv_hello_plus_forms_lite_send_form', [ $this, 'ajax_send_form' ] );
 	}
 }

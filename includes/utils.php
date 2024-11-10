@@ -35,7 +35,7 @@ class Utils {
 	}
 
 	public static function get_site_domain() {
-		return str_ireplace( 'www.', '', parse_url( home_url(), PHP_URL_HOST ) );
+		return str_ireplace( 'www.', '', wp_parse_url( home_url(), PHP_URL_HOST ) );
 	}
 
 	public static function get_current_post_id() {
@@ -46,29 +46,33 @@ class Utils {
 		return get_the_ID();
 	}
 
-	public static function _unstable_get_super_global_value( $super_global, $key ) {
+	public static function unstable_get_super_global_value( $super_global, $key ) {
 		if ( ! isset( $super_global[ $key ] ) ) {
 			return null;
-		}
-
-		if ( $_FILES === $super_global ) {
-			return isset( $super_global[ $key ]['name'] ) ?
-				static::sanitize_file_name( $super_global[ $key ] ) :
-				static::sanitize_multi_upload( $super_global[ $key ] );
 		}
 
 		return wp_kses_post_deep( wp_unslash( $super_global[ $key ] ) );
 	}
 
-	private static function sanitize_multi_upload( $fields ) {
-		return array_map( function( $field ) {
-			return array_map( [ __CLASS__, 'sanitize_file_name' ], $field );
-		}, $fields );
-	}
+	public static function get_client_ip() {
+		$server_ip_keys = [
+			'HTTP_CLIENT_IP',
+			'HTTP_X_FORWARDED_FOR',
+			'HTTP_X_FORWARDED',
+			'HTTP_X_CLUSTER_CLIENT_IP',
+			'HTTP_FORWARDED_FOR',
+			'HTTP_FORWARDED',
+			'REMOTE_ADDR',
+		];
 
-	private static function sanitize_file_name( $file ) {
-		$file['name'] = sanitize_file_name( $file['name'] );
+		foreach ( $server_ip_keys as $key ) {
+			$value = static::unstable_get_super_global_value( $_SERVER, $key );
+			if ( $value && filter_var( $value, FILTER_VALIDATE_IP ) ) {
+				return $value;
+			}
+		}
 
-		return $file;
+		// Fallback local ip.
+		return '127.0.0.1';
 	}
 }

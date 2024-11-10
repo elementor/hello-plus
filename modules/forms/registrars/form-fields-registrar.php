@@ -30,11 +30,7 @@ class Form_Fields_Registrar extends Registrar {
 	 * @return void
 	 */
 	public function init() {
-		$this->register( new Fields\Time() );
-		$this->register( new Fields\Date() );
 		$this->register( new Fields\Tel() );
-		$this->register( new Fields\Number() );
 		$this->register( new Fields\Acceptance() );
-
 	}
 }

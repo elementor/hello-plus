@@ -16,7 +16,7 @@ class Acceptance extends Field_Base {
 	}
 
 	public function get_name() {
-		return esc_html__( 'Acceptance', 'elementor-pro' );
+		return esc_html__( 'Acceptance', 'hello-plus' );
 	}
 
 	public function update_controls( $widget ) {
@@ -31,7 +31,7 @@ class Acceptance extends Field_Base {
 		$field_controls = [
 			'acceptance_text' => [
 				'name' => 'acceptance_text',
-				'label' => esc_html__( 'Acceptance Text', 'elementor-pro' ),
+				'label' => esc_html__( 'Acceptance Text', 'hello-plus' ),
 				'type' => Controls_Manager::TEXTAREA,
 				'condition' => [
 					'field_type' => $this->get_type(),
@@ -42,7 +42,7 @@ class Acceptance extends Field_Base {
 			],
 			'checked_by_default' => [
 				'name' => 'checked_by_default',
-				'label' => esc_html__( 'Checked by Default', 'elementor-pro' ),
+				'label' => esc_html__( 'Checked by Default', 'hello-plus' ),
 				'type' => Controls_Manager::SWITCHER,
 				'condition' => [
 					'field_type' => $this->get_type(),

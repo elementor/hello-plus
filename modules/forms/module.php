@@ -3,19 +3,15 @@
 namespace HelloPlus\Modules\Forms;
 
 use Elementor\Controls_Manager;
-use Elementor\Settings;
-use Elementor\Core\Admin\Admin_Notices;
 use Elementor\Core\Common\Modules\Ajax\Module as Ajax;
 
 use HelloPlus\Includes\Module_Base;
 
-use Elementor\User;
 use HelloPlus\Modules\Forms\Controls\Fields_Map;
 use HelloPlus\Modules\Forms\Registrars\Form_Actions_Registrar;
 use HelloPlus\Modules\Forms\Registrars\Form_Fields_Registrar;
 use HelloPlus\Modules\Forms\Submissions\Component as Form_Submissions_Component;
 use HelloPlus\Modules\Forms\Controls\Fields_Repeater;
-use HelloPlus\Plugin;
 use HelloPlus\Modules\Forms\Submissions\AdminMenuItems\Submissions_Promotion_Menu_Item;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -44,19 +40,13 @@ class Module extends Module_Base {
 		];
 	}
 
-	public function get_widgets() {
-		return [
-			'form' => 'Form',
-		];
-	}
-
 	/**
 	 * Get the base URL for assets.
 	 *
 	 * @return string
 	 */
 	public function get_assets_base_url(): string {
-		return ELEMENTOR_PRO_URL;
+		return HELLO_PLUS_URL;
 	}
 
 	/**
@@ -69,7 +59,6 @@ class Module extends Module_Base {
 	 */
 	public function register_styles() {
 		$widget_styles = $this->get_widgets_style_list();
-
 	}
 
 	private function get_widgets_style_list(): array {
@@ -102,39 +91,11 @@ class Module extends Module_Base {
 		$controls_manager->register( new Fields_Map() );
 	}
 
-	/**
-	 * @param array $data
-	 *
-	 * @return array
-	 * @throws \Exception
-	 */
-	public function forms_panel_action_data( array $data ) {
-		$document = Utils::_unstable_get_document_for_edit( $data['editor_post_id'] );
-
-		if ( empty( $data['service'] ) ) {
-			throw new \Exception( 'Service required.' );
-		}
-
-		/** @var \HelloPlus\Modules\Forms\Classes\Integration_Base $integration */
-		$integration = $this->actions_registrar->get( $data['service'] );
-
-		if ( ! $integration ) {
-			throw new \Exception( 'Action not found.' );
-		}
-
-		return $integration->handle_panel_request( $data );
-	}
-
-	public function register_ajax_actions( Ajax $ajax ) {
-		$ajax->register_ajax_action( 'pro_forms_panel_action_data', [ $this, 'forms_panel_action_data' ] );
-	}
-
 	public function enqueue_editor_scripts() {
-
 		wp_enqueue_script(
 			'hello-plus-forms-editor',
 			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-forms-editor.js',
-			[ 'elementor-editor' ],
+			[ 'elementor-editor', 'wp-i18n' ],
 			HELLO_PLUS_VERSION,
 			true
 		);
@@ -144,7 +105,7 @@ class Module extends Module_Base {
 		wp_enqueue_script(
 			'hello-plus-forms-editor-fe',
 			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-forms-editor-fe.js',
-			[ 'elementor-frontend', 'elementor-common', 'elementor-frontend-modules' ],
+			[ 'elementor-common', 'elementor-frontend-modules', 'elementor-frontend' ],
 			HELLO_PLUS_VERSION,
 			true
 		);
@@ -181,7 +142,7 @@ class Module extends Module_Base {
 			 * @since 2.0.0
 			 *
 			 */
-			do_action( 'elementor_pro/forms/form_submitted', $this );
+			do_action( 'hello_plus/forms/form_submitted', $this );
 		}
 	}
 

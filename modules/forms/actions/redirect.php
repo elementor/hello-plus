@@ -17,14 +17,14 @@ class Redirect extends Action_Base {
 	}
 
 	public function get_label() {
-		return esc_html__( 'Redirect', 'elementor-pro' );
+		return esc_html__( 'Redirect', 'hello-plus' );
 	}
 
 	public function register_settings_section( $widget ) {
 		$widget->start_controls_section(
 			'section_redirect',
 			[
-				'label' => esc_html__( 'Redirect', 'elementor-pro' ),
+				'label' => esc_html__( 'Redirect', 'hello-plus' ),
 				'condition' => [
 					'submit_actions' => $this->get_name(),
 				],
@@ -34,9 +34,9 @@ class Redirect extends Action_Base {
 		$widget->add_control(
 			'redirect_to',
 			[
-				'label' => esc_html__( 'Redirect To', 'elementor-pro' ),
+				'label' => esc_html__( 'Redirect To', 'hello-plus' ),
 				'type' => Controls_Manager::TEXT,
-				'placeholder' => esc_html__( 'https://your-link.com', 'elementor-pro' ),
+				'placeholder' => esc_html__( 'https://your-link.com', 'hello-plus' ),
 				'ai' => [
 					'active' => false,
 				],

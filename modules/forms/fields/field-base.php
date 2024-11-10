@@ -34,7 +34,7 @@ abstract class Field_Base {
 
 	public function process_field( $field, Classes\Form_Record $record, Classes\Ajax_Handler $ajax_handler ) {}
 
-	public function add_assets_depends( $form ) {
+	public function add_assets_depends() {
 		foreach ( $this->depended_scripts as $script ) {
 			wp_enqueue_script( $script );
 		}
@@ -55,7 +55,7 @@ abstract class Field_Base {
 	}
 
 	public function add_field_type( $field_types ) {
-		if ( ! in_array( $this->get_type(), $field_types ) ) {
+		if ( ! in_array( $this->get_type(), $field_types, true ) ) {
 			$field_types[ $this->get_type() ] = $this->get_name();
 		}
 
@@ -67,27 +67,27 @@ abstract class Field_Base {
 		$this->render( $item, $item_index, $form );
 	}
 
-	public function sanitize_field( $value, $field ) {
+	public function sanitize_field( $value ) {
 		return sanitize_text_field( $value );
 	}
 
-	public function inject_field_controls( $array, $controls_to_inject ) {
-		$keys = array_keys( $array );
-		$key_index = array_search( 'required', $keys ) + 1;
+	public function inject_field_controls( $data, $controls_to_inject ) {
+		$keys = array_keys( $data );
+		$key_index = array_search( 'required', $keys, true ) + 1;
 
-		return array_merge( array_slice( $array, 0, $key_index, true ),
+		return array_merge( array_slice( $data, 0, $key_index, true ),
 			$controls_to_inject,
-			array_slice( $array, $key_index, null, true )
+			array_slice( $data, $key_index, null, true )
 		);
 	}
 
 	public function __construct() {
 		$field_type = $this->get_type();
-		add_action( "elementor_pro/forms/render_field/{$field_type}", [ $this, 'field_render' ], 10, 3 );
-		add_action( "elementor_pro/forms/validation/{$field_type}", [ $this, 'validation' ], 10, 3 );
-		add_action( "elementor_pro/forms/process/{$field_type}", [ $this, 'process_field' ], 10, 3 );
-		add_filter( 'elementor_pro/forms/field_types', [ $this, 'add_field_type' ] );
-		add_filter( "elementor_pro/forms/sanitize/{$field_type}", [ $this, 'sanitize_field' ], 10, 2 );
+		add_action( "hello_plus/forms/render_field/{$field_type}", [ $this, 'field_render' ], 10, 3 );
+		add_action( "hello_plus/forms/validation/{$field_type}", [ $this, 'validation' ], 10, 3 );
+		add_action( "hello_plus/forms/process/{$field_type}", [ $this, 'process_field' ], 10, 3 );
+		add_filter( 'hello_plus/forms/field_types', [ $this, 'add_field_type' ] );
+		add_filter( "hello_plus/forms/sanitize/{$field_type}", [ $this, 'sanitize_field' ], 10, 2 );
 		add_action( 'elementor/preview/enqueue_scripts', [ $this, 'add_preview_depends' ] );
 		if ( method_exists( $this, 'update_controls' ) ) {
 			add_action( 'elementor/element/form/section_form_fields/before_section_end', [ $this, 'update_controls' ] );

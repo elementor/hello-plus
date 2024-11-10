@@ -1,7 +1,5 @@
 import RepeaterRowView from './fields-repeater-row';
 
-console.log( 'wqeq', elementor.modules.controls.Repeater );
-
 export default class extends elementor.modules.controls.Repeater {
 	className() {
 		let classes = super.className();

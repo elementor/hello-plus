@@ -29,11 +29,11 @@ abstract class Form_Base extends Widget_Base {
 
 	public static function get_button_sizes() {
 		return [
-			'xs' => esc_html__( 'Extra Small', 'elementor-pro' ),
-			'sm' => esc_html__( 'Small', 'elementor-pro' ),
-			'md' => esc_html__( 'Medium', 'elementor-pro' ),
-			'lg' => esc_html__( 'Large', 'elementor-pro' ),
-			'xl' => esc_html__( 'Extra Large', 'elementor-pro' ),
+			'xs' => esc_html__( 'Extra Small', 'hello-plus' ),
+			'sm' => esc_html__( 'Small', 'hello-plus' ),
+			'md' => esc_html__( 'Medium', 'hello-plus' ),
+			'lg' => esc_html__( 'Large', 'hello-plus' ),
+			'xl' => esc_html__( 'Extra Large', 'hello-plus' ),
 		];
 	}
 
@@ -133,7 +133,7 @@ abstract class Form_Base extends Widget_Base {
 					$this->add_render_attribute( $option_id, 'value', $option_value );
 
 					// Support multiple selected values
-					if ( ! empty( $item['field_value'] ) && in_array( $option_value, explode( ',', $item['field_value'] ) ) ) {
+					if ( ! empty( $item['field_value'] ) && in_array( $option_value, explode( ',', $item['field_value'] ), true ) ) {
 						$this->add_render_attribute( $option_id, 'selected', 'selected' );
 					} ?>
 					<option <?php $this->print_render_attribute_string( $option_id ); ?>><?php

@@ -29,7 +29,7 @@ module.exports = function() {
 		emailFields = _.map( emailModels, function( model ) {
 			return {
 				id: model.get( 'custom_id' ),
-				label: sprintf( __( '%s Field', 'elementor-pro' ), model.get( 'field_label' ) ),
+				label: sprintf( '%s Field', model.get( 'field_label' ) ),
 			};
 		} );
 
@@ -78,7 +78,7 @@ module.exports = function() {
 	};
 
 	var init = function() {
-		elementor.hooks.addAction( 'panel/open_editor/widget/form', onPanelShow );
+		elementor.hooks.addAction( 'panel/open_editor/widget/form-lite', onPanelShow );
 	};
 
 	init();

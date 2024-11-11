@@ -58,14 +58,13 @@ class Module extends Module_Base {
 	 * @return void
 	 */
 	public function register_styles() {
-		$widget_styles = $this->get_widgets_style_list();
-	}
+		wp_enqueue_style(
+			'hello-plus-forms',
+			HELLO_PLUS_STYLE_URL . 'hello-plus-forms.css',
+			[ 'elementor-frontend' ],
+			HELLO_PLUS_VERSION
+		);
 
-	private function get_widgets_style_list(): array {
-		return [
-			'widget-form',
-			'widget-login',
-		];
 	}
 
 	public static function find_element_recursive( $elements, $form_id ) {
@@ -120,7 +119,7 @@ class Module extends Module_Base {
 		add_action( 'elementor/frontend/after_register_scripts', [ $this, 'register_scripts' ] );
 		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_styles' ] );
 		add_action( 'elementor/controls/register', [ $this, 'register_controls' ] );
-		add_action( 'elementor/ajax/register_actions', [ $this, 'register_ajax_actions' ] );
+		// add_action( 'elementor/ajax/register_actions', [ $this, 'register_ajax_actions' ] );
 		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'enqueue_editor_scripts' ] );
 
 		// Initialize registrars.

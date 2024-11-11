@@ -37,7 +37,7 @@ abstract class Form_Base extends Widget_Base {
 		];
 	}
 
-	protected function make_textarea_field( $item, $item_index ) {
+	public function make_textarea_field( $item, $item_index ) {
 		$this->add_render_attribute( 'textarea' . $item_index, [
 			'class' => [
 				'elementor-field-textual',
@@ -63,7 +63,7 @@ abstract class Form_Base extends Widget_Base {
 		return '<textarea ' . $this->get_render_attribute_string( 'textarea' . $item_index ) . '>' . $value . '</textarea>';
 	}
 
-	protected function make_select_field( $item, $i ) {
+	public function make_select_field( $item, $i ) {
 		$this->add_render_attribute(
 			[
 				'select-wrapper' . $i => [
@@ -188,15 +188,16 @@ abstract class Form_Base extends Widget_Base {
 		return $html;
 	}
 
-	protected function form_fields_render_attributes( $i, $instance, $item ) {
+	public function form_fields_render_attributes( $i, $instance, $item ) {
 		$this->add_render_attribute(
 			[
 				'field-group' . $i => [
 					'class' => [
-						'elementor-field-type-' . $item['field_type'],
-						'elementor-field-group',
-						'elementor-column',
-						'elementor-field-group-' . $item['custom_id'],
+						'ehp-form__field-group',
+						'is-field-type-' . $item['field_type'],
+						// 'elementor-field-group',
+						// 'elementor-column',
+						'is-field-group-' . $item['custom_id'],
 					],
 				],
 				'input' . $i => [
@@ -204,14 +205,14 @@ abstract class Form_Base extends Widget_Base {
 					'name' => $this->get_attribute_name( $item ),
 					'id' => $this->get_attribute_id( $item ),
 					'class' => [
-						'elementor-field',
-						'elementor-size-' . $item['input_size'],
+						'ehp-form__field',
+						'has-size-' . $item['input_size'],
 						empty( $item['css_classes'] ) ? '' : esc_attr( $item['css_classes'] ),
 					],
 				],
 				'label' . $i => [
 					'for' => $this->get_attribute_id( $item ),
-					'class' => 'elementor-field-label',
+					'class' => 'ehp-form__field-label',
 				],
 			]
 		);
@@ -220,18 +221,18 @@ abstract class Form_Base extends Widget_Base {
 			$item['width'] = '100';
 		}
 
-		$this->add_render_attribute( 'field-group' . $i, 'class', 'elementor-col-' . $item['width'] );
-
-		if ( ! empty( $item['width_tablet'] ) ) {
-			$this->add_render_attribute( 'field-group' . $i, 'class', 'elementor-md-' . $item['width_tablet'] );
-		}
+		$this->add_render_attribute( 'field-group' . $i, 'class', 'has-width-' . $item['width'] );
 
 		if ( $item['allow_multiple'] ) {
 			$this->add_render_attribute( 'field-group' . $i, 'class', 'elementor-field-type-' . $item['field_type'] . '-multiple' );
 		}
 
+		if ( ! empty( $item['width_tablet'] ) ) {
+			$this->add_render_attribute( 'field-group' . $i, 'class', 'has-width-md-' . $item['width_tablet'] );
+		}
+
 		if ( ! empty( $item['width_mobile'] ) ) {
-			$this->add_render_attribute( 'field-group' . $i, 'class', 'elementor-sm-' . $item['width_mobile'] );
+			$this->add_render_attribute( 'field-group' . $i, 'class', 'has-width-sm-' . $item['width_mobile'] );
 		}
 
 		// Allow zero as placeholder.
@@ -248,7 +249,7 @@ abstract class Form_Base extends Widget_Base {
 		}
 
 		if ( ! empty( $item['required'] ) ) {
-			$class = 'elementor-field-required';
+			$class = 'is-field-required';
 			if ( ! empty( $instance['mark_required'] ) ) {
 				$class .= ' elementor-mark-required';
 			}

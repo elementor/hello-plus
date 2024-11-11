@@ -4,16 +4,17 @@ namespace HelloPlus\Modules\Forms\Widgets;
 use Elementor\Controls_Manager;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Typography;
-use Elementor\Icons_Manager;
 use Elementor\Modules\DynamicTags\Module as TagsModule;
 use Elementor\Repeater;
 
-use HelloPlus\Includes\Utils;
 use HelloPlus\Modules\Forms\Classes\Ajax_Handler;
 use HelloPlus\Modules\Forms\Classes\Form_Base;
+use HelloPlus\Modules\Forms\Classes\Render\Widget_Form_Render;
 use HelloPlus\Modules\Forms\Controls\Fields_Repeater;
+use HelloPlus\Includes\Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -55,7 +56,85 @@ class Form extends Form_Base {
 		return [ 'widget-form' ];
 	}
 
+	protected function render(): void {
+		$render_strategy = new Widget_Form_Render( $this );
+
+		$render_strategy->render();
+	}
+
 	protected function register_controls() {
+		$this->add_content_text_section();
+		$this->add_content_form_fields_section();
+		$this->add_content_button_section();
+		$this->add_content_actions_after_submit_section();
+		$this->add_content_additional_options_section();
+
+		$this->add_style_text_section();
+		$this->add_style_form_section();
+		$this->add_style_fields_section();
+		$this->add_style_buttons_section();
+		$this->add_style_messages_section();
+		$this->add_style_box_section();
+	}
+
+	protected function add_content_text_section(): void {
+		$this->start_controls_section(
+			'section_text',
+			[
+				'label' => esc_html__( 'Text', 'hello-plus' ),
+			]
+		);
+
+		$this->add_control(
+			'text_heading',
+			[
+				'label' => esc_html__( 'Heading', 'hello-plus' ),
+				'type' => Controls_Manager::TEXTAREA,
+				'default' => esc_html__( 'Contact Us', 'hello-plus' ),
+				'placeholder' => esc_html__( 'Add your text here', 'hello-plus' ),
+				'dynamic' => [
+					'active' => true,
+				],
+			]
+		);
+
+		$this->add_control(
+			'text_heading_tag',
+			[
+				'label' => esc_html__( 'Heading HTML Tag', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => 'H1',
+					'h2' => 'H2',
+					'h3' => 'H3',
+					'h4' => 'H4',
+					'h5' => 'H5',
+					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'p' => 'p',
+				],
+				'default' => 'h2',
+			]
+		);
+
+		$this->add_control(
+			'text_description',
+			[
+				'label' => esc_html__( 'Description', 'hello-plus' ),
+				'type' => Controls_Manager::TEXTAREA,
+				'default' => esc_html__( 'Fill out the form below and we will contact you as soon as possible', 'hello-plus' ),
+				'placeholder' => esc_html__( 'Add your text here', 'hello-plus' ),
+				'dynamic' => [
+					'active' => true,
+				],
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
+	protected function add_content_form_fields_section(): void {
 		$repeater = new Repeater();
 
 		$field_types = [
@@ -197,7 +276,6 @@ class Form extends Form_Base {
 				'label' => esc_html__( 'Column Width', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'' => esc_html__( 'Default', 'hello-plus' ),
 					'100' => '100%',
 					'50' => '50%',
 					'33' => '33%',
@@ -409,24 +487,10 @@ class Form extends Form_Base {
 			]
 		);
 
-		$this->add_control(
-			'label_position',
-			[
-				'label' => esc_html__( 'Label Position', 'hello-plus' ),
-				'type' => Controls_Manager::HIDDEN,
-				'options' => [
-					'above' => esc_html__( 'Above', 'hello-plus' ),
-					'inline' => esc_html__( 'Inline', 'hello-plus' ),
-				],
-				'default' => 'above',
-				'condition' => [
-					'show_labels!' => '',
-				],
-			]
-		);
-
 		$this->end_controls_section();
+	}
 
+	protected function add_content_button_section(): void {
 		$this->start_controls_section(
 			'section_buttons',
 			[
@@ -569,7 +633,9 @@ class Form extends Form_Base {
 		);
 
 		$this->end_controls_section();
+	}
 
+	protected function add_content_actions_after_submit_section(): void {
 		$this->start_controls_section(
 			'section_integration',
 			[
@@ -809,7 +875,9 @@ class Form extends Form_Base {
 		);
 
 		$this->end_controls_section();
+	}
 
+	protected function add_content_additional_options_section(): void {
 		$this->start_controls_section(
 			'section_form_options',
 			[
@@ -939,7 +1007,113 @@ class Form extends Form_Base {
 		);
 
 		$this->end_controls_section();
+	}
 
+	protected function add_style_text_section(): void {
+		$this->start_controls_section(
+			'section_text_style',
+			[
+				'label' => esc_html__( 'Text', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'text_align',
+			[
+				'label' => esc_html__( 'Align', 'hello-plus' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'start' => [
+						'title' => esc_html__( 'Left', 'hello-plus' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'hello-plus' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'end' => [
+						'title' => esc_html__( 'Right', 'hello-plus' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'default' => 'center',
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .elementor-field-group > label, {{WRAPPER}} .elementor-field-group > .elementor-field' => 'text-align: {{VALUE}};',
+				// ],
+			]
+		);
+
+		$this->add_control(
+			'heading_text',
+			[
+				'label' => esc_html__( 'Heading', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+			]
+		);
+
+		$this->add_control(
+			'heading_color',
+			[
+				'label' => esc_html__( 'Text Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .elementor-field-group > label' => 'color: {{VALUE}};',
+				// ],
+				'global' => [
+					'default' => Global_Colors::COLOR_PRIMARY,
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'heading_typography',
+				// 'selector' => '{{WRAPPER}} .elementor-field-group > label',
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+			]
+		);
+
+		$this->add_control(
+			'heading_description',
+			[
+				'label' => esc_html__( 'Description', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+			]
+		);
+
+		$this->add_control(
+			'description_color',
+			[
+				'label' => esc_html__( 'Text Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .elementor-field-group > .elementor-field-description' => 'color: {{VALUE}};',
+				// ],
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'description_typography',
+				// 'selector' => '{{WRAPPER}} .elementor-field-group > .elementor-field-description',
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_TEXT,
+				],
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
+	protected function add_style_form_section(): void {
 		$this->start_controls_section(
 			'section_form_style',
 			[
@@ -969,8 +1143,8 @@ class Form extends Form_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .elementor-field-group' => 'padding-right: calc( {{SIZE}}{{UNIT}}/2 ); padding-left: calc( {{SIZE}}{{UNIT}}/2 );',
-					'{{WRAPPER}} .elementor-form-fields-wrapper' => 'margin-left: calc( -{{SIZE}}{{UNIT}}/2 ); margin-right: calc( -{{SIZE}}{{UNIT}}/2 );',
+					// '{{WRAPPER}} .elementor-field-group' => 'padding-right: calc( {{SIZE}}{{UNIT}}/2 ); padding-left: calc( {{SIZE}}{{UNIT}}/2 );',
+					// '{{WRAPPER}} .elementor-form-fields-wrapper' => 'margin-left: calc( -{{SIZE}}{{UNIT}}/2 ); margin-right: calc( -{{SIZE}}{{UNIT}}/2 );',
 				],
 			]
 		);
@@ -996,9 +1170,9 @@ class Form extends Form_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .elementor-field-group' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .elementor-field-group.recaptcha_v3-bottomleft, {{WRAPPER}} .elementor-field-group.recaptcha_v3-bottomright' => 'margin-bottom: 0;',
-					'{{WRAPPER}} .elementor-form-fields-wrapper' => 'margin-bottom: -{{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}} .elementor-field-group' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}} .elementor-field-group.recaptcha_v3-bottomleft, {{WRAPPER}} .elementor-field-group.recaptcha_v3-bottomright' => 'margin-bottom: 0;',
+					// '{{WRAPPER}} .elementor-form-fields-wrapper' => 'margin-bottom: -{{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -1033,12 +1207,7 @@ class Form extends Form_Base {
 					],
 				],
 				'selectors' => [
-					'body.rtl {{WRAPPER}} .elementor-labels-inline .elementor-field-group > label' => 'padding-left: {{SIZE}}{{UNIT}};',
-					// for the label position = inline option
-					'body:not(.rtl) {{WRAPPER}} .elementor-labels-inline .elementor-field-group > label' => 'padding-right: {{SIZE}}{{UNIT}};',
-					// for the label position = inline option
-					'body {{WRAPPER}} .elementor-labels-above .elementor-field-group > label' => 'padding-bottom: {{SIZE}}{{UNIT}};',
-					// for the label position = above option
+					// Add selectors
 				],
 			]
 		);
@@ -1049,7 +1218,7 @@ class Form extends Form_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .elementor-field-group > label, {{WRAPPER}} .elementor-field-subgroup label' => 'color: {{VALUE}};',
+					// '{{WRAPPER}} .elementor-field-group > label, {{WRAPPER}} .elementor-field-subgroup label' => 'color: {{VALUE}};',
 				],
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
@@ -1064,7 +1233,7 @@ class Form extends Form_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
-					'{{WRAPPER}} .elementor-mark-required .elementor-field-label:after' => 'color: {{COLOR}};',
+					// '{{WRAPPER}} .elementor-mark-required .elementor-field-label:after' => 'color: {{COLOR}};',
 				],
 				'condition' => [
 					'mark_required' => 'yes',
@@ -1076,7 +1245,7 @@ class Form extends Form_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'label_typography',
-				'selector' => '{{WRAPPER}} .elementor-field-group > label',
+				// 'selector' => '{{WRAPPER}} .elementor-field-group > label',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
@@ -1113,7 +1282,7 @@ class Form extends Form_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .elementor-field-type-html' => 'padding-bottom: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}} .elementor-field-type-html' => 'padding-bottom: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -1124,7 +1293,7 @@ class Form extends Form_Base {
 				'label' => esc_html__( 'Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .elementor-field-type-html' => 'color: {{VALUE}};',
+					// '{{WRAPPER}} .elementor-field-type-html' => 'color: {{VALUE}};',
 				],
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
@@ -1136,7 +1305,7 @@ class Form extends Form_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'html_typography',
-				'selector' => '{{WRAPPER}} .elementor-field-type-html',
+				// 'selector' => '{{WRAPPER}} .elementor-field-type-html',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
@@ -1144,11 +1313,13 @@ class Form extends Form_Base {
 		);
 
 		$this->end_controls_section();
+	}
 
+	protected function add_style_fields_section(): void {
 		$this->start_controls_section(
 			'section_field_style',
 			[
-				'label' => esc_html__( 'Field', 'hello-plus' ),
+				'label' => esc_html__( 'Fields', 'hello-plus' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -1159,7 +1330,7 @@ class Form extends Form_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .elementor-field-group .elementor-field' => 'color: {{VALUE}};',
+					// '{{WRAPPER}} .elementor-field-group .elementor-field' => 'color: {{VALUE}};',
 				],
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
@@ -1171,7 +1342,7 @@ class Form extends Form_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'field_typography',
-				'selector' => '{{WRAPPER}} .elementor-field-group .elementor-field, {{WRAPPER}} .elementor-field-subgroup label',
+				// 'selector' => '{{WRAPPER}} .elementor-field-group .elementor-field, {{WRAPPER}} .elementor-field-subgroup label',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
@@ -1185,10 +1356,51 @@ class Form extends Form_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#ffffff',
 				'selectors' => [
-					'{{WRAPPER}} .elementor-field-group:not(.elementor-field-type-upload) .elementor-field:not(.elementor-select-wrapper)' => 'background-color: {{VALUE}};',
-					'{{WRAPPER}} .elementor-field-group .elementor-select-wrapper select' => 'background-color: {{VALUE}};',
+					// '{{WRAPPER}} .elementor-field-group:not(.elementor-field-type-upload) .elementor-field:not(.elementor-select-wrapper)' => 'background-color: {{VALUE}};',
+					// '{{WRAPPER}} .elementor-field-group .elementor-select-wrapper select' => 'background-color: {{VALUE}};',
 				],
 				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'field_border_switcher',
+			[
+				'label' => esc_html__( 'Border', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'options' => [
+					'yes' => esc_html__( 'Yes', 'hello-plus' ),
+					'no' => esc_html__( 'No', 'hello-plus' ),
+				],
+				'default' => 'yes',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'field_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
+					],
+				],
+				'selectors' => [
+					// '{{WRAPPER}} .elementor-field-group:not(.elementor-field-type-upload) .elementor-field:not(.elementor-select-wrapper)' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					// '{{WRAPPER}} .elementor-field-group .elementor-select-wrapper select' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'field_border_switcher' => 'yes',
+				],
 			]
 		);
 
@@ -1198,48 +1410,57 @@ class Form extends Form_Base {
 				'label' => esc_html__( 'Border Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .elementor-field-group:not(.elementor-field-type-upload) .elementor-field:not(.elementor-select-wrapper)' => 'border-color: {{VALUE}};',
-					'{{WRAPPER}} .elementor-field-group .elementor-select-wrapper select' => 'border-color: {{VALUE}};',
-					'{{WRAPPER}} .elementor-field-group .elementor-select-wrapper::before' => 'color: {{VALUE}};',
+					// '{{WRAPPER}} .elementor-field-group:not(.elementor-field-type-upload) .elementor-field:not(.elementor-select-wrapper)' => 'border-color: {{VALUE}};',
+					// '{{WRAPPER}} .elementor-field-group .elementor-select-wrapper select' => 'border-color: {{VALUE}};',
+					// '{{WRAPPER}} .elementor-field-group .elementor-select-wrapper::before' => 'color: {{VALUE}};',
 				],
 				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'field_border_width',
-			[
-				'label' => esc_html__( 'Border Width', 'hello-plus' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'placeholder' => '1',
-				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
-				'selectors' => [
-					'{{WRAPPER}} .elementor-field-group:not(.elementor-field-type-upload) .elementor-field:not(.elementor-select-wrapper)' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .elementor-field-group .elementor-select-wrapper select' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				'condition' => [
+					'field_border_switcher' => 'yes',
 				],
 			]
 		);
 
 		$this->add_control(
-			'field_border_radius',
+			'fields_shape',
 			[
-				'label' => esc_html__( 'Border Radius', 'hello-plus' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
+				'label' => esc_html__( 'Shape', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'default' => 'Default',
+					'sharp' => 'Sharp',
+					'rounded' => 'Rounded',
+					'round' => 'Round',
+				],
+				'default' => 'default',
 				'selectors' => [
-					'{{WRAPPER}} .elementor-field-group:not(.elementor-field-type-upload) .elementor-field:not(.elementor-select-wrapper)' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .elementor-field-group .elementor-select-wrapper select' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					// '{{WRAPPER}} .ehp-cta' => '--cta-text-heading-width: var(--cta-text-{{VALUE}}-heading); --cta-text-description-width: var(--cta-text-{{VALUE}}-description);',
 				],
 			]
 		);
 
 		$this->end_controls_section();
+	}
 
+	protected function add_style_buttons_section(): void {
 		$this->start_controls_section(
 			'section_button_style',
 			[
-				'label' => esc_html__( 'Buttons', 'hello-plus' ),
+				'label' => esc_html__( 'Button', 'hello-plus' ),
 				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'button_type',
+			[
+				'label' => esc_html__( 'Type', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'button' => esc_html__( 'Button', 'hello-plus' ),
+					'link' => esc_html__( 'Link', 'hello-plus' ),
+				],
+				'default' => 'button',
 			]
 		);
 
@@ -1271,37 +1492,6 @@ class Form extends Form_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'button_content_align',
-			[
-				'label' => esc_html__( 'Alignment', 'hello-plus' ),
-				'type' => Controls_Manager::CHOOSE,
-				'options' => [
-					'start'    => [
-						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => "eicon-text-align-{$start}",
-					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'hello-plus' ),
-						'icon' => 'eicon-text-align-center',
-					],
-					'end' => [
-						'title' => esc_html__( 'End', 'hello-plus' ),
-						'icon' => "eicon-text-align-{$end}",
-					],
-					'space-between' => [
-						'title' => esc_html__( 'Space between', 'hello-plus' ),
-						'icon' => 'eicon-text-align-justify',
-					],
-				],
-				'default' => '',
-				'selectors' => [
-					'{{WRAPPER}} .elementor-button span' => 'justify-content: {{VALUE}};',
-				],
-				'condition' => [ 'button_align' => 'stretch' ],
-			]
-		);
-
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
@@ -1310,16 +1500,6 @@ class Form extends Form_Base {
 					'default' => Global_Typography::TYPOGRAPHY_ACCENT,
 				],
 				'selector' => '{{WRAPPER}} .elementor-button',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Border::get_type(), [
-				'name' => 'button_border',
-				'selector' => '{{WRAPPER}} .elementor-button',
-				'exclude' => [
-					'color',
-				],
 			]
 		);
 
@@ -1333,106 +1513,59 @@ class Form extends Form_Base {
 		);
 
 		$this->add_control(
-			'heading_next_submit_button',
-			[
-				'label' => esc_html__( 'Next & Submit Button', 'hello-plus' ),
-				'type' => Controls_Manager::HEADING,
-			]
-		);
-
-		$this->add_control(
-			'button_background_color',
-			[
-				'label' => esc_html__( 'Background Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_ACCENT,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .e-form__buttons__wrapper__button-next' => 'background-color: {{VALUE}};',
-					'{{WRAPPER}} .elementor-button[type="submit"]' => 'background-color: {{VALUE}};',
-				],
-			]
-		);
-
-		$this->add_control(
 			'button_text_color',
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#ffffff',
-				'selectors' => [
-					'{{WRAPPER}} .e-form__buttons__wrapper__button-next' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .elementor-button[type="submit"]' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .elementor-button[type="submit"] svg *' => 'fill: {{VALUE}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'button_border_color',
-			[
-				'label' => esc_html__( 'Border Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '',
-				'selectors' => [
-					'{{WRAPPER}} .e-form__buttons__wrapper__button-next' => 'border-color: {{VALUE}};',
-					'{{WRAPPER}} .elementor-button[type="submit"]' => 'border-color: {{VALUE}};',
-				],
-				'condition' => [
-					'button_border_border!' => '',
-				],
-			]
-		);
-
-		$this->add_control(
-			'heading_previous_button',
-			[
-				'label' => esc_html__( 'Previous Button', 'hello-plus' ),
-				'type' => Controls_Manager::HEADING,
-			]
-		);
-
-		$this->add_control(
-			'previous_button_background_color',
-			[
-				'label' => esc_html__( 'Background Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
+				// 'default' => '#ffffff',
 				'global' => [
-					'default' => Global_Colors::COLOR_ACCENT,
+					'default' => Global_Colors::COLOR_SECONDARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .e-form__buttons__wrapper__button-previous' => 'background-color: {{VALUE}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'previous_button_text_color',
-			[
-				'label' => esc_html__( 'Text Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#ffffff',
-				'selectors' => [
-					'{{WRAPPER}} .e-form__buttons__wrapper__button-previous' => 'color: {{VALUE}};',
+					// '{{WRAPPER}} .elementor-button' => 'color: {{VALUE}};',
+					// '{{WRAPPER}} .elementor-button svg *' => 'fill: {{VALUE}};',
 				],
 			]
 		);
 
-		$this->add_control(
-			'previous_button_border_color',
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
 			[
-				'label' => esc_html__( 'Border Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '',
-				'selectors' => [
-					'{{WRAPPER}} .e-form__buttons__wrapper__button-previous' => 'border-color: {{VALUE}};',
+				'name' => 'button_background',
+				'types' => [ 'classic', 'gradient' ],
+				'exclude' => [ 'image' ],
+				'selector' => '{{WRAPPER}} .ehp-form__button',
+				'fields_options' => [
+					'background' => [
+						'default' => 'classic',
+					],
+					'color' => [
+						'global' => [
+							'default' => Global_Colors::COLOR_ACCENT,
+						],
+					],
 				],
 				'condition' => [
-					'button_border_border!' => '',
+					'button_type' => 'button',
 				],
 			]
 		);
+
+
+		// $this->add_control(
+		// 	'button_background_color',
+		// 	[
+		// 		'label' => esc_html__( 'Background Color', 'hello-plus' ),
+		// 		'type' => Controls_Manager::COLOR,
+		// 		'global' => [
+		// 			'default' => Global_Colors::COLOR_ACCENT,
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .e-form__buttons__wrapper__button-next' => 'background-color: {{VALUE}};',
+		// 			'{{WRAPPER}} .elementor-button[type="submit"]' => 'background-color: {{VALUE}};',
+		// 		],
+		// 	]
+		// );
 
 		$this->end_controls_tab();
 
@@ -1444,117 +1577,40 @@ class Form extends Form_Base {
 		);
 
 		$this->add_control(
-			'heading_next_submit_button_hover',
-			[
-				'label' => esc_html__( 'Next & Submit Button', 'hello-plus' ),
-				'type' => Controls_Manager::HEADING,
-			]
-		);
-
-		$this->add_control(
-			'button_background_hover_color',
-			[
-				'label' => esc_html__( 'Background Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '',
-				'selectors' => [
-					'{{WRAPPER}} .e-form__buttons__wrapper__button-next:hover' => 'background-color: {{VALUE}};',
-					'{{WRAPPER}} .elementor-button[type="submit"]:hover' => 'background-color: {{VALUE}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'button_hover_color',
+			'button_text_color_hover',
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#ffffff',
+				// 'default' => '#ffffff',
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
 				'selectors' => [
-					'{{WRAPPER}} .e-form__buttons__wrapper__button-next:hover' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .elementor-button[type="submit"]:hover' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .elementor-button[type="submit"]:hover svg *' => 'fill: {{VALUE}};',
+					// '{{WRAPPER}} .elementor-button' => 'color: {{VALUE}};',
+					// '{{WRAPPER}} .elementor-button svg *' => 'fill: {{VALUE}};',
 				],
 			]
 		);
 
-		$this->add_control(
-			'button_hover_border_color',
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
 			[
-				'label' => esc_html__( 'Border Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '',
-				'selectors' => [
-					'{{WRAPPER}} .e-form__buttons__wrapper__button-next:hover' => 'border-color: {{VALUE}};',
-					'{{WRAPPER}} .elementor-button[type="submit"]:hover' => 'border-color: {{VALUE}};',
+				'name' => 'button_background_hover',
+				'types' => [ 'classic', 'gradient' ],
+				'exclude' => [ 'image' ],
+				'selector' => '{{WRAPPER}} .ehp-form__button:hover, {{WRAPPER}} .ehp-form__button:focus',
+				'fields_options' => [
+					'background' => [
+						'default' => 'classic',
+					],
+					'color' => [
+						'global' => [
+							'default' => Global_Colors::COLOR_ACCENT,
+						],
+					],
 				],
 				'condition' => [
-					'button_border_border!' => '',
-				],
-			]
-		);
-
-		$this->add_control(
-			'heading_previous_button_hover',
-			[
-				'label' => esc_html__( 'Previous Button', 'hello-plus' ),
-				'type' => Controls_Manager::HEADING,
-			]
-		);
-
-		$this->add_control(
-			'previous_button_background_color_hover',
-			[
-				'label' => esc_html__( 'Background Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '',
-				'selectors' => [
-					'{{WRAPPER}} .e-form__buttons__wrapper__button-previous:hover' => 'background-color: {{VALUE}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'previous_button_text_color_hover',
-			[
-				'label' => esc_html__( 'Text Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#ffffff',
-				'selectors' => [
-					'{{WRAPPER}} .e-form__buttons__wrapper__button-previous:hover' => 'color: {{VALUE}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'previous_button_border_color_hover',
-			[
-				'label' => esc_html__( 'Border Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '',
-				'selectors' => [
-					'{{WRAPPER}} .e-form__buttons__wrapper__button-previous:hover' => 'border-color: {{VALUE}};',
-				],
-				'condition' => [
-					'button_border_border!' => '',
-				],
-			]
-		);
-
-		$this->add_control(
-			'hover_transition_duration',
-			[
-				'label' => esc_html__( 'Transition Duration', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 's', 'ms', 'custom' ],
-				'default' => [
-					'unit' => 'ms',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .e-form__buttons__wrapper__button-previous' => 'transition-duration: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .e-form__buttons__wrapper__button-next' => 'transition-duration: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .elementor-button[type="submit"] svg *' => 'transition-duration: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .elementor-button[type="submit"]' => 'transition-duration: {{SIZE}}{{UNIT}};',
+					'button_type' => 'button',
 				],
 			]
 		);
@@ -1572,15 +1628,34 @@ class Form extends Form_Base {
 		$this->end_controls_tabs();
 
 		$this->add_control(
-			'button_border_radius',
+			'button_border_switcher',
 			[
-				'label' => esc_html__( 'Border Radius', 'hello-plus' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
-				'selectors' => [
-					'{{WRAPPER}} .elementor-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				'label' => esc_html__( 'Border', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'options' => [
+					'yes' => esc_html__( 'Yes', 'hello-plus' ),
+					'no' => esc_html__( 'No', 'hello-plus' ),
 				],
+				'default' => 'yes',
 				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'button_shape',
+			[
+				'label' => esc_html__( 'Shape', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'default' => 'Default',
+					'sharp' => 'Sharp',
+					'rounded' => 'Rounded',
+					'round' => 'Round',
+				],
+				'default' => 'default',
+				'selectors' => [
+					// '{{WRAPPER}} .ehp-cta' => '--cta-text-heading-width: var(--cta-text-{{VALUE}}-heading); --cta-text-description-width: var(--cta-text-{{VALUE}}-description);',
+				],
 			]
 		);
 
@@ -1593,11 +1668,14 @@ class Form extends Form_Base {
 				'selectors' => [
 					'{{WRAPPER}} .elementor-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
+				'separator' => 'before',
 			]
 		);
 
 		$this->end_controls_section();
+	}
 
+	protected function add_style_messages_section(): void {
 		$this->start_controls_section(
 			'section_messages_style',
 			[
@@ -1653,433 +1731,91 @@ class Form extends Form_Base {
 		$this->end_controls_section();
 	}
 
-	private function render_icon_with_fallback( $settings ) {
-		$migrated = isset( $settings['__fa4_migrated']['selected_button_icon'] );
-		$is_new = empty( $settings['button_icon'] ) && Icons_Manager::is_migration_allowed();
-
-		if ( $is_new || $migrated ) {
-			Icons_Manager::render_icon( $settings['selected_button_icon'], [ 'aria-hidden' => 'true' ] );
-		} else {
-			?><i class="<?php echo esc_attr( $settings['button_icon'] ); ?>" aria-hidden="true"></i><?php
-		}
-	}
-
-	protected function render() {
-		$instance = $this->get_settings_for_display();
-
-		if ( ! Utils::elementor()->editor->is_edit_mode() ) {
-			/**
-			 * Elementor form pre render.
-			 *
-			 * Fires before the from is rendered in the frontend. This hook allows
-			 * developers to add functionality before the from is rendered.
-			 *
-			 * @since 2.4.0
-			 *
-			 * @param array $instance Current form settings.
-			 * @param Form  $this     An instance of the form.
-			 */
-			do_action( 'elementor-pro/forms/pre_render', $instance, $this );
-		}
-
-		$this->add_render_attribute(
+	protected function add_style_box_section(): void {
+		$this->start_controls_section(
+			'section_box_style',
 			[
-				'wrapper' => [
-					'class' => [
-						'elementor-form-fields-wrapper',
-						'elementor-labels-' . $instance['label_position'],
+				'label' => esc_html__( 'Box', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'box_heading',
+			[
+				'label' => esc_html__( 'Background', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
+			[
+				'name' => 'box_background',
+				'types' => [ 'classic', 'gradient' ],
+				'selector' => '{{WRAPPER}} .ehp-form',
+				'fields_options' => [
+					'background' => [
+						'default' => 'classic',
 					],
-				],
-				'submit-group' => [
-					'class' => [
-						'elementor-field-group',
-						'elementor-column',
-						'elementor-field-type-submit',
-					],
-				],
-				'button' => [
-					'class' => 'elementor-button',
-					'type' => 'submit',
-				],
-				'button-content-wrapper' => [
-					'class' => 'elementor-button-content-wrapper',
-				],
-				'button-icon' => [
-					'class' => 'elementor-button-icon',
-				],
-				'button-text' => [
-					'class' => 'elementor-button-text',
 				],
 			]
 		);
 
-		if ( empty( $instance['button_width'] ) ) {
-			$instance['button_width'] = '100';
-		}
+		$this->add_responsive_control(
+			'content_width',
+			[
+				'label' => esc_html__( 'Content Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 1600,
+					],
+					'%' => [
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'size' => 640,
+					'unit' => 'px',
+				],
+				'tablet_default' => [
+					'size' => 640,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 320,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-content-width: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
 
-		$this->add_render_attribute( 'submit-group', 'class', 'elementor-col-' . $instance['button_width'] . ' e-form__buttons' );
 
-		if ( ! empty( $instance['button_width_tablet'] ) ) {
-			$this->add_render_attribute( 'submit-group', 'class', 'elementor-md-' . $instance['button_width_tablet'] );
-		}
+		$this->add_responsive_control(
+			'box_padding',
+			[
+				'label' => esc_html__( 'Padding', 'hello-plus' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em', 'rem' ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-box-padding-block-end: {{BOTTOM}}{{UNIT}}; --cta-box-padding-block-start: {{TOP}}{{UNIT}}; --cta-box-padding-inline-end: {{RIGHT}}{{UNIT}}; --cta-box-padding-inline-start: {{LEFT}}{{UNIT}};',
+				],
+				'default' => [
+					'top' => '60',
+					'right' => '60',
+					'bottom' => '60',
+					'left' => '60',
+					'unit' => 'px',
+				],
+				'separator' => 'before',
+			]
+		);
 
-		if ( ! empty( $instance['button_width_mobile'] ) ) {
-			$this->add_render_attribute( 'submit-group', 'class', 'elementor-sm-' . $instance['button_width_mobile'] );
-		}
-
-		if ( ! empty( $instance['button_size'] ) ) {
-			$this->add_render_attribute( 'button', 'class', 'elementor-size-' . $instance['button_size'] );
-		}
-
-		if ( ! empty( $instance['button_type'] ) ) {
-			$this->add_render_attribute( 'button', 'class', 'elementor-button-' . $instance['button_type'] );
-		}
-
-		if ( $instance['button_hover_animation'] ) {
-			$this->add_render_attribute( 'button', 'class', 'elementor-animation-' . $instance['button_hover_animation'] );
-		}
-
-		if ( ! empty( $instance['form_id'] ) ) {
-			$this->add_render_attribute( 'form', 'id', $instance['form_id'] );
-		}
-
-		if ( ! empty( $instance['form_name'] ) ) {
-			$this->add_render_attribute( 'form', 'name', $instance['form_name'] );
-		}
-
-		if ( ! empty( $instance['button_css_id'] ) ) {
-			$this->add_render_attribute( 'button', 'id', $instance['button_css_id'] );
-		}
-
-		$referer_title = trim( wp_title( '', false ) );
-
-		if ( ! $referer_title && is_home() ) {
-			$referer_title = get_option( 'blogname' );
-		}
-
-		?>
-		<form class="elementor-form-lite" method="post" <?php $this->print_render_attribute_string( 'form' ); ?>>
-			<input type="hidden" name="post_id" value="<?php // PHPCS - the method Utils::get_current_post_id is safe.
-				echo Utils::get_current_post_id(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"/>
-			<input type="hidden" name="form_id" value="<?php echo esc_attr( $this->get_id() ); ?>"/>
-			<input type="hidden" name="referer_title" value="<?php echo esc_attr( $referer_title ); ?>" />
-
-			<?php if ( is_singular() ) {
-				// `queried_id` may be different from `post_id` on Single theme builder templates.
-				?>
-				<input type="hidden" name="queried_id" value="<?php echo (int) get_the_ID(); ?>"/>
-			<?php } ?>
-
-			<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
-				<?php
-				foreach ( $instance['form_fields'] as $item_index => $item ) :
-					$item['input_size'] = $instance['input_size'];
-					$this->form_fields_render_attributes( $item_index, $instance, $item );
-
-					$field_type = $item['field_type'];
-
-					/**
-					 * Render form field.
-					 *
-					 * Filters the field rendered by Elementor forms.
-					 *
-					 * @since 1.0.0
-					 *
-					 * @param array $item       The field value.
-					 * @param int   $item_index The field index.
-					 * @param Form  $this       An instance of the form.
-					 */
-					$item = apply_filters( 'hello_plus/forms/render/item', $item, $item_index, $this );
-
-					/**
-					 * Render form field.
-					 *
-					 * Filters the field rendered by Elementor forms.
-					 *
-					 * The dynamic portion of the hook name, `$field_type`, refers to the field type.
-					 *
-					 * @since 1.0.0
-					 *
-					 * @param array $item       The field value.
-					 * @param int   $item_index The field index.
-					 * @param Form  $this       An instance of the form.
-					 */
-					$item = apply_filters( "hello_plus/forms/render/item/{$field_type}", $item, $item_index, $this );
-
-					$print_label = ! in_array( $item['field_type'], [ 'hidden', 'html', 'step' ], true );
-					?>
-				<div <?php $this->print_render_attribute_string( 'field-group' . $item_index ); ?>>
-					<?php
-					if ( $print_label && $item['field_label'] ) {
-						?>
-							<label <?php $this->print_render_attribute_string( 'label' . $item_index ); ?>>
-								<?php // PHPCS - the variable $item['field_label'] is safe.
-								echo $item['field_label']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-							</label>
-						<?php
-					}
-
-					switch ( $item['field_type'] ) :
-						case 'textarea':
-							// PHPCS - the method make_textarea_field is safe.
-							echo $this->make_textarea_field( $item, $item_index ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-							break;
-
-						case 'select':
-							// PHPCS - the method make_select_field is safe.
-							echo $this->make_select_field( $item, $item_index ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-							break;
-
-						case 'text':
-						case 'email':
-							$this->add_render_attribute( 'input' . $item_index, 'class', 'elementor-field-textual' );
-							?>
-								<input size="1" <?php $this->print_render_attribute_string( 'input' . $item_index ); ?>>
-							<?php
-							break;
-
-						default:
-							$field_type = $item['field_type'];
-
-							/**
-							 * Elementor form field render.
-							 *
-							 * Fires when a field is rendered in the frontend. This hook allows developers to
-							 * add functionality when from fields are rendered.
-							 *
-							 * The dynamic portion of the hook name, `$field_type`, refers to the field type.
-							 *
-							 * @since 1.0.0
-							 *
-							 * @param array $item       The field value.
-							 * @param int   $item_index The field index.
-							 * @param Form  $this       An instance of the form.
-							 */
-							do_action( "hello_plus/forms/render_field/{$field_type}", $item, $item_index, $this );
-					endswitch;
-					?>
-				</div>
-				<?php endforeach; ?>
-				<div <?php $this->print_render_attribute_string( 'submit-group' ); ?>>
-					<button <?php $this->print_render_attribute_string( 'button' ); ?>>
-						<span <?php $this->print_render_attribute_string( 'button-content-wrapper' ); ?>>
-							<?php if ( ! empty( $instance['button_icon'] ) || ! empty( $instance['selected_button_icon']['value'] ) ) : ?>
-								<span <?php $this->print_render_attribute_string( 'button-icon' ); ?>>
-									<?php $this->render_icon_with_fallback( $instance ); ?>
-									<?php if ( empty( $instance['button_text'] ) ) : ?>
-										<span class="elementor-screen-only"><?php echo esc_html__( 'Submit', 'hello-plus' ); ?></span>
-									<?php endif; ?>
-								</span>
-							<?php endif; ?>
-							<?php if ( ! empty( $instance['button_text'] ) ) : ?>
-								<span <?php $this->print_render_attribute_string( 'button-text' ); ?>><?php $this->print_unescaped_setting( 'button_text' ); ?></span>
-							<?php endif; ?>
-						</span>
-					</button>
-				</div>
-			</div>
-		</form>
-		<?php
-	}
-
-	/**
-	 * Render Form widget output in the editor.
-	 *
-	 * Written as a Backbone JavaScript template and used to generate the live preview.
-	 *
-	 * @since 2.9.0
-	 * @access protected
-	 */
-	protected function content_template() {
-		?>
-		<#
-		view.addRenderAttribute( 'form', 'class', 'elementor-form' );
-
-		if ( '' !== settings.form_id ) {
-			view.addRenderAttribute( 'form', 'id', settings.form_id );
-		}
-
-		if ( '' !== settings.form_name ) {
-			view.addRenderAttribute( 'form', 'name', settings.form_name );
-		}
-
-		#>
-		<form {{{ view.getRenderAttributeString( 'form' ) }}}>
-			<div class="elementor-form-fields-wrapper elementor-labels-{{settings.label_position}}">
-				<#
-					for ( var i in settings.form_fields ) {
-						var item = settings.form_fields[ i ];
-						item = elementor.hooks.applyFilters( 'hello_plus/forms/content_template/item', item, i, settings );
-
-						item.field_type  = _.escape( item.field_type );
-						item.field_value = _.escape( item.field_value );
-
-						var options = item.field_options ? item.field_options.split( '\n' ) : [],
-							itemClasses = _.escape( item.css_classes ),
-							labelVisibility = '',
-							placeholder = '',
-							required = '',
-							inputField = '',
-							multiple = '',
-							fieldGroupClasses = 'elementor-field-group elementor-column elementor-field-type-' + item.field_type,
-							printLabel = settings.show_labels && ! [ 'hidden', 'html', 'step' ].includes( item.field_type );
-
-						fieldGroupClasses += ' elementor-col-' + ( ( '' !== item.width ) ? item.width : '100' );
-
-						if ( item.width_tablet ) {
-							fieldGroupClasses += ' elementor-md-' + item.width_tablet;
-						}
-
-						if ( item.width_mobile ) {
-							fieldGroupClasses += ' elementor-sm-' + item.width_mobile;
-						}
-
-						if ( item.required ) {
-							required = 'required';
-							fieldGroupClasses += ' elementor-field-required';
-
-							if ( settings.mark_required ) {
-								fieldGroupClasses += ' elementor-mark-required';
-							}
-						}
-
-						if ( item.placeholder ) {
-							placeholder = 'placeholder="' + _.escape( item.placeholder ) + '"';
-						}
-
-						if ( item.allow_multiple ) {
-							multiple = ' multiple';
-							fieldGroupClasses += ' elementor-field-type-' + item.field_type + '-multiple';
-						}
-
-						switch ( item.field_type ) {
-
-							case 'textarea':
-								inputField = '<textarea class="elementor-field elementor-field-textual elementor-size-' + settings.input_size + ' ' + itemClasses + '" name="form_field_' + i + '" id="form_field_' + i + '" rows="' + item.rows + '" ' + required + ' ' + placeholder + '>' + item.field_value + '</textarea>';
-								break;
-
-							case 'select':
-								if ( options ) {
-									var size = '';
-									if ( item.allow_multiple && item.select_size ) {
-										size = ' size="' + item.select_size + '"';
-									}
-									inputField = '<div class="elementor-field elementor-select-wrapper ' + itemClasses + '">';
-									inputField += '<select class="elementor-field-textual elementor-size-' + settings.input_size + '" name="form_field_' + i + '" id="form_field_' + i + '" ' + required + multiple + size + ' >';
-									for ( var x in options ) {
-										var option_value = options[ x ];
-										var option_label = options[ x ];
-										var option_id = 'form_field_option' + i + x;
-
-										if ( options[ x ].indexOf( '|' ) > -1 ) {
-											var label_value = options[ x ].split( '|' );
-											option_label = label_value[0];
-											option_value = label_value[1];
-										}
-
-										view.addRenderAttribute( option_id, 'value', option_value );
-										if ( item.field_value.split( ',' ) .indexOf( option_value ) ) {
-											view.addRenderAttribute( option_id, 'selected', 'selected' );
-										}
-										inputField += '<option ' + view.getRenderAttributeString( option_id ) + '>' + option_label + '</option>';
-									}
-									inputField += '</select></div>';
-								}
-								break;
-
-							case 'text':
-							case 'email':
-								itemClasses = 'elementor-field-textual ' + itemClasses;
-								inputField = '<input size="1" type="' + item.field_type + '" value="' + item.field_value + '" class="elementor-field elementor-size-' + settings.input_size + ' ' + itemClasses + '" name="form_field_' + i + '" id="form_field_' + i + '" ' + required + ' ' + placeholder + ' >';
-								break;
-							default:
-								item.placeholder = _.escape( item.placeholder );
-								inputField = elementor.hooks.applyFilters( 'hello_plus/forms/content_template/field/' + item.field_type, '', item, i, settings );
-						}
-
-						if ( inputField ) {
-							#>
-							<div class="{{ fieldGroupClasses }}">
-
-								<# if ( printLabel && item.field_label ) { #>
-									<label class="elementor-field-label" for="form_field_{{ i }}" {{{ labelVisibility }}}>{{{ item.field_label }}}</label>
-								<# } #>
-
-								{{{ inputField }}}
-							</div>
-							<#
-						}
-					}
-
-					view.addRenderAttribute(
-						'submit-group',
-						{
-							'class': [
-								'elementor-field-group',
-								'elementor-column',
-								'elementor-field-type-submit',
-								'e-form__buttons',
-								'elementor-col-' + ( ( '' !== settings.button_width ) ? settings.button_width : '100' )
-							]
-						}
-					);
-
-					if ( settings.button_width_tablet ) {
-						view.addRenderAttribute( 'submit-group', 'class', 'elementor-md-' + settings.button_width_tablet );
-					}
-
-					if ( settings.button_width_mobile ) {
-						view.addRenderAttribute( 'submit-group', 'class', 'elementor-sm-' + settings.button_width_mobile );
-					}
-
-					view.addRenderAttribute( 'button', 'type', 'submit' );
-					view.addRenderAttribute( 'button', 'class', 'elementor-button' );
-
-					if ( '' !== settings.button_css_id ) {
-						view.addRenderAttribute( 'button', 'id', settings.button_css_id );
-					}
-
-					if ( '' !== settings.button_size ) {
-						view.addRenderAttribute( 'button', 'class', 'elementor-size-' + settings.button_size );
-					}
-
-					if ( '' !== settings.button_type ) {
-						view.addRenderAttribute( 'button', 'class', 'elementor-button-' + settings.button_type );
-					}
-
-					if ( '' !== settings.button_hover_animation ) {
-						view.addRenderAttribute( 'button', 'class', 'elementor-animation-' + settings.button_hover_animation );
-					}
-
-					view.addRenderAttribute( 'button-content-wrapper', 'class', 'elementor-button-content-wrapper' );
-					view.addRenderAttribute( 'button-icon', 'class', 'elementor-button-icon' );
-					view.addRenderAttribute( 'button-text', 'class', 'elementor-button-text' );
-
-					const iconHTML = elementor.helpers.renderIcon( view, settings.selected_button_icon, { 'aria-hidden': true }, 'i' , 'object' );
-					const migrated = elementor.helpers.isIconMigrated( settings, 'selected_button_icon' );
-					#>
-					<div {{{ view.getRenderAttributeString( 'submit-group' ) }}}>
-						<button {{{ view.getRenderAttributeString( 'button' ) }}}>
-							<span {{{ view.getRenderAttributeString( 'button-content-wrapper' ) }}}>
-								<# if ( settings.button_icon || settings.selected_button_icon ) { #>
-									<span {{{ view.getRenderAttributeString( 'button-icon' ) }}}>
-										<# if ( iconHTML && iconHTML.rendered && ( ! settings.button_icon || migrated ) ) { #>
-											{{{ iconHTML.value }}}
-										<# } else { #>
-											<i class="{{ settings.button_icon }}" aria-hidden="true"></i>
-										<# } #>
-										<span class="elementor-screen-only"><?php echo esc_html__( 'Submit', 'hello-plus' ); ?></span>
-									</span>
-								<# } #>
-
-								<# if ( settings.button_text ) { #>
-									<span {{{ view.getRenderAttributeString( 'button-text' ) }}}>{{{ settings.button_text }}}</span>
-								<# } #>
-							</span>
-						</button>
-					</div>
-			</div>
-		</form>
-		<?php
+		$this->end_controls_section();
 	}
 }

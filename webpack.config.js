@@ -27,7 +27,8 @@ const entryPoints = {
 	'js/hello-plus-forms-editor': path.resolve( modulesDir, 'forms/assets/js', 'editor.js' ),
 	'js/hello-plus-forms-editor-fe': path.resolve( modulesDir, 'forms/assets/js/frontend', 'frontend.js' ),
 
-	// Theme module
+	// Forms module
+	'css/hello-plus-forms': path.resolve( modulesDir, 'forms/assets/scss/widgets', 'hello-plus-forms.scss' ),
 };
 
 module.exports = {

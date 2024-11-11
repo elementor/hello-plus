@@ -7,10 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use Elementor\{
-	Controls_Manager,
 	TemplateLibrary\Source_Local,
 	Modules\Library\Documents\Library_Document,
-	Utils as ElementorUtils
 };
 use HelloPlus\Includes\Utils as Theme_Utils;
 use WP_Query;
@@ -20,11 +18,13 @@ use WP_Query;
  **/
 abstract class Document_Base extends Library_Document {
 
+	const LOCATION = '';
+
 	public static function get_properties(): array {
 		$properties = parent::get_properties();
 		$properties['support_kit'] = true;
 		$properties['show_in_finder'] = true;
-		$properties['support_site_editor'] = true;
+		$properties['support_site_editor'] = false;
 		$properties['support_conditions'] = true;
 		$properties['support_lazyload'] = false;
 		$properties['condition_type'] = 'general';
@@ -108,7 +108,23 @@ abstract class Document_Base extends Library_Document {
 			return;
 		}
 
-		add_action( static::get_template_hook(), [ static::get_class_full_name(), 'get_template' ], 10, 2 );
+		add_action( static::get_template_hook(), [ static::get_class_full_name(), 'maybe_get_template' ], 10, 2 );
+	}
+
+	public static function maybe_get_template( ?string $name, array $args ): void {
+		if ( ! defined( 'ELEMENTOR_PRO_VERSION' ) ) {
+			return;
+		}
+		/** @var \ElementorPro\Modules\ThemeBuilder\Module $theme_builder_module */
+		$theme_builder_module = \ElementorPro\Modules\ThemeBuilder\Module::instance();
+		$conditions_manager = $theme_builder_module->get_conditions_manager();
+
+		$location_docs = $conditions_manager->get_documents_for_location( static::LOCATION );
+		if ( ! empty( $location_docs ) ) {
+			return;
+		}
+
+		static::get_template( $name, $args );
 	}
 
 	/**
@@ -119,10 +135,10 @@ abstract class Document_Base extends Library_Document {
 	abstract public static function get_template_hook(): string;
 
 	/**
-	 * @param string $name
+	 * @param ?string $name
 	 * @param array $args
 	 *
 	 * @return mixed
 	 */
-	abstract public static function get_template( string $name, array $args );
+	abstract protected static function get_template( ?string $name, array $args );
 }

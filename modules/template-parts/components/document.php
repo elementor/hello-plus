@@ -15,8 +15,8 @@ class Document {
 
 	private function get_documents_list(): array {
 		return [
-			'Header',
-			'Footer',
+			'Ehp_Header',
+			'Ehp_Footer',
 		];
 	}
 	/**

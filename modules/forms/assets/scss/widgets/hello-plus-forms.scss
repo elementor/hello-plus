@@ -46,5 +46,13 @@
 				}
 			}
 		}
+
+		&.is-field-required .ehp-form__field-label {
+			&::after {
+				content: "*";
+				color: red;
+				display: inline-block;
+			}
+		}
 	}
 }

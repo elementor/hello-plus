@@ -63,9 +63,6 @@ final class Plugin {
 	}
 
 	public function activate() {
-		error_log( 'activate' );
-		error_log(Setup_Wizard::has_site_wizard_been_completed());
-
 		if ( ! Setup_Wizard::has_site_wizard_been_completed() ) {
 			set_transient( 'hello_plus_redirect_to_setup_wizard', true );
 		}

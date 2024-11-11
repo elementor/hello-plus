@@ -60,6 +60,7 @@ export const AdminProvider = ( { children } ) => {
 			setStep,
 			isLoading,
 			elementorKitSettings,
+			setIsLoading,
 		} }>
 			{ children }
 		</AdminContext.Provider>

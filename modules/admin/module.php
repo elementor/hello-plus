@@ -30,7 +30,6 @@ class Module extends Module_Base {
 			'Api_Controller',
 			'Scripts_Controller',
 			'Admin_Menu_Controller',
-			'Theme_Override',
 		];
 	}
 }

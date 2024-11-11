@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use HelloPlus\Modules\TemplateParts\Documents\Header;
 use Elementor\{
 	Controls_Manager,
 	Group_Control_Background,

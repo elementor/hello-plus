@@ -34,8 +34,6 @@ class Onboarding_Settings {
 						},
 					]
 				);
-
-
 			}
 		);
 	}

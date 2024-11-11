@@ -22,6 +22,10 @@ class Setup_Wizard {
 		if ( null === self::$is_setup_wizard_completed ) {
 			$sessions = \Elementor\App\Modules\ImportExport\Processes\Revert::get_import_sessions();
 
+			if ( ! $sessions ) {
+				return false;
+			}
+
 			$last_session = end( $sessions );
 			$kit_name = $last_session['kit_name'];
 

@@ -12,21 +12,14 @@ use WP_REST_Server;
 
 class Onboarding_Settings {
 	// ToDo: replace with the actual kit ids.
-	protected array $kits_ids = [
-		'60bcabe2810f3b0019c900be',
-		'60bcad9b3d876b001906ef12',
-		'60bdd89ff13c4300122bf236',
-		'60bde05315d1580012c373f4',
-		'60bde51115d1580012c373f5',
-		'60bdeffbf13c4300122bf239',
-		'60bdf4c4f13c4300122bf23b',
-		'60bdf76d15d1580012c373f6',
-	];
+	protected array $kits_ids = [];
 
 	const DEFAULT_BASE_ENDPOINT = 'https://my.elementor.com/api/v1/kits-library/kits/';
 	const FALLBACK_BASE_ENDPOINT = 'https://ms-8874.elementor.com/api/v1/kits-library/kits/';
 
 	public function __construct() {
+
+		$this->kits_ids = apply_filters( 'hello-plus-kits', [] );
 
 		add_action(
 			'rest_api_init',

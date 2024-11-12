@@ -118,7 +118,6 @@ class Module extends Module_Base {
 		add_action( 'elementor/frontend/after_register_scripts', [ $this, 'register_scripts' ] );
 		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_styles' ] );
 		add_action( 'elementor/controls/register', [ $this, 'register_controls' ] );
-		// add_action( 'elementor/ajax/register_actions', [ $this, 'register_ajax_actions' ] );
 		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'enqueue_editor_scripts' ] );
 
 		// Initialize registrars.

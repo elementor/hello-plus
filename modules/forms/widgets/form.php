@@ -1100,7 +1100,7 @@ class Form extends Form_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'description_typography',
-				// 'selector' => '{{WRAPPER}} .elementor-field-group > .elementor-field-description',
+				'selector' => '{{WRAPPER}} .elementor-field-group > .elementor-field-description',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],

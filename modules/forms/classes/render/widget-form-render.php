@@ -153,6 +153,7 @@ class Widget_Form_Render {
 	$button_text = $this->settings['button_text'];
 	$button_css_id = $this->settings['button_css_id'];
 	$button_size = $this->settings['button_size'];
+	$button_width = $this->settings['button_width'];
 	$button_hover_animation = $this->settings['button_hover_animation'];
 	$button_classnames = 'ehp-form__button';
 
@@ -162,6 +163,10 @@ class Widget_Form_Render {
 
 	if ( ! empty( $button_size ) ) {
 		$button_classnames .= ' has-size-' . $button_size;
+	}
+
+	if ( ! empty( $button_width ) ) {
+		$button_classnames .= ' has-width-' . $button_width;
 	}
 
 	$this->widget->add_render_attribute( 'button', [

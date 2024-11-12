@@ -1,21 +1,21 @@
 @import "../breakpoints";
 
-@mixin field-width-sizes() {
+@mixin column-width-sizes() {
 	&-33 {
-		--ehp-form-field-width: 33.3333%;
+		--ehp-column-width: 33.3333%;
 	}
 
 	&-50 {
-		--ehp-form-field-width: 50%;
+		--ehp-column-width: 50%;
 	}
 
 	&-100 {
-		--ehp-form-field-width: 100%;
+		--ehp-column-width: 100%;
 	}
 }
 
 .ehp-form {
-	--ehp-form-field-width: 100%;
+	--ehp-column-width: 100%;
 	--ehp-form-row-gap: 20px;
 	--ehp-form-column-gap: 20px;
 
@@ -29,29 +29,33 @@
 
 	&__field-group {
 		padding-inline: calc(var(--ehp-form-column-gap) / 2);
-		width: var(--ehp-form-field-width);
+
+		&.is-field-required.is-mark-required .ehp-form__field-label {
+			&::after {
+				content: "*";
+				color: red;
+				display: inline-block;
+			}
+		}
+	}
+
+	&__field-group,
+	&__button {
+		width: var(--ehp-column-width);
 
 		&.has-width {
-			@include field-width-sizes();
+			@include column-width-sizes();
 
 			&-md {
 				@media screen and (max-width: $screen-desktop-min) {
-					@include field-width-sizes();
+					@include column-width-sizes();
 				}
 			}
 
 			&-sm {
 				@media screen and (max-width: $screen-tablet-min) {
-					@include field-width-sizes();
+					@include column-width-sizes();
 				}
-			}
-		}
-
-		&.is-field-required .ehp-form__field-label {
-			&::after {
-				content: "*";
-				color: red;
-				display: inline-block;
 			}
 		}
 	}

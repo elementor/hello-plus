@@ -518,7 +518,6 @@ class Form extends Form_Base {
 				'label' => esc_html__( 'Column Width', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'' => esc_html__( 'Default', 'hello-plus' ),
 					'100' => '100%',
 					'50' => '50%',
 					'33' => '33%',

@@ -195,8 +195,6 @@ abstract class Form_Base extends Widget_Base {
 					'class' => [
 						'ehp-form__field-group',
 						'is-field-type-' . $item['field_type'],
-						// 'elementor-field-group',
-						// 'elementor-column',
 						'is-field-group-' . $item['custom_id'],
 					],
 				],
@@ -206,7 +204,7 @@ abstract class Form_Base extends Widget_Base {
 					'id' => $this->get_attribute_id( $item ),
 					'class' => [
 						'ehp-form__field',
-						'has-size-' . $item['input_size'],
+						'elementor-size-' . $item['input_size'],
 						empty( $item['css_classes'] ) ? '' : esc_attr( $item['css_classes'] ),
 					],
 				],
@@ -251,7 +249,7 @@ abstract class Form_Base extends Widget_Base {
 		if ( ! empty( $item['required'] ) ) {
 			$class = 'is-field-required';
 			if ( ! empty( $instance['mark_required'] ) ) {
-				$class .= ' elementor-mark-required';
+				$class .= ' is-mark-required';
 			}
 			$this->add_render_attribute( 'field-group' . $i, 'class', $class );
 			$this->add_required_attribute( 'input' . $i );

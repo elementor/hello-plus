@@ -1041,9 +1041,9 @@ class Form extends Form_Base {
 					],
 				],
 				'default' => 'center',
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .elementor-field-group > label, {{WRAPPER}} .elementor-field-group > .elementor-field' => 'text-align: {{VALUE}};',
-				// ],
+				'selectors' => [
+					// 	'{{WRAPPER}} .elementor-field-group > label, {{WRAPPER}} .elementor-field-group > .elementor-field' => 'text-align: {{VALUE}};',
+				],
 			]
 		);
 
@@ -1060,9 +1060,9 @@ class Form extends Form_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .elementor-field-group > label' => 'color: {{VALUE}};',
-				// ],
+				'selectors' => [
+					// 	'{{WRAPPER}} .elementor-field-group > label' => 'color: {{VALUE}};',
+				],
 				'global' => [
 					'default' => Global_Colors::COLOR_PRIMARY,
 				],
@@ -1073,7 +1073,7 @@ class Form extends Form_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'heading_typography',
-				// 'selector' => '{{WRAPPER}} .elementor-field-group > label',
+				'selector' => '{{WRAPPER}} .elementor-field-group > label',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
 				],
@@ -1093,9 +1093,9 @@ class Form extends Form_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .elementor-field-group > .elementor-field-description' => 'color: {{VALUE}};',
-				// ],
+				'selectors' => [
+					// 	'{{WRAPPER}} .elementor-field-group > .elementor-field-description' => 'color: {{VALUE}};',
+				],
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
 				],
@@ -1554,22 +1554,6 @@ class Form extends Form_Base {
 			]
 		);
 
-
-		// $this->add_control(
-		// 	'button_background_color',
-		// 	[
-		// 		'label' => esc_html__( 'Background Color', 'hello-plus' ),
-		// 		'type' => Controls_Manager::COLOR,
-		// 		'global' => [
-		// 			'default' => Global_Colors::COLOR_ACCENT,
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .e-form__buttons__wrapper__button-next' => 'background-color: {{VALUE}};',
-		// 			'{{WRAPPER}} .elementor-button[type="submit"]' => 'background-color: {{VALUE}};',
-		// 		],
-		// 	]
-		// );
-
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
@@ -1797,7 +1781,6 @@ class Form extends Form_Base {
 				'separator' => 'before',
 			]
 		);
-
 
 		$this->add_responsive_control(
 			'box_padding',

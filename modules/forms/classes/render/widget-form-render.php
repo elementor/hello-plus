@@ -14,14 +14,14 @@ use Elementor\Icons_Manager;
 use Elementor\Utils as Elementor_Utils;
 
 class Widget_Form_Render {
-    protected Form $widget;
+	protected Form $widget;
 
-    public function __construct( Form $widget ) {
-        $this->widget = $widget;
-        $this->settings = $widget->get_settings_for_display();
-    }
+	public function __construct( Form $widget ) {
+		$this->widget = $widget;
+		$this->settings = $widget->get_settings_for_display();
+	}
 
-   public function render() {
+	public function render() {
 	$form_name = $this->settings['form_name'];
 
 	if ( ! empty( $form_name ) ) {
@@ -147,86 +147,85 @@ class Widget_Form_Render {
 		</form>
 	<?php
    }
+   
+	protected function render_button(): void {
+		$button_icon = $this->settings['selected_button_icon'];
+		$button_text = $this->settings['button_text'];
+		$button_css_id = $this->settings['button_css_id'];
+		$button_size = $this->settings['button_size'];
+		$button_width = $this->settings['button_width'];
+		$button_hover_animation = $this->settings['button_hover_animation'];
+		$button_classnames = 'ehp-form__button';
 
-   protected function render_button(): void {
-	$button_icon = $this->settings['selected_button_icon'];
-	$button_text = $this->settings['button_text'];
-	$button_css_id = $this->settings['button_css_id'];
-	$button_size = $this->settings['button_size'];
-	$button_width = $this->settings['button_width'];
-	$button_hover_animation = $this->settings['button_hover_animation'];
-	$button_classnames = 'ehp-form__button';
+		$this->widget->add_render_attribute( 'submit-group', [
+			'class' => 'ehp-form__submit-group',
+		] );
 
-	$this->widget->add_render_attribute( 'submit-group', [
-		'class' => 'ehp-form__submit-group',
-	] );
+		if ( ! empty( $button_size ) ) {
+			$button_classnames .= ' has-size-' . $button_size;
+		}
 
-	if ( ! empty( $button_size ) ) {
-		$button_classnames .= ' has-size-' . $button_size;
-	}
-
-	if ( ! empty( $button_width ) ) {
-		$button_classnames .= ' has-width-' . $button_width;
-	}
-
-	$this->widget->add_render_attribute( 'button', [
-		'class' => $button_classnames,
-		'type' => 'submit',
-	] );
-
-	if ( $button_hover_animation ) {
-		$this->widget->add_render_attribute( 'button', 'class', 'elementor-animation-' . $button_hover_animation );
-	}
-
-	if ( ! empty( $button_css_id ) ) {
-		$this->widget->add_render_attribute( 'button', 'id', $button_css_id );
-	}
-
-	$this->widget->add_render_attribute( 'button-text', [
-		'class' => 'ehp-form__button-text',
-	] );
-
-	?>
-	<div <?php $this->widget->print_render_attribute_string( 'submit-group' ); ?>>
-		<button <?php $this->widget->print_render_attribute_string( 'button' ); ?>>
-			<?php if ( ! empty( $button_icon ) || ! empty( $button_icon['value'] ) ) : ?>
-				<?php
-					Icons_Manager::render_icon( $button_icon,
-						[
-							'aria-hidden' => 'true',
-							'class' => 'ehp-form__button-icon',
-						]
-					);
-				?>
-			<?php endif; ?>
-			
-			<?php if ( ! empty( $button_text ) ) : ?>
-				<span <?php $this->widget->print_render_attribute_string( 'button-text' ); ?>><?php $this->widget->print_unescaped_setting( 'button_text' ); ?></span>
-			<?php endif; ?>
-		</button>
-	</div>
-	<?php
-   }
-
-   protected function render_text_container(): void {
-	$heading_text = $this->settings['text_heading'];
-	$has_heading = ! empty( $this->settings['text_heading'] );
-	$heading_tag = $this->settings['text_heading_tag'];
+		if ( ! empty( $button_width ) ) {
+			$button_classnames .= ' has-width-' . $button_width;
+		}
 	
-	$description_text = $this->settings['text_description'];
-	$has_description = ! empty( $description_text );
-	?>
-	<div class="ehp-form__text-container">
-		<?php if ( $has_heading ) {
-			$heading_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Elementor_Utils::validate_html_tag( $heading_tag ), 'class="ehp-cta__heading"', esc_html( $heading_text ) );
-			// Escaped above
-			Elementor_Utils::print_unescaped_internal_string( $heading_output );
-		} ?>
+		$this->widget->add_render_attribute( 'button', [
+			'class' => $button_classnames,
+			'type' => 'submit',
+		] );
+		if ( $button_hover_animation ) {
+			$this->widget->add_render_attribute( 'button', 'class', 'elementor-animation-' . $button_hover_animation );
+		}
 
-		<?php if ( $has_description ) { ?>
-			<p><?php echo esc_html( $description_text ); ?></p>
-		<?php } ?>
-	</div>
-	<?php
+		if ( ! empty( $button_css_id ) ) {
+			$this->widget->add_render_attribute( 'button', 'id', $button_css_id );
+		}
+
+		$this->widget->add_render_attribute( 'button-text', [
+			'class' => 'ehp-form__button-text',
+		] );
+
+		?>
+		<div <?php $this->widget->print_render_attribute_string( 'submit-group' ); ?>>
+			<button <?php $this->widget->print_render_attribute_string( 'button' ); ?>>
+				<?php if ( ! empty( $button_icon ) || ! empty( $button_icon['value'] ) ) : ?>
+					<?php
+						Icons_Manager::render_icon( $button_icon,
+							[
+								'aria-hidden' => 'true',
+								'class' => 'ehp-form__button-icon',
+							]
+						);
+					?>
+				<?php endif; ?>
+				
+				<?php if ( ! empty( $button_text ) ) : ?>
+					<span <?php $this->widget->print_render_attribute_string( 'button-text' ); ?>><?php $this->widget->print_unescaped_setting( 'button_text' ); ?></span>
+				<?php endif; ?>
+			</button>
+		</div>
+		<?php
+	}
+
+	protected function render_text_container(): void {
+		$heading_text = $this->settings['text_heading'];
+		$has_heading = ! empty( $this->settings['text_heading'] );
+		$heading_tag = $this->settings['text_heading_tag'];
+
+		$description_text = $this->settings['text_description'];
+		$has_description = ! empty( $description_text );
+		?>
+		<div class="ehp-form__text-container">
+			<?php if ( $has_heading ) {
+				$heading_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Elementor_Utils::validate_html_tag( $heading_tag ), 'class="ehp-cta__heading"', esc_html( $heading_text ) );
+				// Escaped above
+				Elementor_Utils::print_unescaped_internal_string( $heading_output );
+			} ?>
+
+			<?php if ( $has_description ) { ?>
+				<p><?php echo esc_html( $description_text ); ?></p>
+			<?php } ?>
+		</div>
+		<?php
 	}
 }

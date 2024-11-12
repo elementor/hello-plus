@@ -64,7 +64,6 @@ class Module extends Module_Base {
 			[ 'elementor-frontend' ],
 			HELLO_PLUS_VERSION
 		);
-
 	}
 
 	public static function find_element_recursive( $elements, $form_id ) {

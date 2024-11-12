@@ -37,11 +37,12 @@ abstract class Form_Base extends Widget_Base {
 		];
 	}
 
-	public function make_textarea_field( $item, $item_index ) {
+	public function make_textarea_field( $item, $item_index, $instance ) {
 		$this->add_render_attribute( 'textarea' . $item_index, [
 			'class' => [
 				'elementor-field-textual',
-				'elementor-field',
+				'ehp-form__field',
+				'eph-form__textarea',
 				esc_attr( $item['css_classes'] ),
 				'elementor-size-' . $item['input_size'],
 			],
@@ -68,6 +69,7 @@ abstract class Form_Base extends Widget_Base {
 			[
 				'select-wrapper' . $i => [
 					'class' => [
+						'ehp-form__field',
 						'elementor-field',
 						'elementor-select-wrapper',
 						'remove-before',
@@ -253,6 +255,14 @@ abstract class Form_Base extends Widget_Base {
 			}
 			$this->add_render_attribute( 'field-group' . $i, 'class', $class );
 			$this->add_required_attribute( 'input' . $i );
+		}
+
+		if ( 'yes' === $instance['field_border_switcher'] ) {
+			$this->add_render_attribute( 'field-group' . $i, 'class', 'has-border' );
+		}
+
+		if ( ! empty( $instance['fields_shape'] ) ) {
+			$this->add_render_attribute( 'field-group' . $i, 'class', 'has-shape-' . $instance['fields_shape'] );
 		}
 	}
 

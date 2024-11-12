@@ -13,8 +13,8 @@ export default class FormsModule extends elementorModules.editor.utils.Module {
 			TelField = require( './fields/tel' );
 
 		this.Fields = {
-			tel: new TelField( 'form' ),
-			acceptance: new AcceptanceField( 'form' ),
+			tel: new TelField( 'ehp-form' ),
+			acceptance: new AcceptanceField( 'ehp-form' ),
 		};
 
 		elementor.addControlView( 'Fields_map', FieldsMapControl );

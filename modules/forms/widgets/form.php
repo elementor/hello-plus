@@ -448,23 +448,6 @@ class Form extends Form_Base {
 		);
 
 		$this->add_control(
-			'input_size',
-			[
-				'label' => esc_html__( 'Input Size', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'xs' => esc_html__( 'Extra Small', 'hello-plus' ),
-					'sm' => esc_html__( 'Small', 'hello-plus' ),
-					'md' => esc_html__( 'Medium', 'hello-plus' ),
-					'lg' => esc_html__( 'Large', 'hello-plus' ),
-					'xl' => esc_html__( 'Extra Large', 'hello-plus' ),
-				],
-				'default' => 'sm',
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
 			'show_labels',
 			[
 				'label' => esc_html__( 'Label', 'hello-plus' ),
@@ -540,70 +523,6 @@ class Form extends Form_Base {
 				'type' => Controls_Manager::ICONS,
 				'skin' => 'inline',
 				'label_block' => false,
-			]
-		);
-
-		$start = is_rtl() ? 'right' : 'left';
-		$end = is_rtl() ? 'left' : 'right';
-
-		$this->add_control(
-			'button_icon_align',
-			[
-				'label' => esc_html__( 'Icon Position', 'hello-plus' ),
-				'type' => Controls_Manager::CHOOSE,
-				'default' => is_rtl() ? 'row-reverse' : 'row',
-				'options' => [
-					'row' => [
-						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => "eicon-h-align-{$start}",
-					],
-					'row-reverse' => [
-						'title' => esc_html__( 'End', 'hello-plus' ),
-						'icon' => "eicon-h-align-{$end}",
-					],
-				],
-				'selectors_dictionary' => [
-					'left' => is_rtl() ? 'row-reverse' : 'row',
-					'right' => is_rtl() ? 'row' : 'row-reverse',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-form' => '--ehp-form-button-icon-position: {{VALUE}};',
-				],
-				'condition' => [
-					'button_text!' => '',
-					'selected_button_icon[value]!' => '',
-				],
-			]
-		);
-
-		$this->add_control(
-			'button_icon_indent',
-			[
-				'label' => esc_html__( 'Icon Spacing', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
-				'range' => [
-					'px' => [
-						'max' => 100,
-					],
-					'em' => [
-						'max' => 10,
-					],
-					'rem' => [
-						'max' => 10,
-					],
-				],
-				'default' => [
-					'size' => 8,
-					'unit' => 'px',
-				],
-				'condition' => [
-					'button_text!' => '',
-					'selected_button_icon[value]!' => '',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-form' => '--ehp-form-button-icon-spacing: {{SIZE}}{{UNIT}};',
-				],
 			]
 		);
 
@@ -1021,7 +940,7 @@ class Form extends Form_Base {
 				'label' => esc_html__( 'Align', 'hello-plus' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
-					'start' => [
+					'flex-start' => [
 						'title' => esc_html__( 'Left', 'hello-plus' ),
 						'icon' => 'eicon-text-align-left',
 					],
@@ -1029,14 +948,14 @@ class Form extends Form_Base {
 						'title' => esc_html__( 'Center', 'hello-plus' ),
 						'icon' => 'eicon-text-align-center',
 					],
-					'end' => [
+					'flex-end' => [
 						'title' => esc_html__( 'Right', 'hello-plus' ),
 						'icon' => 'eicon-text-align-right',
 					],
 				],
 				'default' => 'center',
 				'selectors' => [
-					'{{WRAPPER}} .elementor-field-group > label, {{WRAPPER}} .elementor-field-group > .elementor-field' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-text-container-align: {{VALUE}};',
 				],
 			]
 		);
@@ -1055,7 +974,7 @@ class Form extends Form_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .elementor-field-group > label' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-heading-color: {{VALUE}};',
 				],
 				'global' => [
 					'default' => Global_Colors::COLOR_PRIMARY,
@@ -1067,7 +986,7 @@ class Form extends Form_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'heading_typography',
-				'selector' => '{{WRAPPER}} .elementor-field-group > label',
+				'selector' => '{{WRAPPER}} .ehp-form__heading',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
 				],
@@ -1088,7 +1007,7 @@ class Form extends Form_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .elementor-field-group > .elementor-field-description' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-description-color: {{VALUE}};',
 				],
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
@@ -1100,7 +1019,7 @@ class Form extends Form_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'description_typography',
-				'selector' => '{{WRAPPER}} .elementor-field-group > .elementor-field-description',
+				'selector' => '{{WRAPPER}} .ehp-form__description',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
@@ -1140,7 +1059,7 @@ class Form extends Form_Base {
 					],
 				],
 				'selectors' => [
-					// Add selectors
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-column-gap: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -1166,7 +1085,7 @@ class Form extends Form_Base {
 					],
 				],
 				'selectors' => [
-					// Add selectors
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-row-gap: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -1188,6 +1107,7 @@ class Form extends Form_Base {
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'default' => [
 					'size' => 0,
+					'unit' => 'px',
 				],
 				'range' => [
 					'px' => [
@@ -1201,7 +1121,7 @@ class Form extends Form_Base {
 					],
 				],
 				'selectors' => [
-					// Add selectors
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-label-spacing: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -1212,7 +1132,7 @@ class Form extends Form_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					// Add selectors
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-label-color: {{VALUE}};',
 				],
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
@@ -1225,9 +1145,9 @@ class Form extends Form_Base {
 			[
 				'label' => esc_html__( 'Mark Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '',
+				'default' => '#FF0000',
 				'selectors' => [
-					// Add selectors
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-mark-color: {{VALUE}};',
 				],
 				'condition' => [
 					'mark_required' => 'yes',
@@ -1239,67 +1159,7 @@ class Form extends Form_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'label_typography',
-				'selector' => '{{WRAPPER}} .elementor-field-group > label',
-				'global' => [
-					'default' => Global_Typography::TYPOGRAPHY_TEXT,
-				],
-			]
-		);
-
-		$this->add_control(
-			'heading_html',
-			[
-				'label' => esc_html__( 'HTML Field', 'hello-plus' ),
-				'type' => Controls_Manager::HEADING,
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'html_spacing',
-			[
-				'label' => esc_html__( 'Spacing', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
-				'default' => [
-					'size' => 0,
-				],
-				'range' => [
-					'px' => [
-						'max' => 60,
-					],
-					'em' => [
-						'max' => 6,
-					],
-					'rem' => [
-						'max' => 6,
-					],
-				],
-				'selectors' => [
-					// Add selectors
-				],
-			]
-		);
-
-		$this->add_control(
-			'html_color',
-			[
-				'label' => esc_html__( 'Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					// Add selectors
-				],
-				'global' => [
-					'default' => Global_Colors::COLOR_TEXT,
-				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => 'html_typography',
-				'selector' => '{{WRAPPER}} .elementor-field-type-html',
+				'selector' => '{{WRAPPER}} .ehp-form__field-label',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
@@ -1319,12 +1179,29 @@ class Form extends Form_Base {
 		);
 
 		$this->add_control(
+			'input_size',
+			[
+				'label' => esc_html__( 'Input Size', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'xs' => esc_html__( 'Extra Small', 'hello-plus' ),
+					'sm' => esc_html__( 'Small', 'hello-plus' ),
+					'md' => esc_html__( 'Medium', 'hello-plus' ),
+					'lg' => esc_html__( 'Large', 'hello-plus' ),
+					'xl' => esc_html__( 'Extra Large', 'hello-plus' ),
+				],
+				'default' => 'sm',
+				'separator' => 'after',
+			]
+		);
+
+		$this->add_control(
 			'field_text_color',
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					// Add selectors
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-field-text-color: {{VALUE}};',
 				],
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
@@ -1336,7 +1213,7 @@ class Form extends Form_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'field_typography',
-				'selector' => '{{WRAPPER}} .elementor-field-group .elementor-field, {{WRAPPER}} .elementor-field-subgroup label',
+				'selector' => '{{WRAPPER}} .ehp-form__field, {{WRAPPER}} .ehp-form__field::placeholder',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
@@ -1350,7 +1227,7 @@ class Form extends Form_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#ffffff',
 				'selectors' => [
-					// Add selectors
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-field-bg-color: {{VALUE}};',
 				],
 				'separator' => 'before',
 			]
@@ -1387,8 +1264,12 @@ class Form extends Form_Base {
 						'max' => 10,
 					],
 				],
+				'default' => [
+					'size' => 2,
+					'unit' => 'px',
+				],
 				'selectors' => [
-					// Add selectors
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-field-border-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'field_border_switcher' => 'yes',
@@ -1402,7 +1283,7 @@ class Form extends Form_Base {
 				'label' => esc_html__( 'Border Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					// Add selectors
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-field-border-color: {{VALUE}};',
 				],
 				'separator' => 'before',
 				'condition' => [
@@ -1423,9 +1304,6 @@ class Form extends Form_Base {
 					'round' => 'Round',
 				],
 				'default' => 'default',
-				'selectors' => [
-					// Add selectors
-				],
 			]
 		);
 
@@ -1460,25 +1338,26 @@ class Form extends Form_Base {
 				'label' => esc_html__( 'Position', 'hello-plus' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
-					'start' => [
-						'title' => esc_html__( 'Left', 'hello-plus' ),
+					'flex-start' => [
+						'title' => esc_html__( 'Start', 'hello-plus' ),
 						'icon' => 'eicon-h-align-left',
 					],
 					'center' => [
 						'title' => esc_html__( 'Center', 'hello-plus' ),
 						'icon' => 'eicon-h-align-center',
 					],
-					'end' => [
-						'title' => esc_html__( 'Right', 'hello-plus' ),
+					'flex-end' => [
+						'title' => esc_html__( 'End', 'hello-plus' ),
 						'icon' => 'eicon-h-align-right',
 					],
-					'stretch' => [
-						'title' => esc_html__( 'Stretch', 'hello-plus' ),
-						'icon' => 'eicon-h-align-stretch',
-					],
 				],
-				'default' => 'stretch',
-				'prefix_class' => 'elementor%s-button-align-',
+				'default' => 'center',
+				'selectors' => [
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-button-align: {{VALUE}};',
+				],
+				'condition' => [
+					'button_width!' => '100',
+				],
 			]
 		);
 
@@ -1489,7 +1368,69 @@ class Form extends Form_Base {
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_ACCENT,
 				],
-				'selector' => '{{WRAPPER}} .elementor-button',
+				'selector' => '{{WRAPPER}} .ehp-form__button',
+			]
+		);
+
+		$start = is_rtl() ? 'right' : 'left';
+		$end = is_rtl() ? 'left' : 'right';
+
+		$this->add_control(
+			'button_icon_align',
+			[
+				'label' => esc_html__( 'Icon Position', 'hello-plus' ),
+				'type' => Controls_Manager::CHOOSE,
+				'default' => is_rtl() ? 'row-reverse' : 'row',
+				'options' => [
+					'row' => [
+						'title' => esc_html__( 'Start', 'hello-plus' ),
+						'icon' => "eicon-h-align-{$start}",
+					],
+					'row-reverse' => [
+						'title' => esc_html__( 'End', 'hello-plus' ),
+						'icon' => "eicon-h-align-{$end}",
+					],
+				],
+				'selectors_dictionary' => [
+					'left' => is_rtl() ? 'row-reverse' : 'row',
+					'right' => is_rtl() ? 'row' : 'row-reverse',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-button-icon-position: {{VALUE}};',
+				],
+				'condition' => [
+					'selected_button_icon[value]!' => '',
+				],
+			]
+		);
+
+		$this->add_control(
+			'button_icon_indent',
+			[
+				'label' => esc_html__( 'Icon Spacing', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
+					],
+				],
+				'default' => [
+					'size' => 8,
+					'unit' => 'px',
+				],
+				'condition' => [
+					'selected_button_icon[value]!' => '',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-button-icon-spacing: {{SIZE}}{{UNIT}};',
+				],
 			]
 		);
 
@@ -1511,7 +1452,7 @@ class Form extends Form_Base {
 					'default' => Global_Colors::COLOR_SECONDARY,
 				],
 				'selectors' => [
-					// Add selectors
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-button-text-color: {{VALUE}};',
 				],
 			]
 		);
@@ -1557,7 +1498,7 @@ class Form extends Form_Base {
 					'default' => Global_Colors::COLOR_TEXT,
 				],
 				'selectors' => [
-					// Add selectors
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-button-text-color-hover: {{VALUE}};',
 				],
 			]
 		);
@@ -1606,8 +1547,55 @@ class Form extends Form_Base {
 					'yes' => esc_html__( 'Yes', 'hello-plus' ),
 					'no' => esc_html__( 'No', 'hello-plus' ),
 				],
-				'default' => 'yes',
+				'default' => '',
 				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'button_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
+					],
+				],
+				'default' => [
+					'size' => 2,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-button-border-width: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'button_border_switcher' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'button_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-button-border-color: {{VALUE}};',
+				],
+				'condition' => [
+					'button_border_switcher' => 'yes',
+				],
 			]
 		);
 
@@ -1623,20 +1611,24 @@ class Form extends Form_Base {
 					'round' => 'Round',
 				],
 				'default' => 'default',
-				'selectors' => [
-					// Add selectors
-				],
 			]
 		);
 
 		$this->add_control(
 			'button_text_padding',
 			[
-				'label' => esc_html__( 'Text Padding', 'hello-plus' ),
+				'label' => esc_html__( 'Padding', 'hello-plus' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
+				'default' => [
+					'top' => '8',
+					'right' => '40',
+					'bottom' => '8',
+					'left' => '40',
+					'unit' => 'px',
+				],
 				'selectors' => [
-					// Add selectors
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-button-padding-block-end: {{BOTTOM}}{{UNIT}}; --ehp-form-button-padding-block-start: {{TOP}}{{UNIT}}; --ehp-form-button-padding-inline-end: {{RIGHT}}{{UNIT}}; --ehp-form-button-padding-inline-start: {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]

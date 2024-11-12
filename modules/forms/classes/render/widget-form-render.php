@@ -104,7 +104,7 @@ class Widget_Form_Render {
 						switch ( $item['field_type'] ) :
 							case 'textarea':
 								// PHPCS - the method make_textarea_field is safe.
-								echo $this->widget->make_textarea_field( $item, $item_index ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+								echo $this->widget->make_textarea_field( $item, $item_index, $this->settings ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 								break;
 
 							case 'select':
@@ -157,6 +157,9 @@ class Widget_Form_Render {
 		$button_width_mobile = $this->settings['button_width_mobile'];
 		$button_hover_animation = $this->settings['button_hover_animation'];
 		$button_classnames = 'ehp-form__button';
+		$button_border = $this->settings['button_border_switcher'];
+		$button_corner_shape = $this->settings['button_shape'];
+		$button_type = $this->settings['button_type'];
 
 		$this->widget->add_render_attribute( 'submit-group', [
 			'class' => 'ehp-form__submit-group',
@@ -172,6 +175,18 @@ class Widget_Form_Render {
 
 		if ( ! empty( $button_width_mobile ) ) {
 			$button_classnames .= ' has-width-sm-' . $button_width_mobile;
+		}
+
+		if ( 'yes' === $button_border ) {
+			$button_classnames .= ' has-border';
+		}
+
+		if ( ! empty( $button_corner_shape ) ) {
+			$button_classnames .= ' has-shape-' . $button_corner_shape;
+		}
+
+		if ( ! empty( $button_type ) ) {
+			$button_classnames .= ' is-type-' . $button_type;
 		}
 	
 		$this->widget->add_render_attribute( 'button', [
@@ -222,13 +237,13 @@ class Widget_Form_Render {
 		?>
 		<div class="ehp-form__text-container">
 			<?php if ( $has_heading ) {
-				$heading_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Elementor_Utils::validate_html_tag( $heading_tag ), 'class="ehp-cta__heading"', esc_html( $heading_text ) );
+				$heading_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Elementor_Utils::validate_html_tag( $heading_tag ), 'class="ehp-form__heading"', esc_html( $heading_text ) );
 				// Escaped above
 				Elementor_Utils::print_unescaped_internal_string( $heading_output );
 			} ?>
 
 			<?php if ( $has_description ) { ?>
-				<p><?php echo esc_html( $description_text ); ?></p>
+				<p class="ehp-form__description"><?php echo esc_html( $description_text ); ?></p>
 			<?php } ?>
 		</div>
 		<?php

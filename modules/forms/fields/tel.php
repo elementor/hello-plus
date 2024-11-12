@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Tel extends Field_Base {
 
 	public function get_type() {
-		return 'tel';
+		return 'ehp-tel';
 	}
 
 	public function get_name() {

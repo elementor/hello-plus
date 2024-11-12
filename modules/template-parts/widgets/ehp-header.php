@@ -77,9 +77,8 @@ class Ehp_Header extends Ehp_Widget_Base {
 		$this->add_style_box_section();
 	}
 
-	protected function add_advanced_tab(): void {
+	public function add_custom_advanced_sections(): void {
 		$this->add_advanced_behavior_section();
-		parent::add_advanced_tab();
 	}
 
 	protected function add_content_site_logo_section() {

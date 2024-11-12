@@ -18,12 +18,10 @@ use HelloPlus\Includes\Utils as Theme_Utils;
 
 use HelloPlus\Modules\TemplateParts\Classes\{
 	Render\Widget_Footer_Render,
-	Traits\Shared_Header_Traits,
 	Control_Media_Preview,
 };
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
-
 
 class Ehp_Footer extends Ehp_Widget_Base {
 
@@ -67,6 +65,7 @@ class Ehp_Footer extends Ehp_Widget_Base {
 	protected function register_controls(): void {
 		$this->add_content_section();
 		$this->add_style_section();
+		$this->add_advanced_tab();
 	}
 
 	public function add_content_section(): void {
@@ -81,6 +80,8 @@ class Ehp_Footer extends Ehp_Widget_Base {
 		$this->add_style_contact_section();
 		$this->add_style_box_section();
 	}
+
+	public function add_custom_advanced_sections(): void {}
 
 	public function add_content_brand_section(): void {
 		$this->start_controls_section(

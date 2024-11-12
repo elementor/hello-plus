@@ -3,7 +3,7 @@ namespace HelloPlus\Modules\Forms\Classes;
 
 use HelloPlus\Includes\Utils;
 use HelloPlus\Modules\Forms\Module;
-use HelloPlus\Plugin;
+use Elementor\Utils as ElementorUtils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -220,7 +220,7 @@ class Ajax_Handler {
 			$this->add_error_message( $this->get_default_message( self::INVALID_FORM, $this->current_form['settings'] ) );
 		}
 
-		$post_id = Utils::unstable_get_super_global_value( $_POST, 'post_id' ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$post_id = ElementorUtils::get_super_global_value( $_POST, 'post_id' ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 
 		$error_msg = implode( '<br>', $this->messages['error'] );
 		if ( current_user_can( 'edit_post', $post_id ) && ! empty( $this->messages['admin_error'] ) ) {

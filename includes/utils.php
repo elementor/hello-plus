@@ -5,6 +5,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use Elementor\Utils as ElementorUtils;
+
 /**
  * class Utils
  **/
@@ -62,7 +64,7 @@ class Utils {
 		];
 
 		foreach ( $server_ip_keys as $key ) {
-			$value = static::unstable_get_super_global_value( $_SERVER, $key );
+			$value = ElementorUtils::get_super_global_value( $_SERVER, $key );
 			if ( $value && filter_var( $value, FILTER_VALIDATE_IP ) ) {
 				return $value;
 			}

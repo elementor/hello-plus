@@ -195,8 +195,6 @@ abstract class Form_Base extends Widget_Base {
 					'class' => [
 						'ehp-form__field-group',
 						'is-field-type-' . $item['field_type'],
-						// 'elementor-field-group',
-						// 'elementor-column',
 						'is-field-group-' . $item['custom_id'],
 					],
 				],

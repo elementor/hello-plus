@@ -17,8 +17,8 @@
 
 .ehp-form {
 	--ehp-column-width: 100%;
-	--ehp-form-row-gap: 20px;
-	--ehp-form-column-gap: 20px;
+	--ehp-form-row-gap: 32px;
+	--ehp-form-column-gap: 32px;
 	--ehp-form-button-icon-spacing: 8px;
 	--ehp-form-button-icon-position: row;
 	--ehp-form-text-container-align: center;
@@ -43,6 +43,24 @@
 	--ehp-form-button-padding-block-start: 8px;
 	--ehp-form-button-padding-inline-end: 16px;
 	--ehp-form-button-padding-inline-start: 16px;
+	--ehp-form-content-width: 640px;
+	--ehp-form-box-padding-block-end: 60px;
+	--ehp-form-box-padding-block-start: 60px;
+	--ehp-form-box-padding-inline-end: 60px;
+	--ehp-form-box-padding-inline-start: 60px;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-block-start: var(--ehp-form-box-padding-block-start);
+	padding-block-end: var(--ehp-form-box-padding-block-end);
+	padding-inline-start: var(--ehp-form-box-padding-inline-start);
+	padding-inline-end: var(--ehp-form-box-padding-inline-end);
+
+	& > * {
+		max-width: var(--ehp-form-content-width);
+		width: 100%;
+	}
 
 	&__wrapper {
 		display: flex;
@@ -146,6 +164,7 @@
 	&__submit-group {
 		display: flex;
 		justify-content: var(--ehp-form-button-align);
+		margin-top: var(--ehp-form-row-gap);
 	}
 
 	&__button[type="submit"] {

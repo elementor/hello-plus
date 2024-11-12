@@ -1045,7 +1045,8 @@ class Form extends Form_Base {
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'default' => [
-					'size' => 10,
+					'size' => 32,
+					'unit' => 'px',
 				],
 				'range' => [
 					'px' => [
@@ -1071,7 +1072,8 @@ class Form extends Form_Base {
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'default' => [
-					'size' => 10,
+					'size' => 32,
+					'unit' => 'px',
 				],
 				'range' => [
 					'px' => [
@@ -1715,6 +1717,7 @@ class Form extends Form_Base {
 			[
 				'name' => 'box_background',
 				'types' => [ 'classic', 'gradient' ],
+				'exclude' => [ 'image' ],
 				'selector' => '{{WRAPPER}} .ehp-form',
 				'fields_options' => [
 					'background' => [
@@ -1751,7 +1754,7 @@ class Form extends Form_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-content-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-content-width: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -1764,7 +1767,7 @@ class Form extends Form_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-box-padding-block-end: {{BOTTOM}}{{UNIT}}; --cta-box-padding-block-start: {{TOP}}{{UNIT}}; --cta-box-padding-inline-end: {{RIGHT}}{{UNIT}}; --cta-box-padding-inline-start: {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-box-padding-block-end: {{BOTTOM}}{{UNIT}}; --ehp-form-box-padding-block-start: {{TOP}}{{UNIT}}; --ehp-form-box-padding-inline-end: {{RIGHT}}{{UNIT}}; --ehp-form-box-padding-inline-start: {{LEFT}}{{UNIT}};',
 				],
 				'default' => [
 					'top' => '60',

@@ -36,7 +36,6 @@ export const OnboardingPage = () => {
 		stepAction,
 		buttonText,
 		step,
-		setStep,
 		onboardingSettings: { nonce, modalCloseRedirectUrl, kits } = {},
 	} = useAdminContext();
 
@@ -86,7 +85,7 @@ export const OnboardingPage = () => {
 		} finally {
 			setIsLoading( false );
 		}
-	}, [ allowTracking, nonce, setIsLoading, setStep, stepAction ] );
+	}, [ allowTracking, nonce, setIsLoading, stepAction ] );
 
 	const onClose = () => {
 		window.location.href = modalCloseRedirectUrl;

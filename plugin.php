@@ -186,7 +186,6 @@ final class Plugin {
 	 */
 	private function __construct() {
 		register_activation_hook( HELLO_PLUS_PLUGIN_BASE, [ $this, 'activate' ] );
-		add_action( 'init', [ $this, 'redirect_on_first_activation' ] );
 
 		static $autoloader_registered = false;
 
@@ -194,6 +193,8 @@ final class Plugin {
 			$autoloader_registered = spl_autoload_register( [ $this, 'autoload' ] );
 		}
 
+		add_action( 'init', [ $this, 'redirect_on_first_activation' ] );
+		
 		$this->init_modules();
 	}
 }

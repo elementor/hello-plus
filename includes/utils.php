@@ -34,10 +34,6 @@ class Utils {
 		return self::$elementor_installed;
 	}
 
-	public static function get_site_domain() {
-		return str_ireplace( 'www.', '', wp_parse_url( home_url(), PHP_URL_HOST ) );
-	}
-
 	public static function get_current_post_id() {
 		if ( isset( self::elementor()->documents ) && self::elementor()->documents->get_current() ) {
 			return self::elementor()->documents->get_current()->get_main_id();

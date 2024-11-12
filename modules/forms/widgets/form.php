@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Form extends Form_Base {
 
 	public function get_name() {
-		return 'form-lite';
+		return 'ehp-form';
 	}
 
 	public function get_title() {
@@ -35,7 +35,7 @@ class Form extends Form_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'form', 'forms', 'field', 'button', 'mailchimp', 'drip', 'mailpoet', 'convertkit', 'getresponse', 'recaptcha', 'zapier', 'webhook', 'activecampaign', 'slack', 'discord', 'mailerlite' ];
+		return [ 'form', 'forms', 'field', 'button' ];
 	}
 
 	protected function is_dynamic_content(): bool {
@@ -53,7 +53,11 @@ class Form extends Form_Base {
 	 * @return array Widget style dependencies.
 	 */
 	public function get_style_depends(): array {
-		return [ 'widget-form' ];
+		return [ 'ehp-form' ];
+	}
+
+	public static function get_site_domain() {
+		return str_ireplace( 'www.', '', wp_parse_url( home_url(), PHP_URL_HOST ) );
 	}
 
 	protected function render(): void {
@@ -752,7 +756,7 @@ class Form extends Form_Base {
 			]
 		);
 
-		$site_domain = Utils::get_site_domain();
+		$site_domain = $this->get_site_domain();
 
 		$this->add_control(
 			'email_from',

@@ -12,11 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Redirect extends Action_Base {
 
-	public function get_name() {
-		return 'redirect';
+	public function get_name(): string {
+		return 'ehp-redirect';
 	}
 
-	public function get_label() {
+	public function get_label(): string {
 		return esc_html__( 'Redirect', 'hello-plus' );
 	}
 

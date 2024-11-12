@@ -14,11 +14,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Email extends Action_Base {
 
-	public function get_name() {
-		return 'email';
+	public function get_name(): string {
+		return 'ehp-email';
 	}
 
-	public function get_label() {
+	public function get_label(): string {
 		return esc_html__( 'Email', 'hello-plus' );
 	}
 

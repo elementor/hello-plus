@@ -9,9 +9,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 abstract class Action_Base {
 
-	abstract public function get_name();
+	abstract public function get_name(): string;
 
-	abstract public function get_label();
+	abstract public function get_label(): string;
 
 	/**
 	 * Get the action ID.

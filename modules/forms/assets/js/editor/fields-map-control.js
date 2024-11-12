@@ -4,7 +4,7 @@ module.exports = elementor.modules.controls.Repeater.extend( {
 	},
 
 	updateMap( fields ) {
-		var self = this,
+		const self = this,
 			savedMapObject = {};
 
 		self.collection.each( function( model ) {
@@ -13,8 +13,8 @@ module.exports = elementor.modules.controls.Repeater.extend( {
 
 		self.collection.reset();
 
-		_.each( fields, function( field ) {
-			var model = {
+		fields.forEach( function( field ) {
+			const model = {
 				remote_id: field.remote_id,
 				remote_label: field.remote_label,
 				remote_type: field.remote_type ? field.remote_type : '',
@@ -31,22 +31,22 @@ module.exports = elementor.modules.controls.Repeater.extend( {
 	onRender() {
 		elementor.modules.controls.Base.prototype.onRender.apply( this, arguments );
 
-		var self = this;
+		const self = this;
 
 		self.children.each( function( view ) {
-			var localFieldsControl = view.children.last(),
+			const localFieldsControl = view.children.last(),
 				options = {
 					'': '- ' + __( 'None', 'elementor' ) + ' -',
-				},
-				label = view.model.get( 'remote_label' );
+				};
+			let label = view.model.get( 'remote_label' );
 
 			if ( view.model.get( 'remote_required' ) ) {
 				label += '<span class="elementor-required">*</span>';
 			}
 
-			_.each( self.elementSettingsModel.get( 'form_fields' ).models, function( model, index ) {
+			self.elementSettingsModel.get( 'form_fields' ).models.forEach( function( model, index ) {
 				// If it's an email field, add only email fields from thr form
-				var remoteType = view.model.get( 'remote_type' );
+				const remoteType = view.model.get( 'remote_type' );
 
 				if ( 'text' !== remoteType && remoteType !== model.get( 'field_type' ) ) {
 					return;

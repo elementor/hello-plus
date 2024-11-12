@@ -152,8 +152,9 @@ class Widget_Form_Render {
 		$button_icon = $this->settings['selected_button_icon'];
 		$button_text = $this->settings['button_text'];
 		$button_css_id = $this->settings['button_css_id'];
-		$button_size = $this->settings['button_size'];
 		$button_width = $this->settings['button_width'];
+		$button_width_tablet = $this->settings['button_width_tablet'];
+		$button_width_mobile = $this->settings['button_width_mobile'];
 		$button_hover_animation = $this->settings['button_hover_animation'];
 		$button_classnames = 'ehp-form__button';
 
@@ -161,12 +162,16 @@ class Widget_Form_Render {
 			'class' => 'ehp-form__submit-group',
 		] );
 
-		if ( ! empty( $button_size ) ) {
-			$button_classnames .= ' has-size-' . $button_size;
-		}
-
 		if ( ! empty( $button_width ) ) {
 			$button_classnames .= ' has-width-' . $button_width;
+		}
+
+		if ( ! empty( $button_width_tablet ) ) {
+			$button_classnames .= ' has-width-md-' . $button_width_tablet;
+		}
+
+		if ( ! empty( $button_width_mobile ) ) {
+			$button_classnames .= ' has-width-sm-' . $button_width_mobile;
 		}
 	
 		$this->widget->add_render_attribute( 'button', [

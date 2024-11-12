@@ -18,6 +18,8 @@
 	--ehp-column-width: 100%;
 	--ehp-form-row-gap: 20px;
 	--ehp-form-column-gap: 20px;
+	--ehp-form-button-icon-spacing: 8px;
+	--ehp-form-button-icon-position: row;
 
 	&__wrapper {
 		display: flex;
@@ -39,8 +41,16 @@
 		}
 	}
 
+	&__button[type="submit"] {
+		align-items: center;
+		display: flex;
+		flex-direction: var(--ehp-form-button-icon-position);
+		justify-content: center;
+		gap: var(--ehp-form-button-icon-spacing);
+	}
+
 	&__field-group,
-	&__button {
+	&__button[type="submit"] {
 		width: var(--ehp-column-width);
 
 		&.has-width {

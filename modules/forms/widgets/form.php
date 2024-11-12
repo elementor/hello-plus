@@ -502,16 +502,6 @@ class Form extends Form_Base {
 			]
 		);
 
-		$this->add_control(
-			'button_size',
-			[
-				'label' => esc_html__( 'Size', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'sm',
-				'options' => self::get_button_sizes(),
-			]
-		);
-
 		$this->add_responsive_control(
 			'button_width',
 			[
@@ -577,7 +567,7 @@ class Form extends Form_Base {
 					'right' => is_rtl() ? 'row' : 'row-reverse',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .elementor-button-content-wrapper' => 'flex-direction: {{VALUE}};',
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-button-icon-position: {{VALUE}};',
 				],
 				'condition' => [
 					'button_text!' => '',
@@ -603,12 +593,16 @@ class Form extends Form_Base {
 						'max' => 10,
 					],
 				],
+				'default' => [
+					'size' => 8,
+					'unit' => 'px',
+				],
 				'condition' => [
 					'button_text!' => '',
 					'selected_button_icon[value]!' => '',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .elementor-button span' => 'gap: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-button-icon-spacing: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);

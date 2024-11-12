@@ -9,7 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * class Header
  **/
-class Header extends Document_Base {
+class Ehp_Header extends Document_Base {
+	const LOCATION = 'header';
 
 	public static function get_template_hook(): string {
 		return 'get_header';
@@ -31,7 +32,7 @@ class Header extends Document_Base {
 		return 'eicon-header';
 	}
 
-	public static function get_template( $name, $args ) {
+	protected static function get_template( $name, $args ) {
 		require static::get_templates_path() . 'header.php';
 
 		$templates = [];

@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * class Footer
  **/
-class Footer extends Document_Base {
+class Ehp_Footer extends Document_Base {
 	const LOCATION = 'footer';
 
 	public static function get_template_hook(): string {
@@ -28,7 +28,7 @@ class Footer extends Document_Base {
 		return esc_html__( 'Hello+ Footers', 'hello-plus' );
 	}
 
-	public static function get_template( $name, $args ) {
+	protected static function get_template( $name, $args ) {
 		require static::get_templates_path() . 'footer.php';
 
 		$templates = [];

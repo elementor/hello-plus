@@ -185,16 +185,15 @@ final class Plugin {
 	 * Theme private constructor.
 	 */
 	private function __construct() {
-		register_activation_hook( HELLO_PLUS_PLUGIN_BASE, [ $this, 'activate' ] );
-
 		static $autoloader_registered = false;
 
 		if ( ! $autoloader_registered ) {
 			$autoloader_registered = spl_autoload_register( [ $this, 'autoload' ] );
 		}
 
+		register_activation_hook( HELLO_PLUS_PLUGIN_BASE, [ $this, 'activate' ] );
 		add_action( 'init', [ $this, 'redirect_on_first_activation' ] );
-		
+
 		$this->init_modules();
 	}
 }

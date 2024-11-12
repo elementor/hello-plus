@@ -1147,8 +1147,7 @@ class Form extends Form_Base {
 					],
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .elementor-field-group' => 'padding-right: calc( {{SIZE}}{{UNIT}}/2 ); padding-left: calc( {{SIZE}}{{UNIT}}/2 );',
-					// '{{WRAPPER}} .elementor-form-fields-wrapper' => 'margin-left: calc( -{{SIZE}}{{UNIT}}/2 ); margin-right: calc( -{{SIZE}}{{UNIT}}/2 );',
+					// Add selectors
 				],
 			]
 		);
@@ -1174,9 +1173,7 @@ class Form extends Form_Base {
 					],
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .elementor-field-group' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-					// '{{WRAPPER}} .elementor-field-group.recaptcha_v3-bottomleft, {{WRAPPER}} .elementor-field-group.recaptcha_v3-bottomright' => 'margin-bottom: 0;',
-					// '{{WRAPPER}} .elementor-form-fields-wrapper' => 'margin-bottom: -{{SIZE}}{{UNIT}};',
+					// Add selectors
 				],
 			]
 		);
@@ -1222,7 +1219,7 @@ class Form extends Form_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					// '{{WRAPPER}} .elementor-field-group > label, {{WRAPPER}} .elementor-field-subgroup label' => 'color: {{VALUE}};',
+					// Add selectors
 				],
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
@@ -1237,7 +1234,7 @@ class Form extends Form_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
-					// '{{WRAPPER}} .elementor-mark-required .elementor-field-label:after' => 'color: {{COLOR}};',
+					// Add selectors
 				],
 				'condition' => [
 					'mark_required' => 'yes',
@@ -1249,7 +1246,7 @@ class Form extends Form_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'label_typography',
-				// 'selector' => '{{WRAPPER}} .elementor-field-group > label',
+				'selector' => '{{WRAPPER}} .elementor-field-group > label',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
@@ -1286,7 +1283,7 @@ class Form extends Form_Base {
 					],
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .elementor-field-type-html' => 'padding-bottom: {{SIZE}}{{UNIT}};',
+					// Add selectors
 				],
 			]
 		);
@@ -1297,7 +1294,7 @@ class Form extends Form_Base {
 				'label' => esc_html__( 'Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					// '{{WRAPPER}} .elementor-field-type-html' => 'color: {{VALUE}};',
+					// Add selectors
 				],
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
@@ -1309,7 +1306,7 @@ class Form extends Form_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'html_typography',
-				// 'selector' => '{{WRAPPER}} .elementor-field-type-html',
+				'selector' => '{{WRAPPER}} .elementor-field-type-html',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
@@ -1334,7 +1331,7 @@ class Form extends Form_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					// '{{WRAPPER}} .elementor-field-group .elementor-field' => 'color: {{VALUE}};',
+					// Add selectors
 				],
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
@@ -1346,7 +1343,7 @@ class Form extends Form_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'field_typography',
-				// 'selector' => '{{WRAPPER}} .elementor-field-group .elementor-field, {{WRAPPER}} .elementor-field-subgroup label',
+				'selector' => '{{WRAPPER}} .elementor-field-group .elementor-field, {{WRAPPER}} .elementor-field-subgroup label',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
@@ -1360,8 +1357,7 @@ class Form extends Form_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#ffffff',
 				'selectors' => [
-					// '{{WRAPPER}} .elementor-field-group:not(.elementor-field-type-upload) .elementor-field:not(.elementor-select-wrapper)' => 'background-color: {{VALUE}};',
-					// '{{WRAPPER}} .elementor-field-group .elementor-select-wrapper select' => 'background-color: {{VALUE}};',
+					// Add selectors
 				],
 				'separator' => 'before',
 			]
@@ -1399,8 +1395,7 @@ class Form extends Form_Base {
 					],
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .elementor-field-group:not(.elementor-field-type-upload) .elementor-field:not(.elementor-select-wrapper)' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					// '{{WRAPPER}} .elementor-field-group .elementor-select-wrapper select' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					// Add selectors
 				],
 				'condition' => [
 					'field_border_switcher' => 'yes',
@@ -1414,9 +1409,7 @@ class Form extends Form_Base {
 				'label' => esc_html__( 'Border Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					// '{{WRAPPER}} .elementor-field-group:not(.elementor-field-type-upload) .elementor-field:not(.elementor-select-wrapper)' => 'border-color: {{VALUE}};',
-					// '{{WRAPPER}} .elementor-field-group .elementor-select-wrapper select' => 'border-color: {{VALUE}};',
-					// '{{WRAPPER}} .elementor-field-group .elementor-select-wrapper::before' => 'color: {{VALUE}};',
+					// Add selectors
 				],
 				'separator' => 'before',
 				'condition' => [
@@ -1438,7 +1431,7 @@ class Form extends Form_Base {
 				],
 				'default' => 'default',
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-cta' => '--cta-text-heading-width: var(--cta-text-{{VALUE}}-heading); --cta-text-description-width: var(--cta-text-{{VALUE}}-description);',
+					// Add selectors
 				],
 			]
 		);
@@ -1521,13 +1514,11 @@ class Form extends Form_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				// 'default' => '#ffffff',
 				'global' => [
 					'default' => Global_Colors::COLOR_SECONDARY,
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .elementor-button' => 'color: {{VALUE}};',
-					// '{{WRAPPER}} .elementor-button svg *' => 'fill: {{VALUE}};',
+					// Add selectors
 				],
 			]
 		);
@@ -1569,13 +1560,11 @@ class Form extends Form_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
-				// 'default' => '#ffffff',
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .elementor-button' => 'color: {{VALUE}};',
-					// '{{WRAPPER}} .elementor-button svg *' => 'fill: {{VALUE}};',
+					// Add selectors
 				],
 			]
 		);
@@ -1642,7 +1631,7 @@ class Form extends Form_Base {
 				],
 				'default' => 'default',
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-cta' => '--cta-text-heading-width: var(--cta-text-{{VALUE}}-heading); --cta-text-description-width: var(--cta-text-{{VALUE}}-description);',
+					// Add selectors
 				],
 			]
 		);
@@ -1654,7 +1643,7 @@ class Form extends Form_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'selectors' => [
-					'{{WRAPPER}} .elementor-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					// Add selectors
 				],
 				'separator' => 'before',
 			]

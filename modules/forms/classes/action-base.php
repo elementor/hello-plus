@@ -13,15 +13,6 @@ abstract class Action_Base {
 
 	abstract public function get_label(): string;
 
-	/**
-	 * Get the action ID.
-	 *
-	 * TODO: Make it an abstract function that will replace `get_name()`.
-	 *
-	 * @since 3.5.0
-	 *
-	 * @return string
-	 */
 	public function get_id() {
 		return $this->get_name();
 	}

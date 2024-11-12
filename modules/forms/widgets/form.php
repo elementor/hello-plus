@@ -1042,7 +1042,7 @@ class Form extends Form_Base {
 				],
 				'default' => 'center',
 				'selectors' => [
-					// 	'{{WRAPPER}} .elementor-field-group > label, {{WRAPPER}} .elementor-field-group > .elementor-field' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} .elementor-field-group > label, {{WRAPPER}} .elementor-field-group > .elementor-field' => 'text-align: {{VALUE}};',
 				],
 			]
 		);
@@ -1061,7 +1061,7 @@ class Form extends Form_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					// 	'{{WRAPPER}} .elementor-field-group > label' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .elementor-field-group > label' => 'color: {{VALUE}};',
 				],
 				'global' => [
 					'default' => Global_Colors::COLOR_PRIMARY,
@@ -1094,7 +1094,7 @@ class Form extends Form_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					// 	'{{WRAPPER}} .elementor-field-group > .elementor-field-description' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .elementor-field-group > .elementor-field-description' => 'color: {{VALUE}};',
 				],
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,

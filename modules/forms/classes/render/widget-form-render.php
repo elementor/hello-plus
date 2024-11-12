@@ -3,7 +3,7 @@
 namespace HelloPlus\Modules\Forms\Classes\Render;
 
 if ( ! defined( 'ABSPATH' ) ) {
-    exit; // Exit if accessed directly.
+	exit; // Exit if accessed directly.
 }
 
 use HelloPlus\Modules\Forms\Widgets\Form;
@@ -22,132 +22,132 @@ class Widget_Form_Render {
 	}
 
 	public function render() {
-	$form_name = $this->settings['form_name'];
+		$form_name = $this->settings['form_name'];
 
-	if ( ! empty( $form_name ) ) {
-		$this->widget->add_render_attribute( 'form', 'name', $form_name );
-	}
+		if ( ! empty( $form_name ) ) {
+			$this->widget->add_render_attribute( 'form', 'name', $form_name );
+		}
 
-	$this->widget->add_render_attribute( 'wrapper', [
-		'class' => 'ehp-form__wrapper',
-	] );
+		$this->widget->add_render_attribute( 'wrapper', [
+			'class' => 'ehp-form__wrapper',
+		] );
 
-	$referer_title = trim( wp_title( '', false ) );
+		$referer_title = trim( wp_title( '', false ) );
 
-	if ( ! $referer_title && is_home() ) {
-		$referer_title = get_option( 'blogname' );
-	}
+		if ( ! $referer_title && is_home() ) {
+			$referer_title = get_option( 'blogname' );
+		}
 
-	?>
-		<form class="ehp-form" method="post" <?php $this->widget->get_render_attribute_string( 'form' ); ?>>
-			<?php $this->render_text_container(); ?>
-			<input type="hidden" name="post_id" value="<?php // PHPCS - the method Utils::get_current_post_id is safe.
-				echo Utils::get_current_post_id(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"/>
-			<input type="hidden" name="form_id" value="<?php echo esc_attr( $this->widget->get_id() ); ?>"/>
-			<input type="hidden" name="referer_title" value="<?php echo esc_attr( $referer_title ); ?>" />
+		?>
+			<form class="ehp-form" method="post" <?php $this->widget->get_render_attribute_string( 'form' ); ?>>
+				<?php $this->render_text_container(); ?>
+				<input type="hidden" name="post_id" value="<?php // PHPCS - the method Utils::get_current_post_id is safe.
+					echo Utils::get_current_post_id(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"/>
+				<input type="hidden" name="form_id" value="<?php echo esc_attr( $this->widget->get_id() ); ?>"/>
+				<input type="hidden" name="referer_title" value="<?php echo esc_attr( $referer_title ); ?>" />
 
-			<?php if ( is_singular() ) {
-				// `queried_id` may be different from `post_id` on Single theme builder templates.
-				?>
-				<input type="hidden" name="queried_id" value="<?php echo (int) get_the_ID(); ?>"/>
-			<?php } ?>
-
-			<div <?php $this->widget->print_render_attribute_string( 'wrapper' ); ?>>
-				<?php
-				foreach ( $this->settings['form_fields'] as $item_index => $item ) :
-					$item['input_size'] = $this->settings['input_size'];
-					$this->widget->form_fields_render_attributes( $item_index, $this->settings, $item );
-
-					$field_type = $item['field_type'];
-
-					/**
-					 * Render form field.
-					 *
-					 * Filters the field rendered by Elementor forms.
-					 *
-					 * @since 1.0.0
-					 *
-					 * @param array $item       The field value.
-					 * @param int   $item_index The field index.
-					 * @param Form  $this       An instance of the form.
-					 */
-					$item = apply_filters( 'hello_plus/forms/render/item', $item, $item_index, $this );
-
-					/**
-					 * Render form field.
-					 *
-					 * Filters the field rendered by Elementor forms.
-					 *
-					 * The dynamic portion of the hook name, `$field_type`, refers to the field type.
-					 *
-					 * @since 1.0.0
-					 *
-					 * @param array $item       The field value.
-					 * @param int   $item_index The field index.
-					 * @param Form  $this       An instance of the form.
-					 */
-					$item = apply_filters( "hello_plus/forms/render/item/{$field_type}", $item, $item_index, $this );
-
-					$print_label = ! in_array( $item['field_type'], [ 'hidden', 'html', 'step' ], true );
+				<?php if ( is_singular() ) {
+					// `queried_id` may be different from `post_id` on Single theme builder templates.
 					?>
-				<div <?php $this->widget->print_render_attribute_string( 'field-group' . $item_index ); ?>>
+					<input type="hidden" name="queried_id" value="<?php echo (int) get_the_ID(); ?>"/>
+				<?php } ?>
+
+				<div <?php $this->widget->print_render_attribute_string( 'wrapper' ); ?>>
 					<?php
-					if ( $print_label && $item['field_label'] ) {
+					foreach ( $this->settings['form_fields'] as $item_index => $item ) :
+						$item['input_size'] = $this->settings['input_size'];
+						$this->widget->form_fields_render_attributes( $item_index, $this->settings, $item );
+
+						$field_type = $item['field_type'];
+
+						/**
+						 * Render form field.
+						 *
+						 * Filters the field rendered by Elementor forms.
+						 *
+						 * @since 1.0.0
+						 *
+						 * @param array $item       The field value.
+						 * @param int   $item_index The field index.
+						 * @param Form  $this       An instance of the form.
+						 */
+						$item = apply_filters( 'hello_plus/forms/render/item', $item, $item_index, $this );
+
+						/**
+						 * Render form field.
+						 *
+						 * Filters the field rendered by Elementor forms.
+						 *
+						 * The dynamic portion of the hook name, `$field_type`, refers to the field type.
+						 *
+						 * @since 1.0.0
+						 *
+						 * @param array $item       The field value.
+						 * @param int   $item_index The field index.
+						 * @param Form  $this       An instance of the form.
+						 */
+						$item = apply_filters( "hello_plus/forms/render/item/{$field_type}", $item, $item_index, $this );
+
+						$print_label = ! in_array( $item['field_type'], [ 'hidden', 'html', 'step' ], true );
 						?>
-							<label <?php $this->widget->print_render_attribute_string( 'label' . $item_index ); ?>>
-								<?php // PHPCS - the variable $item['field_label'] is safe.
-								echo $item['field_label']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-							</label>
+					<div <?php $this->widget->print_render_attribute_string( 'field-group' . $item_index ); ?>>
 						<?php
-					}
-
-					switch ( $item['field_type'] ) :
-						case 'textarea':
-							// PHPCS - the method make_textarea_field is safe.
-							echo $this->widget->make_textarea_field( $item, $item_index ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-							break;
-
-						case 'select':
-							// PHPCS - the method make_select_field is safe.
-							echo $this->widget->make_select_field( $item, $item_index ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-							break;
-
-						case 'text':
-						case 'email':
-							$this->widget->add_render_attribute( 'input' . $item_index, 'class', 'elementor-field-textual' );
+						if ( $print_label && $item['field_label'] ) {
 							?>
-								<input size="1" <?php $this->widget->print_render_attribute_string( 'input' . $item_index ); ?>>
+								<label <?php $this->widget->print_render_attribute_string( 'label' . $item_index ); ?>>
+									<?php // PHPCS - the variable $item['field_label'] is safe.
+									echo $item['field_label']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+								</label>
 							<?php
-							break;
+						}
 
-						default:
-							$field_type = $item['field_type'];
+						switch ( $item['field_type'] ) :
+							case 'textarea':
+								// PHPCS - the method make_textarea_field is safe.
+								echo $this->widget->make_textarea_field( $item, $item_index ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+								break;
 
-							/**
-							 * Elementor form field render.
-							 *
-							 * Fires when a field is rendered in the frontend. This hook allows developers to
-							 * add functionality when from fields are rendered.
-							 *
-							 * The dynamic portion of the hook name, `$field_type`, refers to the field type.
-							 *
-							 * @since 1.0.0
-							 *
-							 * @param array $item       The field value.
-							 * @param int   $item_index The field index.
-							 * @param Form  $this       An instance of the form.
-							 */
-							do_action( "hello_plus/forms/render_field/{$field_type}", $item, $item_index, $this );
-					endswitch;
-					?>
+							case 'select':
+								// PHPCS - the method make_select_field is safe.
+								echo $this->widget->make_select_field( $item, $item_index ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+								break;
+
+							case 'text':
+							case 'email':
+								$this->widget->add_render_attribute( 'input' . $item_index, 'class', 'elementor-field-textual' );
+								?>
+									<input size="1" <?php $this->widget->print_render_attribute_string( 'input' . $item_index ); ?>>
+								<?php
+								break;
+
+							default:
+								$field_type = $item['field_type'];
+
+								/**
+								 * Elementor form field render.
+								 *
+								 * Fires when a field is rendered in the frontend. This hook allows developers to
+								 * add functionality when from fields are rendered.
+								 *
+								 * The dynamic portion of the hook name, `$field_type`, refers to the field type.
+								 *
+								 * @since 1.0.0
+								 *
+								 * @param array $item       The field value.
+								 * @param int   $item_index The field index.
+								 * @param Form  $this       An instance of the form.
+								 */
+								do_action( "hello_plus/forms/render_field/{$field_type}", $item, $item_index, $this );
+						endswitch;
+						?>
+					</div>
+					<?php endforeach; ?>
 				</div>
-				<?php endforeach; ?>
-			</div>
-			<?php $this->render_button(); ?>
-		</form>
-	<?php
-   }
-   
+				<?php $this->render_button(); ?>
+			</form>
+		<?php
+	}
+
 	protected function render_button(): void {
 		$button_icon = $this->settings['selected_button_icon'];
 		$button_text = $this->settings['button_text'];

@@ -34,6 +34,10 @@ class Widget_Header_Render {
 		$behavior_float = $this->settings['behavior_float'];
 		$behavior_float_shape = $this->settings['behavior_float_shape'];
 		$behavior_on_scroll = $this->settings['behavior_onscroll_select'];
+		$align_logo = $this->settings['style_align_logo'];
+		$align_title = $this->settings['style_align_title'];
+		$behavior_scale_logo = $this->settings['behavior_sticky_scale_logo'];
+		$behavior_scale_title = $this->settings['behavior_sticky_scale_title'];
 
 		if ( ! empty( $navigation_breakpoint ) ) {
 			$layout_classnames .= ' has-navigation-breakpoint-' . $navigation_breakpoint;
@@ -47,12 +51,28 @@ class Widget_Header_Render {
 			$layout_classnames .= ' has-behavior-float';
 		}
 
+		if ( 'yes' === $behavior_scale_logo ) {
+			$layout_classnames .= ' has-behavior-sticky-scale-logo';
+		}
+
+		if ( 'yes' === $behavior_scale_title ) {
+			$layout_classnames .= ' has-behavior-sticky-scale-title';
+		}
+
 		if ( ! empty( $behavior_float_shape ) ) {
 			$layout_classnames .= ' has-shape-' . $behavior_float_shape;
 		}
 
 		if ( ! empty( $behavior_on_scroll ) ) {
 			$layout_classnames .= ' has-behavior-onscroll-' . $behavior_on_scroll;
+		}
+
+		if ( ! empty( $align_logo ) ) {
+			$layout_classnames .= ' has-align-link-' . $align_logo;
+		}
+
+		if ( ! empty( $align_title ) ) {
+			$layout_classnames .= ' has-align-link-' . $align_title;
 		}
 
 		$render_attributes = [
@@ -66,7 +86,7 @@ class Widget_Header_Render {
 		$this->maybe_add_advanced_attributes();
 
 		?>
-		<div <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
+		<header <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
 			<div class="ehp-header__elements-container">
 				<?php
 				$this->render_site_link();
@@ -74,7 +94,7 @@ class Widget_Header_Render {
 				$this->render_ctas_container();
 				?>
 			</div>
-		</div>
+		</header>
 		<?php
 	}
 
@@ -190,7 +210,6 @@ class Widget_Header_Render {
 			'ehp-header__navigation',
 		] );
 		?>
-		<span class="ehp-header__ghost-element"></span>
 
 		<nav <?php $this->widget->print_render_attribute_string( 'main-menu' ); ?>>
 			<?php
@@ -237,8 +256,13 @@ class Widget_Header_Render {
 		$secondary_cta_button_text = $this->settings['secondary_cta_button_text'];
 		$has_primary_button = ! empty( $primary_cta_button_text );
 		$has_secondary_button = ! empty( $secondary_cta_button_text );
+		$responsive_button_width = $this->settings['cta_responsive_width'] ?? '';
 
 		$ctas_container_classnames = self::CTAS_CONTAINER_CLASSNAME;
+
+		if ( '' !== $responsive_button_width ) {
+			$ctas_container_classnames .= ' has-responsive-width-' . $responsive_button_width;
+		}
 
 		$this->widget->add_render_attribute( 'ctas-container', [
 			'class' => $ctas_container_classnames,

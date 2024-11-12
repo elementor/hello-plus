@@ -22,6 +22,7 @@ abstract class Ehp_Widget_Base extends Widget_Base {
 			esc_html__( 'Advanced', 'hello-plus' )
 		);
 
+		$this->add_custom_advanced_sections();
 		$this->add_basic_css_controls_section();
 
 		$elementor_plugin = Theme_Utils::elementor();
@@ -29,7 +30,30 @@ abstract class Ehp_Widget_Base extends Widget_Base {
 		$elementor_plugin->controls_manager->add_custom_attributes_controls( $this, $advanced_tab_id );
 	}
 
+	abstract public function add_custom_advanced_sections(): void;
+
 	protected function add_basic_css_controls_section(): void {
+		$this->start_controls_section(
+			'advanced_responsive_section',
+			[
+				'label' => esc_html__( 'Responsive', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_ADVANCED,
+			]
+		);
+
+		$this->add_control(
+			'responsive_description',
+			[
+				'raw' => __( 'Responsive visibility will take effect only on preview mode or live page, and not while editing in Elementor.', 'hello-plus' ),
+				'type' => Controls_Manager::RAW_HTML,
+				'content_classes' => 'elementor-descriptor',
+			]
+		);
+
+		$this->add_hidden_device_controls();
+
+		$this->end_controls_section();
+
 		$this->start_controls_section(
 			'advanced_custom_controls_section',
 			[

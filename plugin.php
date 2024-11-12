@@ -6,7 +6,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use HelloPlus\Includes\Module_Base;
-use HelloPlus\Modules\Admin\Classes\Menu\Pages\Setup_Wizard;
 
 /**
  * Theme's main class,
@@ -63,17 +62,11 @@ final class Plugin {
 	}
 
 	public function activate() {
-		if ( ! Setup_Wizard::has_site_wizard_been_completed() ) {
-			set_transient( 'hello_plus_redirect_to_setup_wizard', true );
-		}
+		do_action( 'hello-plus/activate' );
 	}
 
-	public function redirect_on_first_activation() {
-		if ( get_transient( 'hello_plus_redirect_to_setup_wizard' ) ) {
-			delete_transient( 'hello_plus_redirect_to_setup_wizard' );
-			wp_safe_redirect( admin_url( 'admin.php?page=' . Setup_Wizard::SETUP_WIZARD_PAGE_SLUG ) );
-			exit;
-		}
+	public function init() {
+		do_action( 'hello-plus/init' );
 	}
 
 	/**
@@ -192,7 +185,7 @@ final class Plugin {
 		}
 
 		register_activation_hook( HELLO_PLUS_PLUGIN_BASE, [ $this, 'activate' ] );
-		add_action( 'init', [ $this, 'redirect_on_first_activation' ] );
+		add_action( 'init', [ $this, 'init' ] );
 
 		$this->init_modules();
 	}

@@ -6,7 +6,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use HelloPlus\Includes\Module_Base;
-use HelloPlus\Modules\Admin\Classes\Menu\Pages\Setup_Wizard;
 
 /**
  * Theme's main class,
@@ -61,6 +60,15 @@ final class Plugin {
 			'1.0.0'
 		);
 	}
+
+	public function activate() {
+		do_action( 'hello-plus/activate' );
+	}
+
+	public function init() {
+		do_action( 'hello-plus/init' );
+	}
+
 	/**
 	 * @param $class_name
 	 *
@@ -175,6 +183,9 @@ final class Plugin {
 		if ( ! $autoloader_registered ) {
 			$autoloader_registered = spl_autoload_register( [ $this, 'autoload' ] );
 		}
+
+		register_activation_hook( HELLO_PLUS_PLUGIN_BASE, [ $this, 'activate' ] );
+		add_action( 'init', [ $this, 'init' ] );
 
 		$this->init_modules();
 	}

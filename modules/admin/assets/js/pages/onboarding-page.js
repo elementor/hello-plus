@@ -36,7 +36,6 @@ export const OnboardingPage = () => {
 		stepAction,
 		buttonText,
 		step,
-		setStep,
 		onboardingSettings: { nonce, modalCloseRedirectUrl, kits } = {},
 	} = useAdminContext();
 
@@ -69,16 +68,13 @@ export const OnboardingPage = () => {
 							throw new Error( __( 'Failed to activate Elementor plugin', 'hello-plus' ) );
 						}
 					}
-
-					setStep( 1 );
-					setMessage( '' );
+					window.location.reload();
 					break;
 				case 'activate-elementor':
 					setMessage( __( 'Activating Elementor plugin…', 'hello-plus' ) );
 					await wp.ajax.post( 'hello_plus_setup_wizard', data );
 					data.slug = 'elementor';
-					setStep( 1 );
-					setMessage( '' );
+					window.location.reload();
 					break;
 				case 'install-kit':
 					break;
@@ -89,7 +85,7 @@ export const OnboardingPage = () => {
 		} finally {
 			setIsLoading( false );
 		}
-	}, [ allowTracking, nonce, setIsLoading, setStep, stepAction ] );
+	}, [ allowTracking, nonce, setIsLoading, stepAction ] );
 
 	const onClose = () => {
 		window.location.href = modalCloseRedirectUrl;

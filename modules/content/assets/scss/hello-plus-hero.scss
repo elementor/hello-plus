@@ -165,6 +165,7 @@
 
 		&.is-type-link,
 		&.is-type-link:not([href]):not([tabindex]) {
+			background: none;
 			text-decoration: underline;
 		}
 

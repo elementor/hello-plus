@@ -15,9 +15,6 @@ class Admin_Menu_Controller {
 	const SETUP_WIZARD_TRANSIENT_NAME = 'hello_plus_redirect_to_setup_wizard';
 
 	public function admin_menu() {
-		$settings = new Settings();
-		$settings->register_settings_page();
-
 		$setup_wizard = new Setup_Wizard();
 		$setup_wizard->register_setup_wizard_page();
 

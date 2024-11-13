@@ -373,15 +373,15 @@ class Hero extends Widget_Base {
 					],
 				],
 				'default' => [
-					'size' => 800,
+					'size' => 440,
 					'unit' => 'px',
 				],
 				'tablet_default' => [
-					'size' => 800,
+					'size' => 440,
 					'unit' => 'px',
 				],
 				'mobile_default' => [
-					'size' => 800,
+					'size' => 440,
 					'unit' => 'px',
 				],
 				'selectors' => [
@@ -539,7 +539,7 @@ class Hero extends Widget_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
-					'default' => Global_Colors::COLOR_SECONDARY,
+					'default' => Global_Colors::COLOR_TEXT,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-hero' => '--hero-button-text-color-hover: {{VALUE}}',
@@ -559,7 +559,7 @@ class Hero extends Widget_Base {
 						'default' => 'classic',
 					],
 					'color' => [
-						'default' => '#0052FF',
+						'default' => Global_Colors::COLOR_ACCENT,
 					],
 				],
 				'condition' => [

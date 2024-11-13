@@ -30,6 +30,7 @@ class Document {
 		$documents = $this->get_documents_list();
 
 		foreach ( $documents as $document ) {
+			/** @var \HelloPlus\Modules\TemplateParts\Documents\Document_Base $doc_class */
 			$doc_class = '\HelloPlus\Modules\TemplateParts\Documents\\' . $document;
 
 			// add the doc type to Elementor documents:

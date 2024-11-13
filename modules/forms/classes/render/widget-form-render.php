@@ -193,6 +193,7 @@ class Widget_Form_Render {
 			'class' => $button_classnames,
 			'type' => 'submit',
 		] );
+
 		if ( $button_hover_animation ) {
 			$this->widget->add_render_attribute( 'button', 'class', 'elementor-animation-' . $button_hover_animation );
 		}

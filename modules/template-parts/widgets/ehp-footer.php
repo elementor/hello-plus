@@ -17,11 +17,11 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use HelloPlus\Includes\Utils as Theme_Utils;
 
 use HelloPlus\Modules\TemplateParts\Classes\{
-	Render\Widget_Footer_Render
+	Render\Widget_Footer_Render,
+	Control_Media_Preview,
 };
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
-
 
 class Ehp_Footer extends Ehp_Widget_Base {
 
@@ -81,6 +81,8 @@ class Ehp_Footer extends Ehp_Widget_Base {
 		$this->add_style_box_section();
 	}
 
+	public function add_custom_advanced_sections(): void {}
+
 	public function add_content_brand_section(): void {
 		$this->start_controls_section(
 			'site_logo_label',
@@ -97,7 +99,7 @@ class Ehp_Footer extends Ehp_Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'logo' => 'Site Logo',
-					'title' => 'Site Title',
+					'title' => 'Site Name',
 				],
 				'default' => 'logo',
 				'tablet_default' => 'logo',
@@ -108,14 +110,18 @@ class Ehp_Footer extends Ehp_Widget_Base {
 		$this->add_control(
 			'site_logo_image',
 			[
-				'label' => esc_html__( 'Choose Image', 'hello-plus' ),
-				'type' => Controls_Manager::MEDIA,
+				'label' => esc_html__( 'Site Logo', 'hello-plus' ),
+				'type' => Control_Media_Preview::CONTROL_TYPE,
+				'src' => $this->get_site_logo_url(),
 				'default' => [
 					'url' => $this->get_site_logo_url(),
 				],
 				'condition' => [
 					'site_logo_brand_select' => 'logo',
 				],
+			],
+			[
+				'recursive' => true,
 			]
 		);
 
@@ -146,7 +152,7 @@ class Ehp_Footer extends Ehp_Widget_Base {
 			[
 				'type' => Controls_Manager::ALERT,
 				'alert_type' => 'info',
-				'content' => esc_html__( 'Go to', 'hello-plus' ) . ' <a href="#" onclick="helloPlusLogo.openSiteIdentity( event )" >' . esc_html__( 'Site Identity > Site Description', 'hello-plus' ) . '</a>' . esc_html__( ' to edit the Site Title', 'hello-plus' ),
+				'content' => esc_html__( 'Go to', 'hello-plus' ) . ' <a href="#" onclick="helloPlusLogo.openSiteIdentity( event )" >' . esc_html__( 'Site Identity > Site Description', 'hello-plus' ) . '</a>' . esc_html__( ' to edit the Site Name', 'hello-plus' ),
 				'condition' => [
 					'site_logo_brand_select' => 'title',
 				],
@@ -521,7 +527,7 @@ class Ehp_Footer extends Ehp_Widget_Base {
 		$this->add_control(
 			'site_title_heading',
 			[
-				'label' => esc_html__( 'Site Title', 'hello-plus' ),
+				'label' => esc_html__( 'Site Name', 'hello-plus' ),
 				'type' => Controls_Manager::HEADING,
 				'condition' => [
 					'site_logo_brand_select' => 'title',

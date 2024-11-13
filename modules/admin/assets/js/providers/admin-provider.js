@@ -11,7 +11,7 @@ export const AdminProvider = ( { children } ) => {
 	const [ stepAction, setStepAction ] = useState( '' );
 	const [ step, setStep ] = useState( 0 );
 	const [ buttonText, setButtonText ] = useState( '' );
-	const { elementorInstalled, elementorActive } = onboardingSettings;
+	const { elementorInstalled, elementorActive, wizardCompleted } = onboardingSettings;
 	const { elementorAppConfig } = window;
 
 	useEffect( () => {
@@ -21,6 +21,10 @@ export const AdminProvider = ( { children } ) => {
 	}, [ elementorAppConfig ] );
 
 	useEffect( () => {
+		if ( wizardCompleted ) {
+			setStep( 2 );
+			return;
+		}
 		if ( false === elementorInstalled ) {
 			setStepAction( 'install-elementor' );
 			setButtonText( __( 'Start building my website', 'hello-plus' ) );
@@ -34,7 +38,7 @@ export const AdminProvider = ( { children } ) => {
 			setButtonText( __( 'Install Kit', 'hello-plus' ) );
 			setStep( 1 );
 		}
-	}, [ elementorInstalled, elementorActive ] );
+	}, [ elementorInstalled, elementorActive, wizardCompleted ] );
 
 	useEffect( () => {
 		Promise.all( [
@@ -56,6 +60,7 @@ export const AdminProvider = ( { children } ) => {
 			setStep,
 			isLoading,
 			elementorKitSettings,
+			setIsLoading,
 		} }>
 			{ children }
 		</AdminContext.Provider>

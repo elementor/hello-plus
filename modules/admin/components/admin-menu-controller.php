@@ -12,9 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Admin_Menu_Controller {
 
-	public function __construct() {
-		add_action( 'hello-plus/admin-menu', array( $this, 'admin_menu' ) );
-	}
+	const SETUP_WIZARD_TRANSIENT_NAME = 'hello_plus_redirect_to_setup_wizard';
 
 	public function admin_menu() {
 		$settings = new Settings();
@@ -25,5 +23,26 @@ class Admin_Menu_Controller {
 
 		$kits_library = new Kits_Library();
 		$kits_library->register_kits_library_page();
+	}
+
+	public function activate() {
+		if ( ! Setup_Wizard::has_site_wizard_been_completed() ) {
+			set_transient( self::SETUP_WIZARD_TRANSIENT_NAME, true );
+		}
+	}
+
+	public function redirect_on_first_activation() {
+		if ( empty( get_transient( self::SETUP_WIZARD_TRANSIENT_NAME ) ) ) {
+			return;
+		}
+		delete_transient( self::SETUP_WIZARD_TRANSIENT_NAME );
+		wp_safe_redirect( admin_url( 'admin.php?page=' . Setup_Wizard::SETUP_WIZARD_PAGE_SLUG ) );
+		exit;
+	}
+
+	public function __construct() {
+		add_action( 'hello-plus-theme/admin-menu', [ $this, 'admin_menu' ] );
+		add_action( 'hello-plus/activate', [ $this, 'activate' ] );
+		add_action( 'hello-plus/init', [ $this, 'redirect_on_first_activation' ] );
 	}
 }

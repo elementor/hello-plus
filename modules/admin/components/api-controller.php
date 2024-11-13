@@ -21,4 +21,12 @@ class Api_Controller {
 
 		$this->ajax_classes['setup-wizard'] = new Setup_Wizard();
 	}
+
+	public function get_endpoint( string $endpoint ) {
+		if ( ! isset( $this->endpoints[ $endpoint ] ) ) {
+			throw new \Exception( esc_html__( 'Endpoint not found', 'hello-plus' ) );
+		}
+
+		return $this->endpoints[ $endpoint ];
+	}
 }

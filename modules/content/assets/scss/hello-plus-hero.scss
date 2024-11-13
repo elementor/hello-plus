@@ -154,40 +154,35 @@
 			border-radius: var(--hero-button-border-radius);
 		}
 
-		&.is-type {
-
-			&-button {
-				background-color: var(--hero-button-background-color);
-				padding-block-end: var(--hero-button-padding-block-end);
-				padding-block-start: var(--hero-button-padding-block-start);
-				padding-inline-end: var(--hero-button-padding-inline-end);
-				padding-inline-start: var(--hero-button-padding-inline-start);
-				text-decoration: none;
-			}
-
-			&-link,
-			&-link:not([href]):not([tabindex]) {
-				text-decoration: underline;
-			}
+		&.is-type-button {
+			background-color: var(--hero-button-background-color);
+			padding-block-end: var(--hero-button-padding-block-end);
+			padding-block-start: var(--hero-button-padding-block-start);
+			padding-inline-end: var(--hero-button-padding-inline-end);
+			padding-inline-start: var(--hero-button-padding-inline-start);
+			text-decoration: none;
 		}
 
-		&.has-shape {
+		&.is-type-link,
+		&.is-type-link:not([href]):not([tabindex]) {
+			background: none;
+			text-decoration: underline;
+		}
 
-			&-sharp {
-				border-radius: $corners-shape-sharp;
-			}
+		&.has-shape-sharp {
+			border-radius: $corners-shape-sharp;
+		}
 
-			&-rounded {
-				border-radius: $corners-shape-rounded;
-			}
+		&.has-shape-rounded {
+			border-radius: $corners-shape-rounded;
+		}
 
-			&-round {
-				border-radius: $corners-shape-round;
-			}
+		&.has-shape-round {
+			border-radius: $corners-shape-round;
+		}
 
-			&-default {
-				border-radius: $corners-shape-default;
-			}
+		&.has-shape-default {
+			border-radius: $corners-shape-default;
 		}
 	}
 

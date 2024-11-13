@@ -131,24 +131,26 @@ class elementorHelloPlusHeaderHandler {
 
 	toggleSubMenu( event ) {
 		event.preventDefault();
-		const subMenu = event.target.nextElementSibling;
-		const itemTarget = event.target;
+		const target = event.target;
+		const isSvg = target.classList.contains( 'ehp-header__submenu-toggle-icon' );
+		const targetItem = isSvg ? target.parentElement : target;
+		const subMenu = isSvg ? target.parentElement.nextElementSibling : target.nextElementSibling;
 		const ariaHidden = subMenu.getAttribute( 'aria-hidden' );
 
 		if ( 'true' === ariaHidden ) {
-			this.openSubMenu( itemTarget, subMenu );
+			this.openSubMenu( targetItem, subMenu );
 		} else {
-			this.closeSubMenu( itemTarget, subMenu );
+			this.closeSubMenu( targetItem, subMenu );
 		}
 	}
 
-	openSubMenu( itemTarget, subMenu ) {
-		itemTarget.setAttribute( 'aria-expanded', 'true' );
+	openSubMenu( targetItem, subMenu ) {
+		targetItem.setAttribute( 'aria-expanded', 'true' );
 		subMenu.setAttribute( 'aria-hidden', 'false' );
 	}
 
-	closeSubMenu( itemTarget, subMenu ) {
-		itemTarget.setAttribute( 'aria-expanded', 'false' );
+	closeSubMenu( targetItem, subMenu ) {
+		targetItem.setAttribute( 'aria-expanded', 'false' );
 		subMenu.setAttribute( 'aria-hidden', 'true' );
 	}
 
@@ -207,5 +209,5 @@ class elementorHelloPlusHeaderHandler {
 }
 
 window.addEventListener( 'elementor/frontend/init', () => {
-	elementorFrontend.hooks.addAction( 'frontend/element_ready/header.default', () => new elementorHelloPlusHeaderHandler() );
+	elementorFrontend.hooks.addAction( 'frontend/element_ready/ehp-header.default', () => new elementorHelloPlusHeaderHandler() );
 } );

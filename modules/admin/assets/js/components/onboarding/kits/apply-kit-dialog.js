@@ -1,7 +1,7 @@
 import { DialogModal } from '../../dialog/dialog';
 import { __ } from '@wordpress/i18n';
 
-export const ApplyKitDialog = ( { title, startImportProcess, onClose } ) => {
+export const ApplyKitDialog = ( { title, startImportProcess, onClose, isLoading } ) => {
 	return ( <DialogModal
 		// Translators: %s is the kit name.
 		title={ __( 'Apply %s?', 'hello-plus' ).replace( '%s', title ) }
@@ -10,5 +10,6 @@ export const ApplyKitDialog = ( { title, startImportProcess, onClose } ) => {
 		approveButtonColor="primary"
 		approveButtonOnClick={ () => startImportProcess( true ) }
 		onClose={ onClose }
+		isLoading={ isLoading }
 	/> );
 };

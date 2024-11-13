@@ -15,6 +15,7 @@ export const DialogModal = (
 		approveButtonUrl,
 		title,
 		text,
+		isLoading,
 	},
 ) => {
 	return (
@@ -39,8 +40,8 @@ export const DialogModal = (
 				<Button onClick={ onClose } color="secondary">
 					{ __( 'Cancel', 'hello-plus' ) }
 				</Button>
-				<Button target="_blank" rel="opener" href={ approveButtonUrl } onClick={ approveButtonOnClick } variant="contained">
-					{ approveButtonText }
+				<Button disabled={ isLoading } target="_blank" rel="opener" href={ approveButtonUrl } onClick={ approveButtonOnClick } variant="contained">
+					{ isLoading ? __( 'Processing…', 'hello-plus' ) : approveButtonText }
 				</Button>
 			</DialogActions>
 		</Dialog>

@@ -71,7 +71,7 @@ abstract class Form_Base extends Widget_Base {
 					'class' => [
 						'ehp-form__field',
 						'elementor-field',
-						'elementor-select-wrapper',
+						'ehp-form__select',
 						'remove-before',
 						esc_attr( $item['css_classes'] ),
 					],

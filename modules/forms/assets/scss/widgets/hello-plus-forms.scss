@@ -124,11 +124,12 @@
 		color: var(--ehp-form-label-color);
 	}
 
-	&__field,
+	&__field:not(.ehp-form__select),
 	&__field[type="text"],
 	&__field[type="email"],
 	&__field[type="tel"],
-	&__textarea {
+	&__textarea,
+	&__select select {
 		background-color: var(--ehp-form-field-bg-color);
 		border: 0;
 		border-radius: 0;
@@ -165,6 +166,7 @@
 		display: flex;
 		justify-content: var(--ehp-form-button-align);
 		margin-top: var(--ehp-form-row-gap);
+		padding-inline: calc(var(--ehp-form-column-gap) / 2);
 	}
 
 	&__button[type="submit"] {
@@ -231,4 +233,38 @@
 			}
 		}
 	}
+
+	&__select {
+		position: relative;
+
+		.select-caret-down-wrapper {
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			inset-inline-end: 10px;
+			pointer-events: none;
+			font-size: 11px;
+		
+			svg {
+				display: unset;
+				width: 1em;
+				aspect-ratio: unset;
+				fill: currentColor;
+			}
+		
+			i {
+				font-size: 19px;
+				line-height: 2;
+			}
+		}
+
+		select {
+			appearance: none;
+
+			&::-ms-expand {
+				display: none;
+			}
+		}
+	}
+
 }

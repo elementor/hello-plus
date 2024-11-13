@@ -91,9 +91,9 @@ jobs:
       - name: Push to Slack on PR merge
         if: ${{ github.event.pull_request.merged == true }}
         run: |
-          curl -F file=@hello-plus.zip -F "initial_comment=Hello plus - A new PR has been pushed to the master branch by ${{ github.actor }}."  title="${{ github.event.pull_request.title }}" -F channels=C080P1MTWTD -H "Authorization: Bearer ${{ secrets.CLOUD_SLACK_BOT_TOKEN }}" https://slack.com/api/files.upload
+          curl -F file=@hello-plus.zip -F "initial_comment=Hello plus - A new PR has been pushed to the master branch by ${{ github.actor }}."  title="${{ github.event.pull_request.title }}" -F channels=C081F86TPFS -H "Authorization: Bearer ${{ secrets.CLOUD_SLACK_BOT_TOKEN }}" https://slack.com/api/files.upload
 
       - name: Push to Slack on Manual Trigger
         if: ${{ github.event.inputs.push_to_slack == 'true'  }}
         run: |
-          curl -F file=@hello-plus.zip -F "initial_comment=Hello plus - A new build was triggered by ${{ github.actor }}."  title="Manuall ${{ steps.date.outputs.date }}" -F channels=C080P1MTWTD -H "Authorization: Bearer ${{ secrets.CLOUD_SLACK_BOT_TOKEN }}" https://slack.com/api/files.upload
+          curl -F file=@hello-plus.zip -F "initial_comment=Hello plus - A new build was triggered by ${{ github.actor }}."  title="Manuall ${{ steps.date.outputs.date }}" -F channels=C081F86TPFS -H "Authorization: Bearer ${{ secrets.CLOUD_SLACK_BOT_TOKEN }}" https://slack.com/api/files.upload

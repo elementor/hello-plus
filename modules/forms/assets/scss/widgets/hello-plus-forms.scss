@@ -1,0 +1,58 @@
+@import "../breakpoints";
+
+@mixin field-width-sizes() {
+	&-33 {
+		--ehp-form-field-width: 33.3333%;
+	}
+
+	&-50 {
+		--ehp-form-field-width: 50%;
+	}
+
+	&-100 {
+		--ehp-form-field-width: 100%;
+	}
+}
+
+.ehp-form {
+	--ehp-form-field-width: 100%;
+	--ehp-form-row-gap: 20px;
+	--ehp-form-column-gap: 20px;
+
+	&__wrapper {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		margin-inline: calc(var(--ehp-form-column-gap) / -2);
+		row-gap: var(--ehp-form-row-gap);
+	}
+
+	&__field-group {
+		padding-inline: calc(var(--ehp-form-column-gap) / 2);
+		width: var(--ehp-form-field-width);
+
+		&.has-width {
+			@include field-width-sizes();
+
+			&-md {
+				@media screen and (max-width: $screen-desktop-min) {
+					@include field-width-sizes();
+				}
+			}
+
+			&-sm {
+				@media screen and (max-width: $screen-tablet-min) {
+					@include field-width-sizes();
+				}
+			}
+		}
+
+		&.is-field-required .ehp-form__field-label {
+			&::after {
+				content: "*";
+				color: red;
+				display: inline-block;
+			}
+		}
+	}
+}

@@ -5,6 +5,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use Elementor\Utils as ElementorUtils;
+
 /**
  * class Utils
  **/
@@ -32,5 +34,35 @@ class Utils {
 		}
 
 		return self::$elementor_installed;
+	}
+
+	public static function get_current_post_id() {
+		if ( isset( self::elementor()->documents ) && self::elementor()->documents->get_current() ) {
+			return self::elementor()->documents->get_current()->get_main_id();
+		}
+
+		return get_the_ID();
+	}
+
+	public static function get_client_ip() {
+		$server_ip_keys = [
+			'HTTP_CLIENT_IP',
+			'HTTP_X_FORWARDED_FOR',
+			'HTTP_X_FORWARDED',
+			'HTTP_X_CLUSTER_CLIENT_IP',
+			'HTTP_FORWARDED_FOR',
+			'HTTP_FORWARDED',
+			'REMOTE_ADDR',
+		];
+
+		foreach ( $server_ip_keys as $key ) {
+			$value = ElementorUtils::get_super_global_value( $_SERVER, $key );
+			if ( $value && filter_var( $value, FILTER_VALIDATE_IP ) ) {
+				return $value;
+			}
+		}
+
+		// Fallback local ip.
+		return '127.0.0.1';
 	}
 }

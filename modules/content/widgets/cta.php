@@ -117,7 +117,7 @@ class CTA extends Widget_Base {
 				'label' => esc_html__( 'Description', 'hello-plus' ),
 				'type' => Controls_Manager::TEXTAREA,
 				'rows' => 6,
-				'default' => esc_html__( 'Schedule a free consultation with our team and let\'s make things happen!', 'hello-plus' ),
+				'default' => htmlspecialchars_decode( __( 'Schedule a free consultation with our team and let\'s make things happen!', 'hello-plus' ) ),
 				'placeholder' => esc_html__( 'Type your text here', 'hello-plus' ),
 				'dynamic' => [
 					'active' => true,
@@ -675,7 +675,7 @@ class CTA extends Widget_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
-					'default' => Global_Colors::COLOR_SECONDARY,
+					'default' => Global_Colors::COLOR_TEXT,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color-hover: {{VALUE}}',

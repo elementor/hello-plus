@@ -4,7 +4,7 @@ assets/dev/
 assets/scss/
 assets/js/qunit-tests*
 bin/
-build/
+//build/
 composer.json
 composer.lock
 Gruntfile.js

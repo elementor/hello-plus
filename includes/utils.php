@@ -44,14 +44,6 @@ class Utils {
 		return get_the_ID();
 	}
 
-	public static function unstable_get_super_global_value( $super_global, $key ) {
-		if ( ! isset( $super_global[ $key ] ) ) {
-			return null;
-		}
-
-		return wp_kses_post_deep( wp_unslash( $super_global[ $key ] ) );
-	}
-
 	public static function get_client_ip() {
 		$server_ip_keys = [
 			'HTTP_CLIENT_IP',

@@ -452,6 +452,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'condition' => [
 					'site_logo_brand_select' => 'logo',
 				],
+				'description' => esc_html__( 'Logo will be aligned to start on smaller screens', 'hello-plus' ),
 			]
 		);
 
@@ -510,6 +511,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'condition' => [
 					'site_logo_brand_select' => 'title',
 				],
+				'description' => esc_html__( 'Site Name will be aligned to start on smaller screens', 'hello-plus' ),
 			]
 		);
 

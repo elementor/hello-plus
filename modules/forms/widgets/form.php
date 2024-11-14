@@ -145,9 +145,9 @@ class Form extends Form_Base {
 			'text' => esc_html__( 'Text', 'hello-plus' ),
 			'email' => esc_html__( 'Email', 'hello-plus' ),
 			'textarea' => esc_html__( 'Textarea', 'hello-plus' ),
-			'tel' => esc_html__( 'Tel', 'hello-plus' ),
+			'ehp-tel' => esc_html__( 'Tel', 'hello-plus' ),
 			'select' => esc_html__( 'Select', 'hello-plus' ),
-			'acceptance' => esc_html__( 'Acceptance', 'hello-plus' ),
+			'ehp-acceptance' => esc_html__( 'Acceptance', 'hello-plus' ),
 		];
 
 		$repeater->start_controls_tabs( 'form_fields_tabs' );

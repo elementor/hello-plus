@@ -1,8 +1,8 @@
 export default class Forms extends elementorModules.Module {
 	constructor() {
 		super();
-
-		elementorFrontend.elementsHandler.attachHandler( 'form-lite', [
+		console.log( 'Forms constructor' );
+		elementorFrontend.elementsHandler.attachHandler( 'ehp-form', [
 			() => import( /* webpackChunkName: 'form-lite' */ './handlers/form-sender' ),
 			() => import( /* webpackChunkName: 'form-lite' */ './handlers/form-redirect' ),
 		] );

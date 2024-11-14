@@ -65,4 +65,8 @@ class Utils {
 		// Fallback local ip.
 		return '127.0.0.1';
 	}
+
+	public static function get_site_domain() {
+		return str_ireplace( 'www.', '', wp_parse_url( home_url(), PHP_URL_HOST ) );
+	}
 }

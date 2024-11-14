@@ -3,7 +3,7 @@ export default elementorModules.frontend.handlers.Base.extend( {
 	getDefaultSettings() {
 		return {
 			selectors: {
-				form: '.elementor-form-lite',
+				form: '.ehp-form',
 				submitButton: '[type="submit"]',
 			},
 			action: 'hello_plus_forms_lite_send_form',

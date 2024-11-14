@@ -137,7 +137,7 @@ class Widget_Form_Render {
 								 * @param int   $item_index The field index.
 								 * @param Form  $this       An instance of the form.
 								 */
-								do_action( "hello_plus/forms/render_field/{$field_type}", $item, $item_index, $this );
+								do_action( "hello_plus/forms/render_field/{$field_type}", $item, $item_index, $this->widget );
 						endswitch;
 						?>
 					</div>
@@ -219,7 +219,7 @@ class Widget_Form_Render {
 						);
 					?>
 				<?php endif; ?>
-				
+
 				<?php if ( ! empty( $button_text ) ) : ?>
 					<span <?php $this->widget->print_render_attribute_string( 'button-text' ); ?>><?php $this->widget->print_unescaped_setting( 'button_text' ); ?></span>
 				<?php endif; ?>

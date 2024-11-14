@@ -1,10 +1,7 @@
 *.zip
 karma.conf.js
-assets/dev/
-assets/scss/
-assets/js/qunit-tests*
+assets/
 bin/
-build/
 composer.json
 composer.lock
 Gruntfile.js

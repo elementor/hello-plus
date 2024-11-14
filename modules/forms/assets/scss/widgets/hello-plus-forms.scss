@@ -206,7 +206,7 @@
 			&-link,
 			&-link:not([href]):not([tabindex]) {
 				background: none;
-				
+
 
 				.ehp-form__button-text {
 					text-decoration: underline;
@@ -244,14 +244,14 @@
 			inset-inline-end: 10px;
 			pointer-events: none;
 			font-size: 11px;
-		
+
 			svg {
 				display: unset;
 				width: 1em;
 				aspect-ratio: unset;
 				fill: currentColor;
 			}
-		
+
 			i {
 				font-size: 19px;
 				line-height: 2;

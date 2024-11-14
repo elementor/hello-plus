@@ -52,5 +52,7 @@ class Module extends Module_Base {
 	protected function register_hooks(): void {
 		parent::register_hooks();
 		add_action( 'elementor/elements/categories_registered', [ $this, 'add_hello_plus_e_panel_categories' ] );
+		add_action( 'hello-plus-theme/header_footer', '__return_false' );
+		add_action( 'hello-plus-theme/enqueue_theme_style', '__return_false' );
 	}
 }

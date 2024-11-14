@@ -3,7 +3,7 @@ name: NPM CI
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
   workflow_dispatch:
 
@@ -35,7 +35,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          registry-url: 'https://npm.pkg.github.com'  
+          registry-url: 'https://npm.pkg.github.com'
           scope: '@elementor'
 
       - name: Install Dependencies

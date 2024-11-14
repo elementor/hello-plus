@@ -1,5 +1,4 @@
-@import "../variables/breakpoints";
-@import "../variables/variables.scss";
+@import "../../../../../assets/dev/scss/variables";
 
 @mixin column-width-sizes() {
 	&-33 {

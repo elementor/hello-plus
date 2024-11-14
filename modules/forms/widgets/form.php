@@ -42,6 +42,18 @@ class Form extends Form_Base {
 		return false;
 	}
 
+	protected function get_upsale_data() {
+		return [
+			'condition' => ! Utils::has_pro(),
+			'image' => esc_url( HELLO_PLUS_URL . '/assets/images/go-pro.svg' ),
+			'image_alt' => esc_attr__( 'Upgrade Now', 'elementor' ),
+			'title' => esc_html__( 'Take your forms further', 'elementor' ),
+			'description' => esc_html__( 'Unlock advanced form customization and field options with Elementor Pro.', 'elementor' ),
+			'upgrade_url' => esc_url( 'https://go.elementor.com/go-pro/' ),
+			'upgrade_text' => esc_html__( 'Upgrade Now', 'elementor' ),
+		];
+	}
+
 	/**
 	 * Get style dependencies.
 	 *

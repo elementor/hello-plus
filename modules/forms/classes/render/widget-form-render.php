@@ -188,7 +188,7 @@ class Widget_Form_Render {
 		if ( ! empty( $button_type ) ) {
 			$button_classnames .= ' is-type-' . $button_type;
 		}
-	
+
 		$this->widget->add_render_attribute( 'button', [
 			'class' => $button_classnames,
 			'type' => 'submit',

@@ -66,12 +66,12 @@ class Utils {
 		return '127.0.0.1';
 	}
 
-	public static function ends_with( $string, $end_string ) {
+	public static function ends_with( $full_string, $end_string ) {
 		$len = strlen( $end_string );
-		if ( $len == 0 ) {
+		if ( 0 === $len ) {
 			return true;
 		}
 
-		return ( substr( $string, - $len ) === $end_string );
+		return ( substr( $full_string, - $len ) === $end_string );
 	}
 }

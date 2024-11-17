@@ -2,6 +2,9 @@
 
 namespace HelloPlus\Modules\Admin\Components;
 
+use HelloPlus\Includes\Utils;
+use HelloPlus\Modules\Admin\Classes\Menu\Pages\Setup_Wizard;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -15,7 +18,7 @@ class Scripts_Controller {
 	public function enqueue_hello_plus_onboarding_scripts() {
 		$screen = get_current_screen();
 
-		if ( 'hello_page_hello-plus-setup-wizard' !== $screen->id ) {
+		if ( ! Utils::ends_with( $screen->id, Setup_Wizard::SETUP_WIZARD_PAGE_SLUG ) ) {
 			return;
 		}
 

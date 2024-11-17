@@ -41,9 +41,9 @@ class Kits_Library {
 		return self::get_page_by_meta_key( '_elementor_work' );
 	}
 
-	public function register_kits_library_page(): void {
+	public function register_kits_library_page( $parent_slug ): void {
 		add_submenu_page(
-			'hello-plus',
+			$parent_slug,
 			__( 'Kits Library', 'hello-plus' ),
 			__( 'Kits Library', 'hello-plus' ),
 			'manage_options',

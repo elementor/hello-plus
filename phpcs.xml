@@ -50,4 +50,5 @@
 			<property name="additionalWordDelimiters" value="/-" />
 		</properties>
 	</rule>
+	<rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
 </ruleset>

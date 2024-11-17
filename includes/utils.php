@@ -1,4 +1,5 @@
 <?php
+
 namespace HelloPlus\Includes;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -62,7 +63,15 @@ class Utils {
 			}
 		}
 
-		// Fallback local ip.
 		return '127.0.0.1';
+	}
+
+	public static function ends_with( $string, $end_string ) {
+		$len = strlen( $end_string );
+		if ( $len == 0 ) {
+			return true;
+		}
+
+		return ( substr( $string, - $len ) === $end_string );
 	}
 }

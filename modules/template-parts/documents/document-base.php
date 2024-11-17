@@ -83,7 +83,7 @@ abstract class Document_Base extends Library_Document {
 	 * @return ?int
 	 */
 	public static function get_document_post(): ?int {
-		$args  = array(
+		$args  = [
 			'post_type' => 'elementor_library',
 			'fields' => 'ids',
 			'lazy_load_term_meta' => true,
@@ -94,7 +94,7 @@ abstract class Document_Base extends Library_Document {
 					'terms'    => static::get_type(),
 				],
 			],
-		);
+		];
 		$query = new WP_Query( $args );
 		$posts = $query->posts;
 

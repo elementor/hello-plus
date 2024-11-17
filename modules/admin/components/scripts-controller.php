@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Scripts_Controller {
 
 	public function __construct() {
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_hello_plus_onboarding_scripts' ) );
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_hello_plus_onboarding_scripts' ] );
 	}
 
 	public function enqueue_hello_plus_onboarding_scripts() {

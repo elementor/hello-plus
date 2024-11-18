@@ -79,7 +79,7 @@ jobs:
       - name: Build Plugin
         run: |
           rsync -av --exclude-from=.buildignore . hello-plus
-          zip -r hello-plus.zip hello-plus
+          npm run zip
 
       - name: Archive
         uses: actions/upload-artifact@v4

@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Acceptance extends Field_Base {
 
 	public function get_type() {
-		return 'acceptance';
+		return 'ehp-acceptance';
 	}
 
 	public function get_name() {

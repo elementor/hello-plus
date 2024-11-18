@@ -21,6 +21,10 @@ class Utils {
 		return \Elementor\Plugin::$instance;
 	}
 
+	public static function has_pro() {
+		return defined( 'ELEMENTOR_PRO_VERSION' );
+	}
+
 	public static function is_elementor_active(): bool {
 		if ( null === self::$elementor_active ) {
 			self::$elementor_active = defined( 'ELEMENTOR_VERSION' );

@@ -104,7 +104,7 @@ class Widget_Form_Render {
 						switch ( $item['field_type'] ) :
 							case 'textarea':
 								// PHPCS - the method make_textarea_field is safe.
-								echo $this->widget->make_textarea_field( $item, $item_index ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+								echo $this->widget->make_textarea_field( $item, $item_index, $this->settings ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 								break;
 
 							case 'select':
@@ -137,7 +137,7 @@ class Widget_Form_Render {
 								 * @param int   $item_index The field index.
 								 * @param Form  $this       An instance of the form.
 								 */
-								do_action( "hello_plus/forms/render_field/{$field_type}", $item, $item_index, $this );
+								do_action( "hello_plus/forms/render_field/{$field_type}", $item, $item_index, $this->widget );
 						endswitch;
 						?>
 					</div>
@@ -152,16 +152,41 @@ class Widget_Form_Render {
 		$button_icon = $this->settings['selected_button_icon'];
 		$button_text = $this->settings['button_text'];
 		$button_css_id = $this->settings['button_css_id'];
-		$button_size = $this->settings['button_size'];
+		$button_width = $this->settings['button_width'];
+		$button_width_tablet = $this->settings['button_width_tablet'];
+		$button_width_mobile = $this->settings['button_width_mobile'];
 		$button_hover_animation = $this->settings['button_hover_animation'];
 		$button_classnames = 'ehp-form__button';
+		$button_border = $this->settings['button_border_switcher'];
+		$button_corner_shape = $this->settings['button_shape'];
+		$button_type = $this->settings['button_type'];
 
 		$this->widget->add_render_attribute( 'submit-group', [
 			'class' => 'ehp-form__submit-group',
 		] );
 
-		if ( ! empty( $button_size ) ) {
-			$button_classnames .= ' has-size-' . $button_size;
+		if ( ! empty( $button_width ) ) {
+			$button_classnames .= ' has-width-' . $button_width;
+		}
+
+		if ( ! empty( $button_width_tablet ) ) {
+			$button_classnames .= ' has-width-md-' . $button_width_tablet;
+		}
+
+		if ( ! empty( $button_width_mobile ) ) {
+			$button_classnames .= ' has-width-sm-' . $button_width_mobile;
+		}
+
+		if ( 'yes' === $button_border ) {
+			$button_classnames .= ' has-border';
+		}
+
+		if ( ! empty( $button_corner_shape ) ) {
+			$button_classnames .= ' has-shape-' . $button_corner_shape;
+		}
+
+		if ( ! empty( $button_type ) ) {
+			$button_classnames .= ' is-type-' . $button_type;
 		}
 
 		$this->widget->add_render_attribute( 'button', [
@@ -194,7 +219,7 @@ class Widget_Form_Render {
 						);
 					?>
 				<?php endif; ?>
-				
+
 				<?php if ( ! empty( $button_text ) ) : ?>
 					<span <?php $this->widget->print_render_attribute_string( 'button-text' ); ?>><?php $this->widget->print_unescaped_setting( 'button_text' ); ?></span>
 				<?php endif; ?>
@@ -213,13 +238,13 @@ class Widget_Form_Render {
 		?>
 		<div class="ehp-form__text-container">
 			<?php if ( $has_heading ) {
-				$heading_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Elementor_Utils::validate_html_tag( $heading_tag ), 'class="ehp-cta__heading"', esc_html( $heading_text ) );
+				$heading_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Elementor_Utils::validate_html_tag( $heading_tag ), 'class="ehp-form__heading"', esc_html( $heading_text ) );
 				// Escaped above
 				Elementor_Utils::print_unescaped_internal_string( $heading_output );
 			} ?>
 
 			<?php if ( $has_description ) { ?>
-				<p><?php echo esc_html( $description_text ); ?></p>
+				<p class="ehp-form__description"><?php echo esc_html( $description_text ); ?></p>
 			<?php } ?>
 		</div>
 		<?php

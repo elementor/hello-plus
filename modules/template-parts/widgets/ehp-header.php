@@ -150,7 +150,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 			[
 				'type' => Controls_Manager::ALERT,
 				'alert_type' => 'info',
-				'content' => esc_html__( 'Go to', 'hello-plus' ) . ' <a href="#" onclick="helloPlusLogo.openSiteIdentity( event )" >' . esc_html__( 'Site Identity > Site Description', 'hello-plus' ) . '</a>' . esc_html__( ' to edit the Site Name', 'hello-plus' ),
+				'content' => esc_html__( 'Go to', 'hello-plus' ) . ' <a href="#" onclick="helloPlusLogo.openSiteIdentity( event )" >' . esc_html__( 'Site Identity > Site Name', 'hello-plus' ) . '</a>' . esc_html__( ' to edit the Site Name', 'hello-plus' ),
 				'condition' => [
 					'site_logo_brand_select' => 'title',
 				],
@@ -452,6 +452,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'condition' => [
 					'site_logo_brand_select' => 'logo',
 				],
+				'description' => esc_html__( 'Logo will be aligned to start on smaller screens', 'hello-plus' ),
 			]
 		);
 
@@ -510,6 +511,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'condition' => [
 					'site_logo_brand_select' => 'title',
 				],
+				'description' => esc_html__( 'Site Name will be aligned to start on smaller screens', 'hello-plus' ),
 			]
 		);
 
@@ -607,7 +609,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
-					'default' => Global_Colors::COLOR_SECONDARY,
+					'default' => Global_Colors::COLOR_ACCENT,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-header' => '--header-menu-item-color-hover: {{VALUE}}',

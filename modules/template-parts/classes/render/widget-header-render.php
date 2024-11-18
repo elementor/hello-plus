@@ -269,11 +269,11 @@ class Widget_Header_Render {
 		] );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'ctas-container' ); ?>>
-			<?php if ( $has_primary_button ) {
-				$this->render_button( 'primary' );
-			} ?>
 			<?php if ( $has_secondary_button ) {
 				$this->render_button( 'secondary' );
+			} ?>
+			<?php if ( $has_primary_button ) {
+				$this->render_button( 'primary' );
 			} ?>
 		</div>
 		<?php

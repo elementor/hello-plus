@@ -144,17 +144,6 @@
 		}
 	}
 
-	&.has-align-link {
-
-		&-center {
-
-			.ehp-header__site-link {
-				grid-area: center;
-				justify-content: center;
-			}
-		}
-	}
-
 	&.has-shape {
 			
 		&-default {
@@ -639,6 +628,14 @@
 		&.has-align-link-start {
 
 			.ehp-header__navigation {
+				justify-content: center;
+			}
+		}
+
+		&.has-align-link-center {
+
+			.ehp-header__site-link {
+				grid-area: center;
 				justify-content: center;
 			}
 		}

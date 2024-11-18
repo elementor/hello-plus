@@ -51,9 +51,9 @@ class Setup_Wizard {
 		return $is_setup_wizard_completed;
 	}
 
-	public function register_setup_wizard_page(): void {
+	public function register_setup_wizard_page( $parent_slug ): void {
 		add_submenu_page(
-			'hello-plus',
+			$parent_slug,
 			__( 'Setup Wizard', 'hello-plus' ),
 			__( 'Setup Wizard', 'hello-plus' ),
 			'manage_options',

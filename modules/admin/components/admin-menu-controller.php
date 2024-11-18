@@ -14,12 +14,12 @@ class Admin_Menu_Controller {
 
 	const SETUP_WIZARD_TRANSIENT_NAME = 'hello_plus_redirect_to_setup_wizard';
 
-	public function admin_menu() {
+	public function admin_menu( $parent_slug ) {
 		$setup_wizard = new Setup_Wizard();
-		$setup_wizard->register_setup_wizard_page();
+		$setup_wizard->register_setup_wizard_page( $parent_slug );
 
 		$kits_library = new Kits_Library();
-		$kits_library->register_kits_library_page();
+		$kits_library->register_kits_library_page( $parent_slug );
 	}
 
 	public function activate() {
@@ -38,7 +38,7 @@ class Admin_Menu_Controller {
 	}
 
 	public function __construct() {
-		add_action( 'hello-plus-theme/admin-menu', [ $this, 'admin_menu' ] );
+		add_action( 'hello-plus-theme/admin-menu', [ $this, 'admin_menu' ], 10, 1 );
 		add_action( 'hello-plus/activate', [ $this, 'activate' ] );
 		add_action( 'hello-plus/init', [ $this, 'redirect_on_first_activation' ] );
 	}

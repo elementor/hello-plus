@@ -49,7 +49,7 @@ class Form extends Form_Base {
 			'image_alt' => esc_attr__( 'Upgrade Now', 'hello-plus' ),
 			'title' => esc_html__( 'Take your forms further', 'hello-plus' ),
 			'description' => esc_html__( 'Unlock advanced form customization and field options with Elementor Pro.', 'hello-plus' ),
-			'upgrade_url' => esc_url( 'https://go.elementor.com/go-pro/' ),
+			'upgrade_url' => esc_url( 'https://go.elementor.com/form-lite-widget-elementor-plugin-pricing/' ),
 			'upgrade_text' => esc_html__( 'Upgrade Now', 'hello-plus' ),
 		];
 	}

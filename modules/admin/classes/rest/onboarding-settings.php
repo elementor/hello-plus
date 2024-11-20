@@ -12,37 +12,11 @@ use HelloPlus\Modules\Admin\Classes\Menu\Pages\Setup_Wizard;
 use WP_REST_Server;
 
 class Onboarding_Settings {
-	// ToDo: replace with the actual kit ids.
-	protected array $kits_ids = [];
-
-	public function __construct() {
-
-		$this->kits_ids = apply_filters( 'hello-plus-kits', [] );
-
-		add_action(
-			'rest_api_init',
-			function () {
-
-				register_rest_route(
-					'elementor-hello-plus/v1',
-					'/onboarding-settings',
-					[
-						'methods' => WP_REST_Server::READABLE,
-						'callback' => [ $this, 'get_onboarding_settings' ],
-						'permission_callback' => function () {
-							return current_user_can( 'manage_options' );
-						},
-					]
-				);
-			}
-		);
-	}
-
 	public function get_kits() {
 		$kits = get_transient( 'e_hello_plus_kits' );
 
 		if ( ! $kits ) {
-			$kits = [];
+			$kits = ['banana'];
 			if ( class_exists( 'Elementor\App\Modules\KitLibrary\Connect\Kit_Library' ) ) {
 				try {
 					$kits = $this->call_and_check(
@@ -60,7 +34,7 @@ class Onboarding_Settings {
 						);
 					}
 
-					set_transient( 'e_hello_plus_kits', $kits, 24 * HOUR_IN_SECONDS );
+//					set_transient( 'e_hello_plus_kits', $kits, 24 * HOUR_IN_SECONDS );
 				} catch ( \Exception $e ) {
 					$kits = [];
 				}
@@ -70,11 +44,19 @@ class Onboarding_Settings {
 		return $kits;
 	}
 
-	public function call_and_check( $url ) {
+	/**
+	 * @param string $url
+	 *
+	 * @return mixed
+	 * @throws \Exception
+	 */
+	public function call_and_check( string $url ) {
 		$response = wp_remote_get( $url );
 
+		error_log( var_export( $response, true ) );
+
 		if ( is_wp_error( $response ) ) {
-			if ( strpos( $url, Kit_Library::DEFAULT_BASE_ENDPOINT ) === 0 ) {
+			if ( 0 === strpos( $url, Kit_Library::DEFAULT_BASE_ENDPOINT ) ) {
 				return $this->call_and_check(
 					str_replace( Kit_Library::DEFAULT_BASE_ENDPOINT, Kit_Library::FALLBACK_BASE_ENDPOINT, $url )
 				);
@@ -86,8 +68,8 @@ class Onboarding_Settings {
 		$response_code = wp_remote_retrieve_response_code( $response );
 
 		if ( 200 !== $response_code ) {
-			if ( strpos( $url, Kit_Library::DEFAULT_BASE_ENDPOINT ) === 0 ) {
-				return $this->call_and_check(
+			if ( 0 === strpos( $url, Kit_Library::DEFAULT_BASE_ENDPOINT ) ) {
+				return $this->call_and_check (
 					str_replace( Kit_Library::DEFAULT_BASE_ENDPOINT, Kit_Library::FALLBACK_BASE_ENDPOINT, $url )
 				);
 			}
@@ -109,7 +91,7 @@ class Onboarding_Settings {
 					'nonce' => $nonce,
 					'elementorInstalled' => Utils::is_elementor_installed(),
 					'elementorActive' => Utils::is_elementor_active(),
-					'modalCloseRedirectUrl' => admin_url( 'admin.php?page=hello-plus' ),
+					'modalCloseRedirectUrl' => admin_url( 'admin.php?page=hello-biz' ),
 					'kits' => $this->get_kits(),
 					'applyKitBaseUrl' => admin_url( 'admin.php?page=elementor-app' ),
 					'wizardCompleted' => Setup_Wizard::has_site_wizard_been_completed(),
@@ -117,5 +99,22 @@ class Onboarding_Settings {
 				],
 			]
 		);
+	}
+
+	public function rest_api_init(  ) {
+		register_rest_route(
+			'elementor-hello-plus/v1',
+			'/onboarding-settings',
+			[
+				'methods' => WP_REST_Server::READABLE,
+				'callback' => [ $this, 'get_onboarding_settings' ],
+				'permission_callback' => function () {
+					return current_user_can( 'manage_options' );
+				},
+			]
+		);
+	}
+	public function __construct() {
+		add_action( 'rest_api_init', [ $this, 'rest_api_init' ] );
 	}
 }

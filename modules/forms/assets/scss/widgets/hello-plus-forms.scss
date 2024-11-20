@@ -2,11 +2,13 @@
 
 @mixin column-width-sizes() {
 	&-33 {
-		--ehp-column-width: 33.3333%;
+		--ehp-column-width: 32.2%;
+		max-width: calc(var(--ehp-column-width) - calc(var(--ehp-form-column-gap) / 2));
 	}
 
 	&-50 {
 		--ehp-column-width: 50%;
+		max-width: calc(var(--ehp-column-width) - var(--ehp-form-column-gap) / 2);
 	}
 
 	&-100 {
@@ -65,15 +67,14 @@
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
-		margin-inline: calc(var(--ehp-form-column-gap) / -2);
 		row-gap: var(--ehp-form-row-gap);
+		column-gap: var(--ehp-form-column-gap);
 	}
 
 	&__field-group {
 		display: flex;
 		flex-direction: column;
 		gap: var(--ehp-form-label-spacing);
-		padding-inline: calc(var(--ehp-form-column-gap) / 2);
 
 		&.is-field-required.is-mark-required .ehp-form__field-label {
 			&::after {
@@ -86,7 +87,7 @@
 
 	&__field-group,
 	&__button[type="submit"] {
-		width: var(--ehp-column-width);
+		width: 100%;
 
 		&.has-width {
 			@include column-width-sizes();
@@ -165,7 +166,6 @@
 		display: flex;
 		justify-content: var(--ehp-form-button-align);
 		margin-top: var(--ehp-form-row-gap);
-		padding-inline: calc(var(--ehp-form-column-gap) / 2);
 	}
 
 	&__button[type="submit"] {
@@ -231,6 +231,14 @@
 				border-radius: $corners-shape-default;
 			}
 		}
+	}
+
+	&__button-icon {
+		color: inherit; // inherit the button color
+		fill: currentColor; // inherit the button color
+		font-size: 1em; // relative to the button font-size
+		height: 1em; // relative to the button font-size
+		width: 1em; // relative to the button font-size
 	}
 
 	&__select {

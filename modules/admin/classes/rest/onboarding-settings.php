@@ -17,7 +17,7 @@ class Onboarding_Settings {
 
 	public function __construct() {
 
-		$this->kits_ids = apply_filters( 'hello-plus-kits', [] );
+		$this->kits_ids = apply_filters( 'hello-plus-kits', [ '673da3942580a31cc679737b' ] );
 
 		add_action(
 			'rest_api_init',

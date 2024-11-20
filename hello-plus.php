@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'HELLO_PLUS_VERSION', '0.0.1' );
+define( 'HELLO_PLUS_VERSION', '0.0.2' );
 
 define( 'HELLO_PLUS__FILE__', __FILE__ );
 define( 'HELLO_PLUS_PLUGIN_BASE', plugin_basename( HELLO_PLUS__FILE__ ) );

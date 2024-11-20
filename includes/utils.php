@@ -78,4 +78,11 @@ class Utils {
 
 		return ( substr( $full_string, - $len ) === $end_string );
 	}
+
+	public static function get_theme_slug(): string {
+		if ( defined( 'EHP_THEME_SLUG' ) ) {
+			return EHP_THEME_SLUG;
+		}
+		return 'hello-plus';
+	}
 }

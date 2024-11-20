@@ -13,7 +13,7 @@ class Templates_Import extends Import_Runner_Base {
 
 	private $import_session_id;
 
-	public static function get_name() : string {
+	public static function get_name(): string {
 		return 'templates';
 	}
 
@@ -64,13 +64,13 @@ class Templates_Import extends Import_Runner_Base {
 		);
 
 		if ( is_wp_error( $new_document ) ) {
-			throw new \Exception( $new_document->get_error_message() );
+			throw new \Exception( esc_html( $new_document->get_error_message() ) );
 		}
 
 		$template_data['import_settings'] = $template_settings;
 		$template_data['id'] = $id;
 
-		$new_attachment_callback = function( $attachment_id ) {
+		$new_attachment_callback = function ( $attachment_id ) {
 			$this->set_session_post_meta( $attachment_id, $this->import_session_id );
 		};
 

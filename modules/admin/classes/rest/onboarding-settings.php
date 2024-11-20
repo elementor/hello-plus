@@ -45,10 +45,19 @@ class Onboarding_Settings {
 			$kits = [];
 			if ( class_exists( 'Elementor\App\Modules\KitLibrary\Connect\Kit_Library' ) ) {
 				try {
-					foreach ( $this->kits_ids as $kit_id ) {
-						$kit = $this->call_and_check( Kit_Library::DEFAULT_BASE_ENDPOINT . '/kits/' . $kit_id );
-						$kit['manifest'] = $this->call_and_check( Kit_Library::DEFAULT_BASE_ENDPOINT . '/kits/' . $kit_id . '/manifest' );
-						$kits[] = $kit;
+					$kits = $this->call_and_check(
+						add_query_arg(
+							[
+								'products' => 'ehp',
+							],
+							Kit_Library::DEFAULT_BASE_ENDPOINT . '/kits'
+						)
+					);
+
+					foreach ( $kits as $index => $kit ) {
+						$kits[ $index ]['manifest'] = $this->call_and_check(
+							Kit_Library::DEFAULT_BASE_ENDPOINT . '/kits/' . $kit['_id'] . '/manifest'
+						);
 					}
 
 					set_transient( 'e_hello_plus_kits', $kits, 24 * HOUR_IN_SECONDS );

@@ -32,7 +32,7 @@ class Ehp_Header extends Document_Base {
 		return 'eicon-header';
 	}
 
-	protected static function get_template( $name, $args ) {
+	public static function get_template( $name, $args ) {
 		require static::get_templates_path() . 'header.php';
 
 		$templates = [];

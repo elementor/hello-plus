@@ -83,22 +83,27 @@ abstract class Document_Base extends Library_Document {
 	 * @return ?int
 	 */
 	public static function get_document_post(): ?int {
+		$posts = static::get_all_document_posts();
+
+		return ( 1 !== count( $posts ) ) ? null : $posts[0];
+	}
+
+	public static function get_all_document_posts(): array {
 		$args  = [
-			'post_type' => 'elementor_library',
+			'post_type' => Source_Local::CPT,
 			'fields' => 'ids',
 			'lazy_load_term_meta' => true,
 			'tax_query' => [
 				[
-					'taxonomy' => self::TAXONOMY_TYPE_SLUG,
-					'field'    => 'slug',
-					'terms'    => static::get_type(),
+					'taxonomy' => static::TAXONOMY_TYPE_SLUG,
+					'field' => 'slug',
+					'terms' => static::get_type(),
 				],
 			],
 		];
 		$query = new WP_Query( $args );
-		$posts = $query->posts;
 
-		return ( 1 !== count( $posts ) ) ? null : $posts[0];
+		return $query->posts;
 	}
 
 	/**

@@ -1,15 +1,16 @@
 <?php
+namespace HelloPlus\Modules\TemplateParts\Classes\Runners;
 
-namespace HelloPlus\Modules\ImportExport\Runners\Import;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 use Elementor\App\Modules\ImportExport\Runners\Import\Import_Runner_Base;
 use Elementor\App\Modules\ImportExport\Utils as ImportExportUtils;
-
-use Elementor\Plugin;
-
 use Elementor\TemplateLibrary\Source_Local;
+use HelloPlus\Includes\Utils;
 
-class Templates_Import extends Import_Runner_Base {
+class Import extends Import_Runner_Base {
 
 	private $import_session_id;
 
@@ -17,7 +18,7 @@ class Templates_Import extends Import_Runner_Base {
 		return 'templates';
 	}
 
-	public function should_import( array $data ) {
+	public function should_import( array $data ): bool {
 		return (
 			isset( $data['include'] ) &&
 			in_array( 'templates', $data['include'], true ) &&
@@ -54,7 +55,7 @@ class Templates_Import extends Import_Runner_Base {
 	private function import_template( $id, array $template_settings, array $template_data ) {
 		$doc_type = $template_settings['doc_type'];
 
-		$new_document = Plugin::$instance->documents->create(
+		$new_document = Utils::elementor()->documents->create(
 			$doc_type,
 			[
 				'post_title' => $template_settings['title'],

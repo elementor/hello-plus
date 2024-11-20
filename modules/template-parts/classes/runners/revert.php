@@ -1,6 +1,10 @@
 <?php
 
-namespace HelloPlus\Modules\ImportExport\Runners\Revert;
+namespace HelloPlus\Modules\TemplateParts\Classes\Runners;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 use Elementor\App\Modules\ImportExport\Runners\Revert\Revert_Runner_Base;
 use Elementor\Core\Base\Document;
@@ -8,17 +12,14 @@ use Elementor\Core\Base\Document;
 use Elementor\TemplateLibrary\Source_Local;
 use HelloPlus\Includes\Utils;
 
-class Templates_Revert extends Revert_Runner_Base {
+class Revert extends Revert_Runner_Base {
 
 	public static function get_name(): string {
 		return 'templates';
 	}
 
 	public function should_revert( array $data ): bool {
-		return (
-			isset( $data['runners'] ) &&
-			array_key_exists( static::get_name(), $data['runners'] )
-		);
+		return isset( $data['runners'][ static::get_name() ] );
 	}
 
 	public function revert( array $data ) {

@@ -161,7 +161,6 @@ final class Plugin {
 			'Content',
 			'TemplateParts',
 			'Forms',
-			'ImportExport',
 		];
 
 		foreach ( $modules_list as $module_name ) {

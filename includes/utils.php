@@ -71,11 +71,12 @@ class Utils {
 	}
 
 	public static function get_site_domain() {
-		return str_ireplace( 'www.', '', parse_url( home_url(), PHP_URL_HOST ) );
+		return str_ireplace( 'www.', '', wp_parse_url( home_url(), PHP_URL_HOST ) );
 	}
 
 	public static function ends_with( $full_string, $end_string ) {
 		$len = strlen( $end_string );
+
 		if ( 0 === $len ) {
 			return true;
 		}
@@ -87,6 +88,7 @@ class Utils {
 		if ( defined( 'EHP_THEME_SLUG' ) ) {
 			return EHP_THEME_SLUG;
 		}
+
 		return 'hello-plus';
 	}
 }

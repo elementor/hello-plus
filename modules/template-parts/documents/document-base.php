@@ -88,8 +88,8 @@ abstract class Document_Base extends Library_Document {
 		return ( 1 !== count( $posts ) ) ? null : $posts[0];
 	}
 
-	public static function get_all_document_posts(): array {
-		$args  = [
+	public static function get_all_document_posts( array $args = [] ): array {
+		$default_args = [
 			'post_type' => Source_Local::CPT,
 			'fields' => 'ids',
 			'lazy_load_term_meta' => true,
@@ -101,9 +101,21 @@ abstract class Document_Base extends Library_Document {
 				],
 			],
 		];
+
+		$args = wp_parse_args( $args, $default_args );
+
 		$query = new WP_Query( $args );
 
 		return $query->posts;
+	}
+
+	public static function get_active_document() {
+		return static::get_all_document_posts(
+			[
+				'post_status' => 'publish',
+				'posts_per_page' => 1,
+			]
+		);
 	}
 
 	/**

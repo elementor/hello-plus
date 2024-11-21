@@ -65,7 +65,6 @@ export default elementorModules.frontend.handlers.Base.extend( {
 	},
 
 	onSuccess( response ) {
-		console.log( response );
 		const $form = this.elements.$form;
 
 		this.elements.$submitButton

@@ -9,6 +9,7 @@ use Elementor\App\Modules\ImportExport\Processes\Import as Elementor_Import;
 use Elementor\App\Modules\ImportExport\Processes\Export as Elementor_Export;
 use Elementor\App\Modules\ImportExport\Processes\Revert as Elementor_Revert;
 
+use HelloPlus\Includes\Utils;
 use HelloPlus\Modules\TemplateParts\Classes\Runners\Import as Ehp_Import;
 use HelloPlus\Modules\TemplateParts\Classes\Runners\Export as Ehp_Export;
 use HelloPlus\Modules\TemplateParts\Classes\Runners\Revert as Ehp_Revert;
@@ -27,9 +28,10 @@ class Import_Export {
 	}
 
 	public function __construct() {
-		if ( defined( 'ELEMENTOR_PRO_VERSION' ) ) {
+		if ( Utils::has_pro() ) {
 			return;
 		}
+
 		add_action( 'elementor/import-export/import-kit', [ $this, 'register_import_runners' ] );
 		add_action( 'elementor/import-export/export-kit', [ $this, 'register_export_runners' ] );
 		add_action( 'elementor/import-export/revert-kit', [ $this, 'register_revert_runners' ] );

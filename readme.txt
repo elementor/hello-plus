@@ -23,13 +23,7 @@ and specialized widgets (Hello Widgets) to ensure a fast, efficient site-buildin
 This Plugin, like WordPress, is distributed under the terms of GPL.
 Use it as your springboard to building a site with ***Elementor***.
 
-Hello+ bundles the following third-party resources:
-
-Font Awesome icons for theme screenshot
-License: SIL Open Font License, version 1.1.
-Source: https://fontawesome.com/v4.7.0/
-
 == Changelog ==
 
-= 0.0.1 - 2024-08-15 =
+= 0.0.3 - 2024-11-21 =
 * Initial Public Release

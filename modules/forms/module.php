@@ -3,7 +3,6 @@
 namespace HelloPlus\Modules\Forms;
 
 use Elementor\Controls_Manager;
-use Elementor\Core\Common\Modules\Ajax\Module as Ajax;
 
 use HelloPlus\Includes\Module_Base;
 

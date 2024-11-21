@@ -28,7 +28,9 @@ class Module extends Module_Base {
 	 * @inheritDoc
 	 */
 	protected function get_component_ids(): array {
-		return [];
+		return [
+			'Theme_Overrides',
+		];
 	}
 
 	/**
@@ -52,8 +54,5 @@ class Module extends Module_Base {
 	protected function register_hooks(): void {
 		parent::register_hooks();
 		add_action( 'elementor/elements/categories_registered', [ $this, 'add_hello_plus_e_panel_categories' ] );
-		add_action( 'hello-plus-theme/settings/header_footer', '__return_false' );
-		add_action( 'hello-plus-theme/settings/hello_theme', '__return_false' );
-		add_action( 'hello-plus-theme/settings/hello_style', '__return_false' );
 	}
 }

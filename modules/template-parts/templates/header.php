@@ -20,7 +20,7 @@ $header = Theme_Utils::elementor()->documents->get( $header_doc_post );
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<?php
 	// PHPCS - not a user input.
-	echo Elementor_Utils::get_meta_viewport( 'hello-plus' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo Elementor_Utils::get_meta_viewport( Theme_Utils::get_theme_slug() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	?>
 	<?php if ( ! current_theme_supports( 'title-tag' ) ) : ?>
 		<title>

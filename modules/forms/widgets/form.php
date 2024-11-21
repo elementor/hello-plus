@@ -202,7 +202,7 @@ class Form extends Form_Base {
 							'name' => 'field_type',
 							'operator' => 'in',
 							'value' => [
-								'tel',
+								'ehp-tel',
 								'text',
 								'email',
 								'textarea',
@@ -579,7 +579,7 @@ class Form extends Form_Base {
 				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
 				'label_off' => esc_html__( 'No', 'hello-plus' ),
 				'return_value' => 'true',
-				'default' => 'true',
+				'default' => '',
 			]
 		);
 
@@ -832,20 +832,6 @@ class Form extends Form_Base {
 				'dynamic' => [
 					'active' => true,
 				],
-			]
-		);
-
-		$this->add_control(
-			'form_validation',
-			[
-				'label' => esc_html__( 'Form Validation', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'' => esc_html__( 'Browser Default', 'hello-plus' ),
-					'custom' => esc_html__( 'Custom', 'hello-plus' ),
-				],
-				'default' => '',
-				'render_type' => 'none',
 			]
 		);
 
@@ -1299,6 +1285,9 @@ class Form extends Form_Base {
 				'selectors' => [
 					'{{WRAPPER}} .ehp-form' => '--ehp-form-field-border-color: {{VALUE}};',
 				],
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
 				'separator' => 'before',
 				'condition' => [
 					'field_border_switcher' => 'yes',
@@ -1628,13 +1617,27 @@ class Form extends Form_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'button_text_padding',
 			[
 				'label' => esc_html__( 'Padding', 'hello-plus' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'default' => [
+					'top' => '8',
+					'right' => '40',
+					'bottom' => '8',
+					'left' => '40',
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'top' => '8',
+					'right' => '40',
+					'bottom' => '8',
+					'left' => '40',
+					'unit' => 'px',
+				],
+				'tablet_default' => [
 					'top' => '8',
 					'right' => '40',
 					'bottom' => '8',

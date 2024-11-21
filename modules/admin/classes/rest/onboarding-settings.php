@@ -91,7 +91,7 @@ class Onboarding_Settings {
 					'nonce' => $nonce,
 					'elementorInstalled' => Utils::is_elementor_installed(),
 					'elementorActive' => Utils::is_elementor_active(),
-					'modalCloseRedirectUrl' => admin_url( 'admin.php?page=hello-biz' ),
+					'modalCloseRedirectUrl' => admin_url( 'admin.php?page=hello-plus' ),
 					'kits' => $this->get_kits(),
 					'applyKitBaseUrl' => admin_url( 'admin.php?page=elementor-app' ),
 					'wizardCompleted' => Setup_Wizard::has_site_wizard_been_completed(),

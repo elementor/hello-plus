@@ -28,7 +28,9 @@ class Module extends Module_Base {
 	 * @inheritDoc
 	 */
 	protected function get_component_ids(): array {
-		return [ 'Theme_Overrides' ];
+		return [
+			'Theme_Overrides',
+		];
 	}
 
 	/**

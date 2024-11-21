@@ -70,6 +70,10 @@ class Utils {
 		return '127.0.0.1';
 	}
 
+	public static function get_site_domain() {
+		return str_ireplace( 'www.', '', parse_url( home_url(), PHP_URL_HOST ) );
+	}
+
 	public static function ends_with( $full_string, $end_string ) {
 		$len = strlen( $end_string );
 		if ( 0 === $len ) {

@@ -2,7 +2,7 @@ export default elementorModules.frontend.handlers.Base.extend( {
 	getDefaultSettings() {
 		return {
 			selectors: {
-				form: '.elementor-form-lite',
+				form: '.ehp-form',
 			},
 		};
 	},

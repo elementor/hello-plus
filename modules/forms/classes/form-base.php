@@ -6,6 +6,7 @@ use Elementor\Widget_Base;
 
 use HelloPlus\Modules\Forms\Module;
 use Elementor\Icons_Manager;
+use HelloPlus\Modules\Theme\Module as Theme_Module;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -279,5 +280,9 @@ abstract class Form_Base extends Widget_Base {
 	private function add_required_attribute( $element ) {
 		$this->add_render_attribute( $element, 'required', 'required' );
 		$this->add_render_attribute( $element, 'aria-required', 'true' );
+	}
+
+	public function get_categories(): array {
+		return [ Theme_Module::HELLO_PLUS_EDITOR_CATEGORY_SLUG ];
 	}
 }

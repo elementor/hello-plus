@@ -83,22 +83,27 @@ abstract class Document_Base extends Library_Document {
 	 * @return ?int
 	 */
 	public static function get_document_post(): ?int {
+		$posts = static::get_all_document_posts();
+
+		return ( 1 !== count( $posts ) ) ? null : $posts[0];
+	}
+
+	public static function get_all_document_posts(): array {
 		$args  = [
-			'post_type' => 'elementor_library',
+			'post_type' => Source_Local::CPT,
 			'fields' => 'ids',
 			'lazy_load_term_meta' => true,
 			'tax_query' => [
 				[
-					'taxonomy' => self::TAXONOMY_TYPE_SLUG,
-					'field'    => 'slug',
-					'terms'    => static::get_type(),
+					'taxonomy' => static::TAXONOMY_TYPE_SLUG,
+					'field' => 'slug',
+					'terms' => static::get_type(),
 				],
 			],
 		];
 		$query = new WP_Query( $args );
-		$posts = $query->posts;
 
-		return ( 1 !== count( $posts ) ) ? null : $posts[0];
+		return $query->posts;
 	}
 
 	/**
@@ -109,22 +114,21 @@ abstract class Document_Base extends Library_Document {
 			return;
 		}
 
-		add_action( static::get_template_hook(), [ static::get_class_full_name(), 'maybe_get_template' ], 10, 2 );
+		$method_name = defined( 'ELEMENTOR_PRO_VERSION' ) ? 'maybe_get_template' : 'get_template';
+		add_action( static::get_template_hook(), [ static::get_class_full_name(), $method_name ], 10, 2 );
 	}
 
 	public static function maybe_get_template( ?string $name, array $args ): void {
-		if ( ! defined( 'ELEMENTOR_PRO_VERSION' ) ) {
-			return;
-		}
-		/** @var \ElementorPro\Modules\ThemeBuilder\Module $theme_builder_module */
-		$theme_builder_module = \ElementorPro\Modules\ThemeBuilder\Module::instance();
-		$conditions_manager = $theme_builder_module->get_conditions_manager();
+		if ( defined( 'ELEMENTOR_PRO_VERSION' ) ) {
+			/** @var \ElementorPro\Modules\ThemeBuilder\Module $theme_builder_module */
+			$theme_builder_module = \ElementorPro\Modules\ThemeBuilder\Module::instance();
+			$conditions_manager = $theme_builder_module->get_conditions_manager();
 
-		$location_docs = $conditions_manager->get_documents_for_location( static::LOCATION );
-		if ( ! empty( $location_docs ) ) {
-			return;
+			$location_docs = $conditions_manager->get_documents_for_location( static::LOCATION );
+			if ( ! empty( $location_docs ) ) {
+				return;
+			}
 		}
-
 		static::get_template( $name, $args );
 	}
 
@@ -141,5 +145,5 @@ abstract class Document_Base extends Library_Document {
 	 *
 	 * @return mixed
 	 */
-	abstract protected static function get_template( ?string $name, array $args );
+	abstract public static function get_template( ?string $name, array $args );
 }

@@ -13,12 +13,17 @@ use Elementor\Core\Documents_Manager;
  **/
 class Document {
 
-	private function get_documents_list(): array {
+	public function get_documents_list(): array {
 		return [
 			'Ehp_Header',
 			'Ehp_Footer',
 		];
 	}
+
+	public function get_documents_namespace(): string {
+		return 'HelloPlus\Modules\TemplateParts\Documents\\';
+	}
+
 	/**
 	 * Add Hello+ documents
 	 *
@@ -28,10 +33,11 @@ class Document {
 	 */
 	public function register( Documents_Manager $documents_manager ) {
 		$documents = $this->get_documents_list();
+		$namespace = $this->get_documents_namespace();
 
 		foreach ( $documents as $document ) {
 			/** @var \HelloPlus\Modules\TemplateParts\Documents\Document_Base $doc_class */
-			$doc_class = '\HelloPlus\Modules\TemplateParts\Documents\\' . $document;
+			$doc_class = $namespace . $document;
 
 			// add the doc type to Elementor documents:
 			$documents_manager->register_document_type( $doc_class::get_type(), $doc_class );

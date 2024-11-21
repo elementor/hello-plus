@@ -26,6 +26,9 @@ class Import_Export {
 	}
 
 	public function __construct() {
+		if ( defined( 'ELEMENTOR_PRO_VERSION' ) ) {
+			return;
+		}
 		add_action( 'elementor/import-export/import-kit', [ $this, 'register_import_runners' ] );
 		add_action( 'elementor/import-export/export-kit', [ $this, 'register_export_runners' ] );
 		add_action( 'elementor/import-export/revert-kit', [ $this, 'register_revert_runners' ] );

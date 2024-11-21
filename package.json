@@ -3,7 +3,7 @@
 	"slug": "hello-plus",
 	"homepage": "https://elementor.com/",
 	"description": "A quick-start theme for Elementor.",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"scripts": {
 		"start": "wp-scripts start",
 		"build": "wp-scripts build",

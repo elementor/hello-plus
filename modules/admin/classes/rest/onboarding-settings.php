@@ -12,21 +12,29 @@ use HelloPlus\Modules\Admin\Classes\Menu\Pages\Setup_Wizard;
 use WP_REST_Server;
 
 class Onboarding_Settings {
+
+	const EHP_KITS_TRANSIENT = 'e_hello_plus_kits';
+
 	public function get_kits() {
-		$kits = get_transient( 'e_hello_plus_kits' );
+		$kits = get_transient( self::EHP_KITS_TRANSIENT );
 
 		if ( ! $kits ) {
 			$kits = ['banana'];
 			if ( class_exists( 'Elementor\App\Modules\KitLibrary\Connect\Kit_Library' ) ) {
+				$args = [
+					'products' => 'ehp',
+				];
+
+				/**
+				 * Filter the arguments used to fetch the Hello+ kits.
+				 *
+				 * @param array $args default arguments.
+				 */
+				$args = apply_filters( 'hello-plus/onboarding/kits-args', $args );
+
+				$endpoint_url = add_query_arg( $args, Kit_Library::DEFAULT_BASE_ENDPOINT . '/kits' );
 				try {
-					$kits = $this->call_and_check(
-						add_query_arg(
-							[
-								'products' => 'ehp',
-							],
-							Kit_Library::DEFAULT_BASE_ENDPOINT . '/kits'
-						)
-					);
+					$kits = $this->call_and_check( $endpoint_url );
 
 					foreach ( $kits as $index => $kit ) {
 						$kits[ $index ]['manifest'] = $this->call_and_check(
@@ -34,7 +42,7 @@ class Onboarding_Settings {
 						);
 					}
 
-//					set_transient( 'e_hello_plus_kits', $kits, 24 * HOUR_IN_SECONDS );
+					set_transient( self::EHP_KITS_TRANSIENT, $kits, 24 * HOUR_IN_SECONDS );
 				} catch ( \Exception $e ) {
 					$kits = [];
 				}

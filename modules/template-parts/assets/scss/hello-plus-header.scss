@@ -581,6 +581,7 @@
 				align-items: var(--header-dropdown-text-align);
 				display: flex;
 				flex-direction: column;
+				margin-bottom: 32px;
 				padding-inline-start: var(--header-box-padding-inline-start);
 				padding-inline-end: var(--header-box-padding-inline-end);
 
@@ -613,13 +614,11 @@
 			align-items: var(--header-dropdown-text-align);
 			display: flex;
 			flex-direction: column;
-			margin-bottom: var(--header-menu-item-spacing);
 			width: 100%;
 			
 			& .ehp-header__dropdown-toggle[aria-expanded="true"] {
 				margin-bottom: var(--header-menu-item-spacing);
 			}
-
 		}
 	}
 

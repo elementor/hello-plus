@@ -25,6 +25,10 @@ class Utils {
 		return defined( 'ELEMENTOR_PRO_VERSION' );
 	}
 
+	public static function has_hello_biz() {
+		return defined( 'HELLO_BIZ_ELEMENTOR_VERSION' );
+	}
+
 	public static function is_elementor_active(): bool {
 		if ( null === self::$elementor_active ) {
 			self::$elementor_active = defined( 'ELEMENTOR_VERSION' );
@@ -83,6 +87,7 @@ class Utils {
 		if ( defined( 'EHP_THEME_SLUG' ) ) {
 			return EHP_THEME_SLUG;
 		}
+
 		return 'hello-plus';
 	}
 }

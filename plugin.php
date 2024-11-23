@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use HelloPlus\Includes\Module_Base;
+use HelloPlus\Includes\Utils;
 
 /**
  * Theme's main class,
@@ -62,6 +63,15 @@ final class Plugin {
 	}
 
 	public function activate() {
+		if ( ! Utils::has_hello_biz() ) {
+			deactivate_plugins( HELLO_PLUS_PLUGIN_BASE );
+			wp_die(
+				esc_html__( 'The Hello Plus plugin requires the Hello Biz theme to be installed and active.', 'hello-plus' ),
+				esc_html__( 'Plugin Activation Error', 'hello-plus' ),
+				[ 'back_link' => true ]
+			);
+		}
+
 		do_action( 'hello-plus/activate' );
 	}
 

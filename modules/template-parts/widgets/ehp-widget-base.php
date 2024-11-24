@@ -8,6 +8,7 @@ use HelloPlus\Modules\TemplateParts\Classes\Traits\Shared_Header_Traits;
 use HelloPlus\Includes\Utils as Theme_Utils;
 
 abstract class Ehp_Widget_Base extends Widget_Base {
+
 	use Shared_Header_Traits;
 
 	public function get_stack( $with_common_controls = true ): array {
@@ -19,7 +20,14 @@ abstract class Ehp_Widget_Base extends Widget_Base {
 	}
 
 	public function hide_on_search() {
-		return true;
+		/**
+		 * allow changing the visibility of the widgets on search
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param bool $hide_on_search the filters value
+		 */
+		return apply_filters( 'hello-plus/modules/template-parts/widgets/hide-on-search', true );
 	}
 
 	protected function add_advanced_tab(): void {

@@ -5,7 +5,6 @@ use Elementor\Controls_Manager;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Background;
-use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Typography;
 use Elementor\Modules\DynamicTags\Module as TagsModule;
 use Elementor\Repeater;
@@ -43,7 +42,7 @@ class Form extends Form_Base {
 		return false;
 	}
 
-	protected function get_upsale_data() {
+	protected function get_upsale_data(): array {
 		return [
 			'condition' => ! Utils::has_pro(),
 			'image' => esc_url( HELLO_PLUS_URL . '/assets/images/go-pro.svg' ),

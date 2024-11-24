@@ -5,7 +5,6 @@ use Elementor\Controls_Manager;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Background;
-use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Typography;
 use Elementor\Modules\DynamicTags\Module as TagsModule;
 use Elementor\Repeater;
@@ -15,6 +14,7 @@ use HelloPlus\Modules\Forms\Classes\Form_Base;
 use HelloPlus\Modules\Forms\Classes\Render\Widget_Form_Render;
 use HelloPlus\Modules\Forms\Controls\Fields_Repeater;
 use HelloPlus\Includes\Utils;
+use HelloPlus\Modules\Forms\Module;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -42,7 +42,7 @@ class Form extends Form_Base {
 		return false;
 	}
 
-	protected function get_upsale_data() {
+	protected function get_upsale_data(): array {
 		return [
 			'condition' => ! Utils::has_pro(),
 			'image' => esc_url( HELLO_PLUS_URL . '/assets/images/go-pro.svg' ),
@@ -66,10 +66,6 @@ class Form extends Form_Base {
 	 */
 	public function get_style_depends(): array {
 		return [ 'ehp-form' ];
-	}
-
-	public static function get_site_domain() {
-		return str_ireplace( 'www.', '', wp_parse_url( home_url(), PHP_URL_HOST ) );
 	}
 
 	protected function render(): void {
@@ -375,6 +371,7 @@ class Form extends Form_Base {
 				'label' => esc_html__( 'ID', 'hello-plus' ),
 				'type' => Controls_Manager::TEXT,
 				'description' => sprintf(
+					/* translators: %1$s: Opening code tag, %2$s: Closing code tag. */
 					esc_html__( 'Please make sure the ID is unique and not used elsewhere on the page. This field allows %1$sA-z 0-9%2$s & underscore chars without spaces.', 'hello-plus' ),
 					'<code>',
 					'</code>'
@@ -549,6 +546,7 @@ class Form extends Form_Base {
 				],
 				'title' => esc_html__( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'hello-plus' ),
 				'description' => sprintf(
+					/* translators: %1$s: Opening code tag, %2$s: Closing code tag. */
 					esc_html__( 'Please make sure the ID is unique and not used elsewhere on the page. This field allows %1$sA-z 0-9%2$s & underscore chars without spaces.', 'hello-plus' ),
 					'<code>',
 					'</code>'
@@ -680,7 +678,7 @@ class Form extends Form_Base {
 			]
 		);
 
-		$site_domain = $this->get_site_domain();
+		$site_domain = Module::get_site_domain();
 
 		$this->add_control(
 			'email_from',
@@ -824,6 +822,7 @@ class Form extends Form_Base {
 				],
 				'placeholder' => 'new_form_id',
 				'description' => sprintf(
+					/* translators: %1$s: Opening code tag, %2$s: Closing code tag. */
 					esc_html__( 'Please make sure the ID is unique and not used elsewhere on the page. This field allows %1$sA-z 0-9%2$s & underscore chars without spaces.', 'hello-plus' ),
 					'<code>',
 					'</code>'

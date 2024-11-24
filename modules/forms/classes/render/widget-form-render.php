@@ -124,7 +124,7 @@ class Widget_Form_Render {
 								$field_type = $item['field_type'];
 
 								/**
-								 * Elementor form field render.
+								 * Hello+ form field render.
 								 *
 								 * Fires when a field is rendered in the frontend. This hook allows developers to
 								 * add functionality when from fields are rendered.

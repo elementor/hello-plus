@@ -48,14 +48,14 @@ class Form_Record {
 			}
 
 			/**
-			 * Elementor form field validation.
+			 * Hello+ form field validation.
 			 *
 			 * Fires when a single form field is being validated. This hook allows developers
 			 * to validate individual field types.
 			 *
 			 * The dynamic portion of the hook name, `$field_type`, refers to the field type.
 			 *
-			 * @since 2.0.0
+			 * @since 1.0.0
 			 *
 			 * @param array        $field        Form field.
 			 * @param Form_Record  $this         An instance of the form record.
@@ -65,12 +65,12 @@ class Form_Record {
 		}
 
 		/**
-		 * Elementor form validation.
+		 * Hello+ form validation.
 		 *
 		 * Fires when form fields are being validated. This hook allows developers
 		 * to validate all form fields.
 		 *
-		 * @since 2.0.0
+		 * @since 1.0.0
 		 *
 		 * @param Form_Record  $this         An instance of the form record.
 		 * @param Ajax_Handler $ajax_handler An instance of the ajax handler.
@@ -89,14 +89,14 @@ class Form_Record {
 			$field_type = $field['type'];
 
 			/**
-			 * Elementor form field process.
+			 * Hello+ form field process.
 			 *
 			 * Fires when a single form field is being processed. This hook allows developers
 			 * to process individual field types.
 			 *
 			 * The dynamic portion of the hook name, `$field_type`, refers to the field type.
 			 *
-			 * @since 2.0.0
+			 * @since 1.0.0
 			 *
 			 * @param array        $field        Form field.
 			 * @param Form_Record  $this         An instance of the form record.
@@ -106,12 +106,12 @@ class Form_Record {
 		}
 
 		/**
-		 * Elementor form process.
+		 * Hello+ form process.
 		 *
 		 * Fires when form fields are being processed. This hook allows developers
 		 * to process all form fields.
 		 *
-		 * @since 2.0.0
+		 * @since 1.0.0
 		 *
 		 * @param Form_Record  $this         An instance of the form record.
 		 * @param Ajax_Handler $ajax_handler An instance of the ajax handler.

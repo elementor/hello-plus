@@ -461,7 +461,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 			[
 				'label' => __( 'Logo Width', 'hello-plus' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px' ],
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
 				'range' => [
 					'px' => [
 						'min' => 0,

@@ -26,7 +26,7 @@ class Utils {
 	}
 
 	public static function has_hello_biz() {
-		return defined( 'HELLO_BIZ_ELEMENTOR_VERSION' );
+		return defined( 'EHP_THEME_SLUG' );
 	}
 
 	public static function is_elementor_active(): bool {

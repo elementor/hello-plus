@@ -72,10 +72,20 @@ final class Plugin {
 			);
 		}
 
+		/**
+		 * Fires on plugin activation
+		 *
+		 * @since 1.0.0
+		 */
 		do_action( 'hello-plus/activate' );
 	}
 
 	public function init() {
+		/**
+		 * Fires on plugin init
+		 *
+		 * @since 1.0.0
+		 */
 		do_action( 'hello-plus/init' );
 	}
 

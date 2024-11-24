@@ -14,6 +14,14 @@ abstract class Ehp_Widget_Base extends Widget_Base {
 		return parent::get_stack( false );
 	}
 
+	public function show_in_panel(): bool {
+		return false;
+	}
+
+	public function hide_on_search() {
+		return true;
+	}
+
 	protected function add_advanced_tab(): void {
 		$advanced_tab_id = Controls_Manager::TAB_ADVANCED;
 

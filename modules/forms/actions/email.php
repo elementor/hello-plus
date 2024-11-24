@@ -3,10 +3,10 @@ namespace HelloPlus\Modules\Forms\Actions;
 
 use Elementor\Controls_Manager;
 
-use HelloPlus\Includes\Utils;
 use HelloPlus\Modules\Forms\Classes\Ajax_Handler;
 use HelloPlus\Modules\Forms\Classes\Action_Base;
 use HelloPlus\Modules\Forms\Classes\Form_Record;
+use HelloPlus\Modules\Forms\Module;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -96,7 +96,7 @@ class Email extends Action_Base {
 			]
 		);
 
-		$site_domain = Utils::get_site_domain();
+		$site_domain = Module::get_site_domain();
 
 		$widget->add_control(
 			$this->get_control_id( 'email_from' ),
@@ -256,7 +256,7 @@ class Email extends Action_Base {
 			'email_content' => '[all-fields]',
 			'email_from_name' => get_bloginfo( 'name' ),
 			'email_from' => get_bloginfo( 'admin_email' ),
-			'email_reply_to' => 'noreply@' . Utils::get_site_domain(),
+			'email_reply_to' => 'noreply@' . Module::get_site_domain(),
 			'email_to_cc' => '',
 			'email_to_bcc' => '',
 		];

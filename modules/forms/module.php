@@ -108,6 +108,14 @@ class Module extends Module_Base {
 		);
 	}
 
+	protected function get_component_ids(): array {
+		return [];
+	}
+
+	public static function get_site_domain() {
+		return str_ireplace( 'www.', '', wp_parse_url( home_url(), PHP_URL_HOST ) );
+	}
+
 	/**
 	 * Module constructor.
 	 */
@@ -123,6 +131,7 @@ class Module extends Module_Base {
 		$this->actions_registrar = new Form_Actions_Registrar();
 		$this->fields_registrar = new Form_Fields_Registrar();
 
+		// TODO: refactor & move to components:
 		// Ajax Handler
 		if ( Classes\Ajax_Handler::is_form_submitted() ) {
 			$this->add_component( 'ajax_handler', new Classes\Ajax_Handler() );
@@ -140,9 +149,5 @@ class Module extends Module_Base {
 			 */
 			do_action( 'hello_plus/forms/form_submitted', $this );
 		}
-	}
-
-	protected function get_component_ids(): array {
-		return [];
 	}
 }

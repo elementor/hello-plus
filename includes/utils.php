@@ -72,7 +72,6 @@ class Utils {
 
 	public static function ends_with( $full_string, $end_string ) {
 		$len = strlen( $end_string );
-
 		if ( 0 === $len ) {
 			return true;
 		}
@@ -84,7 +83,6 @@ class Utils {
 		if ( defined( 'EHP_THEME_SLUG' ) ) {
 			return EHP_THEME_SLUG;
 		}
-
 		return 'hello-plus';
 	}
 }

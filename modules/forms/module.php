@@ -137,14 +137,14 @@ class Module extends Module_Base {
 			$this->add_component( 'ajax_handler', new Classes\Ajax_Handler() );
 
 			/**
-			 * Elementor form submitted.
+			 * Hello+ form submitted.
 			 *
 			 * Fires when the form is submitted. This hook allows developers
 			 * to add functionality after form submission.
 			 *
 			 * @param Module $this An instance of the form module.
 			 *
-			 * @since 2.0.0
+			 * @since 1.0.0
 			 *
 			 */
 			do_action( 'hello_plus/forms/form_submitted', $this );

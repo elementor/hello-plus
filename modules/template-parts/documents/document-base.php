@@ -34,6 +34,13 @@ abstract class Document_Base extends Library_Document {
 		$properties['support_page_layout'] = false;
 		$properties['allow_closing_remote_library'] = false;
 
+		/**
+		 * Filter the document properties.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param array $properties The document default properties.
+		 */
 		return apply_filters( 'hello-plus/template-parts/document/properties', $properties );
 	}
 

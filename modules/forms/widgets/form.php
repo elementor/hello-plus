@@ -371,6 +371,7 @@ class Form extends Form_Base {
 				'label' => esc_html__( 'ID', 'hello-plus' ),
 				'type' => Controls_Manager::TEXT,
 				'description' => sprintf(
+					/* translators: %1$s: Opening code tag, %2$s: Closing code tag. */
 					esc_html__( 'Please make sure the ID is unique and not used elsewhere on the page. This field allows %1$sA-z 0-9%2$s & underscore chars without spaces.', 'hello-plus' ),
 					'<code>',
 					'</code>'
@@ -545,6 +546,7 @@ class Form extends Form_Base {
 				],
 				'title' => esc_html__( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'hello-plus' ),
 				'description' => sprintf(
+					/* translators: %1$s: Opening code tag, %2$s: Closing code tag. */
 					esc_html__( 'Please make sure the ID is unique and not used elsewhere on the page. This field allows %1$sA-z 0-9%2$s & underscore chars without spaces.', 'hello-plus' ),
 					'<code>',
 					'</code>'
@@ -820,6 +822,7 @@ class Form extends Form_Base {
 				],
 				'placeholder' => 'new_form_id',
 				'description' => sprintf(
+					/* translators: %1$s: Opening code tag, %2$s: Closing code tag. */
 					esc_html__( 'Please make sure the ID is unique and not used elsewhere on the page. This field allows %1$sA-z 0-9%2$s & underscore chars without spaces.', 'hello-plus' ),
 					'<code>',
 					'</code>'

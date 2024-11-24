@@ -6,6 +6,8 @@
  * Author: Elementor.com
  * Version: 0.0.3
  * Author URI: https://elementor.com
+ * License: GPL-3
+ * License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
  *
  * Text Domain: hello-plus
  *

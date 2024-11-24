@@ -15,6 +15,7 @@ use HelloPlus\Modules\Forms\Classes\Form_Base;
 use HelloPlus\Modules\Forms\Classes\Render\Widget_Form_Render;
 use HelloPlus\Modules\Forms\Controls\Fields_Repeater;
 use HelloPlus\Includes\Utils;
+use HelloPlus\Modules\Forms\Module;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -66,10 +67,6 @@ class Form extends Form_Base {
 	 */
 	public function get_style_depends(): array {
 		return [ 'ehp-form' ];
-	}
-
-	public static function get_site_domain() {
-		return str_ireplace( 'www.', '', wp_parse_url( home_url(), PHP_URL_HOST ) );
 	}
 
 	protected function render(): void {
@@ -680,7 +677,7 @@ class Form extends Form_Base {
 			]
 		);
 
-		$site_domain = $this->get_site_domain();
+		$site_domain = Module::get_site_domain();
 
 		$this->add_control(
 			'email_from',

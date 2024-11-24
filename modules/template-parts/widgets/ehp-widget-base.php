@@ -15,11 +15,11 @@ abstract class Ehp_Widget_Base extends Widget_Base {
 	}
 
 	public function show_in_panel(): bool {
-		return false;
+		return apply_filters( 'hello-plus/template-parts/widgets/panel/show', false );
 	}
 
-	public function hide_on_search() {
-		return true;
+	public function hide_on_search(): bool {
+		return ! $this->show_in_panel();
 	}
 
 	protected function add_advanced_tab(): void {

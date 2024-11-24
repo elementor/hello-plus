@@ -439,23 +439,24 @@ class CTA extends Widget_Base {
 		$this->add_control(
 			'cta_position',
 			[
-				'label' => esc_html__( 'Desktop Position', 'hello-plus' ),
+				'label' => esc_html__( 'Position', 'hello-plus' ),
 				'type' => Controls_Manager::CHOOSE,
+				'description' => esc_html__( 'Buttons will be aligned to end on smaller screens', 'hello-plus' ),
 				'options' => [
-					'flex-start' => [
+					'row' => [
 						'title' => esc_html__( 'Start', 'hello-plus' ),
 						'icon' => 'eicon-align-start-v',
 					],
-					'flex-end' => [
+					'column' => [
 						'title' => esc_html__( 'End', 'hello-plus' ),
 						'icon' => 'eicon-align-end-v',
 					],
 				],
-				'default' => 'flex-start',
-				'tablet_default' => 'flex-start',
-				'mobile_default' => 'flex-start',
+				'default' => 'row',
+				'tablet_default' => 'row',
+				'mobile_default' => 'row',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-buttons-position: {{VALUE}};',
+					'{{WRAPPER}} .ehp-cta' => '--cta-elements-start-position-desktop: {{VALUE}};',
 				],
 				'condition' => [
 					'elements_position' => 'start',

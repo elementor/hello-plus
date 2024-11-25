@@ -23,14 +23,14 @@ export const ReadyToGo = ( { modalCloseRedirectUrl } ) => {
 					</Typography>
 					<Stack direction="row" gap={ 1 } mt={ 5 }>
 						<Button variant="outlined" color="secondary" onClick={ () => {
-							window.location.href = modalCloseRedirectUrl;
-						} }>
-							{ __( 'Customize my site', 'hello-plus' ) }
-						</Button>
-						<Button variant="contained" color="primary" onClick={ () => {
 							window.location.href = '/';
 						} }>
 							{ __( 'View my site', 'hello-plus' ) }
+						</Button>
+						<Button variant="contained" color="primary" onClick={ () => {
+							window.location.href = modalCloseRedirectUrl;
+						} }>
+							{ __( 'Customize my site', 'hello-plus' ) }
 						</Button>
 					</Stack>
 				</Stack>

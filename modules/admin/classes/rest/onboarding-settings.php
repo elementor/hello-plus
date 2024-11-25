@@ -17,7 +17,17 @@ class Onboarding_Settings {
 
 	public function __construct() {
 
-		$this->kits_ids = apply_filters( 'hello-plus-kits', [ '673da3942580a31cc679737b' ] );
+		$this->kits_ids = apply_filters( 'hello-plus-kits', [
+			'673da3942580a31cc679737b',
+			'67446ce1bda2e2012a73bbcc',
+			'67434de5bb2d4185550be7ab',
+			'67446d1dbda2e2012a73bbdd',
+			'67446d3d7f31e7099cc64eae',
+			'67446d627f817bb8debfa451',
+			'67434559a5a0ed6d7a3fd0ac',
+			'67446da5bda2e2012a73bbf3',
+			'67446dc87f817bb8debfa469',
+		] );
 
 		add_action(
 			'rest_api_init',

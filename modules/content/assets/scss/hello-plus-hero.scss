@@ -203,6 +203,8 @@
 	}
 
 	&__image {
+		display: flex;
+		justify-content: center;
 		overflow: hidden;
 
 		.elementor & img {

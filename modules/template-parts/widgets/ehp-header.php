@@ -150,7 +150,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 			[
 				'type' => Controls_Manager::ALERT,
 				'alert_type' => 'info',
-				'content' => esc_html__( 'Go to', 'hello-plus' ) . ' <a href="#" onclick="helloPlusLogo.openSiteIdentity( event )" >' . esc_html__( 'Site Identity > Site Name', 'hello-plus' ) . '</a>' . esc_html__( ' to edit the Site Name', 'hello-plus' ),
+				'content' => esc_html__( 'Go to', 'hello-plus' ) . ' <a href="#" onclick="templatesModule.openSiteIdentity( event )" >' . esc_html__( 'Site Identity > Site Name', 'hello-plus' ) . '</a>' . esc_html__( ' to edit the Site Name', 'hello-plus' ),
 				'condition' => [
 					'site_logo_brand_select' => 'title',
 				],

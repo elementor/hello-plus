@@ -6,6 +6,8 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 		elementor.channels.editor.on( 'helloPlusLogo:change', this.openSiteIdentity );
 		elementor.hooks.addFilter( 'elements/widget/controls/common/default', this.resetCommonControls.bind( this ) );
 		elementor.hooks.addFilter( 'elements/widget/controls/common-optimized/default', this.resetCommonControls.bind( this ) );
+
+		window.templatesModule = this;
 	}
 
 	async openSiteIdentity() {

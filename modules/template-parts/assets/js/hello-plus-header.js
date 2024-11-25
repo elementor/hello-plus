@@ -64,7 +64,7 @@ class elementorHelloPlusHeaderHandler {
     }
 
 	onInit() {
-		const { none, no } = this.settings.constants;
+		const { none, no, always, scrollUp } = this.settings.constants;
 
 		this.handleAriaAttributesMenu();
 		this.handleAriaAttributesDropdown();
@@ -72,6 +72,10 @@ class elementorHelloPlusHeaderHandler {
 
 		if ( none === this.getDataScrollBehavior() && no === this.getBehaviorFloat() ) {
 			this.setupInnerContainer();
+		}
+
+		if ( scrollUp === this.getDataScrollBehavior() || always === this.getDataScrollBehavior() ) {
+			this.applyBodyPadding();
 		}
 	}
 
@@ -99,10 +103,6 @@ class elementorHelloPlusHeaderHandler {
 
 		if ( scrollUp === this.getDataScrollBehavior() || always === this.getDataScrollBehavior() ) {
 			this.handleScrollDown( this.getDataScrollBehavior() );
-		}
-
-		if ( always === this.getDataScrollBehavior() ) {
-			this.applyBodyPadding();
 		}
 	}
 

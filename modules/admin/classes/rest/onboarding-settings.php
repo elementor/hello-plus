@@ -12,32 +12,23 @@ use HelloPlus\Modules\Admin\Classes\Menu\Pages\Setup_Wizard;
 use WP_REST_Server;
 
 class Onboarding_Settings {
-	// ToDo: replace with the actual kit ids.
 	protected array $kits_ids = [];
 
-	public function __construct() {
-
-		$this->kits_ids = apply_filters( 'hello-plus-kits', [ '673da3942580a31cc679737b' ] );
-
-		add_action(
-			'rest_api_init',
-			function () {
-
-				register_rest_route(
-					'elementor-hello-plus/v1',
-					'/onboarding-settings',
-					[
-						'methods' => WP_REST_Server::READABLE,
-						'callback' => [ $this, 'get_onboarding_settings' ],
-						'permission_callback' => function () {
-							return current_user_can( 'manage_options' );
-						},
-					]
-				);
-			}
+	public function rest_api_init() {
+		register_rest_route(
+			'elementor-hello-plus/v1',
+			'/onboarding-settings',
+			[
+				'methods' => WP_REST_Server::READABLE,
+				'callback' => [ $this, 'get_onboarding_settings' ],
+				'permission_callback' => function () {
+					return current_user_can( 'manage_options' );
+				},
+			]
 		);
 	}
 
+	// TODO: implement using new kits api.
 	public function get_kits() {
 		$kits = get_transient( 'e_hello_plus_kits' );
 
@@ -108,5 +99,21 @@ class Onboarding_Settings {
 				],
 			]
 		);
+	}
+
+	public function __construct() {
+		$this->kits_ids = apply_filters( 'hello-plus/kits/ids', [
+			'673da3942580a31cc679737b',
+			'67446ce1bda2e2012a73bbcc',
+			'67434de5bb2d4185550be7ab',
+			'67446d1dbda2e2012a73bbdd',
+			'67446d3d7f31e7099cc64eae',
+			'67446d627f817bb8debfa451',
+			'67434559a5a0ed6d7a3fd0ac',
+			'67446da5bda2e2012a73bbf3',
+			'67446dc87f817bb8debfa469',
+		] );
+
+		add_action( 'rest_api_init', [ $this, 'rest_api_init' ] );
 	}
 }

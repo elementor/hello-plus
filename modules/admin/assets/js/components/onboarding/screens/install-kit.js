@@ -7,14 +7,10 @@ import Grid from '@elementor/ui/Grid';
 import { PreviewWithImage } from '../../preview/preview-with-image';
 
 export const InstallKit = ( { message, kits = [], setPreviewKit, severity } ) => {
-	let md = 0;
+	let md = 3;
 
-	if ( 0 === kits.length % 4 ) {
-		md = 3;
-	}
-
-	// if a number is divisble by 3 and 4, keep 4.
-	if ( ! md && 0 === kits.length % 3 ) {
+	if ( 0 !== kits.length % 4 && 0 === kits.length % 3 ) {
+		// if a number is divisble by 3 update to 3
 		md = 4;
 	}
 

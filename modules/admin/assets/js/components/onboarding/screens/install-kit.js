@@ -8,7 +8,7 @@ import { PreviewWithImage } from '../../preview/preview-with-image';
 
 export const InstallKit = ( { message, kits = [], setPreviewKit, severity } ) => {
 	return (
-		<Stack direction="column" alignItems="center" justifyContent="center">
+		<Stack direction="column" alignItems="center" justifyContent="center" sx={ { overflowY: 'auto' } }>
 			<Stack sx={ { maxWidth: 900 } } alignItems="center" justifyContent="center" gap={ 4 }>
 				<Navigation />
 				<Stack alignItems="center" justifyContent="center" gap={ 4 }>
@@ -27,7 +27,7 @@ export const InstallKit = ( { message, kits = [], setPreviewKit, severity } ) =>
 
 					<Grid container rowSpacing={ 3 } columnSpacing={ 5 } >
 						{ kits.map( ( kit ) => (
-							<Grid key={ kit._id } item xs={ 12 } sm={ 6 } md={ 3 }>
+							<Grid key={ kit._id } item xs={ 12 } sm={ 6 } md={ 0 === kits.length % 3 ? 4 : 3 }>
 								<PreviewWithImage { ...kit } onClick={ () => {
 									setPreviewKit( kit );
 								} } />

@@ -13,6 +13,7 @@ export const InstallKit = ( { message, kits = [], setPreviewKit, severity } ) =>
 		md = 3;
 	}
 
+	// if a number is divisble by 3 and 4, keep 4.
 	if ( ! md && 0 === kits.length % 3 ) {
 		md = 4;
 	}

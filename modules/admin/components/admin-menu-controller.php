@@ -29,7 +29,7 @@ class Admin_Menu_Controller {
 			return;
 		}
 		delete_transient( self::SETUP_WIZARD_TRANSIENT_NAME );
-		wp_safe_redirect( admin_url( 'admin.php?page=' . Setup_Wizard::SETUP_WIZARD_PAGE_SLUG ) );
+		wp_safe_redirect( self_admin_url( 'admin.php?page=' . Setup_Wizard::SETUP_WIZARD_PAGE_SLUG ) );
 		exit;
 	}
 

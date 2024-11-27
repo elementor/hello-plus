@@ -365,7 +365,7 @@ class Ehp_Footer extends Ehp_Widget_Base {
 					'description' => sprintf(
 						/* translators: 1: Link opening tag, 2: Link closing tag. */
 						esc_html__( 'Go to the %1$sMenus screen%2$s to manage your menus.', 'hello-plus' ),
-						sprintf( '<a href="%s" target="_blank">', admin_url( 'nav-menus.php' ) ),
+						sprintf( '<a href="%s" target="_blank">', self_admin_url( 'nav-menus.php' ) ),
 						'</a>'
 					),
 				]
@@ -380,7 +380,7 @@ class Ehp_Footer extends Ehp_Widget_Base {
 					'content' => sprintf(
 						/* translators: 1: Link opening tag, 2: Link closing tag. */
 						esc_html__( 'Add and manage menus from %1$sMy menus%2$s ', 'hello-plus' ),
-						sprintf( '<a href="%s" target="_blank">', admin_url( 'nav-menus.php?action=edit&menu=0' ) ),
+						sprintf( '<a href="%s" target="_blank">', self_admin_url( 'nav-menus.php?action=edit&menu=0' ) ),
 						'</a>'
 					),
 					'separator' => 'before',

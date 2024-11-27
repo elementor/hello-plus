@@ -3,8 +3,8 @@
 Contributors: elementor, KingYes, ariel.k
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 0.0.3
-Version: 0.0.3
+Stable tag: 0.0.4
+Version: 0.0.4
 Requires PHP: 7.4
 License: GPL-3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -25,5 +25,5 @@ Use it as your springboard to building a site with ***Elementor***.
 
 == Changelog ==
 
-= 0.0.3 - 2024-11-21 =
+= 0.0.4 - 2024-11-27 =
 * Initial Public Release

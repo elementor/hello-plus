@@ -4,7 +4,7 @@
  * Description: Puts the PLUS in Elementor's Hello+ themes
  * Plugin URI: https://elementor.com
  * Author: Elementor.com
- * Version: 0.0.3
+ * Version: 0.0.4
  * Author URI: https://elementor.com
  * License: GPL-3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -13,15 +13,15 @@
  *
  * @package HelloPlus
  *
- * Hello+ is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * Hello+ Plugin is a free WordPress plugin crafted for seamless use with Elementor’s Hello Themes,
+ * tailored to help beginner web creators, but far from limited to just them, to build professional websites with ease.
+ * It features a guided setup, dedicated kits, streamlined management tools,
+ * and specialized widgets (Hello Widgets) to ensure a fast, efficient site-building experience
  *
  * Hello+ is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
  */
 
 use HelloPlus\Plugin;
@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'HELLO_PLUS_VERSION', '0.0.3' );
+define( 'HELLO_PLUS_VERSION', '0.0.4' );
 
 define( 'HELLO_PLUS__FILE__', __FILE__ );
 define( 'HELLO_PLUS_PLUGIN_BASE', plugin_basename( HELLO_PLUS__FILE__ ) );

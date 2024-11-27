@@ -14,7 +14,7 @@ export const PreviewWithImage = ( { title, thumbnail, onClick } ) => {
 				cursor: 'pointer',
 				boxShadow: 3,
 				display: 'flex',
-				aspectRatio: '21 / 20',
+				aspectRatio: '1',
 				overflow: 'hidden',
 			} }>
 				<Image

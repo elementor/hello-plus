@@ -42,6 +42,9 @@ define( 'HELLO_PLUS_SCRIPTS_PATH', HELLO_PLUS_ASSETS_PATH . 'js/' );
 define( 'HELLO_PLUS_SCRIPTS_URL', HELLO_PLUS_ASSETS_URL . 'js/' );
 define( 'HELLO_PLUS_STYLE_PATH', HELLO_PLUS_ASSETS_PATH . 'css/' );
 define( 'HELLO_PLUS_STYLE_URL', HELLO_PLUS_ASSETS_URL . 'css/' );
+define( 'HELLO_PLUS_IMAGES_PATH', HELLO_PLUS_ASSETS_PATH . 'images/' );
+define( 'HELLO_PLUS_IMAGES_URL', HELLO_PLUS_ASSETS_URL . 'images/' );
+
 
 if ( ! isset( $content_width ) ) {
 	$content_width = 800; // Pixels.

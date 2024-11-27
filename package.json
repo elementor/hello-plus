@@ -10,7 +10,8 @@
 		"build:prod": "wp-scripts build --env=production",
 		"lint:js": "wp-scripts lint-js",
 		"clean:build": "rimraf build && rimraf hello-plus",
-		"zip": "npm run clean:build && npm run build:prod && rsync -av --exclude-from=.buildignore . hello-plus && zip -r hello-plus.$npm_package_version.zip hello-plus/*"
+		"zip": "npm run clean:build && npm run build:prod && rsync -av --exclude-from=.buildignore . hello-plus && zip -r hello-plus.$npm_package_version.zip hello-plus/*",
+		"build:dir": "npm run clean:build && npm run build:prod && rsync -av --exclude-from=.buildignore ./assets/dev . hello-plus"
 	},
 	"devDependencies": {
 		"@elementor/eslint-plugin": "^1.0.0",
@@ -20,7 +21,8 @@
 		"eslint-plugin-react": "^7.35.2",
 		"path": "^0.12.7",
 		"webpack-cli": "^5.1.4",
-		"webpack-remove-empty-scripts": "^1.0.4"
+		"webpack-remove-empty-scripts": "^1.0.4",
+		"copy-webpack-plugin": "^12.0.2"
 	},
 	"dependencies": {
 		"@elementor/icons": "1.12.0",

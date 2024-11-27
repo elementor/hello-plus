@@ -26,6 +26,14 @@ class Setup_Wizard {
 			delete_option( 'elementor_allow_tracking' );
 		}
 
+		$campaign_data = [
+			'source' => 'ecore-ehp-install',
+			'campaign' => 'ec-plg',
+			'medium' => 'wp-dash',
+		];
+
+		set_transient( 'elementor_elementor_core_campaign', $campaign_data, 30 * DAY_IN_SECONDS );
+
 		switch ( $step ) {
 			case 'install-elementor':
 				$step = new Install_Elementor();

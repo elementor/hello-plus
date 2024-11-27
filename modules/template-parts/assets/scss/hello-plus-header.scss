@@ -238,6 +238,7 @@
 
 			&-link,
 			&-link:not([href]):not([tabindex]) {
+				background: none;
 				text-decoration: underline;
 			}
 

@@ -142,8 +142,8 @@ class Widget_Form_Render {
 						?>
 					</div>
 					<?php endforeach; ?>
+					<?php $this->render_button(); ?>
 				</div>
-				<?php $this->render_button(); ?>
 			</form>
 		<?php
 	}
@@ -161,21 +161,23 @@ class Widget_Form_Render {
 		$button_corner_shape = $this->settings['button_shape'];
 		$button_type = $this->settings['button_type'];
 
-		$this->widget->add_render_attribute( 'submit-group', [
-			'class' => 'ehp-form__submit-group',
-		] );
+		$submit_group_classnames = 'ehp-form__submit-group';
 
 		if ( ! empty( $button_width ) ) {
-			$button_classnames .= ' has-width-' . $button_width;
+			$submit_group_classnames .= ' has-width-' . $button_width;
 		}
 
 		if ( ! empty( $button_width_tablet ) ) {
-			$button_classnames .= ' has-width-md-' . $button_width_tablet;
+			$submit_group_classnames .= ' has-width-md-' . $button_width_tablet;
 		}
 
 		if ( ! empty( $button_width_mobile ) ) {
-			$button_classnames .= ' has-width-sm-' . $button_width_mobile;
+			$submit_group_classnames .= ' has-width-sm-' . $button_width_mobile;
 		}
+
+		$this->widget->add_render_attribute( 'submit-group', [
+			'class' => $submit_group_classnames,
+		] );
 
 		if ( 'yes' === $button_border ) {
 			$button_classnames .= ' has-border';

@@ -9,12 +9,23 @@ export const PreviewWithImage = ( { title, thumbnail, onClick } ) => {
 	return (
 		<Stack direction="column" >
 			<Typography variant="body2" sx={ { height: 45 } }>{ title }</Typography>
-			<Box sx={ { position: 'relative', cursor: 'pointer', boxShadow: 3, display: 'flex' } }>
+			<Box sx={ {
+				position: 'relative',
+				cursor: 'pointer',
+				boxShadow: 3,
+				display: 'flex',
+				aspectRatio: '21 / 20',
+				overflow: 'hidden',
+			} }>
 				<Image
 					src={ thumbnail }
 					alt={ title }
-					sx={ { borderRadius: 1, width: '100%', height: 'auto' } }
-				/>
+					sx={ {
+						borderRadius: 1,
+						width: '100%',
+						height: 'auto',
+						objectFit: 'cover',
+				} } />
 				<Box
 					sx={ {
 						position: 'absolute',

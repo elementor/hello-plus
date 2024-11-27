@@ -7,7 +7,7 @@ const CopyWebpackPlugin = require( 'copy-webpack-plugin' );
 
 // Utilities.
 const path = require( 'path' );
-const imagesPath = path.resolve( __dirname, './assets/images' );
+const imagesPath = path.resolve( __dirname, './build/images' );
 
 const modulesDir = process.cwd() + '/modules/';
 

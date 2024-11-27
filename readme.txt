@@ -1,7 +1,7 @@
 === Hello Plus ===
 
 Contributors: elementor
-Tags: elementor, themes, drag and drop, hello, plus, hello themes, hello plus, widgets, hello widgets
+Tags: elementor, themes, hello themes, hello plus, widgets
 Requires at least: 6.0
 Tested up to: 6.7
 Stable tag: 0.0.3
@@ -10,7 +10,7 @@ Requires PHP: 7.4
 License: GPL-3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
-Adds the Plus in the Hello themes.
+Hello+ is a free WordPress plugin designed to work seamlessly with Elementor’s Hello Themes. It adds the Plus in the Hello themes.
 
 == Description ==
 
@@ -24,8 +24,12 @@ an essential companion that must be installed alongside Hello+ for optimal funct
 Click [here](https://wordpress.org/themes/hello-biz/) to install Hello Biz.
 
 == Screenshots ==
-1.
-2.
+1. Call to action widget
+2. Zigzag widget with images
+3. Form-lite widget
+4. Hero widget
+5. Zigzag widget with icons
+
 == Copyright ==
 
 This Plugin, like WordPress, is distributed under the terms of GPL.

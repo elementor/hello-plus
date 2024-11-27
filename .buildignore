@@ -1,6 +1,6 @@
 *.zip
 karma.conf.js
-assets/dev/
+assets/
 bin/
 composer.json
 composer.lock

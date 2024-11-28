@@ -12,7 +12,7 @@ use HelloPlus\Modules\Admin\Classes\Menu\Pages\Setup_Wizard;
 use WP_REST_Server;
 
 class Onboarding_Settings {
-	protected array $kits_ids = [];
+	const EHP_KITS_TRANSIENT = 'e_hello_plus_kits';
 
 	public function rest_api_init() {
 		register_rest_route(
@@ -28,35 +28,58 @@ class Onboarding_Settings {
 		);
 	}
 
-	// TODO: implement using new kits api.
 	public function get_kits() {
-		$kits = get_transient( 'e_hello_plus_kits' );
+		$kits = get_transient( self::EHP_KITS_TRANSIENT );
+		if ( ! empty( $kits ) ) {
+			return $kits;
+		}
 
-		if ( ! $kits ) {
-			$kits = [];
-			if ( class_exists( 'Elementor\App\Modules\KitLibrary\Connect\Kit_Library' ) ) {
-				try {
-					foreach ( $this->kits_ids as $kit_id ) {
-						$kit = $this->call_and_check( Kit_Library::DEFAULT_BASE_ENDPOINT . '/kits/' . $kit_id );
-						$kit['manifest'] = $this->call_and_check( Kit_Library::DEFAULT_BASE_ENDPOINT . '/kits/' . $kit_id . '/manifest' );
-						$kits[] = $kit;
-					}
+		if ( ! class_exists( 'Elementor\App\Modules\KitLibrary\Connect\Kit_Library' ) ) {
+			return [];
+		}
 
-					set_transient( 'e_hello_plus_kits', $kits, 24 * HOUR_IN_SECONDS );
-				} catch ( \Exception $e ) {
-					$kits = [];
-				}
+		$args = [
+			'products' => 'ehp',
+			'visibility' => 'restricted',
+			'editor_layout_type' => 'container_flexbox',
+		];
+
+		/**
+		 * Filter the arguments used to fetch the Hello+ kits.
+		 *
+		 * @param array $args default arguments.
+		 */
+		$args = apply_filters( 'hello-plus/onboarding/kits-args', $args );
+
+		$endpoint_url = add_query_arg( $args, Kit_Library::DEFAULT_BASE_ENDPOINT . '/kits' );
+		try {
+			$kits = $this->call_and_check( $endpoint_url );
+
+			foreach ( $kits as $index => $kit ) {
+				$kits[ $index ]['manifest'] = $this->call_and_check(
+					Kit_Library::DEFAULT_BASE_ENDPOINT . '/kits/' . $kit['_id'] . '/manifest'
+				);
 			}
+
+			set_transient( self::EHP_KITS_TRANSIENT, $kits, 24 * HOUR_IN_SECONDS );
+		} catch ( \Exception $e ) {
+			return [];
 		}
 
 		return $kits;
 	}
 
-	public function call_and_check( $url ) {
+	/**
+	 * @param string $url
+	 *
+	 * @return mixed
+	 * @throws \Exception
+	 */
+	public function call_and_check( string $url ) {
 		$response = wp_remote_get( $url );
 
 		if ( is_wp_error( $response ) ) {
-			if ( strpos( $url, Kit_Library::DEFAULT_BASE_ENDPOINT ) === 0 ) {
+			if ( 0 === strpos( $url, Kit_Library::DEFAULT_BASE_ENDPOINT ) ) {
 				return $this->call_and_check(
 					str_replace( Kit_Library::DEFAULT_BASE_ENDPOINT, Kit_Library::FALLBACK_BASE_ENDPOINT, $url )
 				);
@@ -68,7 +91,7 @@ class Onboarding_Settings {
 		$response_code = wp_remote_retrieve_response_code( $response );
 
 		if ( 200 !== $response_code ) {
-			if ( strpos( $url, Kit_Library::DEFAULT_BASE_ENDPOINT ) === 0 ) {
+			if ( 0 === strpos( $url, Kit_Library::DEFAULT_BASE_ENDPOINT ) ) {
 				return $this->call_and_check(
 					str_replace( Kit_Library::DEFAULT_BASE_ENDPOINT, Kit_Library::FALLBACK_BASE_ENDPOINT, $url )
 				);
@@ -102,18 +125,6 @@ class Onboarding_Settings {
 	}
 
 	public function __construct() {
-		$this->kits_ids = apply_filters( 'hello-plus/kits/ids', [
-			'673da3942580a31cc679737b',
-			'67446ce1bda2e2012a73bbcc',
-			'67434de5bb2d4185550be7ab',
-			'67446d1dbda2e2012a73bbdd',
-			'67446d3d7f31e7099cc64eae',
-			'67446d627f817bb8debfa451',
-			'67434559a5a0ed6d7a3fd0ac',
-			'67446da5bda2e2012a73bbf3',
-			'67446dc87f817bb8debfa469',
-		] );
-
 		add_action( 'rest_api_init', [ $this, 'rest_api_init' ] );
 	}
 }

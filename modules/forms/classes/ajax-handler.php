@@ -30,8 +30,8 @@ class Ajax_Handler {
 	const NONCE_ACTION = 'ehp-form-submission';
 
 	public static function is_form_submitted() {
+		// we don't need to check referrer here as this is only to instantiate the required classes.
 		return wp_doing_ajax() &&
-			check_ajax_referer( self::NONCE_ACTION, 'nonce' ) &&
 			isset( $_POST['action'] ) &&
 			'hello_plus_forms_lite_send_form' === $_POST['action'];
 	}

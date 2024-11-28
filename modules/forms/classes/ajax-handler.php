@@ -27,10 +27,11 @@ class Ajax_Handler {
 	const INVALID_FORM = 'invalid_form';
 	const SERVER_ERROR = 'server_error';
 	const SUBSCRIBER_ALREADY_EXISTS = 'subscriber_already_exists';
+	const NONCE_ACTION = 'ehp-form-submission';
 
 	public static function is_form_submitted() {
 		return wp_doing_ajax() &&
-			check_ajax_referer( 'ehp-form-submission', 'nonce' ) &&
+			check_ajax_referer( self::NONCE_ACTION, 'nonce' ) &&
 			isset( $_POST['action'] ) &&
 			'hello_plus_forms_lite_send_form' === $_POST['action'];
 	}
@@ -60,7 +61,7 @@ class Ajax_Handler {
 	}
 
 	public function ajax_send_form() {
-		check_ajax_referer( 'ehp-form-submission', 'nonce' );
+		check_ajax_referer( self::NONCE_ACTION, 'nonce' );
 
 		// $post_id that holds the form settings.
 		$post_id = filter_input( INPUT_POST, 'post_id', FILTER_SANITIZE_NUMBER_INT );

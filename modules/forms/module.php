@@ -6,6 +6,7 @@ use Elementor\Controls_Manager;
 
 use HelloPlus\Includes\Module_Base;
 
+use HelloPlus\Modules\Forms\Classes\Ajax_Handler;
 use HelloPlus\Modules\Forms\Controls\Fields_Map;
 use HelloPlus\Modules\Forms\Registrars\Form_Actions_Registrar;
 use HelloPlus\Modules\Forms\Registrars\Form_Fields_Registrar;
@@ -111,7 +112,7 @@ class Module extends Module_Base {
 			'hello-plus-forms-editor-fe',
 			'ehpForms',
 			[
-				'nonce' => wp_create_nonce( 'ehp-form-submission' ),
+				'nonce' => wp_create_nonce( Ajax_Handler::NONCE_ACTION ),
 			]
 		);
 	}

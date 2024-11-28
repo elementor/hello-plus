@@ -3,7 +3,6 @@ namespace HelloPlus\Modules\Forms\Classes;
 
 use HelloPlus\Includes\Utils;
 use HelloPlus\Modules\Forms\Module;
-use Elementor\Utils as ElementorUtils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -30,8 +29,10 @@ class Ajax_Handler {
 	const SUBSCRIBER_ALREADY_EXISTS = 'subscriber_already_exists';
 
 	public static function is_form_submitted() {
-		// PHPCS - No nonce is required, all visitors may send the form.
-		return wp_doing_ajax() && isset( $_POST['action'] ) && 'hello_plus_forms_lite_send_form' === $_POST['action']; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		return wp_doing_ajax() &&
+			\check_ajax_referer( 'ehp-form-submission', 'nonce' ) &&
+			isset( $_POST['action'] ) &&
+			'hello_plus_forms_lite_send_form' === $_POST['action'];
 	}
 
 	public static function get_default_messages() {
@@ -209,6 +210,7 @@ class Ajax_Handler {
 	}
 
 	public function send() {
+		// this method will only be called dafter the check_ajax_referer passes.
 		if ( $this->is_success ) {
 			wp_send_json_success( [
 				'message' => $this->get_default_message( self::SUCCESS, $this->current_form['settings'] ),
@@ -220,9 +222,10 @@ class Ajax_Handler {
 			$this->add_error_message( $this->get_default_message( self::INVALID_FORM, $this->current_form['settings'] ) );
 		}
 
-		$post_id = ElementorUtils::get_super_global_value( $_POST, 'post_id' ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$post_id = filter_input( INPUT_POST, 'post_id', FILTER_SANITIZE_NUMBER_INT );
 
 		$error_msg = implode( '<br>', $this->messages['error'] );
+
 		if ( current_user_can( 'edit_post', $post_id ) && ! empty( $this->messages['admin_error'] ) ) {
 			$this->add_admin_error_message( esc_html__( 'This message is not visible to site visitors.', 'hello-plus' ) );
 			$error_msg .= '<div class="elementor-forms-admin-errors">' . implode( '<br>', $this->messages['admin_error'] ) . '</div>';

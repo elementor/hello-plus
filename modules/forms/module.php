@@ -106,6 +106,14 @@ class Module extends Module_Base {
 			HELLO_PLUS_VERSION,
 			true
 		);
+
+		wp_localize_script(
+			'hello-plus-forms-editor-fe',
+			'ehpForms',
+			[
+				'nonce' => wp_create_nonce( 'ehp-form-submission' ),
+			]
+		);
 	}
 
 	protected function get_component_ids(): array {
@@ -131,23 +139,25 @@ class Module extends Module_Base {
 		$this->actions_registrar = new Form_Actions_Registrar();
 		$this->fields_registrar = new Form_Fields_Registrar();
 
-		// TODO: refactor & move to components:
 		// Ajax Handler
-		if ( Classes\Ajax_Handler::is_form_submitted() ) {
-			$this->add_component( 'ajax_handler', new Classes\Ajax_Handler() );
+		add_action( 'init', function () {
+			if ( Classes\Ajax_Handler::is_form_submitted() ) {
+				$this->add_component( 'ajax_handler', new Classes\Ajax_Handler() );
 
-			/**
-			 * Hello+ form submitted.
-			 *
-			 * Fires when the form is submitted. This hook allows developers
-			 * to add functionality after form submission.
-			 *
-			 * @param Module $this An instance of the form module.
-			 *
-			 * @since 1.0.0
-			 *
-			 */
-			do_action( 'hello_plus/forms/form_submitted', $this );
-		}
+				/**
+				 * Hello+ form submitted.
+				 *
+				 * Fires when the form is submitted. This hook allows developers
+				 * to add functionality after form submission.
+				 *
+				 * @param Module $this An instance of the form module.
+				 *
+				 * @since 1.0.0
+				 *
+				 */
+				do_action( 'hello_plus/forms/form_submitted', $this );
+			}
+		} );
+
 	}
 }

@@ -155,6 +155,8 @@ class Form_Record {
 	}
 
 	public function get_form_meta( $meta_keys = [] ) {
+		check_ajax_referer( 'ehp-form-submission', 'nonce' );
+
 		$result = [];
 
 		foreach ( $meta_keys as $metadata_type ) {
@@ -174,23 +176,26 @@ class Form_Record {
 					break;
 
 				case 'page_url':
+					$referrer = filter_input( INPUT_POST, 'referrer', FILTER_SANITIZE_URL );
 					$result['page_url'] = [
 						'title' => esc_html__( 'Page URL', 'hello-plus' ),
-						'value' => isset( $_POST['referrer'] ) ? esc_url_raw( wp_unslash( $_POST['referrer'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Missing
+						'value' => $referrer ? esc_url_raw( wp_unslash( $referrer ) ) : '',
 					];
 					break;
 
 				case 'page_title':
+					$referrer_title = filter_input( INPUT_POST, 'referer_title', FILTER_SANITIZE_STRING );
 					$result['page_title'] = [
 						'title' => esc_html__( 'Page Title', 'hello-plus' ),
-						'value' => isset( $_POST['referer_title'] ) ? sanitize_text_field( wp_unslash( $_POST['referer_title'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Missing
+						'value' => $referrer_title ? sanitize_text_field( wp_unslash( $referrer_title ) ) : '',
 					];
 					break;
 
 				case 'user_agent':
+					$user_agent = filter_input( INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_SANITIZE_STRING );
 					$result['user_agent'] = [
 						'title' => esc_html__( 'User Agent', 'hello-plus' ),
-						'value' => isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_textarea_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '',
+						'value' => $user_agent ? sanitize_textarea_field( wp_unslash( $user_agent ) ) : '',
 					];
 					break;
 

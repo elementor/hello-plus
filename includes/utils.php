@@ -65,8 +65,9 @@ class Utils {
 		];
 
 		foreach ( $server_ip_keys as $key ) {
-			$value = ElementorUtils::get_super_global_value( $_SERVER, $key );
-			if ( $value && filter_var( $value, FILTER_VALIDATE_IP ) ) {
+			$value = filter_input( INPUT_SERVER, $key, FILTER_VALIDATE_IP );
+
+			if ( $value ) {
 				return $value;
 			}
 		}

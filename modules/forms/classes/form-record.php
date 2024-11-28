@@ -155,7 +155,6 @@ class Form_Record {
 	}
 
 	public function get_form_meta( $meta_keys = [] ) {
-		check_ajax_referer( 'ehp-form-submission', 'nonce' );
 
 		$result = [];
 

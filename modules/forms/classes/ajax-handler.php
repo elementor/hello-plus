@@ -60,21 +60,21 @@ class Ajax_Handler {
 	}
 
 	public function ajax_send_form() {
-		$post_data = $_POST; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		check_ajax_referer( 'ehp-form-submission', 'nonce' );
+
 		// $post_id that holds the form settings.
-		$post_id = $post_data['post_id'];
+		$post_id = filter_input( INPUT_POST, 'post_id', FILTER_SANITIZE_NUMBER_INT );
+		$queried_id = filter_input( INPUT_POST, 'queried_id', FILTER_SANITIZE_NUMBER_INT );
 
 		// $queried_id the post for dynamic values data.
-		if ( isset( $post_data['queried_id'] ) ) {
-			$queried_id = $post_data['queried_id'];
-		} else {
+		if ( ! $queried_id ) {
 			$queried_id = $post_id;
 		}
 
 		// Make the post as global post for dynamic values.
 		Utils::elementor()->db->switch_to_post( $queried_id );
 
-		$form_id = $post_data['form_id'];
+		$form_id = filter_input( INPUT_POST, 'form_id', FILTER_SANITIZE_STRING );
 
 		$elementor = Utils::elementor();
 		$document = $elementor->documents->get( $post_id );
@@ -82,7 +82,8 @@ class Ajax_Handler {
 		$template_id = null;
 
 		if ( $document ) {
-			$form = Module::find_element_recursive( $document->get_elements_data(), $form_id );
+			error_log(print_r($document->get_elements_data(), true));
+			$form = Module::find_element_recursive( $document->get_elements_data(), (string) $form_id );
 		}
 
 		if ( ! empty( $form['templateID'] ) ) {
@@ -119,7 +120,10 @@ class Ajax_Handler {
 				->send();
 		}
 
-		$record = new Form_Record( $post_data['form_fields'], $form );
+		// the fields are not fixed so they will be validated afterwards
+		$form_fields = filter_input(INPUT_POST, 'form_fields', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
+
+		$record = new Form_Record( $form_fields, $form );
 
 		if ( ! $record->validate( $this ) ) {
 			$this
@@ -210,7 +214,6 @@ class Ajax_Handler {
 	}
 
 	public function send() {
-		// this method will only be called dafter the check_ajax_referer passes.
 		if ( $this->is_success ) {
 			wp_send_json_success( [
 				'message' => $this->get_default_message( self::SUCCESS, $this->current_form['settings'] ),

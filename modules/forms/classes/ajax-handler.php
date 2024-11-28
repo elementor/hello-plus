@@ -30,7 +30,7 @@ class Ajax_Handler {
 
 	public static function is_form_submitted() {
 		return wp_doing_ajax() &&
-			\check_ajax_referer( 'ehp-form-submission', 'nonce' ) &&
+			check_ajax_referer( 'ehp-form-submission', 'nonce' ) &&
 			isset( $_POST['action'] ) &&
 			'hello_plus_forms_lite_send_form' === $_POST['action'];
 	}

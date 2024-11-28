@@ -12,8 +12,6 @@ use HelloPlus\Modules\Admin\Classes\Menu\Pages\Setup_Wizard;
 use WP_REST_Server;
 
 class Onboarding_Settings {
-	protected array $kits_ids = [];
-
 	const EHP_KITS_TRANSIENT = 'e_hello_plus_kits';
 
 	public function rest_api_init() {
@@ -30,39 +28,42 @@ class Onboarding_Settings {
 		);
 	}
 
-	// TODO: implement using new kits api.
 	public function get_kits() {
 		$kits = get_transient( self::EHP_KITS_TRANSIENT );
+		if ( ! empty( $kits ) ) {
+			return $kits;
+		}
 
-		if ( ! $kits ) {
-			$kits = ['banana'];
-			if ( class_exists( 'Elementor\App\Modules\KitLibrary\Connect\Kit_Library' ) ) {
-				$args = [
-					'products' => 'ehp',
-				];
+		if ( ! class_exists( 'Elementor\App\Modules\KitLibrary\Connect\Kit_Library' ) ) {
+			return [];
+		}
 
-				/**
-				 * Filter the arguments used to fetch the Hello+ kits.
-				 *
-				 * @param array $args default arguments.
-				 */
-				$args = apply_filters( 'hello-plus/onboarding/kits-args', $args );
+		$args = [
+			'products' => 'ehp',
+			'visibility' => 'restricted',
+			'editor_layout_type' => 'container_flexbox'
+		];
 
-				$endpoint_url = add_query_arg( $args, Kit_Library::DEFAULT_BASE_ENDPOINT . '/kits' );
-				try {
-					$kits = $this->call_and_check( $endpoint_url );
+		/**
+		 * Filter the arguments used to fetch the Hello+ kits.
+		 *
+		 * @param array $args default arguments.
+		 */
+		$args = apply_filters( 'hello-plus/onboarding/kits-args', $args );
 
-					foreach ( $kits as $index => $kit ) {
-						$kits[ $index ]['manifest'] = $this->call_and_check(
-							Kit_Library::DEFAULT_BASE_ENDPOINT . '/kits/' . $kit['_id'] . '/manifest'
-						);
-					}
+		$endpoint_url = add_query_arg( $args, Kit_Library::DEFAULT_BASE_ENDPOINT . '/kits' );
+		try {
+			$kits = $this->call_and_check( $endpoint_url );
 
-					set_transient( self::EHP_KITS_TRANSIENT, $kits, 24 * HOUR_IN_SECONDS );
-				} catch ( \Exception $e ) {
-					$kits = [];
-				}
+			foreach ( $kits as $index => $kit ) {
+				$kits[ $index ]['manifest'] = $this->call_and_check(
+					Kit_Library::DEFAULT_BASE_ENDPOINT . '/kits/' . $kit['_id'] . '/manifest'
+				);
 			}
+
+			set_transient( self::EHP_KITS_TRANSIENT, $kits, 24 * HOUR_IN_SECONDS );
+		} catch ( \Exception $e ) {
+			return [];
 		}
 
 		return $kits;
@@ -76,8 +77,6 @@ class Onboarding_Settings {
 	 */
 	public function call_and_check( string $url ) {
 		$response = wp_remote_get( $url );
-
-		error_log( var_export( $response, true ) );
 
 		if ( is_wp_error( $response ) ) {
 			if ( 0 === strpos( $url, Kit_Library::DEFAULT_BASE_ENDPOINT ) ) {

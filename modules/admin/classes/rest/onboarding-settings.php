@@ -41,7 +41,7 @@ class Onboarding_Settings {
 		$args = [
 			'products' => 'ehp',
 			'visibility' => 'restricted',
-			'editor_layout_type' => 'container_flexbox'
+			'editor_layout_type' => 'container_flexbox',
 		];
 
 		/**
@@ -92,7 +92,7 @@ class Onboarding_Settings {
 
 		if ( 200 !== $response_code ) {
 			if ( 0 === strpos( $url, Kit_Library::DEFAULT_BASE_ENDPOINT ) ) {
-				return $this->call_and_check (
+				return $this->call_and_check(
 					str_replace( Kit_Library::DEFAULT_BASE_ENDPOINT, Kit_Library::FALLBACK_BASE_ENDPOINT, $url )
 				);
 			}

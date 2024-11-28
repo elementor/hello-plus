@@ -4,7 +4,7 @@ namespace HelloPlus\Modules\Forms\Actions;
 use Elementor\Controls_Manager;
 use HelloPlus\Modules\Forms\Classes\Action_Base;
 use HelloPlus\Modules\Forms\Classes\Form_Record;
-use HelloPlus\Modules\Forms\components\Ajax_Handler;
+use HelloPlus\Modules\Forms\Components\Ajax_Handler;
 use HelloPlus\Modules\Forms\Module;
 
 if ( ! defined( 'ABSPATH' ) ) {

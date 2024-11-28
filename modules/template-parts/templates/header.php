@@ -25,8 +25,7 @@ $header = Theme_Utils::elementor()->documents->get( $header_doc_post );
 	<?php if ( ! current_theme_supports( 'title-tag' ) ) : ?>
 		<title>
 			<?php
-			$title = wp_get_document_title();
-			echo esc_html( $title );
+			echo esc_html( wp_get_document_title() );
 			?>
 		</title>
 	<?php endif; ?>

@@ -39,12 +39,12 @@ class Widget_Form_Render {
 		}
 
 		?>
-			<form class="ehp-form" method="post" <?php $this->widget->get_render_attribute_string( 'form' ); ?>>
+			<form class="ehp-form" method="post" <?php $this->widget->print_render_attribute_string( 'form' ); ?>>
 				<?php $this->render_text_container(); ?>
 				<input type="hidden" name="post_id" value="<?php // PHPCS - the method Utils::get_current_post_id is safe.
 					echo Utils::get_current_post_id(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"/>
-				<input type="hidden" name="form_id" value="<?php echo esc_attr( $this->widget->get_id() ); ?>"/>
-				<input type="hidden" name="referer_title" value="<?php echo esc_attr( $referer_title ); ?>" />
+				<input type="hidden" name="form_id" value="<?php esc_attr_e( $this->widget->get_id() ); ?>"/>
+				<input type="hidden" name="referer_title" value="<?php esc_attr_e( $referer_title ); ?>" />
 
 				<?php if ( is_singular() ) {
 					// `queried_id` may be different from `post_id` on Single theme builder templates.
@@ -246,7 +246,7 @@ class Widget_Form_Render {
 			} ?>
 
 			<?php if ( $has_description ) { ?>
-				<p class="ehp-form__description"><?php echo esc_html( $description_text ); ?></p>
+				<p class="ehp-form__description"><?php esc_html_e( $description_text ); ?></p>
 			<?php } ?>
 		</div>
 		<?php

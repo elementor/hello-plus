@@ -325,7 +325,7 @@ class Widget_Header_Render {
 				]
 			);
 			?>
-			<?php echo esc_html( $button_text ); ?>
+			<?php esc_html_e( $button_text ); ?>
 		</a>
 		<?php
 	}

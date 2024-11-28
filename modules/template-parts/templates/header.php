@@ -25,8 +25,7 @@ $header = Theme_Utils::elementor()->documents->get( $header_doc_post );
 	<?php if ( ! current_theme_supports( 'title-tag' ) ) : ?>
 		<title>
 			<?php
-			// PHPCS - already escaped by WordPress.
-			echo wp_get_document_title(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			esc_html_e(  wp_get_document_title() );
 			?>
 		</title>
 	<?php endif; ?>

@@ -36,7 +36,7 @@ class Widget_Zig_Zag_Render {
 			'class' => $layout_classnames,
 		] );
 		?>
-		<div <?php echo $this->widget->get_render_attribute_string( 'layout' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<div <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
 			<?php
 			$remainder = 'right' === $first_zigzag_direction ? 0 : 1;
 
@@ -55,7 +55,7 @@ class Widget_Zig_Zag_Render {
 				] );
 				?>
 				<div class="ehp-zigzag__item-wrapper">
-					<div <?php echo $this->widget->get_render_attribute_string( 'zigzag-item-' . $key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+					<div <?php $this->widget->print_render_attribute_string( 'zigzag-item-' . $key ); ?>>
 						<?php
 							$this->render_graphic_element_container( $item, $key );
 							$this->render_text_element_container( $item, $key );
@@ -86,7 +86,7 @@ class Widget_Zig_Zag_Render {
 			'class' => $graphic_element_classnames,
 		] );
 		?>
-		<div <?php echo $this->widget->get_render_attribute_string( 'graphic-element-container-' . $key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<div <?php $this->widget->print_render_attribute_string( 'graphic-element-container-' . $key ); ?>>
 			<?php if ( $is_image ) : ?>
 				<?php Group_Control_Image_Size::print_attachment_image_html( $item, 'image_graphic_image' ); ?>
 			<?php elseif ( $is_icon ) : ?>
@@ -159,18 +159,18 @@ class Widget_Zig_Zag_Render {
 			'class' => $text_container_classnames,
 		] );
 		?>
-		<div <?php echo $this->widget->get_render_attribute_string( 'text-container-' . $key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<div <?php $this->widget->print_render_attribute_string( 'text-container-' . $key ); ?>>
 			<?php if ( $has_title ) {
 				$title_output = sprintf( '<%1$s %2$s %3$s>%4$s</%1$s>', Utils::validate_html_tag( $title_tag ), $this->widget->get_render_attribute_string( 'heading' ), 'class="ehp-zigzag__title"', esc_html( $title_text ) );
 				// Escaped above
 				Utils::print_unescaped_internal_string( $title_output );
 			} ?>
 			<?php if ( $has_description ) { ?>
-				<p <?php echo $this->widget->get_render_attribute_string( 'description-' . $key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php echo esc_html( $description_text ); ?></p>
+				<p <?php $this->widget->print_render_attribute_string( 'description-' . $key ); ?>><?php esc_html_e( $description_text ); ?></p>
 			<?php } ?>
 			<?php if ( $has_button ) { ?>
 				<div class="ehp-zigzag__button-container">
-					<a <?php echo $this->widget->get_render_attribute_string( 'button-link-' . $key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+					<a <?php $this->widget->print_render_attribute_string( 'button-link-' . $key ); ?>>
 					<?php
 						Icons_Manager::render_icon( $button_icon,
 							[
@@ -179,7 +179,7 @@ class Widget_Zig_Zag_Render {
 							]
 						);
 					?>
-					<?php echo esc_html( $button_text ); ?>
+					<?php esc_html_e( $button_text ); ?>
 					</a>
 				</div>
 			<?php } ?>

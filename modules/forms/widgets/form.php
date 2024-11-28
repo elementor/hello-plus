@@ -293,6 +293,8 @@ class Form extends Form_Base {
 					'33' => '33%',
 				],
 				'default' => '100',
+				'tablet_default' => '100',
+				'mobile_default' => '100',
 			]
 		);
 

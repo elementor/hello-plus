@@ -8,6 +8,7 @@ export default elementorModules.frontend.handlers.Base.extend( {
 			},
 			action: 'hello_plus_forms_lite_send_form',
 			ajaxUrl: elementorFrontendConfig.urls.ajaxurl,
+			nonce: ehpForms.nonce,
 		};
 	},
 
@@ -59,6 +60,7 @@ export default elementorModules.frontend.handlers.Base.extend( {
 	getFormData() {
 		const formData = new FormData( this.elements.$form[ 0 ] );
 		formData.append( 'action', this.getSettings( 'action' ) );
+		formData.append( 'nonce', this.getSettings( 'nonce' ) );
 		formData.append( 'referrer', location.toString() );
 
 		return formData;

@@ -3,7 +3,6 @@ namespace HelloPlus\Modules\Forms\Classes;
 
 use HelloPlus\Includes\Utils;
 use HelloPlus\Modules\Forms\Module;
-use Elementor\Utils as ElementorUtils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -28,10 +27,13 @@ class Ajax_Handler {
 	const INVALID_FORM = 'invalid_form';
 	const SERVER_ERROR = 'server_error';
 	const SUBSCRIBER_ALREADY_EXISTS = 'subscriber_already_exists';
+	const NONCE_ACTION = 'ehp-form-submission';
 
 	public static function is_form_submitted() {
-		// PHPCS - No nonce is required, all visitors may send the form.
-		return wp_doing_ajax() && isset( $_POST['action'] ) && 'hello_plus_forms_lite_send_form' === $_POST['action']; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		return wp_doing_ajax() &&
+			check_ajax_referer( self::NONCE_ACTION, 'nonce' ) &&
+			isset( $_POST['action'] ) &&
+			'hello_plus_forms_lite_send_form' === $_POST['action'];
 	}
 
 	public static function get_default_messages() {
@@ -59,21 +61,21 @@ class Ajax_Handler {
 	}
 
 	public function ajax_send_form() {
-		$post_data = $_POST; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		check_ajax_referer( self::NONCE_ACTION, 'nonce' );
+
 		// $post_id that holds the form settings.
-		$post_id = $post_data['post_id'];
+		$post_id = filter_input( INPUT_POST, 'post_id', FILTER_SANITIZE_NUMBER_INT );
+		$queried_id = filter_input( INPUT_POST, 'queried_id', FILTER_SANITIZE_NUMBER_INT );
 
 		// $queried_id the post for dynamic values data.
-		if ( isset( $post_data['queried_id'] ) ) {
-			$queried_id = $post_data['queried_id'];
-		} else {
+		if ( ! $queried_id ) {
 			$queried_id = $post_id;
 		}
 
 		// Make the post as global post for dynamic values.
 		Utils::elementor()->db->switch_to_post( $queried_id );
 
-		$form_id = $post_data['form_id'];
+		$form_id = filter_input( INPUT_POST, 'form_id', FILTER_SANITIZE_STRING );
 
 		$elementor = Utils::elementor();
 		$document = $elementor->documents->get( $post_id );
@@ -81,7 +83,7 @@ class Ajax_Handler {
 		$template_id = null;
 
 		if ( $document ) {
-			$form = Module::find_element_recursive( $document->get_elements_data(), $form_id );
+			$form = Module::find_element_recursive( $document->get_elements_data(), (string) $form_id );
 		}
 
 		if ( ! empty( $form['templateID'] ) ) {
@@ -118,7 +120,10 @@ class Ajax_Handler {
 				->send();
 		}
 
-		$record = new Form_Record( $post_data['form_fields'], $form );
+		// the fields are not fixed so they will be validated afterwards
+		$form_fields = filter_input( INPUT_POST, 'form_fields', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+
+		$record = new Form_Record( $form_fields, $form );
 
 		if ( ! $record->validate( $this ) ) {
 			$this
@@ -220,9 +225,10 @@ class Ajax_Handler {
 			$this->add_error_message( $this->get_default_message( self::INVALID_FORM, $this->current_form['settings'] ) );
 		}
 
-		$post_id = ElementorUtils::get_super_global_value( $_POST, 'post_id' ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$post_id = filter_input( INPUT_POST, 'post_id', FILTER_SANITIZE_NUMBER_INT );
 
 		$error_msg = implode( '<br>', $this->messages['error'] );
+
 		if ( current_user_can( 'edit_post', $post_id ) && ! empty( $this->messages['admin_error'] ) ) {
 			$this->add_admin_error_message( esc_html__( 'This message is not visible to site visitors.', 'hello-plus' ) );
 			$error_msg .= '<div class="elementor-forms-admin-errors">' . implode( '<br>', $this->messages['admin_error'] ) . '</div>';

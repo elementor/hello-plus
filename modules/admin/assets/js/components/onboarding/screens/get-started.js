@@ -46,7 +46,7 @@ export const GetStarted = ( { message, buttonText, onClick, severity, allowTrack
 					</Stack>
 					<Stack direction="row" alignItems="center" justifyContent="center" >
 						<Typography color="text.tertiary" variant="body1" align="center">
-							{ __( 'By clicking "Start building my website," I agree to install the Elementor and Hello+ plugins. I accept the Elementor.', 'hello-plus' ) }
+							{ __( 'By clicking "Start building my website", I agree to install & activate the Elementor plugin. I accept the Elementor.', 'hello-plus' ) }
 						</Typography>
 						<Link variant="body1" color="info.main" ml={ 1 } underline="hover" target="_blank" href="https://elementor.com/terms/">
 							{ __( 'Terms and Conditions', 'hello-plus' ) }

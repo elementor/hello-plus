@@ -246,7 +246,7 @@ class Widget_Header_Render {
 			);
 			?>
 			<i class="eicon-close ehp-header__toggle-icon ehp-header__toggle-icon--close"></i>
-			<span class="elementor-screen-only"><?php echo esc_html( 'Menu', 'hello-plus' ); ?></span>
+			<span class="elementor-screen-only"><?php esc_html_e( 'Menu', 'hello-plus' ); ?></span>
 		</button>
 		<?php
 	}

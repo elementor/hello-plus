@@ -166,7 +166,7 @@ class Widget_Zig_Zag_Render {
 				Utils::print_unescaped_internal_string( $title_output );
 			} ?>
 			<?php if ( $has_description ) { ?>
-				<p <?php $this->widget->print_render_attribute_string( 'description-' . $key ); ?>><?php esc_html_e( $description_text ); ?></p>
+				<p <?php $this->widget->print_render_attribute_string( 'description-' . $key ); ?>><?php echo esc_html( $description_text ); ?></p>
 			<?php } ?>
 			<?php if ( $has_button ) { ?>
 				<div class="ehp-zigzag__button-container">

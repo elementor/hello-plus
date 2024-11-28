@@ -21,7 +21,7 @@ export const GetStarted = ( { message, buttonText, onClick, severity, allowTrack
 						<Typography variant="body1" align="center" px={ 2 } color="text.secondary">
 							{
 								__(
-									'Thanks for installing the Hello Business theme by Elementor. This setup wizard will help you create a website in moments.',
+									'Thanks for installing the Hello Biz theme by Elementor. This setup wizard will help you create a website in moments.',
 									'hello-plus',
 								)
 							}

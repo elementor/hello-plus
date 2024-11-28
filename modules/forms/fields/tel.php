@@ -2,6 +2,7 @@
 namespace HelloPlus\Modules\Forms\Fields;
 
 use HelloPlus\Modules\Forms\Classes;
+use HelloPlus\Modules\Forms\Components\Ajax_Handler;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -27,7 +28,7 @@ class Tel extends Field_Base {
 		<?php
 	}
 
-	public function validation( $field, Classes\Form_Record $record, \HelloPlus\Modules\Forms\components\Ajax_Handler $ajax_handler ) {
+	public function validation( $field, Classes\Form_Record $record, Ajax_Handler $ajax_handler ) {
 		if ( empty( $field['value'] ) ) {
 			return;
 		}

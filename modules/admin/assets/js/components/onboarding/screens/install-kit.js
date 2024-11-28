@@ -15,7 +15,7 @@ export const InstallKit = ( { message, kits = [], setPreviewKit, severity } ) =>
 	}
 
 	return (
-		<Stack direction="column" alignItems="center" justifyContent="center" sx={ { overflowY: 'auto' } }>
+		<Stack direction="column" alignItems="center" pb={ 4 } sx={ { overflowY: 'auto' } }>
 			<Stack sx={ { maxWidth: 900 } } alignItems="center" justifyContent="center" gap={ 4 }>
 				<Navigation />
 				<Stack alignItems="center" justifyContent="center" gap={ 4 }>

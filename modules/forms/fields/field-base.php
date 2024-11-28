@@ -30,9 +30,9 @@ abstract class Field_Base {
 
 	abstract public function render( $item, $item_index, $form );
 
-	public function validation( $field, Classes\Form_Record $record, Classes\Ajax_Handler $ajax_handler ) {}
+	public function validation( $field, Classes\Form_Record $record, \HelloPlus\Modules\Forms\components\Ajax_Handler $ajax_handler ) {}
 
-	public function process_field( $field, Classes\Form_Record $record, Classes\Ajax_Handler $ajax_handler ) {}
+	public function process_field( $field, Classes\Form_Record $record, \HelloPlus\Modules\Forms\components\Ajax_Handler $ajax_handler ) {}
 
 	public function add_assets_depends() {
 		foreach ( $this->depended_scripts as $script ) {

@@ -2,10 +2,9 @@
 namespace HelloPlus\Modules\Forms\Actions;
 
 use Elementor\Controls_Manager;
-
-use HelloPlus\Modules\Forms\Classes\Ajax_Handler;
 use HelloPlus\Modules\Forms\Classes\Action_Base;
 use HelloPlus\Modules\Forms\Classes\Form_Record;
+use HelloPlus\Modules\Forms\components\Ajax_Handler;
 use HelloPlus\Modules\Forms\Module;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -242,7 +241,7 @@ class Email extends Action_Base {
 
 	/**
 	 * @param \HelloPlus\Modules\Forms\Classes\Form_Record  $record
-	 * @param \HelloPlus\Modules\Forms\Classes\Ajax_Handler $ajax_handler
+	 * @param \HelloPlus\Modules\Forms\components\Ajax_Handler $ajax_handler
 	 */
 	public function run( $record, $ajax_handler ) {
 		$settings = $record->get( 'form_settings' );

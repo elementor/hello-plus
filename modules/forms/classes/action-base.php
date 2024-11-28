@@ -1,6 +1,7 @@
 <?php
 namespace HelloPlus\Modules\Forms\Classes;
 
+use HelloPlus\Modules\Forms\components\Ajax_Handler;
 use HelloPlus\Modules\Forms\Widgets\Form;
 
 if ( ! defined( 'ABSPATH' ) ) {

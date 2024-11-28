@@ -2,6 +2,7 @@
 namespace HelloPlus\Modules\Forms\Classes;
 
 use HelloPlus\Includes\Utils;
+use HelloPlus\Modules\Forms\components\Ajax_Handler;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly

@@ -3,16 +3,14 @@
 namespace HelloPlus\Modules\Forms;
 
 use Elementor\Controls_Manager;
-
 use HelloPlus\Includes\Module_Base;
-
-use HelloPlus\Modules\Forms\Classes\Ajax_Handler;
+use HelloPlus\Modules\Forms\components\Ajax_Handler;
 use HelloPlus\Modules\Forms\Controls\Fields_Map;
+use HelloPlus\Modules\Forms\Controls\Fields_Repeater;
 use HelloPlus\Modules\Forms\Registrars\Form_Actions_Registrar;
 use HelloPlus\Modules\Forms\Registrars\Form_Fields_Registrar;
-use HelloPlus\Modules\Forms\Submissions\Component as Form_Submissions_Component;
-use HelloPlus\Modules\Forms\Controls\Fields_Repeater;
 use HelloPlus\Modules\Forms\Submissions\AdminMenuItems\Submissions_Promotion_Menu_Item;
+use HelloPlus\Modules\Forms\Submissions\Component as Form_Submissions_Component;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -118,7 +116,7 @@ class Module extends Module_Base {
 	}
 
 	protected function get_component_ids(): array {
-		return [];
+		return [ 'Ajax_Handler' ];
 	}
 
 	public static function get_site_domain() {
@@ -139,25 +137,5 @@ class Module extends Module_Base {
 		// Initialize registrars.
 		$this->actions_registrar = new Form_Actions_Registrar();
 		$this->fields_registrar = new Form_Fields_Registrar();
-
-		// Ajax Handler
-		add_action( 'init', function () {
-			if ( Classes\Ajax_Handler::is_form_submitted() ) {
-				$this->add_component( 'ajax_handler', new Classes\Ajax_Handler() );
-
-				/**
-				 * Hello+ form submitted.
-				 *
-				 * Fires when the form is submitted. This hook allows developers
-				 * to add functionality after form submission.
-				 *
-				 * @param Module $this An instance of the form module.
-				 *
-				 * @since 1.0.0
-				 *
-				 */
-				do_action( 'hello_plus/forms/form_submitted', $this );
-			}
-		} );
 	}
 }

@@ -27,7 +27,7 @@ class Tel extends Field_Base {
 		<?php
 	}
 
-	public function validation( $field, Classes\Form_Record $record, Classes\Ajax_Handler $ajax_handler ) {
+	public function validation( $field, Classes\Form_Record $record, \HelloPlus\Modules\Forms\components\Ajax_Handler $ajax_handler ) {
 		if ( empty( $field['value'] ) ) {
 			return;
 		}

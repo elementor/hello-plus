@@ -8,12 +8,11 @@ use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Typography;
 use Elementor\Modules\DynamicTags\Module as TagsModule;
 use Elementor\Repeater;
-
-use HelloPlus\Modules\Forms\Classes\Ajax_Handler;
+use HelloPlus\Includes\Utils;
 use HelloPlus\Modules\Forms\Classes\Form_Base;
 use HelloPlus\Modules\Forms\Classes\Render\Widget_Form_Render;
+use HelloPlus\Modules\Forms\components\Ajax_Handler;
 use HelloPlus\Modules\Forms\Controls\Fields_Repeater;
-use HelloPlus\Includes\Utils;
 use HelloPlus\Modules\Forms\Module;
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -1,7 +1,8 @@
 <?php
-namespace HelloPlus\Modules\Forms\Classes;
+namespace HelloPlus\Modules\Forms\Components;
 
 use HelloPlus\Includes\Utils;
+use HelloPlus\Modules\Forms\Classes\Form_Record;
 use HelloPlus\Modules\Forms\Module;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -28,13 +29,6 @@ class Ajax_Handler {
 	const SERVER_ERROR = 'server_error';
 	const SUBSCRIBER_ALREADY_EXISTS = 'subscriber_already_exists';
 	const NONCE_ACTION = 'ehp-form-submission';
-
-	public static function is_form_submitted() {
-		// we don't need to check referrer here as this is only to instantiate the required classes.
-		return wp_doing_ajax() &&
-			isset( $_POST['action'] ) &&
-			'hello_plus_forms_lite_send_form' === $_POST['action'];
-	}
 
 	public static function get_default_messages() {
 		return [

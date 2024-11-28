@@ -179,7 +179,7 @@ class Widget_Zig_Zag_Render {
 							]
 						);
 					?>
-					<?php esc_html_e( $button_text ); ?>
+					<?php echo esc_html( $button_text ); ?>
 					</a>
 				</div>
 			<?php } ?>

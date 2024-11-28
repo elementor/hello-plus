@@ -246,7 +246,7 @@ class Widget_Form_Render {
 			} ?>
 
 			<?php if ( $has_description ) { ?>
-				<p class="ehp-form__description"><?php esc_html_e( $description_text ); ?></p>
+				<p class="ehp-form__description"><?php echo esc_html( $description_text ); ?></p>
 			<?php } ?>
 		</div>
 		<?php

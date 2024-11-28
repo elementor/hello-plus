@@ -160,7 +160,7 @@ class Widget_CTA_Render {
 					]
 				);
 			?>
-			<?php esc_html_e( $button_text ); ?>
+			<?php echo esc_html( $button_text ); ?>
 		</a>
 		<?php
 	}

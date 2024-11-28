@@ -3,13 +3,13 @@ export default class Forms extends elementorModules.Module {
 		super();
 
 		elementorFrontend.elementsHandler.attachHandler( 'ehp-form', [
-			() => import( /* webpackChunkName: 'form-lite' */ './handlers/form-sender' ),
-			() => import( /* webpackChunkName: 'form-lite' */ './handlers/form-redirect' ),
+			() => import( /* webpackChunkName: 'js/form-lite' */ './handlers/form-sender' ),
+			() => import( /* webpackChunkName: 'js/form-lite' */ './handlers/form-redirect' ),
 		] );
 
 		elementorFrontend.elementsHandler.attachHandler( 'subscribe', [
-			() => import( /* webpackChunkName: 'form-lite' */ './handlers/form-sender' ),
-			() => import( /* webpackChunkName: 'form-lite' */ './handlers/form-redirect' ),
+			() => import( /* webpackChunkName: 'js/form-lite' */ './handlers/form-sender' ),
+			() => import( /* webpackChunkName: 'js/form-lite' */ './handlers/form-redirect' ),
 		] );
 	}
 }

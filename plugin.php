@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use HelloPlus\Includes\Module_Base;
+use HelloPlus\Includes\Utils;
 
 /**
  * Theme's main class,
@@ -62,10 +63,29 @@ final class Plugin {
 	}
 
 	public function activate() {
+		if ( ! Utils::has_hello_biz() ) {
+			deactivate_plugins( HELLO_PLUS_PLUGIN_BASE );
+			wp_die(
+				esc_html__( 'The Hello Plus plugin requires the Hello Biz theme to be installed and active.', 'hello-plus' ),
+				esc_html__( 'Plugin Activation Error', 'hello-plus' ),
+				[ 'back_link' => true ]
+			);
+		}
+
+		/**
+		 * Fires on plugin activation
+		 *
+		 * @since 1.0.0
+		 */
 		do_action( 'hello-plus/activate' );
 	}
 
 	public function init() {
+		/**
+		 * Fires on plugin init
+		 *
+		 * @since 1.0.0
+		 */
 		do_action( 'hello-plus/init' );
 	}
 

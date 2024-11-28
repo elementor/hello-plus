@@ -4,7 +4,6 @@ assets/
 bin/
 composer.json
 composer.lock
-Gruntfile.js
 node_modules/
 npm-debug.log
 package-lock.json
@@ -13,6 +12,7 @@ phpcs.xml
 README.md
 webpack.config.js
 vendor/
+wp-assets/
 
 .github/
 .buildignore

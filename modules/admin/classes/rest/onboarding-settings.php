@@ -12,9 +12,25 @@ use HelloPlus\Modules\Admin\Classes\Menu\Pages\Setup_Wizard;
 use WP_REST_Server;
 
 class Onboarding_Settings {
+	protected array $kits_ids = [];
 
 	const EHP_KITS_TRANSIENT = 'e_hello_plus_kits';
 
+	public function rest_api_init() {
+		register_rest_route(
+			'elementor-hello-plus/v1',
+			'/onboarding-settings',
+			[
+				'methods' => WP_REST_Server::READABLE,
+				'callback' => [ $this, 'get_onboarding_settings' ],
+				'permission_callback' => function () {
+					return current_user_can( 'manage_options' );
+				},
+			]
+		);
+	}
+
+	// TODO: implement using new kits api.
 	public function get_kits() {
 		$kits = get_transient( self::EHP_KITS_TRANSIENT );
 
@@ -99,29 +115,16 @@ class Onboarding_Settings {
 					'nonce' => $nonce,
 					'elementorInstalled' => Utils::is_elementor_installed(),
 					'elementorActive' => Utils::is_elementor_active(),
-					'modalCloseRedirectUrl' => admin_url( 'admin.php?page=hello-plus' ),
+					'modalCloseRedirectUrl' => self_admin_url( 'admin.php?page=' . Utils::get_theme_slug() ),
 					'kits' => $this->get_kits(),
-					'applyKitBaseUrl' => admin_url( 'admin.php?page=elementor-app' ),
+					'applyKitBaseUrl' => self_admin_url( 'admin.php?page=elementor-app' ),
 					'wizardCompleted' => Setup_Wizard::has_site_wizard_been_completed(),
-					'returnUrl' => admin_url( 'admin.php?page=hello-plus-setup-wizard' ),
+					'returnUrl' => self_admin_url( 'admin.php?page=hello-plus-setup-wizard' ),
 				],
 			]
 		);
 	}
 
-	public function rest_api_init(  ) {
-		register_rest_route(
-			'elementor-hello-plus/v1',
-			'/onboarding-settings',
-			[
-				'methods' => WP_REST_Server::READABLE,
-				'callback' => [ $this, 'get_onboarding_settings' ],
-				'permission_callback' => function () {
-					return current_user_can( 'manage_options' );
-				},
-			]
-		);
-	}
 	public function __construct() {
 		add_action( 'rest_api_init', [ $this, 'rest_api_init' ] );
 	}

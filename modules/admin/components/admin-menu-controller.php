@@ -2,7 +2,6 @@
 
 namespace HelloPlus\Modules\Admin\Components;
 
-use HelloPlus\Modules\Admin\Classes\Menu\Pages\Kits_Library;
 use HelloPlus\Modules\Admin\Classes\Menu\Pages\Settings;
 use HelloPlus\Modules\Admin\Classes\Menu\Pages\Setup_Wizard;
 
@@ -17,9 +16,6 @@ class Admin_Menu_Controller {
 	public function admin_menu( $parent_slug ) {
 		$setup_wizard = new Setup_Wizard();
 		$setup_wizard->register_setup_wizard_page( $parent_slug );
-
-		$kits_library = new Kits_Library();
-		$kits_library->register_kits_library_page( $parent_slug );
 	}
 
 	public function activate() {
@@ -33,7 +29,7 @@ class Admin_Menu_Controller {
 			return;
 		}
 		delete_transient( self::SETUP_WIZARD_TRANSIENT_NAME );
-		wp_safe_redirect( admin_url( 'admin.php?page=' . Setup_Wizard::SETUP_WIZARD_PAGE_SLUG ) );
+		wp_safe_redirect( self_admin_url( 'admin.php?page=' . Setup_Wizard::SETUP_WIZARD_PAGE_SLUG ) );
 		exit;
 	}
 

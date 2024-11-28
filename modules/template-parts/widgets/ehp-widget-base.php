@@ -14,6 +14,14 @@ abstract class Ehp_Widget_Base extends Widget_Base {
 		return parent::get_stack( false );
 	}
 
+	public function show_in_panel(): bool {
+		return apply_filters( 'hello-plus/template-parts/widgets/panel/show', false );
+	}
+
+	public function hide_on_search(): bool {
+		return ! $this->show_in_panel();
+	}
+
 	protected function add_advanced_tab(): void {
 		$advanced_tab_id = Controls_Manager::TAB_ADVANCED;
 

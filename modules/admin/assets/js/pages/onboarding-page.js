@@ -94,7 +94,7 @@ export const OnboardingPage = () => {
 	return (
 		<ThemeProvider colorScheme="auto">
 			<Modal open sx={ { zIndex: 100000 } } >
-				<Box style={ { ...style, display: 'flex', flexDirection: 'column' } }>
+				<Box style={ { ...style, display: 'flex', flexDirection: 'column', py: 4 } }>
 					{ ! previewKit && ( <TopBarContent onClose={ onClose } sx={ { borderBottom: '1px solid var(--divider-divider, rgba(0, 0, 0, 0.12))', mb: 4 } } iconSize="small" /> ) }
 					{ 0 === step && ! isLoading && ! previewKit && (
 						<GetStarted allowTracking={ allowTracking } setAllowTracking={ setAllowTracking } severity={ severity } message={ message } buttonText={ buttonText } onClick={ onClick } />

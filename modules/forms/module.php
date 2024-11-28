@@ -158,6 +158,5 @@ class Module extends Module_Base {
 				do_action( 'hello_plus/forms/form_submitted', $this );
 			}
 		} );
-
 	}
 }

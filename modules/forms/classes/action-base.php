@@ -22,7 +22,7 @@ abstract class Action_Base {
 	 * @param Form_Record  $record
 	 * @param Ajax_Handler $ajax_handler
 	 */
-	abstract public function run( $record, $ajax_handler );
+	abstract public function run( Form_Record $record, Ajax_Handler $ajax_handler );
 
 	/**
 	 * @param Form $form

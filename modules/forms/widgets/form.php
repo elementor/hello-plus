@@ -11,7 +11,7 @@ use Elementor\Repeater;
 use HelloPlus\Includes\Utils;
 use HelloPlus\Modules\Forms\Classes\Form_Base;
 use HelloPlus\Modules\Forms\Classes\Render\Widget_Form_Render;
-use HelloPlus\Modules\Forms\components\Ajax_Handler;
+use HelloPlus\Modules\Forms\Components\Ajax_Handler;
 use HelloPlus\Modules\Forms\Controls\Fields_Repeater;
 use HelloPlus\Modules\Forms\Module;
 

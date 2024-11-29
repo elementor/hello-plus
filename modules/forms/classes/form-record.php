@@ -2,6 +2,7 @@
 namespace HelloPlus\Modules\Forms\Classes;
 
 use HelloPlus\Includes\Utils;
+use HelloPlus\Modules\Forms\Components\Ajax_Handler;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -15,7 +16,7 @@ class Form_Record {
 	protected $files = [];
 	protected $meta = [];
 
-	public function get_formatted_data( $with_meta = false ) {
+	public function get_formatted_data( $with_meta = false ): array {
 		$formatted = [];
 		$no_label = esc_html__( 'No Label', 'hello-plus' );
 		$fields = $this->fields;
@@ -40,7 +41,7 @@ class Form_Record {
 	 *
 	 * @return bool
 	 */
-	public function validate( $ajax_handler ) {
+	public function validate( Ajax_Handler $ajax_handler ): bool {
 		foreach ( $this->fields as $id => $field ) {
 			$field_type = $field['type'];
 			if ( ! empty( $field['required'] ) && '' === $field['value'] && 'upload' !== $field_type ) {
@@ -84,7 +85,7 @@ class Form_Record {
 	 * @param Ajax_Handler $ajax_handler An instance of the ajax handler.
 	 *
 	 */
-	public function process_fields( $ajax_handler ) {
+	public function process_fields( Ajax_Handler $ajax_handler ) {
 		foreach ( $this->fields as $id => $field ) {
 			$field_type = $field['type'];
 

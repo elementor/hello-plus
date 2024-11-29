@@ -1,7 +1,8 @@
 <?php
-namespace HelloPlus\Modules\Forms\Classes;
+namespace HelloPlus\Modules\Forms\Components;
 
 use HelloPlus\Includes\Utils;
+use HelloPlus\Modules\Forms\Classes\Form_Record;
 use HelloPlus\Modules\Forms\Module;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -29,14 +30,7 @@ class Ajax_Handler {
 	const SUBSCRIBER_ALREADY_EXISTS = 'subscriber_already_exists';
 	const NONCE_ACTION = 'ehp-form-submission';
 
-	public static function is_form_submitted() {
-		return wp_doing_ajax() &&
-			check_ajax_referer( self::NONCE_ACTION, 'nonce' ) &&
-			isset( $_POST['action'] ) &&
-			'hello_plus_forms_lite_send_form' === $_POST['action'];
-	}
-
-	public static function get_default_messages() {
+	public static function get_default_messages(): array {
 		return [
 			self::SUCCESS => esc_html__( 'Your submission was successful.', 'hello-plus' ),
 			self::ERROR => esc_html__( 'Your submission failed because of an error.', 'hello-plus' ),
@@ -47,7 +41,7 @@ class Ajax_Handler {
 		];
 	}
 
-	public static function get_default_message( $id, $settings ) {
+	public static function get_default_message( $id, $settings ): string {
 		if ( ! empty( $settings['custom_messages'] ) ) {
 			$field_id = $id . '_message';
 			if ( isset( $settings[ $field_id ] ) ) {
@@ -57,7 +51,7 @@ class Ajax_Handler {
 
 		$default_messages = self::get_default_messages();
 
-		return isset( $default_messages[ $id ] ) ? $default_messages[ $id ] : esc_html__( 'Unknown error.', 'hello-plus' );
+		return $default_messages[ $id ] ?? esc_html__( 'Unknown error.', 'hello-plus' );
 	}
 
 	public function ajax_send_form() {

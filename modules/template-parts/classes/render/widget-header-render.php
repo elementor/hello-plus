@@ -311,8 +311,8 @@ class Widget_Header_Render {
 			'class' => $button_classnames,
 		] );
 
-		if ( ! empty( $button_link ) ) {
-			$this->widget->add_link_attributes( $type . '-button', $button_link );
+		if ( ! empty( $button_link['url'] ) ) {
+			$this->widget->add_link_attributes( $type . '-button', $button_link, true );
 		}
 
 		?>

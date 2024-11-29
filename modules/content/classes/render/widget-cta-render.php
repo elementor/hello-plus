@@ -142,7 +142,7 @@ class Widget_CTA_Render {
 			$button_classnames .= ' has-shape-' . $button_corner_shape;
 		}
 
-		$this->widget->add_render_attribute(  $type . '-button', [
+		$this->widget->add_render_attribute( $type . '-button', [
 			'class' => $button_classnames,
 		] );
 

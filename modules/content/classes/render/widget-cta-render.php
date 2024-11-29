@@ -48,7 +48,7 @@ class Widget_CTA_Render {
 			'class' => $layout_classnames,
 		] );
 		?>
-		<div <?php echo $this->widget->get_render_attribute_string( 'layout' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<div <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
 			<div class="ehp-cta__elements-container">
 				<?php
 					$this->render_text_container();
@@ -74,7 +74,7 @@ class Widget_CTA_Render {
 			'class' => $text_container_classnames,
 		] );
 		?>
-		<div <?php echo $this->widget->get_render_attribute_string( 'text-container' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<div <?php $this->widget->print_render_attribute_string( 'text-container' ); ?>>
 			<?php if ( $has_heading ) {
 				$heading_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $heading_tag ), 'class="ehp-cta__heading"', esc_html( $heading_text ) );
 				// Escaped above
@@ -101,7 +101,7 @@ class Widget_CTA_Render {
 			'class' => $ctas_container_classnames,
 		] );
 		?>
-			<div <?php echo $this->widget->get_render_attribute_string( 'ctas-container' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+			<div <?php $this->widget->print_render_attribute_string( 'ctas-container' ); ?>>
 				<div class="ehp-cta__buttons-wrapper">
 					<?php if ( $has_primary_button ) {
 						$this->render_button( 'primary' );
@@ -151,7 +151,7 @@ class Widget_CTA_Render {
 		}
 
 		?>
-		<a <?php echo $this->widget->get_render_attribute_string( $type . '-button' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<a <?php $this->widget->print_render_attribute_string( $type . '-button' ); ?>>
 			<?php
 				Icons_Manager::render_icon( $button_icon,
 					[

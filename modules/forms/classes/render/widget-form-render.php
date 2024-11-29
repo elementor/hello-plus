@@ -39,7 +39,7 @@ class Widget_Form_Render {
 		}
 
 		?>
-			<form class="ehp-form" method="post" <?php $this->widget->get_render_attribute_string( 'form' ); ?>>
+			<form class="ehp-form" method="post" <?php $this->widget->print_render_attribute_string( 'form' ); ?>>
 				<?php $this->render_text_container(); ?>
 				<input type="hidden" name="post_id" value="<?php // PHPCS - the method Utils::get_current_post_id is safe.
 					echo Utils::get_current_post_id(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"/>

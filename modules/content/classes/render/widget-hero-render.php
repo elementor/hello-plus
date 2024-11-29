@@ -38,7 +38,7 @@ class Widget_Hero_Render {
 			'class' => $layout_classnames,
 		] );
 		?>
-		<div <?php echo $this->widget->get_render_attribute_string( 'layout' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<div <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
 			<?php
 				$this->render_text_container();
 				$this->render_cta_button();
@@ -63,7 +63,7 @@ class Widget_Hero_Render {
 			'class' => $text_container_classnames,
 		] );
 		?>
-		<div <?php echo $this->widget->get_render_attribute_string( 'text-container' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<div <?php $this->widget->print_render_attribute_string( 'text-container' ); ?>>
 			<?php if ( $has_heading ) {
 				$heading_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $heading_tag ), 'class="ehp-hero__heading"', esc_html( $heading_text ) );
 				// Escaped above
@@ -114,7 +114,7 @@ class Widget_Hero_Render {
 
 		if ( $has_button ) { ?>
 			<div class="ehp-hero__button-container">
-				<a <?php echo $this->widget->get_render_attribute_string( 'button' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+				<a <?php $this->widget->print_render_attribute_string( 'button' ); ?>>
 				<?php
 					Icons_Manager::render_icon( $button_icon,
 						[
@@ -138,7 +138,7 @@ class Widget_Hero_Render {
 			'class' => $image_classnames,
 		] );
 		?>
-		<div <?php echo $this->widget->get_render_attribute_string( 'image' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<div <?php $this->widget->print_render_attribute_string( 'image' ); ?>>
 			<?php
 			if ( $has_image ) {
 				Group_Control_Image_Size::print_attachment_image_html( $this->settings, 'image' );

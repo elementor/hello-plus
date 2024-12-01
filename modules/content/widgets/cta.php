@@ -43,7 +43,7 @@ class CTA extends Widget_Base {
 	}
 
 	public function get_style_depends(): array {
-		return [ 'hello-plus-cta' ];
+		return [ 'helloplus-cta' ];
 	}
 
 	protected function render(): void {

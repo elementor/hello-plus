@@ -42,7 +42,7 @@ class Zig_Zag extends Widget_Base {
 	}
 
 	public function get_style_depends(): array {
-		return [ 'hello-plus-zigzag' ];
+		return [ 'helloplus-zigzag' ];
 	}
 
 	protected function render(): void {

@@ -64,7 +64,7 @@ class Form extends Form_Base {
 	 * @return array Widget style dependencies.
 	 */
 	public function get_style_depends(): array {
-		return [ 'ehp-form' ];
+		return [ 'helloplus-forms' ];
 	}
 
 	protected function render(): void {

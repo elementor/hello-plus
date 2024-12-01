@@ -15,7 +15,7 @@ use HelloPlus\Includes\Module_Base;
  * @subpackage HelloPlusModules
  */
 class Module extends Module_Base {
-	const HELLO_PLUS_EDITOR_CATEGORY_SLUG = 'helloplus';
+	const HELLOPLUS_EDITOR_CATEGORY_SLUG = 'helloplus';
 
 	/**
 	 * @inheritDoc
@@ -40,7 +40,7 @@ class Module extends Module_Base {
 	 */
 	public function add_hello_plus_e_panel_categories( \Elementor\Elements_Manager $elements_manager ) {
 		$elements_manager->add_category(
-			self::HELLO_PLUS_EDITOR_CATEGORY_SLUG,
+			self::HELLOPLUS_EDITOR_CATEGORY_SLUG,
 			[
 				'title' => esc_html__( 'Hello+', 'hello-plus' ),
 				'icon' => 'fa fa-plug',

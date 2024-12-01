@@ -31,7 +31,7 @@ class CTA extends Widget_Base {
 	}
 
 	public function get_categories(): array {
-		return [ Theme_Module::HELLO_PLUS_EDITOR_CATEGORY_SLUG ];
+		return [ Theme_Module::HELLOPLUS_EDITOR_CATEGORY_SLUG ];
 	}
 
 	public function get_keywords(): array {

@@ -1,0 +1,141 @@
+<?php
+
+namespace HelloPlus\Modules\Forms;
+
+use Elementor\Controls_Manager;
+use HelloPlus\Includes\Module_Base;
+use HelloPlus\Modules\Forms\components\Ajax_Handler;
+use HelloPlus\Modules\Forms\Controls\Fields_Map;
+use HelloPlus\Modules\Forms\Controls\Fields_Repeater;
+use HelloPlus\Modules\Forms\Registrars\Form_Actions_Registrar;
+use HelloPlus\Modules\Forms\Registrars\Form_Fields_Registrar;
+use HelloPlus\Modules\Forms\Submissions\AdminMenuItems\Submissions_Promotion_Menu_Item;
+use HelloPlus\Modules\Forms\Submissions\Component as Form_Submissions_Component;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+class Module extends Module_Base {
+	/**
+	 * @var Form_Actions_Registrar
+	 */
+	public $actions_registrar;
+
+	/**
+	 * @var Form_Fields_Registrar
+	 */
+	public $fields_registrar;
+
+
+	public static function get_name(): string {
+		return 'forms';
+	}
+
+	protected function get_widget_ids(): array {
+		return [
+			'Form',
+		];
+	}
+
+	/**
+	 * Get the base URL for assets.
+	 *
+	 * @return string
+	 */
+	public function get_assets_base_url(): string {
+		return HELLO_PLUS_URL;
+	}
+
+	/**
+	 * Register styles.
+	 *
+	 * At build time, Elementor compiles `/modules/forms/assets/scss/frontend.scss`
+	 * to `/assets/css/widget-forms.min.css`.
+	 *
+	 * @return void
+	 */
+	public function register_styles() {
+		wp_enqueue_style(
+			'hello-plus-forms',
+			HELLO_PLUS_STYLE_URL . 'hello-plus-forms.css',
+			[ 'elementor-frontend' ],
+			HELLO_PLUS_VERSION
+		);
+	}
+
+	public static function find_element_recursive( $elements, $form_id ) {
+		foreach ( $elements as $element ) {
+			if ( $form_id === $element['id'] ) {
+				return $element;
+			}
+
+			if ( ! empty( $element['elements'] ) ) {
+				$element = self::find_element_recursive( $element['elements'], $form_id );
+
+				if ( $element ) {
+					return $element;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	public function register_controls( Controls_Manager $controls_manager ) {
+		$controls_manager->register( new Fields_Repeater() );
+		$controls_manager->register( new Fields_Map() );
+	}
+
+	public function enqueue_editor_scripts() {
+		wp_enqueue_script(
+			'hello-plus-forms-editor',
+			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-forms-editor.js',
+			[ 'elementor-editor', 'wp-i18n' ],
+			HELLO_PLUS_VERSION,
+			true
+		);
+	}
+
+	public function register_scripts() {
+		wp_enqueue_script(
+			'hello-plus-forms-editor-fe',
+			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-forms-editor-fe.js',
+			[ 'elementor-common', 'elementor-frontend-modules', 'elementor-frontend' ],
+			HELLO_PLUS_VERSION,
+			true
+		);
+
+		wp_localize_script(
+			'hello-plus-forms-editor-fe',
+			'ehpForms',
+			[
+				'nonce' => wp_create_nonce( Ajax_Handler::NONCE_ACTION ),
+			]
+		);
+	}
+
+	protected function get_component_ids(): array {
+		return [ 'Ajax_Handler' ];
+	}
+
+	public static function get_site_domain() {
+		return str_ireplace( 'www.', '', wp_parse_url( home_url(), PHP_URL_HOST ) );
+	}
+
+	/**
+	 * Module constructor.
+	 */
+	public function __construct() {
+		parent::__construct();
+
+		add_action( 'elementor/frontend/after_register_scripts', [ $this, 'register_scripts' ] );
+		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_styles' ] );
+		add_action( 'elementor/controls/register', [ $this, 'register_controls' ] );
+		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'enqueue_editor_scripts' ] );
+
+		// Initialize registrars.
+		$this->actions_registrar = new Form_Actions_Registrar();
+		$this->fields_registrar = new Form_Fields_Registrar();
+	}
+}

@@ -1,0 +1,33 @@
+{
+	"name": "hello-plus",
+	"slug": "hello-plus",
+	"homepage": "https://elementor.com/",
+	"description": "A quick-start theme for Elementor.",
+	"version": "0.0.5",
+	"scripts": {
+		"start": "wp-scripts start",
+		"build": "wp-scripts build",
+		"build:prod": "wp-scripts build --env=production",
+		"lint:js": "wp-scripts lint-js",
+		"clean:build": "rimraf build && rimraf hello-plus",
+		"zip": "npm run clean:build && npm run build:prod && rsync -av --exclude-from=.buildignore . hello-plus && zip -r hello-plus.$npm_package_version.zip hello-plus/*",
+		"build:dir": "npm run clean:build && npm run build:prod && rsync -av --exclude-from=.buildignore . hello-plus"
+	},
+	"devDependencies": {
+		"@elementor/eslint-plugin": "^1.0.0",
+		"@wordpress/scripts": "^27.1.0",
+		"eslint-plugin-babel": "^5.3.1",
+		"eslint-plugin-no-jquery": "^3.0.2",
+		"eslint-plugin-react": "^7.35.2",
+		"path": "^0.12.7",
+		"webpack-cli": "^5.1.4",
+		"webpack-remove-empty-scripts": "^1.0.4",
+		"copy-webpack-plugin": "^12.0.2"
+	},
+	"dependencies": {
+		"@elementor/icons": "1.12.0",
+		"@elementor/ui": "1.20.3",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1"
+	}
+}

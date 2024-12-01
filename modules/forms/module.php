@@ -107,7 +107,7 @@ class Module extends Module_Base {
 		);
 
 		wp_localize_script(
-			'hello-plusforms-editor-fe',
+			'helloplus-forms-editor-fe',
 			'ehpForms',
 			[
 				'nonce' => wp_create_nonce( Ajax_Handler::NONCE_ACTION ),

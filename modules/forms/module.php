@@ -58,7 +58,7 @@ class Module extends Module_Base {
 	public function register_styles() {
 		wp_enqueue_style(
 			'helloplus-forms',
-			HELLOPLUS_STYLE_URL . 'hello-plus-forms.css',
+			HELLOPLUS_STYLE_URL . 'helloplus-forms.css',
 			[ 'elementor-frontend' ],
 			HELLOPLUS_VERSION
 		);
@@ -90,7 +90,7 @@ class Module extends Module_Base {
 	public function enqueue_editor_scripts() {
 		wp_enqueue_script(
 			'helloplus-forms-editor',
-			HELLOPLUS_SCRIPTS_URL . 'hello-plus-forms-editor.js',
+			HELLOPLUS_SCRIPTS_URL . 'helloplus-forms-editor.js',
 			[ 'elementor-editor', 'wp-i18n' ],
 			HELLOPLUS_VERSION,
 			true
@@ -100,14 +100,14 @@ class Module extends Module_Base {
 	public function register_scripts() {
 		wp_enqueue_script(
 			'helloplus-forms-editor-fe',
-			HELLOPLUS_SCRIPTS_URL . 'hello-plus-forms-editor-fe.js',
+			HELLOPLUS_SCRIPTS_URL . 'helloplus-forms-editor-fe.js',
 			[ 'elementor-common', 'elementor-frontend-modules', 'elementor-frontend' ],
 			HELLOPLUS_VERSION,
 			true
 		);
 
 		wp_localize_script(
-			'hello-plus-forms-editor-fe',
+			'helloplus-forms-editor-fe',
 			'ehpForms',
 			[
 				'nonce' => wp_create_nonce( Ajax_Handler::NONCE_ACTION ),

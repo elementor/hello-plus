@@ -50,7 +50,7 @@ class Ehp_Footer extends Ehp_Widget_Base {
 			? parent::get_style_depends()
 			: [ 'elementor-icons-fa-solid', 'elementor-icons-fa-brands', 'elementor-icons-fa-regular' ];
 
-		$style_depends[] = 'hello-plus-footer';
+		$style_depends[] = 'helloplus-footer';
 		$style_depends[] = 'e-apple-webkit';
 
 		return $style_depends;

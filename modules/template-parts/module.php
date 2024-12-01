@@ -82,8 +82,8 @@ class Module extends Module_Base {
 	 */
 	public function enqueue_editor_scripts(): void {
 		wp_enqueue_script(
-			'hello-plus-template-parts-editor',
-			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-template-parts-editor.js',
+			'hello-plus-editor',
+			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-editor.js',
 			[ 'elementor-editor' ],
 			HELLO_PLUS_VERSION,
 			true

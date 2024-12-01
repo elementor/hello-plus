@@ -41,22 +41,22 @@ class Module extends Module_Base {
 
 	public function register_styles(): void {
 		wp_register_style(
-			'hello-plus-zigzag',
-			HELLOPLUS_STYLE_URL . 'hello-plus-zigzag.css',
+			'helloplus-zigzag',
+			HELLOPLUS_STYLE_URL . 'helloplus-zigzag.css',
 			[ 'elementor-frontend' ],
 			HELLOPLUS_VERSION
 		);
 
 		wp_register_style(
-			'hello-plus-hero',
-			HELLOPLUS_STYLE_URL . 'hello-plus-hero.css',
+			'helloplus-hero',
+			HELLOPLUS_STYLE_URL . 'helloplus-hero.css',
 			[ 'elementor-frontend' ],
 			HELLOPLUS_VERSION
 		);
 
 		wp_register_style(
-			'hello-plus-cta',
-			HELLOPLUS_STYLE_URL . 'hello-plus-cta.css',
+			'helloplus-cta',
+			HELLOPLUS_STYLE_URL . 'helloplus-cta.css',
 			[ 'elementor-frontend' ],
 			HELLOPLUS_VERSION
 		);

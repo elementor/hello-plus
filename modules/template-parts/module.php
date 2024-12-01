@@ -49,8 +49,8 @@ class Module extends Module_Base {
 	 */
 	public function register_scripts(): void {
 		wp_register_script(
-			'hello-plus-header',
-			HELLOPLUS_SCRIPTS_URL . 'hello-plus-header.js',
+			'helloplus-header',
+			HELLOPLUS_SCRIPTS_URL . 'helloplus-header.js',
 			[ 'elementor-frontend' ],
 			HELLOPLUS_VERSION,
 			true
@@ -62,15 +62,15 @@ class Module extends Module_Base {
 	 */
 	public function register_styles(): void {
 		wp_register_style(
-			'hello-plus-header',
-			HELLOPLUS_STYLE_URL . 'hello-plus-header.css',
+			'helloplus-header',
+			HELLOPLUS_STYLE_URL . 'helloplus-header.css',
 			[ 'elementor-frontend' ],
 			HELLOPLUS_VERSION
 		);
 
 		wp_register_style(
-			'hello-plus-footer',
-			HELLOPLUS_STYLE_URL . 'hello-plus-footer.css',
+			'helloplus-footer',
+			HELLOPLUS_STYLE_URL . 'helloplus-footer.css',
 			[ 'elementor-frontend' ],
 			HELLOPLUS_VERSION
 		);
@@ -82,8 +82,8 @@ class Module extends Module_Base {
 	 */
 	public function enqueue_editor_scripts(): void {
 		wp_enqueue_script(
-			'hello-plus-editor',
-			HELLOPLUS_SCRIPTS_URL . 'hello-plus-editor.js',
+			'helloplus-editor',
+			HELLOPLUS_SCRIPTS_URL . 'helloplus-editor.js',
 			[ 'elementor-editor' ],
 			HELLOPLUS_VERSION,
 			true
@@ -95,8 +95,8 @@ class Module extends Module_Base {
 	 */
 	public function enqueue_editor_styles(): void {
 		wp_enqueue_style(
-			'hello-plus-template-parts-preview',
-			HELLOPLUS_STYLE_URL . 'hello-plus-template-parts-preview.css',
+			'helloplus-template-parts-preview',
+			HELLOPLUS_STYLE_URL . 'helloplus-template-parts-preview.css',
 			[],
 			HELLOPLUS_VERSION
 		);

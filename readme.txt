@@ -81,5 +81,5 @@ For documentation and tutorials, visit our [Knowledge Base](https://elementor.co
 
 == Changelog ==
 
-= 0.0.4 - 2024-11-27 =
+= 0.0.5 - 2024-12-01 =
 * Initial Public Release

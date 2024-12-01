@@ -64,7 +64,7 @@ final class Plugin {
 
 	public function activate() {
 		if ( ! Utils::has_hello_biz() ) {
-			deactivate_plugins( HELLO_PLUS_PLUGIN_BASE );
+			deactivate_plugins( HELLOPLUS_PLUGIN_BASE );
 			wp_die(
 				esc_html__( 'The Hello Plus plugin requires the Hello Biz theme to be installed and active.', 'hello-plus' ),
 				esc_html__( 'Plugin Activation Error', 'hello-plus' ),
@@ -117,7 +117,7 @@ final class Plugin {
 					$class_to_load
 				)
 			);
-			$filename = trailingslashit( HELLO_PLUS_PATH ) . $filename . '.php';
+			$filename = trailingslashit( HELLOPLUS_PATH ) . $filename . '.php';
 
 			if ( is_readable( $filename ) ) {
 				include $filename;
@@ -205,7 +205,7 @@ final class Plugin {
 			$autoloader_registered = spl_autoload_register( [ $this, 'autoload' ] );
 		}
 
-		register_activation_hook( HELLO_PLUS_PLUGIN_BASE, [ $this, 'activate' ] );
+		register_activation_hook( HELLOPLUS_PLUGIN_BASE, [ $this, 'activate' ] );
 		add_action( 'init', [ $this, 'init' ] );
 
 		$this->init_modules();

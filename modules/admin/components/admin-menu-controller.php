@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Admin_Menu_Controller {
 
-	const SETUP_WIZARD_TRANSIENT_NAME = 'hello_plus_redirect_to_setup_wizard';
+	const SETUP_WIZARD_TRANSIENT_NAME = 'helloplus_redirect_to_setup_wizard';
 
 	public function admin_menu( $parent_slug ) {
 		$setup_wizard = new Setup_Wizard();

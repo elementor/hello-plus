@@ -12,7 +12,7 @@ use HelloPlus\Modules\Admin\Classes\Menu\Pages\Setup_Wizard;
 use WP_REST_Server;
 
 class Onboarding_Settings {
-	const EHP_KITS_TRANSIENT = 'e_hello_plus_kits';
+	const EHP_KITS_TRANSIENT = 'helloplus_elementor_kits';
 
 	public function rest_api_init() {
 		register_rest_route(

@@ -51,7 +51,7 @@ if ( ! isset( $content_width ) ) {
 	$content_width = 800; // Pixels.
 }
 
-// Init the Theme class
+// Init the Plugin class
 require HELLOPLUS_PATH . '/plugin.php';
 
 Plugin::instance();

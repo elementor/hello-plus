@@ -38,7 +38,7 @@ class Module extends Module_Base {
 	 *
 	 * @return void
 	 */
-	public function add_hello_plus_e_panel_categories( \Elementor\Elements_Manager $elements_manager ) {
+	public function add_helloplus_e_panel_categories( \Elementor\Elements_Manager $elements_manager ) {
 		$elements_manager->add_category(
 			self::HELLOPLUS_EDITOR_CATEGORY_SLUG,
 			[
@@ -53,6 +53,6 @@ class Module extends Module_Base {
 	 */
 	protected function register_hooks(): void {
 		parent::register_hooks();
-		add_action( 'elementor/elements/categories_registered', [ $this, 'add_hello_plus_e_panel_categories' ] );
+		add_action( 'elementor/elements/categories_registered', [ $this, 'add_helloplus_e_panel_categories' ] );
 	}
 }

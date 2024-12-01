@@ -12,10 +12,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Scripts_Controller {
 
 	public function __construct() {
-		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_hello_plus_onboarding_scripts' ] );
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_helloplus_onboarding_scripts' ] );
 	}
 
-	public function enqueue_hello_plus_onboarding_scripts() {
+	public function enqueue_helloplus_onboarding_scripts() {
 		$screen = get_current_screen();
 
 		if ( ! Utils::ends_with( $screen->id, Setup_Wizard::SETUP_WIZARD_PAGE_SLUG ) ) {

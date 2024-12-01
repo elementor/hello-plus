@@ -55,7 +55,7 @@ export const OnboardingPage = () => {
 			switch ( stepAction ) {
 				case 'install-elementor':
 					setMessage( __( 'Installing Elementor plugin…', 'hello-plus' ) );
-					const response = await wp.ajax.post( 'hello_plus_setup_wizard', data );
+					const response = await wp.ajax.post( 'helloplus_setup_wizard', data );
 
 					if ( response.activateUrl ) {
 						setMessage( __( 'Activating Elementor plugin…', 'hello-plus' ) );
@@ -72,7 +72,7 @@ export const OnboardingPage = () => {
 					break;
 				case 'activate-elementor':
 					setMessage( __( 'Activating Elementor plugin…', 'hello-plus' ) );
-					await wp.ajax.post( 'hello_plus_setup_wizard', data );
+					await wp.ajax.post( 'helloplus_setup_wizard', data );
 					data.slug = 'elementor';
 					window.location.reload();
 					break;

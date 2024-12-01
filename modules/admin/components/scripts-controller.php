@@ -23,7 +23,7 @@ class Scripts_Controller {
 		}
 
 		$handle = 'helloplus-onboarding';
-		$asset_path = HELLOPLUS_SCRIPTS_PATH . 'hello-plus-onboarding.asset.php';
+		$asset_path = HELLOPLUS_SCRIPTS_PATH . 'helloplus-onboarding.asset.php';
 		$asset_url = HELLOPLUS_SCRIPTS_URL;
 
 		if ( ! file_exists( $asset_path ) ) {

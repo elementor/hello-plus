@@ -82,7 +82,7 @@ class Module extends Module_Base {
 	 */
 	public function enqueue_editor_scripts(): void {
 		wp_enqueue_script(
-			'hello-plus-editor',
+			'helloplus-editor',
 			HELLOPLUS_SCRIPTS_URL . 'hello-plus-editor.js',
 			[ 'elementor-editor' ],
 			HELLOPLUS_VERSION,
@@ -95,7 +95,7 @@ class Module extends Module_Base {
 	 */
 	public function enqueue_editor_styles(): void {
 		wp_enqueue_style(
-			'hello-plus-template-parts-preview',
+			'helloplus-template-parts-preview',
 			HELLOPLUS_STYLE_URL . 'hello-plus-template-parts-preview.css',
 			[],
 			HELLOPLUS_VERSION

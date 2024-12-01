@@ -11,7 +11,7 @@ use HelloPlus\Modules\Admin\Classes\Onboarding\Install_Elementor;
 class Setup_Wizard {
 
 	public function __construct() {
-		add_action( 'wp_ajax_hello_plus_setup_wizard', [ $this, 'ajax_setup_wizard' ] );
+		add_action( 'wp_ajax_helloplus_setup_wizard', [ $this, 'ajax_setup_wizard' ] );
 	}
 
 	public function ajax_setup_wizard() {

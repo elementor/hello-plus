@@ -6,7 +6,7 @@ export default elementorModules.frontend.handlers.Base.extend( {
 				form: '.ehp-form',
 				submitButton: '[type="submit"]',
 			},
-			action: 'hello_plus_forms_lite_send_form',
+			action: 'helloplus_forms_lite_send_form',
 			ajaxUrl: elementorFrontendConfig.urls.ajaxurl,
 			nonce: ehpForms.nonce,
 		};

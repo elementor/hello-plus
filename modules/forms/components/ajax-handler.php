@@ -257,7 +257,7 @@ class Ajax_Handler {
 	}
 
 	public function __construct() {
-		add_action( 'wp_ajax_hello_plus_forms_lite_send_form', [ $this, 'ajax_send_form' ] );
-		add_action( 'wp_ajax_nopriv_hello_plus_forms_lite_send_form', [ $this, 'ajax_send_form' ] );
+		add_action( 'wp_ajax_helloplus_forms_lite_send_form', [ $this, 'ajax_send_form' ] );
+		add_action( 'wp_ajax_nopriv_helloplus_forms_lite_send_form', [ $this, 'ajax_send_form' ] );
 	}
 }

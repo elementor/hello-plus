@@ -129,7 +129,21 @@ abstract class Document_Base extends Library_Document {
 	 * @return void
 	 */
 	public static function register_hooks(): void {
-		if ( is_null( static::get_document_post() ) ) {
+		$post = static::get_document_post();
+		if ( is_null( $post ) ) {
+			return;
+		}
+
+		if ( Theme_Utils::elementor()->preview->is_preview_mode() ) {
+			$post_id = filter_input( INPUT_GET, 'elementor-preview', FILTER_VALIDATE_INT );
+			$document = Theme_Utils::elementor()->documents->get( $post_id );
+
+			if ( $document instanceof Document_Base ) {
+				return;
+			}
+		}
+
+		if ( Theme_Utils::is_preview_for_document( $post ) ) {
 			return;
 		}
 
@@ -144,6 +158,7 @@ abstract class Document_Base extends Library_Document {
 			$conditions_manager = $theme_builder_module->get_conditions_manager();
 
 			$location_docs = $conditions_manager->get_documents_for_location( static::LOCATION );
+
 			if ( ! empty( $location_docs ) ) {
 				return;
 			}

@@ -154,6 +154,11 @@
 			transition: $transition;
 		}
 
+		i {
+			color: var(--footer-icon-color);
+			transition: $transition;
+		}
+
 		&:hover,
 		&:focus {
 			color: var(--footer-icon-color-hover);
@@ -161,6 +166,11 @@
 
 			svg {
 				fill: var(--footer-icon-color-hover);
+				transition: $transition;
+			}
+
+			i {
+				color: var(--footer-icon-color-hover);
 				transition: $transition;
 			}
 		}

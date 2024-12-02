@@ -33,7 +33,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 	}
 
 	public function get_categories(): array {
-		return [ Theme_Module::HELLO_PLUS_EDITOR_CATEGORY_SLUG ];
+		return [ Theme_Module::HELLOPLUS_EDITOR_CATEGORY_SLUG ];
 	}
 
 	public function get_keywords(): array {
@@ -45,11 +45,11 @@ class Ehp_Header extends Ehp_Widget_Base {
 	}
 
 	public function get_style_depends(): array {
-		return [ 'hello-plus-header' ];
+		return [ 'helloplus-header' ];
 	}
 
 	public function get_script_depends(): array {
-		return [ 'hello-plus-header' ];
+		return [ 'helloplus-header' ];
 	}
 
 	protected function render(): void {

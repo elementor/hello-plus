@@ -13,24 +13,24 @@ const modulesDir = process.cwd() + '/modules/';
 
 const entryPoints = {
 	// Admin module:
-	'js/hello-plus-onboarding': path.resolve( modulesDir, 'admin/assets/js', 'hello-plus-onboarding.js' ),
+	'js/helloplus-onboarding': path.resolve( modulesDir, 'admin/assets/js', 'hello-plus-onboarding.js' ),
 
 	// Content module
-	'css/hello-plus-zigzag': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-zigzag.scss' ),
-	'css/hello-plus-hero': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-hero.scss' ),
-	'css/hello-plus-cta': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-cta.scss' ),
+	'css/helloplus-zigzag': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-zigzag.scss' ),
+	'css/helloplus-hero': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-hero.scss' ),
+	'css/helloplus-cta': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-cta.scss' ),
 
 	// Template Parts module
-	'css/hello-plus-template-parts-preview': path.resolve( modulesDir, 'template-parts/assets/scss', 'hello-plus-template-parts-preview.scss' ),
-	'css/hello-plus-header': path.resolve( modulesDir, 'template-parts/assets/scss', 'hello-plus-header.scss' ),
-	'css/hello-plus-footer': path.resolve( modulesDir, 'template-parts/assets/scss', 'hello-plus-footer.scss' ),
-	'js/hello-plus-header': path.resolve( modulesDir, 'template-parts/assets/js', 'hello-plus-header.js' ),
-	'js/hello-plus-editor': path.resolve( modulesDir, 'template-parts/assets/js', 'editor.js' ),
+	'css/helloplus-template-parts-preview': path.resolve( modulesDir, 'template-parts/assets/scss', 'hello-plus-template-parts-preview.scss' ),
+	'css/helloplus-header': path.resolve( modulesDir, 'template-parts/assets/scss', 'hello-plus-header.scss' ),
+	'css/helloplus-footer': path.resolve( modulesDir, 'template-parts/assets/scss', 'hello-plus-footer.scss' ),
+	'js/helloplus-header': path.resolve( modulesDir, 'template-parts/assets/js', 'hello-plus-header.js' ),
+	'js/helloplus-editor': path.resolve( modulesDir, 'template-parts/assets/js', 'editor.js' ),
 
 	// Forms module
-	'css/hello-plus-forms': path.resolve( modulesDir, 'forms/assets/scss/widgets', 'hello-plus-forms.scss' ),
-	'js/hello-plus-forms-editor': path.resolve( modulesDir, 'forms/assets/js', 'editor.js' ),
-	'js/hello-plus-forms-editor-fe': path.resolve( modulesDir, 'forms/assets/js/frontend', 'frontend.js' ),
+	'css/helloplus-forms': path.resolve( modulesDir, 'forms/assets/scss/widgets', 'hello-plus-forms.scss' ),
+	'js/helloplus-forms-editor': path.resolve( modulesDir, 'forms/assets/js', 'editor.js' ),
+	'js/helloplus-forms-editor-fe': path.resolve( modulesDir, 'forms/assets/js/frontend', 'frontend.js' ),
 };
 
 module.exports = {

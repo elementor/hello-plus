@@ -44,7 +44,7 @@ class Form extends Form_Base {
 	protected function get_upsale_data(): array {
 		return [
 			'condition' => ! Utils::has_pro(),
-			'image' => esc_url( HELLO_PLUS_IMAGES_URL . 'go-pro.svg' ),
+			'image' => esc_url( HELLOPLUS_IMAGES_URL . 'go-pro.svg' ),
 			'image_alt' => esc_attr__( 'Upgrade Now', 'hello-plus' ),
 			'title' => esc_html__( 'Take your forms further', 'hello-plus' ),
 			'description' => esc_html__( 'Unlock advanced form customization and field options with Elementor Pro.', 'hello-plus' ),
@@ -64,7 +64,7 @@ class Form extends Form_Base {
 	 * @return array Widget style dependencies.
 	 */
 	public function get_style_depends(): array {
-		return [ 'ehp-form' ];
+		return [ 'helloplus-forms' ];
 	}
 
 	protected function render(): void {

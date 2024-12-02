@@ -80,7 +80,7 @@ abstract class Document_Base extends Library_Document {
 	}
 
 	protected static function get_templates_path(): string {
-		return HELLO_PLUS_PATH . '/modules/template-parts/templates/';
+		return HELLOPLUS_PATH . '/modules/template-parts/templates/';
 	}
 
 	/**

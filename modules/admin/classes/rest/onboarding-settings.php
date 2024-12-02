@@ -12,7 +12,7 @@ use HelloPlus\Modules\Admin\Classes\Menu\Pages\Setup_Wizard;
 use WP_REST_Server;
 
 class Onboarding_Settings {
-	const EHP_KITS_TRANSIENT = 'e_hello_plus_kits';
+	const KITS_TRANSIENT = 'helloplus_elementor_kits';
 
 	public function rest_api_init() {
 		register_rest_route(
@@ -29,7 +29,7 @@ class Onboarding_Settings {
 	}
 
 	public function get_kits() {
-		$kits = get_transient( self::EHP_KITS_TRANSIENT );
+		$kits = get_transient( self::KITS_TRANSIENT );
 		if ( ! empty( $kits ) ) {
 			return $kits;
 		}
@@ -61,7 +61,7 @@ class Onboarding_Settings {
 				);
 			}
 
-			set_transient( self::EHP_KITS_TRANSIENT, $kits, 24 * HOUR_IN_SECONDS );
+			set_transient( self::KITS_TRANSIENT, $kits, 24 * HOUR_IN_SECONDS );
 		} catch ( \Exception $e ) {
 			return [];
 		}

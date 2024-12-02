@@ -44,7 +44,7 @@ class Module extends Module_Base {
 	 * @return string
 	 */
 	public function get_assets_base_url(): string {
-		return HELLO_PLUS_URL;
+		return HELLOPLUS_URL;
 	}
 
 	/**
@@ -57,10 +57,10 @@ class Module extends Module_Base {
 	 */
 	public function register_styles() {
 		wp_enqueue_style(
-			'hello-plus-forms',
-			HELLO_PLUS_STYLE_URL . 'hello-plus-forms.css',
+			'helloplus-forms',
+			HELLOPLUS_STYLE_URL . 'helloplus-forms.css',
 			[ 'elementor-frontend' ],
-			HELLO_PLUS_VERSION
+			HELLOPLUS_VERSION
 		);
 	}
 
@@ -89,25 +89,25 @@ class Module extends Module_Base {
 
 	public function enqueue_editor_scripts() {
 		wp_enqueue_script(
-			'hello-plus-forms-editor',
-			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-forms-editor.js',
+			'helloplus-forms-editor',
+			HELLOPLUS_SCRIPTS_URL . 'helloplus-forms-editor.js',
 			[ 'elementor-editor', 'wp-i18n' ],
-			HELLO_PLUS_VERSION,
+			HELLOPLUS_VERSION,
 			true
 		);
 	}
 
 	public function register_scripts() {
 		wp_enqueue_script(
-			'hello-plus-forms-editor-fe',
-			HELLO_PLUS_SCRIPTS_URL . 'hello-plus-forms-editor-fe.js',
+			'helloplus-forms-editor-fe',
+			HELLOPLUS_SCRIPTS_URL . 'helloplus-forms-editor-fe.js',
 			[ 'elementor-common', 'elementor-frontend-modules', 'elementor-frontend' ],
-			HELLO_PLUS_VERSION,
+			HELLOPLUS_VERSION,
 			true
 		);
 
 		wp_localize_script(
-			'hello-plus-forms-editor-fe',
+			'helloplus-forms-editor-fe',
 			'ehpForms',
 			[
 				'nonce' => wp_create_nonce( Ajax_Handler::NONCE_ACTION ),

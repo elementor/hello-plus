@@ -22,9 +22,9 @@ class Scripts_Controller {
 			return;
 		}
 
-		$handle = 'hello-plus-onboarding';
-		$asset_path = HELLO_PLUS_SCRIPTS_PATH . 'hello-plus-onboarding.asset.php';
-		$asset_url = HELLO_PLUS_SCRIPTS_URL;
+		$handle = 'helloplus-onboarding';
+		$asset_path = HELLOPLUS_SCRIPTS_PATH . 'helloplus-onboarding.asset.php';
+		$asset_url = HELLOPLUS_SCRIPTS_URL;
 
 		if ( ! file_exists( $asset_path ) ) {
 			throw new \Exception( 'You need to run `npm run build` for the "hello-plus" first.' );
@@ -36,7 +36,7 @@ class Scripts_Controller {
 
 		wp_enqueue_script(
 			$handle,
-			HELLO_PLUS_SCRIPTS_URL . "$handle.js",
+			HELLOPLUS_SCRIPTS_URL . "$handle.js",
 			$script_asset['dependencies'],
 			$script_asset['version'],
 			true

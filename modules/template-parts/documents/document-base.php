@@ -6,7 +6,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use HelloPlus\Includes\Utils;
 use Elementor\{
 	TemplateLibrary\Source_Local,
 	Modules\Library\Documents\Library_Document,
@@ -135,16 +134,16 @@ abstract class Document_Base extends Library_Document {
 			return;
 		}
 
-		if ( Utils::elementor()->preview->is_preview_mode() ) {
+		if ( Theme_Utils::elementor()->preview->is_preview_mode() ) {
 			$post_id = filter_input( INPUT_GET, 'elementor-preview', FILTER_VALIDATE_INT );
-			$document = Utils::elementor()->documents->get( $post_id );
+			$document = Theme_Utils::elementor()->documents->get( $post_id );
 
 			if ( $document instanceof Document_Base ) {
 				return;
 			}
 		}
 
-		if ( Utils::is_preview_for_document( $post ) ) {
+		if ( Theme_Utils::is_preview_for_document( $post ) ) {
 			return;
 		}
 

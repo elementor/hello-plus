@@ -5,7 +5,6 @@
  * Plugin URI: https://elementor.com
  * Author: Elementor.com
  * Version: 0.0.5
- * Author URI: https://elementor.com
  * License: GPL-3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
  *

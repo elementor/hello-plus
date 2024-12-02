@@ -137,7 +137,7 @@ abstract class Document_Base extends Library_Document {
 
 		if ( Utils::elementor()->preview->is_preview_mode() ) {
 			$post_id = filter_input( INPUT_GET, 'elementor-preview', FILTER_VALIDATE_INT );
-			$document = Utils::elementor()::$instance->documents->get( $post_id );
+			$document = Utils::elementor()->documents->get( $post_id );
 
 			if ( $document instanceof Document_Base ) {
 				return;

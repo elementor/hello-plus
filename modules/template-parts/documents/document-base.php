@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use HelloPlus\Includes\Utils;
 use Elementor\{
 	TemplateLibrary\Source_Local,
 	Modules\Library\Documents\Library_Document,
@@ -44,7 +45,7 @@ abstract class Document_Base extends Library_Document {
 		return apply_filters( 'hello-plus/template-parts/document/properties', $properties );
 	}
 
-	public function print_content() {
+	public function print_content(): void {
 		$plugin = Theme_Utils::elementor();
 
 		if ( $plugin->preview->is_preview_mode( $this->get_main_id() ) ) {
@@ -116,7 +117,7 @@ abstract class Document_Base extends Library_Document {
 		return $query->posts;
 	}
 
-	public static function get_active_document() {
+	public static function get_active_document(): array {
 		return static::get_all_document_posts(
 			[
 				'post_status' => 'publish',
@@ -152,8 +153,8 @@ abstract class Document_Base extends Library_Document {
 	}
 
 	public static function maybe_get_template( ?string $name, array $args ): void {
-		if ( defined( 'ELEMENTOR_PRO_VERSION' ) ) {
-			/** @var \ElementorPro\Modules\ThemeBuilder\Module $theme_builder_module */
+		if ( Utils::has_pro() ) {
+			/** @var $theme_builder_module */
 			$theme_builder_module = \ElementorPro\Modules\ThemeBuilder\Module::instance();
 			$conditions_manager = $theme_builder_module->get_conditions_manager();
 
@@ -179,5 +180,5 @@ abstract class Document_Base extends Library_Document {
 	 *
 	 * @return mixed
 	 */
-	abstract public static function get_template( ?string $name, array $args );
+	abstract public static function get_template( ?string $name, array $args ): void;
 }

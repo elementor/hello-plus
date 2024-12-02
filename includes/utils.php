@@ -91,4 +91,12 @@ class Utils {
 
 		return 'hello-plus';
 	}
+
+
+	public static function is_preview_for_document( $post_id ) {
+		$preview_id = filter_input( INPUT_GET, 'preview_id', FILTER_VALIDATE_INT );
+		$preview = filter_input( INPUT_GET, 'preview', FILTER_UNSAFE_RAW );
+
+		return 'true' === $preview && (int) $post_id === (int) $preview_id;
+	}
 }

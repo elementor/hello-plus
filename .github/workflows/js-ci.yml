@@ -11,10 +11,6 @@ concurrency:
   cancel-in-progress: true
   group: ${{ github.workflow }}-${{ github.ref }}
 
-env:
-  token: ${{ secrets.CLOUD_DEVOPS_TOKEN }}
-  NODE_AUTH_TOKEN: ${{ secrets.CLOUD_DEVOPS_TOKEN }}
-
 jobs:
   build:
     runs-on: ubuntu-latest

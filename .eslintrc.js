@@ -11,7 +11,7 @@ module.exports = {
         'react',
         'no-jquery',
 		'@typescript-eslint',
-		'@elementor',
+		'@wordpress',
 		'import',
 		'react-hooks',
 		'prettier',
@@ -150,7 +150,7 @@ module.exports = {
         // 'react/jsx-tag-spacing': 'error',
         // 'react/no-children-prop': 'off',
         // 'react/prop-types': 'off',
-		'@elementor/eui-default-imports-only': 'error',
+		'import/no-named-as-default': 'error',
 		'react/no-unescaped-entities': 'warn',
     },
 };

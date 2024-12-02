@@ -14,7 +14,7 @@
 		"build:dir": "npm run clean:build && npm run build:prod && rsync -av --exclude-from=.buildignore . hello-plus"
 	},
 	"devDependencies": {
-		"@elementor/eslint-plugin": "^1.0.0",
+		"@wordpress/eslint-plugin": "^1.0.0",
 		"@wordpress/scripts": "^27.1.0",
 		"eslint-plugin-babel": "^5.3.1",
 		"eslint-plugin-no-jquery": "^3.0.2",

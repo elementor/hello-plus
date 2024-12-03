@@ -15,7 +15,7 @@ export const GetStarted = ( { message, buttonText, onClick, severity, allowTrack
 				<Stack sx={ { maxWidth: 662 } } alignItems="center" justifyContent="center" gap={ 4 }>
 					<Navigation />
 					<Stack alignItems="center" justifyContent="center" gap={ 4 }>
-						<Typography variant="h4" align="center" px={ 2 }>
+						<Typography variant="h4" align="center" px={ 2 } sx={ { color: 'text.primary' } }>
 							{ __( 'Welcome! Let’s create your website.', 'hello-plus' ) }
 						</Typography>
 						<Typography variant="body1" align="center" px={ 2 } color="text.secondary">

@@ -19,7 +19,7 @@ export const InstallKit = ( { message, kits = [], setPreviewKit, severity } ) =>
 			<Stack sx={ { maxWidth: 900 } } alignItems="center" justifyContent="center" gap={ 4 }>
 				<Navigation />
 				<Stack alignItems="center" justifyContent="center" gap={ 4 }>
-					<Typography variant="h4" align="center" px={ 2 }>
+					<Typography variant="h4" align="center" px={ 2 } sx={ { color: 'text.primary' } }>
 						{ __( 'Choose your website template kit', 'hello-plus' ) }
 					</Typography>
 					<Typography variant="body1" align="center" px={ 2 } color="text.secondary">

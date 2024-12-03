@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n';
 import Step from '@elementor/ui/Step';
 import StepLabel from '@elementor/ui/StepLabel';
 import Stepper from '@elementor/ui/Stepper';
+import Typography from '@elementor/ui/Typography';
 import { useAdminContext } from '../../hooks/use-admin-context';
 
 export const Navigation = () => {
@@ -15,8 +16,12 @@ export const Navigation = () => {
 			<Stepper activeStep={ step }>
 				{ steps.map( ( label, index ) => {
 					return (
-						<Step key={ label } completed={ index < step } active={ index === step } >
-							<StepLabel >{ label }</StepLabel>
+						<Step key={ label } completed={ index < step } active={ index === step }>
+							<StepLabel>
+								<Typography>
+									{ label }
+								</Typography>
+							</StepLabel>
 						</Step>
 					);
 				} ) }

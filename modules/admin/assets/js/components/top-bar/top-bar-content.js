@@ -12,9 +12,9 @@ export const TopBarContent = ( { sx = {}, iconSize = 'medium', onClose } ) => {
 				<SvgIcon fontSize={ iconSize } color="secondary">
 					<ElementorNoticeIcon />
 				</SvgIcon>
-				<Typography variant="subtitle1">{ __( 'Hello+', 'hello-plus' ) }</Typography>
+				<Typography variant="subtitle1" sx={ { color: 'text.primary' } }>{ __( 'Hello+', 'hello-plus' ) }</Typography>
 			</Stack>
-			{ onClose && ( <XIcon onClick={ onClose } sx={ { cursor: 'pointer' } } /> ) }
+			{ onClose && ( <XIcon onClick={ onClose } sx={ { cursor: 'pointer', color: 'text.primary' } } /> ) }
 		</Stack>
 	);
 };

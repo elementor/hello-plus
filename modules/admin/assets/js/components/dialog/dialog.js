@@ -5,6 +5,7 @@ import DialogContentText from '@elementor/ui/DialogContentText';
 import DialogHeader from '@elementor/ui/DialogHeader';
 import DialogTitle from '@elementor/ui/DialogTitle';
 import Button from '@elementor/ui/Button';
+import Typography from '@elementor/ui/Typography';
 import { __ } from '@wordpress/i18n';
 
 export const DialogModal = (
@@ -27,7 +28,7 @@ export const DialogModal = (
 			sx={ { zIndex: 100001 } }
 		>
 			<DialogHeader onClose={ () => onClose() }>
-				<DialogTitle>{ title }</DialogTitle>
+				<DialogTitle><Typography sx={ { color: 'text.secondary' } }>{ title }</Typography></DialogTitle>
 			</DialogHeader>
 
 			<DialogContent >

@@ -19,13 +19,13 @@ export const Overview = ( { title, description, setIsLoading, setPreviewUrl, set
 						borderRight: '1px solid rgba(0, 0, 0, 0.12)',
 					} }
 				>
-				<Typography variant="h6">{ title }</Typography>
+				<Typography variant="h6" sx={ { color: 'text.primary' } }>{ title }</Typography>
 				<Image
 					src={ kit.thumbnail }
 					alt={ kit.title }
 					sx={ { borderRadius: 1, width: '100%', height: 'auto', mb: 3 } }
 					/>
-				<Typography variant="body1">{ description }</Typography>
+				<Typography variant="body1" sx={ { color: 'text.secondary' } }>{ description }</Typography>
 			</Stack>
 			<Box
 				sx={ {
@@ -35,7 +35,7 @@ export const Overview = ( { title, description, setIsLoading, setPreviewUrl, set
 				>
 				{ pages.length && (
 				<>
-					<Typography variant="h6" sx={ { mb: 2 } }>{ __( 'Pages', 'hello-plus' ) }</Typography>
+					<Typography variant="h6" sx={ { mb: 2, color: 'text.primary' } }>{ __( 'Pages', 'hello-plus' ) }</Typography>
 					<Grid container rowSpacing={ 3 } columnSpacing={ 5 }>
 						{ pages.map( ( [ id, data ] ) => (
 							<Grid key={ id } item xs={ 12 } sm={ 6 } md={ 2 }>

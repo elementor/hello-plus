@@ -23,7 +23,7 @@ export const TobBarPreview = ( { onClickBack, onClickLeftButton, onClickRightBut
 			onClick={ onClickBack }
 		>
 			<ChevronRightIcon sx={ { transform: 'rotate(180deg)' } } color="action" />
-			<Typography variant="subtitle1" color="action">{ __( 'Back to Wizard', 'hello-plus' ) }</Typography>
+			<Typography variant="subtitle1" color="action" sx={ { color: 'text.secondary' } }>{ __( 'Back to Wizard', 'hello-plus' ) }</Typography>
 		</Stack>
 		<Stack direction="row" gap={ 1 }>
 			<Button variant="outlined" color="secondary" onClick={ onClickLeftButton }>

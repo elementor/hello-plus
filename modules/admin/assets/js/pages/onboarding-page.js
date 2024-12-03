@@ -13,17 +13,6 @@ import { InstallKit } from '../components/onboarding/screens/install-kit';
 import { ReadyToGo } from '../components/onboarding/screens/ready-to-go';
 import { Preview } from '../components/onboarding/screens/preview';
 
-const style = {
-	position: 'fixed',
-	top: 0,
-	left: 0,
-	width: '100%',
-	height: '100%',
-	background: 'white',
-	boxShadow: 24,
-	p: 4,
-};
-
 export const OnboardingPage = () => {
 	const [ message, setMessage ] = useState( '' );
 	const [ severity, setSeverity ] = useState( 'info' );
@@ -94,7 +83,17 @@ export const OnboardingPage = () => {
 	return (
 		<ThemeProvider colorScheme="auto">
 			<Modal open sx={ { zIndex: 100000 } } >
-				<Box style={ { ...style, display: 'flex', flexDirection: 'column', py: 4 } }>
+				<Box sx={ {
+						backgroundColor: 'background.default',
+						position: 'fixed',
+						top: 0,
+						left: 0,
+						width: '100%',
+						height: '100%',
+						boxShadow: 24,
+						display: 'flex',
+						flexDirection: 'column',
+					} }>
 					{ ! previewKit && ( <TopBarContent onClose={ onClose } sx={ { borderBottom: '1px solid var(--divider-divider, rgba(0, 0, 0, 0.12))', mb: 4 } } iconSize="small" /> ) }
 					{ 0 === step && ! isLoading && ! previewKit && (
 						<GetStarted allowTracking={ allowTracking } setAllowTracking={ setAllowTracking } severity={ severity } message={ message } buttonText={ buttonText } onClick={ onClick } />

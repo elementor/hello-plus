@@ -8,7 +8,7 @@ import { __ } from '@wordpress/i18n';
 export const PreviewWithImage = ( { title, thumbnail, onClick } ) => {
 	return (
 		<Stack direction="column" >
-			<Typography variant="body2" sx={ { height: 45 } }>{ title }</Typography>
+			<Typography variant="body2" sx={ { height: 45, color: 'text.secondary' } }>{ title }</Typography>
 			<Box sx={ {
 				position: 'relative',
 				cursor: 'pointer',
@@ -48,7 +48,7 @@ export const PreviewWithImage = ( { title, thumbnail, onClick } ) => {
 					onClick={ onClick }
 				>
 					<EyeIcon sx={ { mr: 1 } } />
-					<Typography variant="body2">{ __( 'View Demo', 'hello-plus' ) }</Typography>
+					<Typography variant="body2" sx={ { color: 'text.primary' } }>{ __( 'View Demo', 'hello-plus' ) }</Typography>
 				</Box>
 			</Box>
 		</Stack>

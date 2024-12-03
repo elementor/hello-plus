@@ -125,12 +125,12 @@ abstract class Form_Base extends Widget_Base {
 				foreach ( $options as $key => $option ) {
 					$option_id = esc_attr( $item['custom_id'] . $key );
 					$option_value = esc_attr( $option );
-					$option_label = esc_html( $option );
+					$option_label = $option;
 
 					if ( false !== strpos( $option, '|' ) ) {
 						list( $label, $value ) = explode( '|', $option );
 						$option_value = esc_attr( $value );
-						$option_label = esc_html( $label );
+						$option_label = $label;
 					}
 
 					$this->add_render_attribute( $option_id, 'value', $option_value );
@@ -141,7 +141,7 @@ abstract class Form_Base extends Widget_Base {
 					} ?>
 					<option <?php $this->print_render_attribute_string( $option_id ); ?>><?php
 						// PHPCS - $option_label is already escaped
-						echo $option_label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></option>
+						echo esc_html( $option_label ); ?></option>
 				<?php } ?>
 			</select>
 		</div>

@@ -17,7 +17,7 @@ class Widget_Form_Render {
 	protected Form $widget;
 
 	public function __construct( Form $widget ) {
-		$this->widget = $widget;
+		$this->widget   = $widget;
 		$this->settings = $widget->get_settings_for_display();
 	}
 
@@ -39,84 +39,114 @@ class Widget_Form_Render {
 		}
 
 		?>
-			<form class="ehp-form" method="post" <?php $this->widget->print_render_attribute_string( 'form' ); ?>>
-				<?php $this->render_text_container(); ?>
-				<input type="hidden" name="post_id" value="<?php // PHPCS - the method Utils::get_current_post_id is safe.
-					echo Utils::get_current_post_id(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"/>
-				<input type="hidden" name="form_id" value="<?php echo esc_attr( $this->widget->get_id() ); ?>"/>
-				<input type="hidden" name="referer_title" value="<?php echo esc_attr( $referer_title ); ?>" />
+		<form class="ehp-form" method="post" <?php $this->widget->print_render_attribute_string( 'form' ); ?>>
+			<?php $this->render_text_container(); ?>
+			<input type="hidden" name="post_id" value="<?php echo (int) Utils::get_current_post_id(); ?>"/>
+			<input type="hidden" name="form_id" value="<?php echo esc_attr( $this->widget->get_id() ); ?>"/>
+			<input type="hidden" name="referer_title" value="<?php echo esc_attr( $referer_title ); ?>"/>
 
-				<?php if ( is_singular() ) {
-					// `queried_id` may be different from `post_id` on Single theme builder templates.
+			<?php if ( is_singular() ) {
+				// `queried_id` may be different from `post_id` on Single theme builder templates.
+				?>
+				<input type="hidden" name="queried_id" value="<?php echo (int) get_the_ID(); ?>"/>
+			<?php } ?>
+
+			<div <?php $this->widget->print_render_attribute_string( 'wrapper' ); ?>>
+				<?php
+				foreach ( $this->settings['form_fields'] as $item_index => $item ) :
+					$item['input_size'] = $this->settings['input_size'];
+					$this->widget->form_fields_render_attributes( $item_index, $this->settings, $item );
+
+					$field_type = $item['field_type'];
+
+					/**
+					 * Render form field.
+					 *
+					 * Filters the field rendered by Elementor forms.
+					 *
+					 * @param array $item The field value.
+					 * @param int $item_index The field index.
+					 * @param Form $this An instance of the form.
+					 *
+					 * @since 1.0.0
+					 *
+					 */
+					$item = apply_filters( 'hello_plus/forms/render/item', $item, $item_index, $this );
+
+					/**
+					 * Render form field.
+					 *
+					 * Filters the field rendered by Elementor forms.
+					 *
+					 * The dynamic portion of the hook name, `$field_type`, refers to the field type.
+					 *
+					 * @param array $item The field value.
+					 * @param int $item_index The field index.
+					 * @param Form $this An instance of the form.
+					 *
+					 * @since 1.0.0
+					 *
+					 */
+					$item = apply_filters( "hello_plus/forms/render/item/{$field_type}", $item, $item_index, $this );
+
+					$print_label = ! in_array( $item['field_type'], [ 'hidden', 'html', 'step' ], true );
 					?>
-					<input type="hidden" name="queried_id" value="<?php echo (int) get_the_ID(); ?>"/>
-				<?php } ?>
-
-				<div <?php $this->widget->print_render_attribute_string( 'wrapper' ); ?>>
-					<?php
-					foreach ( $this->settings['form_fields'] as $item_index => $item ) :
-						$item['input_size'] = $this->settings['input_size'];
-						$this->widget->form_fields_render_attributes( $item_index, $this->settings, $item );
-
-						$field_type = $item['field_type'];
-
-						/**
-						 * Render form field.
-						 *
-						 * Filters the field rendered by Elementor forms.
-						 *
-						 * @since 1.0.0
-						 *
-						 * @param array $item       The field value.
-						 * @param int   $item_index The field index.
-						 * @param Form  $this       An instance of the form.
-						 */
-						$item = apply_filters( 'hello_plus/forms/render/item', $item, $item_index, $this );
-
-						/**
-						 * Render form field.
-						 *
-						 * Filters the field rendered by Elementor forms.
-						 *
-						 * The dynamic portion of the hook name, `$field_type`, refers to the field type.
-						 *
-						 * @since 1.0.0
-						 *
-						 * @param array $item       The field value.
-						 * @param int   $item_index The field index.
-						 * @param Form  $this       An instance of the form.
-						 */
-						$item = apply_filters( "hello_plus/forms/render/item/{$field_type}", $item, $item_index, $this );
-
-						$print_label = ! in_array( $item['field_type'], [ 'hidden', 'html', 'step' ], true );
-						?>
 					<div <?php $this->widget->print_render_attribute_string( 'field-group' . $item_index ); ?>>
 						<?php
 						if ( $print_label && $item['field_label'] ) {
 							?>
-								<label <?php $this->widget->print_render_attribute_string( 'label' . $item_index ); ?>>
-									<?php // PHPCS - the variable $item['field_label'] is safe.
-									echo $item['field_label']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-								</label>
+							<label <?php $this->widget->print_render_attribute_string( 'label' . $item_index ); ?>>
+								<?php
+								echo esc_html( $item['field_label'] ); ?>
+							</label>
 							<?php
 						}
 
 						switch ( $item['field_type'] ) :
 							case 'textarea':
-								// PHPCS - the method make_textarea_field is safe.
-								echo $this->widget->make_textarea_field( $item, $item_index, $this->settings ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+								echo wp_kses(
+									$this->widget->make_textarea_field( $item, $item_index, $this->settings ),
+									[
+										'textarea' => [
+											'cols'        => true,
+											'rows'        => true,
+											'name'        => true,
+											'id'          => true,
+											'class'       => true,
+											'style'       => true,
+											'placeholder' => true,
+											'maxlength'   => true,
+											'required'    => true,
+											'readonly'    => true,
+											'disabled'    => true,
+										],
+									]
+								);
 								break;
 
 							case 'select':
-								// PHPCS - the method make_select_field is safe.
-								echo $this->widget->make_select_field( $item, $item_index ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+								echo wp_kses( $this->widget->make_select_field( $item, $item_index ), [
+									'select' => [
+										'name'     => true,
+										'id'       => true,
+										'class'    => true,
+										'style'    => true,
+										'required' => true,
+										'disabled' => true,
+									],
+									'option' => [
+										'value'    => true,
+										'selected' => true,
+									],
+								] );
 								break;
 
 							case 'text':
 							case 'email':
 								$this->widget->add_render_attribute( 'input' . $item_index, 'class', 'elementor-field-textual' );
 								?>
-									<input size="1" <?php $this->widget->print_render_attribute_string( 'input' . $item_index ); ?>>
+								<input
+									size="1" <?php $this->widget->print_render_attribute_string( 'input' . $item_index ); ?>>
 								<?php
 								break;
 
@@ -131,35 +161,36 @@ class Widget_Form_Render {
 								 *
 								 * The dynamic portion of the hook name, `$field_type`, refers to the field type.
 								 *
+								 * @param array $item The field value.
+								 * @param int $item_index The field index.
+								 * @param Form $this An instance of the form.
+								 *
 								 * @since 1.0.0
 								 *
-								 * @param array $item       The field value.
-								 * @param int   $item_index The field index.
-								 * @param Form  $this       An instance of the form.
 								 */
 								do_action( "hello_plus/forms/render_field/{$field_type}", $item, $item_index, $this->widget );
 						endswitch;
 						?>
 					</div>
-					<?php endforeach; ?>
-					<?php $this->render_button(); ?>
-				</div>
-			</form>
+				<?php endforeach; ?>
+				<?php $this->render_button(); ?>
+			</div>
+		</form>
 		<?php
 	}
 
 	protected function render_button(): void {
-		$button_icon = $this->settings['selected_button_icon'];
-		$button_text = $this->settings['button_text'];
-		$button_css_id = $this->settings['button_css_id'];
-		$button_width = $this->settings['button_width'];
-		$button_width_tablet = $this->settings['button_width_tablet'];
-		$button_width_mobile = $this->settings['button_width_mobile'];
+		$button_icon            = $this->settings['selected_button_icon'];
+		$button_text            = $this->settings['button_text'];
+		$button_css_id          = $this->settings['button_css_id'];
+		$button_width           = $this->settings['button_width'];
+		$button_width_tablet    = $this->settings['button_width_tablet'];
+		$button_width_mobile    = $this->settings['button_width_mobile'];
 		$button_hover_animation = $this->settings['button_hover_animation'];
-		$button_classnames = 'ehp-form__button';
-		$button_border = $this->settings['button_border_switcher'];
-		$button_corner_shape = $this->settings['button_shape'];
-		$button_type = $this->settings['button_type'];
+		$button_classnames      = 'ehp-form__button';
+		$button_border          = $this->settings['button_border_switcher'];
+		$button_corner_shape    = $this->settings['button_shape'];
+		$button_type            = $this->settings['button_type'];
 
 		$submit_group_classnames = 'ehp-form__submit-group';
 
@@ -193,7 +224,7 @@ class Widget_Form_Render {
 
 		$this->widget->add_render_attribute( 'button', [
 			'class' => $button_classnames,
-			'type' => 'submit',
+			'type'  => 'submit',
 		] );
 
 		if ( $button_hover_animation ) {
@@ -213,12 +244,12 @@ class Widget_Form_Render {
 			<button <?php $this->widget->print_render_attribute_string( 'button' ); ?>>
 				<?php if ( ! empty( $button_icon ) || ! empty( $button_icon['value'] ) ) : ?>
 					<?php
-						Icons_Manager::render_icon( $button_icon,
-							[
-								'aria-hidden' => 'true',
-								'class' => 'ehp-form__button-icon',
-							]
-						);
+					Icons_Manager::render_icon( $button_icon,
+						[
+							'aria-hidden' => 'true',
+							'class'       => 'ehp-form__button-icon',
+						],
+					);
 					?>
 				<?php endif; ?>
 
@@ -232,11 +263,11 @@ class Widget_Form_Render {
 
 	protected function render_text_container(): void {
 		$heading_text = $this->settings['text_heading'];
-		$has_heading = ! empty( $this->settings['text_heading'] );
-		$heading_tag = $this->settings['text_heading_tag'];
+		$has_heading  = ! empty( $this->settings['text_heading'] );
+		$heading_tag  = $this->settings['text_heading_tag'];
 
 		$description_text = $this->settings['text_description'];
-		$has_description = ! empty( $description_text );
+		$has_description  = ! empty( $description_text );
 		?>
 		<div class="ehp-form__text-container">
 			<?php if ( $has_heading ) {

@@ -23,24 +23,25 @@ abstract class Document_Base extends Library_Document {
 	const LOCATION = '';
 
 	public static function get_properties(): array {
-		$properties = parent::get_properties();
-		$properties['support_kit'] = true;
-		$properties['show_in_finder'] = true;
-		$properties['support_site_editor'] = false;
-		$properties['support_conditions'] = true;
-		$properties['support_lazyload'] = false;
-		$properties['condition_type'] = 'general';
-		$properties['allow_adding_widgets'] = false;
-		$properties['show_navigator'] = false;
-		$properties['support_page_layout'] = false;
+		$properties                                 = parent::get_properties();
+		$properties['support_kit']                  = true;
+		$properties['show_in_finder']               = true;
+		$properties['support_site_editor']          = false;
+		$properties['support_conditions']           = true;
+		$properties['support_lazyload']             = false;
+		$properties['condition_type']               = 'general';
+		$properties['allow_adding_widgets']         = false;
+		$properties['show_navigator']               = false;
+		$properties['support_page_layout']          = false;
 		$properties['allow_closing_remote_library'] = false;
 
 		/**
 		 * Filter the document properties.
 		 *
+		 * @param array $properties The document default properties.
+		 *
 		 * @since 1.0.0
 		 *
-		 * @param array $properties The document default properties.
 		 */
 		return apply_filters( 'hello-plus/template-parts/document/properties', $properties );
 	}
@@ -49,11 +50,10 @@ abstract class Document_Base extends Library_Document {
 		$plugin = Theme_Utils::elementor();
 
 		if ( $plugin->preview->is_preview_mode( $this->get_main_id() ) ) {
-			// PHPCS - the method builder_wrapper is safe.
-			echo $plugin->preview->builder_wrapper( '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+			echo wp_kses_post( $plugin->preview->builder_wrapper( '' ) );
 		} else {
-			// PHPCS - the method get_content is safe.
-			echo $this->get_content(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( $this->get_content() );
 		}
 	}
 
@@ -98,14 +98,14 @@ abstract class Document_Base extends Library_Document {
 
 	public static function get_all_document_posts( array $args = [] ): array {
 		$default_args = [
-			'post_type' => Source_Local::CPT,
-			'fields' => 'ids',
+			'post_type'           => Source_Local::CPT,
+			'fields'              => 'ids',
 			'lazy_load_term_meta' => true,
-			'tax_query' => [
+			'tax_query'           => [
 				[
 					'taxonomy' => static::TAXONOMY_TYPE_SLUG,
-					'field' => 'slug',
-					'terms' => static::get_type(),
+					'field'    => 'slug',
+					'terms'    => static::get_type(),
 				],
 			],
 		];
@@ -120,9 +120,9 @@ abstract class Document_Base extends Library_Document {
 	public static function get_active_document(): array {
 		return static::get_all_document_posts(
 			[
-				'post_status' => 'publish',
+				'post_status'    => 'publish',
 				'posts_per_page' => 1,
-			]
+			],
 		);
 	}
 
@@ -136,7 +136,7 @@ abstract class Document_Base extends Library_Document {
 		}
 
 		if ( Theme_Utils::elementor()->preview->is_preview_mode() ) {
-			$post_id = filter_input( INPUT_GET, 'elementor-preview', FILTER_VALIDATE_INT );
+			$post_id  = filter_input( INPUT_GET, 'elementor-preview', FILTER_VALIDATE_INT );
 			$document = Theme_Utils::elementor()->documents->get( $post_id );
 
 			if ( $document instanceof Document_Base ) {
@@ -156,7 +156,7 @@ abstract class Document_Base extends Library_Document {
 		if ( Utils::has_pro() ) {
 			/** @var $theme_builder_module */
 			$theme_builder_module = \ElementorPro\Modules\ThemeBuilder\Module::instance();
-			$conditions_manager = $theme_builder_module->get_conditions_manager();
+			$conditions_manager   = $theme_builder_module->get_conditions_manager();
 
 			$location_docs = $conditions_manager->get_documents_for_location( static::LOCATION );
 

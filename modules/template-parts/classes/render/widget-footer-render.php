@@ -212,8 +212,13 @@ class Widget_Footer_Render {
 					Utils::print_unescaped_internal_string( $menu_heading_output );
 				} ?>
 				<?php
-					// PHPCS - escaped by WordPress with "wp_nav_menu"
-					echo $menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				add_filter( 'nav_menu_link_attributes', [ $this, 'handle_link_classes' ], 10, 4 );
+
+				$args['echo'] = true;
+
+				wp_nav_menu( $args );
+
+				remove_filter( 'nav_menu_link_attributes', [ $this, 'handle_link_classes' ] );
 				?>
 			</nav>
 		</div>

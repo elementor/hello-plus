@@ -38,9 +38,10 @@ abstract class Document_Base extends Library_Document {
 		/**
 		 * Filter the document properties.
 		 *
+		 * @param array $properties The document default properties.
+		 *
 		 * @since 1.0.0
 		 *
-		 * @param array $properties The document default properties.
 		 */
 		return apply_filters( 'hello-plus/template-parts/document/properties', $properties );
 	}
@@ -49,11 +50,10 @@ abstract class Document_Base extends Library_Document {
 		$plugin = Theme_Utils::elementor();
 
 		if ( $plugin->preview->is_preview_mode( $this->get_main_id() ) ) {
-			// PHPCS - the method builder_wrapper is safe.
-			echo $plugin->preview->builder_wrapper( '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+			echo wp_kses_post( $plugin->preview->builder_wrapper( '' ) );
 		} else {
-			// PHPCS - the method get_content is safe.
-			echo $this->get_content(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( $this->get_content() );
 		}
 	}
 
@@ -74,7 +74,6 @@ abstract class Document_Base extends Library_Document {
 
 		return add_query_arg( [ 'template_type' => static::get_type() ], $base_create_url );
 	}
-
 
 	public function get_name(): string {
 		return static::get_type();
@@ -122,7 +121,7 @@ abstract class Document_Base extends Library_Document {
 			[
 				'post_status' => 'publish',
 				'posts_per_page' => 1,
-			]
+			],
 		);
 	}
 

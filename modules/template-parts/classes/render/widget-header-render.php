@@ -213,8 +213,21 @@ class Widget_Header_Render {
 
 		<nav <?php $this->widget->print_render_attribute_string( 'main-menu' ); ?>>
 			<?php
-			// PHPCS - escaped by WordPress with "wp_nav_menu"
-			echo $menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			// Add custom filter to handle Nav Menu HTML output.
+			add_filter( 'nav_menu_link_attributes', [ $this, 'handle_link_classes' ], 10, 4 );
+			add_filter( 'nav_menu_submenu_css_class', [ $this, 'handle_sub_menu_classes' ] );
+			add_filter( 'walker_nav_menu_start_el', [ $this, 'handle_walker_menu_start_el' ], 10, 4 );
+			add_filter( 'nav_menu_item_id', '__return_empty_string' );
+
+			$args['echo'] = true;
+
+			wp_nav_menu( $args );
+
+			// Remove all our custom filters.
+			remove_filter( 'nav_menu_link_attributes', [ $this, 'handle_link_classes' ] );
+			remove_filter( 'nav_menu_submenu_css_class', [ $this, 'handle_sub_menu_classes' ] );
+			remove_filter( 'walker_nav_menu_start_el', [ $this, 'handle_walker_menu_start_el' ] );
+			remove_filter( 'nav_menu_item_id', '__return_empty_string' );
 			$this->render_ctas_container();
 			?>
 		</nav>

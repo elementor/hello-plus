@@ -69,7 +69,7 @@ class Ajax_Handler {
 		// Make the post as global post for dynamic values.
 		Utils::elementor()->db->switch_to_post( $queried_id );
 
-		$form_id = filter_input( INPUT_POST, 'form_id', FILTER_SANITIZE_STRING );
+		$form_id = filter_input( INPUT_POST, 'form_id', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 		$elementor = Utils::elementor();
 		$document = $elementor->documents->get( $post_id );

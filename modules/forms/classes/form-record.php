@@ -184,7 +184,7 @@ class Form_Record {
 					break;
 
 				case 'page_title':
-					$referrer_title = filter_input( INPUT_POST, 'referer_title', FILTER_SANITIZE_STRING );
+					$referrer_title = filter_input( INPUT_POST, 'referer_title', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 					$result['page_title'] = [
 						'title' => esc_html__( 'Page Title', 'hello-plus' ),
 						'value' => $referrer_title ? sanitize_text_field( wp_unslash( $referrer_title ) ) : '',
@@ -192,7 +192,7 @@ class Form_Record {
 					break;
 
 				case 'user_agent':
-					$user_agent = filter_input( INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_SANITIZE_STRING );
+					$user_agent = filter_input( INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 					$result['user_agent'] = [
 						'title' => esc_html__( 'User Agent', 'hello-plus' ),
 						'value' => $user_agent ? sanitize_textarea_field( wp_unslash( $user_agent ) ) : '',

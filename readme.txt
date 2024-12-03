@@ -8,6 +8,7 @@ Stable tag: 0.0.5
 Requires PHP: 7.4
 License: GPL-3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
+Resources URI: https://github.com/elementor/hello-plus
 
 Hello+ is a free WordPress plugin designed to work seamlessly with Elementor’s Hello Themes. It adds the Plus in the Hello themes.
 

@@ -91,7 +91,7 @@ class Utils {
 
 	public static function is_preview_for_document( $post_id ): bool {
 		$preview_id = filter_input( INPUT_GET, 'preview_id', FILTER_VALIDATE_INT );
-		$preview = filter_input( INPUT_GET, 'preview', FILTER_SANITIZE_STRING );
+		$preview = filter_input( INPUT_GET, 'preview', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 		return 'true' === $preview && (int) $post_id === (int) $preview_id;
 	}

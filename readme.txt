@@ -4,7 +4,7 @@ Contributors: elementor
 Tags: elementor, themes, hello themes, hello plus, widgets
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 0.0.5
+Stable tag: 0.0.6
 Requires PHP: 7.4
 License: GPL-3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -81,5 +81,5 @@ For documentation and tutorials, visit our [Knowledge Base](https://elementor.co
 
 == Changelog ==
 
-= 0.0.5 - 2024-12-01 =
+= 0.0.6 - 2024-12-03 =
 * Initial Public Release

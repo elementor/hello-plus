@@ -115,7 +115,12 @@ class Ajax_Handler {
 		}
 
 		// the fields are not fixed so they will be validated afterwards
-		$form_fields = filter_input( INPUT_POST, 'form_fields', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+		$form_fields = filter_input(
+			INPUT_POST,
+			'form_fields',
+			FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+			FILTER_REQUIRE_ARRAY
+		);
 
 		$record = new Form_Record( $form_fields, $form );
 

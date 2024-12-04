@@ -33,7 +33,7 @@ class Setup_Wizard {
 		];
 
 		set_transient(
-			'elementor_elementor_core_campaign',
+			'elementor_core_campaign',
 			$campaign_data,
 			30 * DAY_IN_SECONDS
 		);

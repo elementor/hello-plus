@@ -5,22 +5,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-use ElementorPro\Modules\Checklist\Module;
 use HelloPlus\Includes\Utils;
 use HelloPlus\Modules\TemplateParts\Classes\Steps\Setup_Header;
 
 class Checklist {
 	public function __construct() {
-		if ( ! class_exists( 'Elementor\\Modules\\Checklist\\Module' ) ) {
-			return;
-		}
-
 		// Run after Pro did:
 		add_filter( 'elementor/checklist/steps', [ $this, 'replace_steps' ], 2 );
-	}
-
-	public function get_name() : string {
-		return 'e-checklist';
 	}
 
 	/**
@@ -33,18 +24,12 @@ class Checklist {
 		$module = \Elementor\Modules\Checklist\Module::instance();
 		$has_pro = Utils::has_pro();
 
-		$elementor_step_id = $has_pro ? \ElementorPro\Modules\Checklist\Steps\Setup_Header::STEP_ID : \Elementor\Modules\Checklist\Steps\Setup_Header::STEP_ID;
+		$elementor_step_id = ! $has_pro ? \Elementor\Modules\Checklist\Steps\Setup_Header::STEP_ID : \ElementorPro\Modules\Checklist\Steps\Setup_Header::STEP_ID;
 
 		foreach ( $steps as $step_id => $step ) {
-			if ( $elementor_step_id !== $step_id ) {
-
+			if ( $elementor_step_id !== $step_id || $step->is_absolute_completed() ) {
 				$formatted_steps[ $step_id ] = $step;
 				continue;
-			}
-
-			if ( $step->is_absolute_completed() ) {
-				// Bail:
-				return $steps;
 			}
 
 			$header_step = new Setup_Header( $module );

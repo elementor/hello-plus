@@ -39,19 +39,19 @@ class Widget_Form_Render {
 		}
 
 		?>
-        <form class="ehp-form" method="post" <?php $this->widget->print_render_attribute_string( 'form' ); ?>>
+		<form class="ehp-form" method="post" <?php $this->widget->print_render_attribute_string( 'form' ); ?>>
 			<?php $this->render_text_container(); ?>
-            <input type="hidden" name="post_id" value="<?php echo (int) Utils::get_current_post_id(); ?>"/>
-            <input type="hidden" name="form_id" value="<?php echo esc_attr( $this->widget->get_id() ); ?>"/>
-            <input type="hidden" name="referer_title" value="<?php echo esc_attr( $referer_title ); ?>"/>
+			<input type="hidden" name="post_id" value="<?php echo (int) Utils::get_current_post_id(); ?>"/>
+			<input type="hidden" name="form_id" value="<?php echo esc_attr( $this->widget->get_id() ); ?>"/>
+			<input type="hidden" name="referer_title" value="<?php echo esc_attr( $referer_title ); ?>"/>
 
 			<?php if ( is_singular() ) {
 				// `queried_id` may be different from `post_id` on Single theme builder templates.
 				?>
-                <input type="hidden" name="queried_id" value="<?php echo (int) get_the_ID(); ?>"/>
+				<input type="hidden" name="queried_id" value="<?php echo (int) get_the_ID(); ?>"/>
 			<?php } ?>
 
-            <div <?php $this->widget->print_render_attribute_string( 'wrapper' ); ?>>
+			<div <?php $this->widget->print_render_attribute_string( 'wrapper' ); ?>>
 				<?php
 				foreach ( $this->settings['form_fields'] as $item_index => $item ) :
 					$item['input_size'] = $this->settings['input_size'];
@@ -91,14 +91,14 @@ class Widget_Form_Render {
 
 					$print_label = ! in_array( $item['field_type'], [ 'hidden', 'html', 'step' ], true );
 					?>
-                    <div <?php $this->widget->print_render_attribute_string( 'field-group' . $item_index ); ?>>
+					<div <?php $this->widget->print_render_attribute_string( 'field-group' . $item_index ); ?>>
 						<?php
 						if ( $print_label && $item['field_label'] ) {
 							?>
                             <label <?php $this->widget->print_render_attribute_string( 'label' . $item_index ); ?>>
 								<?php
 								echo esc_html( $item['field_label'] ); ?>
-                            </label>
+							 </label>
 							<?php
 						}
 
@@ -145,7 +145,7 @@ class Widget_Form_Render {
 							case 'email':
 								$this->widget->add_render_attribute( 'input' . $item_index, 'class', 'elementor-field-textual' );
 								?>
-                                <input size="1" <?php $this->widget->print_render_attribute_string( 'input' . $item_index ); ?>>
+								<input size="1" <?php $this->widget->print_render_attribute_string( 'input' . $item_index ); ?>>
 								<?php
 								break;
 
@@ -170,11 +170,11 @@ class Widget_Form_Render {
 								do_action( "hello_plus/forms/render_field/{$field_type}", $item, $item_index, $this->widget );
 						endswitch;
 						?>
-                    </div>
+					</div>
 				<?php endforeach; ?>
 				<?php $this->render_button(); ?>
-            </div>
-        </form>
+			</div>
+		 </form>
 		<?php
 	}
 
@@ -239,8 +239,8 @@ class Widget_Form_Render {
 		] );
 
 		?>
-        <div <?php $this->widget->print_render_attribute_string( 'submit-group' ); ?>>
-            <button <?php $this->widget->print_render_attribute_string( 'button' ); ?>>
+		<div <?php $this->widget->print_render_attribute_string( 'submit-group' ); ?>>
+			<button <?php $this->widget->print_render_attribute_string( 'button' ); ?>>
 				<?php if ( ! empty( $button_icon ) || ! empty( $button_icon['value'] ) ) : ?>
 					<?php
 					Icons_Manager::render_icon( $button_icon,
@@ -253,10 +253,10 @@ class Widget_Form_Render {
 				<?php endif; ?>
 
 				<?php if ( ! empty( $button_text ) ) : ?>
-                    <span <?php $this->widget->print_render_attribute_string( 'button-text' ); ?>><?php $this->widget->print_unescaped_setting( 'button_text' ); ?></span>
+					<span <?php $this->widget->print_render_attribute_string( 'button-text' ); ?>><?php $this->widget->print_unescaped_setting( 'button_text' ); ?></span>
 				<?php endif; ?>
-            </button>
-        </div>
+			</button>
+		</div>
 		<?php
 	}
 
@@ -268,7 +268,7 @@ class Widget_Form_Render {
 		$description_text = $this->settings['text_description'];
 		$has_description = ! empty( $description_text );
 		?>
-        <div class="ehp-form__text-container">
+		<div class="ehp-form__text-container">
 			<?php if ( $has_heading ) {
 				$heading_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Elementor_Utils::validate_html_tag( $heading_tag ), 'class="ehp-form__heading"', esc_html( $heading_text ) );
 				// Escaped above
@@ -276,9 +276,9 @@ class Widget_Form_Render {
 			} ?>
 
 			<?php if ( $has_description ) { ?>
-                <p class="ehp-form__description"><?php echo esc_html( $description_text ); ?></p>
+				<p class="ehp-form__description"><?php echo esc_html( $description_text ); ?></p>
 			<?php } ?>
-        </div>
+		</div>
 		<?php
 	}
 }

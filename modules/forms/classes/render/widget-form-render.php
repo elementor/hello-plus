@@ -95,10 +95,10 @@ class Widget_Form_Render {
 						<?php
 						if ( $print_label && $item['field_label'] ) {
 							?>
-                            <label <?php $this->widget->print_render_attribute_string( 'label' . $item_index ); ?>>
+							<label <?php $this->widget->print_render_attribute_string( 'label' . $item_index ); ?>>
 								<?php
 								echo esc_html( $item['field_label'] ); ?>
-							 </label>
+							</label>
 							<?php
 						}
 
@@ -174,7 +174,7 @@ class Widget_Form_Render {
 				<?php endforeach; ?>
 				<?php $this->render_button(); ?>
 			</div>
-		 </form>
+		</form>
 		<?php
 	}
 

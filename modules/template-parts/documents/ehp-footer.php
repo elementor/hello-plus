@@ -28,7 +28,7 @@ class Ehp_Footer extends Document_Base {
 		return esc_html__( 'Hello+ Footers', 'hello-plus' );
 	}
 
-	public static function get_template( $name, $args ) {
+	public static function get_template( $name, $args ): void {
 		require static::get_templates_path() . 'footer.php';
 
 		$templates = [];

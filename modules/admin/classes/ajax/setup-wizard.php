@@ -17,7 +17,7 @@ class Setup_Wizard {
 	public function ajax_setup_wizard() {
 		check_ajax_referer( 'updates', 'nonce' );
 
-		$step = filter_input( INPUT_POST, 'step', FILTER_UNSAFE_RAW );
+		$step = filter_input( INPUT_POST, 'step', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$allow_tracking = filter_input( INPUT_POST, 'allowTracking', FILTER_VALIDATE_BOOLEAN );
 
 		if ( $allow_tracking ) {
@@ -25,6 +25,18 @@ class Setup_Wizard {
 		} else {
 			delete_option( 'elementor_allow_tracking' );
 		}
+
+		$campaign_data = [
+			'source' => 'ecore-ehp-install',
+			'campaign' => 'ec-plg',
+			'medium' => 'wp-dash',
+		];
+
+		set_transient(
+			'elementor_core_campaign',
+			$campaign_data,
+			30 * DAY_IN_SECONDS
+		);
 
 		switch ( $step ) {
 			case 'install-elementor':

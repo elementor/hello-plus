@@ -74,8 +74,15 @@ class Acceptance extends Field_Base {
 		<div class="elementor-field-subgroup">
 			<span class="elementor-field-option">
 				<input <?php $form->print_render_attribute_string( 'input' . $item_index ); ?>>
-				<?php // PHPCS - the variables $label is safe.
-				echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				<?php
+				echo wp_kses( $label, [
+					'label' => [
+						'for' => true,
+						'class' => true,
+						'id' => true,
+						'style' => true,
+					],
+				] ); ?>
 			</span>
 		</div>
 		<?php

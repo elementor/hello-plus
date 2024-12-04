@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use HelloPlus\Includes\Utils;
 use Elementor\{
 	TemplateLibrary\Source_Local,
 	Modules\Library\Documents\Library_Document,
@@ -37,22 +38,22 @@ abstract class Document_Base extends Library_Document {
 		/**
 		 * Filter the document properties.
 		 *
+		 * @param array $properties The document default properties.
+		 *
 		 * @since 1.0.0
 		 *
-		 * @param array $properties The document default properties.
 		 */
 		return apply_filters( 'hello-plus/template-parts/document/properties', $properties );
 	}
 
-	public function print_content() {
+	public function print_content(): void {
 		$plugin = Theme_Utils::elementor();
 
 		if ( $plugin->preview->is_preview_mode( $this->get_main_id() ) ) {
-			// PHPCS - the method builder_wrapper is safe.
-			echo $plugin->preview->builder_wrapper( '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+			echo wp_kses_post( $plugin->preview->builder_wrapper( '' ) );
 		} else {
-			// PHPCS - the method get_content is safe.
-			echo $this->get_content(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( $this->get_content() );
 		}
 	}
 
@@ -73,7 +74,6 @@ abstract class Document_Base extends Library_Document {
 
 		return add_query_arg( [ 'template_type' => static::get_type() ], $base_create_url );
 	}
-
 
 	public function get_name(): string {
 		return static::get_type();
@@ -116,12 +116,12 @@ abstract class Document_Base extends Library_Document {
 		return $query->posts;
 	}
 
-	public static function get_active_document() {
+	public static function get_active_document(): array {
 		return static::get_all_document_posts(
 			[
 				'post_status' => 'publish',
 				'posts_per_page' => 1,
-			]
+			],
 		);
 	}
 
@@ -152,8 +152,8 @@ abstract class Document_Base extends Library_Document {
 	}
 
 	public static function maybe_get_template( ?string $name, array $args ): void {
-		if ( defined( 'ELEMENTOR_PRO_VERSION' ) ) {
-			/** @var \ElementorPro\Modules\ThemeBuilder\Module $theme_builder_module */
+		if ( Utils::has_pro() ) {
+			/** @var $theme_builder_module */
 			$theme_builder_module = \ElementorPro\Modules\ThemeBuilder\Module::instance();
 			$conditions_manager = $theme_builder_module->get_conditions_manager();
 
@@ -179,5 +179,5 @@ abstract class Document_Base extends Library_Document {
 	 *
 	 * @return mixed
 	 */
-	abstract public static function get_template( ?string $name, array $args );
+	abstract public static function get_template( ?string $name, array $args ): void;
 }

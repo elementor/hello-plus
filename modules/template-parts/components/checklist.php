@@ -33,16 +33,18 @@ class Checklist {
 		$module = \Elementor\Modules\Checklist\Module::instance();
 		$has_pro = Utils::has_pro();
 
-		$elementor_step_id = $has_pro ? \Elementor\Modules\Checklist\Steps\Setup_Header::STEP_ID : \ElementorPro\Modules\Checklist\Steps\Setup_Header::STEP_ID;
+		$elementor_step_id = $has_pro ? \ElementorPro\Modules\Checklist\Steps\Setup_Header::STEP_ID : \Elementor\Modules\Checklist\Steps\Setup_Header::STEP_ID;
 
 		foreach ( $steps as $step_id => $step ) {
 			if ( $elementor_step_id !== $step_id ) {
-				if ( $step->is_absolute_completed() ) {
-					// Bail:
-					return $steps;
-				}
+
 				$formatted_steps[ $step_id ] = $step;
 				continue;
+			}
+
+			if ( $step->is_absolute_completed() ) {
+				// Bail:
+				return $steps;
 			}
 
 			$header_step = new Setup_Header( $module );

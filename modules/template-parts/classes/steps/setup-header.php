@@ -24,14 +24,24 @@ class Setup_Header extends \Elementor\Modules\Checklist\Steps\Setup_Header {
 		$args = [
 			'post_type' => 'elementor_library',
 			'meta_query' => [
-				'relation' => 'AND',
+				'relation' => 'OR',
 				[
-					'key' => '_elementor_template_type',
-					'value' => [ 'header', 'ehp-header' ],
-					'compare' => 'IN',
+					'relation' => 'AND',
+					[
+						'key' => '_elementor_template_type',
+						'value' => [ 'header', 'ehp-header' ],
+						'compare' => 'IN',
+					],
+					[
+						'key' => '_elementor_conditions',
+					],
 				],
 				[
-					'key' => '_elementor_conditions',
+					[
+						'key' => '_elementor_template_type',
+						'value' => 'ehp-header',
+						'compare' => '=',
+					],
 				],
 			],
 			'posts_per_page' => 1,

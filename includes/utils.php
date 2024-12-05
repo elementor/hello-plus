@@ -89,6 +89,14 @@ class Utils {
 		return 'hello-plus';
 	}
 
+	public static function get_theme_admin_home(): string {
+		if ( defined( 'EHP_THEME_SLUG' ) ) {
+			return add_query_arg( [ 'page' => EHP_THEME_SLUG ], self_admin_url( 'edit.php' ) );
+		}
+
+		return self_admin_url();
+	}
+
 	public static function is_preview_for_document( $post_id ): bool {
 		$preview_id = filter_input( INPUT_GET, 'preview_id', FILTER_VALIDATE_INT );
 		$preview = filter_input( INPUT_GET, 'preview', FILTER_SANITIZE_FULL_SPECIAL_CHARS );

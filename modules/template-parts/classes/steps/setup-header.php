@@ -57,7 +57,7 @@ class Setup_Header extends \Elementor\Modules\Checklist\Steps\Step_Base {
 	}
 
 	public function get_cta_url() : string {
-		return add_query_arg( [ 'page' => EHP_THEME_SLUG ], self_admin_url( 'edit.php' ) );
+		return Utils::get_theme_admin_home();
 	}
 
 	public function get_cta_text() : string {

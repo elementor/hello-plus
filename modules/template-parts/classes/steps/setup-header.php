@@ -57,9 +57,7 @@ class Setup_Header extends \Elementor\Modules\Checklist\Steps\Step_Base {
 	}
 
 	public function get_cta_url() : string {
-		$base_create_url = Utils::elementor()->documents->get_create_new_post_url( 'elementor_library' );
-
-		return add_query_arg( [ 'template_type' => 'ehp-header' ], $base_create_url );
+		return add_query_arg( [ 'page' => EHP_THEME_SLUG ], self_admin_url( 'edit.php' ) );
 	}
 
 	public function get_cta_text() : string {

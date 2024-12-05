@@ -30,7 +30,7 @@ class Form extends Form_Base {
 	}
 
 	public function get_icon() {
-		return 'eicon-form-horizontal';
+		return 'eicon-ehp-forms';
 	}
 
 	public function get_keywords() {

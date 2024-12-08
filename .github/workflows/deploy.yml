@@ -24,7 +24,7 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v4
         with:
-          name: hello-plus
+          name: ${{ env.PLUGIN_SLUG }}
       - run: ls -lah && pwd
       - name: unzip
         run: unzip ${{ env.PLUGIN_SLUG }}.zip

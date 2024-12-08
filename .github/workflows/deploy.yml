@@ -1,0 +1,39 @@
+name: Deploy
+
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    if: ( github.actor == 'KingYes' || github.actor == 'bainternet'  || github.actor == 'arielk' ) && startsWith( github.repository, 'elementor/' )
+    uses: ./.github/workflows/build.yml
+    secrets: inherit
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: hello-plus
+      - run: ls -lah
+      - name: unzip
+        run: unzip hello-plus.zip
+      - name: Preparing envs
+        run: |
+          echo "PACKAGE_VERSION=$(cat package.json | jq -r '.version')" >> $GITHUB_ENV
+          echo "PLUGIN_SLUG=$(cat package.json | jq -r '.name')" >> $GITHUB_ENV
+      - name: Publish to WordPress.org SVN
+        env:
+          PLUGIN_SLUG: ${{ env.PLUGIN_SLUG }}
+          PLUGIN_VERSION: ${{ env.PACKAGE_VERSION }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+        run: |
+          bash "${GITHUB_WORKSPACE}/.github/scripts/validate-build-files.sh"
+          bash "${GITHUB_WORKSPACE}/.github/scripts/publish-to-wordpress-org.sh"

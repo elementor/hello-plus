@@ -1,6 +1,6 @@
 'use strict';
 
-const fs = require( "fs" );
+const fs = require( 'fs' );
 
 const { VERSION } = process.env;
  if ( ! VERSION ) {
@@ -17,8 +17,8 @@ async function replaceInFileWithArray( filePath, replacementArray ) {
 		}
 		console.log( content );
 		//fs.writeFileSync( filePath, content, { encoding: 'utf8' } );
-		console.log( `All replacements in ${ filePath } were successful.`);
-	} catch (error) {
+		console.log( `All replacements in ${ filePath } were successful.` );
+	} catch ( error ) {
 		console.error( `An error occurred in ${ filePath }:`, error );
 	}
 }
@@ -29,30 +29,29 @@ const run = async () => {
 		await replaceInFileWithArray( './readme.txt',
 			[
 				{
-					from:  /Stable tag: (.*)/m,
+					from: /Stable tag: (.*)/m,
 					to: `Stable tag: ${ VERSION }`,
 				},
 				{
-					from:  /= NEXT_VERSION =/m,
+					from: /= NEXT_VERSION =/m,
 					to: `= ${ VERSION } =`,
 				},
-			]
+			],
 		);
 
 		// update version in image-optimization.php
 		await replaceInFileWithArray( './image-optimization.php',
 			[
 				{
-					from:  /\* Version: (.*)/m,
+					from: /\* Version: (.*)/m,
 					to: `* Version: ${ VERSION }`,
 				},
 				{
-					from:  /define\( \'HELLOPLUS_VERSION\', \'(.*)\' \)\;/m,
+					from: /define\( \'HELLOPLUS_VERSION\', \'(.*)\' \)\;/m,
 					to: `define( 'HELLOPLUS_VERSION', '${ VERSION }' );`,
 				},
-			]
+			],
 		);
-
 	} catch ( err ) {
 		// eslint-disable-next-line no-console
 		console.error( 'Error occurred:', err );

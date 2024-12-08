@@ -16,7 +16,6 @@ async function replaceInFileWithArray( filePath, replacementArray ) {
 			content = content.replace( replacement.from, replacement.to );
 		}
 		console.log( content );
-		//fs.writeFileSync( filePath, content, { encoding: 'utf8' } );
 		console.log( `All replacements in ${ filePath } were successful.` );
 	} catch ( error ) {
 		console.error( `An error occurred in ${ filePath }:`, error );
@@ -39,8 +38,8 @@ const run = async () => {
 			],
 		);
 
-		// update version in image-optimization.php
-		await replaceInFileWithArray( './image-optimization.php',
+		// update version in hello-plus.php
+		await replaceInFileWithArray( './hello-plus.php',
 			[
 				{
 					from: /\* Version: (.*)/m,

@@ -45,11 +45,11 @@ cd $SVN_PATH/trunk
 
 svn status
 
-echo "svn delete"
-svn status | grep -v '^.[ \t]*\\..*' | { grep '^!' || true; } | awk '{print $2}' | xargs -r svn delete;
-
 echo "svn add"
 svn status | grep -v '^.[ \t]*\\..*' | { grep '^?' || true; } | awk '{print $2}' | xargs -r svn add;
+
+echo "svn delete"
+svn status | grep -v '^.[ \t]*\\..*' | { grep '^!' || true; } | awk '{print $2}' | xargs -r svn delete;
 
 svn status
 

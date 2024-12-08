@@ -52,14 +52,14 @@ svn status | grep -v '^.[ \t]*\\..*' | { grep '^?' || true; } | awk '{print $2}'
 svn status
 
 echo "Commit files to trunk"
-#svn ci -m "Upload v${PLUGIN_VERSION}" --no-auth-cache --non-interactive  --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
+svn ci -m "Upload v${PLUGIN_VERSION}" --no-auth-cache --non-interactive  --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
 
 echo "Copy files from trunk to tag ${PLUGIN_VERSION}"
-#svn cp https://plugins.svn.wordpress.org/${PLUGIN_SLUG}/trunk https://plugins.svn.wordpress.org/${PLUGIN_SLUG}/tags/${PLUGIN_VERSION} --message "Tagged ${PLUGIN_VERSION}" --no-auth-cache --non-interactive  --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
-#svn update
+svn cp https://plugins.svn.wordpress.org/${PLUGIN_SLUG}/trunk https://plugins.svn.wordpress.org/${PLUGIN_SLUG}/tags/${PLUGIN_VERSION} --message "Tagged ${PLUGIN_VERSION}" --no-auth-cache --non-interactive  --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
+svn update
 
 echo "Remove the SVN folder from the workspace (for multiple releases in the same Action)"
-#rm -rf $SVN_PATH
+rm -rf $SVN_PATH
 
 echo "Back to the workspace root"
 cd $GITHUB_WORKSPACE

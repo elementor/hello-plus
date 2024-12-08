@@ -86,7 +86,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PLUGIN_SLUG }}
-          path: ${{ env.PLUGIN_SLUG }}.zip
+          path: ${{ env.PLUGIN_SLUG }}
           retention-days: 14
 
       - name: Push to Slack on PR merge

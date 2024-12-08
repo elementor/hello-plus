@@ -40,6 +40,8 @@ find . -maxdepth 1 -not -name ".svn" -not -name "." -not -name ".." -exec rm -rf
 echo "Copy files"
 rsync -ah --progress $PLUGIN_PATH/* $SVN_PATH/trunk
 
+ls -lah
+
 echo "Preparing files"
 cd $SVN_PATH/trunk
 

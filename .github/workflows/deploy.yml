@@ -1,0 +1,41 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    if: ( github.actor == 'KingYes' || github.actor == 'bainternet'  || github.actor == 'arielk' || github.actor == 'nuritsha' ) && startsWith( github.repository, 'elementor/' )
+    uses: ./.github/workflows/build.yml
+    secrets: inherit
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Preparing envs
+        run: |
+          echo "PACKAGE_VERSION=$(cat package.json | jq -r '.version')" >> $GITHUB_ENV
+          echo "PLUGIN_SLUG=$(cat package.json | jq -r '.name')" >> $GITHUB_ENV
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.PLUGIN_SLUG }}
+      - run: ls -lah && pwd
+      - name: unzip
+        run: unzip ${{ env.PLUGIN_SLUG }}.zip
+      - name: Preparing envs
+        run: |
+          echo "PACKAGE_VERSION=$(cat package.json | jq -r '.version')" >> $GITHUB_ENV
+          echo "PLUGIN_SLUG=$(cat package.json | jq -r '.name')" >> $GITHUB_ENV
+      - name: Publish to WordPress.org SVN
+        env:
+          PLUGIN_SLUG: ${{ env.PLUGIN_SLUG }}
+          PLUGIN_VERSION: ${{ env.PACKAGE_VERSION }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+        run: |
+          bash "${GITHUB_WORKSPACE}/.github/scripts/validate-build-files.sh"
+          bash "${GITHUB_WORKSPACE}/.github/scripts/publish-to-wordpress-org.sh"

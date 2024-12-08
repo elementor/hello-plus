@@ -73,27 +73,29 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.CLOUD_DEVOPS_TOKEN }}
 
-      - name: Build
-        run: npm run build:prod
+      - name: Preparing envs
+        run: |
+          echo "PACKAGE_VERSION=$(cat package.json | jq -r '.version')" >> $GITHUB_ENV
+          echo "PLUGIN_SLUG=$(cat package.json | jq -r '.name')" >> $GITHUB_ENV
 
       - name: Build Plugin
         run: |
-          rsync -av --exclude-from=.buildignore . hello-plus
-          npm run zip
+          npm run package:zip
+          mv ${{ env.PLUGIN_SLUG }}*.zip ${{ env.PLUGIN_SLUG }}.zip
 
       - name: Archive
         uses: actions/upload-artifact@v4
         with:
-          name: hello-plus
-          path: hello-plus.zip
+          name: ${{ env.PLUGIN_SLUG }}
+          path: ${{ env.PLUGIN_SLUG }}.zip
           retention-days: 14
 
       - name: Push to Slack on PR merge
         if: ${{ github.event.pull_request.merged == true }}
         run: |
-          curl -F file=@hello-plus.zip -F "initial_comment=Hello plus - A new PR has been pushed to the master branch by ${{ github.actor }}."  title="${{ github.event.pull_request.title }}" -F channels=C081F86TPFS -H "Authorization: Bearer ${{ secrets.CLOUD_SLACK_BOT_TOKEN }}" https://slack.com/api/files.upload
+          curl -F file=@${{ env.PLUGIN_SLUG }}.zip -F "initial_comment=Hello plus - A new PR has been pushed to the master branch by ${{ github.actor }}."  title="${{ github.event.pull_request.title }}" -F channels=C081F86TPFS -H "Authorization: Bearer ${{ secrets.CLOUD_SLACK_BOT_TOKEN }}" https://slack.com/api/files.upload
 
       - name: Push to Slack on Manual Trigger
         if: ${{ github.event.inputs.push_to_slack == 'true'  }}
         run: |
-          curl -F file=@hello-plus.zip -F "initial_comment=Hello plus - A new build was triggered by ${{ github.actor }}."  title="Manuall ${{ steps.date.outputs.date }}" -F channels=C081F86TPFS -H "Authorization: Bearer ${{ secrets.CLOUD_SLACK_BOT_TOKEN }}" https://slack.com/api/files.upload
+          curl -F file=@${{ env.PLUGIN_SLUG }}.zip -F "initial_comment=Hello plus - A new build was triggered by ${{ github.actor }}."  title="Manuall ${{ steps.date.outputs.date }}" -F channels=C081F86TPFS -H "Authorization: Bearer ${{ secrets.CLOUD_SLACK_BOT_TOKEN }}" https://slack.com/api/files.upload

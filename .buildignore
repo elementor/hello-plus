@@ -21,3 +21,6 @@ vendor/
 .browserslistrc
 .eslintignore
 .eslintrc.js
+
+hello-plus*.zip
+hello-plus/

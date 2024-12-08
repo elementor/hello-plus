@@ -91,7 +91,7 @@ class Widget_Form_Render {
 
 					$print_label = ! in_array( $item['field_type'], [ 'hidden', 'html', 'step' ], true );
 					?>
-                    <div <?php $this->widget->print_render_attribute_string( 'field-group' . $item_index ); ?>>
+					<div <?php $this->widget->print_render_attribute_string( 'field-group' . $item_index ); ?>>
 						<?php
 						if ( $print_label && $item['field_label'] ) {
 							?>

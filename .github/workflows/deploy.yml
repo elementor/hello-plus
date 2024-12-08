@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    if: ( github.actor == 'KingYes' || github.actor == 'bainternet'  || github.actor == 'arielk' ) && startsWith( github.repository, 'elementor/' )
+    if: ( github.actor == 'KingYes' || github.actor == 'bainternet'  || github.actor == 'arielk' || github.actor == 'nuritsha' ) && startsWith( github.repository, 'elementor/' )
     uses: ./.github/workflows/build.yml
     secrets: inherit
 

@@ -37,17 +37,13 @@ echo "Clean trunk folder"
 cd $SVN_PATH/trunk
 find . -maxdepth 1 -not -name ".svn" -not -name "." -not -name ".." -exec rm -rf {} +
 
-svn status
-
 echo "Copy files"
 rsync -ah --progress $PLUGIN_PATH/* $SVN_PATH/trunk
-
-ls -lah
 
 echo "Preparing files"
 cd $SVN_PATH/trunk
 
-ls -lah
+svn status
 
 echo "svn delete"
 svn status | grep -v '^.[ \t]*\\..*' | { grep '^!' || true; } | awk '{print $2}' | xargs -r svn delete;

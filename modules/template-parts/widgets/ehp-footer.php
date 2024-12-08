@@ -250,21 +250,21 @@ class Ehp_Footer extends Ehp_Widget_Base {
 						'footer_icon_text' => esc_html__( 'Instagram', 'hello-plus' ),
 						'footer_selected_icon' => [
 							'value' => 'fab fa-instagram',
-							'library' => 'fa-solid',
+							'library' => 'fa-brands',
 						],
 					],
 					[
 						'footer_icon_text' => esc_html__( 'Tiktok', 'hello-plus' ),
 						'footer_selected_icon' => [
 							'value' => 'fab fa-tiktok',
-							'library' => 'fa-solid',
+							'library' => 'fa-brands',
 						],
 					],
 					[
 						'footer_icon_text' => esc_html__( 'X (Twitter)', 'hello-plus' ),
 						'footer_selected_icon' => [
 							'value' => 'fab fa-x-twitter',
-							'library' => 'fa-solid',
+							'library' => 'fa-brands',
 						],
 					],
 				],

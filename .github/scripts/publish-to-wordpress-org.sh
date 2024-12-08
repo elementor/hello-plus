@@ -43,6 +43,8 @@ rsync -ah --progress $PLUGIN_PATH/* $SVN_PATH/trunk
 echo "Preparing files"
 cd $SVN_PATH/trunk
 
+pwd
+
 echo "svn delete"
 svn status | grep -v '^.[ \t]*\\..*' | { grep '^!' || true; } | awk '{print $2}' | xargs -r svn delete;
 

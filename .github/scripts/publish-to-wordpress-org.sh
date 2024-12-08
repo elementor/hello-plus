@@ -43,13 +43,11 @@ rsync -ah --progress $PLUGIN_PATH/* $SVN_PATH/trunk
 echo "Preparing files"
 cd $SVN_PATH/trunk
 
-svn status
+echo "svn delete"
+svn status | grep -v '^.[ \t]*\\..*' | { grep '^!' || true; } | awk '{print $2}' | xargs -r svn delete || true
 
 echo "svn add"
-svn status | grep -v '^.[ \t]*\\..*' | { grep '^?' || true; } | awk '{print $2}' | xargs -r svn add;
-
-echo "svn delete"
-svn status | grep -v '^.[ \t]*\\..*' | { grep '^!' || true; } | awk '{print $2}' | xargs -r svn delete;
+svn status | grep -v '^.[ \t]*\\..*' | { grep '^?' || true; } | awk '{print $2}' | xargs -r svn add || true
 
 svn status
 

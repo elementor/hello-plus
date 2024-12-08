@@ -33,6 +33,9 @@ cd $SVN_PATH
 echo "Checkout from SVN"
 svn co https://plugins.svn.wordpress.org/${PLUGIN_SLUG}/trunk
 
+ls -lah trunk
+ls -lah
+
 echo "Clean trunk folder"
 cd $SVN_PATH/trunk
 find . -maxdepth 1 -not -name ".svn" -not -name "." -not -name ".." -exec rm -rf {} +

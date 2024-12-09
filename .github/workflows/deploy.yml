@@ -24,8 +24,8 @@ jobs:
         with:
           name: ${{ env.PLUGIN_SLUG }}
       - run: ls -lah && pwd
-      - name: unzip
-        run: unzip ${{ env.PLUGIN_SLUG }}.zip
+#      - name: unzip
+#        run: unzip ${{ env.PLUGIN_SLUG }}.zip
       - name: Preparing envs
         run: |
           echo "PACKAGE_VERSION=$(cat package.json | jq -r '.version')" >> $GITHUB_ENV

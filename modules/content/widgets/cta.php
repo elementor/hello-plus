@@ -39,7 +39,7 @@ class CTA extends Widget_Base {
 	}
 
 	public function get_icon(): string {
-		return 'eicon-single-page';
+		return 'eicon-ehp-cta';
 	}
 
 	public function get_style_depends(): array {

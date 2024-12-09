@@ -18,7 +18,7 @@ class Checklist {
 	 * @param array $steps
 	 * @return \Elementor\Modules\Checklist\Steps\Step_Base[]
 	 */
-	public function replace_steps( array $steps ) : array {
+	public function replace_steps( array $steps ): array {
 		$formatted_steps = [];
 
 		$module = \Elementor\Modules\Checklist\Module::instance();

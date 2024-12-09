@@ -4,7 +4,6 @@ import Typography from '@elementor/ui/Typography';
 import Alert from '@elementor/ui/Alert';
 import Box from '@elementor/ui/Box';
 import Button from '@elementor/ui/Button';
-import Checkbox from '@elementor/ui/Checkbox';
 import Link from '@elementor/ui/Link';
 import { __ } from '@wordpress/i18n';
 
@@ -34,7 +33,7 @@ export const GetStarted = ( { message, buttonText, onClick, severity } ) => {
 				</Stack>
 			</Stack>
 			<Stack direction="column" alignItems="center" justifyContent="center" sx={ { marginTop: 'auto', pb: 4 } }>
-				<Stack direction='row' sx={ { maxWidth: 'fit-content' } } alignItems="center" justifyContent="center">
+				<Stack direction="row" sx={ { maxWidth: 'fit-content' } } alignItems="center" justifyContent="center">
 					<Typography color="text.tertiary" variant="body2" align="center">
 						{ __( 'By clicking "Start building my website", I agree to install & activate the Elementor plugin. I accept the Elementor', 'hello-plus' ) }
 					</Typography>

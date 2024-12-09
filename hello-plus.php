@@ -45,11 +45,6 @@ define( 'HELLOPLUS_STYLE_URL', HELLOPLUS_ASSETS_URL . 'css/' );
 define( 'HELLOPLUS_IMAGES_PATH', HELLOPLUS_ASSETS_PATH . 'images/' );
 define( 'HELLOPLUS_IMAGES_URL', HELLOPLUS_ASSETS_URL . 'images/' );
 
-
-if ( ! isset( $content_width ) ) {
-	$content_width = 800; // Pixels.
-}
-
 // Init the Plugin class
 require HELLOPLUS_PATH . '/plugin.php';
 

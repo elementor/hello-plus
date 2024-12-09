@@ -53,7 +53,7 @@ abstract class Document_Base extends Library_Document {
 
 			echo wp_kses_post( $plugin->preview->builder_wrapper( '' ) );
 		} else {
-			echo wp_kses_post( $this->get_content() );
+			echo wp_kses_post( $this->get_content( true ) );
 		}
 	}
 

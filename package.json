@@ -3,15 +3,16 @@
 	"slug": "hello-plus",
 	"homepage": "https://elementor.com/",
 	"description": "A quick-start theme for Elementor.",
-	"version": "0.0.7",
+	"version": "1.0.0",
 	"scripts": {
 		"start": "wp-scripts start",
 		"build": "wp-scripts build",
 		"build:prod": "wp-scripts build --env=production",
 		"lint:js": "wp-scripts lint-js",
-		"clean:build": "rimraf build && rimraf hello-plus",
-		"zip": "npm run clean:build && npm run build:prod && rsync -av --exclude-from=.buildignore . hello-plus && zip -r hello-plus.$npm_package_version.zip hello-plus/*",
-		"build:dir": "npm run clean:build && npm run build:prod && rsync -av --exclude-from=.buildignore . hello-plus"
+		"clean": "rimraf build && rimraf $npm_package_name",
+		"build:dir": "npm run clean:build && npm run build:prod && rsync -av --exclude-from=.buildignore . hello-plus",
+		"package": "npm run clean && npm run build && rsync -av --exclude-from=.buildignore . $npm_package_name",
+		"package:zip": "npm run package && zip -r $npm_package_name.$npm_package_version.zip $npm_package_name/*"
 	},
 	"devDependencies": {
 		"@wordpress/eslint-plugin": "^21.6.0",

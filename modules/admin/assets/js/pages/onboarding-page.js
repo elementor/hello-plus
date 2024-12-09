@@ -17,7 +17,6 @@ export const OnboardingPage = () => {
 	const [ message, setMessage ] = useState( '' );
 	const [ severity, setSeverity ] = useState( 'info' );
 	const [ previewKit, setPreviewKit ] = useState( null );
-	const [ allowTracking, setAllowTracking ] = useState( true );
 
 	const {
 		isLoading,
@@ -35,7 +34,6 @@ export const OnboardingPage = () => {
 			step: stepAction,
 			_wpnonce: nonce,
 			slug: 'elementor',
-			allowTracking,
 		};
 
 		setIsLoading( true );
@@ -74,7 +72,7 @@ export const OnboardingPage = () => {
 		} finally {
 			setIsLoading( false );
 		}
-	}, [ allowTracking, nonce, setIsLoading, stepAction ] );
+	}, [ nonce, setIsLoading, stepAction ] );
 
 	const onClose = () => {
 		window.location.href = modalCloseRedirectUrl;
@@ -96,7 +94,7 @@ export const OnboardingPage = () => {
 					} }>
 					{ ! previewKit && ( <TopBarContent onClose={ onClose } sx={ { borderBottom: '1px solid var(--divider-divider, rgba(0, 0, 0, 0.12))', mb: 4 } } iconSize="small" /> ) }
 					{ 0 === step && ! isLoading && ! previewKit && (
-						<GetStarted allowTracking={ allowTracking } setAllowTracking={ setAllowTracking } severity={ severity } message={ message } buttonText={ buttonText } onClick={ onClick } />
+						<GetStarted severity={ severity } message={ message } buttonText={ buttonText } onClick={ onClick } />
 					) }
 					{ 1 === step && ! isLoading && ! previewKit && ( <InstallKit setPreviewKit={ setPreviewKit } severity={ severity } message={ message } onClick={ onClick } kits={ kits } /> ) }
 					{ 2 === step && ! isLoading && ! previewKit && ( <ReadyToGo modalCloseRedirectUrl={ modalCloseRedirectUrl } /> ) }

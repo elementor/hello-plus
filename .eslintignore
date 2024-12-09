@@ -5,3 +5,4 @@ assets/js/*.js
 **/vendor/**
 build/**
 hello-plus/**
+.github/**

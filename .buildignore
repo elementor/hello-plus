@@ -15,6 +15,7 @@ vendor/
 .wporg-assets/
 
 .github/
+.git/
 .buildignore
 .editorconfig
 .gitignore

@@ -32,9 +32,6 @@ class Setup_Header extends \Elementor\Modules\Checklist\Steps\Step_Base {
 						'value' => [ 'header', 'ehp-header' ],
 						'compare' => 'IN',
 					],
-					[
-						'key' => '_elementor_conditions',
-					],
 				],
 				[
 					[
@@ -61,7 +58,7 @@ class Setup_Header extends \Elementor\Modules\Checklist\Steps\Step_Base {
 	}
 
 	public function get_cta_text() : string {
-		return esc_html__( 'Add a Hello+ Header', 'hello-plus' );
+		return esc_html__( 'Go to Home Dashboard', 'hello-plus' );
 	}
 
 	public function get_title() : string {
@@ -72,16 +69,14 @@ class Setup_Header extends \Elementor\Modules\Checklist\Steps\Step_Base {
 		return esc_html__( 'This element applies across different pages, so visitors can easily navigate around your site.', 'hello-plus' );
 	}
 
-	// TODO: replace the image
 	public function get_image_src() : string {
-		return 'https://assets.elementor.com/checklist/v1/images/checklist-step-4.jpg';
+		return HELLOPLUS_IMAGES_URL . 'ehp-header-checklist-step.jpg';
 	}
 
 	public function get_is_completion_immutable() : bool {
 		return false;
 	}
 
-	// TODO: replace the link
 	public function get_learn_more_url() : string {
 		return 'https://go.elementor.com/app-website-checklist-header-article';
 	}

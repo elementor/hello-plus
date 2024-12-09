@@ -51,6 +51,10 @@ module.exports = {
 						from: path.resolve( modulesDir, 'forms/assets/images' ),
 						to: imagesPath,
 					},
+					{
+						from: path.resolve( modulesDir, 'template-parts/assets/images' ),
+						to: imagesPath,
+					},
 				],
 			} ),
 

@@ -17,7 +17,7 @@ $header = Theme_Utils::elementor()->documents->get( $header_doc_post );
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
-    <meta charset="<?php bloginfo( 'charset' ); ?>">
+	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<?php
 
 	echo wp_kses( Elementor_Utils::get_meta_viewport( Theme_Utils::get_theme_slug() ), [
@@ -30,11 +30,11 @@ $header = Theme_Utils::elementor()->documents->get( $header_doc_post );
 	] );
 	?>
 	<?php if ( ! current_theme_supports( 'title-tag' ) ) : ?>
-        <title>
+		<title>
 			<?php
 			echo esc_html( wp_get_document_title() );
 			?>
-        </title>
+		</title>
 	<?php endif; ?>
 	<?php wp_head(); ?>
 </head>

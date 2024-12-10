@@ -7,9 +7,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use HelloPlus\Includes\Utils;
-use Elementor\{Modules\Favorites\Types\Widgets,
+use Elementor\{
 	TemplateLibrary\Source_Local,
-	Modules\Library\Documents\Library_Document};
+	Modules\Library\Documents\Library_Document
+};
 
 use HelloPlus\Includes\Utils as Theme_Utils;
 use WP_Query;

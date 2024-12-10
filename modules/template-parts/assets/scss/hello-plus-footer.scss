@@ -198,8 +198,8 @@
 		padding: 0;
 	}
 
-	&__menu-item,
-	&__menu-item:not([href]):not([tabindex]) {
+	&__menu-item:is(a),
+	&__menu-item:is(a):is(:not([href]):not([tabindex])) {
 		color: var(--footer-menu-item-color);
 		display: inline-flex;
 

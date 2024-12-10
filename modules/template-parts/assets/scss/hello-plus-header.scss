@@ -411,8 +411,8 @@
 		white-space: nowrap;
 	}
 
-	&__item,
-	&__item[type="button"] {
+	&__item:is(a),
+	&__item:is(a):is([type="button"]) {
 		color: var(--header-menu-item-color);
 		transition: $transition;
 

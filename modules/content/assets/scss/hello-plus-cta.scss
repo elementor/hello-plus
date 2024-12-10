@@ -211,11 +211,12 @@
 			padding-block-start: var(--cta-button-padding-block-start);
 			padding-inline-end: var(--cta-button-padding-inline-end);
 			padding-inline-start: var(--cta-button-padding-inline-start);
+			text-decoration: none;
 		}
 
 		&.is-type-link,
 		&.is-type-link:not([href]):not([tabindex]) {
-			background: none;
+			background: none !important; // Always override primary and secondary background coming from the control
 			align-self: center;
 			text-decoration: underline;
 		}

@@ -7,10 +7,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use HelloPlus\Includes\Utils;
-use Elementor\{
+use Elementor\{Modules\Favorites\Types\Widgets,
 	TemplateLibrary\Source_Local,
-	Modules\Library\Documents\Library_Document,
-};
+	Modules\Library\Documents\Library_Document};
 
 use HelloPlus\Includes\Utils as Theme_Utils;
 use WP_Query;
@@ -50,10 +49,11 @@ abstract class Document_Base extends Library_Document {
 		$plugin = Theme_Utils::elementor();
 
 		if ( $plugin->preview->is_preview_mode( $this->get_main_id() ) ) {
-
 			echo wp_kses_post( $plugin->preview->builder_wrapper( '' ) );
+		} elseif ( is_customize_preview() ) {
+			echo $plugin->frontend->get_builder_content( $this->post->ID, true );
 		} else {
-			echo wp_kses_post( $this->get_content( true ) );
+			echo wp_kses_post( $this->get_content() );
 		}
 	}
 

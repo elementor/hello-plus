@@ -80,5 +80,12 @@ For documentation and tutorials, visit our [Knowledge Base](https://elementor.co
 
 == Changelog ==
 
+= 1.0.1 - 2024-12-11 =
+* Tweak: Integrate with Elementor checklist
+* Fix: Footer widget social icons not displaying
+* Fix: CSS printed as text in customizer screens
+* Fix: CTA widget buttons styling
+* Fix: Header widget navigation styling
+
 = 1.0.0 - 2024-12-05 =
 * Initial Public Release

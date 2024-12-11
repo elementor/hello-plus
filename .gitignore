@@ -12,6 +12,7 @@ Thumbs.db
 *.map
 yarn.lock
 *.zip
+.npmrc
 
 hello-plus*.zip
 hello-plus/

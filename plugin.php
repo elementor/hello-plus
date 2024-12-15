@@ -206,6 +206,7 @@ final class Plugin {
 		}
 
 		register_activation_hook( HELLOPLUS_PLUGIN_BASE, [ $this, 'activate' ] );
+
 		add_action( 'init', [ $this, 'init' ] );
 
 		$this->init_modules();

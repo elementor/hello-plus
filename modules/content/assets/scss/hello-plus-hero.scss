@@ -4,10 +4,6 @@
 	--hero-box-height: auto;
 	--hero-box-full-height: 100vh;
 
-	@supports (height: 100dvh) {
-		--hero-box-full-height: 100dvh;
-	}
-
 	--hero-content-position: center;
 	--hero-content-text-align: center;
 	--hero-content-text-gap: 20px;
@@ -51,6 +47,10 @@
 	padding-block-start: var(--hero-box-padding-block-start);
 	padding-inline-end: var(--hero-box-padding-inline-end);
 	padding-inline-start: var(--hero-box-padding-inline-start);
+
+	@supports (height: 100dvh) {
+		--hero-box-full-height: 100dvh;
+	}
 
 	@mixin full-height($min: null, $max: null) {
 		$query: null;

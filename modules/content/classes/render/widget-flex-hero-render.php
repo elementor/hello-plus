@@ -24,11 +24,27 @@ class Widget_Flex_Hero_Render {
 		$this->settings = $widget->get_settings_for_display();
 	}
 
+	public function add_layout_responsive_classes() {
+		$layout_image_position_mobile = $this->settings['layout_image_position_mobile'];
+		$layout_image_position_tablet = $this->settings['layout_image_position_tablet'];
+
+		if ( ! empty( $layout_image_position_mobile ) ) {
+			$this->widget->add_render_attribute( 'layout', 'class', 'has-image-position-sm-' . $layout_image_position_mobile );
+		}
+
+		if ( ! empty( $layout_image_position_tablet ) ) {
+			$this->widget->add_render_attribute( 'layout', 'class', 'has-image-position-md-' . $layout_image_position_tablet );
+		}
+	}
+
 	public function render(): void {
 		$layout_classnames = self::LAYOUT_CLASSNAME;
 		$layout_full_height_controls = $this->settings['box_full_screen_height_controls'] ?? '';
-
 		$layout_preset = $this->settings['layout_preset'];
+		$image_stretch = $this->settings['image_stretch'];
+		$layout_image_position = $this->settings['layout_image_position'];
+		$has_border = $this->settings['show_box_border'];
+		$box_shape = $this->settings['box_shape'];
 
 		if ( ! empty( $layout_full_height_controls ) ) {
 			foreach ( $layout_full_height_controls as $breakpoint ) {
@@ -38,6 +54,24 @@ class Widget_Flex_Hero_Render {
 
 		if ( ! empty( $layout_preset ) ) {
 			$layout_classnames .= ' has-layout-preset-' . $layout_preset;
+		}
+
+		if ( 'yes' === $image_stretch ) {
+			$layout_classnames .= ' has-image-stretch';
+		}
+
+		if ( 'yes' === $has_border ) {
+			$layout_classnames .= ' has-border';
+		}
+
+		if ( ! empty( $layout_image_position ) ) {
+			$layout_classnames .= ' has-image-position-' . $layout_image_position;
+
+			$this->add_layout_responsive_classes();
+		}
+
+		if ( ! empty( $box_shape ) ) {
+			$layout_classnames .= ' has-shape-' . $box_shape;
 		}
 
 		$this->widget->add_render_attribute( 'layout', [
@@ -55,6 +89,7 @@ class Widget_Flex_Hero_Render {
 
 	public function render_content_container() {
 		?>
+			<div class="ehp-flex-hero__overlay"></div>
 			<div class="ehp-flex-hero__content-container">
 				<?php
 					$this->render_text_container();
@@ -108,14 +143,12 @@ class Widget_Flex_Hero_Render {
 		] );
 		?>
 			<div <?php $this->widget->print_render_attribute_string( 'ctas-container' ); ?>>
-				<div class="ehp-cta__buttons-wrapper">
-					<?php if ( $has_primary_button ) {
-						$this->render_button( 'primary' );
-					} ?>
-					<?php if ( $has_secondary_button ) {
-						$this->render_button( 'secondary' );
-					} ?>
-				</div>
+				<?php if ( $has_primary_button ) {
+					$this->render_button( 'primary' );
+				} ?>
+				<?php if ( $has_secondary_button ) {
+					$this->render_button( 'secondary' );
+				} ?>
 			</div>
 		<?php
 	}
@@ -175,6 +208,17 @@ class Widget_Flex_Hero_Render {
 		$image = $this->settings['image'];
 		$has_image = ! empty( $image['url'] );
 		$image_classnames = self::IMAGE_CLASSNAME;
+
+		$has_border = $this->settings['show_image_border'];
+		$image_shape = $this->settings['image_shape'];
+
+		if ( 'yes' === $has_border ) {
+			$image_classnames .= ' has-border';
+		}
+
+		if ( ! empty( $image_shape ) ) {
+			$image_classnames .= ' has-shape-' . $image_shape;
+		}
 
 		$this->widget->add_render_attribute( 'image', [
 			'class' => $image_classnames,

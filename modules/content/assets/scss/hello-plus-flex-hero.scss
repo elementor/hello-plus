@@ -1,15 +1,169 @@
+@import "../../../../assets/dev/scss/variables";
+
 .ehp-flex-hero {
 	--flex-hero-content-alignment-showcase: center;
 	--flex-hero-content-alignment-storytelling: start;
 	--flex-hero-content-position: flex-start;
 	--flex-hero-content-width: 648px;
+	--flex-hero-buttons-space-between: 16px;
+	--flex-hero-gap: 60px;
+	--flex-hero-element-spacing: 40px;
+	--flex-hero-box-height: auto;
+	--flex-hero-box-full-height: 100vh;
+
+	@supports (height: 100dvh) {
+		--flex-hero-box-full-height: 100dvh;
+	}
+
+	--flex-hero-intro-color: #{$global-colors-text};
+	--flex-hero-heading-color: #{$global-colors-secondary};
+	--flex-hero-subheading-color: #{$global-colors-secondary};
+
+	--flex-hero-button-primary-background-color: #{$global-colors-accent};
+	--flex-hero-button-primary-icon-spacing: 10px;
+	--flex-hero-button-primary-icon-size: 16px;
+	--flex-hero-button-primary-text-color: #{$global-colors-white};
+	--flex-hero-button-primary-text-color-hover: #{$global-colors-text};
+	--flex-hero-button-primary-border-width: 0;
+	--flex-hero-button-primary-border-color: transparent;
+	--flex-hero-button-primary-padding-block-end: 8px;
+	--flex-hero-button-primary-padding-block-start: 8px;
+	--flex-hero-button-primary-padding-inline-end: 16px;
+	--flex-hero-button-primary-padding-inline-start: 16px;
+	--flex-hero-button-primary-border-radius: 0;
+
+	--flex-hero-button-secondary-background-color: transparent;
+	--flex-hero-button-secondary-icon-spacing: 10px;
+	--flex-hero-button-secondary-icon-size: 16px;
+	--flex-hero-button-secondary-text-color: #{$global-colors-secondary};
+	--flex-hero-button-secondary-text-color-hover: #{$global-colors-secondary};
+	--flex-hero-button-secondary-border-width: 2px;
+	--flex-hero-button-secondary-border-color: #{$global-colors-secondary};
+	--flex-hero-button-secondary-padding-block-end: 8px;
+	--flex-hero-button-secondary-padding-block-start: 8px;
+	--flex-hero-button-secondary-padding-inline-end: 16px;
+	--flex-hero-button-secondary-padding-inline-start: 16px;
+	--flex-hero-button-secondary-border-radius: #{$corners-shape-default};
+
+	--flex-hero-button-text-color: var(--flex-hero-button-primary-text-color);
+	--flex-hero-button-text-color-hover: var(--flex-hero-button-primary-text-color-hover);
+	--flex-hero-button-border-color: var(--flex-hero-button-primary-border-color);
+	--flex-hero-button-background-color: var(--flex-hero-button-primary-background-color);
+	--flex-hero-button-padding-block-end: var(--flex-hero-button-primary-padding-block-end);
+	--flex-hero-button-padding-block-start: var(--flex-hero-button-primary-padding-block-start);
+	--flex-hero-button-padding-inline-end: var(--flex-hero-button-primary-padding-inline-end);
+	--flex-hero-button-padding-inline-start: var(--flex-hero-button-primary-padding-inline-start);
+	--flex-hero-button-border-width: var(--flex-hero-button-primary-border-width);
+	--flex-hero-button-icon-spacing: var(--flex-hero-button-primary-icon-spacing);
+	--flex-hero-button-icon-size: var(--flex-hero-button-primary-icon-size);
+
+	--flex-hero-box-padding-block-end: 60px;
+	--flex-hero-box-padding-block-start: 60px;
+	--flex-hero-box-padding-inline-end: 60px;
+	--flex-hero-box-padding-inline-start: 60px;
+	--flex-hero-box-border-color: #{$global-colors-secondary};
+	--flex-hero-box-border-width: 1px;
+
+	--flex-hero-image-position: center center;
+	--flex-hero-image-border-width: 1px;
+	--flex-hero-image-border-color: #{$global-colors-secondary};
+
+	--flex-hero-button-border-radius-block-end: 8px;
+	--flex-hero-button-border-radius-block-start: 8px;
+	--flex-hero-button-border-radius-inline-end: 8px;
+	--flex-hero-button-border-radius-inline-start: 8px;
+	--flex-hero-image-border-radius-block-end: 8px;
+	--flex-hero-image-border-radius-block-start: 8px;
+	--flex-hero-image-border-radius-inline-end: 8px;
+	--flex-hero-image-border-radius-inline-start: 8px;
+	--flex-hero-box-border-radius-block-end: 8px;
+	--flex-hero-box-border-radius-block-start: 8px;
+	--flex-hero-box-border-radius-inline-end: 8px;
+	--flex-hero-box-border-radius-inline-start: 8px;
 
 	display: flex;
+	gap: var(--flex-hero-gap);
+	flex-direction: column;
+	overflow: hidden;
+	padding-block-end: var(--flex-hero-box-padding-block-end);
+	padding-block-start: var(--flex-hero-box-padding-block-start);
+	padding-inline-end: var(--flex-hero-box-padding-inline-end);
+	padding-inline-start: var(--flex-hero-box-padding-inline-start);
+	position: relative;
+
+	@mixin full-height($min: null, $max: null) {
+		$query: null;
+
+		@if $min != null and $max != null {
+			$query: "(min-width: " + $min + ") and (max-width: " + $max + ")";
+		} @else if $max != null {
+			$query: "(max-width: " + $max + ")";
+		} @else if $min != null {
+			$query: "(min-width: " + $min + ")";
+		}
+
+		@if $query != null {
+			@media #{$query} {
+				--flex-hero-box-height: var(--flex-hero-box-full-height, 100vh);
+			};
+		}
+	}
+
+	& .has-shape,
+	&.has-shape {
+
+		&-sharp {
+			border-radius: $corners-shape-sharp;
+		}
+	
+		&-rounded {
+			border-radius: $corners-shape-rounded;
+		}
+	
+		&-round {
+			border-radius: $corners-shape-round;
+		}
+
+		&-default {
+			border-radius: $corners-shape-default;
+		}
+	
+		&-oval {
+			border-radius: $corners-shape-oval;
+		}
+	}
+
+	&.has-shape-custom {
+		border-top-left-radius: var(--flex-hero-box-border-radius-block-end);
+		border-top-right-radius: var(--flex-hero-box-border-radius-block-start);
+		border-bottom-right-radius: var(--flex-hero-box-border-radius-inline-end);
+		border-bottom-left-radius: var(--flex-hero-box-border-radius-inline-start);
+	}
+
+	&.has-border {
+		border-color: var(--flex-hero-box-border-color);
+		border-style: solid;
+		border-width: var(--flex-hero-box-border-width);
+	}
+
+	&.has-image-stretch {
+		padding: 0;
+
+		& .ehp-flex-hero__content-container {
+			
+			@media screen and (min-width: $screen-desktop-min) {
+				padding-block-end: var(--flex-hero-box-padding-block-end);
+				padding-block-start: var(--flex-hero-box-padding-block-start);
+			}
+		}
+	}
 
 	&.has-layout-preset {
 
 		&-showcase {
-			flex-direction: row;
+			@media screen and (min-width: $screen-desktop-min) {
+				flex-direction: row;
+			}
 
 			& .ehp-flex-hero__content-container {
 				justify-content: var(--flex-hero-content-alignment-showcase);
@@ -29,14 +183,220 @@
 		}
 	}
 
+	@mixin responsive-image-position() {
+		&-start {
+
+			& .ehp-flex-hero__content-container {
+				order: 2;
+			}
+			
+			& .ehp-flex-hero__image {
+				order: 1;
+			}
+		}
+	
+		&-end {
+			& .ehp-flex-hero__content-container {
+				order: 1;
+			}
+			
+			& .ehp-flex-hero__image {
+				order: 1;
+			}
+		}
+	}
+
+	@mixin responsive-content-padding() {
+		&-end {
+			&.has-image-stretch .ehp-flex-hero__content-container {
+				padding-block-start: var(--flex-hero-box-padding-block-start);
+				padding-inline-end: var(--flex-hero-box-padding-inline-end);
+				padding-inline-start: var(--flex-hero-box-padding-inline-start);
+			}
+		}
+
+		&-start {
+			&.has-image-stretch .ehp-flex-hero__content-container {
+				padding-block-end: var(--flex-hero-box-padding-block-end);
+				padding-inline-end: var(--flex-hero-box-padding-inline-end);
+				padding-inline-start: var(--flex-hero-box-padding-inline-start);
+			}
+		}
+	}
+
+	&.has-image-position {
+		@include responsive-image-position();
+
+		@media screen and (min-width: $screen-desktop-min) {
+			
+			&-start {
+				&.has-image-stretch .ehp-flex-hero__content-container {
+					padding-inline-end: var(--flex-hero-box-padding-inline-end);
+					padding-inline-start: 0;
+				}
+			}
+
+			&-end {
+				&.has-image-stretch .ehp-flex-hero__content-container {
+					padding-inline-end: 0;
+					padding-inline-start: var(--flex-hero-box-padding-inline-start);
+				}
+			}
+		}
+
+		&-md {
+			@media screen and (max-width: $screen-desktop-min) {
+				@include responsive-image-position();
+				@include responsive-content-padding();
+			}
+		}
+
+		&-sm {
+			@media screen and (max-width: $screen-tablet-min) {
+				@include responsive-image-position();
+				@include responsive-content-padding();
+			}
+		}
+	}
+
 	&__content-container {
 		display: flex;
 		flex-direction: column;
+		gap: var(--flex-hero-element-spacing);
+		z-index: 2;
 	}
 
-	&__intro,
-	&__heading,
-	&__subheading {
+	&__intro {
+		color: var(--flex-hero-intro-color);
 		margin: 0;
+	}
+
+	&__heading {
+		color: var(--flex-hero-heading-color);
+		margin: 0;
+	}
+
+	&__subheading {
+		color: var(--flex-hero-subheading-color);
+		margin: 0;
+	}
+
+	&__ctas-container {
+		display: flex;
+		gap: var(--flex-hero-buttons-space-between);
+	}
+
+	&__button-icon {
+		fill: currentColor;
+		height: var(--flex-hero-button-icon-size);
+		width: var(--flex-hero-button-icon-size);
+	}
+
+	&__button,
+	&__button:not([href]):not([tabindex]) {
+		align-items: center;
+		display: flex;
+		gap: var(--flex-hero-button-icon-spacing);
+		justify-content: center;
+		text-decoration: none;
+		transition: $transition;
+
+		&:hover,
+		&:focus {
+			transition: $transition;
+		}
+
+		&.has-border {
+			border-color: var(--flex-hero-button-border-color);
+			border-style: solid;
+			border-width: var(--flex-hero-button-border-width);
+		}
+
+		&.is-type-button {
+			background-color: var(--flex-hero-button-background-color);
+			padding-block-end: var(--flex-hero-button-padding-block-end);
+			padding-block-start: var(--flex-hero-button-padding-block-start);
+			padding-inline-end: var(--flex-hero-button-padding-inline-end);
+			padding-inline-start: var(--flex-hero-button-padding-inline-start);
+			text-decoration: none;
+		}
+
+		&.is-type-link,
+		&.is-type-link:not([href]):not([tabindex]) {
+			background: none !important; // Always override primary and secondary background coming from the control
+			align-self: center;
+			text-decoration: underline;
+		}
+
+		&.is-type-button,
+		&.is-type-link,
+		&.is-type-button:not([href]):not([tabindex]),
+		&.is-type-link:not([href]):not([tabindex]) {
+			color: var(--flex-hero-button-text-color);
+
+			&:hover,
+			&:focus {
+				color: var(--flex-hero-button-text-color-hover);
+			}
+		}
+
+		&.has-shape-custom {
+			border-top-left-radius: var(--flex-hero-button-border-radius-block-end);
+			border-top-right-radius: var(--flex-hero-button-border-radius-block-start);
+			border-bottom-right-radius: var(--flex-hero-button-border-radius-inline-end);
+			border-bottom-left-radius: var(--flex-hero-button-border-radius-inline-start);
+		}
+	}
+
+	&__button--secondary,
+	&__button--secondary:not([href]):not([tabindex]) {
+		--flex-hero-button-text-color: var(--flex-hero-button-secondary-text-color);
+		--flex-hero-button-text-color-hover: var(--flex-hero-button-secondary-text-color-hover);
+		--flex-hero-button-border-color: var(--flex-hero-button-secondary-border-color);
+		--flex-hero-button-background-color: var(--flex-hero-button-secondary-background-color);
+		--flex-hero-button-padding-block-end: var(--flex-hero-button-secondary-padding-block-end);
+		--flex-hero-button-padding-block-start: var(--flex-hero-button-secondary-padding-block-start);
+		--flex-hero-button-padding-inline-end: var(--flex-hero-button-secondary-padding-inline-end);
+		--flex-hero-button-padding-inline-start: var(--flex-hero-button-secondary-padding-inline-start);
+		--flex-hero-button-border-width: var(--flex-hero-button-secondary-border-width);
+		--flex-hero-button-icon-spacing: var(--flex-hero-button-secondary-icon-spacing);
+	}
+
+	&__image {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		overflow: hidden;
+		z-index: 2;
+
+		.elementor & img {
+			height: var(--flex-hero-image-height);
+			object-fit: cover;
+			object-position: var(--flex-hero-image-position);
+			min-height: var(--flex-hero-image-min-height);
+		}
+
+		&.has-border {
+			border-color: var(--flex-hero-image-border-color);
+			border-style: solid;
+			border-width: var(--flex-hero-image-border-width);
+		}
+
+		&.has-shape-custom {
+			border-top-left-radius: var(--flex-hero-image-border-radius-block-end);
+			border-top-right-radius: var(--flex-hero-image-border-radius-block-start);
+			border-bottom-right-radius: var(--flex-hero-image-border-radius-inline-end);
+			border-bottom-left-radius: var(--flex-hero-image-border-radius-inline-start);
+		}
+	}
+
+	&__overlay {
+		height: 100%;
+		left: 0;
+		opacity: var(--flex-hero-overlay-opacity);
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: 1;
 	}
 }

@@ -376,27 +376,21 @@ class Flex_Hero extends Widget_Base {
 			[
 				'label' => esc_html__( 'Image Position', 'hello-plus' ),
 				'type' => Controls_Manager::CHOOSE,
-				'default' => is_rtl() ? 'row-reverse' : 'row',
+				'default' => is_rtl() ? 'start' : 'end',
 				'options' => [
-					'row' => [
+					'start' => [
 						'title' => esc_html__( 'Start', 'hello-plus' ),
 						'icon' => 'eicon-h-align-left',
 					],
-					'row-reverse' => [
+					'end' => [
 						'title' => esc_html__( 'End', 'hello-plus' ),
 						'icon' => 'eicon-h-align-right',
 					],
 				],
-				'selectors_dictionary' => [
-					'left' => is_rtl() ? 'row-reverse' : 'row',
-					'right' => is_rtl() ? 'row' : 'row-reverse',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => 'flex-direction: {{VALUE}};',
-				],
 				'condition' => [
 					'layout_preset' => 'showcase',
 				],
+				'frontend_available' => true,
 			]
 		);
 
@@ -558,10 +552,10 @@ class Flex_Hero extends Widget_Base {
 				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
-					'default' => Global_Colors::COLOR_PRIMARY,
+					'default' => Global_Colors::COLOR_TEXT,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-intro-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-intro-color: {{VALUE}}',
 				],
 			]
 		);
@@ -570,9 +564,9 @@ class Flex_Hero extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'intro_typography',
-				'selector' => '{{WRAPPER}} .ehp-hero__heading',
+				'selector' => '{{WRAPPER}} .ehp-flex-hero__intro',
 				'global' => [
-					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
 			]
 		);
@@ -595,7 +589,7 @@ class Flex_Hero extends Widget_Base {
 					'default' => Global_Colors::COLOR_PRIMARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-heading-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-heading-color: {{VALUE}}',
 				],
 			]
 		);
@@ -604,7 +598,7 @@ class Flex_Hero extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'heading_typography',
-				'selector' => '{{WRAPPER}} .ehp-hero__heading',
+				'selector' => '{{WRAPPER}} .ehp-flex-hero__heading',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
 				],
@@ -629,7 +623,7 @@ class Flex_Hero extends Widget_Base {
 					'default' => Global_Colors::COLOR_SECONDARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-subheading-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-subheading-color: {{VALUE}}',
 				],
 			]
 		);
@@ -638,7 +632,7 @@ class Flex_Hero extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'subheading_typography',
-				'selector' => '{{WRAPPER}} .ehp-hero__subheading',
+				'selector' => '{{WRAPPER}} .ehp-flex-hero__subheading',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
 				],
@@ -676,7 +670,7 @@ class Flex_Hero extends Widget_Base {
 				],
 				'separator' => 'before',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-buttons-space-between: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-buttons-space-between: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'secondary_cta_show' => 'yes',
@@ -725,7 +719,7 @@ class Flex_Hero extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => $type . '_button_typography',
-				'selector' => '{{WRAPPER}} .ehp-cta__button--' . $type,
+				'selector' => '{{WRAPPER}} .ehp-flex-hero__button--' . $type,
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_ACCENT,
 				],
@@ -755,7 +749,7 @@ class Flex_Hero extends Widget_Base {
 					'right' => is_rtl() ? 'row' : 'row-reverse',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta__button--' . $type => 'flex-direction: {{VALUE}};',
+					'{{WRAPPER}} .ehp-flex-hero__button--' . $type => 'flex-direction: {{VALUE}};',
 				],
 				'condition' => array_merge([
 					$type . '_cta_button_icon[value]!' => '',
@@ -784,7 +778,7 @@ class Flex_Hero extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-icon-spacing: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-button-' . $type . '-icon-spacing: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => array_merge([
 					$type . '_cta_button_icon[value]!' => '',
@@ -813,7 +807,7 @@ class Flex_Hero extends Widget_Base {
 					'default' => Global_Colors::COLOR_SECONDARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-button-' . $type . '-text-color: {{VALUE}}',
 				],
 				'condition' => $add_type_condition,
 			]
@@ -825,7 +819,7 @@ class Flex_Hero extends Widget_Base {
 				'name' => $type . '_button_background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .ehp-cta__button--' . $type,
+				'selector' => '{{WRAPPER}} .ehp-flex-hero__button--' . $type,
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
@@ -861,7 +855,7 @@ class Flex_Hero extends Widget_Base {
 					'default' => Global_Colors::COLOR_TEXT,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-text-color-hover: {{VALUE}}',
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-button-' . $type . '-text-color-hover: {{VALUE}}',
 				],
 				'condition' => $add_type_condition,
 			]
@@ -873,7 +867,7 @@ class Flex_Hero extends Widget_Base {
 				'name' => $type . '_button_background_hover',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .ehp-cta__button--' . $type . ':hover, {{WRAPPER}} .ehp-cta__button--' . $type . ':focus',
+				'selector' => '{{WRAPPER}} .ehp-flex-hero__button--' . $type . ':hover, {{WRAPPER}} .ehp-flex-hero__button--' . $type . ':focus',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
@@ -937,10 +931,11 @@ class Flex_Hero extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-border-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-button-' . $type . '-border-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => array_merge([
 					$type . '_show_button_border' => 'yes',
+					$type . '_button_type' => 'button',
 				], $add_type_condition),
 			]
 		);
@@ -954,10 +949,11 @@ class Flex_Hero extends Widget_Base {
 					'default' => Global_Colors::COLOR_SECONDARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-border-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-button-' . $type . '-border-color: {{VALUE}}',
 				],
 				'condition' => array_merge([
 					$type . '_show_button_border' => 'yes',
+					$type . '_button_type' => 'button',
 				], $add_type_condition),
 			]
 		);
@@ -989,7 +985,7 @@ class Flex_Hero extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-button-padding-block-end: {{BOTTOM}}{{UNIT}}; --hero-button-padding-block-start: {{TOP}}{{UNIT}}; --hero-button-padding-inline-end: {{RIGHT}}{{UNIT}}; --hero-button-padding-inline-start: {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-button-border-radius-block-end: {{BOTTOM}}{{UNIT}}; --flex-hero-button-border-radius-block-start: {{TOP}}{{UNIT}}; --flex-hero-button-border-radius-inline-end: {{RIGHT}}{{UNIT}}; --flex-hero-button-border-radius-inline-start: {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 				'condition' => array_merge([
@@ -1002,7 +998,7 @@ class Flex_Hero extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => $type . '_button_box_shadow',
-				'selector' => '{{WRAPPER}} .ehp-cta__button--' . $type,
+				'selector' => '{{WRAPPER}} .ehp-flex-hero__button--' . $type,
 				'condition' => array_merge([
 					$type . '_button_type' => 'button',
 				], $add_type_condition),
@@ -1016,7 +1012,7 @@ class Flex_Hero extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-button-' . $type . '-padding-block-end: {{BOTTOM}}{{UNIT}}; --cta-button-' . $type . '-padding-block-start: {{TOP}}{{UNIT}}; --cta-button-' . $type . '-padding-inline-end: {{RIGHT}}{{UNIT}}; --cta-button-' . $type . '-padding-inline-start: {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-button-' . $type . '-padding-block-end: {{BOTTOM}}{{UNIT}}; --flex-hero-button-' . $type . '-padding-block-start: {{TOP}}{{UNIT}}; --flex-hero-button-' . $type . '-padding-inline-end: {{RIGHT}}{{UNIT}}; --flex-hero-button-' . $type . '-padding-inline-start: {{LEFT}}{{UNIT}};',
 				],
 				'default' => [
 					'top' => '8',
@@ -1062,17 +1058,21 @@ class Flex_Hero extends Widget_Base {
 				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
 				'range' => [
 					'px' => [
-						'max' => 1600,
+						'max' => 380,
 					],
 					'%' => [
 						'max' => 100,
 					],
 				],
+				'default' => [
+					'size' => 380,
+					'unit' => 'px',
+				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-image-height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-height: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
-					'image_stretch' => 'no',
+					'image_stretch' => '',
 				],
 			]
 		);
@@ -1085,14 +1085,14 @@ class Flex_Hero extends Widget_Base {
 				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
 				'range' => [
 					'px' => [
-						'max' => 1600,
+						'max' => 380,
 					],
 					'%' => [
 						'max' => 100,
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-image-height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-min-height: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'image_stretch' => 'yes',
@@ -1121,7 +1121,7 @@ class Flex_Hero extends Widget_Base {
 					'bottom right' => esc_html__( 'Bottom Right', 'hello-plus' ),
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-image-position: {{VALUE}}',
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-position: {{VALUE}}',
 				],
 			]
 		);
@@ -1130,7 +1130,7 @@ class Flex_Hero extends Widget_Base {
 			Group_Control_Css_Filter::get_type(),
 			[
 				'name' => 'image_css_filters',
-				'selector' => '{{WRAPPER}} > .elementor-element-populated >  .elementor-background-overlay',
+				'selector' => '{{WRAPPER}} .ehp-flex-hero__image img',
 			]
 		);
 
@@ -1165,7 +1165,7 @@ class Flex_Hero extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-button-border-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-border-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'show_image_border' => 'yes',
@@ -1182,7 +1182,7 @@ class Flex_Hero extends Widget_Base {
 					'default' => Global_Colors::COLOR_TEXT,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-button-border-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-border-color: {{VALUE}}',
 				],
 				'condition' => [
 					'show_image_border' => 'yes',
@@ -1214,7 +1214,7 @@ class Flex_Hero extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-button-padding-block-end: {{BOTTOM}}{{UNIT}}; --hero-button-padding-block-start: {{TOP}}{{UNIT}}; --hero-button-padding-inline-end: {{RIGHT}}{{UNIT}}; --hero-button-padding-inline-start: {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-border-radius-block-end: {{BOTTOM}}{{UNIT}}; --flex-hero-image-border-radius-block-start: {{TOP}}{{UNIT}}; --flex-hero-image-border-radius-inline-end: {{RIGHT}}{{UNIT}}; --flex-hero-image-border-radius-inline-start: {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 				'condition' => [
@@ -1227,7 +1227,7 @@ class Flex_Hero extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'image_box_shadow',
-				'selector' => '{{WRAPPER}} .ehp-hero__button',
+				'selector' => '{{WRAPPER}} .ehp-flex-hero__image img',
 			]
 		);
 
@@ -1256,7 +1256,7 @@ class Flex_Hero extends Widget_Base {
 			[
 				'name' => 'background',
 				'types' => [ 'classic', 'gradient' ],
-				'selector' => '{{WRAPPER}} .ehp-hero',
+				'selector' => '{{WRAPPER}} .ehp-flex-hero',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
@@ -1279,11 +1279,34 @@ class Flex_Hero extends Widget_Base {
 			[
 				'name' => 'background_overlay',
 				'types' => [ 'classic', 'gradient' ],
-				'selector' => '{{WRAPPER}} .ehp-hero',
+				'selector' => '{{WRAPPER}} .ehp-flex-hero__overlay',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
 					],
+				],
+				'frontend_available' => true,
+			]
+		);
+
+		$this->add_responsive_control(
+			'background_overlay_opacity',
+			[
+				'label' => esc_html__( 'Opacity', 'elementor' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'%' => [
+						'max' => 1,
+						'min' => 0.10,
+						'step' => 0.01,
+					],
+				],
+				'default' => [
+					'unit' => '%',
+					'size' => 0.5,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-overlay-opacity: {{SIZE}};',
 				],
 			]
 		);
@@ -1321,7 +1344,7 @@ class Flex_Hero extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-content-text-gap: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-element-spacing: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -1360,7 +1383,7 @@ class Flex_Hero extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-content-text-gap: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-gap: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -1446,9 +1469,8 @@ class Flex_Hero extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-button-padding-block-end: {{BOTTOM}}{{UNIT}}; --hero-button-padding-block-start: {{TOP}}{{UNIT}}; --hero-button-padding-inline-end: {{RIGHT}}{{UNIT}}; --hero-button-padding-inline-start: {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-box-border-radius-block-end: {{BOTTOM}}{{UNIT}}; --flex-hero-box-border-radius-block-start: {{TOP}}{{UNIT}}; --flex-hero-box-border-radius-inline-end: {{RIGHT}}{{UNIT}}; --flex-hero-box-border-radius-inline-start: {{LEFT}}{{UNIT}};',
 				],
-				'separator' => 'before',
 				'condition' => [
 					'box_shape' => 'custom',
 				],
@@ -1459,7 +1481,7 @@ class Flex_Hero extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'box_box_shadow',
-				'selector' => '{{WRAPPER}} .ehp-hero__button',
+				'selector' => '{{WRAPPER}} .ehp-flex-hero',
 			]
 		);
 

@@ -27,6 +27,7 @@
 	--zigzag-content-width: 1304px;
 	--zigzag-icon-size: 256px;
 	--zigzag-icon-color: #555963;
+	--zigzag-icon-color-alternate: #61CE70;
 
 	--zigzag-box-padding-block-start: 60px;
 	--zigzag-box-padding-block-end: 60px;
@@ -191,11 +192,18 @@
 		max-width: var(--zigzag-content-width);
 		width: 100%;
 	
-		&.row-odd {
+		&.row-even {
 			flex-direction: row;
+
+			&.has-alternate-icon-color {
+
+				.ehp-zigzag__graphic-element-container {
+					color: var(--zigzag-icon-color-alternate);
+				}
+			}
 		}
 	
-		&.row-even {
+		&.row-odd {
 			flex-direction: row-reverse;
 		}
 

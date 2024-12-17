@@ -15,7 +15,7 @@ class Install_Elementor {
 	}
 
 	public function activate() {
-		if ( ! Utils::is_elementor_version_from_filesystem_supported() ) {
+		if ( ! Utils::is_installed_elementor_version_supported() ) {
 			wp_send_json_error(
 				[
 					'errorMessage' => Utils::get_update_elementor_message(),

@@ -112,7 +112,7 @@ class Utils {
 		return 'true' === $preview && (int) $post_id === (int) $preview_id;
 	}
 
-	public static function is_elementor_version_from_filesystem_supported(): bool {
+	public static function is_installed_elementor_version_supported(): bool {
 		$plugin_file = WP_PLUGIN_DIR . '/elementor/elementor.php';
 
 		if ( ! file_exists( $plugin_file ) ) {
@@ -124,10 +124,14 @@ class Utils {
 		$plugin_data = get_plugin_data( $plugin_file );
 		$plugin_version = $plugin_data['Version'];
 
-		return version_compare( $plugin_version, HELLOPLUS_MIN_ELEMENTOR_VERSION, '>' );
+		return self::is_elementor_version_supported( $plugin_version);
 	}
 
 	public static function is_active_elementor_version_supported(): bool {
-		return version_compare( ELEMENTOR_VERSION, HELLOPLUS_MIN_ELEMENTOR_VERSION, '>' );
+		return self::is_elementor_version_supported( ELEMENTOR_VERSION );
+	}
+
+	public static function is_elementor_version_supported( string $version ): bool {
+		return version_compare( $version, HELLOPLUS_MIN_ELEMENTOR_VERSION, 'ge' );
 	}
 }

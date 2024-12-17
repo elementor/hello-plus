@@ -44,6 +44,14 @@
 	--footer-text-width-wide: 500px;
 	--footer-text-width: var(--footer-text-width-default);
 
+	display: flex;
+	flex-direction: column;
+	gap: var(--footer-vertical-gap-copyright);
+	padding-block-start: var(--footer-box-padding-block-start);
+	padding-block-end: var(--footer-box-padding-block-end);
+	padding-inline-start: var(--footer-box-padding-inline-start);
+	padding-inline-end: var(--footer-box-padding-inline-end);
+
 	@media screen and (min-width: $screen-tablet-min) {
 		--footer-box-padding-block-start: 60px;
 		--footer-box-padding-block-end: 60px;
@@ -57,14 +65,6 @@
 		--footer-box-padding-inline-start: 100px;
 		--footer-box-padding-inline-end: 100px;
 	}
-
-	display: flex;
-	flex-direction: column;
-	gap: var(--footer-vertical-gap-copyright);
-	padding-block-start: var(--footer-box-padding-block-start);
-	padding-block-end: var(--footer-box-padding-block-end);
-	padding-inline-start: var(--footer-box-padding-inline-start);
-	padding-inline-end: var(--footer-box-padding-inline-end);
 
 	&.has-box-border {
 		border-top: var(--footer-box-border-width) solid var(--footer-box-border-color);

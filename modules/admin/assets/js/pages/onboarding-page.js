@@ -41,29 +41,24 @@ export const OnboardingPage = () => {
 		try {
 			switch ( stepAction ) {
 				case 'install-elementor':
-					setMessage( __( 'Installing Elementor plugin…', 'hello-plus' ) );
 					const response = await wp.ajax.post( 'helloplus_setup_wizard', data );
 
 					if ( response.activateUrl ) {
-						setMessage( __( 'Activating Elementor plugin…', 'hello-plus' ) );
 						const activate = await fetch( response.activateUrl );
 
 						if ( activate.ok ) {
-							setSeverity( 'success' );
-							setMessage( __( 'Elementor plugin has been installed and activated' ) );
+							window.location.reload();
 						} else {
 							throw new Error( __( 'Failed to activate Elementor plugin', 'hello-plus' ) );
 						}
 					}
-					window.location.reload();
 					break;
 				case 'activate-elementor':
-					setMessage( __( 'Activating Elementor plugin…', 'hello-plus' ) );
 					await wp.ajax.post( 'helloplus_setup_wizard', data );
-					data.slug = 'elementor';
+
 					window.location.reload();
 					break;
-				case 'install-kit':
+				default:
 					break;
 			}
 		} catch ( error ) {

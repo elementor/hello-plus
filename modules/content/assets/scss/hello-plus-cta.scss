@@ -4,10 +4,6 @@
 	--cta-box-height: auto;
 	--cta-box-full-height: 100vh;
 
-	@supports (height: 100dvh) {
-		--cta-box-full-height: 100dvh;
-	}
-
 	--cta-content-direction: start;
 	--cta-content-text-align: start;
 	--cta-buttons-position: flex-start;
@@ -74,6 +70,10 @@
 	padding-block-start: var(--cta-box-padding-block-start);
 	padding-inline-end: var(--cta-box-padding-inline-end);
 	padding-inline-start: var(--cta-box-padding-inline-start);
+
+	@supports (height: 100dvh) {
+		--cta-box-full-height: 100dvh;
+	}
 
 	@mixin full-height($min: null, $max: null) {
 		$query: null;
@@ -266,7 +266,7 @@
 	}
 
 	&.has-elements-position {
-			
+
 		&-center {
 
 			.ehp-cta__buttons-wrapper {

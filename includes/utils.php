@@ -124,7 +124,7 @@ class Utils {
 		$plugin_data = get_plugin_data( $plugin_file );
 		$plugin_version = $plugin_data['Version'];
 
-		return self::is_elementor_version_supported( $plugin_version);
+		return self::is_elementor_version_supported( $plugin_version );
 	}
 
 	public static function is_active_elementor_version_supported(): bool {

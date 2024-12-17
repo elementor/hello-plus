@@ -77,7 +77,7 @@ final class Plugin {
 			deactivate_plugins( HELLOPLUS_PLUGIN_BASE );
 
 			wp_die(
-				Utils::get_message_to_update_elementor(),
+				esc_html( Utils::get_message_to_update_elementor() ),
 				esc_html__( 'Plugin Activation Error', 'hello-plus' ),
 				[ 'back_link' => true ]
 			);
@@ -217,7 +217,7 @@ final class Plugin {
 		}
 
 		register_activation_hook( HELLOPLUS_PLUGIN_BASE, [ $this, 'activate' ] );
-	
+
 		add_action( 'init', [ $this, 'init' ] );
 
 		$this->init_modules();

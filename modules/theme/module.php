@@ -30,7 +30,7 @@ class Module extends Module_Base {
 	protected function get_component_ids(): array {
 		return [
 			'Theme_Overrides',
-			'Theme_Dependency'
+			'Theme_Dependency',
 		];
 	}
 

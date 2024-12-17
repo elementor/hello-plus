@@ -32,6 +32,6 @@ class Theme_Dependency {
 	}
 
 	public function __construct() {
-		add_action( 'hello-plus/activate' , [ $this, 'activate' ] );
+		add_action( 'hello-plus/activate', [ $this, 'activate' ] );
 	}
 }

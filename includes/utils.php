@@ -50,11 +50,10 @@ class Utils {
 		return get_the_ID();
 	}
 
-	public static function get_message_to_update_elementor() {
+	public static function get_update_elementor_message(): string {
 		return sprintf(
-			__(
-				'Elementor plugin version needs to be at least %s for Hello Plus to Work. Please update.', 'hello-plus'
-			),
+			/* translators: %s: Elementor version number. */
+			__( 'Elementor plugin version needs to be at least %s for Hello Plus to Work. Please update.', 'hello-plus' ),
 			HELLOPLUS_MIN_ELEMENTOR_VERSION,
 		);
 	}

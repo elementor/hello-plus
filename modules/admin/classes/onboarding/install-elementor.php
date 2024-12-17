@@ -15,7 +15,13 @@ class Install_Elementor {
 	}
 
 	public function activate() {
-		$this->check_if_local_version_is_higher_than_min_version();
+		if ( ! $this->is_elementor_version_supported() ) {
+			wp_send_json_error(
+				[
+					'errorMessage' => Utils::get_update_elementor_message(),
+				],
+			);
+		}
 
 		$activated = activate_plugin( 'elementor/elementor.php' );
 
@@ -26,23 +32,18 @@ class Install_Elementor {
 		wp_send_json_success( [ 'message' => __( 'Elementor activated successfully.', 'hello-plus' ) ] );
 	}
 
-	public function check_if_local_version_is_higher_than_min_version(): void {
+	public function is_elementor_version_supported(): bool {
 		$plugin_file = WP_PLUGIN_DIR . '/elementor/elementor.php';
 
-		if ( file_exists( $plugin_file ) ) {
-			require_once ABSPATH . 'wp-admin/includes/plugin.php';
-
-			$plugin_data = get_plugin_data( $plugin_file );
-
-			$plugin_version = $plugin_data['Version'];
-
-			if ( version_compare( $plugin_version, HELLOPLUS_MIN_ELEMENTOR_VERSION, '<' ) ) {
-				wp_send_json_error(
-					[
-						'errorMessage' => Utils::get_message_to_update_elementor(),
-					],
-				);
-			}
+		if ( ! file_exists( $plugin_file ) ) {
+			return true;
 		}
+
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+
+		$plugin_data = get_plugin_data( $plugin_file );
+		$plugin_version = $plugin_data['Version'];
+
+		return ! version_compare( $plugin_version, HELLOPLUS_MIN_ELEMENTOR_VERSION, '<' );
 	}
 }

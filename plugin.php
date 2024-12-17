@@ -63,26 +63,6 @@ final class Plugin {
 	}
 
 	public function activate() {
-		if ( ! Utils::has_hello_biz() ) {
-			deactivate_plugins( HELLOPLUS_PLUGIN_BASE );
-
-			wp_die(
-				esc_html__( 'The Hello Plus plugin requires the Hello Biz theme to be installed and active.', 'hello-plus' ),
-				esc_html__( 'Plugin Activation Error', 'hello-plus' ),
-				[ 'back_link' => true ]
-			);
-		}
-
-		if ( Utils::is_elementor_active() && version_compare( ELEMENTOR_VERSION, HELLOPLUS_MIN_ELEMENTOR_VERSION, '<' ) ) {
-			deactivate_plugins( HELLOPLUS_PLUGIN_BASE );
-
-			wp_die(
-				esc_html( Utils::get_message_to_update_elementor() ),
-				esc_html__( 'Plugin Activation Error', 'hello-plus' ),
-				[ 'back_link' => true ]
-			);
-		}
-
 		/**
 		 * Fires on plugin activation
 		 *

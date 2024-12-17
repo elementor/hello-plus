@@ -28,17 +28,19 @@ class Widget_Zig_Zag_Render {
 
 	public function render(): void {
 		$layout_classnames = self::LAYOUT_CLASSNAME;
-
 		$first_zigzag_direction = $this->settings['first_zigzag_direction'];
+		$has_alternate_icon_color = $this->settings['has_alternate_icon_color'];
+
 		$layout_classnames .= ' has-direction-' . $first_zigzag_direction;
 
 		$this->widget->add_render_attribute( 'layout', [
 			'class' => $layout_classnames,
 		] );
+
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
 			<?php
-			$remainder = 'right' === $first_zigzag_direction ? 0 : 1;
+			$remainder = 'right' === $first_zigzag_direction ? 1 : 0;
 
 			$graphic_element = $this->settings['graphic_element'];
 			$repeater = 'image' === $graphic_element ? $this->settings['image_zigzag_items'] : $this->settings['icon_zigzag_items'];
@@ -49,6 +51,10 @@ class Widget_Zig_Zag_Render {
 				$item_class = self::ITEM_CLASSNAME;
 
 				$item_class .= ' row' . ( $is_even ? '-even' : '-odd' );
+
+				if ( $has_alternate_icon_color && $is_even ) {
+					$item_class .= ' has-alternate-icon-color';
+				}
 
 				$this->widget->add_render_attribute( 'zigzag-item-' . $key, [
 					'class' => $item_class,

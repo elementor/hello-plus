@@ -30,6 +30,7 @@ class Module extends Module_Base {
 	protected function get_component_ids(): array {
 		return [
 			'Theme_Overrides',
+			'Theme_Dependency',
 		];
 	}
 
@@ -39,6 +40,11 @@ class Module extends Module_Base {
 	 * @return void
 	 */
 	public function add_hello_plus_e_panel_categories( \Elementor\Elements_Manager $elements_manager ) {
+		$categories = $elements_manager->get_categories();
+		if ( ! empty( $categories[ self::HELLOPLUS_EDITOR_CATEGORY_SLUG ] ) ) {
+			return;
+		}
+
 		$elements_manager->add_category(
 			self::HELLOPLUS_EDITOR_CATEGORY_SLUG,
 			[

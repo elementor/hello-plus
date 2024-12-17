@@ -4,7 +4,7 @@
  * Description: Puts the PLUS in Elementor's Hello+ themes
  * Plugin URI: https://elementor.com
  * Author: Elementor.com
- * Version: 0.0.7
+ * Version: 1.0.1
  * License: GPL-3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
  *
@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'HELLOPLUS_VERSION', '0.0.7' );
+define( 'HELLOPLUS_VERSION', '1.0.1' );
 define( 'HELLO_PLUS_VERSION', HELLOPLUS_VERSION );
 
 define( 'HELLOPLUS__FILE__', __FILE__ );
@@ -44,11 +44,7 @@ define( 'HELLOPLUS_STYLE_PATH', HELLOPLUS_ASSETS_PATH . 'css/' );
 define( 'HELLOPLUS_STYLE_URL', HELLOPLUS_ASSETS_URL . 'css/' );
 define( 'HELLOPLUS_IMAGES_PATH', HELLOPLUS_ASSETS_PATH . 'images/' );
 define( 'HELLOPLUS_IMAGES_URL', HELLOPLUS_ASSETS_URL . 'images/' );
-
-
-if ( ! isset( $content_width ) ) {
-	$content_width = 800; // Pixels.
-}
+define( 'HELLOPLUS_MIN_ELEMENTOR_VERSION', '3.25.11' );
 
 // Init the Plugin class
 require HELLOPLUS_PATH . '/plugin.php';

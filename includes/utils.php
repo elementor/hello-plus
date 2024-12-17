@@ -50,6 +50,14 @@ class Utils {
 		return get_the_ID();
 	}
 
+	public static function get_update_elementor_message(): string {
+		return sprintf(
+		/* translators: %s: Elementor version number. */
+			__( 'Elementor plugin version needs to be at least %s for Hello Plus to Work. Please update.', 'hello-plus' ),
+			HELLOPLUS_MIN_ELEMENTOR_VERSION,
+		);
+	}
+
 	public static function get_client_ip(): string {
 		$server_ip_keys = [
 			'HTTP_CLIENT_IP',
@@ -78,7 +86,7 @@ class Utils {
 			return true;
 		}
 
-		return ( substr( $full_string, - $len ) === $end_string );
+		return ( substr( $full_string, -$len ) === $end_string );
 	}
 
 	public static function get_theme_slug(): string {
@@ -89,10 +97,41 @@ class Utils {
 		return 'hello-plus';
 	}
 
+	public static function get_theme_admin_home(): string {
+		if ( defined( 'EHP_THEME_SLUG' ) ) {
+			return add_query_arg( [ 'page' => EHP_THEME_SLUG ], self_admin_url( 'edit.php' ) );
+		}
+
+		return self_admin_url();
+	}
+
 	public static function is_preview_for_document( $post_id ): bool {
 		$preview_id = filter_input( INPUT_GET, 'preview_id', FILTER_VALIDATE_INT );
 		$preview = filter_input( INPUT_GET, 'preview', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 		return 'true' === $preview && (int) $post_id === (int) $preview_id;
+	}
+
+	public static function is_installed_elementor_version_supported(): bool {
+		$plugin_file = WP_PLUGIN_DIR . '/elementor/elementor.php';
+
+		if ( ! file_exists( $plugin_file ) ) {
+			return true;
+		}
+
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+
+		$plugin_data = get_plugin_data( $plugin_file );
+		$plugin_version = $plugin_data['Version'];
+
+		return self::is_elementor_version_supported( $plugin_version );
+	}
+
+	public static function is_active_elementor_version_supported(): bool {
+		return self::is_elementor_version_supported( ELEMENTOR_VERSION );
+	}
+
+	public static function is_elementor_version_supported( string $version ): bool {
+		return version_compare( $version, HELLOPLUS_MIN_ELEMENTOR_VERSION, 'ge' );
 	}
 }

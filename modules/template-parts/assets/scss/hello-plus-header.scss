@@ -167,7 +167,7 @@
 		display: grid;
 		grid-template-areas:
 			"start center end";
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: 1fr auto 1fr;
 		flex-grow: 1;
 		position: relative;
 
@@ -238,12 +238,12 @@
 
 			&-link,
 			&-link:not([href]):not([tabindex]) {
-				background: none;
+				background: none !important; /* Always override background color coming from the controls */
 				text-decoration: underline;
 
 				&:hover,
 				&:focus {
-					background: none;
+					background: none !important; /* Always override background color coming from the controls */
 				}
 			}
 
@@ -411,8 +411,8 @@
 		white-space: nowrap;
 	}
 
-	&__item,
-	&__item[type="button"] {
+	&__item:is(a),
+	&__item:is(a):is([type="button"]) {
 		color: var(--header-menu-item-color);
 		transition: $transition;
 

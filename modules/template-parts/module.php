@@ -30,6 +30,7 @@ class Module extends Module_Base {
 		return [
 			'Document',
 			'Import_Export',
+			'Checklist',
 		];
 	}
 

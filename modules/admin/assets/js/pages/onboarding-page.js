@@ -17,7 +17,6 @@ export const OnboardingPage = () => {
 	const [ message, setMessage ] = useState( '' );
 	const [ severity, setSeverity ] = useState( 'info' );
 	const [ previewKit, setPreviewKit ] = useState( null );
-	const [ allowTracking, setAllowTracking ] = useState( true );
 
 	const {
 		isLoading,
@@ -35,7 +34,6 @@ export const OnboardingPage = () => {
 			step: stepAction,
 			_wpnonce: nonce,
 			slug: 'elementor',
-			allowTracking,
 		};
 
 		setIsLoading( true );
@@ -43,29 +41,24 @@ export const OnboardingPage = () => {
 		try {
 			switch ( stepAction ) {
 				case 'install-elementor':
-					setMessage( __( 'Installing Elementor plugin…', 'hello-plus' ) );
 					const response = await wp.ajax.post( 'helloplus_setup_wizard', data );
 
 					if ( response.activateUrl ) {
-						setMessage( __( 'Activating Elementor plugin…', 'hello-plus' ) );
 						const activate = await fetch( response.activateUrl );
 
 						if ( activate.ok ) {
-							setSeverity( 'success' );
-							setMessage( __( 'Elementor plugin has been installed and activated' ) );
+							window.location.reload();
 						} else {
 							throw new Error( __( 'Failed to activate Elementor plugin', 'hello-plus' ) );
 						}
 					}
-					window.location.reload();
 					break;
 				case 'activate-elementor':
-					setMessage( __( 'Activating Elementor plugin…', 'hello-plus' ) );
 					await wp.ajax.post( 'helloplus_setup_wizard', data );
-					data.slug = 'elementor';
+
 					window.location.reload();
 					break;
-				case 'install-kit':
+				default:
 					break;
 			}
 		} catch ( error ) {
@@ -74,7 +67,7 @@ export const OnboardingPage = () => {
 		} finally {
 			setIsLoading( false );
 		}
-	}, [ allowTracking, nonce, setIsLoading, stepAction ] );
+	}, [ nonce, setIsLoading, stepAction ] );
 
 	const onClose = () => {
 		window.location.href = modalCloseRedirectUrl;
@@ -96,7 +89,7 @@ export const OnboardingPage = () => {
 					} }>
 					{ ! previewKit && ( <TopBarContent onClose={ onClose } sx={ { borderBottom: '1px solid var(--divider-divider, rgba(0, 0, 0, 0.12))', mb: 4 } } iconSize="small" /> ) }
 					{ 0 === step && ! isLoading && ! previewKit && (
-						<GetStarted allowTracking={ allowTracking } setAllowTracking={ setAllowTracking } severity={ severity } message={ message } buttonText={ buttonText } onClick={ onClick } />
+						<GetStarted severity={ severity } message={ message } buttonText={ buttonText } onClick={ onClick } />
 					) }
 					{ 1 === step && ! isLoading && ! previewKit && ( <InstallKit setPreviewKit={ setPreviewKit } severity={ severity } message={ message } onClick={ onClick } kits={ kits } /> ) }
 					{ 2 === step && ! isLoading && ! previewKit && ( <ReadyToGo modalCloseRedirectUrl={ modalCloseRedirectUrl } /> ) }

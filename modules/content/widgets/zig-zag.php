@@ -394,6 +394,35 @@ class Zig_Zag extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'has_alternate_icon_color',
+			[
+				'label' => esc_html__( 'Alternate Icon Color', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+			]
+		);
+
+		$this->add_control(
+			'icon_alternate_color',
+			[
+				'label' => esc_html__( 'Alternate Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_ACCENT,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-icon-color-alternate: {{VALUE}}',
+				],
+				'condition' => [
+					'icon_color_alternate' => 'yes',
+				],
+			]
+		);
+
 		$this->add_responsive_control(
 			'icon_zigzag_size',
 			[

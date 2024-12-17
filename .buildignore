@@ -12,12 +12,16 @@ phpcs.xml
 README.md
 webpack.config.js
 vendor/
-wp-assets/
+.wporg-assets/
 
 .github/
+.git/
 .buildignore
 .editorconfig
 .gitignore
 .browserslistrc
 .eslintignore
 .eslintrc.js
+
+hello-plus*.zip
+hello-plus/

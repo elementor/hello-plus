@@ -2,7 +2,6 @@
 node_modules/
 .sass-cache/
 build/
-hello-plus/
 log/
 vendor/
 composer.lock
@@ -13,3 +12,7 @@ Thumbs.db
 *.map
 yarn.lock
 *.zip
+.npmrc
+
+hello-plus*.zip
+hello-plus/

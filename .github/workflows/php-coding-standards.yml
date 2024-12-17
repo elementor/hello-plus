@@ -3,7 +3,7 @@ name: PHP Lint
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
   workflow_dispatch:
 
@@ -40,7 +40,7 @@ jobs:
           composer --version
 
       - name: Oauth Composer authentication
-        run: composer config -g github-oauth.github.com ${{ secrets.DEVOPS_TOKEN }}
+        run: composer config -g github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install dependencies
         uses: ramsey/composer-install@83af392bf5f031813d25e6fe4cd626cdba9a2df6 # 2.2.0

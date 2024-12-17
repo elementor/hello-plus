@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use HelloPlus\Includes\Utils;
 use Elementor\{
 	TemplateLibrary\Source_Local,
-	Modules\Library\Documents\Library_Document,
+	Modules\Library\Documents\Library_Document
 };
 
 use HelloPlus\Includes\Utils as Theme_Utils;
@@ -50,10 +50,11 @@ abstract class Document_Base extends Library_Document {
 		$plugin = Theme_Utils::elementor();
 
 		if ( $plugin->preview->is_preview_mode( $this->get_main_id() ) ) {
-
-			echo wp_kses_post( $plugin->preview->builder_wrapper( '' ) );
+			// PHPCS - this method is safe
+			echo $plugin->preview->builder_wrapper( '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		} else {
-			echo wp_kses_post( $this->get_content() );
+			// PHPCS - this method is safe
+			echo $this->get_content(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 

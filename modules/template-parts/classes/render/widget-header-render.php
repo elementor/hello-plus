@@ -249,15 +249,15 @@ class Widget_Header_Render {
 
 		?>
 		<button <?php $this->widget->print_render_attribute_string( 'button-toggle' ); ?>>
-			<?php
-			Icons_Manager::render_icon( $toggle_icon,
-				[
-					'aria-hidden' => 'true',
-					'class' => 'ehp-header__toggle-icon ehp-header__toggle-icon--open',
-					'role' => 'presentation',
-				]
-			);
-			?>
+			<span class="ehp-header__toggle-icon ehp-header__toggle-icon--open" aria-hidden="true">
+				<?php
+				Icons_Manager::render_icon( $toggle_icon,
+					[
+						'role' => 'presentation',
+					]
+				);
+				?>
+			</span>
 			<i class="eicon-close ehp-header__toggle-icon ehp-header__toggle-icon--close"></i>
 			<span class="elementor-screen-only"><?php esc_html_e( 'Menu', 'hello-plus' ); ?></span>
 		</button>

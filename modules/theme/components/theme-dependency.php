@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use HelloPlus\Includes\Utils;
 
 class Theme_Dependency {
-	public function activate(  ) {
+	public function activate() {
 		if ( ! Utils::has_hello_biz() ) {
 			deactivate_plugins( HELLOPLUS_PLUGIN_BASE );
 

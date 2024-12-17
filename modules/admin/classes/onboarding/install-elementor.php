@@ -2,6 +2,8 @@
 
 namespace HelloPlus\Modules\Admin\Classes\Onboarding;
 
+use HelloPlus\Includes\Utils;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -37,12 +39,7 @@ class Install_Elementor {
 			if ( version_compare( $plugin_version, HELLOPLUS_MIN_ELEMENTOR_VERSION, '<' ) ) {
 				wp_send_json_error(
 					[
-						'errorMessage' => sprintf(
-							__(
-								'Elementor plugin version needs to be at least %s for Hello Plus to Work. Please update.', 'hello-plus'
-							),
-							HELLOPLUS_MIN_ELEMENTOR_VERSION
-						),
+						'errorMessage' => Utils::get_message_to_update_elementor(),
 					],
 				);
 			}

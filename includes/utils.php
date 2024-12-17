@@ -50,6 +50,15 @@ class Utils {
 		return get_the_ID();
 	}
 
+	public static function get_message_to_update_elementor(  ) {
+		return sprintf(
+			__(
+				'Elementor plugin version needs to be at least %s for Hello Plus to Work. Please update.', 'hello-plus'
+			),
+			HELLOPLUS_MIN_ELEMENTOR_VERSION,
+		);
+	}
+
 	public static function get_client_ip(): string {
 		$server_ip_keys = [
 			'HTTP_CLIENT_IP',
@@ -78,7 +87,7 @@ class Utils {
 			return true;
 		}
 
-		return ( substr( $full_string, - $len ) === $end_string );
+		return ( substr( $full_string, -$len ) === $end_string );
 	}
 
 	public static function get_theme_slug(): string {

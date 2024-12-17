@@ -20,7 +20,7 @@ class Theme_Dependency {
 			);
 		}
 
-		if ( Utils::is_elementor_active() && version_compare( ELEMENTOR_VERSION, HELLOPLUS_MIN_ELEMENTOR_VERSION, '<' ) ) {
+		if ( Utils::is_elementor_active() && ! Utils::is_active_elementor_version_supported() ) {
 			deactivate_plugins( HELLOPLUS_PLUGIN_BASE );
 
 			wp_die(

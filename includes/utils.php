@@ -52,7 +52,7 @@ class Utils {
 
 	public static function get_update_elementor_message(): string {
 		return sprintf(
-			/* translators: %s: Elementor version number. */
+		/* translators: %s: Elementor version number. */
 			__( 'Elementor plugin version needs to be at least %s for Hello Plus to Work. Please update.', 'hello-plus' ),
 			HELLOPLUS_MIN_ELEMENTOR_VERSION,
 		);
@@ -110,5 +110,24 @@ class Utils {
 		$preview = filter_input( INPUT_GET, 'preview', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 		return 'true' === $preview && (int) $post_id === (int) $preview_id;
+	}
+
+	public static function is_elementor_version_from_filesystem_supported(): bool {
+		$plugin_file = WP_PLUGIN_DIR . '/elementor/elementor.php';
+
+		if ( ! file_exists( $plugin_file ) ) {
+			return true;
+		}
+
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+
+		$plugin_data = get_plugin_data( $plugin_file );
+		$plugin_version = $plugin_data['Version'];
+
+		return version_compare( $plugin_version, HELLOPLUS_MIN_ELEMENTOR_VERSION, '>' );
+	}
+
+	public static function is_active_elementor_version_supported(): bool {
+		return version_compare( ELEMENTOR_VERSION, HELLOPLUS_MIN_ELEMENTOR_VERSION, '>' );
 	}
 }

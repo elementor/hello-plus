@@ -17,13 +17,13 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 
 use Elementor\Utils as Elementor_Utils;
 
-// use HelloPlus\Modules\Content\Base\Traits\Shared_Content_Traits;
+use HelloPlus\Modules\Content\Base\Traits\Shared_Content_Traits;
 use HelloPlus\Modules\Content\Classes\Render\Widget_Flex_Hero_Render;
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
 class Flex_Hero extends Widget_Base {
 
-	// use Shared_Content_Traits;
+	use Shared_Content_Traits;
 
 	public function get_name(): string {
 		return 'flex-hero';
@@ -972,6 +972,7 @@ class Flex_Hero extends Widget_Base {
 					'oval' => esc_html__( 'Oval', 'hello-plus' ),
 					'custom' => esc_html__( 'Custom', 'hello-plus' ),
 				],
+				'frontend_available' => true,
 				'condition' => array_merge([
 					$type . '_button_type' => 'button',
 				], $add_type_condition),
@@ -1058,7 +1059,7 @@ class Flex_Hero extends Widget_Base {
 				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
 				'range' => [
 					'px' => [
-						'max' => 380,
+						'max' => 1500,
 					],
 					'%' => [
 						'max' => 100,
@@ -1072,7 +1073,7 @@ class Flex_Hero extends Widget_Base {
 					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-height: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
-					'image_stretch' => '',
+					'image_stretch' => 'no',
 				],
 			]
 		);
@@ -1204,6 +1205,7 @@ class Flex_Hero extends Widget_Base {
 					'oval' => esc_html__( 'Oval', 'hello-plus' ),
 					'custom' => esc_html__( 'Custom', 'hello-plus' ),
 				],
+				'frontend_available' => true,
 			]
 		);
 			
@@ -1459,6 +1461,7 @@ class Flex_Hero extends Widget_Base {
 					'oval' => esc_html__( 'Oval', 'hello-plus' ),
 					'custom' => esc_html__( 'Custom', 'hello-plus' ),
 				],
+				'frontend_available' => true,
 			]
 		);
 			
@@ -1497,6 +1500,23 @@ class Flex_Hero extends Widget_Base {
 				'tablet_default' => '',
 				'mobile_default' => '',
 				'separator' => 'before',
+			]
+		);
+
+		$configured_breakpoints = $this->get_configured_breakpoints();
+
+		$this->add_control(
+			'box_full_screen_height_controls',
+			[
+				'label' => esc_html__( 'Apply Full Screen Height on', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT2,
+				'label_block' => true,
+				'multiple' => true,
+				'options' => $configured_breakpoints['devices_options'],
+				'default' => $configured_breakpoints['active_devices'],
+				'condition' => [
+					'box_full_screen_height' => 'yes',
+				],
 			]
 		);
 

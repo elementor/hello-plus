@@ -45,6 +45,8 @@ class Widget_Flex_Hero_Render {
 		$layout_image_position = $this->settings['layout_image_position'];
 		$has_border = $this->settings['show_box_border'];
 		$box_shape = $this->settings['box_shape'];
+		$box_shape_mobile = $this->settings['box_shape_mobile'];
+		$box_shape_tablet = $this->settings['box_shape_tablet'];
 
 		if ( ! empty( $layout_full_height_controls ) ) {
 			foreach ( $layout_full_height_controls as $breakpoint ) {
@@ -72,6 +74,14 @@ class Widget_Flex_Hero_Render {
 
 		if ( ! empty( $box_shape ) ) {
 			$layout_classnames .= ' has-shape-' . $box_shape;
+
+			if ( ! empty( $box_shape_mobile ) ) {
+				$layout_classnames .= ' has-shape-sm-' . $box_shape_mobile;
+			}
+
+			if ( ! empty( $box_shape_tablet ) ) {
+				$layout_classnames .= ' has-shape-md-' . $box_shape_tablet;
+			}
 		}
 
 		$this->widget->add_render_attribute( 'layout', [
@@ -159,9 +169,11 @@ class Widget_Flex_Hero_Render {
 		$button_icon = $this->settings[ $type . '_cta_button_icon' ];
 		$button_hover_animation = $this->settings[ $type . '_button_hover_animation' ] ?? '';
 		$button_has_border = $this->settings[ $type . '_show_button_border' ];
-		$button_corner_shape = $this->settings[ $type . '_button_shape' ] ?? '';
 		$button_type = $this->settings[ $type . '_button_type' ] ?? '';
 		$button_classnames = self::BUTTON_CLASSNAME;
+		$button_corner_shape = $this->settings[ $type . '_button_shape' ] ?? '';
+		$button_corner_shape_mobile = $this->settings[ $type . '_button_shape_mobile' ] ?? '';
+		$button_corner_shape_tablet = $this->settings[ $type . '_button_shape_tablet' ] ?? '';
 
 		$button_classnames .= ' ehp-flex-hero__button--' . $type;
 
@@ -179,6 +191,14 @@ class Widget_Flex_Hero_Render {
 
 		if ( ! empty( $button_corner_shape ) ) {
 			$button_classnames .= ' has-shape-' . $button_corner_shape;
+
+			if ( ! empty( $button_corner_shape_mobile ) ) {
+				$button_classnames .= ' has-shape-sm-' . $button_corner_shape_mobile;
+			}
+
+			if ( ! empty( $button_corner_shape_tablet ) ) {
+				$button_classnames .= ' has-shape-md-' . $button_corner_shape_tablet;
+			}
 		}
 
 		$this->widget->add_render_attribute( $type . '-button', [
@@ -211,6 +231,8 @@ class Widget_Flex_Hero_Render {
 
 		$has_border = $this->settings['show_image_border'];
 		$image_shape = $this->settings['image_shape'];
+		$image_shape_mobile = $this->settings['image_shape_mobile'];
+		$image_shape_tablet = $this->settings['image_shape_tablet'];
 
 		if ( 'yes' === $has_border ) {
 			$image_classnames .= ' has-border';
@@ -218,6 +240,14 @@ class Widget_Flex_Hero_Render {
 
 		if ( ! empty( $image_shape ) ) {
 			$image_classnames .= ' has-shape-' . $image_shape;
+
+			if ( ! empty( $image_shape_mobile ) ) {
+				$image_classnames .= ' has-shape-sm-' . $image_shape_mobile;
+			}
+
+			if ( ! empty( $image_shape_tablet ) ) {
+				$image_classnames .= ' has-shape-md-' . $image_shape_tablet;
+			}
 		}
 
 		$this->widget->add_render_attribute( 'image', [

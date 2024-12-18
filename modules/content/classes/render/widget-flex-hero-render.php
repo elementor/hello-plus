@@ -227,32 +227,40 @@ class Widget_Flex_Hero_Render {
 	public function render_image() {
 		$image = $this->settings['image'];
 		$has_image = ! empty( $image['url'] );
-		$image_classnames = self::IMAGE_CLASSNAME;
-
-		$has_border = $this->settings['show_image_border'];
-		$image_shape = $this->settings['image_shape'];
-		$image_shape_mobile = $this->settings['image_shape_mobile'];
-		$image_shape_tablet = $this->settings['image_shape_tablet'];
-
-		if ( 'yes' === $has_border ) {
-			$image_classnames .= ' has-border';
-		}
-
-		if ( ! empty( $image_shape ) ) {
-			$image_classnames .= ' has-shape-' . $image_shape;
-
-			if ( ! empty( $image_shape_mobile ) ) {
-				$image_classnames .= ' has-shape-sm-' . $image_shape_mobile;
-			}
-
-			if ( ! empty( $image_shape_tablet ) ) {
-				$image_classnames .= ' has-shape-md-' . $image_shape_tablet;
-			}
-		}
+		$image_wrapper_classnames = self::IMAGE_CLASSNAME;
 
 		$this->widget->add_render_attribute( 'image', [
-			'class' => $image_classnames,
+			'class' => $image_wrapper_classnames,
 		] );
+
+		add_filter( 'elementor/image_size/get_attachment_image_html', function ( $html, $settings, $image_size_key, $image_key ) {
+			$image_classnames = 'ehp-flex-hero__img';
+			$image_shape = $this->settings['image_shape'];
+			$image_shape_mobile = $this->settings['image_shape_mobile'];
+			$image_shape_tablet = $this->settings['image_shape_tablet'];
+
+			$has_border = $this->settings['show_image_border'];
+
+			if ( 'yes' === $has_border ) {
+				$image_classnames .= ' has-border';
+			}
+
+			if ( ! empty( $image_shape ) ) {
+				$image_classnames .= ' has-shape-' . $image_shape;
+	
+				if ( ! empty( $image_shape_mobile ) ) {
+					$image_classnames .= ' has-shape-sm-' . $image_shape_mobile;
+				}
+	
+				if ( ! empty( $image_shape_tablet ) ) {
+					$image_classnames .= ' has-shape-md-' . $image_shape_tablet;
+				}
+			}
+
+			$html = str_replace( '<img ', '<img class="' . esc_attr( $image_classnames ) . '" ', $html );
+			return $html;
+		}, 10, 4 );
+
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'image' ); ?>>
 			<?php

@@ -1073,7 +1073,7 @@ class Flex_Hero extends Widget_Base {
 					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-height: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
-					'image_stretch' => 'no',
+					'image_stretch' => '',
 				],
 			]
 		);
@@ -1086,7 +1086,7 @@ class Flex_Hero extends Widget_Base {
 				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
 				'range' => [
 					'px' => [
-						'max' => 380,
+						'max' => 1500,
 					],
 					'%' => [
 						'max' => 100,
@@ -1485,6 +1485,26 @@ class Flex_Hero extends Widget_Base {
 			[
 				'name' => 'box_box_shadow',
 				'selector' => '{{WRAPPER}} .ehp-flex-hero',
+			]
+		);
+
+		$this->add_responsive_control(
+			'box_padding',
+			[
+				'label' => esc_html__( 'Padding', 'hello-plus' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-box-padding-block-end: {{BOTTOM}}{{UNIT}}; --flex-hero-box-padding-block-start: {{TOP}}{{UNIT}}; --flex-hero-box-padding-inline-end: {{RIGHT}}{{UNIT}}; --flex-hero-box-padding-inline-start: {{LEFT}}{{UNIT}};',
+				],
+				'default' => [
+					'top' => '60',
+					'right' => '60',
+					'bottom' => '60',
+					'left' => '60',
+					'unit' => 'px',
+				],
+				'separator' => 'before',
 			]
 		);
 

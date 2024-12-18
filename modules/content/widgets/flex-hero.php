@@ -67,13 +67,13 @@ class Flex_Hero extends Widget_Base {
 	}
 
 	protected function add_style_section() {
-        $this->add_style_layout_section();
+		$this->add_style_layout_section();
 		$this->add_style_content_section();
 		$this->add_style_image_section();
 		$this->add_style_box_section();
 	}
 
-    protected function add_content_text_section() {
+	protected function add_content_text_section() {
 		$this->start_controls_section(
 			'content_text',
 			[
@@ -82,7 +82,7 @@ class Flex_Hero extends Widget_Base {
 			]
 		);
 
-        $this->add_control(
+		$this->add_control(
 			'intro_text',
 			[
 				'label' => esc_html__( 'Intro', 'hello-plus' ),
@@ -186,7 +186,7 @@ class Flex_Hero extends Widget_Base {
 		$this->end_controls_section();
 	}
 
-    protected function add_content_cta_section() {
+	protected function add_content_cta_section() {
 		$this->start_controls_section(
 			'content_cta',
 			[
@@ -302,7 +302,7 @@ class Flex_Hero extends Widget_Base {
 		$this->end_controls_section();
 	}
 
-    protected function add_content_image_section() {
+	protected function add_content_image_section() {
 		$this->start_controls_section(
 			'content_image',
 			[
@@ -325,14 +325,14 @@ class Flex_Hero extends Widget_Base {
 		$this->end_controls_section();
 	}
 
-    protected function add_style_layout_section() {
-        $this->start_controls_section(
-            'style_layout',
-            [
-                'label' => esc_html__( 'Layout', 'hello-plus' ),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
+	protected function add_style_layout_section() {
+		$this->start_controls_section(
+			'style_layout',
+			[
+				'label' => esc_html__( 'Layout', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
 
 		$this->add_control(
 			'layout_preset',
@@ -526,8 +526,8 @@ class Flex_Hero extends Widget_Base {
 			]
 		);
 
-        $this->end_controls_section();
-    }
+		$this->end_controls_section();
+	}
 
 	protected function add_style_content_section() {
 		$this->start_controls_section(
@@ -697,7 +697,7 @@ class Flex_Hero extends Widget_Base {
 				'label' => $label,
 				'type' => Controls_Manager::HEADING,
 				'condition' => $add_type_condition,
-				'separator' => $type === 'primary' ? 'before' : '',
+				'separator' => 'primary' === $type ? 'before' : '',
 			]
 		);
 
@@ -1294,7 +1294,7 @@ class Flex_Hero extends Widget_Base {
 		$this->add_responsive_control(
 			'background_overlay_opacity',
 			[
-				'label' => esc_html__( 'Opacity', 'elementor' ),
+				'label' => esc_html__( 'Opacity', 'hello-plus' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'%' => [
@@ -1464,7 +1464,7 @@ class Flex_Hero extends Widget_Base {
 				'frontend_available' => true,
 			]
 		);
-			
+
 		$this->add_responsive_control(
 			'box_shape_custom',
 			[

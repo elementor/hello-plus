@@ -233,7 +233,7 @@ class Widget_Flex_Hero_Render {
 			'class' => $image_wrapper_classnames,
 		] );
 
-		add_filter( 'elementor/image_size/get_attachment_image_html', function ( $html, $settings, $image_size_key, $image_key ) {
+		add_filter( 'elementor/image_size/get_attachment_image_html', function ( $html ) {
 			$image_classnames = 'ehp-flex-hero__img';
 			$image_shape = $this->settings['image_shape'];
 			$image_shape_mobile = $this->settings['image_shape_mobile'];
@@ -247,11 +247,11 @@ class Widget_Flex_Hero_Render {
 
 			if ( ! empty( $image_shape ) ) {
 				$image_classnames .= ' has-shape-' . $image_shape;
-	
+
 				if ( ! empty( $image_shape_mobile ) ) {
 					$image_classnames .= ' has-shape-sm-' . $image_shape_mobile;
 				}
-	
+
 				if ( ! empty( $image_shape_tablet ) ) {
 					$image_classnames .= ' has-shape-md-' . $image_shape_tablet;
 				}

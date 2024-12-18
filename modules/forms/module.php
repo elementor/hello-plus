@@ -56,7 +56,7 @@ class Module extends Module_Base {
 	 * @return void
 	 */
 	public function register_styles() {
-		wp_enqueue_style(
+		wp_register_style(
 			'helloplus-forms',
 			HELLOPLUS_STYLE_URL . 'helloplus-forms.css',
 			[ 'elementor-frontend' ],
@@ -98,7 +98,7 @@ class Module extends Module_Base {
 	}
 
 	public function register_scripts() {
-		wp_enqueue_script(
+		wp_register_script(
 			'helloplus-forms-editor-fe',
 			HELLOPLUS_SCRIPTS_URL . 'helloplus-forms-editor-fe.js',
 			[ 'elementor-common', 'elementor-frontend-modules', 'elementor-frontend' ],

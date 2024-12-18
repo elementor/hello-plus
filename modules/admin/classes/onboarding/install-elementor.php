@@ -2,6 +2,8 @@
 
 namespace HelloPlus\Modules\Admin\Classes\Onboarding;
 
+use HelloPlus\Includes\Utils;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -13,6 +15,14 @@ class Install_Elementor {
 	}
 
 	public function activate() {
+		if ( ! Utils::is_installed_elementor_version_supported() ) {
+			wp_send_json_error(
+				[
+					'errorMessage' => Utils::get_update_elementor_message(),
+				],
+			);
+		}
+
 		$activated = activate_plugin( 'elementor/elementor.php' );
 
 		if ( is_wp_error( $activated ) ) {

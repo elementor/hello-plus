@@ -44,6 +44,7 @@ define( 'HELLOPLUS_STYLE_PATH', HELLOPLUS_ASSETS_PATH . 'css/' );
 define( 'HELLOPLUS_STYLE_URL', HELLOPLUS_ASSETS_URL . 'css/' );
 define( 'HELLOPLUS_IMAGES_PATH', HELLOPLUS_ASSETS_PATH . 'images/' );
 define( 'HELLOPLUS_IMAGES_URL', HELLOPLUS_ASSETS_URL . 'images/' );
+define( 'HELLOPLUS_MIN_ELEMENTOR_VERSION', '3.25.11' );
 
 // Init the Plugin class
 require HELLOPLUS_PATH . '/plugin.php';

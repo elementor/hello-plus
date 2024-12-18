@@ -1,5 +1,4 @@
 <?php
-
 namespace HelloPlus\Modules\Forms\Classes\Render;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -7,14 +6,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use HelloPlus\Modules\Forms\Widgets\Form;
-
 use HelloPlus\Includes\Utils;
-
 use Elementor\Icons_Manager;
 use Elementor\Utils as Elementor_Utils;
 
 class Widget_Form_Render {
 	protected Form $widget;
+	protected array $settings;
 
 	public function __construct( Form $widget ) {
 		$this->widget = $widget;

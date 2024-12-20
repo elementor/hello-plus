@@ -1208,7 +1208,7 @@ class Flex_Hero extends Widget_Base {
 				'frontend_available' => true,
 			]
 		);
-			
+
 		$this->add_responsive_control(
 			'image_shape_custom',
 			[

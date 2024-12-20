@@ -39,6 +39,19 @@ class Module extends Module_Base {
 		];
 	}
 
+	/**
+	 * @return void
+	 */
+	public function register_scripts() {
+		wp_register_script(
+			'helloplus-content-fe',
+			HELLOPLUS_SCRIPTS_URL . 'helloplus-content-fe.js',
+			[ 'elementor-common', 'elementor-frontend-modules', 'elementor-frontend' ],
+			HELLOPLUS_VERSION,
+			true
+		);
+	}
+
 	public function register_styles(): void {
 		wp_register_style(
 			'helloplus-zigzag',
@@ -73,6 +86,9 @@ class Module extends Module_Base {
 
 	protected function register_hooks(): void {
 		parent::register_hooks();
+		add_action( 'elementor/frontend/after_register_scripts', [ $this, 'register_scripts' ] );
 		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_styles' ] );
+
+		wp_enqueue_script('helloplus-content-fe');
 	}
 }

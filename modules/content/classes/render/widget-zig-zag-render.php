@@ -30,6 +30,12 @@ class Widget_Zig_Zag_Render {
 		$layout_classnames = self::LAYOUT_CLASSNAME;
 		$first_zigzag_direction = $this->settings['first_zigzag_direction'];
 		$has_alternate_icon_color = $this->settings['has_alternate_icon_color'];
+		$entrance_animation = $this->settings['zigzag_animation'] ?? '';
+		$has_entrance_animation = ! empty( $entrance_animation ) && 'none' !== $entrance_animation;
+
+		if ( $has_entrance_animation ) {
+			$layout_classnames .= ' has-entrance-animation';
+		}
 
 		$layout_classnames .= ' has-direction-' . $first_zigzag_direction;
 
@@ -56,11 +62,21 @@ class Widget_Zig_Zag_Render {
 					$item_class .= ' has-alternate-icon-color';
 				}
 
+				$wrapper_classnames = 'ehp-zigzag__item-wrapper';
+
+				if ( $has_entrance_animation ) {
+					$wrapper_classnames .= ' has-entrance-animation';
+				}
+
+				$this->widget->add_render_attribute( 'zigzag-item-wrapper-' . $key, [
+					'class' => $wrapper_classnames,
+				] );
+
 				$this->widget->add_render_attribute( 'zigzag-item-' . $key, [
 					'class' => $item_class,
 				] );
 				?>
-				<div class="ehp-zigzag__item-wrapper">
+				<div <?php $this->widget->print_render_attribute_string( 'zigzag-item-wrapper-' . $key ); ?>>
 					<div <?php $this->widget->print_render_attribute_string( 'zigzag-item-' . $key ); ?>>
 						<?php
 							$this->render_graphic_element_container( $item, $key );

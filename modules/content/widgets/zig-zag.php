@@ -1018,6 +1018,111 @@ class Zig_Zag extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'animation_label',
+			[
+				'label' => esc_html__( 'Motion Effects', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'zigzag_animation',
+			[
+				'label' => esc_html__( 'Sequenced Entrance Animation', 'elementor' ),
+				'type' => Controls_Manager::ANIMATION,
+				'frontend_available' => true,
+			]
+		);
+
+		$this->add_control(
+			'animation_duration',
+			[
+				'label' => esc_html__( 'Animation Duration', 'elementor' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => '',
+				'options' => [
+					'2s' => esc_html__( 'Slow', 'elementor' ),
+					'1s' => esc_html__( 'Normal', 'elementor' ),
+					'800ms' => esc_html__( 'Fast', 'elementor' ),
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-animation-duration: {{VALUE}};',
+				],
+				'prefix_class' => 'animated-',
+				'condition' => [
+					'animation!' => '',
+				],
+			]
+		);
+
+		$this->add_control(
+			'animation_delay',
+			[
+				'label' => esc_html__( 'Animation Delay', 'elementor' ) . ' (ms)',
+				'type' => Controls_Manager::NUMBER,
+				'default' => '',
+				'min' => 0,
+				'step' => 100,
+				'selectors' => [
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-animation-delay: {{VALUE}}ms;',
+				],
+				'condition' => [
+					'animation!' => '',
+				],
+				'render_type' => 'none',
+				'frontend_available' => true,
+			]
+		);
+
+		$this->add_control(
+			'animation_alternate',
+			[
+				'label' => esc_html__( 'Alternate Entrance Animation', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+				'conditions' => [
+					'relation' => 'or',
+					'terms' => [
+						[
+							'name' => 'zigzag_animation',
+							'operator' => '==',
+							'value' => 'fadeInLeft',
+						],
+						[
+							'name' => 'zigzag_animation',
+							'operator' => '==',
+							'value' => 'fadeInRight',
+						],
+						[
+							'name' => 'zigzag_animation',
+							'operator' => '==',
+							'value' => 'bounceInLeft',
+						],
+						[
+							'name' => 'zigzag_animation',
+							'operator' => '==',
+							'value' => 'bounceInRight',
+						],
+						[
+							'name' => 'zigzag_animation',
+							'operator' => '==',
+							'value' => 'slideInLeft',
+						],
+						[
+							'name' => 'zigzag_animation',
+							'operator' => '==',
+							'value' => 'slideInRight',
+						],
+					],
+				],
+			]
+		);
+
 		$this->end_controls_section();
 	}
 }

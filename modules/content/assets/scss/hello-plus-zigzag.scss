@@ -34,6 +34,9 @@
 	--zigzag-box-padding-inline-start: 0;
 	--zigzag-box-padding-inline-end: 0;
 
+	--zigzag-animation-delay: 0;
+	--zigzag-animation-duration: 1s;
+
 	align-items: center;
 	background-color: transparent;
 	display: flex;
@@ -229,6 +232,16 @@
 			.ehp-zigzag__item-container {
 				padding-block-end: var(--zigzag-box-padding-block-end);
 			}
+		}
+
+		&.has-entrance-animation {
+			animation-delay: var(--zigzag-animation-delay);
+			animation-duration: var(--zigzag-animation-duration);
+			opacity: 0;
+		}
+
+		&.visible {
+			opacity: 1;
 		}
 	}
 

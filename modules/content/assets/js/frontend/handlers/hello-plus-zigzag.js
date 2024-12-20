@@ -43,11 +43,31 @@ export default class ZigZagHandler extends elementorModules.frontend.handlers.Ba
 		if ( ! entranceAnimationClass || none === entranceAnimationClass ) {
 			return;
 		}
-		console.log( 'item wrapper', entranceAnimationClass );
 
-		this.elements.itemWrappers.forEach( ( itemWrapper ) => {
-			itemWrapper.classList.add( entranceAnimationClass );
-		} );
+		const observerCallback = ( entries ) => {
+			const sortedEntries = [ ...entries ].sort( ( a, b ) => {
+				const indexA = a.target.dataset.index;
+				const indexB = b.target.dataset.index;
+				return indexA - indexB;
+			} );
+
+			sortedEntries.forEach( ( entry, index ) => {
+				if ( entry.isIntersecting ) {
+					setTimeout( () => {
+						entry.target.classList.add( entranceAnimationClass );
+					}, index * 400 );
+				}
+			} );
+		};
+
+		const observerOptions = {
+			root: null,
+			rootMargin: '0px',
+			threshold: 0.5,
+		};
+		const observer = new IntersectionObserver( observerCallback, observerOptions );
+
+		this.elements.itemWrappers.forEach( ( element ) => observer.observe( element ) );
 	}
 
 	removeAnimationClasses( event ) {

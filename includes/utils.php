@@ -22,7 +22,7 @@ class Utils {
 		return defined( 'ELEMENTOR_PRO_VERSION' );
 	}
 
-	public static function is_constant_that_allows_install_withouth_theme_true(  ) {
+	public static function is_constant_that_allows_install_withouth_theme_true() {
 		return defined( 'HELLOPLUS_ALLOW_INSTALL_WITHOUT_HELLBIZ' ) && HELLOPLUS_ALLOW_INSTALL_WITHOUT_HELLBIZ;
 	}
 

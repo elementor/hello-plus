@@ -2,6 +2,7 @@
 
 namespace HelloPlus\Modules\Admin\Components;
 
+use HelloPlus\Includes\Utils;
 use HelloPlus\Modules\Admin\Classes\Menu\Pages\Settings;
 use HelloPlus\Modules\Admin\Classes\Menu\Pages\Setup_Wizard;
 
@@ -28,7 +29,13 @@ class Admin_Menu_Controller {
 		if ( empty( get_transient( self::SETUP_WIZARD_TRANSIENT_NAME ) ) ) {
 			return;
 		}
+
 		delete_transient( self::SETUP_WIZARD_TRANSIENT_NAME );
+
+		if ( Utils::is_constant_that_allows_install_withouth_theme_true() ) {
+			return;
+		}
+
 		wp_safe_redirect( self_admin_url( 'admin.php?page=' . Setup_Wizard::SETUP_WIZARD_PAGE_SLUG ) );
 		exit;
 	}

@@ -22,12 +22,18 @@ class Utils {
 		return defined( 'ELEMENTOR_PRO_VERSION' );
 	}
 
-	public static function is_constant_that_allows_install_withouth_theme_true() {
-		return defined( 'HELLOPLUS_ALLOW_INSTALL_WITHOUT_HELLBIZ' ) && HELLOPLUS_ALLOW_INSTALL_WITHOUT_HELLBIZ;
+	public static function are_we_on_elementor_domains() {
+		$current_domain = filter_input( INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_URL );
+		$allowed_domains = [
+			'elementor.com' => true,
+			'elementor.red' => true,
+		];
+
+		return isset( $allowed_domains[ $current_domain ] );
 	}
 
 	public static function has_hello_biz(): bool {
-		if ( self::is_constant_that_allows_install_withouth_theme_true() ) {
+		if ( self::are_we_on_elementor_domains() ) {
 			return true;
 		}
 

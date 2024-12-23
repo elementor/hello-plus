@@ -32,7 +32,7 @@ class Admin_Menu_Controller {
 
 		delete_transient( self::SETUP_WIZARD_TRANSIENT_NAME );
 
-		if ( Utils::is_constant_that_allows_install_withouth_theme_true() ) {
+		if ( Utils::are_we_on_elementor_domains() ) {
 			return;
 		}
 

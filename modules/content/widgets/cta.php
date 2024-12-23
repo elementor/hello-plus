@@ -46,6 +46,10 @@ class CTA extends Widget_Base {
 		return [ 'helloplus-cta' ];
 	}
 
+	public function get_script_depends(): array {
+		return [ 'helloplus-content-fe' ];
+	}
+
 	protected function render(): void {
 		$render_strategy = new Widget_CTA_Render( $this );
 

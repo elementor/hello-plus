@@ -50,6 +50,10 @@ class Zig_Zag extends Widget_Base {
 		return [ 'helloplus-zigzag' ];
 	}
 
+	public function get_script_depends(): array {
+		return [ 'helloplus-content-fe' ];
+	}
+
 	protected function render(): void {
 		$render_strategy = new Widget_Zig_Zag_Render( $this );
 

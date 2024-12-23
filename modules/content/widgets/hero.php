@@ -48,6 +48,10 @@ class Hero extends Widget_Base {
 		return [ 'helloplus-hero' ];
 	}
 
+	public function get_script_depends(): array {
+		return [ 'helloplus-content-fe' ];
+	}
+
 	protected function render(): void {
 		$render_strategy = new Widget_Hero_Render( $this );
 

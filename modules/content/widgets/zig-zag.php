@@ -13,11 +13,15 @@ use Elementor\Group_Control_Typography;
 use Elementor\Repeater;
 use Elementor\Utils;
 use Elementor\Widget_Base;
-use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
-use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+use Elementor\Core\Kits\Documents\Tabs\{
+	Global_Typography,
+	Global_Colors
+};
 
-use HelloPlus\Modules\Content\Classes\Control_ZigZag_Animation;
-use HelloPlus\Modules\Content\Classes\Render\Widget_Zig_Zag_Render;
+use HelloPlus\Modules\Content\Classes\{
+	Control_Zig_Zag_Animation,
+	Render\Widget_Zig_Zag_Render
+};
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
 class Zig_Zag extends Widget_Base {
@@ -1032,7 +1036,7 @@ class Zig_Zag extends Widget_Base {
 			'zigzag_animation',
 			[
 				'label' => esc_html__( 'Sequenced Entrance Animation', 'elementor' ),
-				'type' => Control_ZigZag_Animation::CONTROL_TYPE,
+				'type' => Control_Zig_Zag_Animation::CONTROL_TYPE,
 				'frontend_available' => true,
 			]
 		);

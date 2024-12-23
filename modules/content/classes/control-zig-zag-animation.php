@@ -1,14 +1,18 @@
 <?php
 namespace HelloPlus\Modules\Content\Classes;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 use Elementor\Control_Animation;
 
-class Control_ZigZag_Animation extends Control_Animation {
+class Control_Zig_Zag_Animation extends Control_Animation {
 
-	const CONTROL_TYPE = 'ehp-control-zigzag-animation';
+	const CONTROL_TYPE = 'ehp-zigzag-animation';
 
-	public function get_type() {
-		return self::CONTROL_TYPE;
+	public function get_type(): string {
+		return static::CONTROL_TYPE;
 	}
 
 	public static function get_animations(): array {

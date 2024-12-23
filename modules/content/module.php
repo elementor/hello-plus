@@ -88,7 +88,5 @@ class Module extends Module_Base {
 		parent::register_hooks();
 		add_action( 'elementor/frontend/after_register_scripts', [ $this, 'register_scripts' ] );
 		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_styles' ] );
-
-		wp_enqueue_script('helloplus-content-fe');
 	}
 }

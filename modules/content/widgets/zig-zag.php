@@ -16,6 +16,7 @@ use Elementor\Widget_Base;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 
+use HelloPlus\Modules\Content\Classes\Control_ZigZag_Animation;
 use HelloPlus\Modules\Content\Classes\Render\Widget_Zig_Zag_Render;
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
@@ -1031,7 +1032,7 @@ class Zig_Zag extends Widget_Base {
 			'zigzag_animation',
 			[
 				'label' => esc_html__( 'Sequenced Entrance Animation', 'elementor' ),
-				'type' => Controls_Manager::ANIMATION,
+				'type' => Control_ZigZag_Animation::CONTROL_TYPE,
 				'frontend_available' => true,
 			]
 		);

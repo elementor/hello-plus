@@ -8,6 +8,7 @@ export default class ZigZagHandler extends elementorModules.frontend.handlers.Ba
 			constants: {
 				entranceAnimation: 'zigzag_animation',
 				hasEntranceAnimation: 'has-entrance-animation',
+				hasAlternateAnimation: 'has-alternate-animation',
 				none: 'none',
 				visible: 'visible',
 			},
@@ -37,7 +38,7 @@ export default class ZigZagHandler extends elementorModules.frontend.handlers.Ba
 	}
 
 	initEntranceAnimation() {
-		const { entranceAnimation, none } = this.getSettings( 'constants' );
+		const { entranceAnimation, none, hasAlternateAnimation } = this.getSettings( 'constants' );
 		const entranceAnimationClass = this.getResponsiveSetting( entranceAnimation );
 
 		if ( ! entranceAnimationClass || none === entranceAnimationClass ) {
@@ -54,7 +55,12 @@ export default class ZigZagHandler extends elementorModules.frontend.handlers.Ba
 			sortedEntries.forEach( ( entry, index ) => {
 				if ( entry.isIntersecting ) {
 					setTimeout( () => {
-						entry.target.classList.add( entranceAnimationClass );
+						if ( entry.target.classList.contains( hasAlternateAnimation ) ) {
+							const alternateAnimationClass = this.getAlternateAnimationClass( entranceAnimationClass );
+							entry.target.classList.add( alternateAnimationClass );
+						} else {
+							entry.target.classList.add( entranceAnimationClass );
+						}
 					}, index * 400 );
 				}
 			} );
@@ -68,6 +74,10 @@ export default class ZigZagHandler extends elementorModules.frontend.handlers.Ba
 		const observer = new IntersectionObserver( observerCallback, observerOptions );
 
 		this.elements.itemWrappers.forEach( ( element ) => observer.observe( element ) );
+	}
+
+	getAlternateAnimationClass( entranceAnimationClass ) {
+		return entranceAnimationClass.replace( /Right|Left/g, ( match ) => ( 'Right' === match ? 'Left' : 'Right' ) );
 	}
 
 	removeAnimationClasses( event ) {

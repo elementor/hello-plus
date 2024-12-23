@@ -32,6 +32,7 @@ class Widget_Zig_Zag_Render {
 		$has_alternate_icon_color = $this->settings['has_alternate_icon_color'];
 		$entrance_animation = $this->settings['zigzag_animation'] ?? '';
 		$has_entrance_animation = ! empty( $entrance_animation ) && 'none' !== $entrance_animation;
+		$has_alternate_animation = 'yes' === $this->settings['animation_alternate'];
 
 		if ( $has_entrance_animation ) {
 			$layout_classnames .= ' has-entrance-animation';
@@ -66,6 +67,10 @@ class Widget_Zig_Zag_Render {
 
 				if ( $has_entrance_animation ) {
 					$wrapper_classnames .= ' has-entrance-animation';
+
+					if ( $has_alternate_animation && $is_even ) {
+						$wrapper_classnames .= ' has-alternate-animation';
+					}
 				}
 
 				$this->widget->add_render_attribute( 'zigzag-item-wrapper-' . $key, [

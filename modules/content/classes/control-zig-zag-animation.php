@@ -15,13 +15,25 @@ class Control_Zig_Zag_Animation extends Control_Animation {
 		return static::CONTROL_TYPE;
 	}
 
-	public static function get_animations(): array {
+	public static function get_default_animations(): array {
 		return [
-			'fadeInDown' => esc_html__( 'Down', 'hello-plus' ),
-			'fadeInUp' => esc_html__( 'Up', 'hello-plus' ),
-			'fadeInRight' => esc_html__( 'Right', 'hello-plus' ),
-			'fadeInLeft' => esc_html__( 'Left', 'hello-plus' ),
-			'zoomIn' => esc_html__( 'Zoom', 'hello-plus' ),
+			'Fading' => [
+				'fadeIn' => 'Fade In',
+				'fadeInLeft' => 'Fade In Left',
+				'fadeInRight' => 'Fade In Right',
+				'fadeInUp' => 'Fade In Up',
+			],
+			'Bouncing' => [
+				'bounceIn' => 'Bounce In',
+				'bounceInLeft' => 'Bounce In Left',
+				'bounceInRight' => 'Bounce In Right',
+				'bounceInUp' => 'Bounce In Up',
+			],
+			'Sliding' => [
+				'slideInLeft' => 'Slide In Left',
+				'slideInRight' => 'Slide In Right',
+				'slideInUp' => 'Slide In Up',
+			],
 		];
 	}
 }

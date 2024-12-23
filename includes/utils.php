@@ -23,6 +23,10 @@ class Utils {
 	}
 
 	public static function has_hello_biz(): bool {
+		if ( defined( 'HELLOPLUS_ALLOW_INSTALL_WITHOUT_HELLBIZ' ) && HELLOPLUS_ALLOW_INSTALL_WITHOUT_HELLBIZ ) {
+			return true;
+		}
+
 		return defined( 'EHP_THEME_SLUG' );
 	}
 

@@ -418,7 +418,7 @@ class Zig_Zag extends Widget_Base {
 					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-icon-color-alternate: {{VALUE}}',
 				],
 				'condition' => [
-					'icon_color_alternate' => 'yes',
+					'has_alternate_icon_color' => 'yes',
 				],
 			]
 		);

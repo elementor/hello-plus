@@ -3,7 +3,7 @@ Contributors: elemntor
 Tags: elementor, themes, hello themes, hello plus, widgets
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.1.0
+Stable tag: 1.0.2
 Requires PHP: 7.4
 License: GPL-3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -80,7 +80,7 @@ For documentation and tutorials, visit our [Knowledge Base](https://elementor.co
 
 == Changelog ==
 
-= 1.1.0 - 2024-12-24 =
+= 1.0.2 - 2024-12-24 =
 * Tweak: Zigzag widget alternate icon color
 * Tweak: Enforce Elementor Core dependency
 * Tweak: Onboarding wizard improvements

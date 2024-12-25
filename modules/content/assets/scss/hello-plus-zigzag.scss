@@ -135,29 +135,32 @@
 		}
 	}
 
-	&.has-direction-start {
-		.ehp-zigzag__item-wrapper:nth-child(odd) {
-			.ehp-zigzag__item-container{
-				flex-direction: row;
+	&.has-direction {
+		&-start {
+			.ehp-zigzag__item-wrapper:nth-child(odd) {
+				.ehp-zigzag__item-container {
+					flex-direction: row;
+				}
+			}
+
+			.ehp-zigzag__item-wrapper:nth-child(even) {
+				.ehp-zigzag__item-container {
+					flex-direction: row-reverse;
+				}
 			}
 		}
 
-		.ehp-zigzag__item-wrapper:nth-child(even) {
-			.ehp-zigzag__item-container {
-				flex-direction: row-reverse;
+		&-end {
+			.ehp-zigzag__item-wrapper:nth-child(odd) {
+				.ehp-zigzag__item-container {
+					flex-direction: row-reverse;
+				}
 			}
-		}
-	}
 
-	&.has-direction-end {
-		.ehp-zigzag__item-wrapper:nth-child(odd) {
-			.ehp-zigzag__item-container {
-				flex-direction: row-reverse;
-			}
-		}
-		.ehp-zigzag__item-wrapper:nth-child(even) {
-			.ehp-zigzag__item-container{
-				flex-direction: row;
+			.ehp-zigzag__item-wrapper:nth-child(even) {
+				.ehp-zigzag__item-container {
+					flex-direction: row;
+				}
 			}
 		}
 	}

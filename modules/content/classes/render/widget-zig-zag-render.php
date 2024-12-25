@@ -27,13 +27,16 @@ class Widget_Zig_Zag_Render {
 	}
 
 	public function render(): void {
-		$layout_classnames = self::LAYOUT_CLASSNAME;
 		$first_zigzag_direction = $this->settings['first_zigzag_direction'];
 		$has_alternate_icon_color = $this->settings['has_alternate_icon_color'];
 
-		$layout_classnames .= ' has-direction-' . $first_zigzag_direction;
+		$layout_classnames = [
+			self::LAYOUT_CLASSNAME,
+			'has-direction-' . $first_zigzag_direction,
+		];
+
 		if ( 'yes' === $has_alternate_icon_color ) {
-			$layout_classnames .= ' has-alternate-icon-color';
+			$layout_classnames[] = 'has-alternate-icon-color';
 		}
 
 		$this->widget->add_render_attribute( 'layout', [
@@ -47,9 +50,8 @@ class Widget_Zig_Zag_Render {
 			$repeater = 'image' === $graphic_element ? $this->settings['image_zigzag_items'] : $this->settings['icon_zigzag_items'];
 
 			foreach ( $repeater as $key => $item ) {
-				$item_class = self::ITEM_CLASSNAME;
 				$this->widget->add_render_attribute( 'zigzag-item-' . $key, [
-					'class' => $item_class,
+					'class' => self::ITEM_CLASSNAME,
 				] );
 				?>
 				<div class="ehp-zigzag__item-wrapper">

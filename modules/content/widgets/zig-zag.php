@@ -271,11 +271,11 @@ class Zig_Zag extends Widget_Base {
 				'options' => [
 					'start' => [
 						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => 'eicon-order-start',
+						'icon' => 'eicon-order-' . ( is_rtl() ? 'end' : 'start' ),
 					],
 					'end' => [
 						'title' => esc_html__( 'End', 'hello-plus' ),
-						'icon' => 'eicon-order-end',
+						'icon' => 'eicon-order-' . ( is_rtl() ? 'start' : 'end' ),
 					],
 				],
 				'default' => 'start',

@@ -38,7 +38,7 @@ class Zig_Zag extends Widget_Base {
 	}
 
 	public function get_icon(): string {
-		return 'eicon-time-line';
+		return 'eicon-ehp-zigzag';
 	}
 
 	public function get_style_depends(): array {

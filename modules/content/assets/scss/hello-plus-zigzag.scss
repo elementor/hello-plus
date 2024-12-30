@@ -128,7 +128,7 @@
 	}
 
 	&.has-alternate-icon-color {
-		.ehp-zigzag__item-wrapper:nth-child(odd) {
+		.ehp-zigzag__item-wrapper:nth-child(even) {
 			.ehp-zigzag__graphic-element-container {
 				color: var(--zigzag-icon-color-alternate);
 			}

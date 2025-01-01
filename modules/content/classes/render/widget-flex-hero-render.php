@@ -225,7 +225,7 @@ class Widget_Flex_Hero_Render {
 		<?php
 	}
 
-	public function get_attachment_image_html_filter( $html, $settings, $image_size_key, $image_key ) {
+	public function get_attachment_image_html_filter( $html ) {
 		$image_classnames = 'ehp-flex-hero__img';
 		$image_shape = $this->settings['image_shape'];
 		$image_shape_mobile = $this->settings['image_shape_mobile'];

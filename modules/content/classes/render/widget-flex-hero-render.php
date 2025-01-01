@@ -262,8 +262,8 @@ class Widget_Flex_Hero_Render {
 			'class' => $image_wrapper_classnames,
 		] );
 
-		if ( $has_image ):
-		?>
+		if ( $has_image ) :
+			?>
 			<div <?php $this->widget->print_render_attribute_string( 'image' ); ?>>
 				<?php
 					add_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_attachment_image_html_filter' ], 10, 4 );
@@ -271,7 +271,7 @@ class Widget_Flex_Hero_Render {
 					remove_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_attachment_image_html_filter' ], 10 );
 				?>
 			</div>
-		<?php
+			<?php
 		endif; //has_image
 	}
 }

@@ -38,7 +38,7 @@ class Zig_Zag extends Widget_Base {
 	}
 
 	public function get_icon(): string {
-		return 'eicon-time-line';
+		return 'eicon-ehp-zigzag';
 	}
 
 	public function get_style_depends(): array {
@@ -269,16 +269,16 @@ class Zig_Zag extends Widget_Base {
 				'label' => esc_html__( 'Align First Graphic', 'hello-plus' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
-					'left' => [
-						'title' => esc_html__( 'Left', 'hello-plus' ),
-						'icon' => 'eicon-order-start',
+					'start' => [
+						'title' => esc_html__( 'Start', 'hello-plus' ),
+						'icon' => 'eicon-order-' . ( is_rtl() ? 'end' : 'start' ),
 					],
-					'right' => [
-						'title' => esc_html__( 'Right', 'hello-plus' ),
-						'icon' => 'eicon-order-end',
+					'end' => [
+						'title' => esc_html__( 'End', 'hello-plus' ),
+						'icon' => 'eicon-order-' . ( is_rtl() ? 'start' : 'end' ),
 					],
 				],
-				'default' => 'left',
+				'default' => 'start',
 				'description' => esc_html__( 'Content will be stacked on smaller screens', 'hello-plus' ),
 			]
 		);
@@ -418,7 +418,7 @@ class Zig_Zag extends Widget_Base {
 					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-icon-color-alternate: {{VALUE}}',
 				],
 				'condition' => [
-					'icon_color_alternate' => 'yes',
+					'has_alternate_icon_color' => 'yes',
 				],
 			]
 		);

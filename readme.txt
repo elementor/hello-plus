@@ -3,7 +3,7 @@ Contributors: elemntor
 Tags: elementor, themes, hello themes, hello plus, widgets
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.0.1
+Stable tag: 1.0.3
 Requires PHP: 7.4
 License: GPL-3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -79,6 +79,18 @@ To install Hello+, follow the steps below:
 For documentation and tutorials, visit our [Knowledge Base](https://elementor.com/help/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme).
 
 == Changelog ==
+
+= 1.0.3 - 2024-12-31 =
+* Tweak: Widgets icons
+* Fix: Zigzag widget alternate icon color
+
+= 1.0.2 - 2024-12-24 =
+* Tweak: Zigzag widget alternate icon color
+* Tweak: Enforce Elementor Core dependency
+* Tweak: Onboarding wizard improvements
+* Fix: Forms widget empty "Advanced" tab
+* Fix: Header - uploaded SVG toggle displays when menu is open on Tablet and Mobile
+* Fix: Header widget styling
 
 = 1.0.1 - 2024-12-11 =
 * Tweak: Integrate with Elementor checklist

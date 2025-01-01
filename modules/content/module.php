@@ -36,6 +36,7 @@ class Module extends Module_Base {
 			'Zig_Zag',
 			'Hero',
 			'CTA',
+			'Flex_Hero',
 		];
 	}
 
@@ -57,6 +58,13 @@ class Module extends Module_Base {
 		wp_register_style(
 			'helloplus-cta',
 			HELLOPLUS_STYLE_URL . 'helloplus-cta.css',
+			[ 'elementor-frontend' ],
+			HELLOPLUS_VERSION
+		);
+
+		wp_register_style(
+			'helloplus-flex-hero',
+			HELLOPLUS_STYLE_URL . 'helloplus-flex-hero.css',
 			[ 'elementor-frontend' ],
 			HELLOPLUS_VERSION
 		);

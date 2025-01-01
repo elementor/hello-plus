@@ -42,7 +42,7 @@ class Flex_Hero extends Widget_Base {
 	}
 
 	public function get_icon(): string {
-		return 'eicon-single-page';
+		return 'eicon-ehp-hero';
 	}
 
 	public function get_style_depends(): array {
@@ -380,11 +380,11 @@ class Flex_Hero extends Widget_Base {
 				'options' => [
 					'start' => [
 						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => 'eicon-h-align-left',
+						'icon' => 'eicon-h-align-' . ( is_rtl() ? 'right' : 'left' ),
 					],
 					'end' => [
-						'title' => esc_html__( 'End', 'hello-plus' ),
-						'icon' => 'eicon-h-align-right',
+						'title' => esc_html__( 'Start', 'hello-plus' ),
+						'icon' => 'eicon-h-align-' . ( is_rtl() ? 'left' : 'right' ),
 					],
 				],
 				'condition' => [
@@ -402,7 +402,7 @@ class Flex_Hero extends Widget_Base {
 				'options' => [
 					'flex-start' => [
 						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => 'eicon-h-align-left',
+						'icon' => 'eicon-h-align-' . ( is_rtl() ? 'right' : 'left' ),
 					],
 					'center' => [
 						'title' => esc_html__( 'Center', 'hello-plus' ),
@@ -737,11 +737,11 @@ class Flex_Hero extends Widget_Base {
 				'options' => [
 					'row' => [
 						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => 'eicon-h-align-left',
+						'icon' => 'eicon-h-align-' . ( is_rtl() ? 'left' : 'right' ),
 					],
 					'row-reverse' => [
 						'title' => esc_html__( 'End', 'hello-plus' ),
-						'icon' => 'eicon-h-align-right',
+						'icon' => 'eicon-h-align-' . ( is_rtl() ? 'left' : 'right' ),
 					],
 				],
 				'selectors_dictionary' => [

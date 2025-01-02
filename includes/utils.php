@@ -22,7 +22,21 @@ class Utils {
 		return defined( 'ELEMENTOR_PRO_VERSION' );
 	}
 
+	public static function are_we_on_elementor_domains() {
+		$current_domain = filter_input( INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_URL );
+		$allowed_domains = [
+			'elementor.com' => true,
+			'elementor.red' => true,
+		];
+
+		return isset( $allowed_domains[ $current_domain ] );
+	}
+
 	public static function has_hello_biz(): bool {
+		if ( self::are_we_on_elementor_domains() ) {
+			return true;
+		}
+
 		return defined( 'EHP_THEME_SLUG' );
 	}
 

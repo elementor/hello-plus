@@ -27,7 +27,6 @@ class Widget_Zig_Zag_Render {
 	}
 
 	public function render(): void {
-		$layout_classnames = self::LAYOUT_CLASSNAME;
 		$first_zigzag_direction = $this->settings['first_zigzag_direction'];
 		$has_alternate_icon_color = $this->settings['has_alternate_icon_color'];
 		$entrance_animation = $this->settings['zigzag_animation'] ?? '';
@@ -38,7 +37,14 @@ class Widget_Zig_Zag_Render {
 			$layout_classnames .= ' has-entrance-animation';
 		}
 
-		$layout_classnames .= ' has-direction-' . $first_zigzag_direction;
+		$layout_classnames = [
+			self::LAYOUT_CLASSNAME,
+			'has-direction-' . $first_zigzag_direction,
+		];
+
+		if ( 'yes' === $has_alternate_icon_color ) {
+			$layout_classnames[] = 'has-alternate-icon-color';
+		}
 
 		$this->widget->add_render_attribute( 'layout', [
 			'class' => $layout_classnames,
@@ -80,7 +86,7 @@ class Widget_Zig_Zag_Render {
 				] );
 
 				$this->widget->add_render_attribute( 'zigzag-item-' . $key, [
-					'class' => $item_class,
+					'class' => self::ITEM_CLASSNAME,
 				] );
 				?>
 				<div <?php $this->widget->print_render_attribute_string( 'zigzag-item-wrapper-' . $key ); ?>>

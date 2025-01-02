@@ -383,7 +383,7 @@ class Flex_Hero extends Widget_Base {
 						'icon' => 'eicon-h-align-' . ( is_rtl() ? 'right' : 'left' ),
 					],
 					'end' => [
-						'title' => esc_html__( 'Start', 'hello-plus' ),
+						'title' => esc_html__( 'End', 'hello-plus' ),
 						'icon' => 'eicon-h-align-' . ( is_rtl() ? 'left' : 'right' ),
 					],
 				],

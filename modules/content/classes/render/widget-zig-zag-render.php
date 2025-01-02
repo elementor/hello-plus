@@ -47,7 +47,7 @@ class Widget_Zig_Zag_Render {
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
 			<?php
-			$remainder = 'right' === $first_zigzag_direction ? 1 : 0;
+			$remainder = 'left' === $first_zigzag_direction ? 1 : 0;
 
 			$graphic_element = $this->settings['graphic_element'];
 			$repeater = 'image' === $graphic_element ? $this->settings['image_zigzag_items'] : $this->settings['icon_zigzag_items'];
@@ -59,7 +59,9 @@ class Widget_Zig_Zag_Render {
 
 				$item_class .= ' row' . ( $is_even ? '-even' : '-odd' );
 
-				if ( $has_alternate_icon_color && $is_even ) {
+				$is_even_index = 0 === ($key + 1) % 2;
+
+				if ( $has_alternate_icon_color && $is_even_index ) {
 					$item_class .= ' has-alternate-icon-color';
 				}
 
@@ -68,7 +70,7 @@ class Widget_Zig_Zag_Render {
 				if ( $has_entrance_animation ) {
 					$wrapper_classnames .= ' has-entrance-animation';
 
-					if ( $has_alternate_animation && $is_even ) {
+					if ( $has_alternate_animation && $is_even_index ) {
 						$wrapper_classnames .= ' has-alternate-animation';
 					}
 				}

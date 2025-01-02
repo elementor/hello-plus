@@ -1132,6 +1132,18 @@ class Zig_Zag extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'zigzag_animation_alternate',
+			[
+				'label' => esc_html__( 'Alternate Entrance Animation', 'elementor' ),
+				'type' => Control_Zig_Zag_Animation::CONTROL_TYPE,
+				'frontend_available' => true,
+				'condition' => [
+					'animation_alternate' => 'yes',
+				],
+			]
+		);
+
 		$this->end_controls_section();
 	}
 }

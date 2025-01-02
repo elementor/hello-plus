@@ -7,6 +7,7 @@ export default class ZigZagHandler extends elementorModules.frontend.handlers.Ba
 			},
 			constants: {
 				entranceAnimation: 'zigzag_animation',
+				entranceAnimationAlternate: 'zigzag_animation_alternate',
 				hasEntranceAnimation: 'has-entrance-animation',
 				hasAlternateAnimation: 'has-alternate-animation',
 				none: 'none',
@@ -38,12 +39,13 @@ export default class ZigZagHandler extends elementorModules.frontend.handlers.Ba
 	}
 
 	initEntranceAnimation() {
-		const { entranceAnimation, none, hasAlternateAnimation } = this.getSettings( 'constants' );
+		const { entranceAnimation, entranceAnimationAlternate, none, hasAlternateAnimation, visible } = this.getSettings( 'constants' );
 		const entranceAnimationClass = this.getResponsiveSetting( entranceAnimation );
 
 		if ( ! entranceAnimationClass || none === entranceAnimationClass ) {
 			return;
 		}
+		const alternateAnimationClass = this.getResponsiveSetting( entranceAnimationAlternate );
 
 		const observerCallback = ( entries ) => {
 			const sortedEntries = [ ...entries ].sort( ( a, b ) => {
@@ -53,13 +55,12 @@ export default class ZigZagHandler extends elementorModules.frontend.handlers.Ba
 			} );
 
 			sortedEntries.forEach( ( entry, index ) => {
-				if ( entry.isIntersecting ) {
+				if ( entry.isIntersecting && ! entry.target.classList.contains( visible ) ) {
 					setTimeout( () => {
-						if ( entry.target.classList.contains( hasAlternateAnimation ) ) {
-							const alternateAnimationClass = this.getAlternateAnimationClass( entranceAnimationClass );
-							entry.target.classList.add( alternateAnimationClass );
-						} else {
+						if ( ! entry.target.classList.contains( hasAlternateAnimation ) ) {
 							entry.target.classList.add( entranceAnimationClass );
+						} else {
+							entry.target.classList.add( alternateAnimationClass );
 						}
 					}, index * 400 );
 				}
@@ -76,21 +77,28 @@ export default class ZigZagHandler extends elementorModules.frontend.handlers.Ba
 		this.elements.itemWrappers.forEach( ( element ) => observer.observe( element ) );
 	}
 
+	removeAnimationClasses( event ) {
+		const { entranceAnimation, entranceAnimationAlternate, visible, hasAlternateAnimation } = this.getSettings( 'constants' );
+		const element = event.target;
+		const entranceAnimationClass = this.getResponsiveSetting( entranceAnimation );
+
+		if ( element.classList.contains( hasAlternateAnimation ) ) {
+			const alternateAnimationClass = this.getResponsiveSetting( entranceAnimationAlternate );
+			element.classList.remove( alternateAnimationClass );
+		} else {
+			element.classList.remove( entranceAnimationClass );
+		}
+
+		element.classList.add( visible );
+	}
+
 	getAlternateAnimationClass( entranceAnimationClass ) {
 		return entranceAnimationClass.replace( /Right|Left/g, ( match ) => ( 'Right' === match ? 'Left' : 'Right' ) );
 	}
 
-	removeAnimationClasses( event ) {
-		const { entranceAnimation, visible } = this.getSettings( 'constants' );
-		const element = event.target;
-		const entranceAnimationClass = this.getResponsiveSetting( entranceAnimation );
-
-		element.classList.remove( entranceAnimationClass );
-		element.classList.add( visible );
-	}
-
 	onInit( ...args ) {
 		const { hasEntranceAnimation } = this.getSettings( 'constants' );
+		console.log('on initttt');
 
 		super.onInit( ...args );
 

@@ -1422,7 +1422,7 @@ class Flex_Hero extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-button-border-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-box-border-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'show_box_border' => 'yes',
@@ -1439,7 +1439,7 @@ class Flex_Hero extends Widget_Base {
 					'default' => Global_Colors::COLOR_TEXT,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-button-border-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-box-border-color: {{VALUE}}',
 				],
 				'condition' => [
 					'show_box_border' => 'yes',

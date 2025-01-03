@@ -232,6 +232,11 @@
 		&-showcase {
 			@media screen and (min-width: $screen-desktop-min) {
 				flex-direction: row;
+
+				& .ehp-flex-hero__content-container,
+				& .ehp-flex-hero__image {
+					flex-basis: 50%;
+				}
 			}
 
 			& .ehp-flex-hero__content-container {

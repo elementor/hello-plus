@@ -49,7 +49,7 @@ class Module extends Module_Base {
 		wp_register_script(
 			'helloplus-content-fe',
 			HELLOPLUS_SCRIPTS_URL . 'helloplus-content-fe.js',
-			[ 'elementor-common', 'elementor-frontend-modules', 'elementor-frontend' ],
+			[ 'elementor-frontend' ],
 			HELLOPLUS_VERSION,
 			true
 		);

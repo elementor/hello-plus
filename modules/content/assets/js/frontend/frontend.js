@@ -8,6 +8,6 @@ export default class Content extends elementorModules.Module {
 	}
 }
 
-elementorCommon.elements.$window.on( 'elementor/frontend/init', () => {
+document.addEventListener( 'elementor/frontend/init', () => {
 	new Content();
 } );

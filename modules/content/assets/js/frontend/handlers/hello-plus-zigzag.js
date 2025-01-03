@@ -12,6 +12,7 @@ export default class ZigZagHandler extends elementorModules.frontend.handlers.Ba
 				hasAlternateAnimation: 'has-alternate-animation',
 				none: 'none',
 				visible: 'visible',
+				hidden: 'hidden',
 			},
 		};
 	}
@@ -39,7 +40,7 @@ export default class ZigZagHandler extends elementorModules.frontend.handlers.Ba
 	}
 
 	initEntranceAnimation() {
-		const { entranceAnimation, entranceAnimationAlternate, none, hasAlternateAnimation, visible } = this.getSettings( 'constants' );
+		const { entranceAnimation, entranceAnimationAlternate, none, hasAlternateAnimation, visible, hidden } = this.getSettings( 'constants' );
 		const entranceAnimationClass = this.getResponsiveSetting( entranceAnimation );
 
 		if ( ! entranceAnimationClass || none === entranceAnimationClass ) {
@@ -55,14 +56,13 @@ export default class ZigZagHandler extends elementorModules.frontend.handlers.Ba
 			} );
 
 			sortedEntries.forEach( ( entry, index ) => {
+				entry.target.classList.add( hidden );
 				if ( entry.isIntersecting && ! entry.target.classList.contains( visible ) ) {
 					setTimeout( () => {
-						if ( ! entry.target.classList.contains( hasAlternateAnimation ) ) {
-							entry.target.classList.add( entranceAnimationClass );
-						} else {
-							entry.target.classList.add( alternateAnimationClass );
-						}
-					}, index * 400 );
+						entry.target.classList.remove( hidden );
+						const animation = entry.target.classList.contains( hasAlternateAnimation ) ? alternateAnimationClass : entranceAnimationClass;
+						entry.target.classList.add( animation );
+					}, index * 200 );
 				}
 			} );
 		};
@@ -78,17 +78,15 @@ export default class ZigZagHandler extends elementorModules.frontend.handlers.Ba
 	}
 
 	removeAnimationClasses( event ) {
-		const { entranceAnimation, entranceAnimationAlternate, visible, hasAlternateAnimation } = this.getSettings( 'constants' );
+		const { entranceAnimation, entranceAnimationAlternate, visible, hidden, hasAlternateAnimation } = this.getSettings( 'constants' );
 		const element = event.target;
 		const entranceAnimationClass = this.getResponsiveSetting( entranceAnimation );
+		const alternateAnimationClass = this.getResponsiveSetting( entranceAnimationAlternate );
 
-		if ( element.classList.contains( hasAlternateAnimation ) ) {
-			const alternateAnimationClass = this.getResponsiveSetting( entranceAnimationAlternate );
-			element.classList.remove( alternateAnimationClass );
-		} else {
-			element.classList.remove( entranceAnimationClass );
-		}
+		const animation = element.classList.contains( hasAlternateAnimation ) ? alternateAnimationClass : entranceAnimationClass;
+		element.classList.remove( animation );
 
+		element.classList.remove( hidden );
 		element.classList.add( visible );
 	}
 
@@ -98,7 +96,6 @@ export default class ZigZagHandler extends elementorModules.frontend.handlers.Ba
 
 	onInit( ...args ) {
 		const { hasEntranceAnimation } = this.getSettings( 'constants' );
-		console.log('on initttt');
 
 		super.onInit( ...args );
 

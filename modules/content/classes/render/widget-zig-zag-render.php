@@ -33,14 +33,14 @@ class Widget_Zig_Zag_Render {
 		$has_entrance_animation = ! empty( $entrance_animation ) && 'none' !== $entrance_animation;
 		$has_alternate_animation = 'yes' === $this->settings['animation_alternate'];
 
-		if ( $has_entrance_animation ) {
-			$layout_classnames .= ' has-entrance-animation';
-		}
-
 		$layout_classnames = [
 			self::LAYOUT_CLASSNAME,
 			'has-direction-' . $first_zigzag_direction,
 		];
+
+		if ( $has_entrance_animation ) {
+			$layout_classnames[] = 'has-entrance-animation';
+		}
 
 		if ( 'yes' === $has_alternate_icon_color ) {
 			$layout_classnames[] = 'has-alternate-icon-color';

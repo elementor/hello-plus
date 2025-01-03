@@ -260,11 +260,18 @@
 		&.has-entrance-animation {
 			animation-delay: var(--zigzag-animation-delay);
 			animation-duration: var(--zigzag-animation-duration);
+			animation-fill-mode: both;
+			animation-timing-function: ease;
+		}
+
+		&.hidden {
 			opacity: 0;
+			visibility: hidden;
 		}
 
 		&.visible {
 			opacity: 1;
+			visibility: visible;
 		}
 	}
 

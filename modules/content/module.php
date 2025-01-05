@@ -47,8 +47,8 @@ class Module extends Module_Base {
 	 */
 	public function register_scripts() {
 		wp_register_script(
-			'helloplus-content-fe',
-			HELLOPLUS_SCRIPTS_URL . 'helloplus-content-fe.js',
+			'helloplus-zigzag-fe',
+			HELLOPLUS_SCRIPTS_URL . 'helloplus-zigzag-fe.js',
 			[ 'elementor-frontend' ],
 			HELLOPLUS_VERSION,
 			true

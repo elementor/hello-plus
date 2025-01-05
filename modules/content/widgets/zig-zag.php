@@ -51,7 +51,7 @@ class Zig_Zag extends Widget_Base {
 	}
 
 	public function get_script_depends(): array {
-		return [ 'helloplus-content-fe' ];
+		return [ 'helloplus-zigzag-fe' ];
 	}
 
 	protected function render(): void {

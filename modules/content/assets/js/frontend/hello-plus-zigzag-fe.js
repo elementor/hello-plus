@@ -1,4 +1,4 @@
-export default class Content extends elementorModules.Module {
+export default class HelloPlusZigzagFe extends elementorModules.Module {
 	constructor() {
 		super();
 
@@ -8,6 +8,6 @@ export default class Content extends elementorModules.Module {
 	}
 }
 
-document.addEventListener( 'elementor/frontend/init', () => {
-	new Content();
+window.addEventListener( 'elementor/frontend/init', () => {
+	new HelloPlusZigzagFe();
 } );

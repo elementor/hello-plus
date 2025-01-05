@@ -7,13 +7,20 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 		elementor.hooks.addFilter( 'elements/widget/controls/common/default', this.resetCommonControls.bind( this ) );
 		elementor.hooks.addFilter( 'elements/widget/controls/common-optimized/default', this.resetCommonControls.bind( this ) );
 
-		window.addEventListener( 'core/modal/close', () => {
-			if ( this.isEhpDocument() ) {
-				window.location.href = elementor.config.close_modal_redirect_hello_plus;
-			}
+		const types = [
+			'core/modal/close/ehp-footer',
+			'core/modal/close/ehp-header',
+		];
+
+		types.forEach( ( type ) => {
+			window.addEventListener( type, this.redirectToHelloPlus );
 		} );
 
 		window.templatesModule = this;
+	}
+
+	redirectToHelloPlus() {
+		window.location.href = elementor.config.close_modal_redirect_hello_plus;
 	}
 
 	async openSiteIdentity() {

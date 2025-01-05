@@ -6,6 +6,7 @@ export default class Component extends $e.modules.ComponentBase {
 	}
 
 	defaultHooks() {
+		console.log( hooks );
 		return this.importHooks( hooks );
 	}
 }

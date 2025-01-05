@@ -53,5 +53,11 @@ class Theme_Overrides {
 				$url = 'https://ba-templates.stg.elementor.red/api/connect/v1/library/templates?products=ehp';
 			}
 		} );
+
+		add_action( 'elementor/editor/localize_settings', function ( $data ) {
+			$data['close_modal_redirect_hello_plus'] = admin_url( 'admin.php?page=hello-biz' );
+
+			return $data;
+		} );
 	}
 }

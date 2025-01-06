@@ -50,7 +50,7 @@ class Theme_Overrides {
 		add_filter( 'hello-plus-theme/rest/admin-config', [ $this, 'admin_config' ] );
 		add_action( 'requests-requests.before_request', function ( &$url ) {
 			if ( 'https://my.elementor.com/api/v1/info/' === $url ) {
-				$url = 'https://ba-templates.stg.elementor.red/api/connect/v1/library/templates?products=ehp';
+				$url = 'https://my.elementor.com/api/connect/v1/library/templates?products=ehp';
 			}
 		} );
 

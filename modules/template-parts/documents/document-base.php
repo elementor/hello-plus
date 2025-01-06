@@ -32,8 +32,8 @@ abstract class Document_Base extends Library_Document {
 		$properties['show_navigator'] = false;
 		$properties['support_page_layout'] = false;
 		$properties['allow_closing_remote_library'] = false;
-		$properties['library_close_title'] = esc_html__( 'Go To Dashboard', 'elementor' );
-		$properties['publish_button_title'] = esc_html__( 'After publishing this widget, you will be able to set it as visible on the entire site in the Admin Table.', 'elementor' );
+		$properties['library_close_title'] = esc_html__( 'Go To Dashboard', 'hello-plus' );
+		$properties['publish_button_title'] = esc_html__( 'After publishing this widget, you will be able to set it as visible on the entire site in the Admin Table.', 'hello-plus' );
 		$properties['cpt'] = [ 'elementor_library' ];
 		/**
 		 * Filter the document properties.

@@ -16,9 +16,9 @@ export class EhpAddLibraryTab extends $e.modules.hookUI.Before {
 	getTitle() {
 		switch ( elementor?.config?.document?.type ) {
 			case 'ehp-header':
-				return __( 'Hello+ Header', 'elementor' );
+				return __( 'Hello+ Header', 'hello-plus' );
 			case 'ehp-footer':
-				return __( 'Hello+ Footer', 'elementor' );
+				return __( 'Hello+ Footer', 'hello-plus' );
 			default:
 				return __( 'Hello Plus', 'elementor' );
 		}

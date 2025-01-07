@@ -59,13 +59,13 @@ class Widget_Zig_Zag_Render {
 			foreach ( $repeater as $key => $item ) {
 				$is_even_index = 0 === ( $key + 1 ) % 2;
 
-				$wrapper_classnames = 'ehp-zigzag__item-wrapper';
+				$wrapper_classnames = [ 'ehp-zigzag__item-wrapper' ];
 
 				if ( $has_entrance_animation ) {
-					$wrapper_classnames .= ' has-entrance-animation';
+					$wrapper_classnames[] = ' has-entrance-animation';
 
 					if ( $has_alternate_animation && $is_even_index ) {
-						$wrapper_classnames .= ' has-alternate-animation';
+						$wrapper_classnames[] = ' has-alternate-animation';
 					}
 				}
 

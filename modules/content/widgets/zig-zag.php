@@ -1099,32 +1099,32 @@ class Zig_Zag extends Widget_Base {
 					'terms' => [
 						[
 							'name' => 'zigzag_animation',
-							'operator' => '==',
+							'operator' => '===',
 							'value' => 'fadeInLeft',
 						],
 						[
 							'name' => 'zigzag_animation',
-							'operator' => '==',
+							'operator' => '===',
 							'value' => 'fadeInRight',
 						],
 						[
 							'name' => 'zigzag_animation',
-							'operator' => '==',
+							'operator' => '===',
 							'value' => 'bounceInLeft',
 						],
 						[
 							'name' => 'zigzag_animation',
-							'operator' => '==',
+							'operator' => '===',
 							'value' => 'bounceInRight',
 						],
 						[
 							'name' => 'zigzag_animation',
-							'operator' => '==',
+							'operator' => '===',
 							'value' => 'slideInLeft',
 						],
 						[
 							'name' => 'zigzag_animation',
-							'operator' => '==',
+							'operator' => '===',
 							'value' => 'slideInRight',
 						],
 					],
@@ -1138,8 +1138,50 @@ class Zig_Zag extends Widget_Base {
 				'label' => esc_html__( 'Alternate Entrance Animation', 'elementor' ),
 				'type' => Control_Zig_Zag_Animation::CONTROL_TYPE,
 				'frontend_available' => true,
-				'condition' => [
-					'animation_alternate' => 'yes',
+				'conditions' => [
+					'relation' => 'and',
+					'terms' => [
+						[
+							'name' => 'animation_alternate',
+							'operator' => '===',
+							'value' => 'yes',
+						],
+						[
+							'relation' => 'or',
+							'terms' => [
+								[
+									'name' => 'zigzag_animation',
+									'operator' => '===',
+									'value' => 'fadeInLeft',
+								],
+								[
+									'name' => 'zigzag_animation',
+									'operator' => '===',
+									'value' => 'fadeInRight',
+								],
+								[
+									'name' => 'zigzag_animation',
+									'operator' => '===',
+									'value' => 'bounceInLeft',
+								],
+								[
+									'name' => 'zigzag_animation',
+									'operator' => '===',
+									'value' => 'bounceInRight',
+								],
+								[
+									'name' => 'zigzag_animation',
+									'operator' => '===',
+									'value' => 'slideInLeft',
+								],
+								[
+									'name' => 'zigzag_animation',
+									'operator' => '===',
+									'value' => 'slideInRight',
+								],
+							],
+						],
+					],
 				],
 			]
 		);

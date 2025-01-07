@@ -238,6 +238,16 @@
 		}
 	}
 
+	&.has-entrance-animation {
+
+		& .ehp-zigzag__item-wrapper {
+			animation-delay: var(--zigzag-animation-delay);
+			animation-duration: var(--zigzag-animation-duration);
+			animation-fill-mode: both;
+			animation-timing-function: ease;
+		}
+	}
+
 	&__item-wrapper {
 		display: flex;
 		justify-content: center;
@@ -255,13 +265,6 @@
 			.ehp-zigzag__item-container {
 				padding-block-end: var(--zigzag-box-padding-block-end);
 			}
-		}
-
-		&.has-entrance-animation {
-			animation-delay: var(--zigzag-animation-delay);
-			animation-duration: var(--zigzag-animation-duration);
-			animation-fill-mode: both;
-			animation-timing-function: ease;
 		}
 
 		&.hidden {

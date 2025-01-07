@@ -46,6 +46,10 @@ class Widget_Zig_Zag_Render {
 			$layout_classnames[] = 'has-entrance-animation';
 		}
 
+		if ( $has_alternate_animation ) {
+			$layout_classnames[] = 'has-alternate-animation';
+		}
+
 		$this->widget->add_render_attribute( 'layout', [
 			'class' => $layout_classnames,
 		] );
@@ -57,20 +61,8 @@ class Widget_Zig_Zag_Render {
 			$repeater = 'image' === $graphic_element ? $this->settings['image_zigzag_items'] : $this->settings['icon_zigzag_items'];
 
 			foreach ( $repeater as $key => $item ) {
-				$is_even_index = 0 === ( $key + 1 ) % 2;
-
-				$wrapper_classnames = [ 'ehp-zigzag__item-wrapper' ];
-
-				if ( $has_entrance_animation ) {
-					$wrapper_classnames[] = ' has-entrance-animation';
-
-					if ( $has_alternate_animation && $is_even_index ) {
-						$wrapper_classnames[] = ' has-alternate-animation';
-					}
-				}
-
 				$this->widget->add_render_attribute( 'zigzag-item-wrapper-' . $key, [
-					'class' => $wrapper_classnames,
+					'class' => 'ehp-zigzag__item-wrapper',
 				] );
 
 				$this->widget->add_render_attribute( 'zigzag-item-' . $key, [

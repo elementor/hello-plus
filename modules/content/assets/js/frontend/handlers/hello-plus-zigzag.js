@@ -40,7 +40,7 @@ export default class ZigZagHandler extends elementorModules.frontend.handlers.Ba
 	}
 
 	initEntranceAnimation() {
-		const { entranceAnimation, entranceAnimationAlternate, none, hasAlternateAnimation, visible, hidden } = this.getSettings( 'constants' );
+		const { entranceAnimation, entranceAnimationAlternate, none, visible, hidden } = this.getSettings( 'constants' );
 		const entranceAnimationClass = this.getResponsiveSetting( entranceAnimation );
 
 		if ( ! entranceAnimationClass || none === entranceAnimationClass ) {
@@ -60,7 +60,8 @@ export default class ZigZagHandler extends elementorModules.frontend.handlers.Ba
 				if ( entry.isIntersecting && ! entry.target.classList.contains( visible ) ) {
 					setTimeout( () => {
 						entry.target.classList.remove( hidden );
-						const animation = entry.target.classList.contains( hasAlternateAnimation ) ? alternateAnimationClass : entranceAnimationClass;
+						const entryIndex = parseInt( entry.target.dataset.index, 10 );
+						const animation = this.hasAlternateAnimation( entryIndex ) ? alternateAnimationClass : entranceAnimationClass;
 						entry.target.classList.add( animation );
 					}, index * 200 );
 				}
@@ -78,16 +79,23 @@ export default class ZigZagHandler extends elementorModules.frontend.handlers.Ba
 	}
 
 	removeAnimationClasses( event ) {
-		const { entranceAnimation, entranceAnimationAlternate, visible, hidden, hasAlternateAnimation } = this.getSettings( 'constants' );
+		const { entranceAnimation, entranceAnimationAlternate, visible, hidden } = this.getSettings( 'constants' );
 		const element = event.target;
 		const entranceAnimationClass = this.getResponsiveSetting( entranceAnimation );
 		const alternateAnimationClass = this.getResponsiveSetting( entranceAnimationAlternate );
+		const entryIndex = parseInt( element.dataset.index, 10 );
 
-		const animation = element.classList.contains( hasAlternateAnimation ) ? alternateAnimationClass : entranceAnimationClass;
+		const animation = this.hasAlternateAnimation( entryIndex ) ? alternateAnimationClass : entranceAnimationClass;
 		element.classList.remove( animation );
 
 		element.classList.remove( hidden );
 		element.classList.add( visible );
+	}
+
+	hasAlternateAnimation( index ) {
+		const { hasAlternateAnimation } = this.getSettings( 'constants' );
+		const isEven = 0 === ( index + 1 ) % 2;
+		return this.elements.main.classList.contains( hasAlternateAnimation ) && isEven;
 	}
 
 	getAlternateAnimationClass( entranceAnimationClass ) {

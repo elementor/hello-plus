@@ -34,7 +34,6 @@ abstract class Document_Base extends Library_Document {
 		$properties['allow_closing_remote_library'] = false;
 		$properties['library_close_title'] = esc_html__( 'Go To Dashboard', 'hello-plus' );
 		$properties['publish_button_title'] = esc_html__( 'After publishing this widget, you will be able to set it as visible on the entire site in the Admin Table.', 'hello-plus' );
-		$properties['cpt'] = [ 'elementor_library' ];
 		/**
 		 * Filter the document properties.
 		 *
@@ -168,14 +167,13 @@ abstract class Document_Base extends Library_Document {
 	}
 
 	protected function get_remote_library_config() {
-		$config = [
-			'type' => $this->get_name(),
-			'default_route' => 'templates/ehp-elements',
-			'autoImportSettings' => true,
-			'category' => $this->get_name(),
-		];
+		$config = parent::get_remote_library_config();
 
-		return array_replace_recursive( parent::get_remote_library_config(), $config );
+		$config['type'] = $this->get_name();
+		$config['default_route'] = 'templates/ehp-elements';
+		$config['autoImportSettings'] = true;
+
+		return $config;
 	}
 
 	/**

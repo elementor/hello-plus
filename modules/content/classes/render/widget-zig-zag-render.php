@@ -65,7 +65,7 @@ class Widget_Zig_Zag_Render {
 
 				$item_class .= ' row' . ( $is_even ? '-even' : '-odd' );
 
-				$is_even_index = 0 === ($key + 1) % 2;
+				$is_even_index = 0 === ( $key + 1 ) % 2;
 
 				if ( $has_alternate_icon_color && $is_even_index ) {
 					$item_class .= ' has-alternate-icon-color';

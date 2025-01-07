@@ -1039,7 +1039,7 @@ class Zig_Zag extends Widget_Base {
 		$this->add_responsive_control(
 			'zigzag_animation',
 			[
-				'label' => esc_html__( 'Sequenced Entrance Animation', 'elementor' ),
+				'label' => esc_html__( 'Sequenced Entrance Animation', 'hello-plus' ),
 				'type' => Control_Zig_Zag_Animation::CONTROL_TYPE,
 				'frontend_available' => true,
 			]
@@ -1048,13 +1048,13 @@ class Zig_Zag extends Widget_Base {
 		$this->add_control(
 			'animation_duration',
 			[
-				'label' => esc_html__( 'Animation Duration', 'elementor' ),
+				'label' => esc_html__( 'Animation Duration', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => '',
 				'options' => [
-					'2s' => esc_html__( 'Slow', 'elementor' ),
-					'1s' => esc_html__( 'Normal', 'elementor' ),
-					'800ms' => esc_html__( 'Fast', 'elementor' ),
+					'2s' => esc_html__( 'Slow', 'hello-plus' ),
+					'1s' => esc_html__( 'Normal', 'hello-plus' ),
+					'800ms' => esc_html__( 'Fast', 'hello-plus' ),
 				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-animation-duration: {{VALUE}};',
@@ -1069,7 +1069,7 @@ class Zig_Zag extends Widget_Base {
 		$this->add_control(
 			'animation_delay',
 			[
-				'label' => esc_html__( 'Animation Delay', 'elementor' ) . ' (ms)',
+				'label' => esc_html__( 'Animation Delay', 'hello-plus' ) . ' (ms)',
 				'type' => Controls_Manager::NUMBER,
 				'default' => '',
 				'min' => 0,
@@ -1135,7 +1135,7 @@ class Zig_Zag extends Widget_Base {
 		$this->add_responsive_control(
 			'zigzag_animation_alternate',
 			[
-				'label' => esc_html__( 'Alternate Entrance Animation', 'elementor' ),
+				'label' => esc_html__( 'Alternate Entrance Animation', 'hello-plus' ),
 				'type' => Control_Zig_Zag_Animation::CONTROL_TYPE,
 				'frontend_available' => true,
 				'conditions' => [

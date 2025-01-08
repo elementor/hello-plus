@@ -138,36 +138,6 @@
 		}
 	}
 
-	&.has-direction {
-		&-start {
-			.ehp-zigzag__item-wrapper:nth-child(odd) {
-				.ehp-zigzag__item-container {
-					flex-direction: row;
-				}
-			}
-
-			.ehp-zigzag__item-wrapper:nth-child(even) {
-				.ehp-zigzag__item-container {
-					flex-direction: row-reverse;
-				}
-			}
-		}
-
-		&-end {
-			.ehp-zigzag__item-wrapper:nth-child(odd) {
-				.ehp-zigzag__item-container {
-					flex-direction: row-reverse;
-				}
-			}
-
-			.ehp-zigzag__item-wrapper:nth-child(even) {
-				.ehp-zigzag__item-container {
-					flex-direction: row;
-				}
-			}
-		}
-	}
-
 	&__text-container {
 		display: flex;
 		flex-direction: column;
@@ -278,12 +248,44 @@
 		}
 	}
 
+	@media screen and (min-width: $screen-desktop-min) {
+		&.has-direction {
+			&-start {
+				.ehp-zigzag__item-wrapper:nth-child(odd) {
+					.ehp-zigzag__item-container {
+						flex-direction: row;
+					}
+				}
+	
+				.ehp-zigzag__item-wrapper:nth-child(even) {
+					.ehp-zigzag__item-container {
+						flex-direction: row-reverse;
+					}
+				}
+			}
+	
+			&-end {
+				.ehp-zigzag__item-wrapper:nth-child(odd) {
+					.ehp-zigzag__item-container {
+						flex-direction: row-reverse;
+					}
+				}
+	
+				.ehp-zigzag__item-wrapper:nth-child(even) {
+					.ehp-zigzag__item-container {
+						flex-direction: row;
+					}
+				}
+			}
+		}
+	}
+
 	@media screen and (max-width: $screen-tablet-max) {
 		.ehp-zigzag__item-container {
 			flex-direction: column;
 		}
 
-		&.has-direction-right {
+		&.has-direction-end {
 
 			.ehp-zigzag__graphic-element-container {
 				order: 2;

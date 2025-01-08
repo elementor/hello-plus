@@ -967,8 +967,8 @@ class Flex_Hero extends Widget_Base {
 				'options' => [
 					'default' => esc_html__( 'Default', 'hello-plus' ),
 					'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
-					'round' => esc_html__( 'Round', 'hello-plus' ),
 					'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
+					'round' => esc_html__( 'Round', 'hello-plus' ),
 					'oval' => esc_html__( 'Oval', 'hello-plus' ),
 					'custom' => esc_html__( 'Custom', 'hello-plus' ),
 				],
@@ -986,7 +986,7 @@ class Flex_Hero extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-button-border-radius-block-end: {{BOTTOM}}{{UNIT}}; --flex-hero-button-border-radius-block-start: {{TOP}}{{UNIT}}; --flex-hero-button-border-radius-inline-end: {{RIGHT}}{{UNIT}}; --flex-hero-button-border-radius-inline-start: {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-button-border-radius-custom-block-end: {{BOTTOM}}{{UNIT}}; --flex-hero-button-border-radius-custom-block-start: {{TOP}}{{UNIT}}; --flex-hero-button-border-radius-custom-inline-end: {{RIGHT}}{{UNIT}}; --flex-hero-button-border-radius-custom-inline-start: {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 				'condition' => array_merge([
@@ -1196,12 +1196,11 @@ class Flex_Hero extends Widget_Base {
 			[
 				'label' => esc_html__( 'Shape', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => 'default',
+				'default' => 'sharp',
 				'options' => [
-					'default' => esc_html__( 'Default', 'hello-plus' ),
 					'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
-					'round' => esc_html__( 'Round', 'hello-plus' ),
 					'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
+					'round' => esc_html__( 'Round', 'hello-plus' ),
 					'oval' => esc_html__( 'Oval', 'hello-plus' ),
 					'custom' => esc_html__( 'Custom', 'hello-plus' ),
 				],
@@ -1216,7 +1215,7 @@ class Flex_Hero extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-border-radius-block-end: {{BOTTOM}}{{UNIT}}; --flex-hero-image-border-radius-block-start: {{TOP}}{{UNIT}}; --flex-hero-image-border-radius-inline-end: {{RIGHT}}{{UNIT}}; --flex-hero-image-border-radius-inline-start: {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-border-radius-custom-block-end: {{BOTTOM}}{{UNIT}}; --flex-hero-image-border-radius-custom-block-start: {{TOP}}{{UNIT}}; --flex-hero-image-border-radius-custom-inline-end: {{RIGHT}}{{UNIT}}; --flex-hero-image-border-radius-custom-inline-start: {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 				'condition' => [
@@ -1452,13 +1451,10 @@ class Flex_Hero extends Widget_Base {
 			[
 				'label' => esc_html__( 'Shape', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => 'default',
+				'default' => 'sharp',
 				'options' => [
-					'default' => esc_html__( 'Default', 'hello-plus' ),
 					'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
-					'round' => esc_html__( 'Round', 'hello-plus' ),
 					'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
-					'oval' => esc_html__( 'Oval', 'hello-plus' ),
 					'custom' => esc_html__( 'Custom', 'hello-plus' ),
 				],
 				'frontend_available' => true,
@@ -1472,7 +1468,7 @@ class Flex_Hero extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-box-border-radius-block-end: {{BOTTOM}}{{UNIT}}; --flex-hero-box-border-radius-block-start: {{TOP}}{{UNIT}}; --flex-hero-box-border-radius-inline-end: {{RIGHT}}{{UNIT}}; --flex-hero-box-border-radius-inline-start: {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-box-border-radius-custom-block-end: {{BOTTOM}}{{UNIT}}; --flex-hero-box-border-radius-custom-block-start: {{TOP}}{{UNIT}}; --flex-hero-box-border-radius-custom-inline-end: {{RIGHT}}{{UNIT}}; --flex-hero-box-border-radius-custom-inline-start: {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'box_shape' => 'custom',

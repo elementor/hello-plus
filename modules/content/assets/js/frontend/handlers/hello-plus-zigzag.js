@@ -56,7 +56,6 @@ export default class ZigZagHandler extends elementorModules.frontend.handlers.Ba
 			} );
 
 			sortedEntries.forEach( ( entry, index ) => {
-				entry.target.classList.add( hidden );
 				if ( entry.isIntersecting && ! entry.target.classList.contains( visible ) ) {
 					setTimeout( () => {
 						entry.target.classList.remove( hidden );

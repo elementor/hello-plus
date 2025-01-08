@@ -60,9 +60,17 @@ class Widget_Zig_Zag_Render {
 			$graphic_element = $this->settings['graphic_element'];
 			$repeater = 'image' === $graphic_element ? $this->settings['image_zigzag_items'] : $this->settings['icon_zigzag_items'];
 
+			$wrapper_classnames = [
+				'ehp-zigzag__item-wrapper'
+			];
+
+			if ( $has_entrance_animation ) {
+				$wrapper_classnames[] = 'hidden';
+			}
+
 			foreach ( $repeater as $key => $item ) {
 				$this->widget->add_render_attribute( 'zigzag-item-wrapper-' . $key, [
-					'class' => 'ehp-zigzag__item-wrapper',
+					'class' => $wrapper_classnames,
 				] );
 
 				$this->widget->add_render_attribute( 'zigzag-item-' . $key, [

@@ -34,6 +34,9 @@
 	--zigzag-box-padding-inline-start: 0;
 	--zigzag-box-padding-inline-end: 0;
 
+	--zigzag-animation-delay: 0;
+	--zigzag-animation-duration: 1s;
+
 	align-items: center;
 	background-color: transparent;
 	display: flex;
@@ -235,6 +238,16 @@
 		}
 	}
 
+	&.has-entrance-animation {
+
+		& .ehp-zigzag__item-wrapper {
+			animation-delay: var(--zigzag-animation-delay);
+			animation-duration: var(--zigzag-animation-duration);
+			animation-fill-mode: both;
+			animation-timing-function: ease;
+		}
+	}
+
 	&__item-wrapper {
 		display: flex;
 		justify-content: center;
@@ -252,6 +265,16 @@
 			.ehp-zigzag__item-container {
 				padding-block-end: var(--zigzag-box-padding-block-end);
 			}
+		}
+
+		&.hidden {
+			opacity: 0;
+			visibility: hidden;
+		}
+
+		&.visible {
+			opacity: 1;
+			visibility: visible;
 		}
 	}
 

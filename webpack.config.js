@@ -20,6 +20,7 @@ const entryPoints = {
 	'css/helloplus-hero': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-hero.scss' ),
 	'css/helloplus-cta': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-cta.scss' ),
 	'css/helloplus-flex-hero': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-flex-hero.scss' ),
+	'js/helloplus-zigzag-fe': path.resolve( modulesDir, 'content/assets/js/frontend', 'hello-plus-zigzag-fe.js' ),
 
 	// Template Parts module
 	'css/helloplus-template-parts-preview': path.resolve( modulesDir, 'template-parts/assets/scss', 'hello-plus-template-parts-preview.scss' ),

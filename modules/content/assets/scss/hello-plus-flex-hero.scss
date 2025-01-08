@@ -242,6 +242,10 @@
 			& .ehp-flex-hero__content-container {
 				justify-content: var(--flex-hero-content-alignment-showcase);
 			}
+
+			& .ehp-flex-hero__image {
+				align-items: var(--flex-hero-content-alignment-showcase);
+			}
 		}
 
 		&-storytelling {

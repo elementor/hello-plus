@@ -61,7 +61,7 @@ class Widget_Zig_Zag_Render {
 			$repeater = 'image' === $graphic_element ? $this->settings['image_zigzag_items'] : $this->settings['icon_zigzag_items'];
 
 			$wrapper_classnames = [
-				'ehp-zigzag__item-wrapper'
+				'ehp-zigzag__item-wrapper',
 			];
 
 			if ( $has_entrance_animation ) {

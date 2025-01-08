@@ -75,7 +75,10 @@ export default class ZigZagHandler extends elementorModules.frontend.handlers.Ba
 		};
 		const observer = new IntersectionObserver( observerCallback, observerOptions );
 
-		this.elements.itemWrappers.forEach( ( element ) => observer.observe( element ) );
+		this.elements.itemWrappers.forEach( ( element, index ) => {
+			element.dataset.index = index;
+			observer.observe( element );
+		} );
 	}
 
 	removeAnimationClasses( event ) {

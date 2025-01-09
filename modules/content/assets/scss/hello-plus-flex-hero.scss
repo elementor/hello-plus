@@ -78,14 +78,14 @@
 	--flex-hero-button-border-radius-custom-block-start: #{$corners-shape-default};
 	--flex-hero-button-border-radius-custom-inline-end: #{$corners-shape-default};
 	--flex-hero-button-border-radius-custom-inline-start: #{$corners-shape-default};
-	--flex-hero-image-border-radius-custom-block-end: #{$corners-image-shape-sharp};
-	--flex-hero-image-border-radius-custom-block-start: #{$corners-image-shape-sharp};
-	--flex-hero-image-border-radius-custom-inline-end: #{$corners-image-shape-sharp};
-	--flex-hero-image-border-radius-custom-inline-start: #{$corners-image-shape-sharp};
-	--flex-hero-box-border-radius-custom-block-end: #{$corners-box-shape-sharp};
-	--flex-hero-box-border-radius-custom-block-start: #{$corners-box-shape-sharp};
-	--flex-hero-box-border-radius-custom-inline-end: #{$corners-box-shape-sharp};
-	--flex-hero-box-border-radius-custom-inline-start: #{$corners-box-shape-sharp};
+	--flex-hero-image-border-radius-custom-block-end: #{$corners-shape-sharp};
+	--flex-hero-image-border-radius-custom-block-start: #{$corners-shape-sharp};
+	--flex-hero-image-border-radius-custom-inline-end: #{$corners-shape-sharp};
+	--flex-hero-image-border-radius-custom-inline-start: #{$corners-shape-sharp};
+	--flex-hero-box-border-radius-custom-block-end: #{$corners-shape-sharp};
+	--flex-hero-box-border-radius-custom-block-start: #{$corners-shape-sharp};
+	--flex-hero-box-border-radius-custom-inline-end: #{$corners-shape-sharp};
+	--flex-hero-box-border-radius-custom-inline-start: #{$corners-shape-sharp};
 
 	display: flex;
 	gap: var(--flex-hero-gap);

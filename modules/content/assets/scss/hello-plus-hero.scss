@@ -24,7 +24,6 @@
 	--hero-button-border-width: 1px;
 	--hero-button-border-color: #28292B;
 	--hero-button-border-radius: 0;
-	--hero-button-background-color: #0052FF;
 	--hero-button-padding-block-end: 8px;
 	--hero-button-padding-block-start: 8px;
 	--hero-button-padding-inline-end: 16px;
@@ -129,13 +128,11 @@
 		width: var(--hero-button-icon-size);
 	}
 
-	&__button,
-	&__button:not([href]):not([tabindex]) {
+	& a.ehp-hero__button,
+	& a.ehp-hero__button:not([href]):not([tabindex]) {
 		align-items: center;
 		color: var(--hero-button-text-color);
 		display: flex;
-		font-weight: 500;
-		font-size: 16px;
 		gap: var(--hero-button-icon-spacing);
 		text-decoration: none;
 		transition: $transition;
@@ -154,7 +151,6 @@
 		}
 
 		&.is-type-button {
-			background-color: var(--hero-button-background-color);
 			padding-block-end: var(--hero-button-padding-block-end);
 			padding-block-start: var(--hero-button-padding-block-start);
 			padding-inline-end: var(--hero-button-padding-inline-end);
@@ -164,13 +160,8 @@
 
 		&.is-type-link,
 		&.is-type-link:not([href]):not([tabindex]) {
-			background: none !important; /* Always override background color coming from the controls */
+			background: none;
 			text-decoration: underline;
-
-			&:hover,
-			&:focus {
-				background: none !important; /* Always override background color coming from the controls */
-			}
 		}
 
 		&.has-shape-sharp {

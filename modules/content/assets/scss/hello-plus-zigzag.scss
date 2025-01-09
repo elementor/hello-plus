@@ -8,7 +8,6 @@
 	--zigzag-button-border-width: 1px;
 	--zigzag-button-border-color: #000000;
 	--zigzag-button-border-radius: 0;
-	--zigzag-button-background-color: #0052FF;
 	--zigzag-title-color: #000000;
 	--zigzag-description-color: #000000;
 	--zigzag-rows-spacing: 60px;
@@ -64,13 +63,11 @@
 		width: var(--zigzag-button-icon-size);
 	}
 
-	&__button,
-	&__button:not([href]):not([tabindex]) {
+	& a.ehp-zigzag__button,
+	& a.ehp-zigzag__button:not([href]):not([tabindex]) {
 		align-items: center;
 		color: var(--zigzag-button-text-color);
 		display: flex;
-		font-weight: 500;
-		font-size: 16px;
 		gap: var(--zigzag-button-icon-spacing);
 		text-decoration: none;
 		transition: $transition;
@@ -91,7 +88,6 @@
 		&.is-type {
 
 			&-button {
-				background-color: var(--zigzag-button-background-color);
 				padding-block-end: var(--zigzag-button-padding-block-end);
 				padding-block-start: var(--zigzag-button-padding-block-start);
 				padding-inline-end: var(--zigzag-button-padding-inline-end);
@@ -101,12 +97,12 @@
 
 			&-link,
 			&-link:not([href]):not([tabindex]) {
-				background: none !important; /* Always override background color coming from the controls */
+				background: none;
 				text-decoration: underline;
 
 				&:hover,
 				&:focus {
-					background: none !important; /* Always override background color coming from the controls */
+					background: none;
 				}
 			}
 		}

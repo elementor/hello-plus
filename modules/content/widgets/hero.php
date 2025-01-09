@@ -507,7 +507,7 @@ class Hero extends Widget_Base {
 				'name' => 'button_background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .ehp-hero__button',
+				'selector' => '{{WRAPPER}} .is-type-button.ehp-hero__button',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
@@ -553,7 +553,7 @@ class Hero extends Widget_Base {
 				'name' => 'button_background_hover',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .ehp-hero__button:hover, {{WRAPPER}} .ehp-hero__button:focus',
+				'selector' => '{{WRAPPER}} .is-type-button.ehp-hero__button:hover, {{WRAPPER}} .is-type-button.ehp-hero__button:focus',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',

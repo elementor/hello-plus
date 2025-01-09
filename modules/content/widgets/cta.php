@@ -643,7 +643,7 @@ class CTA extends Widget_Base {
 				'name' => $type . '_button_background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .ehp-cta__button--' . $type,
+				'selector' => '{{WRAPPER}} .is-type-button.ehp-cta__button--' . $type,
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
@@ -691,7 +691,7 @@ class CTA extends Widget_Base {
 				'name' => $type . '_button_background_hover',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .ehp-cta__button--' . $type . ':hover, {{WRAPPER}} .ehp-cta__button--' . $type . ':focus',
+				'selector' => '{{WRAPPER}} .is-type-button.ehp-cta__button--' . $type . ':hover, {{WRAPPER}} .is-type-button.ehp-cta__button--' . $type . ':focus',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',

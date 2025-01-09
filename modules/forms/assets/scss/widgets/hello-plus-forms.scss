@@ -206,11 +206,11 @@
 
 			&-link,
 			&-link:not([href]):not([tabindex]) {
-				background: none !important; /* Always override background color coming from the controls */
+				background: none;
 
 				&:hover,
 				&:focus {
-					background: none !important; /* Always override background color coming from the controls */
+					background: none;
 				}
 
 				.ehp-form__button-text {

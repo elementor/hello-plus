@@ -208,6 +208,10 @@
 			&-link:not([href]):not([tabindex]) {
 				background: none;
 
+				&:hover,
+				&:focus {
+					background: none;
+				}
 
 				.ehp-form__button-text {
 					text-decoration: underline;

@@ -19,7 +19,6 @@
 	--cta-text-width-heading: 800px;
 	--cta-text-width-description: 440px;
 
-	--cta-button-primary-background-color: #0052FF;
 	--cta-button-primary-icon-spacing: 10px;
 	--cta-button-primary-icon-size: 16px;
 	--cta-button-primary-text-color: #FFFFFF;
@@ -32,7 +31,6 @@
 	--cta-button-primary-padding-inline-start: 16px;
 	--cta-button-primary-border-radius: 0;
 
-	--cta-button-secondary-background-color: transparent;
 	--cta-button-secondary-icon-spacing: 10px;
 	--cta-button-secondary-icon-size: 16px;
 	--cta-button-secondary-text-color: #555963;
@@ -48,7 +46,6 @@
 	--cta-button-text-color: var(--cta-button-primary-text-color);
 	--cta-button-text-color-hover: var(--cta-button-primary-text-color-hover);
 	--cta-button-border-color: var(--cta-button-primary-border-color);
-	--cta-button-background-color: var(--cta-button-primary-background-color);
 	--cta-button-padding-block-end: var(--cta-button-primary-padding-block-end);
 	--cta-button-padding-block-start: var(--cta-button-primary-padding-block-start);
 	--cta-button-padding-inline-end: var(--cta-button-primary-padding-inline-end);
@@ -182,12 +179,10 @@
 		width: var(--cta-button-icon-size);
 	}
 
-	&__button,
-	&__button:not([href]):not([tabindex]) {
+	& a.ehp-cta__button,
+	& a.ehp-cta__button:not([href]):not([tabindex]) {
 		align-items: center;
 		display: flex;
-		font-weight: 500;
-		font-size: 16px;
 		gap: var(--cta-button-icon-spacing);
 		justify-content: center;
 		text-decoration: none;
@@ -206,7 +201,6 @@
 		}
 
 		&.is-type-button {
-			background-color: var(--cta-button-background-color);
 			padding-block-end: var(--cta-button-padding-block-end);
 			padding-block-start: var(--cta-button-padding-block-start);
 			padding-inline-end: var(--cta-button-padding-inline-end);
@@ -216,9 +210,14 @@
 
 		&.is-type-link,
 		&.is-type-link:not([href]):not([tabindex]) {
-			background: none !important; // Always override primary and secondary background coming from the control
+			background: none;
 			align-self: center;
 			text-decoration: underline;
+			
+			&:hover,
+			&:focus {
+				background: none;
+			}
 		}
 
 		&.is-type-button,
@@ -255,7 +254,6 @@
 		--cta-button-text-color: var(--cta-button-secondary-text-color);
 		--cta-button-text-color-hover: var(--cta-button-secondary-text-color-hover);
 		--cta-button-border-color: var(--cta-button-secondary-border-color);
-		--cta-button-background-color: var(--cta-button-secondary-background-color);
 		--cta-button-padding-block-end: var(--cta-button-secondary-padding-block-end);
 		--cta-button-padding-block-start: var(--cta-button-secondary-padding-block-start);
 		--cta-button-padding-inline-end: var(--cta-button-secondary-padding-inline-end);

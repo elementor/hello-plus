@@ -19,7 +19,6 @@
 	--flex-hero-heading-color: #{$global-colors-secondary};
 	--flex-hero-subheading-color: #{$global-colors-secondary};
 
-	--flex-hero-button-primary-background-color: #{$global-colors-accent};
 	--flex-hero-button-primary-icon-spacing: 10px;
 	--flex-hero-button-primary-icon-size: 16px;
 	--flex-hero-button-primary-text-color: #{$global-colors-white};
@@ -32,7 +31,6 @@
 	--flex-hero-button-primary-padding-inline-start: 16px;
 	--flex-hero-button-primary-border-radius: 0;
 
-	--flex-hero-button-secondary-background-color: transparent;
 	--flex-hero-button-secondary-icon-spacing: 10px;
 	--flex-hero-button-secondary-icon-size: 16px;
 	--flex-hero-button-secondary-text-color: #{$global-colors-secondary};
@@ -48,7 +46,6 @@
 	--flex-hero-button-text-color: var(--flex-hero-button-primary-text-color);
 	--flex-hero-button-text-color-hover: var(--flex-hero-button-primary-text-color-hover);
 	--flex-hero-button-border-color: var(--flex-hero-button-primary-border-color);
-	--flex-hero-button-background-color: var(--flex-hero-button-primary-background-color);
 	--flex-hero-button-padding-block-end: var(--flex-hero-button-primary-padding-block-end);
 	--flex-hero-button-padding-block-start: var(--flex-hero-button-primary-padding-block-start);
 	--flex-hero-button-padding-inline-end: var(--flex-hero-button-primary-padding-inline-end);
@@ -385,8 +382,8 @@
 		width: var(--flex-hero-button-icon-size);
 	}
 
-	&__button,
-	&__button:not([href]):not([tabindex]) {
+	& a.ehp-flex-hero__button,
+	& a.ehp-flex-hero__button:not([href]):not([tabindex]) {
 		align-items: center;
 		display: flex;
 		gap: var(--flex-hero-button-icon-spacing);
@@ -406,7 +403,6 @@
 		}
 
 		&.is-type-button {
-			background-color: var(--flex-hero-button-background-color);
 			padding-block-end: var(--flex-hero-button-padding-block-end);
 			padding-block-start: var(--flex-hero-button-padding-block-start);
 			padding-inline-end: var(--flex-hero-button-padding-inline-end);
@@ -416,9 +412,14 @@
 
 		&.is-type-link,
 		&.is-type-link:not([href]):not([tabindex]) {
-			background: none !important; // Always override primary and secondary background coming from the control
+			background: none;
 			align-self: center;
 			text-decoration: underline;
+
+			&:hover,
+			&:focus {
+				background: none;
+			}
 		}
 
 		&.is-type-button,
@@ -464,7 +465,6 @@
 		--flex-hero-button-text-color: var(--flex-hero-button-secondary-text-color);
 		--flex-hero-button-text-color-hover: var(--flex-hero-button-secondary-text-color-hover);
 		--flex-hero-button-border-color: var(--flex-hero-button-secondary-border-color);
-		--flex-hero-button-background-color: var(--flex-hero-button-secondary-background-color);
 		--flex-hero-button-padding-block-end: var(--flex-hero-button-secondary-padding-block-end);
 		--flex-hero-button-padding-block-start: var(--flex-hero-button-secondary-padding-block-start);
 		--flex-hero-button-padding-inline-end: var(--flex-hero-button-secondary-padding-inline-end);

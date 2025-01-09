@@ -14,7 +14,7 @@ class Theme_Dependency {
 			deactivate_plugins( HELLOPLUS_PLUGIN_BASE );
 
 			wp_die(
-				wp_kses( sprintf( __( 'The Hello Plus plugin requires the <a href="%s">Hello Biz</a> theme to be installed and active. Check it out!', 'hello-plus' ), admin_url( 'theme-install.php?theme=hello-biz' ) ),
+				wp_kses( sprintf( __( 'The Hello Plus plugin requires the Hello Biz theme to be installed and active. <a href="%s">Check it out!</a>', 'hello-plus' ), admin_url( 'theme-install.php?theme=hello-biz' ) ),
 					[
 						'a' => [
 							'href' => [],

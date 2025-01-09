@@ -101,8 +101,13 @@
 
 			&-link,
 			&-link:not([href]):not([tabindex]) {
-				background: none;
+				background: none !important; /* Always override background color coming from the controls */
 				text-decoration: underline;
+
+				&:hover,
+				&:focus {
+					background: none !important; /* Always override background color coming from the controls */
+				}
 			}
 		}
 

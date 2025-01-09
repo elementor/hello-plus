@@ -416,9 +416,14 @@
 
 		&.is-type-link,
 		&.is-type-link:not([href]):not([tabindex]) {
-			background: none !important; // Always override primary and secondary background coming from the control
+			background: none !important; /* Always override background color coming from the controls */
 			align-self: center;
 			text-decoration: underline;
+
+			&:hover,
+			&:focus {
+				background: none !important; /* Always override background color coming from the controls */
+			}
 		}
 
 		&.is-type-button,

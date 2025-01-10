@@ -9,6 +9,7 @@ use Elementor\Group_Control_Image_Size;
 use Elementor\Icons_Manager;
 use Elementor\Utils;
 use HelloPlus\Modules\Content\Widgets\Flex_Hero;
+use HelloPlus\Includes\Utils as Theme_Utils;
 
 class Widget_Flex_Hero_Render {
 	protected Flex_Hero $widget;
@@ -111,34 +112,22 @@ class Widget_Flex_Hero_Render {
 	}
 
 	public function render_text_container() {
-		$intro_text = $this->settings['intro_text'];
-		$intro_tag = $this->settings['intro_tag'];
-		$has_intro = '' !== $intro_text;
+		$this->maybe_render_text_html( 'intro_text', 'ehp-flex-hero__intro', $this->settings['intro_text'], $this->settings['intro_tag'] );
+		$this->maybe_render_text_html( 'heading_text', 'ehp-flex-hero__heading', $this->settings['heading_text'], $this->settings['heading_tag'] );
+		$this->maybe_render_text_html( 'subheading_text', 'ehp-flex-hero__subheading', $this->settings['subheading_text'], $this->settings['subheading_tag'] );
+	}
 
-		$heading_text = $this->settings['heading_text'];
-		$heading_tag = $this->settings['heading_tag'];
-		$has_heading = '' !== $heading_text;
+	public function maybe_render_text_html( $render_key, $class, $settings_text, $settings_tag ) {
+		if ( '' !== $settings_text ) {
+			$this->widget->add_render_attribute( $render_key, 'class', $class );
 
-		$subheading_text = $this->settings['subheading_text'];
-		$subheading_tag = $this->settings['subheading_tag'];
-		$has_subheading = '' !== $subheading_text;
-		?>
-		<?php if ( $has_intro ) {
-			$intro_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $intro_tag ), 'class="ehp-flex-hero__intro"', esc_html( $intro_text ) );
-			// Escaped above
-			Utils::print_unescaped_internal_string( $intro_output );
-		} ?>
-		<?php if ( $has_heading ) {
-			$heading_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $heading_tag ), 'class="ehp-flex-hero__heading"', esc_html( $heading_text ) );
-			// Escaped above
-			Utils::print_unescaped_internal_string( $heading_output );
-		} ?>
-		<?php if ( $has_subheading ) {
-			$subheading_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $subheading_tag ), 'class="ehp-flex-hero__subheading"', esc_html( $subheading_text ) );
-			// Escaped above
-			Utils::print_unescaped_internal_string( $subheading_output );
-		} ?>
-		<?php
+			$element = wp_kses_post( $settings_text );
+	
+			$element_html = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $settings_tag ), $this->widget->get_render_attribute_string( $render_key ), $element );
+	
+			// PHPCS - the variable $element_html holds safe data.
+			echo $element_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
 	}
 
 	protected function render_ctas_container() {

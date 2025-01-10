@@ -121,7 +121,7 @@ class Widget_Flex_Hero_Render {
 			$this->widget->add_render_attribute( $render_key, 'class', $class );
 
 			$element = wp_kses_post( $settings_text );
-	
+
 			$element_html = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $settings_tag ), $this->widget->get_render_attribute_string( $render_key ), $element );
 	
 			// PHPCS - the variable $element_html holds safe data.

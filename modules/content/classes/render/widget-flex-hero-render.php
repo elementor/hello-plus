@@ -9,7 +9,6 @@ use Elementor\Group_Control_Image_Size;
 use Elementor\Icons_Manager;
 use Elementor\Utils;
 use HelloPlus\Modules\Content\Widgets\Flex_Hero;
-use HelloPlus\Includes\Utils as Theme_Utils;
 
 class Widget_Flex_Hero_Render {
 	protected Flex_Hero $widget;

@@ -1466,7 +1466,7 @@ class Form extends Form_Base {
 				'name' => 'button_background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .ehp-form__button',
+				'selector' => '{{WRAPPER}} .is-type-button.ehp-form__button',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
@@ -1512,7 +1512,7 @@ class Form extends Form_Base {
 				'name' => 'button_background_hover',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .ehp-form__button:hover, {{WRAPPER}} .ehp-form__button:focus',
+				'selector' => '{{WRAPPER}} .is-type-button.ehp-form__button:hover, {{WRAPPER}} .is-type-button.ehp-form__button:focus',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',

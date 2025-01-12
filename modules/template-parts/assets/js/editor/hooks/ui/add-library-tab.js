@@ -28,8 +28,8 @@ export class EhpAddLibraryTab extends $e.modules.hookUI.Before {
 		$e.components.get( 'library' ).addTab( 'templates/ehp-elements', {
 			title: this.getTitle(),
 			filter: {
-				source: 'remote',
-				type: 'floating_button',
+				source: 'remote-ehp',
+				type: 'block',
 			},
 		}, 2 );
 

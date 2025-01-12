@@ -42,22 +42,25 @@ class Theme_Overrides {
 		return $config;
 	}
 
+	public function register_remote_source(  ) {
+		Utils::elementor()->templates_manager->register_source(
+			'HelloPlus\Modules\TemplateParts\Classes\Sources\Source_Remote_Ehp'
+		);
+	}
+
+	public function localize_settings( $data ) {
+		$data['close_modal_redirect_hello_plus'] = admin_url( 'admin.php?page=hello-biz' );
+
+		return $data;
+	}
+
 	public function __construct() {
 		add_filter( 'hello-plus-theme/settings/header_footer', '__return_false' );
 		add_filter( 'hello-plus-theme/settings/hello_theme', '__return_false' );
 		add_filter( 'hello-plus-theme/settings/hello_style', '__return_false' );
 		add_filter( 'hello-plus-theme/customizer/enable', Setup_Wizard::has_site_wizard_been_completed() ? '__return_false' : '__return_true' );
 		add_filter( 'hello-plus-theme/rest/admin-config', [ $this, 'admin_config' ] );
-		add_action( 'requests-requests.before_request', function ( &$url ) {
-			if ( 'https://my.elementor.com/api/v1/info/' === $url ) {
-				$url = 'https://my.elementor.com/api/connect/v1/library/templates?products=ehp';
-			}
-		} );
-
-		add_action( 'elementor/editor/localize_settings', function ( $data ) {
-			$data['close_modal_redirect_hello_plus'] = admin_url( 'admin.php?page=hello-biz' );
-
-			return $data;
-		} );
+		add_action('elementor/init', [ $this, 'register_remote_source' ] );
+		add_action( 'elementor/editor/localize_settings', [ $this, 'localize_settings' ] );
 	}
 }

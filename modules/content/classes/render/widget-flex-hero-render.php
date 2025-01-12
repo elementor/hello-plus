@@ -116,9 +116,9 @@ class Widget_Flex_Hero_Render {
 		$this->maybe_render_text_html( 'subheading_text', 'ehp-flex-hero__subheading', $this->settings['subheading_text'], $this->settings['subheading_tag'] );
 	}
 
-	public function maybe_render_text_html( $render_key, $class, $settings_text, $settings_tag ) {
+	public function maybe_render_text_html( $render_key, $css_class, $settings_text, $settings_tag ) {
 		if ( '' !== $settings_text ) {
-			$this->widget->add_render_attribute( $render_key, 'class', $class );
+			$this->widget->add_render_attribute( $render_key, 'class', $css_class );
 
 			$element = wp_kses_post( $settings_text );
 

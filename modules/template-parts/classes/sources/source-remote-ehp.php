@@ -17,8 +17,6 @@ class Source_Remote_Ehp extends \Elementor\TemplateLibrary\Source_Remote {
 
 		$templates_data = $this->get_templates_remotely( $editor_layout_type );
 
-		error_log( 'templates_data: ' . print_r( $templates_data, true ) );
-
 		if ( empty( $templates_data ) ) {
 			return [];
 		}

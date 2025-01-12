@@ -1383,7 +1383,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'name' => $type . '_button_background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .ehp-header__button--' . $type,
+				'selector' => '{{WRAPPER}} .is-type-button.ehp-header__button--' . $type,
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
@@ -1431,7 +1431,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'name' => $type . '_button_background_hover',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .ehp-header__button--' . $type . ':hover, {{WRAPPER}} .ehp-header__button--' . $type . ':focus',
+				'selector' => '{{WRAPPER}} .is-type-button.ehp-header__button--' . $type . ':hover, {{WRAPPER}} .is-type-button.ehp-header__button--' . $type . ':focus',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
@@ -1896,7 +1896,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'name' => 'behavior_sticky_bg',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .ehp-header.scroll-down, {{WRAPPER}} .ehp-header.scroll-down .ehp-header__dropdown',
+				'selector' => '{{WRAPPER}} header.ehp-header.scroll-down, {{WRAPPER}} header.ehp-header.scroll-down .ehp-header__dropdown',
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',

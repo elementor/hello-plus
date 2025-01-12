@@ -8,7 +8,6 @@
 	--zigzag-button-border-width: 1px;
 	--zigzag-button-border-color: #000000;
 	--zigzag-button-border-radius: 0;
-	--zigzag-button-background-color: #0052FF;
 	--zigzag-title-color: #000000;
 	--zigzag-description-color: #000000;
 	--zigzag-rows-spacing: 60px;
@@ -33,6 +32,9 @@
 	--zigzag-box-padding-block-end: 60px;
 	--zigzag-box-padding-inline-start: 0;
 	--zigzag-box-padding-inline-end: 0;
+
+	--zigzag-animation-delay: 0;
+	--zigzag-animation-duration: 1s;
 
 	align-items: center;
 	background-color: transparent;
@@ -61,13 +63,11 @@
 		width: var(--zigzag-button-icon-size);
 	}
 
-	&__button,
-	&__button:not([href]):not([tabindex]) {
+	& a.ehp-zigzag__button,
+	& a.ehp-zigzag__button:not([href]):not([tabindex]) {
 		align-items: center;
 		color: var(--zigzag-button-text-color);
 		display: flex;
-		font-weight: 500;
-		font-size: 16px;
 		gap: var(--zigzag-button-icon-spacing);
 		text-decoration: none;
 		transition: $transition;
@@ -88,7 +88,6 @@
 		&.is-type {
 
 			&-button {
-				background-color: var(--zigzag-button-background-color);
 				padding-block-end: var(--zigzag-button-padding-block-end);
 				padding-block-start: var(--zigzag-button-padding-block-start);
 				padding-inline-end: var(--zigzag-button-padding-inline-end);
@@ -100,6 +99,11 @@
 			&-link:not([href]):not([tabindex]) {
 				background: none;
 				text-decoration: underline;
+
+				&:hover,
+				&:focus {
+					background: none;
+				}
 			}
 		}
 
@@ -131,36 +135,6 @@
 		.ehp-zigzag__item-wrapper:nth-child(even) {
 			.ehp-zigzag__graphic-element-container {
 				color: var(--zigzag-icon-color-alternate);
-			}
-		}
-	}
-
-	&.has-direction {
-		&-start {
-			.ehp-zigzag__item-wrapper:nth-child(odd) {
-				.ehp-zigzag__item-container {
-					flex-direction: row;
-				}
-			}
-
-			.ehp-zigzag__item-wrapper:nth-child(even) {
-				.ehp-zigzag__item-container {
-					flex-direction: row-reverse;
-				}
-			}
-		}
-
-		&-end {
-			.ehp-zigzag__item-wrapper:nth-child(odd) {
-				.ehp-zigzag__item-container {
-					flex-direction: row-reverse;
-				}
-			}
-
-			.ehp-zigzag__item-wrapper:nth-child(even) {
-				.ehp-zigzag__item-container {
-					flex-direction: row;
-				}
 			}
 		}
 	}
@@ -235,6 +209,16 @@
 		}
 	}
 
+	&.has-entrance-animation {
+
+		& .ehp-zigzag__item-wrapper {
+			animation-delay: var(--zigzag-animation-delay);
+			animation-duration: var(--zigzag-animation-duration);
+			animation-fill-mode: both;
+			animation-timing-function: ease;
+		}
+	}
+
 	&__item-wrapper {
 		display: flex;
 		justify-content: center;
@@ -253,6 +237,48 @@
 				padding-block-end: var(--zigzag-box-padding-block-end);
 			}
 		}
+
+		&.hidden {
+			opacity: 0;
+			visibility: hidden;
+		}
+
+		&.visible {
+			opacity: 1;
+			visibility: visible;
+		}
+	}
+
+	@media screen and (min-width: $screen-desktop-min) {
+		&.has-direction {
+			&-start {
+				.ehp-zigzag__item-wrapper:nth-child(odd) {
+					.ehp-zigzag__item-container {
+						flex-direction: row;
+					}
+				}
+	
+				.ehp-zigzag__item-wrapper:nth-child(even) {
+					.ehp-zigzag__item-container {
+						flex-direction: row-reverse;
+					}
+				}
+			}
+	
+			&-end {
+				.ehp-zigzag__item-wrapper:nth-child(odd) {
+					.ehp-zigzag__item-container {
+						flex-direction: row-reverse;
+					}
+				}
+	
+				.ehp-zigzag__item-wrapper:nth-child(even) {
+					.ehp-zigzag__item-container {
+						flex-direction: row;
+					}
+				}
+			}
+		}
 	}
 
 	@media screen and (max-width: $screen-tablet-max) {
@@ -260,7 +286,7 @@
 			flex-direction: column;
 		}
 
-		&.has-direction-right {
+		&.has-direction-end {
 
 			.ehp-zigzag__graphic-element-container {
 				order: 2;

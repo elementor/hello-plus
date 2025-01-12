@@ -2,6 +2,10 @@
 
 namespace HelloPlus\Modules\TemplateParts\Classes\Sources;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 class Source_Remote_Ehp extends \Elementor\TemplateLibrary\Source_Remote {
 
 	const API_TEMPLATES_URL = 'https://my.stg.elementor.red/api/connect/v1/library/templates?products=ehp';

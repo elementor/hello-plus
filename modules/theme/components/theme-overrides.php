@@ -42,12 +42,6 @@ class Theme_Overrides {
 		return $config;
 	}
 
-	public function register_remote_source() {
-		Utils::elementor()->templates_manager->register_source(
-			'HelloPlus\Modules\TemplateParts\Classes\Sources\Source_Remote_Ehp'
-		);
-	}
-
 	public function localize_settings( $data ) {
 		$data['close_modal_redirect_hello_plus'] = admin_url( 'admin.php?page=hello-biz' );
 
@@ -60,7 +54,6 @@ class Theme_Overrides {
 		add_filter( 'hello-plus-theme/settings/hello_style', '__return_false' );
 		add_filter( 'hello-plus-theme/customizer/enable', Setup_Wizard::has_site_wizard_been_completed() ? '__return_false' : '__return_true' );
 		add_filter( 'hello-plus-theme/rest/admin-config', [ $this, 'admin_config' ] );
-		add_action( 'elementor/init', [ $this, 'register_remote_source' ] );
 		add_action( 'elementor/editor/localize_settings', [ $this, 'localize_settings' ] );
 	}
 }

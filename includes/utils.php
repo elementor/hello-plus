@@ -22,14 +22,19 @@ class Utils {
 		return defined( 'ELEMENTOR_PRO_VERSION' );
 	}
 
-	public static function are_we_on_elementor_domains() {
+	public static function are_we_on_elementor_domains(): bool {
 		$current_domain = filter_input( INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_URL );
 		$allowed_domains = [
-			'elementor.com' => true,
-			'elementor.red' => true,
+			'elementor.com',
+			'elementor.red',
 		];
 
-		return isset( $allowed_domains[ $current_domain ] );
+		foreach ( $allowed_domains as $domain ) {
+			if ( str_ends_with( $current_domain, $domain ) ) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public static function has_hello_biz(): bool {

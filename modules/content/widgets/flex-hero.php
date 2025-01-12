@@ -52,6 +52,10 @@ class Flex_Hero extends Widget_Base {
 	protected function render(): void {
 		$render_strategy = new Widget_Flex_Hero_Render( $this );
 
+		$this->add_inline_editing_attributes( 'intro_text', 'basic' );
+		$this->add_inline_editing_attributes( 'heading_text', 'basic' );
+		$this->add_inline_editing_attributes( 'subheading_text', 'basic' );
+
 		$render_strategy->render();
 	}
 

@@ -412,6 +412,9 @@ class Zig_Zag extends Widget_Base {
 				'label_off' => esc_html__( 'No', 'hello-plus' ),
 				'return_value' => 'yes',
 				'default' => 'no',
+				'condition' => [
+					'graphic_element' => 'icon',
+				],
 			]
 		);
 
@@ -427,6 +430,7 @@ class Zig_Zag extends Widget_Base {
 					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-icon-color-alternate: {{VALUE}}',
 				],
 				'condition' => [
+					'graphic_element' => 'icon',
 					'has_alternate_icon_color' => 'yes',
 				],
 			]

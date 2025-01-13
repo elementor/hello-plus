@@ -15,6 +15,8 @@
 	--header-menu-item-spacing: 32px;
 	--header-title-size-sticky: 20px;
 	--header-title-weight-sticky: 800;
+	--header-align-menu: start;
+	--header-element-spacing: 0;
 
 	--header-wp-admin-bar-height: 0;
 	--header-float-offset: 0px;
@@ -162,6 +164,7 @@
 
 	&__elements-container {
 		display: grid;
+		grid-gap: var(--header-element-spacing);
 		grid-template-areas:
 			"start center end";
 		grid-template-columns: 1fr auto 1fr;
@@ -633,6 +636,17 @@
 			.ehp-header__site-link {
 				grid-area: center;
 				justify-content: center;
+			}
+		}
+
+		&.has-align-link-connect {
+
+			& .ehp-header__elements-container {
+				grid-template-columns: auto 1fr auto;
+			}
+
+			& .ehp-header__navigation {
+				justify-content: var(--header-align-menu);
 			}
 		}
 

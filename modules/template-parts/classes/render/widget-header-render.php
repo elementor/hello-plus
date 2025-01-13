@@ -28,51 +28,52 @@ class Widget_Header_Render {
 	protected array $settings;
 
 	public function render(): void {
-		$layout_classnames = self::LAYOUT_CLASSNAME;
+		$layout_classnames = [
+			self::LAYOUT_CLASSNAME,
+		];
 		$navigation_breakpoint = $this->settings['navigation_breakpoint'] ?? '';
 		$box_border = $this->settings['show_box_border'] ?? '';
 		$behavior_float = $this->settings['behavior_float'];
 		$behavior_float_shape = $this->settings['behavior_float_shape'];
 		$behavior_on_scroll = $this->settings['behavior_onscroll_select'];
-		$align_logo = $this->settings['style_align_logo'];
-		$align_title = $this->settings['style_align_title'];
+		$layout_preset = $this->settings['layout_preset_select'];
 		$behavior_scale_logo = $this->settings['behavior_sticky_scale_logo'];
 		$behavior_scale_title = $this->settings['behavior_sticky_scale_title'];
 
 		if ( ! empty( $navigation_breakpoint ) ) {
-			$layout_classnames .= ' has-navigation-breakpoint-' . $navigation_breakpoint;
+			$layout_classnames[] = 'has-navigation-breakpoint-' . $navigation_breakpoint;
 		}
 
 		if ( 'yes' === $box_border ) {
-			$layout_classnames .= ' has-box-border';
+			$layout_classnames[] = 'has-box-border';
 		}
 
 		if ( 'yes' === $behavior_float ) {
-			$layout_classnames .= ' has-behavior-float';
+			$layout_classnames[] = 'has-behavior-float';
 		}
 
 		if ( 'yes' === $behavior_scale_logo ) {
-			$layout_classnames .= ' has-behavior-sticky-scale-logo';
+			$layout_classnames[] = 'has-behavior-sticky-scale-logo';
 		}
 
 		if ( 'yes' === $behavior_scale_title ) {
-			$layout_classnames .= ' has-behavior-sticky-scale-title';
+			$layout_classnames[] = 'has-behavior-sticky-scale-title';
 		}
 
 		if ( ! empty( $behavior_float_shape ) ) {
-			$layout_classnames .= ' has-shape-' . $behavior_float_shape;
+			$layout_classnames[] = 'has-shape-' . $behavior_float_shape;
 		}
 
 		if ( ! empty( $behavior_on_scroll ) ) {
-			$layout_classnames .= ' has-behavior-onscroll-' . $behavior_on_scroll;
+			$layout_classnames[] = 'has-behavior-onscroll-' . $behavior_on_scroll;
 		}
 
-		if ( ! empty( $align_logo ) ) {
-			$layout_classnames .= ' has-align-link-' . $align_logo;
-		}
-
-		if ( ! empty( $align_title ) ) {
-			$layout_classnames .= ' has-align-link-' . $align_title;
+		if ( 'navigate' === $layout_preset ) {
+			$layout_classnames[] = 'has-align-link-start';
+		} else if ( 'identity' === $layout_preset ) {
+			$layout_classnames[] = 'has-align-link-center';
+		} else if ( 'connect' === $layout_preset ) {
+			$layout_classnames[] = 'has-align-link-connect';
 		}
 
 		$render_attributes = [

@@ -65,6 +65,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 	}
 
 	protected function add_content_tab() {
+		$this->add_content_layout_section();
 		$this->add_content_site_logo_section();
 		$this->add_content_navigation_section();
 		$this->add_content_cta_section();
@@ -79,6 +80,70 @@ class Ehp_Header extends Ehp_Widget_Base {
 
 	public function add_custom_advanced_sections(): void {
 		$this->add_advanced_behavior_section();
+	}
+
+	protected function add_content_layout_section() {
+		$this->start_controls_section(
+			'layout_section',
+			[
+				'label' => esc_html__( 'Layout', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_control(
+			'layout_preset_select',
+			[
+				'label' => esc_html__( 'Preset', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'identity' => esc_html__( 'Identity', 'hello-plus' ),
+					'navigate' => esc_html__( 'Navigate', 'hello-plus' ),
+					'connect' => esc_html__( 'Connect', 'hello-plus' ),
+				],
+				'default' => 'navigate',
+				'tablet_default' => 'navigate',
+				'mobile_default' => 'navigate',
+			]
+		);
+
+		$this->add_control(
+			'layout_info_connect',
+			[
+				'type' => Controls_Manager::ALERT,
+				'alert_type' => 'info',
+				'content' => esc_html__( 'Focus on direct interaction with clear contact options.', 'hello-plus' ),
+				'condition' => [
+					'layout_preset_select' => 'connect',
+				],
+			]
+		);
+
+		$this->add_control(
+			'layout_info_navigate',
+			[
+				'type' => Controls_Manager::ALERT,
+				'alert_type' => 'info',
+				'content' => esc_html__( 'Guide visitors with a centered menu.', 'hello-plus' ),
+				'condition' => [
+					'layout_preset_select' => 'navigate',
+				],
+			]
+		);
+
+		$this->add_control(
+			'layout_info_identity',
+			[
+				'type' => Controls_Manager::ALERT,
+				'alert_type' => 'info',
+				'content' => esc_html__( 'Spotlight your brand with your logo or site name in the center.', 'hello-plus' ),
+				'condition' => [
+					'layout_preset_select' => 'identity',
+				],
+			]
+		);
+
+		$this->end_controls_section();
 	}
 
 	protected function add_content_site_logo_section() {
@@ -431,31 +496,6 @@ class Ehp_Header extends Ehp_Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'style_align_logo',
-			[
-				'label' => esc_html__( 'Align Logo', 'hello-plus' ),
-				'type' => Controls_Manager::CHOOSE,
-				'options' => [
-					'start' => [
-						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => 'eicon-align-start-h',
-					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'hello-plus' ),
-						'icon' => 'eicon-align-center-h',
-					],
-				],
-				'default' => 'start',
-				'tablet_default' => 'start',
-				'mobile_default' => 'start',
-				'condition' => [
-					'site_logo_brand_select' => 'logo',
-				],
-				'description' => esc_html__( 'Logo will be aligned to start on smaller screens', 'hello-plus' ),
-			]
-		);
-
 		$this->add_responsive_control(
 			'style_logo_width',
 			[
@@ -487,31 +527,6 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'condition' => [
 					'site_logo_brand_select' => 'logo',
 				],
-			]
-		);
-
-		$this->add_control(
-			'style_align_title',
-			[
-				'label' => esc_html__( 'Align Site Name', 'hello-plus' ),
-				'type' => Controls_Manager::CHOOSE,
-				'options' => [
-					'start' => [
-						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => 'eicon-align-start-h',
-					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'hello-plus' ),
-						'icon' => 'eicon-align-center-h',
-					],
-				],
-				'default' => 'start',
-				'tablet_default' => 'start',
-				'mobile_default' => 'start',
-				'condition' => [
-					'site_logo_brand_select' => 'title',
-				],
-				'description' => esc_html__( 'Site Name will be aligned to start on smaller screens', 'hello-plus' ),
 			]
 		);
 
@@ -555,6 +570,33 @@ class Ehp_Header extends Ehp_Widget_Base {
 			[
 				'label' => esc_html__( 'Navigation', 'hello-plus' ),
 				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'style_align_menu',
+			[
+				'label' => esc_html__( 'Align Menu', 'hello-plus' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'start' => [
+						'title' => esc_html__( 'Start', 'hello-plus' ),
+						'icon' => 'eicon-align-start-h',
+					],
+					'end' => [
+						'title' => esc_html__( 'End', 'hello-plus' ),
+						'icon' => 'eicon-align-end-h',
+					],
+				],
+				'default' => 'start',
+				'tablet_default' => 'start',
+				'mobile_default' => 'start',
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-align-menu: {{VALUE}}',
+				],
+				'condition' => [
+					'layout_preset_select' => 'connect',
+				],
 			]
 		);
 
@@ -1156,6 +1198,40 @@ class Ehp_Header extends Ehp_Widget_Base {
 					'color' => [
 						'default' => '#F6F7F8',
 					],
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'box_element_spacing',
+			[
+				'label' => __( 'Element Spacing', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 32,
+					'unit' => 'px',
+				],
+				'tablet_default' => [
+					'size' => 32,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 32,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-element-spacing: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'layout_preset_select' => 'connect',
 				],
 			]
 		);

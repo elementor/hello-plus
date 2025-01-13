@@ -10,7 +10,8 @@ use Elementor\{
 	Controls_Manager,
 	Group_Control_Background,
 	Group_Control_Box_Shadow,
-	Group_Control_Typography
+	Group_Control_Typography,
+	Repeater
 };
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
@@ -68,6 +69,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 		$this->add_content_layout_section();
 		$this->add_content_site_logo_section();
 		$this->add_content_navigation_section();
+		$this->add_content_contact_buttons_section();
 		$this->add_content_cta_section();
 	}
 
@@ -375,6 +377,106 @@ class Ehp_Header extends Ehp_Widget_Base {
 				]
 			);
 		}
+
+		$this->end_controls_section();
+	}
+
+	protected function add_content_contact_buttons_section() {
+		$this->start_controls_section(
+			'contact_buttons',
+			[
+				'label' => esc_html__( 'Contact Buttons', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_control(
+			'contact_buttons_show',
+			[
+				'label' => esc_html__( 'Show', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+			]
+		);
+
+		$repeater = new Repeater();
+
+		$repeater->add_control(
+			'contact_buttons_icon',
+			[
+				'label' => esc_html__( 'Icon', 'hello-plus' ),
+				'type' => Controls_Manager::ICONS,
+				'default' => [
+					'value' => 'fas fa-map-marker-alt',
+					'library' => 'fa-solid',
+				],
+			]
+		);
+
+		$repeater->add_control(
+			'contact_buttons_label',
+			[
+				'label' => esc_html__( 'Label', 'hello-plus' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => esc_html__( 'Visit', 'hello-plus' ),
+				'dynamic' => [
+					'active' => true,
+				],
+			]
+		);
+
+		$repeater->add_control(
+			'contact_buttons_platform',
+			[
+				'label' => esc_html__( 'Platform', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'groups' => [
+					[
+						'label' => '',
+						'options' => [
+							'email' => esc_html__( 'Email', 'hello-plus' ),
+							'telephone' => esc_html__( 'Telephone', 'hello-plus' ),
+							'sms' => esc_html__( 'SMS', 'hello-plus' ),
+							'whatsapp' => esc_html__( 'Whatsapp', 'hello-plus' ),
+							'skype' => esc_html__( 'Skype', 'hello-plus' ),
+							'messenger' => esc_html__( 'Messenger', 'hello-plus' ),
+							'viber' => esc_html__( 'Viber', 'hello-plus' ),
+							'map' => esc_html__( 'Map', 'hello-plus' ),
+							'waze' => esc_html__( 'Waze', 'hello-plus' ),
+							'url' => esc_html__( 'URL', 'hello-plus' ),
+						],
+					],
+				],
+				'default' => 'map',
+			],
+		);
+
+		$this->add_control(
+			'contact_repeater',
+			[
+				'type' => Controls_Manager::REPEATER,
+				'fields' => $repeater->get_controls(),
+				'prevent_empty' => true,
+				'button_text' => esc_html__( 'Add Item', 'hello-plus' ),
+				'title_field' => '{{{ contact_buttons_label }}}',
+				'condition' => [
+					'contact_buttons_show' => 'yes',
+				],
+				'default' => [
+					[
+						'contact_buttons_label' => esc_html__( 'Visit', 'hello-plus' ),
+						'selected_icon' => [
+							'value' => 'fas fa-map-marker-alt',
+							'library' => 'fa-solid',
+						],
+						'contact_buttons_platform' => 'map',
+					],
+				],
+			]
+		);
 
 		$this->end_controls_section();
 	}

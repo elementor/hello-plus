@@ -30,7 +30,7 @@ class Ehp_Footer extends Ehp_Widget_Base {
 	}
 
 	public function get_title(): string {
-		return esc_html__( 'Footer', 'hello-plus' );
+		return esc_html__( 'Hello+ Footer', 'hello-plus' );
 	}
 
 	public function get_categories(): array {

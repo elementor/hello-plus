@@ -412,6 +412,9 @@ class Zig_Zag extends Widget_Base {
 				'label_off' => esc_html__( 'No', 'hello-plus' ),
 				'return_value' => 'yes',
 				'default' => 'no',
+				'condition' => [
+					'graphic_element' => 'icon',
+				],
 			]
 		);
 
@@ -427,6 +430,7 @@ class Zig_Zag extends Widget_Base {
 					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-icon-color-alternate: {{VALUE}}',
 				],
 				'condition' => [
+					'graphic_element' => 'icon',
 					'has_alternate_icon_color' => 'yes',
 				],
 			]
@@ -1046,26 +1050,24 @@ class Zig_Zag extends Widget_Base {
 		);
 
 		$this->add_control(
-			'animation_duration',
+			'zigzag_animation_duration',
 			[
 				'label' => esc_html__( 'Animation Duration', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => '',
 				'options' => [
-					'2s' => esc_html__( 'Slow', 'hello-plus' ),
-					'1s' => esc_html__( 'Normal', 'hello-plus' ),
-					'800ms' => esc_html__( 'Fast', 'hello-plus' ),
+					'slow' => esc_html__( 'Slow', 'hello-plus' ),
+					'normal' => esc_html__( 'Normal', 'hello-plus' ),
+					'fast' => esc_html__( 'Fast', 'hello-plus' ),
 				],
+				'default' => 'normal',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-animation-duration: {{VALUE}};',
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-animation-duration: var(--zigzag-animation-duration-{{VALUE}});',
 				],
-				'prefix_class' => 'animated-',
 				'condition' => [
-					'animation!' => '',
+					'zigzag_animation!' => '',
 				],
 			]
 		);
-
 		$this->add_control(
 			'animation_delay',
 			[
@@ -1078,7 +1080,7 @@ class Zig_Zag extends Widget_Base {
 					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-animation-delay: {{VALUE}}ms;',
 				],
 				'condition' => [
-					'animation!' => '',
+					'zigzag_animation!' => '',
 				],
 				'render_type' => 'none',
 				'frontend_available' => true,

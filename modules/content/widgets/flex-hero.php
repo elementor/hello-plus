@@ -1077,7 +1077,34 @@ class Flex_Hero extends Widget_Base {
 					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-height: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
-					'image_stretch' => '',
+					'image_stretch!' => 'yes',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'image_width',
+			[
+				'label' => esc_html__( 'Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 1500,
+					],
+					'%' => [
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'size' => 100,
+					'unit' => '%',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-width: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'image_stretch!' => 'yes',
 				],
 			]
 		);

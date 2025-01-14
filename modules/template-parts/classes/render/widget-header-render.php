@@ -283,6 +283,9 @@ class Widget_Header_Render {
 		] );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'ctas-container' ); ?>>
+			<?php if ( 'yes' === $this->settings['contact_buttons_show'] ) {
+				$this->render_contact_buttons();
+			} ?>
 			<?php if ( $has_secondary_button ) {
 				$this->render_button( 'secondary' );
 			} ?>
@@ -291,6 +294,168 @@ class Widget_Header_Render {
 			} ?>
 		</div>
 		<?php
+	}
+
+	protected function render_contact_buttons() {
+		$contact_buttons = $this->settings['contact_buttons_repeater'];
+		?>
+		<div class="ehp-header__contact-buttons">
+			<?php
+			foreach ( $contact_buttons as $key => $contact_button ) {
+				// Ensure attributes are cleared for this key
+				$this->widget->remove_render_attribute( 'contact-button-' . $key );
+
+				$link = [
+					'platform' => $contact_button['contact_buttons_platform'],
+					'number' => $contact_button['contact_buttons_number'] ?? '',
+					'username' => $contact_button['contact_buttons_username'] ?? '',
+					'email_data' => [
+						'contact_buttons_mail' => $contact_button['contact_buttons_mail'] ?? '',
+						'contact_buttons_mail_subject' => $contact_button['contact_buttons_mail_subject'] ?? '',
+						'contact_buttons_mail_body' => $contact_button['contact_buttons_mail_body'] ?? '',
+					],
+					'viber_action' => $contact_button['contact_buttons_viber_action'] ?? '',
+					'url' => $contact_button['contact_buttons_url'] ?? '',
+					'location' => $contact_button['contact_buttons_waze'] ?? '',
+					'map' => $contact_button['contact_buttons_map'] ?? '',
+				];
+
+				$icon = $contact_button['contact_buttons_icon'];
+
+				$this->widget->add_render_attribute( 'contact-button-' . $key, [
+					'aria-label' => esc_attr( $contact_button['contact_buttons_label'] ),
+					'class' => [ 'ehp-header__contact-button' ],
+				] );
+
+				if ( $this->is_url_link( $contact_button['contact_buttons_platform'] ) ) {
+					$this->render_link_attributes( $link, 'contact-button-' . $key );
+				} else {
+					$formatted_link = $this->get_formatted_link( $link, 'contact_icon' );
+
+					$this->widget->add_render_attribute( 'contact-button-' . $key, [
+						'href' => $formatted_link,
+						'rel' => 'noopener noreferrer',
+						'target' => '_blank',
+					] );
+				}
+				?>
+
+				<a <?php echo $this->widget->print_render_attribute_string( 'contact-button-' . $key ); ?>>
+				<?php
+				Icons_Manager::render_icon( $icon,
+					[
+						'aria-hidden' => 'true',
+						'class' => 'ehp-header__contact-button-icon',
+					]
+				);
+				?>
+				</a>
+			<?php } ?>
+		</div>
+		<?php
+	}
+
+	protected function is_url_link( $platform ) {
+		return 'url' === $platform || 'waze' === $platform || 'map' === $platform;
+	}
+
+	protected function render_link_attributes( array $link, string $key ) {
+		switch ( $link['platform'] ) {
+			case 'waze':
+				if ( empty( $link['location']['url'] ) ) {
+					$link['location']['url'] = '#';
+				}
+
+				$this->widget->add_link_attributes( $key, $link['location'] );
+				break;
+			case 'url':
+				if ( empty( $link['url']['url'] ) ) {
+					$link['url']['url'] = '#';
+				}
+
+				$this->widget->add_link_attributes( $key, $link['url'] );
+				break;
+			case 'map':
+				if ( empty( $link['map']['url'] ) ) {
+					$link['map']['url'] = '#';
+				}
+
+				$this->widget->add_link_attributes( $key, $link['map'] );
+				break;
+			default:
+				break;
+		}
+	}
+
+	protected function get_formatted_link( array $link, string $prefix ): string {
+
+		// Ensure we clear the default link value if the matching type value is empty
+		switch ( $link['platform'] ) {
+			case 'email':
+				$formatted_link = $this->build_email_link( $link['email_data'], $prefix );
+				break;
+			case 'sms':
+				$formatted_link = ! empty( $link['number'] ) ? 'sms:' . $link['number'] : '';
+				break;
+			case 'messenger':
+				$formatted_link = ! empty( $link['username'] ) ?
+					$this->build_messenger_link( $link['username'] ) :
+					'';
+				break;
+			case 'whatsapp':
+				$formatted_link = ! empty( $link['number'] ) ? 'https://wa.me/' . $link['number'] : '';
+				break;
+			case 'viber':
+				$formatted_link = $this->build_viber_link( $link['viber_action'], $link['number'] );
+				break;
+			case 'skype':
+				$formatted_link = ! empty( $link['username'] ) ? 'skype:' . $link['username'] . '?chat' : '';
+				break;
+			case 'telephone':
+				$formatted_link = ! empty( $link['number'] ) ? 'tel:' . $link['number'] : '';
+				break;
+			default:
+				break;
+		}
+
+		return esc_html( $formatted_link );
+	}
+
+	public static function build_email_link( array $data, string $prefix ) {
+		$email = $data[ $prefix . '_mail' ] ?? '';
+		$subject = $data[ $prefix . '_mail_subject' ] ?? '';
+		$body = $data[ $prefix . '_mail_body' ] ?? '';
+
+		if ( ! $email ) {
+			return '';
+		}
+
+		$link = 'mailto:' . $email;
+
+		if ( $subject ) {
+			$link .= '?subject=' . $subject;
+		}
+
+		if ( $body ) {
+			$link .= $subject ? '&' : '?';
+			$link .= 'body=' . $body;
+		}
+
+		return $link;
+	}
+
+	public static function build_viber_link( string $action, string $number ) {
+		if ( empty( $number ) ) {
+			return '';
+		}
+
+		return add_query_arg( [
+			'number' => urlencode( $number ),
+		], 'viber://' . $action );
+	}
+
+	public static function build_messenger_link( string $username ) {
+		return 'https://m.me/' . $username;
 	}
 
 	protected function render_button( $type ) {

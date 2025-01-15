@@ -194,7 +194,7 @@ class Flex_Hero extends Widget_Base {
 		$this->start_controls_section(
 			'content_cta',
 			[
-				'label' => esc_html__( 'Content', 'hello-plus' ),
+				'label' => esc_html__( 'CTA Button', 'hello-plus' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);

@@ -308,6 +308,8 @@ class Widget_Header_Render {
 		$contact_buttons = $this->settings['contact_buttons_repeater'];
 		$link_type = $this->settings['contact_buttons_link_type'];
 		$responsive_display = $this->settings['contact_buttons_responsive_display'];
+		$hover_animation = $this->settings['contact_button_hover_animation'];
+
 		$contact_buttons_classnames = [
 			'ehp-header__contact-buttons',
 			'has-responsive-display-' . $responsive_display,
@@ -341,9 +343,15 @@ class Widget_Header_Render {
 
 				$icon = $contact_button['contact_buttons_icon'];
 
+				$button_classnames = ['ehp-header__contact-button'];
+
+				if ( ! empty( $hover_animation ) ) {
+					$button_classnames[] = 'elementor-animation-' . $hover_animation;
+				}
+
 				$this->widget->add_render_attribute( 'contact-button-' . $key, [
 					'aria-label' => esc_attr( $contact_button['contact_buttons_label'] ),
-					'class' => [ 'ehp-header__contact-button' ],
+					'class' => $button_classnames,
 				] );
 
 				if ( $this->is_url_link( $contact_button['contact_buttons_platform'] ) ) {

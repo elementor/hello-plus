@@ -1,0 +1,16 @@
+.elementor-control-type-choose-img {
+
+	&.elementor-label-block {
+
+		.elementor-choices {
+			width: 100%;
+		}
+	}
+}
+
+.elementor-choices {
+	&.elementor-choices-img {
+		height: fit-content;
+		line-height: normal;
+	}
+}

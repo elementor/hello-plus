@@ -10,6 +10,7 @@ use Elementor\Controls_Manager;
 use HelloPlus\Includes\Module_Base;
 use HelloPlus\Includes\Utils;
 use HelloPlus\Modules\Content\Classes\Control_Zig_Zag_Animation;
+use HelloPlus\Modules\Content\Classes\Choose_Img_Control;
 
 /**
  * class Module
@@ -96,12 +97,34 @@ class Module extends Module_Base {
 
 	public function register_controls( Controls_Manager $controls_manager ) {
 		$controls_manager->register( new Control_Zig_Zag_Animation() );
+        $controls_manager->register( new Choose_Img_Control() );
 	}
+
+		
+	public function enqueue_editor_styles() {
+		wp_enqueue_style(
+			'helloplus-control-choose-img',
+			HELLOPLUS_STYLE_URL . 'helloplus-control-choose-img.css',
+			[],
+			HELLOPLUS_VERSION
+		);
+	}
+	public function enqueue_editor_scripts() {
+		wp_enqueue_script(
+			'helloplus-control-choose-img',
+			HELLOPLUS_SCRIPTS_URL . 'helloplus-control-choose-img.js',
+			[],
+			HELLOPLUS_VERSION
+		);
+	}
+
 
 	protected function register_hooks(): void {
 		parent::register_hooks();
 		add_action( 'elementor/frontend/after_register_scripts', [ $this, 'register_scripts' ] );
 		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_styles' ] );
 		add_action( 'elementor/controls/register', [ $this, 'register_controls' ] );
+		add_action( 'elementor/editor/after_enqueue_styles', [ $this, 'enqueue_editor_styles' ] );
+		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'enqueue_editor_scripts' ] );
 	}
 }

@@ -745,7 +745,7 @@ class Flex_Hero extends Widget_Base {
 					],
 					'row-reverse' => [
 						'title' => esc_html__( 'End', 'hello-plus' ),
-						'icon' => 'eicon-h-align-' . ( is_rtl() ? 'left' :'right' ),
+						'icon' => 'eicon-h-align-' . ( is_rtl() ? 'left' : 'right' ),
 					],
 				],
 				'selectors_dictionary' => [

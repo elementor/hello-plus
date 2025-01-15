@@ -34,11 +34,13 @@ class Widget_Header_Render {
 		$navigation_breakpoint = $this->settings['navigation_breakpoint'] ?? '';
 		$box_border = $this->settings['show_box_border'] ?? '';
 		$behavior_float = $this->settings['behavior_float'];
-		$behavior_float_shape = $this->settings['behavior_float_shape'];
 		$behavior_on_scroll = $this->settings['behavior_onscroll_select'];
 		$layout_preset = $this->settings['layout_preset_select'];
 		$behavior_scale_logo = $this->settings['behavior_sticky_scale_logo'];
 		$behavior_scale_title = $this->settings['behavior_sticky_scale_title'];
+		$behavior_float_shape = $this->settings['behavior_float_shape'];
+		$behavior_float_shape_tablet = $this->settings['behavior_float_shape_tablet'] ?? '';
+		$behavior_float_shape_mobile = $this->settings['behavior_float_shape_mobile'] ?? '';
 
 		if ( ! empty( $navigation_breakpoint ) ) {
 			$layout_classnames[] = 'has-navigation-breakpoint-' . $navigation_breakpoint;
@@ -62,6 +64,14 @@ class Widget_Header_Render {
 
 		if ( ! empty( $behavior_float_shape ) ) {
 			$layout_classnames[] = 'has-shape-' . $behavior_float_shape;
+
+			if ( ! empty( $behavior_float_shape_mobile ) ) {
+				$layout_classnames[] = 'has-shape-sm-' . $behavior_float_shape_mobile;
+			}
+
+			if ( ! empty( $behavior_float_shape_tablet ) ) {
+				$layout_classnames[] = 'has-shape-md-' . $behavior_float_shape_tablet;
+			}
 		}
 
 		if ( ! empty( $behavior_on_scroll ) ) {
@@ -495,25 +505,37 @@ class Widget_Header_Render {
 		$button_hover_animation = $this->settings[ $type . '_button_hover_animation' ] ?? '';
 		$button_has_border = $this->settings[ $type . '_show_button_border' ];
 		$button_corner_shape = $this->settings[ $type . '_button_shape' ] ?? '';
+		$button_corner_shape_mobile = $this->settings[ $type . '_button_shape_mobile' ] ?? '';
+		$button_corner_shape_tablet = $this->settings[ $type . '_button_shape_tablet' ] ?? '';
 		$button_type = $this->settings[ $type . '_button_type' ] ?? '';
-		$button_classnames = self::BUTTON_CLASSNAME;
+		$button_classnames = [
+			self::BUTTON_CLASSNAME,
+		];
 
-		$button_classnames .= ' ehp-header__button--' . $type;
+		$button_classnames[] = 'ehp-header__button--' . $type;
 
 		if ( ! empty( $button_type ) ) {
-			$button_classnames .= ' is-type-' . $button_type;
+			$button_classnames[] = 'is-type-' . $button_type;
 		}
 
 		if ( $button_hover_animation ) {
-			$button_classnames .= ' elementor-animation-' . $button_hover_animation;
+			$button_classnames[] = 'elementor-animation-' . $button_hover_animation;
 		}
 
 		if ( 'yes' === $button_has_border ) {
-			$button_classnames .= ' has-border';
+			$button_classnames[] = 'has-border';
 		}
 
 		if ( ! empty( $button_corner_shape ) ) {
-			$button_classnames .= ' has-shape-' . $button_corner_shape;
+			$button_classnames[] = 'has-shape-' . $button_corner_shape;
+
+			if ( ! empty( $button_corner_shape_mobile ) ) {
+				$button_classnames[] = 'has-shape-sm-' . $button_corner_shape_mobile;
+			}
+
+			if ( ! empty( $button_corner_shape_tablet ) ) {
+				$button_classnames[] = 'has-shape-md-' . $button_corner_shape_tablet;
+			}
 		}
 
 		$this->widget->add_render_attribute( $type . '-button', [
@@ -566,15 +588,16 @@ class Widget_Header_Render {
 
 	public function handle_sub_menu_classes( $classes ) {
 		$submenu_layout = $this->settings['style_submenu_layout'] ?? 'horizontal';
-		$submenu_shape = $this->settings['style_submenu_shape'] ?? 'default';
+		$submenu_shape = $this->settings['style_submenu_shape'];
 
-		$dropdown_classnames = 'ehp-header__dropdown';
-		$dropdown_classnames .= ' has-layout-' . $submenu_layout;
-		$dropdown_classnames .= ' has-shape-' . $submenu_shape;
+		$dropdown_classnames = [ 'ehp-header__dropdown' ];
+		$dropdown_classnames[] = 'has-layout-' . $submenu_layout;
+		
+		if ( ! empty( $submenu_shape ) ) {
+			$dropdown_classnames[] = 'has-shape-' . $submenu_shape;
+		}
 
-		$classes[] = $dropdown_classnames;
-
-		return $classes;
+		return $dropdown_classnames;
 	}
 
 	public function handle_walker_menu_start_el( $item_output, $item ) {

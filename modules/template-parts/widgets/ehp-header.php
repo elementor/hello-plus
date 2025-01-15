@@ -414,6 +414,36 @@ class Ehp_Header extends Ehp_Widget_Base {
 					'value' => 'fas fa-map-marker-alt',
 					'library' => 'fa-solid',
 				],
+				'recommended' => [
+					'fa-solid' => [
+						'envelope',
+						'phone-alt',
+						'phone',
+						'mobile',
+						'mobile-alt',
+						'sms',
+						'comment-dots',
+						'map-marker-alt',
+						'map-marker',
+						'location-arrow',
+						'map',
+						'link',
+						'globe',
+					],
+					'fa-regular' => [
+						'envelope',
+						'comment-dots',
+						'map',
+					],
+					'fa-brands' => [
+						'whatsapp',
+						'whatsapp-square',
+						'skype',
+						'facebook-messenger',
+						'viber',
+						'waze',
+					],
+				],
 			]
 		);
 
@@ -1210,12 +1240,29 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'label' => esc_html__( 'Shape', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'default' => 'Default',
-					'sharp' => 'Sharp',
-					'rounded' => 'Rounded',
-					'round' => 'Round',
+					'default' => esc_html__( 'Default', 'hello-plus' ),
+					'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
+					'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
+					'round' => esc_html__( 'Round', 'hello-plus' ),
+					'custom' => esc_html__( 'Custom', 'hello-plus' ),
 				],
 				'default' => 'default',
+			]
+		);
+
+		$this->add_control(
+			'submenu_shape_custom',
+			[
+				'label' => esc_html__( 'Border Radius', 'hello-plus' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em', 'rem' ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-submenu-border-radius-custom-block-end: {{BOTTOM}}{{UNIT}}; --header-submenu-border-radius-custom-block-start: {{TOP}}{{UNIT}}; --header-submenu-border-radius-custom-inline-end: {{RIGHT}}{{UNIT}}; --header-submenu-border-radius-custom-inline-start: {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+				'condition' => [
+					'style_submenu_shape' => 'custom',
+				],
 			]
 		);
 
@@ -2049,7 +2096,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			$type . '_button_shape',
 			[
 				'label' => esc_html__( 'Shape', 'hello-plus' ),
@@ -2060,9 +2107,27 @@ class Ehp_Header extends Ehp_Widget_Base {
 					'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
 					'round' => esc_html__( 'Round', 'hello-plus' ),
 					'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
+					'oval' => esc_html__( 'Oval', 'hello-plus' ),
+					'custom' => esc_html__( 'Custom', 'hello-plus' ),
 				],
 				'condition' => array_merge([
 					$type . '_button_type' => 'button',
+				], $add_type_condition),
+			]
+		);
+
+		$this->add_responsive_control(
+			$type . '_button_shape_custom',
+			[
+				'label' => esc_html__( 'Border Radius', 'hello-plus' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em', 'rem' ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-button-border-radius-custom-block-end: {{BOTTOM}}{{UNIT}}; --header-button-border-radius-custom-block-start: {{TOP}}{{UNIT}}; --header-button-border-radius-custom-inline-end: {{RIGHT}}{{UNIT}}; --header-button-border-radius-custom-inline-start: {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+				'condition' => array_merge([
+					$type . '_button_shape' => 'custom',
 				], $add_type_condition),
 			]
 		);
@@ -2165,7 +2230,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'behavior_float_shape',
 			[
 				'label' => esc_html__( 'Shape', 'hello-plus' ),
@@ -2176,9 +2241,26 @@ class Ehp_Header extends Ehp_Widget_Base {
 					'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
 					'round' => esc_html__( 'Round', 'hello-plus' ),
 					'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
+					'custom' => esc_html__( 'Custom', 'hello-plus' ),
 				],
 				'condition' => [
 					'behavior_float' => 'yes',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'behavior_float_shape_custom',
+			[
+				'label' => esc_html__( 'Border Radius', 'hello-plus' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em', 'rem' ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-float-border-radius-custom-block-end: {{BOTTOM}}{{UNIT}}; --header-float-border-radius-custom-block-start: {{TOP}}{{UNIT}}; --header-float-border-radius-custom-inline-end: {{RIGHT}}{{UNIT}}; --header-float-border-radius-custom-inline-start: {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+				'condition' => [
+					'behavior_float_shape' => 'custom',
 				],
 			]
 		);

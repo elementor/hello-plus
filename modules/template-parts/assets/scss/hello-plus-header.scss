@@ -102,6 +102,9 @@
 	--header-box-padding-inline-end: 32px;
 	--header-box-border-width: 1px;
 	--header-box-border-color: #555963;
+	
+	--header-contact-button-size: 16px;
+	--header-contact-button-spacing: 12px;
 
 	display: flex;
 	max-width: var(--header-float-width);
@@ -308,16 +311,20 @@
 			display: none;
 		}
 	}
+	
+	&__side-toggle {
+		display: none;
+		grid-area: end;
+		justify-content: flex-end;
+		gap: 16px;
+		order: 3;
+	}
 
 	&__button-toggle {
 		align-items: center;
 		background: none;
 		border: none;
 		cursor: pointer;
-		display: none;
-		grid-area: end;
-		justify-content: flex-end;
-		order: 3;
 		padding: 0;
 
 		&:hover,
@@ -506,6 +513,40 @@
 		width: 12px;
 	}
 
+	&__contact-buttons {
+		align-items: center;
+		display: flex;
+		gap: var(--header-contact-button-spacing);
+	}
+
+	&__contact-button {
+		
+		& .ehp-header__contact-button-icon,
+		& .ehp-header__contact-button-label {
+			color: var(--header-contact-button-color);
+		}
+
+		&:hover,
+		&:focus {
+			& .ehp-header__contact-button-icon,
+			& .ehp-header__contact-button-label {
+				color: var(--header-contact-button-color-hover);
+			}
+		}
+	}
+
+	&__contact-button-icon {
+		
+		&:is(i) {
+			font-size: var(--header-contact-button-size);
+		}
+
+		&:is(svg) {
+			height: var(--header-contact-button-size);
+			width: var(--header-contact-button-size);
+		}
+	}
+
 	&.has-behavior-onscroll-always {
 		transition: $transition;
 
@@ -567,14 +608,22 @@
 					display: flex;
 					flex-direction: column;
 				}
+
+				.ehp-header__contact-buttons.has-responsive-display-navbar {
+					display: none;
+				}
 			}
 
 			&__button {
 				justify-content: center;
 			}
 
-			&__button-toggle {
-				display: flex;	
+			&__side-toggle {
+				display: flex;
+
+				& .ehp-header__contact-buttons.has-responsive-display-dropdown {
+					display: none;
+				}
 			}
 
 			&__menu {
@@ -657,7 +706,8 @@
 				background: none !important; // Override the default background color
 				display: flex;
 
-				& > .ehp-header__ctas-container {
+				& > .ehp-header__ctas-container,
+				& > .ehp-header__contact-buttons {
 					display: none;
 				}
 			}

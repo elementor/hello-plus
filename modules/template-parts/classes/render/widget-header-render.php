@@ -229,6 +229,7 @@ class Widget_Header_Render {
 			remove_filter( 'nav_menu_submenu_css_class', [ $this, 'handle_sub_menu_classes' ] );
 			remove_filter( 'walker_nav_menu_start_el', [ $this, 'handle_walker_menu_start_el' ] );
 			remove_filter( 'nav_menu_item_id', '__return_empty_string' );
+
 			$this->render_ctas_container();
 			?>
 		</nav>
@@ -249,19 +250,24 @@ class Widget_Header_Render {
 		] );
 
 		?>
-		<button <?php $this->widget->print_render_attribute_string( 'button-toggle' ); ?>>
-			<span class="ehp-header__toggle-icon ehp-header__toggle-icon--open" aria-hidden="true">
-				<?php
-				Icons_Manager::render_icon( $toggle_icon,
-					[
-						'role' => 'presentation',
-					]
-				);
-				?>
-			</span>
-			<i class="eicon-close ehp-header__toggle-icon ehp-header__toggle-icon--close"></i>
-			<span class="elementor-screen-only"><?php esc_html_e( 'Menu', 'hello-plus' ); ?></span>
-		</button>
+		<div class="ehp-header__side-toggle">
+			<?php if ( 'yes' === $this->settings['contact_buttons_show'] ) {
+				$this->render_contact_buttons();
+			} ?>
+			<button <?php $this->widget->print_render_attribute_string( 'button-toggle' ); ?>>
+				<span class="ehp-header__toggle-icon ehp-header__toggle-icon--open" aria-hidden="true">
+					<?php
+					Icons_Manager::render_icon( $toggle_icon,
+						[
+							'role' => 'presentation',
+						]
+					);
+					?>
+				</span>
+				<i class="eicon-close ehp-header__toggle-icon ehp-header__toggle-icon--close"></i>
+				<span class="elementor-screen-only"><?php esc_html_e( 'Menu', 'hello-plus' ); ?></span>
+			</button>
+		</div>
 		<?php
 	}
 
@@ -283,9 +289,11 @@ class Widget_Header_Render {
 		] );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'ctas-container' ); ?>>
-			<?php if ( 'yes' === $this->settings['contact_buttons_show'] ) {
-				$this->render_contact_buttons();
-			} ?>
+			<?php
+				if ( 'yes' === $this->settings['contact_buttons_show'] ) {
+					$this->render_contact_buttons();
+				}
+			?>
 			<?php if ( $has_secondary_button ) {
 				$this->render_button( 'secondary' );
 			} ?>
@@ -298,8 +306,19 @@ class Widget_Header_Render {
 
 	protected function render_contact_buttons() {
 		$contact_buttons = $this->settings['contact_buttons_repeater'];
+		$link_type = $this->settings['contact_buttons_link_type'];
+		$responsive_display = $this->settings['contact_buttons_responsive_display'];
+		$contact_buttons_classnames = [
+			'ehp-header__contact-buttons',
+			'has-responsive-display-' . $responsive_display,
+		];
+
+		$this->widget->add_render_attribute( 'contact-buttons', [
+			'class' => $contact_buttons_classnames,
+		] );
+
 		?>
-		<div class="ehp-header__contact-buttons">
+		<div <?php $this->widget->print_render_attribute_string( 'contact-buttons' ); ?>>
 			<?php
 			foreach ( $contact_buttons as $key => $contact_button ) {
 				// Ensure attributes are cleared for this key
@@ -341,14 +360,17 @@ class Widget_Header_Render {
 				?>
 
 				<a <?php echo $this->widget->print_render_attribute_string( 'contact-button-' . $key ); ?>>
-				<?php
-				Icons_Manager::render_icon( $icon,
-					[
-						'aria-hidden' => 'true',
-						'class' => 'ehp-header__contact-button-icon',
-					]
-				);
-				?>
+				<?php if ( 'icon' === $link_type ) {
+					Icons_Manager::render_icon( $icon,
+						[
+							'aria-hidden' => 'true',
+							'class' => 'ehp-header__contact-button-icon',
+						]
+					);
+				} ?>
+				<?php if ( 'label' === $link_type ) { ?>
+					<span class="ehp-header__contact-button-label"><?php echo esc_html( $contact_button['contact_buttons_label'] ); ?></span>
+				<?php } ?>
 				</a>
 			<?php } ?>
 		</div>

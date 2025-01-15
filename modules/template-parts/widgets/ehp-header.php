@@ -76,6 +76,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 	protected function add_style_tab() {
 		$this->add_style_site_identity_section();
 		$this->add_style_navigation_section();
+		$this->add_style_contact_button_section();
 		$this->add_style_cta_section();
 		$this->add_style_box_section();
 	}
@@ -1394,6 +1395,170 @@ class Ehp_Header extends Ehp_Widget_Base {
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
+
+		$this->end_controls_section();
+	}
+
+	protected function add_style_contact_button_section() {
+		$this->start_controls_section(
+			'style_contact_button',
+			[
+				'label' => esc_html__( 'Contact Button', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'contact_buttons_link_type',
+			[
+				'label' => esc_html__( 'Link Type', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'icon' => esc_html__( 'Icon', 'hello-plus' ),
+					'label' => esc_html__( 'Label', 'hello-plus' ),
+				],
+				'default' => 'icon',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'contact_buttons_typography',
+				'selector' => '{{WRAPPER}} .ehp-header__contact-button-label',
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_ACCENT,
+				],
+				'condition' => [
+					'contact_buttons_link_type' => 'label',
+				],
+			]
+		);
+
+		$this->start_controls_tabs(
+			'contact_button_tabs'
+		);
+
+		$this->start_controls_tab(
+			'contact_button_normal_tab',
+			[
+				'label' => esc_html__( 'Normal', 'hello-plus' ),
+			]
+		);
+
+		$this->add_control(
+			'contact_buttons_color',
+			[
+				'label' => esc_html__( 'Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-contact-button-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'contact_button_hover_tab',
+			[
+				'label' => esc_html__( 'Hover', 'hello-plus' ),
+			]
+		);
+
+		$this->add_control(
+			'contact_buttons_color_hover',
+			[
+				'label' => esc_html__( 'Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_ACCENT,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-contact-button-color-hover: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'contact_button_hover_animation',
+			[
+				'label' => esc_html__( 'Hover Animation', 'elementor' ),
+				'type' => Controls_Manager::HOVER_ANIMATION,
+				'frontend_available' => true,
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_responsive_control(
+			'contact_buttons_size',
+			[
+				'label' => esc_html__( 'Size', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'min' => 1,
+						'max' => 50,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 16,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-contact-button-size: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
+				'condition' => [
+					'contact_buttons_link_type' => 'icon',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'contact_buttons_spacing',
+			[
+				'label' => esc_html__( 'Spacing', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'min' => 1,
+						'max' => 50,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 12,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-contact-button-spacing: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'contact_buttons_responsive_display',
+			[
+				'label' => esc_html__( 'Responsive Display', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'navbar' => esc_html__( 'Navbar', 'hello-plus' ),
+					'dropdown' => esc_html__( 'Dropdown', 'hello-plus' ),
+				],
+				'default' => 'navbar',
+				'separator' => 'before',
+			]
+		);
 
 		$this->end_controls_section();
 	}

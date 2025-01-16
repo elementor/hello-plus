@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Source_Remote_Ehp extends \Elementor\TemplateLibrary\Source_Base {
 
-	const API_TEMPLATES_URL = 'https://ba-templates-api.platform-prod.elementor.red/v1/templates/';
+	const API_TEMPLATES_URL = 'https://ba-templates.stg.elementor.red/v1/templates/';
 
 	const TEMPLATES_DATA_TRANSIENT_KEY_PREFIX = 'elementor_remote_templates_ehp_data_';
 
@@ -184,6 +184,7 @@ class Source_Remote_Ehp extends \Elementor\TemplateLibrary\Source_Base {
 			'headers' => apply_filters( 'stg-cf-headers', [] ),
 		] );
 
+		error_log( print_r( $response, true ) );
 		if ( is_wp_error( $response ) || 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
 			return false;
 		}
@@ -200,6 +201,7 @@ class Source_Remote_Ehp extends \Elementor\TemplateLibrary\Source_Base {
 	protected function get_templates_body_args( string $editor_layout_type ): array {
 		return [];
 	}
+
 	protected function get_url_params( string $editor_layout_type ): array {
 		return [
 			'products' => 'ehp',

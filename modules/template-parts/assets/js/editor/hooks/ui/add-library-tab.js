@@ -30,6 +30,7 @@ export class EhpAddLibraryTab extends $e.modules.hookUI.Before {
 			filter: {
 				source: 'remote-ehp',
 				type: 'block',
+				subtype: elementor?.config?.document?.type,
 			},
 		}, 2 );
 

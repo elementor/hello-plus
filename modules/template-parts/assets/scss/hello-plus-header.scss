@@ -12,6 +12,7 @@
 	--header-title-weight-sticky: 800;
 	--header-align-menu: start;
 	--header-element-spacing: 0;
+	--header-blur-level: 7px;
 
 	--header-wp-admin-bar-height: 0;
 	--header-float-offset: 0px;
@@ -150,6 +151,10 @@
 			top: calc(-1 * var(--header-scroll-down));
 			transition: top 0.5s ease-in-out;
 		}
+	}
+
+	&.has-blur-background {
+		backdrop-filter: blur(var(--header-blur-level));
 	}
 
 	@mixin shapes() {
@@ -645,6 +650,7 @@
 			&__dropdown {
 				align-items: var(--header-dropdown-text-align);
 				background-color: transparent !important; // Override the default background color
+				background-image: none !important; // Override the default background image
 				border-radius: unset;
 				flex-direction: column;
 				left: unset;

@@ -50,7 +50,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 	}
 
 	public function get_script_depends(): array {
-		return [ 'helloplus-header' ];
+		return [ 'helloplus-header-frontend' ];
 	}
 
 	protected function render(): void {
@@ -2520,6 +2520,71 @@ class Ehp_Header extends Ehp_Widget_Base {
 				],
 				'condition' => [
 					'behavior_sticky_change_bg' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'blur_background',
+			[
+				'label' => esc_html__( 'Blur Background', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+			]
+		);
+
+		$this->add_control(
+			'blur_background_level',
+			[
+				'label' => esc_html__( 'Blur Level', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'min' => 1,
+						'max' => 15,
+					],
+					'%' => [
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'size' => 7,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-blur-background-level: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'blur_background' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'blur_background_transparency',
+			[
+				'label' => esc_html__( 'Transparency', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'%' => [
+						'max' => 1,
+						'min' => 0,
+						'step' => 0.01,
+					],
+				],
+				'default' => [
+					'unit' => '%',
+					'size' => 0.5,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-blur-opacity: {{SIZE}};',
+				],
+				'condition' => [
+					'blur_background' => 'yes',
 				],
 			]
 		);

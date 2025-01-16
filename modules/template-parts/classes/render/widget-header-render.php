@@ -41,6 +41,7 @@ class Widget_Header_Render {
 		$behavior_float_shape = $this->settings['behavior_float_shape'];
 		$behavior_float_shape_tablet = $this->settings['behavior_float_shape_tablet'] ?? '';
 		$behavior_float_shape_mobile = $this->settings['behavior_float_shape_mobile'] ?? '';
+		$has_blur_background = $this->settings['blur_background'];
 
 		if ( ! empty( $navigation_breakpoint ) ) {
 			$layout_classnames[] = 'has-navigation-breakpoint-' . $navigation_breakpoint;
@@ -84,6 +85,10 @@ class Widget_Header_Render {
 			$layout_classnames[] = 'has-align-link-center';
 		} else if ( 'connect' === $layout_preset ) {
 			$layout_classnames[] = 'has-align-link-connect';
+		}
+
+		if ( 'yes' === $has_blur_background ) {
+			$layout_classnames[] = 'has-blur-background';
 		}
 
 		$render_attributes = [

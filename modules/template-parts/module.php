@@ -50,8 +50,8 @@ class Module extends Module_Base {
 	 */
 	public function register_scripts(): void {
 		wp_register_script(
-			'helloplus-header',
-			HELLOPLUS_SCRIPTS_URL . 'helloplus-header.js',
+			'helloplus-header-frontend',
+			HELLOPLUS_SCRIPTS_URL . 'helloplus-header-frontend.js',
 			[ 'elementor-frontend' ],
 			HELLOPLUS_VERSION,
 			true

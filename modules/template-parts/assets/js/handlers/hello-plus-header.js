@@ -1,13 +1,6 @@
-class elementorHelloPlusHeaderHandler {
-    constructor() {
-        this.initSettings();
-        this.initElements();
-        this.bindEvents();
-		this.lastScrollY = window.scrollY;
-    }
-
-    initSettings() {
-        this.settings = {
+export default class HelloPlusHeaderHandler extends elementorModules.frontend.handlers.Base {
+    getDefaultSettings() {
+        return {
             selectors: {
                 main: '.ehp-header',
                 navigationToggle: '.ehp-header__button-toggle',
@@ -28,21 +21,36 @@ class elementorHelloPlusHeaderHandler {
 				always: 'always',
 				none: 'none',
 				no: 'no',
+				hasBlurBackground: 'has-blur-background',
 			},
         };
     }
 
-    initElements() {
-        this.elements = {
-            window,
-            main: document.querySelector( this.settings.selectors.main ),
-            navigationToggle: document.querySelector( this.settings.selectors.navigationToggle ),
-			dropdownToggle: document.querySelectorAll( this.settings.selectors.dropdownToggle ),
-			navigation: document.querySelector( this.settings.selectors.navigation ),
-			dropdown: document.querySelector( this.settings.selectors.dropdown ),
-			wpAdminBar: document.querySelector( this.settings.selectors.wpAdminBar ),
-        };
-    }
+	getDefaultElements() {
+		const selectors = this.getSettings( 'selectors' );
+
+		return {
+			main: this.$element[ 0 ].querySelector( selectors.main ),
+			navigationToggle: this.$element[ 0 ].querySelector( selectors.navigationToggle ),
+			dropdownToggle: this.$element[ 0 ].querySelectorAll( selectors.dropdownToggle ),
+			navigation: this.$element[ 0 ].querySelector( selectors.navigation ),
+			dropdown: this.$element[ 0 ].querySelector( selectors.dropdown ),
+			wpAdminBar: document.querySelector( selectors.wpAdminBar ),
+		};
+	}
+
+	onElementChange( property ) {
+		console.log('property', property);
+		const changedProperties = [
+			'blur_background',
+			'blur_background_level',
+			'blur_background_transparency',
+		];
+
+		if ( changedProperties.includes( property ) ) {
+			this.initDefaultState();
+		}
+	}
 
     bindEvents() {
 		if ( this.elements.navigationToggle ) {
@@ -58,13 +66,19 @@ class elementorHelloPlusHeaderHandler {
 		if ( this.elements.main ) {
 			window.addEventListener( 'resize', () => this.onResize() );
 			window.addEventListener( 'scroll', () => this.onScroll() );
-
-			this.onInit();
 		}
     }
 
-	onInit() {
-		const { none, no, always, scrollUp } = this.settings.constants;
+	onInit( ...args ) {
+		super.onInit( ...args );
+
+		this.initDefaultState();
+	}
+
+	initDefaultState() {
+		this.lastScrollY = window.scrollY;
+
+		const { none, no, always, scrollUp, hasBlurBackground } = this.getSettings( 'constants' );
 
 		this.handleAriaAttributesMenu();
 		this.handleAriaAttributesDropdown();
@@ -77,21 +91,43 @@ class elementorHelloPlusHeaderHandler {
 		if ( scrollUp === this.getDataScrollBehavior() || always === this.getDataScrollBehavior() ) {
 			this.applyBodyPadding();
 		}
+
+		if ( this.elements.main.classList.contains( hasBlurBackground ) ) {
+			this.handleBlurBackground();
+		}
+	}
+
+	handleBlurBackground() {
+		const blurOpacity = getComputedStyle( this.elements.main ).getPropertyValue( '--header-blur-opacity' );
+		const backgroundColor = getComputedStyle( this.elements.main ).getPropertyValue( 'background-color' );
+		const backgroundColorWithOpacity = backgroundColor.replace( 'rgb', 'rgba' ).replace( ')', `, ${ blurOpacity })` );
+
+		[ this.elements.main, this.elements.dropdown, this.elements.navigation ].forEach( ( element ) => {
+			element.style.setProperty( 'background-color', backgroundColorWithOpacity );
+		} );
+
+		const backgroundImage = getComputedStyle( this.elements.main ).getPropertyValue( 'background-image' );
+		if ( 'none' !== backgroundImage ) {
+			const backgroundImageWithOpacity = backgroundImage.replace( 'rgb', 'rgba' ).replace( ')', `, ${ blurOpacity })` );
+			[ this.elements.main, this.elements.dropdown, this.elements.navigation ].forEach( ( element ) => {
+				element.style.setProperty( 'background-image', backgroundImageWithOpacity );
+			} );
+		}
 	}
 
 	getBehaviorFloat() {
-		const { dataBehaviorFloat } = this.settings.constants;
+		const { dataBehaviorFloat } = this.getSettings( 'constants' );
 		return this.elements.main.getAttribute( dataBehaviorFloat );
 	}
 
 	getDataScrollBehavior() {
-		const { dataScrollBehavior } = this.settings.constants;
+		const { dataScrollBehavior } = this.getSettings( 'constants' );
 		return this.elements.main.getAttribute( dataScrollBehavior );
 	}
 
 	setupInnerContainer() {
-		this.elements.main.closest( '.e-con-inner' ).classList.add( 'e-con-inner--ehp-header' );
-		this.elements.main.closest( '.e-con' ).classList.add( 'e-con--ehp-header' );
+		this.elements.main.closest( '.e-con-inner' )?.classList.add( 'e-con-inner--ehp-header' );
+		this.elements.main.closest( '.e-con' )?.classList.add( 'e-con--ehp-header' );
 	}
 
 	onResize() {
@@ -99,7 +135,7 @@ class elementorHelloPlusHeaderHandler {
 	}
 
 	onScroll() {
-		const { scrollUp, always } = this.settings.constants;
+		const { scrollUp, always } = this.getSettings( 'constants' );
 
 		if ( scrollUp === this.getDataScrollBehavior() || always === this.getDataScrollBehavior() ) {
 			this.handleScrollDown( this.getDataScrollBehavior() );
@@ -155,7 +191,7 @@ class elementorHelloPlusHeaderHandler {
 	}
 
 	handleScrollDown( behaviorOnScroll ) {
-		const { scrollUp } = this.settings.constants;
+		const { scrollUp } = this.getSettings( 'constants' );
 
 		const currentScrollY = window.scrollY;
 		const headerHeight = this.elements.main.offsetHeight;
@@ -182,10 +218,10 @@ class elementorHelloPlusHeaderHandler {
 	}
 
 	getCurrentDevice() {
-		const { mobilePortrait, tabletPortrait, mobile, tablet, desktop } = this.settings.constants;
+		const { mobilePortrait, tabletPortrait, mobile, tablet, desktop } = this.getSettings( 'constants' );
 
-		const isMobile = this.elements.window.innerWidth <= mobilePortrait;
-		const isTablet = this.elements.window.innerWidth <= tabletPortrait;
+		const isMobile = window.innerWidth <= mobilePortrait;
+		const isTablet = window.innerWidth <= tabletPortrait;
 
 		if ( isMobile ) {
 			return mobile;
@@ -207,7 +243,3 @@ class elementorHelloPlusHeaderHandler {
 		}
     }
 }
-
-window.addEventListener( 'elementor/frontend/init', () => {
-	elementorFrontend.hooks.addAction( 'frontend/element_ready/ehp-header.default', () => new elementorHelloPlusHeaderHandler() );
-} );

@@ -97,7 +97,7 @@ class Module extends Module_Base {
 
 	public function register_controls( Controls_Manager $controls_manager ) {
 		$controls_manager->register( new Control_Zig_Zag_Animation() );
-        $controls_manager->register( new Choose_Img_Control() );
+		$controls_manager->register( new Choose_Img_Control() );
 	}
 
 

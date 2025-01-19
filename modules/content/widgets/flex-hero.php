@@ -339,16 +339,6 @@ class Flex_Hero extends Widget_Base {
 		);
 
 		$this->add_control(
-//			'layout_preset',
-//			[
-//				'label' => esc_html__( 'Preset', 'hello-plus' ),
-//				'type' => Controls_Manager::SELECT,
-//				'default' => 'showcase',
-//				'options' => [
-//					'showcase' => esc_html__( 'Showcase', 'hello-plus' ),
-//					'storytelling' => esc_html__( 'Storytelling', 'hello-plus' ),
-//				],
-//			]
 			'layout_preset',
 			[
 				'label' => esc_html__( 'Preset', 'hello-plus' ),
@@ -357,11 +347,11 @@ class Flex_Hero extends Widget_Base {
 				'options' => [
 					'showcase' => [
 						'title' => esc_html__( 'SHOWCASE: highlight key concepts with a balanced layout.', 'hello-plus' ),
-						'image' => 'http://005.local/wp-content/uploads/2024/12/HomePage-Services-Icon_3.svg',
+						'image' => HELLOPLUS_IMAGES_URL . 'showcase.svg',
 					],
 					'storytelling' => [
 						'title' => esc_html__( 'STORYTELLING: focus on a narrative with supporting visuals.', 'hello-plus' ),
-						'image' => 'http://005.local/wp-content/uploads/2024/12/AboutPage-OurVision.jpg',
+						'image' => HELLOPLUS_IMAGES_URL . 'storytelling.svg',
 					],
 				],
 				'frontend_available' => true,

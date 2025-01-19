@@ -100,7 +100,7 @@ class Module extends Module_Base {
         $controls_manager->register( new Choose_Img_Control() );
 	}
 
-		
+
 	public function enqueue_editor_styles() {
 		wp_enqueue_style(
 			'helloplus-control-choose-img',
@@ -109,12 +109,14 @@ class Module extends Module_Base {
 			HELLOPLUS_VERSION
 		);
 	}
+
 	public function enqueue_editor_scripts() {
 		wp_enqueue_script(
 			'helloplus-control-choose-img',
 			HELLOPLUS_SCRIPTS_URL . 'helloplus-control-choose-img.js',
 			[],
-			HELLOPLUS_VERSION
+			HELLOPLUS_VERSION,
+			true
 		);
 	}
 

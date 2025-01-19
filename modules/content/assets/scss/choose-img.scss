@@ -6,6 +6,14 @@
 			width: 100%;
 		}
 	}
+
+	& .elementor-choices.elementor-choices-img {
+		& input.e-choose-placeholder + .elementor-choices-label,
+		& input:checked + .elementor-choices-label {
+			border: 1px solid red;
+			background-color: initial;
+		}
+	}
 }
 
 .elementor-choices {

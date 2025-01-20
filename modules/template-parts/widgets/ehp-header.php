@@ -2537,6 +2537,18 @@ class Ehp_Header extends Ehp_Widget_Base {
 		);
 
 		$this->add_control(
+			'blur_background_info',
+			[
+				'type' => Controls_Manager::ALERT,
+				'alert_type' => 'info',
+				'content' => esc_html__( 'Blur background will only work if the applied background has an opacity.', 'hello-plus' ),
+				'condition' => [
+					'blur_background' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
 			'blur_background_level',
 			[
 				'label' => esc_html__( 'Blur Level', 'hello-plus' ),
@@ -2557,31 +2569,6 @@ class Ehp_Header extends Ehp_Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-header' => '--header-blur-background-level: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'blur_background' => 'yes',
-				],
-			]
-		);
-
-		$this->add_control(
-			'blur_background_transparency',
-			[
-				'label' => esc_html__( 'Transparency', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'%' => [
-						'max' => 1,
-						'min' => 0,
-						'step' => 0.01,
-					],
-				],
-				'default' => [
-					'unit' => '%',
-					'size' => 0.5,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-header' => '--header-blur-opacity: {{SIZE}};',
 				],
 				'condition' => [
 					'blur_background' => 'yes',

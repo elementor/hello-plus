@@ -39,19 +39,6 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 		};
 	}
 
-	onElementChange( property ) {
-		console.log('property', property);
-		const changedProperties = [
-			'blur_background',
-			'blur_background_level',
-			'blur_background_transparency',
-		];
-
-		if ( changedProperties.includes( property ) ) {
-			this.initDefaultState();
-		}
-	}
-
     bindEvents() {
 		if ( this.elements.navigationToggle ) {
 			this.elements.navigationToggle.addEventListener( 'click', () => this.toggleNavigation() );
@@ -78,7 +65,7 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 	initDefaultState() {
 		this.lastScrollY = window.scrollY;
 
-		const { none, no, always, scrollUp, hasBlurBackground } = this.getSettings( 'constants' );
+		const { none, no, always, scrollUp } = this.getSettings( 'constants' );
 
 		this.handleAriaAttributesMenu();
 		this.handleAriaAttributesDropdown();
@@ -90,28 +77,6 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 
 		if ( scrollUp === this.getDataScrollBehavior() || always === this.getDataScrollBehavior() ) {
 			this.applyBodyPadding();
-		}
-
-		if ( this.elements.main.classList.contains( hasBlurBackground ) ) {
-			this.handleBlurBackground();
-		}
-	}
-
-	handleBlurBackground() {
-		const blurOpacity = getComputedStyle( this.elements.main ).getPropertyValue( '--header-blur-opacity' );
-		const backgroundColor = getComputedStyle( this.elements.main ).getPropertyValue( 'background-color' );
-		const backgroundColorWithOpacity = backgroundColor.replace( 'rgb', 'rgba' ).replace( ')', `, ${ blurOpacity })` );
-
-		[ this.elements.main, this.elements.dropdown, this.elements.navigation ].forEach( ( element ) => {
-			element.style.setProperty( 'background-color', backgroundColorWithOpacity );
-		} );
-
-		const backgroundImage = getComputedStyle( this.elements.main ).getPropertyValue( 'background-image' );
-		if ( 'none' !== backgroundImage ) {
-			const backgroundImageWithOpacity = backgroundImage.replace( 'rgb', 'rgba' ).replace( ')', `, ${ blurOpacity })` );
-			[ this.elements.main, this.elements.dropdown, this.elements.navigation ].forEach( ( element ) => {
-				element.style.setProperty( 'background-image', backgroundImageWithOpacity );
-			} );
 		}
 	}
 

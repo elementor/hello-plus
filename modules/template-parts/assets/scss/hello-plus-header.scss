@@ -154,7 +154,7 @@
 	}
 
 	&.has-blur-background {
-		backdrop-filter: blur(var(--header-blur-level));
+		backdrop-filter: blur(var(--header-blur-background-level));
 	}
 
 	@mixin shapes() {

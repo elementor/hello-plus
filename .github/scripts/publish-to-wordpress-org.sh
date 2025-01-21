@@ -21,6 +21,11 @@ if [[ -z "$PLUGIN_SLUG" ]]; then
 	exit 1
 fi
 
+# Ensure SVN is installed
+svn --version
+
+echo "SVN installed"
+
 echo "Publish version: ${PLUGIN_VERSION}"
 
 PLUGIN_PATH="$GITHUB_WORKSPACE"

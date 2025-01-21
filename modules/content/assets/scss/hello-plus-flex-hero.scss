@@ -374,6 +374,10 @@
 	&__ctas-container {
 		display: flex;
 		gap: var(--flex-hero-buttons-space-between);
+
+		@media screen and (max-width: $screen-tablet-max) {
+			flex-direction: column;
+		}
 	}
 
 	&__button-icon {
@@ -477,7 +481,6 @@
 		align-items: center;
 		display: flex;
 		justify-content: center;
-		overflow: hidden;
 		z-index: 2;
 
 		.elementor & img {

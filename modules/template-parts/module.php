@@ -94,8 +94,8 @@ class Module extends Module_Base {
 	 */
 	public function enqueue_editor_styles(): void {
 		wp_enqueue_style(
-			'helloplus-template-parts-preview',
-			HELLOPLUS_STYLE_URL . 'helloplus-template-parts-preview.css',
+			'helloplus-template-parts-editor',
+			HELLOPLUS_STYLE_URL . 'helloplus-template-parts-editor.css',
 			[],
 			HELLOPLUS_VERSION
 		);

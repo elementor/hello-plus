@@ -3,7 +3,7 @@ Contributors: elemntor
 Tags: elementor, themes, hello themes, hello plus, widgets
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 Requires PHP: 7.4
 License: GPL-3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -79,8 +79,12 @@ To install Hello+, follow the steps below:
 For documentation and tutorials, visit our [Knowledge Base](https://elementor.com/help/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme).
 
 == Changelog ==
-= 1.1.0 - 2025-01-14 =
-* Fix: Flex-Hero widget control labels & icons mismatch
+= 1.1.2 - 2025-01-21 =
+* Tweak: Onboarding wizard improvements
+
+= 1.1.1 - 2025-01-16 =
+* Tweak: Flex-Hero widget allow inline editing
+* Fix: Flex-Hero widget drop shadow
 
 = 1.1.0 - 2025-01-14 =
 * New: Flex-Hero widget

@@ -1533,7 +1533,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 		$this->add_control(
 			'contact_button_hover_animation',
 			[
-				'label' => esc_html__( 'Hover Animation', 'elementor' ),
+				'label' => esc_html__( 'Hover Animation', 'hello-plus' ),
 				'type' => Controls_Manager::HOVER_ANIMATION,
 				'frontend_available' => true,
 			]

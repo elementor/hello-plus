@@ -495,7 +495,7 @@ class Widget_Header_Render {
 		}
 
 		return add_query_arg( [
-			'number' => urlencode( $number ),
+			'number' => rawurlencode( $number ),
 		], 'viber://' . $action );
 	}
 
@@ -591,7 +591,7 @@ class Widget_Header_Render {
 		return $atts;
 	}
 
-	public function handle_sub_menu_classes( $classes ) {
+	public function handle_sub_menu_classes() {
 		$submenu_layout = $this->settings['style_submenu_layout'] ?? 'horizontal';
 		$submenu_shape = $this->settings['style_submenu_shape'];
 

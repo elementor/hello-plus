@@ -10,7 +10,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Scripts_Controller {
-
 	public function enqueue_hello_plus_onboarding_scripts() {
 		$screen = get_current_screen();
 
@@ -44,5 +43,4 @@ class Scripts_Controller {
 	public function __construct() {
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_hello_plus_onboarding_scripts' ] );
 	}
-
 }

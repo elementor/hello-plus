@@ -29,5 +29,4 @@ class Api_Controller {
 
 		$this->ajax_classes['setup-wizard'] = new Setup_Wizard();
 	}
-
 }

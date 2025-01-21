@@ -45,7 +45,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 	}
 
 	public function get_style_depends(): array {
-		return [ 'helloplus-header' ];
+		return [ 'helloplus-header', 'helloplus-button' ];
 	}
 
 	public function get_script_depends(): array {

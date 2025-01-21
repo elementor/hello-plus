@@ -13,6 +13,7 @@ use Elementor\{
 };
 
 use HelloPlus\Modules\TemplateParts\Widgets\Ehp_Header;
+// use HelloPlus\Classes\Ehp_Button;
 
 /**
  * class Widget_Header_Render
@@ -265,12 +266,7 @@ class Widget_Header_Render {
 	}
 
 	protected function render_ctas_container() {
-		$primary_cta_button_text = $this->settings['primary_cta_button_text'];
-		$secondary_cta_button_text = $this->settings['secondary_cta_button_text'];
-		$has_primary_button = ! empty( $primary_cta_button_text );
-		$has_secondary_button = ! empty( $secondary_cta_button_text );
 		$responsive_button_width = $this->settings['cta_responsive_width'] ?? '';
-
 		$ctas_container_classnames = self::CTAS_CONTAINER_CLASSNAME;
 
 		if ( '' !== $responsive_button_width ) {
@@ -282,10 +278,10 @@ class Widget_Header_Render {
 		] );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'ctas-container' ); ?>>
-			<?php if ( $has_secondary_button ) {
+			<?php if ( ! empty( $this->settings['secondary_cta_button_text'] ) ) {
 				$this->render_button( 'secondary' );
 			} ?>
-			<?php if ( $has_primary_button ) {
+			<?php if ( ! empty( $this->settings['primary_cta_button_text'] ) ) {
 				$this->render_button( 'primary' );
 			} ?>
 		</div>

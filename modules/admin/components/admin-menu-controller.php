@@ -30,13 +30,17 @@ class Admin_Menu_Controller {
 			return;
 		}
 
+		if ( ! is_admin() ) {
+			return;
+		}
+
 		delete_transient( self::SETUP_WIZARD_TRANSIENT_NAME );
 
 		if ( Utils::are_we_on_elementor_domains() ) {
 			return;
 		}
 
-		wp_safe_redirect( self_admin_url( 'admin.php?page=' . Setup_Wizard::SETUP_WIZARD_PAGE_SLUG ) );
+		wp_safe_redirect( self_admin_url( 'admin.php?page=' . Setup_Wizard::SETUP_WIZARD_PAGE_SLUG  . '&banana' ) );
 		exit;
 	}
 

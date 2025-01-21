@@ -10,10 +10,6 @@ use HelloPlus\Modules\Admin\Classes\Onboarding\Install_Elementor;
 
 class Setup_Wizard {
 
-	public function __construct() {
-		add_action( 'wp_ajax_helloplus_setup_wizard', [ $this, 'ajax_setup_wizard' ] );
-	}
-
 	public function ajax_setup_wizard() {
 		check_ajax_referer( 'updates', 'nonce' );
 
@@ -43,5 +39,9 @@ class Setup_Wizard {
 			default:
 				wp_send_json_error( [ 'message' => __( 'Invalid step.', 'hello-plus' ) ] );
 		}
+	}
+
+	public function __construct() {
+		add_action( 'wp_ajax_helloplus_setup_wizard', [ $this, 'ajax_setup_wizard' ] );
 	}
 }

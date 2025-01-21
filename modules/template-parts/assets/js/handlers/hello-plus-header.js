@@ -21,7 +21,6 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 				always: 'always',
 				none: 'none',
 				no: 'no',
-				hasBlurBackground: 'has-blur-background',
 			},
         };
     }

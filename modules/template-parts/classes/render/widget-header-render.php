@@ -305,9 +305,9 @@ class Widget_Header_Render {
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'ctas-container' ); ?>>
 			<?php
-				if ( 'yes' === $this->settings['contact_buttons_show'] ) {
-					$this->render_contact_buttons();
-				}
+			if ( 'yes' === $this->settings['contact_buttons_show'] ) {
+				$this->render_contact_buttons();
+			}
 			?>
 			<?php if ( $has_secondary_button ) {
 				$this->render_button( 'secondary' );
@@ -358,7 +358,7 @@ class Widget_Header_Render {
 
 				$icon = $contact_button['contact_buttons_icon'];
 
-				$button_classnames = ['ehp-header__contact-button'];
+				$button_classnames = [ 'ehp-header__contact-button' ];
 
 				if ( ! empty( $hover_animation ) ) {
 					$button_classnames[] = 'elementor-animation-' . $hover_animation;
@@ -382,7 +382,7 @@ class Widget_Header_Render {
 				}
 				?>
 
-				<a <?php echo $this->widget->print_render_attribute_string( 'contact-button-' . $key ); ?>>
+				<a <?php $this->widget->print_render_attribute_string( 'contact-button-' . $key ); ?>>
 				<?php if ( 'icon' === $link_type ) {
 					Icons_Manager::render_icon( $icon,
 						[
@@ -597,7 +597,7 @@ class Widget_Header_Render {
 
 		$dropdown_classnames = [ 'ehp-header__dropdown' ];
 		$dropdown_classnames[] = 'has-layout-' . $submenu_layout;
-		
+
 		if ( ! empty( $submenu_shape ) ) {
 			$dropdown_classnames[] = 'has-shape-' . $submenu_shape;
 		}

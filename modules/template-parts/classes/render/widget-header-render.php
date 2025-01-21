@@ -81,9 +81,9 @@ class Widget_Header_Render {
 
 		if ( 'navigate' === $layout_preset ) {
 			$layout_classnames[] = 'has-align-link-start';
-		} else if ( 'identity' === $layout_preset ) {
+		} elseif ( 'identity' === $layout_preset ) {
 			$layout_classnames[] = 'has-align-link-center';
-		} else if ( 'connect' === $layout_preset ) {
+		} elseif ( 'connect' === $layout_preset ) {
 			$layout_classnames[] = 'has-align-link-connect';
 		}
 

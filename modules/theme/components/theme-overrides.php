@@ -43,7 +43,7 @@ class Theme_Overrides {
 	}
 
 	public function localize_settings( $data ) {
-		$data['close_modal_redirect_hello_plus'] = admin_url( 'admin.php?page=hello-biz' );
+		$data['close_modal_redirect_hello_plus'] = admin_url( 'admin.php?page=' . Utils::get_theme_slug() );
 
 		return $data;
 	}

@@ -54,6 +54,6 @@ class Theme_Overrides {
 		add_filter( 'hello-plus-theme/settings/hello_style', '__return_false' );
 		add_filter( 'hello-plus-theme/customizer/enable', Setup_Wizard::has_site_wizard_been_completed() ? '__return_false' : '__return_true' );
 		add_filter( 'hello-plus-theme/rest/admin-config', [ $this, 'admin_config' ] );
-		add_action( 'elementor/editor/localize_settings', [ $this, 'localize_settings' ] );
+		add_filter( 'elementor/editor/localize_settings', [ $this, 'localize_settings' ] );
 	}
 }

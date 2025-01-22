@@ -577,7 +577,7 @@ class Ehp_Button {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-' . $widget_name => '--' . $widget_name . '-button-border-radius-custom-block-end: {{BOTTOM}}{{UNIT}}; --' . $widget_name . '-button-border-radius-custom-block-start: {{TOP}}{{UNIT}}; --' . $widget_name . '-button-border-radius-custom-inline-end: {{RIGHT}}{{UNIT}}; --' . $widget_name . '-button-border-radius-custom-inline-start: {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-' . $widget_name => '--' . $widget_name . '-button-' . $type . '-border-radius-block-end: {{BOTTOM}}{{UNIT}}; --' . $widget_name . '-button-' . $type . '-border-radius-block-start: {{TOP}}{{UNIT}}; --' . $widget_name . '-button-' . $type . '-border-radius-inline-end: {{RIGHT}}{{UNIT}}; --' . $widget_name . '-button-' . $type . '-border-radius-inline-start: {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 				'condition' => array_merge([

@@ -21,25 +21,33 @@
 
 	--cta-button-primary-icon-spacing: 10px;
 	--cta-button-primary-icon-size: 16px;
-	--cta-button-primary-text-color: #FFFFFF;
-	--cta-button-primary-text-color-hover: #555963;
+	--cta-button-primary-text-color: #{$global-colors-white};
+	--cta-button-primary-text-color-hover: #{$global-colors-text};
 	--cta-button-primary-border-width: 0;
 	--cta-button-primary-border-color: transparent;
 	--cta-button-primary-padding-block-end: 8px;
 	--cta-button-primary-padding-block-start: 8px;
 	--cta-button-primary-padding-inline-end: 16px;
 	--cta-button-primary-padding-inline-start: 16px;
+	--cta-button-primary-border-radius-block-end: #{$corners-shape-default};
+	--cta-button-primary-border-radius-block-start: #{$corners-shape-default};
+	--cta-button-primary-border-radius-inline-end: #{$corners-shape-default};
+	--cta-button-primary-border-radius-inline-start: #{$corners-shape-default};
 
 	--cta-button-secondary-icon-spacing: 10px;
 	--cta-button-secondary-icon-size: 16px;
-	--cta-button-secondary-text-color: #555963;
-	--cta-button-secondary-text-color-hover: #555963;
+	--cta-button-secondary-text-color: #{$global-colors-secondary};
+	--cta-button-secondary-text-color-hover: #{$global-colors-secondary};
 	--cta-button-secondary-border-width: 2px;
-	--cta-button-secondary-border-color: #555963;
+	--cta-button-secondary-border-color: #{$global-colors-secondary};
 	--cta-button-secondary-padding-block-end: 8px;
 	--cta-button-secondary-padding-block-start: 8px;
 	--cta-button-secondary-padding-inline-end: 16px;
 	--cta-button-secondary-padding-inline-start: 16px;
+	--cta-button-secondary-border-radius-block-end: #{$corners-shape-default};
+	--cta-button-secondary-border-radius-block-start: #{$corners-shape-default};
+	--cta-button-secondary-border-radius-inline-end: #{$corners-shape-default};
+	--cta-button-secondary-border-radius-inline-start: #{$corners-shape-default};
 
 	--cta-box-padding-block-end: 60px;
 	--cta-box-padding-block-start: 60px;
@@ -53,31 +61,6 @@
 	padding-block-start: var(--cta-box-padding-block-start);
 	padding-inline-end: var(--cta-box-padding-inline-end);
 	padding-inline-start: var(--cta-box-padding-inline-start);
-
-	& a.ehp-button,
-	& a.ehp-button:not([href]):not([tabindex]) {
-		--ehp-button-primary-icon-spacing: var(--cta-button-primary-icon-spacing);
-		--ehp-button-primary-icon-size: var(--cta-button-primary-icon-size);
-		--ehp-button-primary-text-color: var(--cta-button-primary-text-color);
-		--ehp-button-primary-text-color-hover: var(--cta-button-primary-text-color-hover);
-		--ehp-button-primary-border-width: var(--cta-button-primary-border-width);
-		--ehp-button-primary-border-color: var(--cta-button-primary-border-color);
-		--ehp-button-primary-padding-block-end: var(--cta-button-primary-padding-block-end);
-		--ehp-button-primary-padding-block-start: var(--cta-button-primary-padding-block-start);
-		--ehp-button-primary-padding-inline-end: var(--cta-button-primary-padding-inline-end);
-		--ehp-button-primary-padding-inline-start: var(--cta-button-primary-padding-inline-start);
-
-		--ehp-button-secondary-icon-spacing: var(--cta-button-secondary-icon-spacing);
-		--ehp-button-secondary-icon-size: var(--cta-button-secondary-icon-size);
-		--ehp-button-secondary-text-color: var(--cta-button-secondary-text-color);
-		--ehp-button-secondary-text-color-hover: var(--cta-button-secondary-text-color-hover);
-		--ehp-button-secondary-border-width: var(--cta-button-secondary-border-width);
-		--ehp-button-secondary-border-color: var(--cta-button-secondary-border-color);
-		--ehp-button-secondary-padding-block-end: var(--cta-button-secondary-padding-block-end);
-		--ehp-button-secondary-padding-block-start: var(--cta-button-secondary-padding-block-start);
-		--ehp-button-secondary-padding-inline-end: var(--cta-button-secondary-padding-inline-end);
-		--ehp-button-secondary-padding-inline-start: var(--cta-button-secondary-padding-inline-start);
-	}
 
 	@supports (height: 100dvh) {
 		--cta-box-full-height: 100dvh;
@@ -133,6 +116,39 @@
 
 	&.is-full-height-widescreen {
 		@include full-height($screen-widescreen-min, null);
+	}
+
+	& a.ehp-button,
+	& a.ehp-button:not([href]):not([tabindex]) {
+		--ehp-button-primary-icon-spacing: var(--cta-button-primary-icon-spacing);
+		--ehp-button-primary-icon-size: var(--cta-button-primary-icon-size);
+		--ehp-button-primary-text-color: var(--cta-button-primary-text-color);
+		--ehp-button-primary-text-color-hover: var(--cta-button-primary-text-color-hover);
+		--ehp-button-primary-border-width: var(--cta-button-primary-border-width);
+		--ehp-button-primary-border-color: var(--cta-button-primary-border-color);
+		--ehp-button-primary-padding-block-end: var(--cta-button-primary-padding-block-end);
+		--ehp-button-primary-padding-block-start: var(--cta-button-primary-padding-block-start);
+		--ehp-button-primary-padding-inline-end: var(--cta-button-primary-padding-inline-end);
+		--ehp-button-primary-padding-inline-start: var(--cta-button-primary-padding-inline-start);
+		--ehp-button-primary-border-radius-block-end: var(--cta-button-primary-border-radius-block-end);
+		--ehp-button-primary-border-radius-block-start: var(--cta-button-primary-border-radius-block-start);
+		--ehp-button-primary-border-radius-inline-end: var(--cta-button-primary-border-radius-inline-end);
+		--ehp-button-primary-border-radius-inline-start: var(--cta-button-primary-border-radius-inline-start);
+
+		--ehp-button-secondary-icon-spacing: var(--cta-button-secondary-icon-spacing);
+		--ehp-button-secondary-icon-size: var(--cta-button-secondary-icon-size);
+		--ehp-button-secondary-text-color: var(--cta-button-secondary-text-color);
+		--ehp-button-secondary-text-color-hover: var(--cta-button-secondary-text-color-hover);
+		--ehp-button-secondary-border-width: var(--cta-button-secondary-border-width);
+		--ehp-button-secondary-border-color: var(--cta-button-secondary-border-color);
+		--ehp-button-secondary-padding-block-end: var(--cta-button-secondary-padding-block-end);
+		--ehp-button-secondary-padding-block-start: var(--cta-button-secondary-padding-block-start);
+		--ehp-button-secondary-padding-inline-end: var(--cta-button-secondary-padding-inline-end);
+		--ehp-button-secondary-padding-inline-start: var(--cta-button-secondary-padding-inline-start);
+		--ehp-button-secondary-border-radius-block-end: var(--cta-button-secondary-border-radius-block-end);
+		--ehp-button-secondary-border-radius-block-start: var(--cta-button-secondary-border-radius-block-start);
+		--ehp-button-secondary-border-radius-inline-end: var(--cta-button-secondary-border-radius-inline-end);
+		--ehp-button-secondary-border-radius-inline-start: var(--cta-button-secondary-border-radius-inline-start);
 	}
 
 	&__ctas-container {

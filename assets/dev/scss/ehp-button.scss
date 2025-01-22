@@ -13,6 +13,10 @@ a.ehp-button:not([href]):not([tabindex]) {
 	--ehp-button-primary-padding-inline-end: 16px;
 	--ehp-button-primary-padding-inline-start: 16px;
 	--ehp-button-primary-border-radius: 0;
+	--ehp-button-primary-border-radius-block-end: #{$corners-shape-default};
+	--ehp-button-primary-border-radius-block-start: #{$corners-shape-default};
+	--ehp-button-primary-border-radius-inline-end: #{$corners-shape-default};
+	--ehp-button-primary-border-radius-inline-start: #{$corners-shape-default};
 
 	--ehp-button-secondary-icon-spacing: 10px;
 	--ehp-button-secondary-icon-size: 16px;
@@ -25,6 +29,10 @@ a.ehp-button:not([href]):not([tabindex]) {
 	--ehp-button-secondary-padding-inline-end: 16px;
 	--ehp-button-secondary-padding-inline-start: 16px;
 	--ehp-button-secondary-border-radius: #{$corners-shape-default};
+	--ehp-button-secondary-border-radius-block-end: #{$corners-shape-default};
+	--ehp-button-secondary-border-radius-block-start: #{$corners-shape-default};
+	--ehp-button-secondary-border-radius-inline-end: #{$corners-shape-default};
+	--ehp-button-secondary-border-radius-inline-start: #{$corners-shape-default};
 
 	--ehp-button-text-color: var(--ehp-button-primary-text-color);
 	--ehp-button-text-color-hover: var(--ehp-button-primary-text-color-hover);
@@ -36,6 +44,10 @@ a.ehp-button:not([href]):not([tabindex]) {
 	--ehp-button-border-width: var(--ehp-button-primary-border-width);
 	--ehp-button-icon-spacing: var(--ehp-button-primary-icon-spacing);
 	--ehp-button-icon-size: var(--ehp-button-primary-icon-size);
+	--ehp-button-border-radius-block-end: var(--ehp-button-primary-border-radius-block-end);
+	--ehp-button-border-radius-block-start: var(--ehp-button-primary-border-radius-block-start);
+	--ehp-button-border-radius-inline-end: var(--ehp-button-primary-border-radius-inline-end);
+	--ehp-button-border-radius-inline-start: var(--ehp-button-primary-border-radius-inline-start);
 
 	--ehp-button-border-radius-default: #{$corners-shape-default};
 	--ehp-button-border-radius-sharp: #{$corners-shape-sharp};
@@ -155,6 +167,9 @@ a.ehp-button--secondary:not([href]):not([tabindex]) {
     --ehp-button-padding-inline-end: var(--ehp-button-secondary-padding-inline-end);
     --ehp-button-padding-inline-start: var(--ehp-button-secondary-padding-inline-start);
     --ehp-button-border-width: var(--ehp-button-secondary-border-width);
-    --ehp-button-border-radius: var(--ehp-button-secondary-border-radius);
     --ehp-button-icon-spacing: var(--ehp-button-secondary-icon-spacing);
+	--ehp-button-border-radius-block-end: var(--ehp-button-secondary-border-radius-block-end);
+	--ehp-button-border-radius-block-start: var(--ehp-button-secondary-border-radius-block-start);
+	--ehp-button-border-radius-inline-end: var(--ehp-button-secondary-border-radius-inline-end);
+	--ehp-button-border-radius-inline-start: var(--ehp-button-secondary-border-radius-inline-start);
 }

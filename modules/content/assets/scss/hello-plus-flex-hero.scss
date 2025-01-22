@@ -29,7 +29,10 @@
 	--flex-hero-button-primary-padding-block-start: 8px;
 	--flex-hero-button-primary-padding-inline-end: 16px;
 	--flex-hero-button-primary-padding-inline-start: 16px;
-	--flex-hero-button-primary-border-radius: 0;
+	--flex-hero-button-primary-border-radius-block-end: #{$corners-shape-default};
+	--flex-hero-button-primary-border-radius-block-start: #{$corners-shape-default};
+	--flex-hero-button-primary-border-radius-inline-end: #{$corners-shape-default};
+	--flex-hero-button-primary-border-radius-inline-start: #{$corners-shape-default};
 
 	--flex-hero-button-secondary-icon-spacing: 10px;
 	--flex-hero-button-secondary-icon-size: 16px;
@@ -41,7 +44,10 @@
 	--flex-hero-button-secondary-padding-block-start: 8px;
 	--flex-hero-button-secondary-padding-inline-end: 16px;
 	--flex-hero-button-secondary-padding-inline-start: 16px;
-	--flex-hero-button-secondary-border-radius: #{$corners-shape-default};
+	--flex-hero-button-secondary-border-radius-block-end: #{$corners-shape-default};
+	--flex-hero-button-secondary-border-radius-block-start: #{$corners-shape-default};
+	--flex-hero-button-secondary-border-radius-inline-end: #{$corners-shape-default};
+	--flex-hero-button-secondary-border-radius-inline-start: #{$corners-shape-default};
 
 	--flex-hero-box-padding-block-end: 60px;
 	--flex-hero-box-padding-block-start: 60px;
@@ -187,6 +193,10 @@
 		--ehp-button-primary-padding-block-start: var(--flex-hero-button-primary-padding-block-start);
 		--ehp-button-primary-padding-inline-end: var(--flex-hero-button-primary-padding-inline-end);
 		--ehp-button-primary-padding-inline-start: var(--flex-hero-button-primary-padding-inline-start);
+		--ehp-button-primary-border-radius-block-end: var(--flex-hero-button-primary-border-radius-block-end);
+		--ehp-button-primary-border-radius-block-start: var(--flex-hero-button-primary-border-radius-block-start);
+		--ehp-button-primary-border-radius-inline-end: var(--flex-hero-button-primary-border-radius-inline-end);
+		--ehp-button-primary-border-radius-inline-start: var(--flex-hero-button-primary-border-radius-inline-start);
 
 		--ehp-button-secondary-icon-spacing: var(--flex-hero-button-secondary-icon-spacing);
 		--ehp-button-secondary-icon-size: var(--flex-hero-button-secondary-icon-size);
@@ -198,32 +208,10 @@
 		--ehp-button-secondary-padding-block-start: var(--flex-hero-button-secondary-padding-block-start);
 		--ehp-button-secondary-padding-inline-end: var(--flex-hero-button-secondary-padding-inline-end);
 		--ehp-button-secondary-padding-inline-start: var(--flex-hero-button-secondary-padding-inline-start);
-
-
-		@mixin custom-shape-button() {
-			&-custom {
-				--ehp-button-border-radius-block-end: var(--flex-hero-button-border-radius-custom-block-end);
-				--ehp-button-border-radius-block-start: var(--flex-hero-button-border-radius-custom-block-start);
-				--ehp-button-border-radius-inline-end: var(--flex-hero-button-border-radius-custom-inline-end);
-				--ehp-button-border-radius-inline-start: var(--flex-hero-button-border-radius-custom-inline-start);
-			}
-		}
-	
-		&.has-shape {
-			@include custom-shape-button();
-	
-			&-md {
-				@media screen and (max-width: $screen-desktop-min) {
-					@include custom-shape-button();
-				}
-			}
-
-			&-sm {
-				@media screen and (max-width: $screen-tablet-min) {
-					@include custom-shape-button();
-				}
-			}
-		}
+		--ehp-button-secondary-border-radius-block-end: var(--flex-hero-button-secondary-border-radius-block-end);
+		--ehp-button-secondary-border-radius-block-start: var(--flex-hero-button-secondary-border-radius-block-start);
+		--ehp-button-secondary-border-radius-inline-end: var(--flex-hero-button-secondary-border-radius-inline-end);
+		--ehp-button-secondary-border-radius-inline-start: var(--flex-hero-button-secondary-border-radius-inline-start);
 	}
 
 	@mixin custom-shape-box() {

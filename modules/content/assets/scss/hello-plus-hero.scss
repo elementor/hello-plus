@@ -130,55 +130,55 @@
 
 	& a.ehp-hero__button,
 	& a.ehp-hero__button:not([href]):not([tabindex]) {
-		align-items: center;
-		color: var(--hero-button-text-color);
-		display: flex;
-		gap: var(--hero-button-icon-spacing);
-		text-decoration: none;
-		transition: $transition;
+		// align-items: center;
+		// color: var(--hero-button-text-color);
+		// display: flex;
+		// gap: var(--hero-button-icon-spacing);
+		// text-decoration: none;
+		// transition: $transition;
 
-		&:hover,
-		&:focus {
-			color: var(--hero-button-text-color-hover);
-			transition: $transition;
-		}
+		// &:hover,
+		// &:focus {
+		// 	color: var(--hero-button-text-color-hover);
+		// 	transition: $transition;
+		// }
 
-		&.has-border {
-			border-color: var(--hero-button-border-color);
-			border-style: solid;
-			border-width: var(--hero-button-border-width);
-			border-radius: var(--hero-button-border-radius);
-		}
+		// &.has-border {
+		// 	border-color: var(--hero-button-border-color);
+		// 	border-style: solid;
+		// 	border-width: var(--hero-button-border-width);
+		// 	border-radius: var(--hero-button-border-radius);
+		// }
 
-		&.is-type-button {
-			padding-block-end: var(--hero-button-padding-block-end);
-			padding-block-start: var(--hero-button-padding-block-start);
-			padding-inline-end: var(--hero-button-padding-inline-end);
-			padding-inline-start: var(--hero-button-padding-inline-start);
-			text-decoration: none;
-		}
+		// &.is-type-button {
+		// 	padding-block-end: var(--hero-button-padding-block-end);
+		// 	padding-block-start: var(--hero-button-padding-block-start);
+		// 	padding-inline-end: var(--hero-button-padding-inline-end);
+		// 	padding-inline-start: var(--hero-button-padding-inline-start);
+		// 	text-decoration: none;
+		// }
 
-		&.is-type-link,
-		&.is-type-link:not([href]):not([tabindex]) {
-			background: none;
-			text-decoration: underline;
-		}
+		// &.is-type-link,
+		// &.is-type-link:not([href]):not([tabindex]) {
+		// 	background: none;
+		// 	text-decoration: underline;
+		// }
 
-		&.has-shape-sharp {
-			border-radius: $corners-shape-sharp;
-		}
+		// &.has-shape-sharp {
+		// 	border-radius: $corners-shape-sharp;
+		// }
 
-		&.has-shape-rounded {
-			border-radius: $corners-shape-rounded;
-		}
+		// &.has-shape-rounded {
+		// 	border-radius: $corners-shape-rounded;
+		// }
 
-		&.has-shape-round {
-			border-radius: $corners-shape-round;
-		}
+		// &.has-shape-round {
+		// 	border-radius: $corners-shape-round;
+		// }
 
-		&.has-shape-default {
-			border-radius: $corners-shape-default;
-		}
+		// &.has-shape-default {
+		// 	border-radius: $corners-shape-default;
+		// }
 	}
 
 	&__heading {

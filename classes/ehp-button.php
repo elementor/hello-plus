@@ -101,6 +101,8 @@ class Ehp_Button {
 	public function add_content_section() {
 		$defaults = [
 			'secondary_cta_show' => $this->defaults['secondary_cta_show'] ?? 'yes',
+			'has_secondary_cta' => $this->defaults['has_secondary_cta'] ?? true,
+			'primary_cta_button_text_placeholder' => $this->defaults['primary_cta_button_text_placeholder'] ?? esc_html__( 'Schedule Now', 'hello-plus' ),
 		];
 
 		$this->widget->start_controls_section(
@@ -111,20 +113,22 @@ class Ehp_Button {
 			]
 		);
 
-		$this->widget->add_control(
-			'primary_cta_heading',
-			[
-				'label' => esc_html__( 'Primary CTA', 'hello-plus' ),
-				'type' => Controls_Manager::HEADING,
-			]
-		);
+		if ( $defaults['has_secondary_cta' ] ) {
+			$this->widget->add_control(
+				'primary_cta_heading',
+				[
+					'label' => esc_html__( 'Primary CTA', 'hello-plus' ),
+					'type' => Controls_Manager::HEADING,
+				]
+			);
+		}
 
 		$this->widget->add_control(
 			'primary_cta_button_text',
 			[
 				'label' => esc_html__( 'Text', 'hello-plus' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => esc_html__( 'Schedule Now', 'hello-plus' ),
+				'default' => $defaults['primary_cta_button_text_placeholder'],
 				'dynamic' => [
 					'active' => true,
 				],
@@ -156,121 +160,132 @@ class Ehp_Button {
 			]
 		);
 
-		$this->widget->add_control(
-			'secondary_cta_show',
-			[
-				'label' => esc_html__( 'Secondary CTA', 'hello-plus' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Show', 'hello-plus' ),
-				'label_off' => esc_html__( 'Hide', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => $defaults['secondary_cta_show'],
-				'separator' => 'before',
-			]
-		);
-
-		$this->widget->add_control(
-			'secondary_cta_button_text',
-			[
-				'label' => esc_html__( 'Text', 'hello-plus' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => esc_html__( 'Contact Us', 'hello-plus' ),
-				'dynamic' => [
-					'active' => true,
-				],
-				'condition' => [
-					'secondary_cta_show' => 'yes',
-				],
-			]
-		);
-
-		$this->widget->add_control(
-			'secondary_cta_button_link',
-			[
-				'label' => esc_html__( 'Link', 'hello-plus' ),
-				'type' => Controls_Manager::URL,
-				'dynamic' => [
-					'active' => true,
-				],
-				'default' => [
-					'url' => '',
-					'is_external' => true,
-				],
-				'condition' => [
-					'secondary_cta_show' => 'yes',
-				],
-			]
-		);
-
-		$this->widget->add_control(
-			'secondary_cta_button_icon',
-			[
-				'label' => esc_html__( 'Icon', 'hello-plus' ),
-				'type' => Controls_Manager::ICONS,
-				'label_block' => false,
-				'skin' => 'inline',
-				'condition' => [
-					'secondary_cta_show' => 'yes',
-				],
-			]
-		);
+		if ( $defaults['has_secondary_cta' ] ) {
+			$this->widget->add_control(
+				'secondary_cta_show',
+				[
+					'label' => esc_html__( 'Secondary CTA', 'hello-plus' ),
+					'type' => Controls_Manager::SWITCHER,
+					'label_on' => esc_html__( 'Show', 'hello-plus' ),
+					'label_off' => esc_html__( 'Hide', 'hello-plus' ),
+					'return_value' => 'yes',
+					'default' => $defaults['secondary_cta_show'],
+					'separator' => 'before',
+				]
+			);
+	
+			$this->widget->add_control(
+				'secondary_cta_button_text',
+				[
+					'label' => esc_html__( 'Text', 'hello-plus' ),
+					'type' => Controls_Manager::TEXT,
+					'default' => esc_html__( 'Contact Us', 'hello-plus' ),
+					'dynamic' => [
+						'active' => true,
+					],
+					'condition' => [
+						'secondary_cta_show' => 'yes',
+					],
+				]
+			);
+	
+			$this->widget->add_control(
+				'secondary_cta_button_link',
+				[
+					'label' => esc_html__( 'Link', 'hello-plus' ),
+					'type' => Controls_Manager::URL,
+					'dynamic' => [
+						'active' => true,
+					],
+					'default' => [
+						'url' => '',
+						'is_external' => true,
+					],
+					'condition' => [
+						'secondary_cta_show' => 'yes',
+					],
+				]
+			);
+	
+			$this->widget->add_control(
+				'secondary_cta_button_icon',
+				[
+					'label' => esc_html__( 'Icon', 'hello-plus' ),
+					'type' => Controls_Manager::ICONS,
+					'label_block' => false,
+					'skin' => 'inline',
+					'condition' => [
+						'secondary_cta_show' => 'yes',
+					],
+				]
+			);
+		}
 
 		$this->widget->end_controls_section();
 	}
 
 	public function add_style_controls() {
 		$widget_name = $this->context['widget_name'];
+		$defaults = [
+			'has_secondary_cta' => $this->defaults['has_secondary_cta'] ?? true,
+		];
 
 		$this->add_button_type_controls( 
 			[ 
 				'type' => 'primary'
 			]
 		);
-		$this->add_button_type_controls(
-			[
-				'type' => 'secondary',
-				'add_condition' => true,
-			]
-		);
 
-		$this->widget->add_responsive_control(
-			'cta_space_between',
-			[
-				'label' => esc_html__( 'Space Between', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
-				'range' => [
-					'px' => [
-						'max' => 200,
+		if ( $defaults['has_secondary_cta' ] ) {
+			$this->add_button_type_controls(
+				[
+					'type' => 'secondary',
+					'add_condition' => true,
+				]
+			);
+
+			$this->widget->add_responsive_control(
+				'cta_space_between',
+				[
+					'label' => esc_html__( 'Space Between', 'hello-plus' ),
+					'type' => Controls_Manager::SLIDER,
+					'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+					'range' => [
+						'px' => [
+							'max' => 200,
+						],
+						'%' => [
+							'max' => 100,
+						],
 					],
-					'%' => [
-						'max' => 100,
+					'default' => [
+						'size' => 16,
+						'unit' => 'px',
 					],
-				],
-				'default' => [
-					'size' => 16,
-					'unit' => 'px',
-				],
-				'tablet_default' => [
-					'size' => 16,
-					'unit' => 'px',
-				],
-				'mobile_default' => [
-					'size' => 16,
-					'unit' => 'px',
-				],
-				'separator' => 'before',
-				'selectors' => [
-					'{{WRAPPER}} .ehp-' . $widget_name => '--' . $widget_name . '-buttons-space-between: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'secondary_cta_show' => 'yes',
-				],
-			]
-		);
+					'tablet_default' => [
+						'size' => 16,
+						'unit' => 'px',
+					],
+					'mobile_default' => [
+						'size' => 16,
+						'unit' => 'px',
+					],
+					'separator' => 'before',
+					'selectors' => [
+						'{{WRAPPER}} .ehp-' . $widget_name => '--' . $widget_name . '-buttons-space-between: {{SIZE}}{{UNIT}};',
+					],
+					'condition' => [
+						'secondary_cta_show' => 'yes',
+					],
+				]
+			);
+		}
 	}
 
 	public function add_button_type_controls( array $options = [] ) {
+		$defaults = [
+			'has_secondary_cta' => $this->defaults['has_secondary_cta'] ?? true,
+		];
 		$type = $options['type'];
 		$add_condition = $options['add_condition'] ?? false;
 
@@ -285,15 +300,17 @@ class Ehp_Button {
 			$type . '_cta_show' => 'yes',
 		] : [];
 
-		$this->widget->add_control(
-			$type . '_button_label',
-			[
-				'label' => $label,
-				'type' => Controls_Manager::HEADING,
-				'condition' => $add_type_condition,
-				'separator' => 'primary' === $type ? 'before' : '',
-			]
-		);
+		if ( $defaults['has_secondary_cta' ] ) {
+			$this->widget->add_control(
+				$type . '_button_label',
+				[
+					'label' => $label,
+					'type' => Controls_Manager::HEADING,
+					'condition' => $add_type_condition,
+					'separator' => 'primary' === $type ? 'before' : '',
+				]
+			);
+		}
 
 		$this->widget->add_control(
 			$type . '_button_type',

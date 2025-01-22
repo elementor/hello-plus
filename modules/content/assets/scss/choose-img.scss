@@ -1,0 +1,24 @@
+.elementor-control-type-choose-img {
+
+	&.elementor-label-block {
+
+		.elementor-choices {
+			width: 100%;
+		}
+	}
+
+	& .elementor-choices.elementor-choices-img {
+		& input.e-choose-placeholder + .elementor-choices-label,
+		& input:checked + .elementor-choices-label {
+			border: 1px solid red;
+			background-color: initial;
+		}
+	}
+}
+
+.elementor-choices {
+	&.elementor-choices-img {
+		height: fit-content;
+		line-height: normal;
+	}
+}

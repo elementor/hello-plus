@@ -43,17 +43,6 @@
 	--flex-hero-button-secondary-padding-inline-start: 16px;
 	--flex-hero-button-secondary-border-radius: #{$corners-shape-default};
 
-	--flex-hero-button-text-color: var(--flex-hero-button-primary-text-color);
-	--flex-hero-button-text-color-hover: var(--flex-hero-button-primary-text-color-hover);
-	--flex-hero-button-border-color: var(--flex-hero-button-primary-border-color);
-	--flex-hero-button-padding-block-end: var(--flex-hero-button-primary-padding-block-end);
-	--flex-hero-button-padding-block-start: var(--flex-hero-button-primary-padding-block-start);
-	--flex-hero-button-padding-inline-end: var(--flex-hero-button-primary-padding-inline-end);
-	--flex-hero-button-padding-inline-start: var(--flex-hero-button-primary-padding-inline-start);
-	--flex-hero-button-border-width: var(--flex-hero-button-primary-border-width);
-	--flex-hero-button-icon-spacing: var(--flex-hero-button-primary-icon-spacing);
-	--flex-hero-button-icon-size: var(--flex-hero-button-primary-icon-size);
-
 	--flex-hero-box-padding-block-end: 60px;
 	--flex-hero-box-padding-block-start: 60px;
 	--flex-hero-box-padding-inline-end: 60px;
@@ -64,12 +53,6 @@
 	--flex-hero-image-position: center center;
 	--flex-hero-image-border-width: 1px;
 	--flex-hero-image-border-color: #{$global-colors-secondary};
-
-	--flex-hero-border-radius-default: #{$corners-shape-default};
-	--flex-hero-border-radius-sharp: #{$corners-shape-sharp};
-	--flex-hero-border-radius-rounded: #{$corners-shape-rounded};
-	--flex-hero-border-radius-round: #{$corners-shape-round};
-	--flex-hero-border-radius-oval: #{$corners-shape-oval};
 
 	--flex-hero-button-border-radius-custom-block-end: #{$corners-shape-default};
 	--flex-hero-button-border-radius-custom-block-start: #{$corners-shape-default};
@@ -188,6 +171,57 @@
 		&-sm {
 			@media screen and (max-width: $screen-tablet-min) {
 				@include shapes();
+			}
+		}
+	}
+
+	& a.ehp-button,
+	& a.ehp-button:not([href]):not([tabindex]) {
+		--ehp-button-primary-icon-spacing: var(--flex-hero-button-primary-icon-spacing);
+		--ehp-button-primary-icon-size: var(--flex-hero-button-primary-icon-size);
+		--ehp-button-primary-text-color: var(--flex-hero-button-primary-text-color);
+		--ehp-button-primary-text-color-hover: var(--flex-hero-button-primary-text-color-hover);
+		--ehp-button-primary-border-width: var(--flex-hero-button-primary-border-width);
+		--ehp-button-primary-border-color: var(--flex-hero-button-primary-border-color);
+		--ehp-button-primary-padding-block-end: var(--flex-hero-button-primary-padding-block-end);
+		--ehp-button-primary-padding-block-start: var(--flex-hero-button-primary-padding-block-start);
+		--ehp-button-primary-padding-inline-end: var(--flex-hero-button-primary-padding-inline-end);
+		--ehp-button-primary-padding-inline-start: var(--flex-hero-button-primary-padding-inline-start);
+
+		--ehp-button-secondary-icon-spacing: var(--flex-hero-button-secondary-icon-spacing);
+		--ehp-button-secondary-icon-size: var(--flex-hero-button-secondary-icon-size);
+		--ehp-button-secondary-text-color: var(--flex-hero-button-secondary-text-color);
+		--ehp-button-secondary-text-color-hover: var(--flex-hero-button-secondary-text-color-hover);
+		--ehp-button-secondary-border-width: var(--flex-hero-button-secondary-border-width);
+		--ehp-button-secondary-border-color: var(--flex-hero-button-secondary-border-color);
+		--ehp-button-secondary-padding-block-end: var(--flex-hero-button-secondary-padding-block-end);
+		--ehp-button-secondary-padding-block-start: var(--flex-hero-button-secondary-padding-block-start);
+		--ehp-button-secondary-padding-inline-end: var(--flex-hero-button-secondary-padding-inline-end);
+		--ehp-button-secondary-padding-inline-start: var(--flex-hero-button-secondary-padding-inline-start);
+
+
+		@mixin custom-shape-button() {
+			&-custom {
+				--ehp-button-border-radius-block-end: var(--flex-hero-button-border-radius-custom-block-end);
+				--ehp-button-border-radius-block-start: var(--flex-hero-button-border-radius-custom-block-start);
+				--ehp-button-border-radius-inline-end: var(--flex-hero-button-border-radius-custom-inline-end);
+				--ehp-button-border-radius-inline-start: var(--flex-hero-button-border-radius-custom-inline-start);
+			}
+		}
+	
+		&.has-shape {
+			@include custom-shape-button();
+	
+			&-md {
+				@media screen and (max-width: $screen-desktop-min) {
+					@include custom-shape-button();
+				}
+			}
+
+			&-sm {
+				@media screen and (max-width: $screen-tablet-min) {
+					@include custom-shape-button();
+				}
 			}
 		}
 	}
@@ -378,103 +412,6 @@
 		@media screen and (max-width: $screen-tablet-max) {
 			flex-direction: column;
 		}
-	}
-
-	&__button-icon {
-		fill: currentColor;
-		height: var(--flex-hero-button-icon-size);
-		width: var(--flex-hero-button-icon-size);
-	}
-
-	& a.ehp-flex-hero__button,
-	& a.ehp-flex-hero__button:not([href]):not([tabindex]) {
-		align-items: center;
-		display: flex;
-		gap: var(--flex-hero-button-icon-spacing);
-		justify-content: center;
-		text-decoration: none;
-		transition: $transition;
-
-		&:hover,
-		&:focus {
-			transition: $transition;
-		}
-
-		&.has-border {
-			border-color: var(--flex-hero-button-border-color);
-			border-style: solid;
-			border-width: var(--flex-hero-button-border-width);
-		}
-
-		&.is-type-button {
-			padding-block-end: var(--flex-hero-button-padding-block-end);
-			padding-block-start: var(--flex-hero-button-padding-block-start);
-			padding-inline-end: var(--flex-hero-button-padding-inline-end);
-			padding-inline-start: var(--flex-hero-button-padding-inline-start);
-			text-decoration: none;
-		}
-
-		&.is-type-link,
-		&.is-type-link:not([href]):not([tabindex]) {
-			background: none;
-			align-self: center;
-			text-decoration: underline;
-
-			&:hover,
-			&:focus {
-				background: none;
-			}
-		}
-
-		&.is-type-button,
-		&.is-type-link,
-		&.is-type-button:not([href]):not([tabindex]),
-		&.is-type-link:not([href]):not([tabindex]) {
-			color: var(--flex-hero-button-text-color);
-
-			&:hover,
-			&:focus {
-				color: var(--flex-hero-button-text-color-hover);
-			}
-		}
-
-		@mixin custom-shape-button() {
-			&-custom {
-				--flex-hero-border-radius-block-end: var(--flex-hero-button-border-radius-custom-block-end);
-				--flex-hero-border-radius-block-start: var(--flex-hero-button-border-radius-custom-block-start);
-				--flex-hero-border-radius-inline-end: var(--flex-hero-button-border-radius-custom-inline-end);
-				--flex-hero-border-radius-inline-start: var(--flex-hero-button-border-radius-custom-inline-start);
-			}
-		}
-	
-		&.has-shape {
-			@include custom-shape-button();
-	
-			&-md {
-				@media screen and (max-width: $screen-desktop-min) {
-					@include custom-shape-button();
-				}
-			}
-
-			&-sm {
-				@media screen and (max-width: $screen-tablet-min) {
-					@include custom-shape-button();
-				}
-			}
-		}
-	}
-
-	&__button--secondary,
-	&__button--secondary:not([href]):not([tabindex]) {
-		--flex-hero-button-text-color: var(--flex-hero-button-secondary-text-color);
-		--flex-hero-button-text-color-hover: var(--flex-hero-button-secondary-text-color-hover);
-		--flex-hero-button-border-color: var(--flex-hero-button-secondary-border-color);
-		--flex-hero-button-padding-block-end: var(--flex-hero-button-secondary-padding-block-end);
-		--flex-hero-button-padding-block-start: var(--flex-hero-button-secondary-padding-block-start);
-		--flex-hero-button-padding-inline-end: var(--flex-hero-button-secondary-padding-inline-end);
-		--flex-hero-button-padding-inline-start: var(--flex-hero-button-secondary-padding-inline-start);
-		--flex-hero-button-border-width: var(--flex-hero-button-secondary-border-width);
-		--flex-hero-button-icon-spacing: var(--flex-hero-button-secondary-icon-spacing);
 	}
 
 	&__image {

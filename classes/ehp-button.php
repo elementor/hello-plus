@@ -20,9 +20,10 @@ class Ehp_Button {
 	private $context = [];
 	private $widget;
 
-	public function __construct( $widget, $context = [] ) {
+	public function __construct( $widget, $context = [], $defaults = [] ) {
 		$this->widget = $widget;
 		$this->context = $context;
+		$this->defaults = $defaults;
 	}
 
 	public function set_context( array $context ) {
@@ -98,6 +99,10 @@ class Ehp_Button {
 	}
 
 	public function add_content_section() {
+		$defaults = [
+			'secondary_cta_show' => $this->defaults['secondary_cta_show'] ?? 'yes',
+		];
+
 		$this->widget->start_controls_section(
 			'content_cta',
 			[
@@ -159,7 +164,7 @@ class Ehp_Button {
 				'label_on' => esc_html__( 'Show', 'hello-plus' ),
 				'label_off' => esc_html__( 'Hide', 'hello-plus' ),
 				'return_value' => 'yes',
-				'default' => 'yes',
+				'default' => $defaults['secondary_cta_show'],
 				'separator' => 'before',
 			]
 		);
@@ -213,47 +218,20 @@ class Ehp_Button {
 		$this->widget->end_controls_section();
 	}
 
-	public function add_style_section() {
+	public function add_style_controls() {
 		$widget_name = $this->context['widget_name'];
 
-		$this->widget->start_controls_section(
-			'style_cta',
-			[
-				'label' => esc_html__( 'CTA Button', 'hello-plus' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+		$this->add_button_type_controls( 
+			[ 
+				'type' => 'primary'
 			]
 		);
-
-		$this->widget->add_control(
-			'cta_position',
+		$this->add_button_type_controls(
 			[
-				'label' => esc_html__( 'Position', 'hello-plus' ),
-				'type' => Controls_Manager::CHOOSE,
-				'description' => esc_html__( 'Buttons will be aligned to end on smaller screens', 'hello-plus' ),
-				'options' => [
-					'row' => [
-						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => 'eicon-align-start-v',
-					],
-					'column' => [
-						'title' => esc_html__( 'End', 'hello-plus' ),
-						'icon' => 'eicon-align-end-v',
-					],
-				],
-				'default' => 'row',
-				'tablet_default' => 'row',
-				'mobile_default' => 'row',
-				'selectors' => [
-					'{{WRAPPER}} .ehp-' . $widget_name => '--' . $widget_name . '-elements-start-position-desktop: {{VALUE}};',
-				],
-				'condition' => [
-					'elements_position' => 'start',
-				],
+				'type' => 'secondary',
+				'add_condition' => true,
 			]
 		);
-
-		$this->add_button_type_controls( 'primary' );
-		$this->add_button_type_controls( 'secondary', true );
 
 		$this->widget->add_responsive_control(
 			'cta_space_between',
@@ -290,11 +268,12 @@ class Ehp_Button {
 				],
 			]
 		);
-
-		$this->widget->end_controls_section();
 	}
 
-	protected function add_button_type_controls( string $type, bool $add_condition = false ) {
+	public function add_button_type_controls( array $options = [] ) {
+		$type = $options['type'];
+		$add_condition = $options['add_condition'] ?? false;
+
 		$widget_name = $this->context['widget_name'];
 
 		$is_primary = 'primary' === $type;
@@ -312,6 +291,7 @@ class Ehp_Button {
 				'label' => $label,
 				'type' => Controls_Manager::HEADING,
 				'condition' => $add_type_condition,
+				'separator' => 'primary' === $type ? 'before' : '',
 			]
 		);
 
@@ -579,11 +559,29 @@ class Ehp_Button {
 				'options' => [
 					'default' => esc_html__( 'Default', 'hello-plus' ),
 					'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
-					'round' => esc_html__( 'Round', 'hello-plus' ),
 					'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
+					'round' => esc_html__( 'Round', 'hello-plus' ),
+					'oval' => esc_html__( 'Oval', 'hello-plus' ),
+					'custom' => esc_html__( 'Custom', 'hello-plus' ),
 				],
 				'condition' => array_merge([
 					$type . '_button_type' => 'button',
+				], $add_type_condition),
+			]
+		);
+
+		$this->widget->add_responsive_control(
+			$type . '_button_shape_custom',
+			[
+				'label' => esc_html__( 'Border Radius', 'hello-plus' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em', 'rem' ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-' . $widget_name => '--' . $widget_name . '-button-border-radius-custom-block-end: {{BOTTOM}}{{UNIT}}; --' . $widget_name . '-button-border-radius-custom-block-start: {{TOP}}{{UNIT}}; --' . $widget_name . '-button-border-radius-custom-inline-end: {{RIGHT}}{{UNIT}}; --' . $widget_name . '-button-border-radius-custom-inline-start: {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+				'condition' => array_merge([
+					$type . '_button_shape' => 'custom',
 				], $add_type_condition),
 			]
 		);

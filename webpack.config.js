@@ -35,7 +35,7 @@ const entryPoints = {
 	'js/helloplus-forms-editor-fe': path.resolve( modulesDir, 'forms/assets/js/frontend', 'frontend.js' ),
 
 	// Button
-	'css/helloplus-button': path.resolve( process.cwd(), 'assets/dev/scss/widgets', 'ehp-button.scss' ),
+	'css/helloplus-button': path.resolve( process.cwd(), 'assets/dev/scss', 'ehp-button.scss' ),
 };
 
 module.exports = {

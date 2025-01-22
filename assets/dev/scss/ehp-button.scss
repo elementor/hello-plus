@@ -1,4 +1,4 @@
-@import "../variables/";
+@import "./variables";
 
 a.ehp-button,
 a.ehp-button:not([href]):not([tabindex]) {
@@ -34,9 +34,14 @@ a.ehp-button:not([href]):not([tabindex]) {
 	--ehp-button-padding-inline-end: var(--ehp-button-primary-padding-inline-end);
 	--ehp-button-padding-inline-start: var(--ehp-button-primary-padding-inline-start);
 	--ehp-button-border-width: var(--ehp-button-primary-border-width);
-	--ehp-button-border-radius: var(--ehp-button-primary-border-radius);
 	--ehp-button-icon-spacing: var(--ehp-button-primary-icon-spacing);
 	--ehp-button-icon-size: var(--ehp-button-primary-icon-size);
+
+	--ehp-button-border-radius-default: #{$corners-shape-default};
+	--ehp-button-border-radius-sharp: #{$corners-shape-sharp};
+	--ehp-button-border-radius-rounded: #{$corners-shape-rounded};
+	--ehp-button-border-radius-round: #{$corners-shape-round};
+	--ehp-button-border-radius-oval: #{$corners-shape-oval};
 
 	align-items: center;
 	display: flex;
@@ -54,7 +59,6 @@ a.ehp-button:not([href]):not([tabindex]) {
 		border-color: var(--ehp-button-border-color);
 		border-style: solid;
 		border-width: var(--ehp-button-border-width);
-		border-radius: var(--ehp-button-border-radius);
 	}
 
 	&.is-type-button {
@@ -89,20 +93,55 @@ a.ehp-button:not([href]):not([tabindex]) {
 		}
 	}
 
-	&.has-shape-sharp {
-		border-radius: $corners-shape-sharp;
+	@mixin shapes() {
+		&-sharp {
+			border-radius: var(--ehp-button-border-radius-sharp);
+		}
+	
+		&-rounded {
+			border-radius: var(--ehp-button-border-radius-rounded);
+		}
+	
+		&-round {
+			border-radius: var(--ehp-button-border-radius-round);
+		}
+
+		&-default {
+			border-radius: var(--ehp-button-border-radius-default);
+		}
+	
+		&-oval {
+			border-radius: var(--ehp-button-border-radius-oval);
+		}
+
+		&-custom {
+			border-top-left-radius: var(--ehp-button-border-radius-block-end);
+			border-top-right-radius: var(--ehp-button-border-radius-block-start);
+			border-bottom-right-radius: var(--ehp-button-border-radius-inline-end);
+			border-bottom-left-radius: var(--ehp-button-border-radius-inline-start);
+		}
 	}
 
-	&.has-shape-rounded {
-		border-radius: $corners-shape-rounded;
+	&.has-shape {
+		@include shapes();
+
+		&-md {
+			@media screen and (max-width: $screen-desktop-min) {
+				@include shapes();
+			}
+		}
+
+		&-sm {
+			@media screen and (max-width: $screen-tablet-min) {
+				@include shapes();
+			}
+		}
 	}
 
-	&.has-shape-round {
-		border-radius: $corners-shape-round;
-	}
-
-	&.has-shape-default {
-		border-radius: $corners-shape-default;
+	.ehp-button__icon {
+		fill: currentColor;
+		height: var(--ehp-button-icon-size);
+		width: var(--ehp-button-icon-size);
 	}
 }
 

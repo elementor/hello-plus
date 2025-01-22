@@ -20,6 +20,7 @@
 	--cta-text-width-description: 440px;
 
 	--cta-button-primary-icon-spacing: 10px;
+	--cta-button-primary-icon-size: 16px;
 	--cta-button-primary-text-color: #FFFFFF;
 	--cta-button-primary-text-color-hover: #555963;
 	--cta-button-primary-border-width: 0;
@@ -56,7 +57,7 @@
 	& a.ehp-button,
 	& a.ehp-button:not([href]):not([tabindex]) {
 		--ehp-button-primary-icon-spacing: var(--cta-button-primary-icon-spacing);
-		--cta-button-primary-icon-size: 16px;
+		--ehp-button-primary-icon-size: var(--cta-button-primary-icon-size);
 		--ehp-button-primary-text-color: var(--cta-button-primary-text-color);
 		--ehp-button-primary-text-color-hover: var(--cta-button-primary-text-color-hover);
 		--ehp-button-primary-border-width: var(--cta-button-primary-border-width);
@@ -181,12 +182,6 @@
 		.ehp-cta__description {
 			text-align: center;
 		}
-	}
-
-	&__button-icon {
-		fill: currentColor;
-		height: var(--cta-button-icon-size);
-		width: var(--cta-button-icon-size);
 	}
 
 	&.has-elements-position {

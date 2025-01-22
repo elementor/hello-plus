@@ -318,8 +318,46 @@ class CTA extends Widget_Base {
 	}
 
 	protected function add_style_section_cta() {
+		$this->start_controls_section(
+			'style_cta',
+			[
+				'label' => esc_html__( 'CTA Button', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'cta_position',
+			[
+				'label' => esc_html__( 'Position', 'hello-plus' ),
+				'type' => Controls_Manager::CHOOSE,
+				'description' => esc_html__( 'Buttons will be aligned to end on smaller screens', 'hello-plus' ),
+				'options' => [
+					'row' => [
+						'title' => esc_html__( 'Start', 'hello-plus' ),
+						'icon' => 'eicon-align-start-v',
+					],
+					'column' => [
+						'title' => esc_html__( 'End', 'hello-plus' ),
+						'icon' => 'eicon-align-end-v',
+					],
+				],
+				'default' => 'row',
+				'tablet_default' => 'row',
+				'mobile_default' => 'row',
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-elements-start-position-desktop: {{VALUE}};',
+				],
+				'condition' => [
+					'elements_position' => 'start',
+				],
+			]
+		);
+
 		$button = new Ehp_Button( $this, [ 'widget_name' => 'cta' ] );
-		$button->add_style_section();
+		$button->add_style_controls();
+
+		$this->end_controls_section();
 	}
 
 	protected function add_style_box_section() {

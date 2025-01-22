@@ -6,7 +6,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use HelloPlus\Includes\Module_Base;
-use HelloPlus\Includes\Utils;
 
 /**
  * Theme's main class,

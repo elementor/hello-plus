@@ -22,6 +22,7 @@ use HelloPlus\Modules\TemplateParts\Classes\{
 };
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
+use HelloPlus\Classes\Ehp_Button;
 
 class Ehp_Header extends Ehp_Widget_Base {
 
@@ -699,111 +700,8 @@ class Ehp_Header extends Ehp_Widget_Base {
 	}
 
 	protected function add_content_cta_section() {
-		$this->start_controls_section(
-			'content_cta',
-			[
-				'label' => esc_html__( 'Call to Action', 'hello-plus' ),
-				'tab' => Controls_Manager::TAB_CONTENT,
-			]
-		);
-
-		$this->add_control(
-			'primary_cta_button_text',
-			[
-				'label' => esc_html__( 'Primary CTA', 'hello-plus' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => esc_html__( 'Schedule Now', 'hello-plus' ),
-				'dynamic' => [
-					'active' => true,
-				],
-			]
-		);
-
-		$this->add_control(
-			'primary_cta_button_link',
-			[
-				'label' => esc_html__( 'Link', 'hello-plus' ),
-				'type' => Controls_Manager::URL,
-				'dynamic' => [
-					'active' => true,
-				],
-				'default' => [
-					'url' => '',
-					'is_external' => true,
-				],
-			]
-		);
-
-		$this->add_control(
-			'primary_cta_button_icon',
-			[
-				'label' => esc_html__( 'Icon', 'hello-plus' ),
-				'type' => Controls_Manager::ICONS,
-				'label_block' => false,
-				'skin' => 'inline',
-			]
-		);
-
-		$this->add_control(
-			'secondary_cta_show',
-			[
-				'label' => esc_html__( 'Secondary CTA', 'hello-plus' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Show', 'hello-plus' ),
-				'label_off' => esc_html__( 'Hide', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => 'no',
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'secondary_cta_button_text',
-			[
-				'label' => esc_html__( 'Secondary CTA', 'hello-plus' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => esc_html__( 'Contact Us', 'hello-plus' ),
-				'dynamic' => [
-					'active' => true,
-				],
-				'condition' => [
-					'secondary_cta_show' => 'yes',
-				],
-			]
-		);
-
-		$this->add_control(
-			'secondary_cta_button_link',
-			[
-				'label' => esc_html__( 'Link', 'hello-plus' ),
-				'type' => Controls_Manager::URL,
-				'dynamic' => [
-					'active' => true,
-				],
-				'default' => [
-					'url' => '',
-					'is_external' => true,
-				],
-				'condition' => [
-					'secondary_cta_show' => 'yes',
-				],
-			]
-		);
-
-		$this->add_control(
-			'secondary_cta_button_icon',
-			[
-				'label' => esc_html__( 'Icon', 'hello-plus' ),
-				'type' => Controls_Manager::ICONS,
-				'label_block' => false,
-				'skin' => 'inline',
-				'condition' => [
-					'secondary_cta_show' => 'yes',
-				],
-			]
-		);
-
-		$this->end_controls_section();
+		$button = new Ehp_Button( $this, [ 'widget_name' => 'header' ] );
+		$button->add_content_section();
 	}
 
 	protected function add_style_site_identity_section() {
@@ -1619,9 +1517,8 @@ class Ehp_Header extends Ehp_Widget_Base {
 			]
 		);
 
-		$this->add_cta_button_controls( 'primary' );
-
-		$this->add_cta_button_controls( 'secondary', true );
+		$button = new Ehp_Button( $this, [ 'widget_name' => 'header' ] );
+		$button->add_style_controls();
 
 		$this->add_control(
 			'cta_responsive_width',
@@ -1632,33 +1529,6 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'options' => [
 					'default' => esc_html__( 'Default', 'hello-plus' ),
 					'stretch' => esc_html__( 'Stretch', 'hello-plus' ),
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_responsive_control(
-			'cta_button_spacing',
-			[
-				'label' => esc_html__( 'Space Between', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-						'step' => 1,
-					],
-				],
-				'default' => [
-					'size' => 16,
-					'unit' => 'px',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-header' => '--header-buttons-space-between: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'secondary_cta_show' => 'yes',
 				],
 				'separator' => 'before',
 			]

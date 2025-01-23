@@ -13,7 +13,7 @@ use Elementor\{
 };
 
 use HelloPlus\Modules\TemplateParts\Widgets\Ehp_Header;
-// use HelloPlus\Classes\Ehp_Button;
+use HelloPlus\Classes\Ehp_Button;
 
 /**
  * class Widget_Header_Render
@@ -500,66 +500,8 @@ class Widget_Header_Render {
 	}
 
 	protected function render_button( $type ) {
-		$button_text = $this->settings[ $type . '_cta_button_text' ];
-		$button_link = $this->settings[ $type . '_cta_button_link' ];
-		$button_icon = $this->settings[ $type . '_cta_button_icon' ];
-		$button_hover_animation = $this->settings[ $type . '_button_hover_animation' ] ?? '';
-		$button_has_border = $this->settings[ $type . '_show_button_border' ];
-		$button_corner_shape = $this->settings[ $type . '_button_shape' ] ?? '';
-		$button_corner_shape_mobile = $this->settings[ $type . '_button_shape_mobile' ] ?? '';
-		$button_corner_shape_tablet = $this->settings[ $type . '_button_shape_tablet' ] ?? '';
-		$button_type = $this->settings[ $type . '_button_type' ] ?? '';
-		$button_classnames = [
-			self::BUTTON_CLASSNAME,
-		];
-
-		$button_classnames[] = 'ehp-header__button--' . $type;
-
-		if ( ! empty( $button_type ) ) {
-			$button_classnames[] = 'is-type-' . $button_type;
-		}
-
-		if ( $button_hover_animation ) {
-			$button_classnames[] = 'elementor-animation-' . $button_hover_animation;
-		}
-
-		if ( 'yes' === $button_has_border ) {
-			$button_classnames[] = 'has-border';
-		}
-
-		if ( ! empty( $button_corner_shape ) ) {
-			$button_classnames[] = 'has-shape-' . $button_corner_shape;
-
-			if ( ! empty( $button_corner_shape_mobile ) ) {
-				$button_classnames[] = 'has-shape-sm-' . $button_corner_shape_mobile;
-			}
-
-			if ( ! empty( $button_corner_shape_tablet ) ) {
-				$button_classnames[] = 'has-shape-md-' . $button_corner_shape_tablet;
-			}
-		}
-
-		$this->widget->add_render_attribute( $type . '-button', [
-			'class' => $button_classnames,
-		] );
-
-		if ( ! empty( $button_link['url'] ) ) {
-			$this->widget->add_link_attributes( $type . '-button', $button_link, true );
-		}
-
-		?>
-		<a <?php $this->widget->print_render_attribute_string( $type . '-button' ); ?>>
-			<?php
-			Icons_Manager::render_icon( $button_icon,
-				[
-					'aria-hidden' => 'true',
-					'class' => 'ehp-header__button-icon',
-				]
-			);
-			?>
-			<?php echo esc_html( $button_text ); ?>
-		</a>
-		<?php
+		$button = new Ehp_Button( $this->widget, [ 'type' => $type, 'widget_name' => 'header' ] );
+		$button->render();
 	}
 
 	public function get_link_url(): array {

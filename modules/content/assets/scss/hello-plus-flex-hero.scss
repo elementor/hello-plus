@@ -60,10 +60,12 @@
 	--flex-hero-image-border-width: 1px;
 	--flex-hero-image-border-color: #{$global-colors-secondary};
 
-	--flex-hero-button-border-radius-custom-block-end: #{$corners-shape-default};
-	--flex-hero-button-border-radius-custom-block-start: #{$corners-shape-default};
-	--flex-hero-button-border-radius-custom-inline-end: #{$corners-shape-default};
-	--flex-hero-button-border-radius-custom-inline-start: #{$corners-shape-default};
+	--flex-hero-border-radius-default: #{$corners-shape-default};
+	--flex-hero-border-radius-sharp: #{$corners-shape-sharp};
+	--flex-hero-border-radius-rounded: #{$corners-shape-rounded};
+	--flex-hero-border-radius-round: #{$corners-shape-round};
+	--flex-hero-border-radius-oval: #{$corners-shape-oval};
+
 	--flex-hero-image-border-radius-custom-block-end: #{$corners-shape-sharp};
 	--flex-hero-image-border-radius-custom-block-start: #{$corners-shape-sharp};
 	--flex-hero-image-border-radius-custom-inline-end: #{$corners-shape-sharp};

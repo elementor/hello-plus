@@ -46,7 +46,7 @@ class Hero extends Widget_Base {
 	}
 
 	public function get_style_depends(): array {
-		return [ 'helloplus-hero' ];
+		return [ 'helloplus-hero', 'helloplus-button' ];
 	}
 
 	protected function render(): void {

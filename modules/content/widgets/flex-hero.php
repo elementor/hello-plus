@@ -47,7 +47,7 @@ class Flex_Hero extends Widget_Base {
 	}
 
 	public function get_style_depends(): array {
-		return [ 'helloplus-flex-hero' ];
+		return [ 'helloplus-flex-hero', 'helloplus-button' ];
 	}
 
 	protected function render(): void {
@@ -767,7 +767,7 @@ class Flex_Hero extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-border-radius-block-end: {{BOTTOM}}{{UNIT}}; --flex-hero-image-border-radius-block-start: {{TOP}}{{UNIT}}; --flex-hero-image-border-radius-inline-end: {{RIGHT}}{{UNIT}}; --flex-hero-image-border-radius-inline-start: {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-border-radius-custom-block-end: {{BOTTOM}}{{UNIT}}; --flex-hero-image-border-radius-custom-block-start: {{TOP}}{{UNIT}}; --flex-hero-image-border-radius-custom-inline-end: {{RIGHT}}{{UNIT}}; --flex-hero-image-border-radius-custom-inline-start: {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 				'condition' => [

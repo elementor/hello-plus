@@ -7,6 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use Elementor\Core\Documents_Manager;
+use HelloPlus\Includes\Utils;
 
 /**
  * class Document
@@ -46,7 +47,15 @@ class Document {
 		}
 	}
 
+
+	public function register_remote_source() {
+		Utils::elementor()->templates_manager->register_source(
+			'HelloPlus\Modules\TemplateParts\Classes\Sources\Source_Remote_Ehp'
+		);
+	}
+
 	public function __construct() {
 		add_action( 'elementor/documents/register', [ $this, 'register' ] );
+		add_action( 'elementor/init', [ $this, 'register_remote_source' ] );
 	}
 }

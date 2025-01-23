@@ -12,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Theme_Overrides {
+
 	public function admin_config( array $config ): array {
 		if ( ! Setup_Wizard::has_site_wizard_been_completed() ) {
 			return $config;
@@ -41,11 +42,18 @@ class Theme_Overrides {
 		return $config;
 	}
 
+	public function localize_settings( $data ) {
+		$data['close_modal_redirect_hello_plus'] = admin_url( 'admin.php?page=' . Utils::get_theme_slug() );
+
+		return $data;
+	}
+
 	public function __construct() {
 		add_filter( 'hello-plus-theme/settings/header_footer', '__return_false' );
 		add_filter( 'hello-plus-theme/settings/hello_theme', '__return_false' );
 		add_filter( 'hello-plus-theme/settings/hello_style', '__return_false' );
 		add_filter( 'hello-plus-theme/customizer/enable', Setup_Wizard::has_site_wizard_been_completed() ? '__return_false' : '__return_true' );
 		add_filter( 'hello-plus-theme/rest/admin-config', [ $this, 'admin_config' ] );
+		add_filter( 'elementor/editor/localize_settings', [ $this, 'localize_settings' ] );
 	}
 }

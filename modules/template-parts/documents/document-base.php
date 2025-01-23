@@ -13,6 +13,7 @@ use Elementor\{
 };
 
 use HelloPlus\Includes\Utils as Theme_Utils;
+use Elementor\Modules\PageTemplates\Module as Page_Templates_Module;
 use WP_Query;
 
 /**
@@ -27,14 +28,12 @@ abstract class Document_Base extends Library_Document {
 		$properties['support_kit'] = true;
 		$properties['show_in_finder'] = true;
 		$properties['support_site_editor'] = false;
-		$properties['support_conditions'] = true;
-		$properties['support_lazyload'] = false;
-		$properties['condition_type'] = 'general';
 		$properties['allow_adding_widgets'] = false;
 		$properties['show_navigator'] = false;
 		$properties['support_page_layout'] = false;
 		$properties['allow_closing_remote_library'] = false;
-
+		$properties['library_close_title'] = esc_html__( 'Go To Dashboard', 'hello-plus' );
+		$properties['publish_button_title'] = esc_html__( 'After publishing this widget, you will be able to set it as visible on the entire site in the Admin Table.', 'hello-plus' );
 		/**
 		 * Filter the document properties.
 		 *
@@ -60,14 +59,6 @@ abstract class Document_Base extends Library_Document {
 
 	public function get_css_wrapper_selector(): string {
 		return '.ehp-' . $this->get_main_id();
-	}
-
-	protected function get_remote_library_config(): array {
-		$config = parent::get_remote_library_config();
-
-		$config['category'] = $this->get_name(); //Header_Footer_Base
-
-		return $config;
 	}
 
 	public static function get_create_url(): string {
@@ -165,6 +156,24 @@ abstract class Document_Base extends Library_Document {
 			}
 		}
 		static::get_template( $name, $args );
+	}
+
+	public function save( $data ) {
+		if ( empty( $data['settings']['template'] ) ) {
+			$data['settings']['template'] = Page_Templates_Module::TEMPLATE_CANVAS;
+		}
+
+		return parent::save( $data );
+	}
+
+	protected function get_remote_library_config() {
+		$config = parent::get_remote_library_config();
+
+		$config['type'] = $this->get_name();
+		$config['default_route'] = 'templates/ehp-elements';
+		$config['autoImportSettings'] = true;
+
+		return $config;
 	}
 
 	/**

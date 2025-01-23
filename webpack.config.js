@@ -23,7 +23,7 @@ const entryPoints = {
 	'js/helloplus-zigzag-fe': path.resolve( modulesDir, 'content/assets/js/frontend', 'hello-plus-zigzag-fe.js' ),
 
 	// Template Parts module
-	'css/helloplus-template-parts-preview': path.resolve( modulesDir, 'template-parts/assets/scss', 'hello-plus-template-parts-preview.scss' ),
+	'css/helloplus-template-parts-editor': path.resolve( modulesDir, 'template-parts/assets/scss', 'editor.scss' ),
 	'css/helloplus-header': path.resolve( modulesDir, 'template-parts/assets/scss', 'hello-plus-header.scss' ),
 	'css/helloplus-footer': path.resolve( modulesDir, 'template-parts/assets/scss', 'hello-plus-footer.scss' ),
 	'js/helloplus-header-fe': path.resolve( modulesDir, 'template-parts/assets/js', 'frontend.js' ),

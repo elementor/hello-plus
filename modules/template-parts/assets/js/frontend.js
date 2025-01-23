@@ -3,7 +3,7 @@ export default class HelloPlusHeaderFe extends elementorModules.Module {
 		super();
 
 		elementorFrontend.elementsHandler.attachHandler( 'ehp-header', [
-			() => import( /* webpackChunkName: 'js/header' */ './handlers/hello-plus-header' ),
+			() => import( /* webpackChunkName: 'js/ehp-hader-fe' */ './handlers/hello-plus-header-fe' ),
 		] );
 	}
 }

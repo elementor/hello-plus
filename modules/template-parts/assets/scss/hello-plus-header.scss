@@ -1,11 +1,6 @@
 @import "../../../../assets/dev/scss/variables";
 
 .ehp-header {
-	$submenu-shape-default: 8px;
-	$submenu-shape-sharp: 0;
-	$submenu-shape-rounded: 32px;
-	$submenu-shape-round: 52px;
-
 	--header-logo-width: 68px;
 	--header-logo-width-sticky: 34px;
 	--header-site-title-color: #0052FF;
@@ -15,6 +10,9 @@
 	--header-menu-item-spacing: 32px;
 	--header-title-size-sticky: 20px;
 	--header-title-weight-sticky: 800;
+	--header-align-menu: start;
+	--header-element-spacing: 0;
+	--header-blur-level: 7px;
 
 	--header-wp-admin-bar-height: 0;
 	--header-float-offset: 0px;
@@ -100,6 +98,20 @@
 	--header-box-padding-inline-end: 32px;
 	--header-box-border-width: 1px;
 	--header-box-border-color: #555963;
+	
+	--header-contact-button-size: 16px;
+	--header-contact-button-spacing: 12px;
+
+	--header-border-radius-default: #{$corners-shape-default};
+	--header-border-radius-sharp: #{$corners-shape-sharp};
+	--header-border-radius-rounded: #{$corners-shape-rounded};
+	--header-border-radius-round: #{$corners-shape-round};
+	--header-border-radius-oval: #{$corners-shape-oval};
+
+	--header-button-border-radius-custom-block-end: #{$corners-shape-default};
+	--header-button-border-radius-custom-block-start: #{$corners-shape-default};
+	--header-button-border-radius-custom-inline-end: #{$corners-shape-default};
+	--header-button-border-radius-custom-inline-start: #{$corners-shape-default};
 
 	display: flex;
 	max-width: var(--header-float-width);
@@ -141,27 +153,84 @@
 		}
 	}
 
-	&.has-shape {
-			
-		&-default {
-			border-radius: $submenu-shape-default;
-		}
+	&.has-blur-background {
+		backdrop-filter: blur(var(--header-blur-background-level));
+	}
 
+	@mixin shapes() {
 		&-sharp {
-			border-radius: $submenu-shape-sharp;
+			border-radius: var(--header-border-radius-sharp);
 		}
-
+	
 		&-rounded {
-			border-radius: $submenu-shape-rounded;
+			border-radius: var(--header-border-radius-rounded);
+		}
+	
+		&-round {
+			border-radius: var(--header-border-radius-round);
 		}
 
-		&-round {
-			border-radius: $submenu-shape-round;
+		&-default {
+			border-radius: var(--header-border-radius-default);
+		}
+	
+		&-oval {
+			border-radius: var(--header-border-radius-oval);
+		}
+
+		&-custom {
+			border-top-left-radius: var(--header-border-radius-block-end);
+			border-top-right-radius: var(--header-border-radius-block-start);
+			border-bottom-right-radius: var(--header-border-radius-inline-end);
+			border-bottom-left-radius: var(--header-border-radius-inline-start);
+		}
+	}
+
+	& .has-shape,
+	&.has-shape {
+		@include shapes();
+
+		&-md {
+			@media screen and (max-width: $screen-desktop-min) {
+				@include shapes();
+			}
+		}
+
+		&-sm {
+			@media screen and (max-width: $screen-tablet-min) {
+				@include shapes();
+			}
+		}
+	}
+
+	@mixin custom-shape-float() {
+		&-custom {
+			--header-border-radius-block-end: var(--header-float-border-radius-custom-block-end);
+			--header-border-radius-block-start: var(--header-float-border-radius-custom-block-start);
+			--header-border-radius-inline-end: var(--header-float-border-radius-custom-inline-end);
+			--header-border-radius-inline-start: var(--header-float-border-radius-custom-inline-start);
+		}
+	}
+
+	&.has-behavior-float.has-shape {
+		@include custom-shape-float();
+
+		&-md {
+			@media screen and (max-width: $screen-desktop-min) {
+				@include custom-shape-float();
+			}
+		}
+
+		&-sm {
+			@media screen and (max-width: $screen-tablet-min) {
+				@include custom-shape-float();
+			}
 		}
 	}
 
 	&__elements-container {
 		display: grid;
+		grid-gap: var(--header-element-spacing);
 		grid-template-areas:
 			"start center end";
 		grid-template-columns: 1fr auto 1fr;
@@ -254,25 +323,6 @@
 			}
 		}
 
-		&.has-shape {
-
-			&-sharp {
-				border-radius: $corners-shape-sharp;
-			}
-	
-			&-rounded {
-				border-radius: $corners-shape-rounded;
-			}
-	
-			&-round {
-				border-radius: $corners-shape-round;
-			}
-	
-			&-default {
-				border-radius: $corners-shape-default;
-			}
-		}
-
 		&--secondary {
 			--header-button-text-color: var(--header-button-secondary-text-color);
 			--header-button-text-color-hover: var(--header-button-secondary-text-color-hover);
@@ -284,6 +334,31 @@
 			--header-button-border-width: var(--header-button-secondary-border-width);
 			--header-button-border-radius: var(--header-button-secondary-border-radius);
 			--header-button-icon-spacing: var(--header-button-secondary-icon-spacing);
+		}
+
+		@mixin custom-shape-button() {
+			&-custom {
+				--header-border-radius-block-end: var(--header-button-border-radius-custom-block-end);
+				--header-border-radius-block-start: var(--header-button-border-radius-custom-block-start);
+				--header-border-radius-inline-end: var(--header-button-border-radius-custom-inline-end);
+				--header-border-radius-inline-start: var(--header-button-border-radius-custom-inline-start);
+			}
+		}
+	
+		&.has-shape {
+			@include custom-shape-button();
+	
+			&-md {
+				@media screen and (max-width: $screen-desktop-min) {
+					@include custom-shape-button();
+				}
+			}
+
+			&-sm {
+				@media screen and (max-width: $screen-tablet-min) {
+					@include custom-shape-button();
+				}
+			}
 		}
 	}
 
@@ -305,16 +380,20 @@
 			display: none;
 		}
 	}
+	
+	&__side-toggle {
+		display: none;
+		grid-area: end;
+		justify-content: flex-end;
+		gap: 16px;
+		order: 3;
+	}
 
 	&__button-toggle {
 		align-items: center;
 		background: none;
 		border: none;
 		cursor: pointer;
-		display: none;
-		grid-area: end;
-		justify-content: flex-end;
-		order: 3;
 		padding: 0;
 
 		&:hover,
@@ -376,23 +455,17 @@
 			flex-grow: 1;
 		}
 
+		@mixin custom-shape-submenu() {
+			&-custom {
+				--header-border-radius-block-end: var(--header-submenu-border-radius-custom-block-end);
+				--header-border-radius-block-start: var(--header-submenu-border-radius-custom-block-start);
+				--header-border-radius-inline-end: var(--header-submenu-border-radius-custom-inline-end);
+				--header-border-radius-inline-start: var(--header-submenu-border-radius-custom-inline-start);
+			}
+		}
+	
 		&.has-shape {
-			
-			&-default {
-				border-radius: $submenu-shape-default;
-			}
-
-			&-sharp {
-				border-radius: $submenu-shape-sharp;
-			}
-
-			&-rounded {
-				border-radius: $submenu-shape-rounded;
-			}
-
-			&-round {
-				border-radius: $submenu-shape-round;
-			}
+			@include custom-shape-submenu();
 		}
 
 		&[aria-hidden="true"] {
@@ -503,6 +576,40 @@
 		width: 12px;
 	}
 
+	&__contact-buttons {
+		align-items: center;
+		display: flex;
+		gap: var(--header-contact-button-spacing);
+	}
+
+	&__contact-button {
+		
+		& .ehp-header__contact-button-icon,
+		& .ehp-header__contact-button-label {
+			color: var(--header-contact-button-color);
+		}
+
+		&:hover,
+		&:focus {
+			& .ehp-header__contact-button-icon,
+			& .ehp-header__contact-button-label {
+				color: var(--header-contact-button-color-hover);
+			}
+		}
+	}
+
+	&__contact-button-icon {
+		
+		&:is(i) {
+			font-size: var(--header-contact-button-size);
+		}
+
+		&:is(svg) {
+			height: var(--header-contact-button-size);
+			width: var(--header-contact-button-size);
+		}
+	}
+
 	&.has-behavior-onscroll-always {
 		transition: $transition;
 
@@ -543,6 +650,7 @@
 			&__dropdown {
 				align-items: var(--header-dropdown-text-align);
 				background-color: transparent !important; // Override the default background color
+				background-image: none !important; // Override the default background image
 				border-radius: unset;
 				flex-direction: column;
 				left: unset;
@@ -564,14 +672,22 @@
 					display: flex;
 					flex-direction: column;
 				}
+
+				.ehp-header__contact-buttons.has-responsive-display-navbar {
+					display: none;
+				}
 			}
 
 			&__button {
 				justify-content: center;
 			}
 
-			&__button-toggle {
-				display: flex;	
+			&__side-toggle {
+				display: flex;
+
+				& .ehp-header__contact-buttons.has-responsive-display-dropdown {
+					display: none;
+				}
 			}
 
 			&__menu {
@@ -636,6 +752,17 @@
 			}
 		}
 
+		&.has-align-link-connect {
+
+			& .ehp-header__elements-container {
+				grid-template-columns: auto 1fr auto;
+			}
+
+			& .ehp-header__navigation {
+				justify-content: var(--header-align-menu);
+			}
+		}
+
 		.ehp-header {
 
 			&__navigation {
@@ -643,7 +770,8 @@
 				background: none !important; // Override the default background color
 				display: flex;
 
-				& > .ehp-header__ctas-container {
+				& > .ehp-header__ctas-container,
+				& > .ehp-header__contact-buttons {
 					display: none;
 				}
 			}

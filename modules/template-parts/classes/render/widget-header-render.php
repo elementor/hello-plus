@@ -29,51 +29,67 @@ class Widget_Header_Render {
 	protected array $settings;
 
 	public function render(): void {
-		$layout_classnames = self::LAYOUT_CLASSNAME;
+		$layout_classnames = [
+			self::LAYOUT_CLASSNAME,
+		];
 		$navigation_breakpoint = $this->settings['navigation_breakpoint'] ?? '';
 		$box_border = $this->settings['show_box_border'] ?? '';
 		$behavior_float = $this->settings['behavior_float'];
-		$behavior_float_shape = $this->settings['behavior_float_shape'];
 		$behavior_on_scroll = $this->settings['behavior_onscroll_select'];
-		$align_logo = $this->settings['style_align_logo'];
-		$align_title = $this->settings['style_align_title'];
+		$layout_preset = $this->settings['layout_preset_select'];
 		$behavior_scale_logo = $this->settings['behavior_sticky_scale_logo'];
 		$behavior_scale_title = $this->settings['behavior_sticky_scale_title'];
+		$behavior_float_shape = $this->settings['behavior_float_shape'];
+		$behavior_float_shape_tablet = $this->settings['behavior_float_shape_tablet'] ?? '';
+		$behavior_float_shape_mobile = $this->settings['behavior_float_shape_mobile'] ?? '';
+		$has_blur_background = $this->settings['blur_background'];
 
 		if ( ! empty( $navigation_breakpoint ) ) {
-			$layout_classnames .= ' has-navigation-breakpoint-' . $navigation_breakpoint;
+			$layout_classnames[] = 'has-navigation-breakpoint-' . $navigation_breakpoint;
 		}
 
 		if ( 'yes' === $box_border ) {
-			$layout_classnames .= ' has-box-border';
+			$layout_classnames[] = 'has-box-border';
 		}
 
 		if ( 'yes' === $behavior_float ) {
-			$layout_classnames .= ' has-behavior-float';
+			$layout_classnames[] = 'has-behavior-float';
 		}
 
 		if ( 'yes' === $behavior_scale_logo ) {
-			$layout_classnames .= ' has-behavior-sticky-scale-logo';
+			$layout_classnames[] = 'has-behavior-sticky-scale-logo';
 		}
 
 		if ( 'yes' === $behavior_scale_title ) {
-			$layout_classnames .= ' has-behavior-sticky-scale-title';
+			$layout_classnames[] = 'has-behavior-sticky-scale-title';
 		}
 
 		if ( ! empty( $behavior_float_shape ) ) {
-			$layout_classnames .= ' has-shape-' . $behavior_float_shape;
+			$layout_classnames[] = 'has-shape-' . $behavior_float_shape;
+
+			if ( ! empty( $behavior_float_shape_mobile ) ) {
+				$layout_classnames[] = 'has-shape-sm-' . $behavior_float_shape_mobile;
+			}
+
+			if ( ! empty( $behavior_float_shape_tablet ) ) {
+				$layout_classnames[] = 'has-shape-md-' . $behavior_float_shape_tablet;
+			}
 		}
 
 		if ( ! empty( $behavior_on_scroll ) ) {
-			$layout_classnames .= ' has-behavior-onscroll-' . $behavior_on_scroll;
+			$layout_classnames[] = 'has-behavior-onscroll-' . $behavior_on_scroll;
 		}
 
-		if ( ! empty( $align_logo ) ) {
-			$layout_classnames .= ' has-align-link-' . $align_logo;
+		if ( 'navigate' === $layout_preset ) {
+			$layout_classnames[] = 'has-align-link-start';
+		} elseif ( 'identity' === $layout_preset ) {
+			$layout_classnames[] = 'has-align-link-center';
+		} elseif ( 'connect' === $layout_preset ) {
+			$layout_classnames[] = 'has-align-link-connect';
 		}
 
-		if ( ! empty( $align_title ) ) {
-			$layout_classnames .= ' has-align-link-' . $align_title;
+		if ( 'yes' === $has_blur_background ) {
+			$layout_classnames[] = 'has-blur-background';
 		}
 
 		$render_attributes = [
@@ -229,6 +245,7 @@ class Widget_Header_Render {
 			remove_filter( 'nav_menu_submenu_css_class', [ $this, 'handle_sub_menu_classes' ] );
 			remove_filter( 'walker_nav_menu_start_el', [ $this, 'handle_walker_menu_start_el' ] );
 			remove_filter( 'nav_menu_item_id', '__return_empty_string' );
+
 			$this->render_ctas_container();
 			?>
 		</nav>
@@ -249,19 +266,24 @@ class Widget_Header_Render {
 		] );
 
 		?>
-		<button <?php $this->widget->print_render_attribute_string( 'button-toggle' ); ?>>
-			<span class="ehp-header__toggle-icon ehp-header__toggle-icon--open" aria-hidden="true">
-				<?php
-				Icons_Manager::render_icon( $toggle_icon,
-					[
-						'role' => 'presentation',
-					]
-				);
-				?>
-			</span>
-			<i class="eicon-close ehp-header__toggle-icon ehp-header__toggle-icon--close"></i>
-			<span class="elementor-screen-only"><?php esc_html_e( 'Menu', 'hello-plus' ); ?></span>
-		</button>
+		<div class="ehp-header__side-toggle">
+			<?php if ( 'yes' === $this->settings['contact_buttons_show'] ) {
+				$this->render_contact_buttons();
+			} ?>
+			<button <?php $this->widget->print_render_attribute_string( 'button-toggle' ); ?>>
+				<span class="ehp-header__toggle-icon ehp-header__toggle-icon--open" aria-hidden="true">
+					<?php
+					Icons_Manager::render_icon( $toggle_icon,
+						[
+							'role' => 'presentation',
+						]
+					);
+					?>
+				</span>
+				<i class="eicon-close ehp-header__toggle-icon ehp-header__toggle-icon--close"></i>
+				<span class="elementor-screen-only"><?php esc_html_e( 'Menu', 'hello-plus' ); ?></span>
+			</button>
+		</div>
 		<?php
 	}
 
@@ -278,6 +300,11 @@ class Widget_Header_Render {
 		] );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'ctas-container' ); ?>>
+			<?php
+			if ( 'yes' === $this->settings['contact_buttons_show'] ) {
+				$this->render_contact_buttons();
+			}
+			?>
 			<?php if ( ! empty( $this->settings['secondary_cta_button_text'] ) ) {
 				$this->render_button( 'secondary' );
 			} ?>
@@ -288,6 +315,190 @@ class Widget_Header_Render {
 		<?php
 	}
 
+	protected function render_contact_buttons() {
+		$contact_buttons = $this->settings['contact_buttons_repeater'];
+		$link_type = $this->settings['contact_buttons_link_type'];
+		$responsive_display = $this->settings['contact_buttons_responsive_display'];
+		$hover_animation = $this->settings['contact_button_hover_animation'];
+
+		$contact_buttons_classnames = [
+			'ehp-header__contact-buttons',
+			'has-responsive-display-' . $responsive_display,
+		];
+
+		$this->widget->add_render_attribute( 'contact-buttons', [
+			'class' => $contact_buttons_classnames,
+		] );
+
+		?>
+		<div <?php $this->widget->print_render_attribute_string( 'contact-buttons' ); ?>>
+			<?php
+			foreach ( $contact_buttons as $key => $contact_button ) {
+				// Ensure attributes are cleared for this key
+				$this->widget->remove_render_attribute( 'contact-button-' . $key );
+
+				$link = [
+					'platform' => $contact_button['contact_buttons_platform'],
+					'number' => $contact_button['contact_buttons_number'] ?? '',
+					'username' => $contact_button['contact_buttons_username'] ?? '',
+					'email_data' => [
+						'contact_buttons_mail' => $contact_button['contact_buttons_mail'] ?? '',
+						'contact_buttons_mail_subject' => $contact_button['contact_buttons_mail_subject'] ?? '',
+						'contact_buttons_mail_body' => $contact_button['contact_buttons_mail_body'] ?? '',
+					],
+					'viber_action' => $contact_button['contact_buttons_viber_action'] ?? '',
+					'url' => $contact_button['contact_buttons_url'] ?? '',
+					'location' => $contact_button['contact_buttons_waze'] ?? '',
+					'map' => $contact_button['contact_buttons_map'] ?? '',
+				];
+
+				$icon = $contact_button['contact_buttons_icon'];
+
+				$button_classnames = [ 'ehp-header__contact-button' ];
+
+				if ( ! empty( $hover_animation ) ) {
+					$button_classnames[] = 'elementor-animation-' . $hover_animation;
+				}
+
+				$this->widget->add_render_attribute( 'contact-button-' . $key, [
+					'aria-label' => esc_attr( $contact_button['contact_buttons_label'] ),
+					'class' => $button_classnames,
+				] );
+
+				if ( $this->is_url_link( $contact_button['contact_buttons_platform'] ) ) {
+					$this->render_link_attributes( $link, 'contact-button-' . $key );
+				} else {
+					$formatted_link = $this->get_formatted_link( $link, 'contact_icon' );
+
+					$this->widget->add_render_attribute( 'contact-button-' . $key, [
+						'href' => $formatted_link,
+						'rel' => 'noopener noreferrer',
+						'target' => '_blank',
+					] );
+				}
+				?>
+
+				<a <?php $this->widget->print_render_attribute_string( 'contact-button-' . $key ); ?>>
+				<?php if ( 'icon' === $link_type ) {
+					Icons_Manager::render_icon( $icon,
+						[
+							'aria-hidden' => 'true',
+							'class' => 'ehp-header__contact-button-icon',
+						]
+					);
+				} ?>
+				<?php if ( 'label' === $link_type ) { ?>
+					<span class="ehp-header__contact-button-label"><?php echo esc_html( $contact_button['contact_buttons_label'] ); ?></span>
+				<?php } ?>
+				</a>
+			<?php } ?>
+		</div>
+		<?php
+	}
+
+	protected function is_url_link( $platform ) {
+		return 'url' === $platform || 'waze' === $platform || 'map' === $platform;
+	}
+
+	protected function render_link_attributes( array $link, string $key ) {
+		switch ( $link['platform'] ) {
+			case 'waze':
+				if ( empty( $link['location']['url'] ) ) {
+					$link['location']['url'] = '#';
+				}
+
+				$this->widget->add_link_attributes( $key, $link['location'] );
+				break;
+			case 'url':
+				if ( empty( $link['url']['url'] ) ) {
+					$link['url']['url'] = '#';
+				}
+
+				$this->widget->add_link_attributes( $key, $link['url'] );
+				break;
+			case 'map':
+				if ( empty( $link['map']['url'] ) ) {
+					$link['map']['url'] = '#';
+				}
+
+				$this->widget->add_link_attributes( $key, $link['map'] );
+				break;
+			default:
+				break;
+		}
+	}
+
+	protected function get_formatted_link( array $link, string $prefix ): string {
+
+		// Ensure we clear the default link value if the matching type value is empty
+		switch ( $link['platform'] ) {
+			case 'email':
+				$formatted_link = $this->build_email_link( $link['email_data'], $prefix );
+				break;
+			case 'sms':
+				$formatted_link = ! empty( $link['number'] ) ? 'sms:' . $link['number'] : '';
+				break;
+			case 'messenger':
+				$formatted_link = ! empty( $link['username'] ) ?
+					$this->build_messenger_link( $link['username'] ) :
+					'';
+				break;
+			case 'whatsapp':
+				$formatted_link = ! empty( $link['number'] ) ? 'https://wa.me/' . $link['number'] : '';
+				break;
+			case 'viber':
+				$formatted_link = $this->build_viber_link( $link['viber_action'], $link['number'] );
+				break;
+			case 'skype':
+				$formatted_link = ! empty( $link['username'] ) ? 'skype:' . $link['username'] . '?chat' : '';
+				break;
+			case 'telephone':
+				$formatted_link = ! empty( $link['number'] ) ? 'tel:' . $link['number'] : '';
+				break;
+			default:
+				break;
+		}
+
+		return esc_html( $formatted_link );
+	}
+
+	public static function build_email_link( array $data, string $prefix ) {
+		$email = $data[ $prefix . '_mail' ] ?? '';
+		$subject = $data[ $prefix . '_mail_subject' ] ?? '';
+		$body = $data[ $prefix . '_mail_body' ] ?? '';
+
+		if ( ! $email ) {
+			return '';
+		}
+
+		$link = 'mailto:' . $email;
+
+		if ( $subject ) {
+			$link .= '?subject=' . $subject;
+		}
+
+		if ( $body ) {
+			$link .= $subject ? '&' : '?';
+			$link .= 'body=' . $body;
+		}
+
+		return $link;
+	}
+
+	public static function build_viber_link( string $action, string $number ) {
+		if ( empty( $number ) ) {
+			return '';
+		}
+
+		return add_query_arg( [
+			'number' => rawurlencode( $number ),
+		], 'viber://' . $action );
+	}
+
+	public static function build_messenger_link( string $username ) {
+		return 'https://m.me/' . $username;
+	}
+
 	protected function render_button( $type ) {
 		$button_text = $this->settings[ $type . '_cta_button_text' ];
 		$button_link = $this->settings[ $type . '_cta_button_link' ];
@@ -295,25 +506,37 @@ class Widget_Header_Render {
 		$button_hover_animation = $this->settings[ $type . '_button_hover_animation' ] ?? '';
 		$button_has_border = $this->settings[ $type . '_show_button_border' ];
 		$button_corner_shape = $this->settings[ $type . '_button_shape' ] ?? '';
+		$button_corner_shape_mobile = $this->settings[ $type . '_button_shape_mobile' ] ?? '';
+		$button_corner_shape_tablet = $this->settings[ $type . '_button_shape_tablet' ] ?? '';
 		$button_type = $this->settings[ $type . '_button_type' ] ?? '';
-		$button_classnames = self::BUTTON_CLASSNAME;
+		$button_classnames = [
+			self::BUTTON_CLASSNAME,
+		];
 
-		$button_classnames .= ' ehp-header__button--' . $type;
+		$button_classnames[] = 'ehp-header__button--' . $type;
 
 		if ( ! empty( $button_type ) ) {
-			$button_classnames .= ' is-type-' . $button_type;
+			$button_classnames[] = 'is-type-' . $button_type;
 		}
 
 		if ( $button_hover_animation ) {
-			$button_classnames .= ' elementor-animation-' . $button_hover_animation;
+			$button_classnames[] = 'elementor-animation-' . $button_hover_animation;
 		}
 
 		if ( 'yes' === $button_has_border ) {
-			$button_classnames .= ' has-border';
+			$button_classnames[] = 'has-border';
 		}
 
 		if ( ! empty( $button_corner_shape ) ) {
-			$button_classnames .= ' has-shape-' . $button_corner_shape;
+			$button_classnames[] = 'has-shape-' . $button_corner_shape;
+
+			if ( ! empty( $button_corner_shape_mobile ) ) {
+				$button_classnames[] = 'has-shape-sm-' . $button_corner_shape_mobile;
+			}
+
+			if ( ! empty( $button_corner_shape_tablet ) ) {
+				$button_classnames[] = 'has-shape-md-' . $button_corner_shape_tablet;
+			}
 		}
 
 		$this->widget->add_render_attribute( $type . '-button', [
@@ -364,17 +587,18 @@ class Widget_Header_Render {
 		return $atts;
 	}
 
-	public function handle_sub_menu_classes( $classes ) {
+	public function handle_sub_menu_classes() {
 		$submenu_layout = $this->settings['style_submenu_layout'] ?? 'horizontal';
-		$submenu_shape = $this->settings['style_submenu_shape'] ?? 'default';
+		$submenu_shape = $this->settings['style_submenu_shape'];
 
-		$dropdown_classnames = 'ehp-header__dropdown';
-		$dropdown_classnames .= ' has-layout-' . $submenu_layout;
-		$dropdown_classnames .= ' has-shape-' . $submenu_shape;
+		$dropdown_classnames = [ 'ehp-header__dropdown' ];
+		$dropdown_classnames[] = 'has-layout-' . $submenu_layout;
 
-		$classes[] = $dropdown_classnames;
+		if ( ! empty( $submenu_shape ) ) {
+			$dropdown_classnames[] = 'has-shape-' . $submenu_shape;
+		}
 
-		return $classes;
+		return $dropdown_classnames;
 	}
 
 	public function handle_walker_menu_start_el( $item_output, $item ) {

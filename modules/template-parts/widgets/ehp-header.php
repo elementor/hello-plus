@@ -50,7 +50,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 	}
 
 	public function get_script_depends(): array {
-		return [ 'helloplus-header-frontend' ];
+		return [ 'helloplus-header-fe' ];
 	}
 
 	protected function render(): void {

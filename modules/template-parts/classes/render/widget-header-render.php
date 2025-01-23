@@ -22,7 +22,6 @@ class Widget_Header_Render {
 	const LAYOUT_CLASSNAME = 'ehp-header';
 	const SITE_LINK_CLASSNAME = 'ehp-header__site-link';
 	const CTAS_CONTAINER_CLASSNAME = 'ehp-header__ctas-container';
-	const BUTTON_CLASSNAME = 'ehp-header__button';
 
 	protected Ehp_Header $widget;
 

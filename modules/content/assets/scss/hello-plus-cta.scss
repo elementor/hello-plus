@@ -16,8 +16,8 @@
 	--cta-heading-color: #28292B;
 	--cta-description-color: #28292B;
 
-	--cta-text-width-heading: 800px;
-	--cta-text-width-description: 440px;
+	// --cta-text-width-heading: 800px;
+	// --cta-text-width-description: 440px;
 
 	--cta-button-primary-icon-spacing: 10px;
 	--cta-button-primary-icon-size: 16px;
@@ -54,13 +54,90 @@
 	--cta-box-padding-inline-end: 60px;
 	--cta-box-padding-inline-start: 60px;
 
-	display: flex;
-	justify-content: center;
+	--cta-image-position: center center;
+	--cta-image-border-width: 1px;
+	--cta-image-border-color: #{$global-colors-secondary};
+
+	--cta-border-radius-default: #{$corners-shape-default};
+	--cta-border-radius-sharp: #{$corners-shape-sharp};
+	--cta-border-radius-rounded: #{$corners-shape-rounded};
+	--cta-border-radius-round: #{$corners-shape-round};
+	--cta-border-radius-oval: #{$corners-shape-oval};
+
+	--cta-box-border-radius-custom-block-end: #{$corners-shape-sharp};
+	--cta-box-border-radius-custom-block-start: #{$corners-shape-sharp};
+	--cta-box-border-radius-custom-inline-end: #{$corners-shape-sharp};
+	--cta-box-border-radius-custom-inline-start: #{$corners-shape-sharp};
+	--cta-image-border-radius-custom-block-end: #{$corners-shape-sharp};
+	--cta-image-border-radius-custom-block-start: #{$corners-shape-sharp};
+	--cta-image-border-radius-custom-inline-end: #{$corners-shape-sharp};
+	--cta-image-border-radius-custom-inline-start: #{$corners-shape-sharp};
+
 	height: var(--cta-box-height);
 	padding-block-end: var(--cta-box-padding-block-end);
 	padding-block-start: var(--cta-box-padding-block-start);
 	padding-inline-end: var(--cta-box-padding-inline-end);
 	padding-inline-start: var(--cta-box-padding-inline-start);
+
+	@mixin shapes() {
+		&-sharp {
+			border-radius: var(--cta-border-radius-sharp);
+		}
+	
+		&-rounded {
+			border-radius: var(--cta-border-radius-rounded);
+		}
+	
+		&-round {
+			border-radius: var(--cta-border-radius-round);
+		}
+
+		&-default {
+			border-radius: var(--cta-border-radius-default);
+		}
+	
+		&-oval {
+			border-radius: var(--cta-border-radius-oval);
+		}
+
+		&-custom {
+			border-top-left-radius: var(--cta-border-radius-block-end);
+			border-top-right-radius: var(--cta-border-radius-block-start);
+			border-bottom-right-radius: var(--cta-border-radius-inline-end);
+			border-bottom-left-radius: var(--cta-border-radius-inline-start);
+		}
+	}
+
+	& .has-shape,
+	&.has-shape {
+		@include shapes();
+
+		&-md {
+			@media screen and (max-width: $screen-desktop-min) {
+				@include shapes();
+			}
+		}
+
+		&-sm {
+			@media screen and (max-width: $screen-tablet-min) {
+				@include shapes();
+			}
+		}
+	}
+
+	&.has-image-stretch {
+		padding-block-start: 0;
+		padding-inline-start: 0;
+		padding-inline-end: 0;
+
+		&.has-preset-storytelling {
+			& .ehp-cta__text-container,
+			& .ehp-cta__ctas-container {
+				padding-inline-end: var(--cta-box-padding-inline-end);
+				padding-inline-start: var(--cta-box-padding-inline-start);
+			}
+		}
+	}
 
 	@supports (height: 100dvh) {
 		--cta-box-full-height: 100dvh;
@@ -118,6 +195,40 @@
 		@include full-height($screen-widescreen-min, null);
 	}
 
+	&.has-preset {
+
+		&-focus {
+
+			.ehp-cta__elements-container {
+				display: flex;
+				flex-direction: column;
+			}
+
+			@media screen and (min-width: $screen-tablet-min) {
+				.ehp-cta__elements-container {
+					flex-direction: row;
+				}
+
+				.ehp-cta__text-container {
+					width: 66.66%;
+				}
+	
+				.ehp-cta__buttons-wrapper {
+					justify-content: flex-end;
+				}
+			}
+		}
+
+		&-streamline,
+		&-storytelling {
+
+			.ehp-cta__elements-container {
+				display: flex;
+				flex-direction: column;
+			}
+		}
+	}
+
 	& a.ehp-button,
 	& a.ehp-button:not([href]):not([tabindex]) {
 		--ehp-button-primary-icon-spacing: var(--cta-button-primary-icon-spacing);
@@ -155,22 +266,51 @@
 		flex-grow: 1;
 	}
 
+	@mixin cta-width() {
+		&-default {
+			flex-direction: row;
+		}
+
+		&-stretch {
+			align-items: flex-start;
+			flex-direction: column;
+
+			& .ehp-cta__button {
+				width: 100%;
+			}
+		}
+	}
+
 	&__buttons-wrapper {
 		display: flex;
 		gap: var(--cta-buttons-space-between);
-		flex-direction: column;
-		justify-content: center;
 
 		@media screen and (min-width: $screen-tablet-min) {
 			align-items: center;
 			flex-direction: row;
 			justify-content: flex-start;
 		}
+
+		&.has-cta-width {
+			@include cta-width();
+
+			&-md {
+				@media screen and (max-width: $screen-desktop-min) {
+					@include cta-width();
+				}
+			}
+
+			&-sm {
+				@media screen and (max-width: $screen-tablet-min) {
+					@include cta-width();
+				}
+			}
+		}
 	}
 
 	&__elements-container {
 		display: flex;
-		flex-direction: var(--cta-elements-start-position);
+		// flex-direction: var(--cta-elements-start-position);
 		gap: var(--cta-elements-spacing);
 		max-width: var(--cta-content-width);
 		width: 100%;
@@ -179,59 +319,135 @@
 	&__heading {
 		color: var(--cta-heading-color);
 		margin: 0;
-		max-width: var(--cta-text-width-heading);
+		// max-width: var(--cta-text-width-heading);
 	}
 
 	&__description {
 		color: var(--cta-description-color);
 		margin: 0;
-		max-width: var(--cta-text-width-description);
+		// max-width: var(--cta-text-width-description);
 	}
 
 	&__text-container {
-		align-items: center;
+		// align-items: center;
 		display: flex;
 		flex-direction: column;
 		gap: var(--cta-elements-spacing);
 
-		.ehp-cta__heading,
-		.ehp-cta__description {
-			text-align: center;
+		// .ehp-cta__heading,
+		// .ehp-cta__description {
+		// 	text-align: center;
+		// }
+	}
+
+	&__image-container {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		z-index: 2;
+
+		.elementor & img {
+			height: var(--cta-image-height);
+			object-fit: cover;
+			object-position: var(--cta-image-position);
+			min-height: var(--cta-image-min-height);
+			width: var(--cta-image-width);
+
+			@mixin custom-shape-image() {
+				&-rounded {
+					--cta-border-shape-rounded: #{$corners-image-shape-rounded};
+				}
+
+				&-round {
+					--cta-border-shape-round: #{$corners-image-shape-round};
+				}
+
+				&-custom {
+					--cta-border-radius-block-end: var(--cta-image-border-radius-custom-block-end);
+					--cta-border-radius-block-start: var(--cta-image-border-radius-custom-block-start);
+					--cta-border-radius-inline-end: var(--cta-image-border-radius-custom-inline-end);
+					--cta-border-radius-inline-start: var(--cta-image-border-radius-custom-inline-start);
+				}
+			}
+		
+			&.has-shape {
+				@include custom-shape-image();
+		
+				&-md {
+					@media screen and (max-width: $screen-desktop-min) {
+						@include custom-shape-image();
+					}
+				}
+	
+				&-sm {
+					@media screen and (max-width: $screen-tablet-min) {
+						@include custom-shape-image();
+					}
+				}
+			}
+
+			&.has-border {
+				border-color: var(--cta-image-border-color);
+				border-style: solid;
+				border-width: var(--cta-image-border-width);
+			}
+		}
+	}
+
+	&.has-image-stretch {
+		--cta-image-width: 100%;
+	}
+
+	@mixin elements-position() {
+		&-center {
+			.ehp-cta__buttons-wrapper {
+				justify-content: center;
+			}
+	
+			.ehp-cta__text-container {
+				text-align: center;
+			}
 		}
 	}
 
 	&.has-elements-position {
+		@include elements-position();
 
-		&-center {
-
-			.ehp-cta__buttons-wrapper {
-				justify-content: center;
+		&-md {
+			@media screen and (max-width: $screen-desktop-min) {
+				@include elements-position();
 			}
 		}
 
-		&-start {
-
-			.ehp-cta__text-container {
-				align-items: start;
-
-				.ehp-cta__heading,
-				.ehp-cta__description {
-					text-align: start;
-				}
-			}
-
-			@media screen and (min-width: $screen-desktop-min) {
-				--cta-elements-start-position: var(--cta-elements-start-position-desktop);
-
-				.ehp-cta__ctas-container {
-					align-items: var(--cta-buttons-position);
-					display: flex;
-				}
-
-				.ehp-cta__buttons-wrapper {
-					justify-content: flex-end;
-				}
+		&-sm {
+			@media screen and (max-width: $screen-tablet-min) {
+				@include elements-position();
 			}
 		}
+
+	// 	&-start {
+
+	// 		.ehp-cta__text-container {
+	// 			align-items: start;
+
+	// 			.ehp-cta__heading,
+	// 			.ehp-cta__description {
+	// 				text-align: start;
+	// 			}
+	// 		}
+
+	// 		@media screen and (min-width: $screen-desktop-min) {
+	// 			--cta-elements-start-position: var(--cta-elements-start-position-desktop);
+
+	// 			.ehp-cta__ctas-container {
+	// 				align-items: var(--cta-buttons-position);
+	// 				display: flex;
+	// 			}
+
+	// 			.ehp-cta__buttons-wrapper {
+	// 				justify-content: flex-end;
+	// 			}
+	// 		}
+	// 	}
 	}
 }

@@ -499,7 +499,10 @@ class Widget_Header_Render {
 	}
 
 	protected function render_button( $type ) {
-		$button = new Ehp_Button( $this->widget, [ 'type' => $type, 'widget_name' => 'header' ] );
+		$button = new Ehp_Button( $this->widget, [
+			'type' => $type,
+			'widget_name' => 'header',
+		] );
 		$button->render();
 	}
 

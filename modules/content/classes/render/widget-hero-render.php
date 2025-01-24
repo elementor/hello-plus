@@ -80,7 +80,10 @@ class Widget_Hero_Render {
 	}
 
 	public function render_cta_button() {
-		$button = new Ehp_Button( $this->widget, [ 'type' => 'primary', 'widget_name' => 'hero' ] );
+		$button = new Ehp_Button( $this->widget, [
+			'type' => 'primary',
+			'widget_name' => 'hero',
+		] );
 		?>
 		<div class="ehp-hero__button-container">
 			<?php $button->render(); ?>

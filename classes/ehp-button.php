@@ -113,7 +113,7 @@ class Ehp_Button {
 			]
 		);
 
-		if ( $defaults['has_secondary_cta' ] ) {
+		if ( $defaults['has_secondary_cta'] ) {
 			$this->widget->add_control(
 				'primary_cta_heading',
 				[
@@ -160,7 +160,7 @@ class Ehp_Button {
 			]
 		);
 
-		if ( $defaults['has_secondary_cta' ] ) {
+		if ( $defaults['has_secondary_cta'] ) {
 			$this->widget->add_control(
 				'secondary_cta_show',
 				[
@@ -173,7 +173,7 @@ class Ehp_Button {
 					'separator' => 'before',
 				]
 			);
-	
+
 			$this->widget->add_control(
 				'secondary_cta_button_text',
 				[
@@ -188,7 +188,7 @@ class Ehp_Button {
 					],
 				]
 			);
-	
+
 			$this->widget->add_control(
 				'secondary_cta_button_link',
 				[
@@ -206,7 +206,7 @@ class Ehp_Button {
 					],
 				]
 			);
-	
+
 			$this->widget->add_control(
 				'secondary_cta_button_icon',
 				[
@@ -230,13 +230,13 @@ class Ehp_Button {
 			'has_secondary_cta' => $this->defaults['has_secondary_cta'] ?? true,
 		];
 
-		$this->add_button_type_controls( 
-			[ 
-				'type' => 'primary'
+		$this->add_button_type_controls(
+			[
+				'type' => 'primary',
 			]
 		);
 
-		if ( $defaults['has_secondary_cta' ] ) {
+		if ( $defaults['has_secondary_cta'] ) {
 			$this->add_button_type_controls(
 				[
 					'type' => 'secondary',
@@ -300,7 +300,7 @@ class Ehp_Button {
 			$type . '_cta_show' => 'yes',
 		] : [];
 
-		if ( $defaults['has_secondary_cta' ] ) {
+		if ( $defaults['has_secondary_cta'] ) {
 			$this->widget->add_control(
 				$type . '_button_label',
 				[

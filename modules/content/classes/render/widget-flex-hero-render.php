@@ -154,7 +154,10 @@ class Widget_Flex_Hero_Render {
 	}
 
 	protected function render_button( $type ) {
-		$button = new Ehp_Button( $this->widget, [ 'type' => $type, 'widget_name' => 'flex-hero' ] );
+		$button = new Ehp_Button( $this->widget, [
+			'type' => $type,
+			'widget_name' => 'flex-hero',
+		] );
 		$button->render();
 	}
 

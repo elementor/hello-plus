@@ -9,6 +9,7 @@ use Elementor\Group_Control_Image_Size;
 use Elementor\Icons_Manager;
 use Elementor\Utils;
 use HelloPlus\Modules\Content\Widgets\Hero;
+use HelloPlus\Classes\Ehp_Button;
 
 class Widget_Hero_Render {
 	protected Hero $widget;
@@ -79,54 +80,15 @@ class Widget_Hero_Render {
 	}
 
 	public function render_cta_button() {
-		$button_text = $this->settings['cta_button_text'];
-		$button_link = $this->settings['cta_button_link'];
-		$button_icon = $this->settings['cta_button_icon'];
-		$has_button = '' !== $button_text;
-		$button_hover_animation = $this->settings['button_hover_animation'] ?? '';
-		$button_has_border = $this->settings['show_button_border'];
-		$button_corner_shape = $this->settings['button_shape'] ?? '';
-		$button_type = $this->settings['button_type'] ?? '';
-		$button_classnames = self::BUTTON_CLASSNAME;
-
-		if ( ! empty( $button_type ) ) {
-			$button_classnames .= ' is-type-' . $button_type;
-		}
-
-		if ( $button_hover_animation ) {
-			$button_classnames .= ' elementor-animation-' . $button_hover_animation;
-		}
-
-		if ( 'yes' === $button_has_border ) {
-			$button_classnames .= ' has-border';
-		}
-
-		if ( ! empty( $button_corner_shape ) ) {
-			$button_classnames .= ' has-shape-' . $button_corner_shape;
-		}
-
-		$this->widget->add_render_attribute( 'button', [
-			'class' => $button_classnames,
+		$button = new Ehp_Button( $this->widget, [
+			'type' => 'primary',
+			'widget_name' => 'hero',
 		] );
-		if ( ! empty( $button_link ) ) {
-			$this->widget->add_link_attributes( 'button', $button_link );
-		}
-
-		if ( $has_button ) { ?>
-			<div class="ehp-hero__button-container">
-				<a <?php $this->widget->print_render_attribute_string( 'button' ); ?>>
-				<?php
-					Icons_Manager::render_icon( $button_icon,
-						[
-							'aria-hidden' => 'true',
-							'class' => 'ehp-hero__button-icon',
-						]
-					);
-				?>
-				<?php echo esc_html( $button_text ); ?>
-				</a>
-			</div>
-		<?php }
+		?>
+		<div class="ehp-hero__button-container">
+			<?php $button->render(); ?>
+		</div>
+		<?php
 	}
 
 	public function render_image() {

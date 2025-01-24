@@ -17,17 +17,20 @@
 	--hero-heading-color: #28292B;
 	--hero-subheading-color: #28292B;
 
-	--hero-button-icon-size: 16px;
-	--hero-button-icon-spacing: 10px;
-	--hero-button-text-color: #ffffff;
-	--hero-button-text-color-hover: #ffffff;
-	--hero-button-border-width: 1px;
-	--hero-button-border-color: #28292B;
-	--hero-button-border-radius: 0;
-	--hero-button-padding-block-end: 8px;
-	--hero-button-padding-block-start: 8px;
-	--hero-button-padding-inline-end: 16px;
-	--hero-button-padding-inline-start: 16px;
+	--hero-button-primary-icon-spacing: 10px;
+	--hero-button-primary-icon-size: 16px;
+	--hero-button-primary-text-color: #{$global-colors-white};
+	--hero-button-primary-text-color-hover: #{$global-colors-text};
+	--hero-button-primary-border-width: 0;
+	--hero-button-primary-border-color: transparent;
+	--hero-button-primary-padding-block-end: 8px;
+	--hero-button-primary-padding-block-start: 8px;
+	--hero-button-primary-padding-inline-end: 16px;
+	--hero-button-primary-padding-inline-start: 16px;
+	--hero-button-primary-border-radius-block-end: #{$corners-shape-default};
+	--hero-button-primary-border-radius-block-start: #{$corners-shape-default};
+	--hero-button-primary-border-radius-inline-end: #{$corners-shape-default};
+	--hero-button-primary-border-radius-inline-start: #{$corners-shape-default};
 
 	--hero-box-padding-block-end: 0;
 	--hero-box-padding-block-start: 0;
@@ -122,63 +125,22 @@
 		margin-bottom: 68px;
 	}
 
-	&__button-icon {
-		fill: currentColor;
-		height: var(--hero-button-icon-size);
-		width: var(--hero-button-icon-size);
-	}
-
 	& a.ehp-hero__button,
 	& a.ehp-hero__button:not([href]):not([tabindex]) {
-		align-items: center;
-		color: var(--hero-button-text-color);
-		display: flex;
-		gap: var(--hero-button-icon-spacing);
-		text-decoration: none;
-		transition: $transition;
-
-		&:hover,
-		&:focus {
-			color: var(--hero-button-text-color-hover);
-			transition: $transition;
-		}
-
-		&.has-border {
-			border-color: var(--hero-button-border-color);
-			border-style: solid;
-			border-width: var(--hero-button-border-width);
-			border-radius: var(--hero-button-border-radius);
-		}
-
-		&.is-type-button {
-			padding-block-end: var(--hero-button-padding-block-end);
-			padding-block-start: var(--hero-button-padding-block-start);
-			padding-inline-end: var(--hero-button-padding-inline-end);
-			padding-inline-start: var(--hero-button-padding-inline-start);
-			text-decoration: none;
-		}
-
-		&.is-type-link,
-		&.is-type-link:not([href]):not([tabindex]) {
-			background: none;
-			text-decoration: underline;
-		}
-
-		&.has-shape-sharp {
-			border-radius: $corners-shape-sharp;
-		}
-
-		&.has-shape-rounded {
-			border-radius: $corners-shape-rounded;
-		}
-
-		&.has-shape-round {
-			border-radius: $corners-shape-round;
-		}
-
-		&.has-shape-default {
-			border-radius: $corners-shape-default;
-		}
+		--ehp-button-primary-icon-spacing: var(--hero-button-primary-icon-spacing);
+		--ehp-button-primary-icon-size: var(--hero-button-primary-icon-size);
+		--ehp-button-primary-text-color: var(--hero-button-primary-text-color);
+		--ehp-button-primary-text-color-hover: var(--hero-button-primary-text-color-hover);
+		--ehp-button-primary-border-width: var(--hero-button-primary-border-width);
+		--ehp-button-primary-border-color: var(--hero-button-primary-border-color);
+		--ehp-button-primary-padding-block-end: var(--hero-button-primary-padding-block-end);
+		--ehp-button-primary-padding-block-start: var(--hero-button-primary-padding-block-start);
+		--ehp-button-primary-padding-inline-end: var(--hero-button-primary-padding-inline-end);
+		--ehp-button-primary-padding-inline-start: var(--hero-button-primary-padding-inline-start);
+		--ehp-button-primary-border-radius-block-end: var(--hero-button-primary-border-radius-block-end);
+		--ehp-button-primary-border-radius-block-start: var(--hero-button-primary-border-radius-block-start);
+		--ehp-button-primary-border-radius-inline-end: var(--hero-button-primary-border-radius-inline-end);
+		--ehp-button-primary-border-radius-inline-start: var(--hero-button-primary-border-radius-inline-start);
 	}
 
 	&__heading {

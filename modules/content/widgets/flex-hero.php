@@ -20,6 +20,7 @@ use Elementor\Utils as Elementor_Utils;
 use HelloPlus\Modules\Content\Base\Traits\Shared_Content_Traits;
 use HelloPlus\Modules\Content\Classes\Render\Widget_Flex_Hero_Render;
 use HelloPlus\Modules\Theme\Module as Theme_Module;
+use HelloPlus\Classes\Ehp_Button;
 
 class Flex_Hero extends Widget_Base {
 
@@ -46,7 +47,7 @@ class Flex_Hero extends Widget_Base {
 	}
 
 	public function get_style_depends(): array {
-		return [ 'helloplus-flex-hero' ];
+		return [ 'helloplus-flex-hero', 'helloplus-button' ];
 	}
 
 	protected function render(): void {
@@ -73,6 +74,7 @@ class Flex_Hero extends Widget_Base {
 	protected function add_style_section() {
 		$this->add_style_layout_section();
 		$this->add_style_content_section();
+		$this->add_style_cta_section();
 		$this->add_style_image_section();
 		$this->add_style_box_section();
 	}
@@ -191,119 +193,11 @@ class Flex_Hero extends Widget_Base {
 	}
 
 	protected function add_content_cta_section() {
-		$this->start_controls_section(
-			'content_cta',
-			[
-				'label' => esc_html__( 'CTA Button', 'hello-plus' ),
-				'tab' => Controls_Manager::TAB_CONTENT,
-			]
-		);
-
-		$this->add_control(
-			'primary_cta_heading',
-			[
-				'label' => esc_html__( 'Primary CTA', 'hello-plus' ),
-				'type' => Controls_Manager::HEADING,
-			]
-		);
-
-		$this->add_control(
-			'primary_cta_button_text',
-			[
-				'label' => esc_html__( 'Text', 'hello-plus' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => esc_html__( 'Schedule Now', 'hello-plus' ),
-				'dynamic' => [
-					'active' => true,
-				],
-			]
-		);
-
-		$this->add_control(
-			'primary_cta_button_link',
-			[
-				'label' => esc_html__( 'Link', 'hello-plus' ),
-				'type' => Controls_Manager::URL,
-				'dynamic' => [
-					'active' => true,
-				],
-				'default' => [
-					'url' => '',
-					'is_external' => true,
-				],
-			]
-		);
-
-		$this->add_control(
-			'primary_cta_button_icon',
-			[
-				'label' => esc_html__( 'Icon', 'hello-plus' ),
-				'type' => Controls_Manager::ICONS,
-				'label_block' => false,
-				'skin' => 'inline',
-			]
-		);
-
-		$this->add_control(
-			'secondary_cta_show',
-			[
-				'label' => esc_html__( 'Secondary CTA', 'hello-plus' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Show', 'hello-plus' ),
-				'label_off' => esc_html__( 'Hide', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => '',
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'secondary_cta_button_text',
-			[
-				'label' => esc_html__( 'Text', 'hello-plus' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => esc_html__( 'Contact Us', 'hello-plus' ),
-				'dynamic' => [
-					'active' => true,
-				],
-				'condition' => [
-					'secondary_cta_show' => 'yes',
-				],
-			]
-		);
-
-		$this->add_control(
-			'secondary_cta_button_link',
-			[
-				'label' => esc_html__( 'Link', 'hello-plus' ),
-				'type' => Controls_Manager::URL,
-				'dynamic' => [
-					'active' => true,
-				],
-				'default' => [
-					'url' => '',
-					'is_external' => true,
-				],
-				'condition' => [
-					'secondary_cta_show' => 'yes',
-				],
-			]
-		);
-
-		$this->add_control(
-			'secondary_cta_button_icon',
-			[
-				'label' => esc_html__( 'Icon', 'hello-plus' ),
-				'type' => Controls_Manager::ICONS,
-				'label_block' => false,
-				'skin' => 'inline',
-				'condition' => [
-					'secondary_cta_show' => 'yes',
-				],
-			]
-		);
-
-		$this->end_controls_section();
+		$defaults = [
+			'secondary_cta_show' => 'no',
+		];
+		$button = new Ehp_Button( $this, [ 'widget_name' => 'flex-hero' ], $defaults );
+		$button->add_content_section();
 	}
 
 	protected function add_content_image_section() {
@@ -643,395 +537,22 @@ class Flex_Hero extends Widget_Base {
 			]
 		);
 
-		$this->add_cta_button_controls( 'primary' );
-		$this->add_cta_button_controls( 'secondary', true );
-
-		$this->add_responsive_control(
-			'cta_space_between',
-			[
-				'label' => esc_html__( 'Space Between Buttons', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
-				'range' => [
-					'px' => [
-						'max' => 200,
-					],
-					'%' => [
-						'max' => 100,
-					],
-				],
-				'default' => [
-					'size' => 16,
-					'unit' => 'px',
-				],
-				'tablet_default' => [
-					'size' => 16,
-					'unit' => 'px',
-				],
-				'mobile_default' => [
-					'size' => 16,
-					'unit' => 'px',
-				],
-				'separator' => 'before',
-				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-buttons-space-between: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'secondary_cta_show' => 'yes',
-				],
-			]
-		);
-
 		$this->end_controls_section();
 	}
 
-	protected function add_cta_button_controls( string $type, bool $add_condition = false ) {
-		$is_primary = 'primary' === $type;
-		$label = $is_primary ? esc_html__( 'Primary CTA', 'hello-plus' ) : esc_html__( 'Secondary CTA', 'hello-plus' );
-		$show_button_border_default = $is_primary ? 'no' : 'yes';
-		$background_color_default = $is_primary ? Global_Colors::COLOR_ACCENT : '';
-
-		$add_type_condition = $add_condition ? [
-			$type . '_cta_show' => 'yes',
-		] : [];
-
-		$this->add_control(
-			$type . '_button_label',
+	protected function add_style_cta_section() {
+		$this->start_controls_section(
+			'style_cta',
 			[
-				'label' => $label,
-				'type' => Controls_Manager::HEADING,
-				'condition' => $add_type_condition,
-				'separator' => 'primary' === $type ? 'before' : '',
+				'label' => esc_html__( 'CTA Button', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
 
-		$this->add_control(
-			$type . '_button_type',
-			[
-				'label' => esc_html__( 'Type', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'button',
-				'options' => [
-					'button' => esc_html__( 'Button', 'hello-plus' ),
-					'link' => esc_html__( 'Link', 'hello-plus' ),
-				],
-				'condition' => $add_type_condition,
-			]
-		);
+		$button = new Ehp_Button( $this, [ 'widget_name' => 'flex-hero' ] );
+		$button->add_style_controls();
 
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => $type . '_button_typography',
-				'selector' => '{{WRAPPER}} .ehp-flex-hero__button--' . $type,
-				'global' => [
-					'default' => Global_Typography::TYPOGRAPHY_ACCENT,
-				],
-				'condition' => $add_type_condition,
-			]
-		);
-
-		$this->add_responsive_control(
-			$type . '_button_icon_position',
-			[
-				'label' => esc_html__( 'Icon Position', 'hello-plus' ),
-				'type' => Controls_Manager::CHOOSE,
-				'default' => is_rtl() ? 'row' : 'row-reverse',
-				'toggle' => false,
-				'options' => [
-					'row' => [
-						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => 'eicon-h-align-' . ( is_rtl() ? 'right' : 'left' ),
-					],
-					'row-reverse' => [
-						'title' => esc_html__( 'End', 'hello-plus' ),
-						'icon' => 'eicon-h-align-' . ( is_rtl() ? 'left' : 'right' ),
-					],
-				],
-				'selectors_dictionary' => [
-					'left' => is_rtl() ? 'row-reverse' : 'row',
-					'right' => is_rtl() ? 'row' : 'row-reverse',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero__button--' . $type => 'flex-direction: {{VALUE}};',
-				],
-				'condition' => array_merge([
-					$type . '_cta_button_icon[value]!' => '',
-				], $add_type_condition),
-			]
-		);
-
-		$this->add_control(
-			$type . '_button_icon_spacing',
-			[
-				'label' => esc_html__( 'Icon Spacing', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
-				'range' => [
-					'px' => [
-						'max' => 100,
-					],
-					'em' => [
-						'max' => 5,
-					],
-					'rem' => [
-						'max' => 5,
-					],
-					'%' => [
-						'max' => 100,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-button-' . $type . '-icon-spacing: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => array_merge([
-					$type . '_cta_button_icon[value]!' => '',
-				], $add_type_condition),
-			]
-		);
-
-		$this->start_controls_tabs(
-			$type . '_button_style'
-		);
-
-		$this->start_controls_tab(
-			$type . '_button_normal_tab',
-			[
-				'label' => esc_html__( 'Normal', 'hello-plus' ),
-				'condition' => $add_type_condition,
-			],
-		);
-
-		$this->add_control(
-			$type . '_button_text_color',
-			[
-				'label' => esc_html__( 'Text Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_SECONDARY,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-button-' . $type . '-text-color: {{VALUE}}',
-				],
-				'condition' => $add_type_condition,
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Background::get_type(),
-			[
-				'name' => $type . '_button_background',
-				'types' => [ 'classic', 'gradient' ],
-				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .is-type-button.ehp-flex-hero__button--' . $type,
-				'fields_options' => [
-					'background' => [
-						'default' => 'classic',
-					],
-					'color' => [
-						'global' => [
-							'default' => $background_color_default,
-						],
-					],
-				],
-				'condition' => array_merge([
-					$type . '_button_type' => 'button',
-				], $add_type_condition),
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->start_controls_tab(
-			$type . '_button_hover_tab',
-			[
-				'label' => esc_html__( 'Hover', 'hello-plus' ),
-				'condition' => $add_type_condition,
-			],
-		);
-
-		$this->add_control(
-			$type . '_hover_button_text_color',
-			[
-				'label' => esc_html__( 'Text Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_TEXT,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-button-' . $type . '-text-color-hover: {{VALUE}}',
-				],
-				'condition' => $add_type_condition,
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Background::get_type(),
-			[
-				'name' => $type . '_button_background_hover',
-				'types' => [ 'classic', 'gradient' ],
-				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .is-type-button.ehp-flex-hero__button--' . $type . ':hover, {{WRAPPER}} .is-type-button.ehp-flex-hero__button--' . $type . ':focus',
-				'fields_options' => [
-					'background' => [
-						'default' => 'classic',
-					],
-					'color' => [
-						'global' => [
-							'default' => $background_color_default,
-						],
-					],
-				],
-				'condition' => array_merge([
-					$type . '_button_type' => 'button',
-				], $add_type_condition),
-			]
-		);
-
-		$this->add_control(
-			$type . '_button_hover_animation',
-			[
-				'label' => esc_html__( 'Hover Animation', 'hello-plus' ),
-				'type' => Controls_Manager::HOVER_ANIMATION,
-				'condition' => $add_type_condition,
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->end_controls_tabs();
-
-		$this->add_control(
-			$type . '_show_button_border',
-			[
-				'label' => esc_html__( 'Border', 'hello-plus' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
-				'label_off' => esc_html__( 'No', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => $show_button_border_default,
-				'separator' => 'before',
-				'condition' => array_merge([
-					$type . '_button_type' => 'button',
-				], $add_type_condition),
-			]
-		);
-
-		$this->add_control(
-			$type . '_button_border_width',
-			[
-				'label' => __( 'Border Width', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 10,
-						'step' => 1,
-					],
-				],
-				'default' => [
-					'size' => 1,
-					'unit' => 'px',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-button-' . $type . '-border-width: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => array_merge([
-					$type . '_show_button_border' => 'yes',
-					$type . '_button_type' => 'button',
-				], $add_type_condition),
-			]
-		);
-
-		$this->add_control(
-			$type . '_button_border_color',
-			[
-				'label' => esc_html__( 'Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_SECONDARY,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-button-' . $type . '-border-color: {{VALUE}}',
-				],
-				'condition' => array_merge([
-					$type . '_show_button_border' => 'yes',
-					$type . '_button_type' => 'button',
-				], $add_type_condition),
-			]
-		);
-
-		$this->add_responsive_control(
-			$type . '_button_shape',
-			[
-				'label' => esc_html__( 'Shape', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'default',
-				'options' => [
-					'default' => esc_html__( 'Default', 'hello-plus' ),
-					'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
-					'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
-					'round' => esc_html__( 'Round', 'hello-plus' ),
-					'oval' => esc_html__( 'Oval', 'hello-plus' ),
-					'custom' => esc_html__( 'Custom', 'hello-plus' ),
-				],
-				'frontend_available' => true,
-				'condition' => array_merge([
-					$type . '_button_type' => 'button',
-				], $add_type_condition),
-			]
-		);
-
-		$this->add_responsive_control(
-			$type . '_button_shape_custom',
-			[
-				'label' => esc_html__( 'Border Radius', 'hello-plus' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em', 'rem' ],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-button-border-radius-custom-block-end: {{BOTTOM}}{{UNIT}}; --flex-hero-button-border-radius-custom-block-start: {{TOP}}{{UNIT}}; --flex-hero-button-border-radius-custom-inline-end: {{RIGHT}}{{UNIT}}; --flex-hero-button-border-radius-custom-inline-start: {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before',
-				'condition' => array_merge([
-					$type . '_button_shape' => 'custom',
-				], $add_type_condition),
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Box_Shadow::get_type(),
-			[
-				'name' => $type . '_button_box_shadow',
-				'selector' => '{{WRAPPER}} .ehp-flex-hero__button--' . $type,
-				'condition' => array_merge([
-					$type . '_button_type' => 'button',
-				], $add_type_condition),
-			]
-		);
-
-		$this->add_responsive_control(
-			$type . '_button_padding',
-			[
-				'label' => esc_html__( 'Padding', 'hello-plus' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em', 'rem' ],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-button-' . $type . '-padding-block-end: {{BOTTOM}}{{UNIT}}; --flex-hero-button-' . $type . '-padding-block-start: {{TOP}}{{UNIT}}; --flex-hero-button-' . $type . '-padding-inline-end: {{RIGHT}}{{UNIT}}; --flex-hero-button-' . $type . '-padding-inline-start: {{LEFT}}{{UNIT}};',
-				],
-				'default' => [
-					'top' => '8',
-					'right' => '16',
-					'bottom' => '8',
-					'left' => '16',
-					'unit' => 'px',
-				],
-				'separator' => 'before',
-				'condition' => array_merge([
-					$type . '_button_type' => 'button',
-				], $add_type_condition),
-			]
-		);
+		$this->end_controls_section();
 	}
 
 	protected function add_style_image_section() {

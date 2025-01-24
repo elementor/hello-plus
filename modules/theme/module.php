@@ -34,6 +34,15 @@ class Module extends Module_Base {
 		];
 	}
 
+	public function register_styles(): void {
+		wp_register_style(
+			'helloplus-button',
+			HELLOPLUS_STYLE_URL . 'helloplus-button.css',
+			[ 'elementor-frontend' ],
+			HELLOPLUS_VERSION
+		);
+	}
+
 	/**
 	 * @param \Elementor\Elements_Manager $elements_manager
 	 *
@@ -60,5 +69,6 @@ class Module extends Module_Base {
 	protected function register_hooks(): void {
 		parent::register_hooks();
 		add_action( 'elementor/elements/categories_registered', [ $this, 'add_hello_plus_e_panel_categories' ] );
+		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_styles' ] );
 	}
 }

@@ -22,39 +22,33 @@
 
 	--header-button-primary-icon-spacing: 10px;
 	--header-button-primary-icon-size: 16px;
-	--header-button-primary-text-color: #FFFFFF;
-	--header-button-primary-text-color-hover: #FFFFFF;
+	--header-button-primary-text-color: #{$global-colors-white};
+	--header-button-primary-text-color-hover: #{$global-colors-text};
 	--header-button-primary-border-width: 0;
 	--header-button-primary-border-color: transparent;
 	--header-button-primary-padding-block-end: 8px;
 	--header-button-primary-padding-block-start: 8px;
 	--header-button-primary-padding-inline-end: 16px;
 	--header-button-primary-padding-inline-start: 16px;
-	--header-button-primary-border-radius: 0;
+	--header-button-primary-border-radius-block-end: #{$corners-shape-default};
+	--header-button-primary-border-radius-block-start: #{$corners-shape-default};
+	--header-button-primary-border-radius-inline-end: #{$corners-shape-default};
+	--header-button-primary-border-radius-inline-start: #{$corners-shape-default};
 
 	--header-button-secondary-icon-spacing: 10px;
 	--header-button-secondary-icon-size: 16px;
-	--header-button-secondary-text-color: #555963;
-	--header-button-secondary-text-color-hover: #555963;
+	--header-button-secondary-text-color: #{$global-colors-secondary};
+	--header-button-secondary-text-color-hover: #{$global-colors-secondary};
 	--header-button-secondary-border-width: 2px;
-	--header-button-secondary-border-color: #555963;
+	--header-button-secondary-border-color: #{$global-colors-secondary};
 	--header-button-secondary-padding-block-end: 8px;
 	--header-button-secondary-padding-block-start: 8px;
 	--header-button-secondary-padding-inline-end: 16px;
 	--header-button-secondary-padding-inline-start: 16px;
-	--header-button-secondary-border-radius: #{$corners-shape-default};
-
-	--header-button-text-color: var(--header-button-primary-text-color);
-	--header-button-text-color-hover: var(--header-button-primary-text-color-hover);
-	--header-button-border-color: var(--header-button-primary-border-color);
-	--header-button-padding-block-end: var(--header-button-primary-padding-block-end);
-	--header-button-padding-block-start: var(--header-button-primary-padding-block-start);
-	--header-button-padding-inline-end: var(--header-button-primary-padding-inline-end);
-	--header-button-padding-inline-start: var(--header-button-primary-padding-inline-start);
-	--header-button-border-width: var(--header-button-primary-border-width);
-	--header-button-border-radius: var(--header-button-primary-border-radius);
-	--header-button-icon-spacing: var(--header-button-primary-icon-spacing);
-	--header-button-icon-size: var(--header-button-primary-icon-size);
+	--header-button-secondary-border-radius-block-end: #{$corners-shape-default};
+	--header-button-secondary-border-radius-block-start: #{$corners-shape-default};
+	--header-button-secondary-border-radius-inline-end: #{$corners-shape-default};
+	--header-button-secondary-border-radius-inline-start: #{$corners-shape-default};
 
 	--header-toggle-icon-color: #555963;
 	--header-toggle-icon-color-active: #555963;
@@ -265,101 +259,37 @@
 		order: 3;
 	}
 
-	& a.ehp-header__button {
-		align-items: center;
-		display: flex;
-		gap: var(--header-button-icon-spacing);
-		text-decoration: none;
-		transition: $transition;
+	& a.ehp-button,
+	& a.ehp-button:not([href]):not([tabindex]) {
+		--ehp-button-primary-icon-spacing: var(--header-button-primary-icon-spacing);
+		--ehp-button-primary-icon-size: var(--header-button-primary-icon-size);
+		--ehp-button-primary-text-color: var(--header-button-primary-text-color);
+		--ehp-button-primary-text-color-hover: var(--header-button-primary-text-color-hover);
+		--ehp-button-primary-border-width: var(--header-button-primary-border-width);
+		--ehp-button-primary-border-color: var(--header-button-primary-border-color);
+		--ehp-button-primary-padding-block-end: var(--header-button-primary-padding-block-end);
+		--ehp-button-primary-padding-block-start: var(--header-button-primary-padding-block-start);
+		--ehp-button-primary-padding-inline-end: var(--header-button-primary-padding-inline-end);
+		--ehp-button-primary-padding-inline-start: var(--header-button-primary-padding-inline-start);
+		--ehp-button-primary-border-radius-block-end: var(--header-button-primary-border-radius-block-end);
+		--ehp-button-primary-border-radius-block-start: var(--header-button-primary-border-radius-block-start);
+		--ehp-button-primary-border-radius-inline-end: var(--header-button-primary-border-radius-inline-end);
+		--ehp-button-primary-border-radius-inline-start: var(--header-button-primary-border-radius-inline-start);
 
-		&:hover,
-		&:focus {
-			transition: $transition;
-		}
-
-		svg {
-			fill: currentColor;
-			height: 1em; // height is relative to the font-size
-			width: 1em; // width is relative to the font-size
-		}
-
-		&.has-border {
-			border-color: var(--header-button-border-color);
-			border-style: solid;
-			border-width: var(--header-button-border-width);
-			border-radius: var(--header-button-border-radius);
-		}
-
-		&.is-type {
-
-			&-button {
-				padding-block-end: var(--header-button-padding-block-end);
-				padding-block-start: var(--header-button-padding-block-start);
-				padding-inline-end: var(--header-button-padding-inline-end);
-				padding-inline-start: var(--header-button-padding-inline-start);
-			}
-
-			&-link,
-			&-link:not([href]):not([tabindex]) {
-				background: none;
-				text-decoration: underline;
-
-				&:hover,
-				&:focus {
-					background: none;
-				}
-			}
-
-			&-button,
-			&-link,
-			&-button:not([href]):not([tabindex]),
-			&-link:not([href]):not([tabindex]) {
-				color: var(--header-button-text-color);
-
-				&:hover,
-				&:focus {
-					color: var(--header-button-text-color-hover);
-				}
-			}
-		}
-
-		&--secondary {
-			--header-button-text-color: var(--header-button-secondary-text-color);
-			--header-button-text-color-hover: var(--header-button-secondary-text-color-hover);
-			--header-button-border-color: var(--header-button-secondary-border-color);
-			--header-button-padding-block-end: var(--header-button-secondary-padding-block-end);
-			--header-button-padding-block-start: var(--header-button-secondary-padding-block-start);
-			--header-button-padding-inline-end: var(--header-button-secondary-padding-inline-end);
-			--header-button-padding-inline-start: var(--header-button-secondary-padding-inline-start);
-			--header-button-border-width: var(--header-button-secondary-border-width);
-			--header-button-border-radius: var(--header-button-secondary-border-radius);
-			--header-button-icon-spacing: var(--header-button-secondary-icon-spacing);
-		}
-
-		@mixin custom-shape-button() {
-			&-custom {
-				--header-border-radius-block-end: var(--header-button-border-radius-custom-block-end);
-				--header-border-radius-block-start: var(--header-button-border-radius-custom-block-start);
-				--header-border-radius-inline-end: var(--header-button-border-radius-custom-inline-end);
-				--header-border-radius-inline-start: var(--header-button-border-radius-custom-inline-start);
-			}
-		}
-	
-		&.has-shape {
-			@include custom-shape-button();
-	
-			&-md {
-				@media screen and (max-width: $screen-desktop-min) {
-					@include custom-shape-button();
-				}
-			}
-
-			&-sm {
-				@media screen and (max-width: $screen-tablet-min) {
-					@include custom-shape-button();
-				}
-			}
-		}
+		--ehp-button-secondary-icon-spacing: var(--header-button-secondary-icon-spacing);
+		--ehp-button-secondary-icon-size: var(--header-button-secondary-icon-size);
+		--ehp-button-secondary-text-color: var(--header-button-secondary-text-color);
+		--ehp-button-secondary-text-color-hover: var(--header-button-secondary-text-color-hover);
+		--ehp-button-secondary-border-width: var(--header-button-secondary-border-width);
+		--ehp-button-secondary-border-color: var(--header-button-secondary-border-color);
+		--ehp-button-secondary-padding-block-end: var(--header-button-secondary-padding-block-end);
+		--ehp-button-secondary-padding-block-start: var(--header-button-secondary-padding-block-start);
+		--ehp-button-secondary-padding-inline-end: var(--header-button-secondary-padding-inline-end);
+		--ehp-button-secondary-padding-inline-start: var(--header-button-secondary-padding-inline-start);
+		--ehp-button-secondary-border-radius-block-end: var(--header-button-secondary-border-radius-block-end);
+		--ehp-button-secondary-border-radius-block-start: var(--header-button-secondary-border-radius-block-start);
+		--ehp-button-secondary-border-radius-inline-end: var(--header-button-secondary-border-radius-inline-end);
+		--ehp-button-secondary-border-radius-inline-start: var(--header-button-secondary-border-radius-inline-start);
 	}
 
 	&__navigation {

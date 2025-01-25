@@ -1,5 +1,6 @@
 import Component from './component';
 import { __ } from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
 import Dialog from './dialog';
 
 export default class TemplatesModule extends elementorModules.editor.utils.Module {
@@ -33,8 +34,9 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 	}
 
 	maybeShowDialog( component, route ) {
-		console.log( window.helloplusEditor );
-		if ( 'panel/elements/categories' === route ) {
+		const howManyTimesOpened = parseInt( window.helloplusEditor.timesEditorOpened, 10 );
+
+		if ( 'panel/elements/categories' === route && 1 === howManyTimesOpened ) {
 			this.dialog.showDialog( {
 				// eslint-disable-next-line @wordpress/valid-sprintf
 				title: __( 'Building your website?', 'hello-plus' ),
@@ -45,11 +47,10 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 					blockStart: '-7',
 				},
 				actionButton: {
-					// eslint-disable-next-line @wordpress/valid-sprintf
 					url: '',
 					text: __( 'Take Me There', 'hello-plus' ),
 					classes: [ 'take-me-there', 'elementor-button', 'go-pro' ],
-					callback: async () => {
+					callback: () => {
 						const parentElement = document.getElementById( 'elementor-panel-content-wrapper' );
 						const targetElement = parentElement.querySelector( '#elementor-panel-category-helloplus' );
 
@@ -57,11 +58,17 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 							const relativePosition = targetElement.offsetTop - parentElement.offsetTop;
 							const container = document.querySelector( '#elementor-panel-content-wrapper' );
 							container.scrollTop = relativePosition;
-							const result = await apiFetch( {
+
+							apiFetch( {
 								path: '/elementor-hello-plus/v1/set-editor-visited',
 								method: 'POST',
+							} ).then( ( result ) => {
+								if ( result ) {
+									console.log( result );
+								}
+							} ).catch( ( error ) => {
+								console.error( error );
 							} );
-							console.log( result );
 						}
 					},
 				},

@@ -85,7 +85,7 @@ class Module extends Module_Base {
 		wp_enqueue_script(
 			'helloplus-editor',
 			HELLOPLUS_SCRIPTS_URL . 'helloplus-editor.js',
-			[ 'elementor-editor' ],
+			[ 'elementor-editor', 'wp-api-fetch' ],
 			HELLOPLUS_VERSION,
 			true
 		);

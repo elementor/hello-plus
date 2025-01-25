@@ -1,5 +1,6 @@
 import Component from './component';
 import { __ } from '@wordpress/i18n';
+import Dialog from './dialog';
 
 export default class TemplatesModule extends elementorModules.editor.utils.Module {
 	onElementorInit() {
@@ -9,16 +10,21 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 		elementor.hooks.addFilter( 'elements/widget/controls/common-optimized/default', this.resetCommonControls.bind( this ) );
 		$e.routes.on( 'run:after', this.maybeShowDialog.bind( this ) );
 		document.addEventListener( 'click', this.takeUserToHelloPlusWidgets );
+		const types = [
+			'core/modal/close/ehp-footer',
+			'core/modal/close/ehp-header',
+		];
+
+		types.forEach( ( type ) => {
+			window.addEventListener( type, this.redirectToHelloPlus );
+		} );
+
+		this.dialog = new Dialog();
 		window.templatesModule = this;
 	}
 
-	takeUserToHelloPlusWidgets( event ) {
-		console.log( 'click event', event );
-		if ( event.target.matches( '.take-me-there' ) ) {
-			event.preventDefault();
-			// Your event handler code here
-			console.log( 'Button with class .take-me-there clicked' );
-		}
+	redirectToHelloPlus() {
+		window.location.href = elementor.config.close_modal_redirect_hello_plus;
 	}
 
 	async openSiteIdentity() {
@@ -27,8 +33,9 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 	}
 
 	maybeShowDialog( component, route ) {
+		console.log( window.helloplusEditor );
 		if ( 'panel/elements/categories' === route ) {
-			elementor.promotion.showDialog( {
+			this.dialog.showDialog( {
 				// eslint-disable-next-line @wordpress/valid-sprintf
 				title: __( 'Building your website?', 'hello-plus' ),
 				// eslint-disable-next-line @wordpress/valid-sprintf
@@ -39,18 +46,38 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 				},
 				actionButton: {
 					// eslint-disable-next-line @wordpress/valid-sprintf
-					url: null,
+					url: '',
 					text: __( 'Take Me There', 'hello-plus' ),
-					classes: [ 'take-me-there' ],
+					classes: [ 'take-me-there', 'elementor-button', 'go-pro' ],
+					callback: async () => {
+						const parentElement = document.getElementById( 'elementor-panel-content-wrapper' );
+						const targetElement = parentElement.querySelector( '#elementor-panel-category-helloplus' );
+
+						if ( targetElement ) {
+							const relativePosition = targetElement.offsetTop - parentElement.offsetTop;
+							const container = document.querySelector( '#elementor-panel-content-wrapper' );
+							container.scrollTop = relativePosition;
+							const result = await apiFetch( {
+								path: '/elementor-hello-plus/v1/set-editor-visited',
+								method: 'POST',
+							} );
+							console.log( result );
+						}
+					},
 				},
 			} );
 		}
 	}
+
 	resetCommonControls( commonControls, widgetType ) {
 		if ( [ 'ehp-footer', 'ehp-header' ].includes( widgetType ) ) {
 			return null;
 		}
 
 		return commonControls;
+	}
+
+	isEhpDocument() {
+		return [ 'ehp-footer', 'ehp-header' ].includes( elementor.config.document.type );
 	}
 }

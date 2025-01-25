@@ -28,7 +28,7 @@ export default class extends elementorModules.Module {
 
     initDialog() {
         this.dialog = elementor.dialogsManager.createWidget( 'buttons', {
-            id: 'elementor-element--promotion__dialog',
+            id: 'elementor-element--ehp__dialog',
             effects: {
                 show: 'show',
                 hide: 'hide',
@@ -66,7 +66,7 @@ export default class extends elementorModules.Module {
             name: 'action',
             text: options.text,
             classes: options.classes.join( ' ' ),
-            callback: () => open( options.url, '_blank' ),
+            callback: options.callback,
         } );
     }
 
@@ -91,8 +91,6 @@ export default class extends elementorModules.Module {
         }
 
         options = this.parseOptions( options );
-
-        console.log( options, 'options' );
 
         this.createButton( options.actionButton );
 

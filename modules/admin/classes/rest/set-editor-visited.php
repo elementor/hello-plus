@@ -23,7 +23,7 @@ class Set_Editor_Visited {
 		);
 	}
 
-	public function increment_editor_visited( \WP_REST_Request $request ) {
+	public function increment_editor_visited() {
 		$user_id = get_current_user_id();
 		$current_count = (int) get_user_meta( $user_id, Module::USER_META_TIMES_EDITOR_OPENED, true );
 		$new_count = $current_count + 1;
@@ -32,7 +32,7 @@ class Set_Editor_Visited {
 		return rest_ensure_response( [ 'new_count' => $new_count ] );
 	}
 
-	public function permission_callback( \WP_REST_Request $request ) {
+	public function permission_callback() {
 		return is_user_logged_in();
 	}
 

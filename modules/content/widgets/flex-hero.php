@@ -18,6 +18,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Utils as Elementor_Utils;
 
 use HelloPlus\Modules\Content\Base\Traits\Shared_Content_Traits;
+use HelloPlus\Modules\Content\Classes\Choose_Img_Control;
 use HelloPlus\Modules\Content\Classes\Render\Widget_Flex_Hero_Render;
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
@@ -342,15 +343,34 @@ class Flex_Hero extends Widget_Base {
 			'layout_preset',
 			[
 				'label' => esc_html__( 'Preset', 'hello-plus' ),
-				'type' => 'choose-img',
+				'type' => Choose_Img_Control::CONTROL_NAME,
 				'default' => 'showcase',
+				'label_block' => true,
+				'columns' => 4,
 				'options' => [
 					'showcase' => [
 						'title' => esc_html__( 'SHOWCASE: highlight key concepts with a balanced layout.', 'hello-plus' ),
 						'image' => HELLOPLUS_IMAGES_URL . 'showcase.svg',
+						'hover_image' => true,
 					],
 					'storytelling' => [
 						'title' => esc_html__( 'STORYTELLING: focus on a narrative with supporting visuals.', 'hello-plus' ),
+						'image' => HELLOPLUS_IMAGES_URL . 'storytelling.svg',
+					],
+					'showcase1' => [
+						'title' => esc_html__( 'SHOWCASE1: highlight key concepts with a balanced layout.', 'hello-plus' ),
+						'image' => HELLOPLUS_IMAGES_URL . 'showcase.svg',
+					],
+					'storytelling1' => [
+						'title' => esc_html__( 'STORYTELLING1: focus on a narrative with supporting visuals.', 'hello-plus' ),
+						'image' => HELLOPLUS_IMAGES_URL . 'storytelling.svg',
+					],
+					'showcase2' => [
+						'title' => esc_html__( 'SHOWCASE2: highlight key concepts with a balanced layout.', 'hello-plus' ),
+						'image' => HELLOPLUS_IMAGES_URL . 'showcase.svg',
+					],
+					'storytelling2' => [
+						'title' => esc_html__( 'STORYTELLING2: focus on a narrative with supporting visuals.', 'hello-plus' ),
 						'image' => HELLOPLUS_IMAGES_URL . 'storytelling.svg',
 					],
 				],
@@ -363,6 +383,7 @@ class Flex_Hero extends Widget_Base {
 			[
 				'type' => Controls_Manager::ALERT,
 				'alert_type' => 'info',
+
 				'content' => esc_html__( 'Showcase: highlight key concepts with a balanced layout.', 'hello-plus' ),
 				'condition' => [
 					'layout_preset' => 'showcase',

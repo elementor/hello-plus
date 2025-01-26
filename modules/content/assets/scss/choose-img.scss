@@ -1,6 +1,35 @@
+@import "../../../../assets/dev/scss/variables";
+
 .elementor-control-type-choose-img {
 
-	&.elementor-label-block {
+	& .elementor-choices-img {
+		gap: 4px;
+
+		& .elementor-choices-column {
+			width: auto;
+			flex: 1 1;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			gap: 8px;
+
+			.elementor-choices-image {
+
+				& + .elementor-choices-image-hover {
+					display: none;
+				}
+
+				&:hover + .elementor-choices-image-hover {
+					display: block;
+				}
+			}
+		}
+	}
+
+
+
+	& .elementor-label-block {
 
 		.elementor-choices {
 			width: 100%;
@@ -8,15 +37,18 @@
 	}
 
 	& .elementor-choices.elementor-choices-img {
+
 		& input.e-choose-placeholder + .elementor-choices-label,
 		& input:checked + .elementor-choices-label {
-			border: 1px solid red;
+			border: 1px solid $e-pink-400;
 			background-color: initial;
+			border-radius: 4px;
 		}
 	}
 }
 
 .elementor-choices {
+
 	&.elementor-choices-img {
 		height: fit-content;
 		line-height: normal;

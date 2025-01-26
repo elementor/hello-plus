@@ -33,8 +33,20 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 		$e.route( 'panel/global/settings-site-identity' );
 	}
 
-	maybeShowDialog( component, route ) {
+	async maybeShowDialog( component, route ) {
 		const howManyTimesOpened = parseInt( window.helloplusEditor.timesEditorOpened, 10 );
+
+		if ( ! howManyTimesOpened ) {
+			try {
+				await apiFetch( {
+					path: '/elementor-hello-plus/v1/set-editor-visited',
+					method: 'POST',
+				} );
+			} catch ( error ) {
+				console.error( error );
+			}
+			return;
+		}
 
 		if ( 'panel/elements/categories' === route && 1 === howManyTimesOpened ) {
 			this.dialog.showDialog( {
@@ -50,7 +62,7 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 					url: '',
 					text: __( 'Take Me There', 'hello-plus' ),
 					classes: [ 'take-me-there', 'elementor-button', 'go-pro' ],
-					callback: () => {
+					callback: async () => {
 						const parentElement = document.getElementById( 'elementor-panel-content-wrapper' );
 						const targetElement = parentElement.querySelector( '#elementor-panel-category-helloplus' );
 
@@ -59,16 +71,14 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 							const container = document.querySelector( '#elementor-panel-content-wrapper' );
 							container.scrollTop = relativePosition;
 
-							apiFetch( {
-								path: '/elementor-hello-plus/v1/set-editor-visited',
-								method: 'POST',
-							} ).then( ( result ) => {
-								if ( result ) {
-									console.log( result );
-								}
-							} ).catch( ( error ) => {
+							try {
+								await apiFetch( {
+									path: '/elementor-hello-plus/v1/set-editor-visited',
+									method: 'POST',
+								} );
+							} catch ( error ) {
 								console.error( error );
-							} );
+							}
 						}
 					},
 				},

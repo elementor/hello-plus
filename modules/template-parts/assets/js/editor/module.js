@@ -21,6 +21,7 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 		} );
 
 		this.dialog = new Dialog();
+
 		window.templatesModule = this;
 	}
 

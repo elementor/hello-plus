@@ -7,7 +7,20 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 		elementor.hooks.addFilter( 'elements/widget/controls/common/default', this.resetCommonControls.bind( this ) );
 		elementor.hooks.addFilter( 'elements/widget/controls/common-optimized/default', this.resetCommonControls.bind( this ) );
 
+		const types = [
+			'core/modal/close/ehp-footer',
+			'core/modal/close/ehp-header',
+		];
+
+		types.forEach( ( type ) => {
+			window.addEventListener( type, this.redirectToHelloPlus );
+		} );
+
 		window.templatesModule = this;
+	}
+
+	redirectToHelloPlus() {
+		window.location.href = elementor.config.close_modal_redirect_hello_plus;
 	}
 
 	async openSiteIdentity() {
@@ -21,5 +34,9 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 		}
 
 		return commonControls;
+	}
+
+	isEhpDocument() {
+		return [ 'ehp-footer', 'ehp-header' ].includes( elementor.config.document.type );
 	}
 }

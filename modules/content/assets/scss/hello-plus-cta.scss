@@ -12,6 +12,7 @@
 	--cta-content-width: 1304px;
 	--cta-elements-start-position: column;
 	--cta-elements-start-position-desktop: row;
+	--cta-buttons-vertical-position: start;
 
 	--cta-heading-color: #28292B;
 	--cta-description-color: #28292B;
@@ -73,7 +74,9 @@
 	--cta-image-border-radius-custom-inline-end: #{$corners-shape-sharp};
 	--cta-image-border-radius-custom-inline-start: #{$corners-shape-sharp};
 
-	height: var(--cta-box-height);
+	display: flex;
+	justify-content: center;
+	min-height: var(--cta-box-height);
 	padding-block-end: var(--cta-box-padding-block-end);
 	padding-block-start: var(--cta-box-padding-block-start);
 	padding-inline-end: var(--cta-box-padding-inline-end);
@@ -263,6 +266,8 @@
 	}
 
 	&__ctas-container {
+		align-items: var(--cta-buttons-vertical-position);
+		display: flex;
 		flex-grow: 1;
 	}
 
@@ -284,6 +289,7 @@
 	&__buttons-wrapper {
 		display: flex;
 		gap: var(--cta-buttons-space-between);
+		width: 100%;
 
 		@media screen and (min-width: $screen-tablet-min) {
 			align-items: center;
@@ -398,7 +404,7 @@
 		--cta-image-width: 100%;
 	}
 
-	@mixin elements-position() {
+	@mixin content-alignment() {
 		&-center {
 			.ehp-cta__buttons-wrapper {
 				justify-content: center;
@@ -410,18 +416,18 @@
 		}
 	}
 
-	&.has-elements-position {
-		@include elements-position();
+	&.has-content-alignment {
+		@include content-alignment();
 
 		&-md {
 			@media screen and (max-width: $screen-desktop-min) {
-				@include elements-position();
+				@include content-alignment();
 			}
 		}
 
 		&-sm {
 			@media screen and (max-width: $screen-tablet-min) {
-				@include elements-position();
+				@include content-alignment();
 			}
 		}
 

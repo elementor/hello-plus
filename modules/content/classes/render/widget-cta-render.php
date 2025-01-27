@@ -35,9 +35,9 @@ class Widget_CTA_Render {
 
 		$show_image = 'storytelling' === $this->settings['layout_preset'] || 'showcase' === $this->settings['layout_preset'];
 		$image_stretch = $this->settings['image_stretch'];
-		$elements_position = $this->settings['elements_position'];
-		$elements_position_tablet = $this->settings['elements_position_tablet'];
-		$elements_position_mobile = $this->settings['elements_position_mobile'];
+		$content_alignment = $this->settings['content_alignment'];
+		$content_alignment_tablet = $this->settings['content_alignment_tablet'];
+		$content_alignment_mobile = $this->settings['content_alignment_mobile'];
 
 		if ( ! empty( $layout_full_height_controls ) ) {
 			foreach ( $layout_full_height_controls as $breakpoint ) {
@@ -45,15 +45,15 @@ class Widget_CTA_Render {
 			}
 		}
 
-		if ( ! empty( $elements_position ) ) {
-			$layout_classnames[] = 'has-elements-position-' . $elements_position;
+		if ( ! empty( $content_alignment ) ) {
+			$layout_classnames[] = 'has-content-alignment-' . $content_alignment;
 
-			if ( ! empty( $elements_position_tablet ) ) {
-				$layout_classnames[] = 'has-elements-position-md-' . $elements_position_tablet;
+			if ( ! empty( $content_alignment_tablet ) ) {
+				$layout_classnames[] = 'has-content-alignment-md-' . $content_alignment_tablet;
 			}
 
-			if ( ! empty( $elements_position_mobile ) ) {
-				$layout_classnames[] = 'has-elements-position-sm-' . $elements_position_mobile;
+			if ( ! empty( $content_alignment_mobile ) ) {
+				$layout_classnames[] = 'has-content-alignment-sm-' . $content_alignment_mobile;
 			}
 		}
 
@@ -114,9 +114,9 @@ class Widget_CTA_Render {
 		$buttons_width_tablet = $this->settings['cta_width_tablet'];
 		$buttons_width_mobile = $this->settings['cta_width_mobile'];
 
-		$buttons_position = $this->settings['cta_position'];
-		$buttons_position_tablet = $this->settings['cta_position_tablet'];
-		$buttons_position_mobile = $this->settings['cta_position_mobile'];
+		$buttons_position = $this->settings['content_alignment'];
+		$buttons_position_tablet = $this->settings['content_alignment_tablet'];
+		$buttons_position_mobile = $this->settings['content_alignment_mobile'];
 
 		$buttons_wrapper_classnames = [ 'ehp-cta__buttons-wrapper' ];
 
@@ -133,14 +133,14 @@ class Widget_CTA_Render {
 		}
 
 		if ( $buttons_position ) {
-			$buttons_wrapper_classnames[] = 'has-cta-position-' . $buttons_position;
+			$buttons_wrapper_classnames[] = 'has-content-alignment-' . $buttons_position;
 
 			if ( $buttons_position_tablet ) {
-				$buttons_wrapper_classnames[] = 'has-cta-position-md-' . $buttons_position_tablet;
+				$buttons_wrapper_classnames[] = 'has-content-alignment-md-' . $buttons_position_tablet;
 			}
 
 			if ( $buttons_position_mobile ) {
-				$buttons_wrapper_classnames[] = 'has-cta-position-sm-' . $buttons_position_mobile;
+				$buttons_wrapper_classnames[] = 'has-content-alignment-sm-' . $buttons_position_mobile;
 			}
 		}
 

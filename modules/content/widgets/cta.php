@@ -147,6 +147,34 @@ class CTA extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'content_alignment',
+			[
+				'label' => esc_html__( 'Content Alignment', 'hello-plus' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'start' => [
+						'title' => esc_html__( 'Start', 'hello-plus' ),
+						'icon' => 'eicon-align-start-h',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'hello-plus' ),
+						'icon' => 'eicon-align-center-h',
+					],
+				],
+				'default' => 'center',
+				'tablet_default' => 'center',
+				'mobile_default' => 'center',
+				'frontend_available' => true,
+				'condition' => [
+					'layout_preset' => [
+						'streamline',
+						'storytelling',
+					],
+				],
+			]
+		);
+
 		$this->end_controls_section();
 	}
 
@@ -156,6 +184,9 @@ class CTA extends Widget_Base {
 			[
 				'label' => esc_html__( 'Image', 'hello-plus' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
+				'condition' => [
+					'layout_preset' => [ 'showcase', 'storytelling' ],
+				],
 			]
 		);
 
@@ -259,6 +290,9 @@ class CTA extends Widget_Base {
 			[
 				'label' => esc_html__( 'Image', 'hello-plus' ),
 				'tab' => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'layout_preset' => [ 'showcase', 'storytelling' ],
+				],
 			]
 		);
 
@@ -473,34 +507,6 @@ class CTA extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'elements_position',
-			[
-				'label' => esc_html__( 'Position', 'hello-plus' ),
-				'type' => Controls_Manager::CHOOSE,
-				'options' => [
-					'start' => [
-						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => 'eicon-align-start-h',
-					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'hello-plus' ),
-						'icon' => 'eicon-align-center-h',
-					],
-				],
-				'default' => 'center',
-				'tablet_default' => 'center',
-				'mobile_default' => 'center',
-				'frontend_available' => true,
-				'condition' => [
-					'layout_preset' => [
-						'streamline',
-						'storytelling',
-					],
-				],
-			]
-		);
-
 		$this->add_control(
 			'heading_label',
 			[
@@ -643,6 +649,36 @@ class CTA extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'cta_vertical_position',
+			[
+				'label' => esc_html__( 'Vertical Position', 'hello-plus' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'start' => [
+						'title' => esc_html__( 'Start', 'hello-plus' ),
+						'icon' => 'eicon-align-start-v',
+					],
+					'end' => [
+						'title' => esc_html__( 'End', 'hello-plus' ),
+						'icon' => 'eicon-align-end-v',
+					],
+				],
+				'default' => 'start',
+				'tablet_default' => 'start',
+				'mobile_default' => 'start',
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-buttons-vertical-position: {{VALUE}};',
+				],
+				'frontend_available' => true,
+				'condition' => [
+					'layout_preset' => [
+						'focus',
+					],
+				],
+			]
+		);
+
 		$button = new Ehp_Button( $this, [ 'widget_name' => 'cta' ] );
 		$button->add_style_controls();
 
@@ -671,7 +707,7 @@ class CTA extends Widget_Base {
 		$this->add_responsive_control(
 			'cta_position',
 			[
-				'label' => esc_html__( 'Width', 'hello-plus' ),
+				'label' => esc_html__( 'Position', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'default' => esc_html__( 'Default', 'hello-plus' ),

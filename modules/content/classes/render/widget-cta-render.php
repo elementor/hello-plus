@@ -64,15 +64,41 @@ class Widget_CTA_Render {
 		$this->widget->add_render_attribute( 'layout', [
 			'class' => $layout_classnames,
 		] );
+
+		$elements_container_classnames = [
+			'ehp-cta__elements-container',
+		];
+		$image_position = $this->settings['image_horizontal_position'];
+		$image_position_tablet = $this->settings['image_horizontal_position_tablet'];
+		$image_position_mobile = $this->settings['image_horizontal_position_mobile'];
+
+		if ( ! empty( $image_position ) ) {
+			$elements_container_classnames[] = 'has-image-position-' . $image_position;
+
+			if ( ! empty( $image_position_tablet ) ) {
+				$elements_container_classnames[] = 'has-image-position-md-' . $image_position_tablet;
+			}
+
+			if ( ! empty( $image_position_mobile ) ) {
+				$elements_container_classnames[] = 'has-image-position-sm-' . $image_position_mobile;
+			}
+		}
+
+		$this->widget->add_render_attribute( 'elements-container', [
+			'class' => $elements_container_classnames,
+		] );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
-			<div class="ehp-cta__elements-container">
+			<div <?php $this->widget->print_render_attribute_string( 'elements-container' ); ?>>
 				<?php
 					if ( $show_image ) {
 						$this->render_image_container();
 					}
 					$this->render_text_container();
-					$this->render_ctas_container();
+					
+					if ( 'showcase' !== $this->settings['layout_preset'] ) {
+						$this->render_ctas_container();
+					}
 				?>
 			</div>
 		</div>
@@ -104,6 +130,11 @@ class Widget_CTA_Render {
 				$description_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $description_tag ), 'class="ehp-cta__description"', esc_html( $description_text ) );
 				// Escaped above
 				Utils::print_unescaped_internal_string( $description_output );
+			} ?>
+
+			<?php
+			if ( 'showcase' === $this->settings['layout_preset'] ) {
+				$this->render_ctas_container();
 			} ?>
 		</div>
 		<?php

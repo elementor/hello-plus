@@ -296,6 +296,35 @@ class CTA extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'image_horizontal_position',
+			[
+				'label' => esc_html__( 'Horizontal Position', 'hello-plus' ),
+				'type' => Controls_Manager::CHOOSE,
+				'toggle' => false,
+				'options' => [
+					'start' => [
+						'title' => esc_html__( 'Start', 'hello-plus' ),
+						'icon' => 'eicon-h-align-left',
+					],
+					'end' => [
+						'title' => esc_html__( 'End', 'hello-plus' ),
+						'icon' => 'eicon-h-align-right',
+					],
+				],
+				'frontend_available' => true,
+				'default' => is_rtl() ? 'end' : 'start',
+				'tablet_default' => is_rtl() ? 'end' : 'start',
+				'mobile_default' => is_rtl() ? 'end' : 'start',
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .ehp-cta.has-preset-showcase .ehp-cta__elements-container' => 'flex-direction: {{VALUE}};',
+				// ],
+				'condition' => [
+					'layout_preset' => 'showcase',
+				],
+			]
+		);
+
 		$this->add_control(
 			'image_stretch',
 			[
@@ -355,6 +384,9 @@ class CTA extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-cta' => '--cta-image-height: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'image_stretch!' => 'yes',
 				],
 			]
 		);

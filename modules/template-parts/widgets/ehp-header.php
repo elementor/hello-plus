@@ -387,7 +387,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 		$this->start_controls_section(
 			'contact_buttons',
 			[
-				'label' => esc_html__( 'Contact Buttons', 'hello-plus' ),
+				'label' => esc_html__( 'Contact Button', 'hello-plus' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);

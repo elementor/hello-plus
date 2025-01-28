@@ -26,7 +26,7 @@ class Ehp_Button {
 
 	const EHP_PREFIX = 'ehp-';
 	const CLASSNAME_BUTTON = 'ehp-button';
-	const CLASSNAME_BUTTON_TYPE_PREFIX = 'ehp-button__';
+	const CLASSNAME_BUTTON_TYPE_PREFIX = 'ehp-button--';
 
 	public function set_context( array $context ) {
 		$this->context = $context;

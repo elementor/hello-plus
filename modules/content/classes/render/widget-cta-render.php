@@ -38,6 +38,11 @@ class Widget_CTA_Render {
 		$content_alignment = $this->settings['content_alignment'];
 		$content_alignment_tablet = $this->settings['content_alignment_tablet'];
 		$content_alignment_mobile = $this->settings['content_alignment_mobile'];
+		$has_border = $this->settings['show_box_border'];
+
+		$box_shape = $this->settings['box_shape'];
+		$box_shape_mobile = $this->settings['box_shape_mobile'];
+		$box_shape_tablet = $this->settings['box_shape_tablet'];
 
 		if ( ! empty( $layout_full_height_controls ) ) {
 			foreach ( $layout_full_height_controls as $breakpoint ) {
@@ -59,6 +64,22 @@ class Widget_CTA_Render {
 
 		if ( 'yes' === $image_stretch ) {
 			$layout_classnames[] = 'has-image-stretch';
+		}
+
+		if ( 'yes' === $has_border ) {
+			$layout_classnames[] = 'has-border';
+		}
+
+		if ( ! empty( $box_shape ) ) {
+			$layout_classnames[] = 'has-shape-' . $box_shape;
+
+			if ( ! empty( $box_shape_mobile ) ) {
+				$layout_classnames[] = 'has-shape-sm-' . $box_shape_mobile;
+			}
+
+			if ( ! empty( $box_shape_tablet ) ) {
+				$layout_classnames[] = 'has-shape-md-' . $box_shape_tablet;
+			}
 		}
 
 		$this->widget->add_render_attribute( 'layout', [
@@ -89,6 +110,7 @@ class Widget_CTA_Render {
 		] );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
+			<div class="ehp-cta__overlay"></div>
 			<div <?php $this->widget->print_render_attribute_string( 'elements-container' ); ?>>
 				<?php
 					if ( $show_image ) {

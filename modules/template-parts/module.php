@@ -44,7 +44,6 @@ class Module extends Module_Base {
 		];
 	}
 
-
 	/**
 	 * @return void
 	 */
@@ -77,7 +76,6 @@ class Module extends Module_Base {
 		);
 	}
 
-
 	/**
 	 * @return void
 	 */
@@ -96,8 +94,8 @@ class Module extends Module_Base {
 	 */
 	public function enqueue_editor_styles(): void {
 		wp_enqueue_style(
-			'helloplus-template-parts-preview',
-			HELLOPLUS_STYLE_URL . 'helloplus-template-parts-preview.css',
+			'helloplus-template-parts-editor',
+			HELLOPLUS_STYLE_URL . 'helloplus-template-parts-editor.css',
 			[],
 			HELLOPLUS_VERSION
 		);
@@ -122,7 +120,7 @@ class Module extends Module_Base {
 		add_action( 'elementor/frontend/after_register_scripts', [ $this, 'register_scripts' ] );
 		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_styles' ] );
 		add_action( 'elementor/editor/after_enqueue_styles', [ $this, 'enqueue_editor_styles' ] );
-		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'enqueue_editor_scripts' ] );
+		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'enqueue_editor_scripts' ] );
 		add_action( 'elementor/controls/register', [ $this, 'register_controls' ] );
 	}
 }

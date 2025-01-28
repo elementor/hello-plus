@@ -11,20 +11,22 @@ use Elementor\{
 	Group_Control_Background,
 	Group_Control_Box_Shadow,
 	Group_Control_Typography,
-	Icons_Manager
+	Icons_Manager,
+	Widget_Base
 };
-use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
-use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use Elementor\Core\Kits\Documents\Tabs\{
+	Global_Colors,
+	Global_Typography
+};
 
 class Ehp_Button {
 	private $context = [];
-	private $widget;
+	private $defaults = [];
+	private ?Widget_Base $widget = null;
 
-	public function __construct( $widget, $context = [], $defaults = [] ) {
-		$this->widget = $widget;
-		$this->context = $context;
-		$this->defaults = $defaults;
-	}
+	const EHP_PREFIX = 'ehp-';
+	const CLASSNAME_BUTTON = 'ehp-button';
+	const CLASSNAME_BUTTON_TYPE_PREFIX = 'ehp-button__';
 
 	public function set_context( array $context ) {
 		$this->context = $context;
@@ -46,10 +48,10 @@ class Ehp_Button {
 		$button_type = $settings[ $type . '_button_type' ] ?? '';
 
 		$button_classnames = [
-			'ehp-button',
-			'ehp-button--' . $type,
-			'ehp-' . $widget_name . '__button',
-			'ehp-' . $widget_name . '__button--' . $type,
+			self::CLASSNAME_BUTTON,
+			self::CLASSNAME_BUTTON_TYPE_PREFIX . $type,
+			self::EHP_PREFIX . $widget_name . '__button',
+			self::EHP_PREFIX . $widget_name . '__button--' . $type,
 		];
 
 		if ( ! empty( $button_type ) ) {
@@ -629,5 +631,11 @@ class Ehp_Button {
 				], $add_type_condition),
 			]
 		);
+	}
+
+	public function __construct( Widget_Base $widget, $context = [], $defaults = [] ) {
+		$this->widget = $widget;
+		$this->context = $context;
+		$this->defaults = $defaults;
 	}
 }

@@ -67,6 +67,10 @@ class Form extends Form_Base {
 		return [ 'helloplus-forms' ];
 	}
 
+	public function get_script_depends(): array {
+		return [ 'helloplus-forms-fe' ];
+	}
+
 	protected function render(): void {
 		$render_strategy = new Widget_Form_Render( $this );
 

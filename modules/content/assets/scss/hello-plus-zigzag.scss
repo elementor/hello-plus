@@ -23,7 +23,6 @@
 	--zigzag-button-padding-inline-end: 16px;
 	--zigzag-button-padding-inline-start: 16px;
 	--zigzag-elements-gap: 32px;
-	--zigzag-content-width: 1304px;
 	--zigzag-icon-size: 256px;
 	--zigzag-icon-color: #555963;
 	--zigzag-icon-color-alternate: #61CE70;
@@ -173,8 +172,9 @@
 		&.has-image {
 			width: var(--zigzag-image-width);
 
-			img {
+			.elementor & img {
 				aspect-ratio: 16 / 9;
+				height: var(--zigzag-image-height);
 				object-fit: cover;
 				object-position: var(--zigzag-image-position);
 				width: 100%;

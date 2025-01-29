@@ -28,7 +28,7 @@ class Widget_Zig_Zag_Render {
 
 	public function render(): void {
 		$first_zigzag_direction = $this->settings['first_zigzag_direction'];
-		$has_alternate_icon_color = $this->settings['has_alternate_icon_color'];
+		$has_alternate_icon_color = $this->settings['has_alternate_icon_color'] ?? 'no';
 		$entrance_animation = $this->settings['zigzag_animation'] ?? '';
 		$has_entrance_animation = ! empty( $entrance_animation ) && 'none' !== $entrance_animation;
 		$has_alternate_animation = 'yes' === $this->settings['animation_alternate'];

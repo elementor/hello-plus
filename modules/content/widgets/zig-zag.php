@@ -71,7 +71,11 @@ class Zig_Zag extends Widget_Base {
 
 	protected function add_style_section() {
 		$this->add_style_zigzags_section();
-		$this->add_box_style_section();
+		$this->add_style_layout_section();
+		$this->add_style_image_section();
+		$this->add_style_icon_section();
+		$this->add_style_cta_section();
+		$this->add_style_box_section();
 	}
 
 	private function add_zigzags_content_section() {
@@ -190,7 +194,7 @@ class Zig_Zag extends Widget_Base {
 		$repeater->add_control(
 			$type . '_button_label',
 			[
-				'label' => esc_html__( 'Button', 'hello-plus' ),
+				'label' => esc_html__( 'CTA Button', 'hello-plus' ),
 				'type' => Controls_Manager::HEADING,
 			]
 		);
@@ -269,287 +273,6 @@ class Zig_Zag extends Widget_Base {
 			[
 				'label' => esc_html__( 'Zigzags', 'hello-plus' ),
 				'tab' => Controls_Manager::TAB_STYLE,
-			]
-		);
-
-		$this->add_control(
-			'first_zigzag_direction',
-			[
-				'label' => esc_html__( 'Align First Graphic', 'hello-plus' ),
-				'type' => Controls_Manager::CHOOSE,
-				'options' => [
-					'start' => [
-						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => 'eicon-order-' . ( is_rtl() ? 'end' : 'start' ),
-					],
-					'end' => [
-						'title' => esc_html__( 'End', 'hello-plus' ),
-						'icon' => 'eicon-order-' . ( is_rtl() ? 'start' : 'end' ),
-					],
-				],
-				'default' => 'start',
-				'description' => esc_html__( 'Content will be stacked on smaller screens', 'hello-plus' ),
-			]
-		);
-
-		$this->add_control(
-			'image_label',
-			[
-				'label' => esc_html__( 'Image', 'hello-plus' ),
-				'type' => Controls_Manager::HEADING,
-				'separator' => 'before',
-				'condition' => [
-					'graphic_element' => 'image',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'image_width',
-			[
-				'label' => esc_html__( 'Image Width', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'50%' => '50%',
-					'40%' => '40%',
-					'30%' => '30%',
-				],
-				'default' => '50%',
-				'devices' => [ 'desktop', 'tablet', 'mobile' ],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-image-width: {{VALUE}};',
-				],
-				'condition' => [
-					'graphic_element' => 'image',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'image_position',
-			[
-				'label' => esc_html__( 'Position', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'desktop_default' => 'center center',
-				'tablet_default' => 'center center',
-				'mobile_default' => 'center center',
-				'options' => [
-					'' => esc_html__( 'Default', 'hello-plus' ),
-					'center center' => esc_html__( 'Center Center', 'hello-plus' ),
-					'center left' => esc_html__( 'Center Left', 'hello-plus' ),
-					'center right' => esc_html__( 'Center Right', 'hello-plus' ),
-					'top center' => esc_html__( 'Top Center', 'hello-plus' ),
-					'top left' => esc_html__( 'Top Left', 'hello-plus' ),
-					'top right' => esc_html__( 'Top Right', 'hello-plus' ),
-					'bottom center' => esc_html__( 'Bottom Center', 'hello-plus' ),
-					'bottom left' => esc_html__( 'Bottom Left', 'hello-plus' ),
-					'bottom right' => esc_html__( 'Bottom Right', 'hello-plus' ),
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-image-position: {{VALUE}}',
-				],
-				'condition' => [
-					'graphic_element' => 'image',
-				],
-			]
-		);
-
-		$this->add_control(
-			'icon_label',
-			[
-				'label' => esc_html__( 'Icon', 'hello-plus' ),
-				'type' => Controls_Manager::HEADING,
-				'separator' => 'before',
-				'condition' => [
-					'graphic_element' => 'icon',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'icon_width',
-			[
-				'label' => esc_html__( 'Box Width', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'50%' => '50%',
-					'30%' => '30%',
-				],
-				'default' => '50%',
-				'devices' => [ 'desktop', 'tablet', 'mobile' ],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-icon-width: {{VALUE}};',
-				],
-				'condition' => [
-					'graphic_element' => 'icon',
-				],
-			]
-		);
-
-		$this->add_control(
-			'icon_zigzag_color',
-			[
-				'label' => esc_html__( 'Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_SECONDARY,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-icon-color: {{VALUE}}',
-				],
-				'condition' => [
-					'graphic_element' => 'icon',
-				],
-			]
-		);
-
-		$this->add_control(
-			'has_alternate_icon_color',
-			[
-				'label' => esc_html__( 'Alternate Icon Color', 'hello-plus' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
-				'label_off' => esc_html__( 'No', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => 'no',
-				'condition' => [
-					'graphic_element' => 'icon',
-				],
-			]
-		);
-
-		$this->add_control(
-			'icon_alternate_color',
-			[
-				'label' => esc_html__( 'Alternate Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_ACCENT,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-icon-color-alternate: {{VALUE}}',
-				],
-				'condition' => [
-					'graphic_element' => 'icon',
-					'has_alternate_icon_color' => 'yes',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'icon_zigzag_size',
-			[
-				'label' => esc_html__( 'Icon Size', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
-				'range' => [
-					'px' => [
-						'max' => 300,
-					],
-					'%' => [
-						'max' => 100,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-icon-size: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'graphic_element' => 'icon',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'content_alignment',
-			[
-				'label' => esc_html__( 'Content Position', 'hello-plus' ),
-				'type' => Controls_Manager::CHOOSE,
-				'options' => [
-					'flex-start' => [
-						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => 'eicon-align-start-v',
-					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'hello-plus' ),
-						'icon' => 'eicon-align-center-v',
-					],
-					'flex-end' => [
-						'title' => esc_html__( 'End', 'hello-plus' ),
-						'icon' => 'eicon-align-end-v',
-					],
-				],
-				'default' => 'center',
-				'selectors' => [
-					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-content-position: {{VALUE}};',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'style_heading',
-			[
-				'label' => esc_html__( 'Heading', 'hello-plus' ),
-				'type' => Controls_Manager::HEADING,
-			]
-		);
-
-		$this->add_control(
-			'title_color',
-			[
-				'label' => esc_html__( 'Text Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_SECONDARY,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-title-color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => 'title_typography',
-				'selector' => '{{WRAPPER}} .ehp-zigzag__title',
-				'global' => [
-					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
-				],
-			]
-		);
-
-		$this->add_control(
-			'style_description',
-			[
-				'label' => esc_html__( 'Description', 'hello-plus' ),
-				'type' => Controls_Manager::HEADING,
-				'separator' => 'default',
-			]
-		);
-
-		$this->add_control(
-			'description_color',
-			[
-				'label' => esc_html__( 'Text Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_TEXT,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-description-color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => 'description_typography',
-				'selector' => '{{WRAPPER}} .ehp-zigzag__description',
-				'global' => [
-					'default' => Global_Typography::TYPOGRAPHY_TEXT,
-				],
 			]
 		);
 
@@ -898,7 +621,373 @@ class Zig_Zag extends Widget_Base {
 		$this->end_controls_section();
 	}
 
-	private function add_box_style_section() {
+	private function add_style_layout_section() {
+		$this->start_controls_section(
+			'style_layout_section',
+			[
+				'label' => esc_html__( 'Layout', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'first_zigzag_direction',
+			[
+				'label' => esc_html__( 'Align First Graphic', 'hello-plus' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'start' => [
+						'title' => esc_html__( 'Start', 'hello-plus' ),
+						'icon' => 'eicon-order-' . ( is_rtl() ? 'end' : 'start' ),
+					],
+					'end' => [
+						'title' => esc_html__( 'End', 'hello-plus' ),
+						'icon' => 'eicon-order-' . ( is_rtl() ? 'start' : 'end' ),
+					],
+				],
+				'default' => 'start',
+				'description' => esc_html__( 'Zigzag content will be stacked on smaller screens', 'hello-plus' ),
+			]
+		);
+
+		$this->add_responsive_control(
+			'content_alignment',
+			[
+				'label' => esc_html__( 'Content Position', 'hello-plus' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'flex-start' => [
+						'title' => esc_html__( 'Start', 'hello-plus' ),
+						'icon' => 'eicon-align-start-v',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'hello-plus' ),
+						'icon' => 'eicon-align-center-v',
+					],
+					'flex-end' => [
+						'title' => esc_html__( 'End', 'hello-plus' ),
+						'icon' => 'eicon-align-end-v',
+					],
+				],
+				'default' => 'center',
+				'selectors' => [
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-content-position: {{VALUE}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'content_width',
+			[
+				'label' => esc_html__( 'Content Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 1600,
+					],
+					'%' => [
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-content-width: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
+	private function add_style_image_section() {
+		$this->start_controls_section(
+			'style_image_section',
+			[
+				'label' => esc_html__( 'Image', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'graphic_element' => 'image',
+				],
+			]
+		);
+
+		$this->add_control(
+			'image_stretch',
+			[
+				'label' => esc_html__( 'Stretch', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+			]
+		);
+
+		$this->add_responsive_control(
+			'image_height',
+			[
+				'label' => esc_html__( 'Height', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 1500,
+					],
+					'%' => [
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'size' => 440,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-image-height: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'image_width',
+			[
+				'label' => esc_html__( 'Width', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'50%' => '50%',
+					'40%' => '40%',
+					'30%' => '30%',
+				],
+				'default' => '50%',
+				'selectors' => [
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-image-width: {{VALUE}};',
+				],
+				'condition' => [
+					'image_stretch!' => 'yes',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'image_position',
+			[
+				'label' => esc_html__( 'Position', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'desktop_default' => 'center center',
+				'tablet_default' => 'center center',
+				'mobile_default' => 'center center',
+				'options' => [
+					'' => esc_html__( 'Default', 'hello-plus' ),
+					'center center' => esc_html__( 'Center Center', 'hello-plus' ),
+					'center left' => esc_html__( 'Center Left', 'hello-plus' ),
+					'center right' => esc_html__( 'Center Right', 'hello-plus' ),
+					'top center' => esc_html__( 'Top Center', 'hello-plus' ),
+					'top left' => esc_html__( 'Top Left', 'hello-plus' ),
+					'top right' => esc_html__( 'Top Right', 'hello-plus' ),
+					'bottom center' => esc_html__( 'Bottom Center', 'hello-plus' ),
+					'bottom left' => esc_html__( 'Bottom Left', 'hello-plus' ),
+					'bottom right' => esc_html__( 'Bottom Right', 'hello-plus' ),
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-image-position: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
+	private function add_style_icon_section() {
+		$this->start_controls_section(
+			'icon_style_section',
+			[
+				'label' => esc_html__( 'Icon', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'graphic_element' => 'icon',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'icon_width',
+			[
+				'label' => esc_html__( 'Box Width', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'50%' => '50%',
+					'30%' => '30%',
+				],
+				'default' => '50%',
+				'devices' => [ 'desktop', 'tablet', 'mobile' ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-icon-width: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'icon_zigzag_color',
+			[
+				'label' => esc_html__( 'Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-icon-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'icon_zigzag_size',
+			[
+				'label' => esc_html__( 'Icon Size', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 300,
+					],
+					'%' => [
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-icon-size: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'has_alternate_icon_color',
+			[
+				'label' => esc_html__( 'Alternate Icon Color', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+				'frontend_available' => true,
+			]
+		);
+
+		$this->add_control(
+			'icon_alternate_color',
+			[
+				'label' => esc_html__( 'Alternate Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_ACCENT,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-icon-color-alternate: {{VALUE}}',
+				],
+				'condition' => [
+					'has_alternate_icon_color' => 'yes',
+				],
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
+	private function add_style_text_section() {
+		$this->start_controls_section(
+			'style_text_section',
+			[
+				'label' => esc_html__( 'Text', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'style_heading',
+			[
+				'label' => esc_html__( 'Heading', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+			]
+		);
+
+		$this->add_control(
+			'title_color',
+			[
+				'label' => esc_html__( 'Text Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-title-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'title_typography',
+				'selector' => '{{WRAPPER}} .ehp-zigzag__title',
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+			]
+		);
+
+		$this->add_control(
+			'style_description',
+			[
+				'label' => esc_html__( 'Description', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'default',
+			]
+		);
+
+		$this->add_control(
+			'description_color',
+			[
+				'label' => esc_html__( 'Text Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-description-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'description_typography',
+				'selector' => '{{WRAPPER}} .ehp-zigzag__description',
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_TEXT,
+				],
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
+	private function add_style_cta_section() {
+		$this->start_controls_section(
+			'style_cta_section',
+			[
+				'label' => esc_html__( 'CTA Button', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		// You are here
+
+		$this->end_controls_section();
+	}
+
+	private function add_style_box_section() {
 		$this->start_controls_section(
 			'box_style_section',
 			[
@@ -956,27 +1045,6 @@ class Zig_Zag extends Widget_Base {
 					'show_alternate_background' => 'yes',
 				],
 				'selector' => '{{WRAPPER}} .ehp-zigzag__item-wrapper:nth-child(even)',
-			]
-		);
-
-		$this->add_responsive_control(
-			'content_width',
-			[
-				'label' => esc_html__( 'Content Width', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
-				'range' => [
-					'px' => [
-						'max' => 1600,
-					],
-					'%' => [
-						'max' => 100,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-content-width: {{SIZE}}{{UNIT}};',
-				],
-				'separator' => 'before',
 			]
 		);
 

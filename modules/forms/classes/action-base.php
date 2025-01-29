@@ -2,7 +2,7 @@
 namespace HelloPlus\Modules\Forms\Classes;
 
 use HelloPlus\Modules\Forms\Components\Ajax_Handler;
-use HelloPlus\Modules\Forms\Widgets\Form;
+use HelloPlus\Modules\Forms\Widgets\Ehp_Form;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -25,7 +25,7 @@ abstract class Action_Base {
 	abstract public function run( Form_Record $record, Ajax_Handler $ajax_handler );
 
 	/**
-	 * @param Form $form
+	 * @param Ehp_Form $form
 	 */
 	abstract public function register_settings_section( $form );
 

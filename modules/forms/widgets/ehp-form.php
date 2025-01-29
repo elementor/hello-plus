@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-class Form extends Form_Base {
+class Ehp_Form extends Form_Base {
 
 	public function get_name() {
 		return 'ehp-form';
@@ -65,6 +65,10 @@ class Form extends Form_Base {
 	 */
 	public function get_style_depends(): array {
 		return [ 'helloplus-forms' ];
+	}
+
+	public function get_script_depends(): array {
+		return [ 'helloplus-forms-fe' ];
 	}
 
 	protected function render(): void {
@@ -637,7 +641,7 @@ class Form extends Form_Base {
 		);
 
 		/* translators: %s: Site title. */
-		$default_message = sprintf( esc_html__( 'New message from "%s"', 'hello-plus' ), get_option( 'blogname' ) );
+		$default_message = sprintf( esc_html__( 'New message from [%s]', 'hello-plus' ), get_bloginfo( 'name' ) );
 
 		$this->add_control(
 			'email_subject',

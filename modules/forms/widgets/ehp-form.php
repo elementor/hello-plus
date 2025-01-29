@@ -68,7 +68,6 @@ class Ehp_Form extends Form_Base {
 	}
 
 	public function get_script_depends(): array {
-		\error_log( __METHOD__ . ' ' . __LINE__ );
 		return [ 'helloplus-forms-fe' ];
 	}
 

@@ -53,7 +53,7 @@ class Email extends Action_Base {
 		);
 
 		/* translators: %s: Site title. */
-		$default_message = esc_html__( sprintf( 'New message from [%s]', get_bloginfo( 'name' ) ), 'hello-plus' );
+		$default_message = sprintf( esc_html__( 'New message from [%s]', 'hello-plus' ), get_bloginfo( 'name' ) );
 
 		$widget->add_control(
 			$this->get_control_id( 'email_subject' ),
@@ -247,7 +247,7 @@ class Email extends Action_Base {
 		$fields = [
 			'email_to' => get_option( 'admin_email' ),
 			/* translators: %s: Site title. */
-			'email_subject' => esc_html__( sprintf( 'New message from [%s]', get_bloginfo( 'name' ) ), 'hello-plus' ),
+			'email_subject' => sprintf( esc_html__( 'New message from [%s]', 'hello-plus' ), get_bloginfo( 'name' ) ),
 			'email_content' => '[all-fields]',
 			'email_from_name' => get_bloginfo( 'name' ),
 			'email_from' => get_bloginfo( 'admin_email' ),

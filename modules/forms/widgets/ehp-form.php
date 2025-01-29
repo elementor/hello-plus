@@ -641,7 +641,7 @@ class Ehp_Form extends Form_Base {
 		);
 
 		/* translators: %s: Site title. */
-		$default_message = esc_html__( sprintf( 'New message from [%s]', get_bloginfo( 'name' ) ), 'hello-plus' );
+		$default_message = sprintf( esc_html__( 'New message from [%s]', 'hello-plus' ), get_bloginfo( 'name' ) );
 
 		$this->add_control(
 			'email_subject',

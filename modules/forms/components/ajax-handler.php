@@ -246,7 +246,7 @@ class Ajax_Handler {
 
 	/**
 	 * BC: checks if the current action add some errors to the errors array
-	 * if it add an error the "run" method treat it as a failed action.
+	 * if it adds an error the "run" method treat it as a failed action.
 	 *
 	 * @param $errors
 	 *

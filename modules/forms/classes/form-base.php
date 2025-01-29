@@ -3,10 +3,9 @@ namespace HelloPlus\Modules\Forms\Classes;
 
 use Elementor\Utils;
 use Elementor\Widget_Base;
-
-use HelloPlus\Modules\Forms\Module;
 use Elementor\Icons_Manager;
 use HelloPlus\Modules\Theme\Module as Theme_Module;
+use HelloPlus\Modules\Forms\Module;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -28,7 +27,7 @@ abstract class Form_Base extends Widget_Base {
 		return $element;
 	}
 
-	public static function get_button_sizes() {
+	public static function get_button_sizes(): array {
 		return [
 			'xs' => esc_html__( 'Extra Small', 'hello-plus' ),
 			'sm' => esc_html__( 'Small', 'hello-plus' ),
@@ -38,7 +37,7 @@ abstract class Form_Base extends Widget_Base {
 		];
 	}
 
-	public function make_textarea_field( $item, $item_index, $instance ) {
+	public function make_textarea_field( $item, $item_index, $instance ): string {
 		$this->add_render_attribute( 'textarea' . $item_index, [
 			'class' => [
 				'elementor-field-textual',
@@ -151,7 +150,7 @@ abstract class Form_Base extends Widget_Base {
 		return $select;
 	}
 
-	protected function make_radio_checkbox_field( $item, $item_index, $type ) {
+	protected function make_radio_checkbox_field( $item, $item_index, $type ): string {
 		$options = preg_split( "/\\r\\n|\\r|\\n/", $item['field_options'] );
 		$html = '';
 		if ( $options ) {
@@ -269,11 +268,11 @@ abstract class Form_Base extends Widget_Base {
 
 	public function render_plain_content() {}
 
-	public function get_attribute_name( $item ) {
+	public function get_attribute_name( $item ): string {
 		return "form_fields[{$item['custom_id']}]";
 	}
 
-	public function get_attribute_id( $item ) {
+	public function get_attribute_id( $item ): string {
 		return 'form-field-' . esc_attr( $item['custom_id'] );
 	}
 

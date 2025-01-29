@@ -98,14 +98,14 @@ class Widget_CTA_Render {
 			<div class="ehp-cta__overlay"></div>
 			<div <?php $this->widget->print_render_attribute_string( 'elements-container' ); ?>>
 				<?php
-					if ( $show_image ) {
-						$this->render_image_container();
-					}
-					$this->render_text_container();
-					
-					if ( 'showcase' !== $this->settings['layout_preset'] ) {
-						$this->render_ctas_container();
-					}
+				if ( $show_image ) {
+					$this->render_image_container();
+				}
+				$this->render_text_container();
+
+				if ( 'showcase' !== $this->settings['layout_preset'] ) {
+					$this->render_ctas_container();
+				}
 				?>
 			</div>
 		</div>

@@ -1,19 +1,12 @@
 <?php
-
 namespace HelloPlus\Modules\TemplateParts\Classes\Sources;
-
-use Elementor\Api as Elementor_Api;
-use Elementor\Core\Common\Modules\Connect\Module as Elementor_Connect_Module;
-use HelloPlus\Includes\Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
 class Source_Remote_Ehp extends \Elementor\TemplateLibrary\Source_Remote {
-
-	const API_TEMPLATES_URL = 'https://ba-templates.stg.elementor.red/v1/templates/';
-
+	const API_TEMPLATES_URL = 'https://my.elementor.com/api/connect/v1/library/templates/';
 	const TEMPLATES_DATA_TRANSIENT_KEY_PREFIX = 'elementor_remote_templates_ehp_data_';
 
 	public function get_id(): string {

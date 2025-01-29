@@ -1,13 +1,6 @@
 @import "../../../../assets/dev/scss/variables";
 
 .ehp-zigzag {
-	--zigzag-button-icon-size: 16px;
-	--zigzag-button-icon-spacing: 10px;
-	--zigzag-button-text-color: #555963;
-	--zigzag-button-text-color-hover: #555963;
-	--zigzag-button-border-width: 1px;
-	--zigzag-button-border-color: #000000;
-	--zigzag-button-border-radius: 0;
 	--zigzag-title-color: #000000;
 	--zigzag-description-color: #000000;
 	--zigzag-rows-spacing: 60px;
@@ -18,10 +11,6 @@
 	--zigzag-image-width: 50%;
 	--zigzag-icon-width: 50%;
 	--zigzag-image-position: center center;
-	--zigzag-button-padding-block-end: 8px;
-	--zigzag-button-padding-block-start: 8px;
-	--zigzag-button-padding-inline-end: 16px;
-	--zigzag-button-padding-inline-start: 16px;
 	--zigzag-elements-gap: 32px;
 	--zigzag-icon-size: 256px;
 	--zigzag-icon-color: #555963;
@@ -38,6 +27,21 @@
 	--zigzag-animation-duration-slow: 2s;
 	--zigzag-animation-duration-normal: 1s;
 	--zigzag-animation-duration-fast: 0.8s;
+
+	--zigzag-button-primary-icon-spacing: 10px;
+	--zigzag-button-primary-icon-size: 16px;
+	--zigzag-button-primary-text-color: #{$global-colors-white};
+	--zigzag-button-primary-text-color-hover: #{$global-colors-text};
+	--zigzag-button-primary-border-width: 0;
+	--zigzag-button-primary-border-color: transparent;
+	--zigzag-button-primary-padding-block-end: 8px;
+	--zigzag-button-primary-padding-block-start: 8px;
+	--zigzag-button-primary-padding-inline-end: 16px;
+	--zigzag-button-primary-padding-inline-start: 16px;
+	--zigzag-button-primary-border-radius-block-end: #{$corners-shape-default};
+	--zigzag-button-primary-border-radius-block-start: #{$corners-shape-default};
+	--zigzag-button-primary-border-radius-inline-end: #{$corners-shape-default};
+	--zigzag-button-primary-border-radius-inline-start: #{$corners-shape-default};
 
 	align-items: center;
 	background-color: transparent;
@@ -60,74 +64,22 @@
 		border-radius: var(--zigzag-wrapper-border-radius);
 	}
 
-	&__button-icon {
-		fill: currentColor;
-		height: var(--zigzag-button-icon-size);
-		width: var(--zigzag-button-icon-size);
-	}
-
 	& a.ehp-zigzag__button,
 	& a.ehp-zigzag__button:not([href]):not([tabindex]) {
-		align-items: center;
-		color: var(--zigzag-button-text-color);
-		display: flex;
-		gap: var(--zigzag-button-icon-spacing);
-		text-decoration: none;
-		transition: $transition;
-
-		&:hover,
-		&:focus {
-			color: var(--zigzag-button-text-color-hover);
-			transition: $transition;
-		}
-
-		&.has-border {
-			border-color: var(--zigzag-button-border-color);
-			border-style: solid;
-			border-width: var(--zigzag-button-border-width);
-			border-radius: var(--zigzag-button-border-radius);
-		}
-
-		&.is-type {
-
-			&-button {
-				padding-block-end: var(--zigzag-button-padding-block-end);
-				padding-block-start: var(--zigzag-button-padding-block-start);
-				padding-inline-end: var(--zigzag-button-padding-inline-end);
-				padding-inline-start: var(--zigzag-button-padding-inline-start);
-				text-decoration: none;
-			}
-
-			&-link,
-			&-link:not([href]):not([tabindex]) {
-				background: none;
-				text-decoration: underline;
-
-				&:hover,
-				&:focus {
-					background: none;
-				}
-			}
-		}
-
-		&.has-shape {
-
-			&-sharp {
-				border-radius: $corners-shape-sharp;
-			}
-
-			&-rounded {
-				border-radius: $corners-shape-rounded;
-			}
-
-			&-round {
-				border-radius: $corners-shape-round;
-			}
-
-			&-default {
-				border-radius: $corners-shape-default;
-			}
-		}
+		--ehp-button-primary-icon-spacing: var(--zigzag-button-primary-icon-spacing);
+		--ehp-button-primary-icon-size: var(--zigzag-button-primary-icon-size);
+		--ehp-button-primary-text-color: var(--zigzag-button-primary-text-color);
+		--ehp-button-primary-text-color-hover: var(--zigzag-button-primary-text-color-hover);
+		--ehp-button-primary-border-width: var(--zigzag-button-primary-border-width);
+		--ehp-button-primary-border-color: var(--zigzag-button-primary-border-color);
+		--ehp-button-primary-padding-block-end: var(--zigzag-button-primary-padding-block-end);
+		--ehp-button-primary-padding-block-start: var(--zigzag-button-primary-padding-block-start);
+		--ehp-button-primary-padding-inline-end: var(--zigzag-button-primary-padding-inline-end);
+		--ehp-button-primary-padding-inline-start: var(--zigzag-button-primary-padding-inline-start);
+		--ehp-button-primary-border-radius-block-end: var(--zigzag-button-primary-border-radius-block-end);
+		--ehp-button-primary-border-radius-block-start: var(--zigzag-button-primary-border-radius-block-start);
+		--ehp-button-primary-border-radius-inline-end: var(--zigzag-button-primary-border-radius-inline-end);
+		--ehp-button-primary-border-radius-inline-start: var(--zigzag-button-primary-border-radius-inline-start);
 	}
 
 	&__button-container {

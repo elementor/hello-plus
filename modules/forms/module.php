@@ -32,7 +32,7 @@ class Module extends Module_Base {
 
 	protected function get_widget_ids(): array {
 		return [
-			'Form',
+			'Ehp_Form',
 		];
 	}
 

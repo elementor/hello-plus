@@ -1,4 +1,4 @@
-export default class ehpForms extends elementorModules.Module {
+export default class ehpFormsLite extends elementorModules.Module {
 	constructor() {
 		super();
 
@@ -14,7 +14,7 @@ export default class ehpForms extends elementorModules.Module {
 	}
 }
 
-elementorCommon.elements.$window.on( 'elementor/frontend/init', () => {
-	new ehpForms();
+window.on( 'elementor/frontend/init', () => {
+	new ehpFormsLite();
 } );
 

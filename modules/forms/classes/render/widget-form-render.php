@@ -5,16 +5,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use HelloPlus\Modules\Forms\Widgets\Form;
+use HelloPlus\Modules\Forms\Widgets\Ehp_Form;
 use HelloPlus\Includes\Utils;
 use Elementor\Icons_Manager;
 use Elementor\Utils as Elementor_Utils;
 
 class Widget_Form_Render {
-	protected Form $widget;
+	protected Ehp_Form $widget;
 	protected array $settings;
 
-	public function __construct( Form $widget ) {
+	public function __construct( Ehp_Form $widget ) {
 		$this->widget = $widget;
 		$this->settings = $widget->get_settings_for_display();
 	}
@@ -64,7 +64,7 @@ class Widget_Form_Render {
 					 *
 					 * @param array $item The field value.
 					 * @param int $item_index The field index.
-					 * @param Form $this An instance of the form.
+					 * @param Ehp_Form $this An instance of the form.
 					 *
 					 * @since 1.0.0
 					 *
@@ -80,7 +80,7 @@ class Widget_Form_Render {
 					 *
 					 * @param array $item The field value.
 					 * @param int $item_index The field index.
-					 * @param Form $this An instance of the form.
+					 * @param Ehp_Form $this An instance of the form.
 					 *
 					 * @since 1.0.0
 					 *
@@ -160,7 +160,7 @@ class Widget_Form_Render {
 								 *
 								 * @param array $item The field value.
 								 * @param int $item_index The field index.
-								 * @param Form $this An instance of the form.
+								 * @param Ehp_Form $this An instance of the form.
 								 *
 								 * @since 1.0.0
 								 *

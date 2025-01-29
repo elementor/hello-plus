@@ -7,6 +7,7 @@
 	--cta-elements-spacing: 40px;
 	--cta-buttons-space-between: 16px;
 	--cta-content-width: 1304px;
+	--cta-content-alignment: center;
 	--cta-buttons-vertical-position: start;
 	--cta-content-position-vertical: start;
 
@@ -69,8 +70,13 @@
 	--cta-image-border-radius-custom-inline-end: #{$corners-shape-sharp};
 	--cta-image-border-radius-custom-inline-start: #{$corners-shape-sharp};
 
+	--cta-text-container-flex-grow-default: 0;
+	--cta-text-container-flex-grow-end: 1;
+	--cta-text-container-flex-grow: var(--cta-text-container-flex-grow-default);
+
 	display: flex;
 	justify-content: center;
+	height: 100%;
 	min-height: var(--cta-box-height);
 	padding-block-end: var(--cta-box-padding-block-end);
 	padding-block-start: var(--cta-box-padding-block-start);
@@ -247,6 +253,7 @@
 	&.has-preset {
 
 		&-focus {
+			--cta-content-alignment: start;
 
 			.ehp-cta__elements-container {
 				display: flex;
@@ -270,6 +277,7 @@
 
 		&-streamline,
 		&-storytelling {
+			--cta-content-alignment: center;
 
 			.ehp-cta__elements-container {
 				display: flex;
@@ -278,6 +286,7 @@
 		}
 
 		&-showcase {
+			--cta-content-alignment: start;
 
 			@mixin image-horizontal-position {
 				&-start {
@@ -400,12 +409,12 @@
 	&__buttons-wrapper {
 		display: flex;
 		gap: var(--cta-buttons-space-between);
+		justify-content: var(--cta-content-alignment);
 		width: 100%;
 
 		@media screen and (min-width: $screen-tablet-min) {
 			align-items: center;
 			flex-direction: row;
-			justify-content: flex-start;
 		}
 
 		&.has-cta-width {
@@ -428,6 +437,7 @@
 	&__elements-container {
 		display: flex;
 		gap: var(--cta-elements-spacing);
+		height: 100%;
 		max-width: var(--cta-content-width);
 		width: 100%;
 		z-index: 1;
@@ -446,7 +456,9 @@
 	&__text-container {
 		display: flex;
 		flex-direction: column;
+		flex-grow: var(--cta-text-container-flex-grow);
 		gap: var(--cta-elements-spacing);
+		text-align: var(--cta-content-alignment);
 	}
 
 	&__image-container {
@@ -499,34 +511,6 @@
 				border-color: var(--cta-image-border-color);
 				border-style: solid;
 				border-width: var(--cta-image-border-width);
-			}
-		}
-	}
-
-	@mixin content-alignment() {
-		&-center {
-			.ehp-cta__buttons-wrapper {
-				justify-content: center;
-			}
-	
-			.ehp-cta__text-container {
-				text-align: center;
-			}
-		}
-	}
-
-	&.has-content-alignment {
-		@include content-alignment();
-
-		&-md {
-			@media screen and (max-width: $screen-desktop-min) {
-				@include content-alignment();
-			}
-		}
-
-		&-sm {
-			@media screen and (max-width: $screen-tablet-min) {
-				@include content-alignment();
 			}
 		}
 	}

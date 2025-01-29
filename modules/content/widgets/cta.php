@@ -285,6 +285,9 @@ class CTA extends Widget_Base {
 				'tablet_default' => 'center',
 				'mobile_default' => 'center',
 				'frontend_available' => true,
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-content-alignment: {{VALUE}};',
+				],
 				'condition' => [
 					'layout_preset' => [
 						'streamline',
@@ -672,38 +675,6 @@ class CTA extends Widget_Base {
 			]
 		);
 
-		// $this->add_responsive_control(
-		// 	'text_width_heading',
-		// 	[
-		// 		'label' => esc_html__( 'Text Width', 'hello-plus' ),
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'size_units' => [ 'px', 'em', 'rem', 'custom' ],
-		// 		'range' => [
-		// 			'px' => [
-		// 				'max' => 1200,
-		// 			],
-		// 			'%' => [
-		// 				'max' => 100,
-		// 			],
-		// 		],
-		// 		'default' => [
-		// 			'size' => 800,
-		// 			'unit' => 'px',
-		// 		],
-		// 		'tablet_default' => [
-		// 			'size' => 800,
-		// 			'unit' => 'px',
-		// 		],
-		// 		'mobile_default' => [
-		// 			'size' => 800,
-		// 			'unit' => 'px',
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .ehp-cta' => '--cta-text-width-heading: {{SIZE}}{{UNIT}};',
-		// 		],
-		// 	]
-		// );
-
 		$this->add_control(
 			'description_label',
 			[
@@ -736,38 +707,6 @@ class CTA extends Widget_Base {
 				],
 			]
 		);
-
-		// $this->add_responsive_control(
-		// 	'text_width_description',
-		// 	[
-		// 		'label' => esc_html__( 'Text Width', 'hello-plus' ),
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'size_units' => [ 'px', 'em', 'rem', 'custom' ],
-		// 		'range' => [
-		// 			'px' => [
-		// 				'max' => 1200,
-		// 			],
-		// 			'%' => [
-		// 				'max' => 100,
-		// 			],
-		// 		],
-		// 		'default' => [
-		// 			'size' => 440,
-		// 			'unit' => 'px',
-		// 		],
-		// 		'tablet_default' => [
-		// 			'size' => 440,
-		// 			'unit' => 'px',
-		// 		],
-		// 		'mobile_default' => [
-		// 			'size' => 440,
-		// 			'unit' => 'px',
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .ehp-cta' => '--cta-text-width-description: {{SIZE}}{{UNIT}};',
-		// 		],
-		// 	]
-		// );
 
 		$this->end_controls_section();
 	}
@@ -819,6 +758,9 @@ class CTA extends Widget_Base {
 				'default_tablet' => 'default',
 				'default_mobile' => 'default',
 				'frontend_available' => true,
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-text-container-flex-grow: var(--cta-text-container-flex-grow-{{VALUE}});',
+				],
 				'condition' => [
 					'layout_preset' => [
 						'streamline',
@@ -827,35 +769,6 @@ class CTA extends Widget_Base {
 				],
 			]
 		);
-		
-
-		// $this->add_control(
-		// 	'cta_position',
-		// 	[
-		// 		'label' => esc_html__( 'Position', 'hello-plus' ),
-		// 		'type' => Controls_Manager::CHOOSE,
-		// 		'description' => esc_html__( 'Buttons will be aligned to end on smaller screens', 'hello-plus' ),
-		// 		'options' => [
-		// 			'row' => [
-		// 				'title' => esc_html__( 'Start', 'hello-plus' ),
-		// 				'icon' => 'eicon-align-start-v',
-		// 			],
-		// 			'column' => [
-		// 				'title' => esc_html__( 'End', 'hello-plus' ),
-		// 				'icon' => 'eicon-align-end-v',
-		// 			],
-		// 		],
-		// 		'default' => 'row',
-		// 		'tablet_default' => 'row',
-		// 		'mobile_default' => 'row',
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .ehp-cta' => '--cta-elements-start-position-desktop: {{VALUE}};',
-		// 		],
-		// 		// 'condition' => [
-		// 		// 	'elements_position' => 'start',
-		// 		// ],
-		// 	]
-		// );
 
 		$this->end_controls_section();
 	}

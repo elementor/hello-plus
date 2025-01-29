@@ -35,9 +35,6 @@ class Widget_CTA_Render {
 
 		$show_image = 'storytelling' === $this->settings['layout_preset'] || 'showcase' === $this->settings['layout_preset'];
 		$image_stretch = $this->settings['image_stretch'];
-		$content_alignment = $this->settings['content_alignment'];
-		$content_alignment_tablet = $this->settings['content_alignment_tablet'];
-		$content_alignment_mobile = $this->settings['content_alignment_mobile'];
 		$has_border = $this->settings['show_box_border'];
 
 		$box_shape = $this->settings['box_shape'];
@@ -47,18 +44,6 @@ class Widget_CTA_Render {
 		if ( ! empty( $layout_full_height_controls ) ) {
 			foreach ( $layout_full_height_controls as $breakpoint ) {
 				$layout_classnames[] = ' is-full-height-' . $breakpoint;
-			}
-		}
-
-		if ( ! empty( $content_alignment ) ) {
-			$layout_classnames[] = 'has-content-alignment-' . $content_alignment;
-
-			if ( ! empty( $content_alignment_tablet ) ) {
-				$layout_classnames[] = 'has-content-alignment-md-' . $content_alignment_tablet;
-			}
-
-			if ( ! empty( $content_alignment_mobile ) ) {
-				$layout_classnames[] = 'has-content-alignment-sm-' . $content_alignment_mobile;
 			}
 		}
 
@@ -167,10 +152,6 @@ class Widget_CTA_Render {
 		$buttons_width_tablet = $this->settings['cta_width_tablet'];
 		$buttons_width_mobile = $this->settings['cta_width_mobile'];
 
-		$buttons_position = $this->settings['content_alignment'];
-		$buttons_position_tablet = $this->settings['content_alignment_tablet'];
-		$buttons_position_mobile = $this->settings['content_alignment_mobile'];
-
 		$buttons_wrapper_classnames = [ 'ehp-cta__buttons-wrapper' ];
 
 		if ( $buttons_width ) {
@@ -182,18 +163,6 @@ class Widget_CTA_Render {
 
 			if ( $buttons_width_mobile ) {
 				$buttons_wrapper_classnames[] = 'has-cta-width-sm-' . $buttons_width_mobile;
-			}
-		}
-
-		if ( $buttons_position ) {
-			$buttons_wrapper_classnames[] = 'has-content-alignment-' . $buttons_position;
-
-			if ( $buttons_position_tablet ) {
-				$buttons_wrapper_classnames[] = 'has-content-alignment-md-' . $buttons_position_tablet;
-			}
-
-			if ( $buttons_position_mobile ) {
-				$buttons_wrapper_classnames[] = 'has-content-alignment-sm-' . $buttons_position_mobile;
 			}
 		}
 

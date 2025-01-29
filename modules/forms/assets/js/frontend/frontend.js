@@ -14,7 +14,7 @@ export default class ehpFormsLite extends elementorModules.Module {
 	}
 }
 
-window.on( 'elementor/frontend/init', () => {
+window.addEventListener( 'elementor/frontend/init', () => {
 	new ehpFormsLite();
 } );
 

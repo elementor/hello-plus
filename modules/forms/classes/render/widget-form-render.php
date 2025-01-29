@@ -14,11 +14,6 @@ class Widget_Form_Render {
 	protected Ehp_Form $widget;
 	protected array $settings;
 
-	public function __construct( Ehp_Form $widget ) {
-		$this->widget = $widget;
-		$this->settings = $widget->get_settings_for_display();
-	}
-
 	public function render() {
 		$form_name = $this->settings['form_name'];
 
@@ -278,5 +273,10 @@ class Widget_Form_Render {
 			<?php } ?>
 		</div>
 		<?php
+	}
+
+	public function __construct( Ehp_Form $widget ) {
+		$this->widget = $widget;
+		$this->settings = $widget->get_settings_for_display();
 	}
 }

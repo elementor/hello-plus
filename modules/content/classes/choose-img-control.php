@@ -7,6 +7,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use Elementor\Control_Choose;
 
+/**
+ * Elementor choose SVG or Image control.
+ *
+ * This control extends the base Choose control allowing the user to choose between options represented by SVG or Image.
+ *
+ * @since 1.0.0
+ */
 class Choose_Img_Control extends Control_Choose {
 
 	const CONTROL_NAME = 'choose-img';
@@ -44,6 +51,20 @@ class Choose_Img_Control extends Control_Choose {
 		<?php
 	}
 
+	/**
+     * Get default settings.
+     *
+     * Retrieve the default settings of the control. Used to return the default settings
+     * while initializing the control.
+     *
+     * @since 1.0.0
+     * @access protected
+     *
+	 * @return array Control default settings.
+	 * * - 'options' (array): An array of options for the control. Instead of 'icon', it uses the field 'image'.
+	 * * - 'toggle' (bool): Whether the control should toggle between options.
+	 * * - 'columns' (int): The number of columns to display the options in.
+ */
 	protected function get_default_settings() {
 		return [
 			'options' => [],

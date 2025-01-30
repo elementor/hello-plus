@@ -22,6 +22,7 @@ use Elementor\Core\Kits\Documents\Tabs\{
 class Ehp_Button {
 	private $context = [];
 	private $defaults = [];
+	private $widget_settings = [];
 	private ?Widget_Base $widget = null;
 
 	const EHP_PREFIX = 'ehp-';
@@ -33,19 +34,18 @@ class Ehp_Button {
 	}
 
 	public function render() {
-		$settings = $this->widget->get_settings_for_display();
 		$type = $this->context['type'] ?? '';
 		$widget_name = $this->context['widget_name'];
 
-		$button_text = $settings[ $type . '_cta_button_text' ] ?? '';
-		$button_link = $settings[ $type . '_cta_button_link' ] ?? [];
-		$button_icon = $settings[ $type . '_cta_button_icon' ] ?? '';
-		$button_hover_animation = $settings[ $type . '_button_hover_animation' ] ?? '';
-		$button_has_border = $settings[ $type . '_show_button_border' ] ?? '';
-		$button_corner_shape = $settings[ $type . '_button_shape' ] ?? '';
-		$button_corner_shape_mobile = $settings[ $type . '_button_shape_mobile' ] ?? '';
-		$button_corner_shape_tablet = $settings[ $type . '_button_shape_tablet' ] ?? '';
-		$button_type = $settings[ $type . '_button_type' ] ?? '';
+		$button_text = $this->get_control_value( 'button_text', '', 'cta_button_text' );
+		$button_link = $this->get_control_value( 'button_link', [], 'cta_button_link' );
+		$button_icon = $this->get_control_value( 'button_icon', '', 'cta_button_icon' );
+		$button_hover_animation = $this->get_control_value( 'button_hover_animation', '' );
+		$button_has_border = $this->get_control_value( 'show_button_border', '' );
+		$button_corner_shape = $this->get_control_value( 'button_shape', '' );
+		$button_corner_shape_mobile = $this->get_control_value( 'button_shape_mobile', '' );
+		$button_corner_shape_tablet = $this->get_control_value( 'button_shape_tablet', '' );
+		$button_type = $this->get_control_value( 'button_type', '' );
 
 		$button_classnames = [
 			self::CLASSNAME_BUTTON,
@@ -98,6 +98,15 @@ class Ehp_Button {
 			<?php echo esc_html( $button_text ); ?>
 		</a>
 		<?php
+	}
+
+	/**
+	 * @return mixed
+	 */
+	protected function get_control_value( string $defaults_key, $default_value, ?string $settings_key = null ) {
+		$type = ! empty( $this->context['type'] ) ? $this->context['type'] . '_' : '';
+		$settings_key = $type . ( $settings_key ?? $defaults_key );
+		return $this->defaults[ $defaults_key ] ?? $this->widget_settings[ $settings_key ] ?? $default_value;
 	}
 
 	public function add_content_section() {
@@ -287,9 +296,10 @@ class Ehp_Button {
 	public function add_button_type_controls( array $options = [] ) {
 		$defaults = [
 			'has_secondary_cta' => $this->defaults['has_secondary_cta'] ?? true,
+			'button_default_type' => $this->defaults['button_default_type'] ?? 'button',
 		];
 		$type = $options['type'];
-		$add_condition = $options['add_condition'] ?? false;
+		$add_condition = $options['add_condition'] ?? [];
 
 		$widget_name = $this->context['widget_name'];
 
@@ -301,6 +311,14 @@ class Ehp_Button {
 		$add_type_condition = $add_condition ? [
 			$type . '_cta_show' => 'yes',
 		] : [];
+
+		if ( isset( $options['ignore_icon_value_condition'] ) && true === $options['ignore_icon_value_condition'] ) {
+			$icon_condition = $add_type_condition;
+		} else {
+			$icon_condition = array_merge( [
+				$type . '_cta_button_icon[value]!' => '',
+			], $add_type_condition );
+		}
 
 		if ( $defaults['has_secondary_cta'] ) {
 			$this->widget->add_control(
@@ -319,7 +337,7 @@ class Ehp_Button {
 			[
 				'label' => esc_html__( 'Type', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => 'button',
+				'default' => $defaults['button_default_type'],
 				'options' => [
 					'button' => esc_html__( 'Button', 'hello-plus' ),
 					'link' => esc_html__( 'Link', 'hello-plus' ),
@@ -364,9 +382,7 @@ class Ehp_Button {
 				'selectors' => [
 					'{{WRAPPER}} .ehp-' . $widget_name . '__button--' . $type => 'flex-direction: {{VALUE}};',
 				],
-				'condition' => array_merge([
-					$type . '_cta_button_icon[value]!' => '',
-				], $add_type_condition),
+				'condition' => $icon_condition,
 			]
 		);
 
@@ -393,9 +409,7 @@ class Ehp_Button {
 				'selectors' => [
 					'{{WRAPPER}} .ehp-' . $widget_name => '--' . $widget_name . '-button-' . $type . '-icon-spacing: {{SIZE}}{{UNIT}};',
 				],
-				'condition' => array_merge([
-					$type . '_cta_button_icon[value]!' => '',
-				], $add_type_condition),
+				'condition' => $icon_condition,
 			]
 		);
 
@@ -637,5 +651,6 @@ class Ehp_Button {
 		$this->widget = $widget;
 		$this->context = $context;
 		$this->defaults = $defaults;
+		$this->widget_settings = $widget->get_settings_for_display();
 	}
 }

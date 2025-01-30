@@ -66,6 +66,7 @@ class Flex_Hero extends Widget_Base {
 	}
 
 	protected function add_content_section() {
+		$this->add_content_layout_section();
 		$this->add_content_text_section();
 		$this->add_content_cta_section();
 		$this->add_content_image_section();
@@ -77,6 +78,55 @@ class Flex_Hero extends Widget_Base {
 		$this->add_style_cta_section();
 		$this->add_style_image_section();
 		$this->add_style_box_section();
+	}
+
+	protected function add_content_layout_section() {
+		$this->start_controls_section(
+			'content_layout',
+			[
+				'label' => esc_html__( 'Layout', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_control(
+			'layout_preset',
+			[
+				'label' => esc_html__( 'Preset', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'showcase',
+				'options' => [
+					'showcase' => esc_html__( 'Showcase', 'hello-plus' ),
+					'storytelling' => esc_html__( 'Storytelling', 'hello-plus' ),
+				],
+			]
+		);
+
+		$this->add_control(
+			'layout_preset_showcase_info',
+			[
+				'type' => Controls_Manager::ALERT,
+				'alert_type' => 'info',
+				'content' => esc_html__( 'Highlight key concepts with a balanced layout.', 'hello-plus' ),
+				'condition' => [
+					'layout_preset' => 'showcase',
+				],
+			]
+		);
+
+		$this->add_control(
+			'layout_preset_storytelling_info',
+			[
+				'type' => Controls_Manager::ALERT,
+				'alert_type' => 'info',
+				'content' => esc_html__( 'Focus on a narrative with supporting visuals.', 'hello-plus' ),
+				'condition' => [
+					'layout_preset' => 'storytelling',
+				],
+			]
+		);
+
+		$this->end_controls_section();
 	}
 
 	protected function add_content_text_section() {
@@ -229,43 +279,6 @@ class Flex_Hero extends Widget_Base {
 			[
 				'label' => esc_html__( 'Layout', 'hello-plus' ),
 				'tab' => Controls_Manager::TAB_STYLE,
-			]
-		);
-
-		$this->add_control(
-			'layout_preset',
-			[
-				'label' => esc_html__( 'Preset', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'showcase',
-				'options' => [
-					'showcase' => esc_html__( 'Showcase', 'hello-plus' ),
-					'storytelling' => esc_html__( 'Storytelling', 'hello-plus' ),
-				],
-			]
-		);
-
-		$this->add_control(
-			'layout_preset_showcase_info',
-			[
-				'type' => Controls_Manager::ALERT,
-				'alert_type' => 'info',
-				'content' => esc_html__( 'Highlight key concepts with a balanced layout.', 'hello-plus' ),
-				'condition' => [
-					'layout_preset' => 'showcase',
-				],
-			]
-		);
-
-		$this->add_control(
-			'layout_preset_storytelling_info',
-			[
-				'type' => Controls_Manager::ALERT,
-				'alert_type' => 'info',
-				'content' => esc_html__( 'Focus on a narrative with supporting visuals.', 'hello-plus' ),
-				'condition' => [
-					'layout_preset' => 'storytelling',
-				],
 			]
 		);
 

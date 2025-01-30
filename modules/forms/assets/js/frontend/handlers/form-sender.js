@@ -8,7 +8,7 @@ export default elementorModules.frontend.handlers.Base.extend( {
 			},
 			action: 'helloplus_forms_lite_send_form',
 			ajaxUrl: elementorFrontendConfig.urls.ajaxurl,
-			nonce: ehpForms.nonce,
+			nonce: ehpFormsData.nonce,
 		};
 	},
 

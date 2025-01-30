@@ -9,8 +9,6 @@ use HelloPlus\Modules\Forms\Controls\Fields_Map;
 use HelloPlus\Modules\Forms\Controls\Fields_Repeater;
 use HelloPlus\Modules\Forms\Registrars\Form_Actions_Registrar;
 use HelloPlus\Modules\Forms\Registrars\Form_Fields_Registrar;
-use HelloPlus\Modules\Forms\Submissions\AdminMenuItems\Submissions_Promotion_Menu_Item;
-use HelloPlus\Modules\Forms\Submissions\Component as Form_Submissions_Component;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -34,7 +32,7 @@ class Module extends Module_Base {
 
 	protected function get_widget_ids(): array {
 		return [
-			'Form',
+			'Ehp_Form',
 		];
 	}
 
@@ -99,16 +97,16 @@ class Module extends Module_Base {
 
 	public function register_scripts() {
 		wp_register_script(
-			'helloplus-forms-editor-fe',
-			HELLOPLUS_SCRIPTS_URL . 'helloplus-forms-editor-fe.js',
+			'helloplus-forms-fe',
+			HELLOPLUS_SCRIPTS_URL . 'helloplus-forms-fe.js',
 			[ 'elementor-common', 'elementor-frontend-modules', 'elementor-frontend' ],
 			HELLOPLUS_VERSION,
 			true
 		);
 
 		wp_localize_script(
-			'helloplus-forms-editor-fe',
-			'ehpForms',
+			'helloplus-forms-fe',
+			'ehpFormsData',
 			[
 				'nonce' => wp_create_nonce( Ajax_Handler::NONCE_ACTION ),
 			]
@@ -123,16 +121,20 @@ class Module extends Module_Base {
 		return str_ireplace( 'www.', '', wp_parse_url( home_url(), PHP_URL_HOST ) );
 	}
 
-	/**
-	 * Module constructor.
-	 */
-	public function __construct() {
-		parent::__construct();
+	protected function register_hooks(): void {
+		parent::register_hooks();
 
 		add_action( 'elementor/frontend/after_register_scripts', [ $this, 'register_scripts' ] );
 		add_action( 'elementor/frontend/after_register_styles', [ $this, 'register_styles' ] );
 		add_action( 'elementor/controls/register', [ $this, 'register_controls' ] );
 		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'enqueue_editor_scripts' ] );
+	}
+
+	/**
+	 * Module constructor.
+	 */
+	public function __construct() {
+		parent::__construct();
 
 		// Initialize registrars.
 		$this->actions_registrar = new Form_Actions_Registrar();

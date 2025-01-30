@@ -1,0 +1,62 @@
+#elementor-element--ehp__dialog {
+	position: absolute;
+	width: 300px;
+	z-index: 1;
+	background-color: var(--e-a-bg-default);
+	box-shadow: var(--e-a-popover-shadow);
+	border-radius: var(--e-a-border-radius);
+
+	&:after {
+		content: '';
+		position: absolute;
+		top: 15px;
+		@include end(100%);
+		transform: scaleY(0.7);
+		border: 10px solid transparent;
+		border-inline-end-color: var(--e-a-bg-default);
+	}
+
+	&__title {
+		font-size: 14px;
+	}
+
+	.dialog {
+
+		&-header {
+			display: flex;
+			padding: 20px;
+			border-block-end: var(--e-a-border);
+			font-weight: 500;
+			justify-content: space-between;
+
+			.eicon-pro-icon {
+				flex-grow: 1;
+				margin-inline-start: 10px;
+				font-size: 14px;
+				color: var(--e-a-color-accent);
+			}
+
+			.eicon-close {
+				cursor: pointer;
+				color: var(--e-a-color-txt-disabled);
+
+				&:hover {
+					color: var(--e-a-color-txt-muted);
+				}
+			}
+		}
+
+		&-message {
+			padding: 20px;
+		}
+
+		&-buttons-wrapper {
+			padding: 0 20px 20px;
+		}
+
+		&-button {
+			padding: 7px 25px;
+			font-size: 12px;
+		}
+	}
+}

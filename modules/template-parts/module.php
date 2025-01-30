@@ -16,6 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  **/
 class Module extends Module_Base {
 
+	const USER_META_TIMES_EDITOR_OPENED = 'helloplus_editor_opened';
+
 	/**
 	 * @inheritDoc
 	 */
@@ -83,9 +85,21 @@ class Module extends Module_Base {
 		wp_enqueue_script(
 			'helloplus-editor',
 			HELLOPLUS_SCRIPTS_URL . 'helloplus-editor.js',
-			[ 'elementor-editor' ],
+			[ 'elementor-editor', 'wp-api-fetch' ],
 			HELLOPLUS_VERSION,
 			true
+		);
+
+		wp_localize_script(
+			'helloplus-editor',
+			'helloplusEditor',
+			[
+				'timesEditorOpened' => (int) get_user_meta(
+					get_current_user_id(),
+					self::USER_META_TIMES_EDITOR_OPENED,
+					true
+				),
+			]
 		);
 	}
 

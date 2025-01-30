@@ -30,6 +30,7 @@ class Onboarding_Settings {
 
 	public function get_kits() {
 		$kits = get_transient( self::KITS_TRANSIENT );
+
 		if ( ! empty( $kits ) ) {
 			return $kits;
 		}

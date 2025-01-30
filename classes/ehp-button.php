@@ -317,7 +317,7 @@ class Ehp_Button {
 		} else {
 			$icon_condition = array_merge( [
 				$type . '_cta_button_icon[value]!' => '',
-			], $add_type_condition);
+			], $add_type_condition );
 		}
 
 		if ( $defaults['has_secondary_cta'] ) {

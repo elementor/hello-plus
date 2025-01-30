@@ -431,8 +431,6 @@ class Ehp_Button {
 			]
 		);
 
-		error_log(print_r($add_type_condition, true));
-
 		$this->widget->add_group_control(
 			Group_Control_Background::get_type(),
 			[

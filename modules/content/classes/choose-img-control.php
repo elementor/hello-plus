@@ -52,14 +52,14 @@ class Choose_Img_Control extends Control_Choose {
 	}
 
 	/**
-     * Get default settings.
-     *
-     * Retrieve the default settings of the control. Used to return the default settings
-     * while initializing the control.
-     *
-     * @since 1.0.0
-     * @access protected
-     *
+	 * Get default settings.
+	 *
+	 * Retrieve the default settings of the control. Used to return the default settings
+	 * while initializing the control.
+	 *
+	 * @since 1.0.0
+	 * @access protected
+	 *
 	 * @return array Control default settings.
 	 * * - 'options' (array): An array of options for the control. Instead of 'icon', it uses the field 'image'.
 	 * * - 'toggle' (bool): Whether the control should toggle between options.

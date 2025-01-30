@@ -22,6 +22,7 @@ use Elementor\Core\Kits\Documents\Tabs\{
 class Ehp_Button {
 	private $context = [];
 	private $defaults = [];
+	private $widget_settings = [];
 	private ?Widget_Base $widget = null;
 
 	const EHP_PREFIX = 'ehp-';
@@ -33,19 +34,18 @@ class Ehp_Button {
 	}
 
 	public function render() {
-		$settings = $this->widget->get_settings_for_display();
 		$type = $this->context['type'] ?? '';
 		$widget_name = $this->context['widget_name'];
 
-		$button_text = $this->get_control_value( 'button_text', $type . '_cta_button_text', '' );
-		$button_link = $this->get_control_value( 'button_link', $type . '_cta_button_link', [] );
-		$button_icon = $this->get_control_value( 'button_icon', $type . '_cta_button_icon', '' );
-		$button_hover_animation = $this->get_control_value( 'button_hover_animation', $type . '_button_hover_animation', '' );
-		$button_has_border = $this->get_control_value( 'show_button_border', $type . '_show_button_border', '' );
-		$button_corner_shape = $this->get_control_value( 'button_shape', $type . '_button_shape', '' );
-		$button_corner_shape_mobile = $this->get_control_value( 'button_shape_mobile', $type . '_button_shape_mobile', '' );
-		$button_corner_shape_tablet = $this->get_control_value( 'button_shape_tablet', $type . '_button_shape_tablet', '' );
-		$button_type = $this->get_control_value( 'button_type', $type . '_button_type', '' );
+		$button_text = $this->get_control_value( 'button_text', '', 'cta_button_text' );
+		$button_link = $this->get_control_value( 'button_link', [], 'cta_button_link' );
+		$button_icon = $this->get_control_value( 'button_icon', '', 'cta_button_icon' );
+		$button_hover_animation = $this->get_control_value( 'button_hover_animation', '' );
+		$button_has_border = $this->get_control_value( 'show_button_border', '' );
+		$button_corner_shape = $this->get_control_value( 'button_shape', '' );
+		$button_corner_shape_mobile = $this->get_control_value( 'button_shape_mobile', '' );
+		$button_corner_shape_tablet = $this->get_control_value( 'button_shape_tablet', '' );
+		$button_type = $this->get_control_value( 'button_type', '' );
 
 		$button_classnames = [
 			self::CLASSNAME_BUTTON,
@@ -100,9 +100,13 @@ class Ehp_Button {
 		<?php
 	}
 
-	protected function get_control_value( $defaults_key, $settings_key, $default ) {
-		$settings = $this->widget->get_settings_for_display();
-  		return $this->defaults[ $defaults_key ] ?? $settings[ $settings_key ] ?? $default;
+	/**
+	 * @return mixed
+	 */
+	protected function get_control_value( string $defaults_key, $default, ?string $settings_key = null ) {
+		$type = ! empty( $this->context['type'] ) ? $this->context['type'] . '_' : '';
+		$settings_key = $type . ( $settings_key ?? $defaults_key );
+  		return $this->defaults[ $defaults_key ] ?? $this->widget_settings[ $settings_key ] ?? $default;
 	}
 
 	public function add_content_section() {
@@ -647,5 +651,6 @@ class Ehp_Button {
 		$this->widget = $widget;
 		$this->context = $context;
 		$this->defaults = $defaults;
+		$this->widget_settings = $widget->get_settings_for_display();
 	}
 }

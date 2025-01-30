@@ -364,7 +364,7 @@ class Hero extends Widget_Base {
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
-		
+
 		$defaults = [
 			'has_secondary_cta' => false,
 		];

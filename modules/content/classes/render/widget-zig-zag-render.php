@@ -178,9 +178,9 @@ class Widget_Zig_Zag_Render {
 		$graphic_element = $this->settings['graphic_element'];
 
 		$defaults = [
-			'button_text'=> $item[ $graphic_element . '_button_text' ] ?? '',
-			'button_link'=> $item[ $graphic_element . '_button_link' ] ?? '',
-			'button_icon'=> $item[ $graphic_element . '_button_icon' ] ?? '',
+			'button_text' => $item[ $graphic_element . '_button_text' ] ?? '',
+			'button_link' => $item[ $graphic_element . '_button_link' ] ?? '',
+			'button_icon' => $item[ $graphic_element . '_button_icon' ] ?? '',
 			'button_hover_animation' => $this->settings['primary_button_hover_animation'] ?? '',
 			'button_has_border' => $this->settings['primary_show_button_border'],
 			'button_corner_shape' => $this->settings['primary_button_shape'] ?? '',

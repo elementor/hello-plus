@@ -37,15 +37,15 @@ class Ehp_Button {
 		$type = $this->context['type'] ?? '';
 		$widget_name = $this->context['widget_name'];
 
-		$button_text = $this->defaults['button_text'] ?? $settings[ $type . '_cta_button_text' ] ?? '';
-		$button_link = $this->defaults['button_link'] ?? $settings[ $type . '_cta_button_link' ] ?? [];
-		$button_icon = $this->defaults['button_icon'] ?? $settings[ $type . '_cta_button_icon' ] ?? '';
-		$button_hover_animation = $this->defaults['button_hover_animation'] ?? $settings[ $type . '_button_hover_animation' ] ?? '';
-		$button_has_border = $this->defaults['show_button_border'] ?? $settings[ $type . '_show_button_border' ] ?? '';
-		$button_corner_shape = $this->defaults['button_shape'] ?? $settings[ $type . '_button_shape' ] ?? '';
-		$button_corner_shape_mobile = $this->defaults['button_shape_mobile'] ?? $settings[ $type . '_button_shape_mobile' ] ?? '';
-		$button_corner_shape_tablet = $this->defaults['button_shape_tablet'] ?? $settings[ $type . '_button_shape_tablet' ] ?? '';
-		$button_type = $this->defaults['button_type'] ?? $settings[ $type . '_button_type' ] ?? '';
+		$button_text = $this->get_control_value( 'button_text', $type . '_cta_button_text', '' );
+		$button_link = $this->get_control_value( 'button_link', $type . '_cta_button_link', [] );
+		$button_icon = $this->get_control_value( 'button_icon', $type . '_cta_button_icon', '' );
+		$button_hover_animation = $this->get_control_value( 'button_hover_animation', $type . '_button_hover_animation', '' );
+		$button_has_border = $this->get_control_value( 'show_button_border', $type . '_show_button_border', '' );
+		$button_corner_shape = $this->get_control_value( 'button_shape', $type . '_button_shape', '' );
+		$button_corner_shape_mobile = $this->get_control_value( 'button_shape_mobile', $type . '_button_shape_mobile', '' );
+		$button_corner_shape_tablet = $this->get_control_value( 'button_shape_tablet', $type . '_button_shape_tablet', '' );
+		$button_type = $this->get_control_value( 'button_type', $type . '_button_type', '' );
 
 		$button_classnames = [
 			self::CLASSNAME_BUTTON,
@@ -98,6 +98,11 @@ class Ehp_Button {
 			<?php echo esc_html( $button_text ); ?>
 		</a>
 		<?php
+	}
+
+	protected function get_control_value( $defaults_key, $settings_key, $default ) {
+		$settings = $this->widget->get_settings_for_display();
+  		return $this->defaults[ $defaults_key ] ?? $settings[ $settings_key ] ?? $default;
 	}
 
 	public function add_content_section() {
@@ -303,7 +308,7 @@ class Ehp_Button {
 			$type . '_cta_show' => 'yes',
 		] : [];
 
-		if ( isset( $options[ 'ignore_icon_value_condition' ] ) && $options[ 'ignore_icon_value_condition' ] === true ) {
+		if ( isset( $options['ignore_icon_value_condition'] ) && true === $options['ignore_icon_value_condition'] ) {
 			$icon_condition = $add_type_condition;
 		} else {
 			$icon_condition = array_merge( [

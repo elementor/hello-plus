@@ -10,6 +10,7 @@ use Elementor\Controls_Manager;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
+use Elementor\Group_Control_Css_Filter;
 use Elementor\Widget_Base;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
@@ -18,6 +19,8 @@ use HelloPlus\Modules\Content\Base\Traits\Shared_Content_Traits;
 use HelloPlus\Modules\Content\Classes\Render\Widget_CTA_Render;
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 use HelloPlus\Classes\Ehp_Button;
+
+use Elementor\Utils as Elementor_Utils;
 
 class CTA extends Widget_Base {
 
@@ -59,14 +62,119 @@ class CTA extends Widget_Base {
 	}
 
 	protected function add_content_section() {
+		$this->add_content_layout_section();
+		$this->add_content_image_section();
 		$this->add_content_text_section();
 		$this->add_content_cta_section();
 	}
 
 	protected function add_style_section() {
+		$this->add_style_section_layout();
+		$this->add_style_section_image();
 		$this->add_style_section_text();
 		$this->add_style_section_cta();
 		$this->add_style_box_section();
+	}
+
+	protected function add_content_layout_section() {
+		$this->start_controls_section(
+			'layout',
+			[
+				'label' => esc_html__( 'Layout', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_control(
+			'layout_preset',
+			[
+				'label' => esc_html__( 'Preset', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'focus' => esc_html__( 'Focus', 'hello-plus' ),
+					'streamline' => esc_html__( 'Streamline', 'hello-plus' ),
+					'showcase' => esc_html__( 'Showcase', 'hello-plus' ),
+					'storytelling' => esc_html__( 'Storytelling', 'hello-plus' ),
+				],
+				'default' => 'focus',
+			]
+		);
+
+		$this->add_control(
+			'layout_info_focus',
+			[
+				'type' => Controls_Manager::ALERT,
+				'alert_type' => 'info',
+				'content' => esc_html__( 'Highlight a single, full-width CTA to maximize impact.', 'hello-plus' ),
+				'condition' => [
+					'layout_preset' => 'focus',
+				],
+			]
+		);
+
+		$this->add_control(
+			'layout_info_streamline',
+			[
+				'type' => Controls_Manager::ALERT,
+				'alert_type' => 'info',
+				'content' => esc_html__( 'Pair alongside other CTAs and elements for a seamless flow.', 'hello-plus' ),
+				'condition' => [
+					'layout_preset' => 'streamline',
+				],
+			]
+		);
+
+		$this->add_control(
+			'layout_info_storytelling',
+			[
+				'type' => Controls_Manager::ALERT,
+				'alert_type' => 'info',
+				'content' => esc_html__( 'Focus on a narrative with supporting visuals.', 'hello-plus' ),
+				'condition' => [
+					'layout_preset' => 'storytelling',
+				],
+			]
+		);
+
+		$this->add_control(
+			'layout_info_showcase',
+			[
+				'type' => Controls_Manager::ALERT,
+				'alert_type' => 'info',
+				'content' => esc_html__( 'Highlight key concepts with a balanced layout.', 'hello-plus' ),
+				'condition' => [
+					'layout_preset' => 'showcase',
+				],
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
+	protected function add_content_image_section() {
+		$this->start_controls_section(
+			'content_image',
+			[
+				'label' => esc_html__( 'Image', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+				'condition' => [
+					'layout_preset' => [ 'showcase', 'storytelling' ],
+				],
+			]
+		);
+
+		$this->add_control(
+			'image',
+			[
+				'label' => esc_html__( 'Choose Image', 'hello-plus' ),
+				'type' => Controls_Manager::MEDIA,
+				'default' => [
+					'url' => Elementor_Utils::get_placeholder_image_src(),
+				],
+			]
+		);
+
+		$this->end_controls_section();
 	}
 
 	protected function add_content_text_section() {
@@ -149,24 +257,19 @@ class CTA extends Widget_Base {
 		$this->end_controls_section();
 	}
 
-	protected function add_content_cta_section() {
-		$button = new Ehp_Button( $this, [ 'widget_name' => 'cta' ] );
-		$button->add_content_section();
-	}
-
-	protected function add_style_section_text() {
+	protected function add_style_section_layout() {
 		$this->start_controls_section(
-			'style_text',
+			'style_layout',
 			[
-				'label' => esc_html__( 'Text', 'hello-plus' ),
+				'label' => esc_html__( 'Layout', 'hello-plus' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
 
-		$this->add_control(
-			'elements_position',
+		$this->add_responsive_control(
+			'content_alignment',
 			[
-				'label' => esc_html__( 'Position', 'hello-plus' ),
+				'label' => esc_html__( 'Content Alignment', 'hello-plus' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'start' => [
@@ -178,9 +281,364 @@ class CTA extends Widget_Base {
 						'icon' => 'eicon-align-center-h',
 					],
 				],
+				'default' => 'center',
+				'tablet_default' => 'center',
+				'mobile_default' => 'center',
+				'frontend_available' => true,
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-content-alignment: {{VALUE}};',
+				],
+				'condition' => [
+					'layout_preset' => [
+						'streamline',
+						'storytelling',
+					],
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'cta_vertical_position',
+			[
+				'label' => esc_html__( 'Vertical Position', 'hello-plus' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'start' => [
+						'title' => esc_html__( 'Start', 'hello-plus' ),
+						'icon' => 'eicon-align-start-v',
+					],
+					'end' => [
+						'title' => esc_html__( 'End', 'hello-plus' ),
+						'icon' => 'eicon-align-end-v',
+					],
+				],
 				'default' => 'start',
 				'tablet_default' => 'start',
 				'mobile_default' => 'start',
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-buttons-vertical-position: {{VALUE}};',
+				],
+				'frontend_available' => true,
+				'condition' => [
+					'layout_preset' => [
+						'focus',
+					],
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'content_width',
+			[
+				'label' => esc_html__( 'Content Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 1200,
+					],
+					'%' => [
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'size' => 1200,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-content-width: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'layout_preset' => [
+						'storytelling',
+						'focus',
+						'streamline',
+					],
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'image_horizontal_position',
+			[
+				'label' => esc_html__( 'Image Position', 'hello-plus' ),
+				'type' => Controls_Manager::CHOOSE,
+				'toggle' => false,
+				'options' => [
+					'start' => [
+						'title' => esc_html__( 'Start', 'hello-plus' ),
+						'icon' => 'eicon-h-align-left',
+					],
+					'end' => [
+						'title' => esc_html__( 'End', 'hello-plus' ),
+						'icon' => 'eicon-h-align-right',
+					],
+				],
+				'frontend_available' => true,
+				'default' => is_rtl() ? 'end' : 'start',
+				'tablet_default' => is_rtl() ? 'end' : 'start',
+				'mobile_default' => is_rtl() ? 'end' : 'start',
+				'condition' => [
+					'layout_preset' => 'showcase',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'content_position_vertical',
+			[
+				'label' => esc_html__( 'Content Position', 'hello-plus' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'start' => [
+						'title' => esc_html__( 'Start', 'hello-plus' ),
+						'icon' => 'eicon-align-start-v',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'hello-plus' ),
+						'icon' => 'eicon-align-center-v',
+					],
+					'end' => [
+						'title' => esc_html__( 'End', 'hello-plus' ),
+						'icon' => 'eicon-align-end-v',
+					],
+				],
+				'default' => 'start',
+				'tablet_default' => 'start',
+				'mobile_default' => 'start',
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-content-position-vertical: {{VALUE}};',
+				],
+				'frontend_available' => true,
+				'condition' => [
+					'layout_preset' => 'showcase',
+				],
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
+	protected function add_style_section_image() {
+		$this->start_controls_section(
+			'style_image',
+			[
+				'label' => esc_html__( 'Image', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'layout_preset' => [ 'showcase', 'storytelling' ],
+				],
+			]
+		);
+
+		$this->add_control(
+			'image_stretch',
+			[
+				'label' => esc_html__( 'Stretch', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+			]
+		);
+
+		$this->add_responsive_control(
+			'image_width',
+			[
+				'label' => esc_html__( 'Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 1500,
+					],
+					'%' => [
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'size' => 100,
+					'unit' => '%',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-image-width: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'image_stretch!' => 'yes',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'image_height',
+			[
+				'label' => esc_html__( 'Height', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 1500,
+					],
+					'%' => [
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'size' => 380,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-image-height: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'image_position',
+			[
+				'label' => esc_html__( 'Position', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'desktop_default' => 'center center',
+				'tablet_default' => 'center center',
+				'mobile_default' => 'center center',
+				'options' => [
+					'' => esc_html__( 'Default', 'hello-plus' ),
+					'center center' => esc_html__( 'Center Center', 'hello-plus' ),
+					'center left' => esc_html__( 'Center Left', 'hello-plus' ),
+					'center right' => esc_html__( 'Center Right', 'hello-plus' ),
+					'top center' => esc_html__( 'Top Center', 'hello-plus' ),
+					'top left' => esc_html__( 'Top Left', 'hello-plus' ),
+					'top right' => esc_html__( 'Top Right', 'hello-plus' ),
+					'bottom center' => esc_html__( 'Bottom Center', 'hello-plus' ),
+					'bottom left' => esc_html__( 'Bottom Left', 'hello-plus' ),
+					'bottom right' => esc_html__( 'Bottom Right', 'hello-plus' ),
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-image-position: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Css_Filter::get_type(),
+			[
+				'name' => 'image_css_filters',
+				'selector' => '{{WRAPPER}} .ehp-cta__image-container img',
+			]
+		);
+
+		$this->add_control(
+			'show_image_border',
+			[
+				'label' => esc_html__( 'Border', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'image_border_width',
+			[
+				'label' => __( 'Border Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 10,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 1,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-image-border-width: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'show_image_border' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'image_border_color',
+			[
+				'label' => esc_html__( 'Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-image-border-color: {{VALUE}}',
+				],
+				'condition' => [
+					'show_image_border' => 'yes',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'image_shape',
+			[
+				'label' => esc_html__( 'Shape', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'sharp',
+				'options' => [
+					'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
+					'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
+					'round' => esc_html__( 'Round', 'hello-plus' ),
+					'oval' => esc_html__( 'Oval', 'hello-plus' ),
+					'custom' => esc_html__( 'Custom', 'hello-plus' ),
+				],
+				'frontend_available' => true,
+			]
+		);
+
+		$this->add_responsive_control(
+			'image_shape_custom',
+			[
+				'label' => esc_html__( 'Border Radius', 'hello-plus' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em', 'rem' ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-image-border-radius-custom-block-end: {{BOTTOM}}{{UNIT}}; --cta-image-border-radius-custom-block-start: {{TOP}}{{UNIT}}; --cta-image-border-radius-custom-inline-end: {{RIGHT}}{{UNIT}}; --cta-image-border-radius-custom-inline-start: {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+				'condition' => [
+					'image_shape' => 'custom',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'image_box_shadow',
+				'selector' => '{{WRAPPER}} .ehp-cta__image-container img',
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
+	protected function add_content_cta_section() {
+		$button = new Ehp_Button( $this, [ 'widget_name' => 'cta' ] );
+		$button->add_content_section();
+	}
+
+	protected function add_style_section_text() {
+		$this->start_controls_section(
+			'style_text',
+			[
+				'label' => esc_html__( 'Text', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
 
@@ -213,38 +671,6 @@ class CTA extends Widget_Base {
 				'selector' => '{{WRAPPER}} .ehp-cta__heading',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'text_width_heading',
-			[
-				'label' => esc_html__( 'Text Width', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
-				'range' => [
-					'px' => [
-						'max' => 1200,
-					],
-					'%' => [
-						'max' => 100,
-					],
-				],
-				'default' => [
-					'size' => 800,
-					'unit' => 'px',
-				],
-				'tablet_default' => [
-					'size' => 800,
-					'unit' => 'px',
-				],
-				'mobile_default' => [
-					'size' => 800,
-					'unit' => 'px',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-text-width-heading: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -282,38 +708,6 @@ class CTA extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'text_width_description',
-			[
-				'label' => esc_html__( 'Text Width', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
-				'range' => [
-					'px' => [
-						'max' => 1200,
-					],
-					'%' => [
-						'max' => 100,
-					],
-				],
-				'default' => [
-					'size' => 440,
-					'unit' => 'px',
-				],
-				'tablet_default' => [
-					'size' => 440,
-					'unit' => 'px',
-				],
-				'mobile_default' => [
-					'size' => 440,
-					'unit' => 'px',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-text-width-description: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
 		$this->end_controls_section();
 	}
 
@@ -326,36 +720,55 @@ class CTA extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'cta_position',
+		$button = new Ehp_Button( $this, [ 'widget_name' => 'cta' ] );
+		$button->add_style_controls();
+
+		$this->add_responsive_control(
+			'cta_width',
 			[
-				'label' => esc_html__( 'Position', 'hello-plus' ),
-				'type' => Controls_Manager::CHOOSE,
-				'description' => esc_html__( 'Buttons will be aligned to end on smaller screens', 'hello-plus' ),
+				'label' => esc_html__( 'Width', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'row' => [
-						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => 'eicon-align-start-v',
-					],
-					'column' => [
-						'title' => esc_html__( 'End', 'hello-plus' ),
-						'icon' => 'eicon-align-end-v',
-					],
+					'default' => esc_html__( 'Default', 'hello-plus' ),
+					'stretch' => esc_html__( 'Stretch', 'hello-plus' ),
 				],
-				'default' => 'row',
-				'tablet_default' => 'row',
-				'mobile_default' => 'row',
-				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-elements-start-position-desktop: {{VALUE}};',
-				],
+				'default' => 'default',
+				'default_tablet' => 'default',
+				'default_mobile' => 'default',
+				'frontend_available' => true,
 				'condition' => [
-					'elements_position' => 'start',
+					'layout_preset' => [
+						'streamline',
+						'storytelling',
+					],
 				],
 			]
 		);
 
-		$button = new Ehp_Button( $this, [ 'widget_name' => 'cta' ] );
-		$button->add_style_controls();
+		$this->add_responsive_control(
+			'cta_position',
+			[
+				'label' => esc_html__( 'Position', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'default' => esc_html__( 'Default', 'hello-plus' ),
+					'end' => esc_html__( 'End', 'hello-plus' ),
+				],
+				'default' => 'default',
+				'default_tablet' => 'default',
+				'default_mobile' => 'default',
+				'frontend_available' => true,
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-text-container-flex-grow: var(--cta-text-container-flex-grow-{{VALUE}});',
+				],
+				'condition' => [
+					'layout_preset' => [
+						'streamline',
+						'storytelling',
+					],
+				],
+			]
+		);
 
 		$this->end_controls_section();
 	}
@@ -395,28 +808,49 @@ class CTA extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'content_width',
+		$this->add_control(
+			'box_background_overlay_label',
 			[
-				'label' => esc_html__( 'Content Width', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
-				'range' => [
-					'px' => [
-						'max' => 1600,
+				'label' => esc_html__( 'Background Overlay', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
+			[
+				'name' => 'background_overlay',
+				'types' => [ 'classic', 'gradient' ],
+				'selector' => '{{WRAPPER}} .ehp-cta__overlay',
+				'fields_options' => [
+					'background' => [
+						'default' => 'classic',
 					],
+				],
+				'frontend_available' => true,
+			]
+		);
+
+		$this->add_responsive_control(
+			'background_overlay_opacity',
+			[
+				'label' => esc_html__( 'Opacity', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
 					'%' => [
-						'max' => 100,
+						'max' => 1,
+						'min' => 0.10,
+						'step' => 0.01,
 					],
 				],
 				'default' => [
-					'size' => 1304,
-					'unit' => 'px',
+					'unit' => '%',
+					'size' => 0.5,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-content-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-cta' => '--cta-overlay-opacity: {{SIZE}};',
 				],
-				'separator' => 'before',
 			]
 		);
 
@@ -470,6 +904,100 @@ class CTA extends Widget_Base {
 					'unit' => 'px',
 				],
 				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'show_box_border',
+			[
+				'label' => esc_html__( 'Border', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'box_border_width',
+			[
+				'label' => __( 'Border Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 10,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 1,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-box-border-width: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'show_box_border' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'box_border_color',
+			[
+				'label' => esc_html__( 'Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-box-border-color: {{VALUE}}',
+				],
+				'condition' => [
+					'show_box_border' => 'yes',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'box_shape',
+			[
+				'label' => esc_html__( 'Shape', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'sharp',
+				'options' => [
+					'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
+					'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
+					'custom' => esc_html__( 'Custom', 'hello-plus' ),
+				],
+				'frontend_available' => true,
+			]
+		);
+
+		$this->add_responsive_control(
+			'box_shape_custom',
+			[
+				'label' => esc_html__( 'Border Radius', 'hello-plus' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em', 'rem' ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-cta' => '--cta-box-border-radius-custom-block-end: {{BOTTOM}}{{UNIT}}; --cta-box-border-radius-custom-block-start: {{TOP}}{{UNIT}}; --cta-box-border-radius-custom-inline-end: {{RIGHT}}{{UNIT}}; --cta-box-border-radius-custom-inline-start: {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'box_shape' => 'custom',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'box_box_shadow',
+				'selector' => '{{WRAPPER}} .ehp-cta',
 			]
 		);
 

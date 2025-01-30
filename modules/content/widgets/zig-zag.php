@@ -74,6 +74,7 @@ class Zig_Zag extends Widget_Base {
 		$this->add_style_layout_section();
 		$this->add_style_image_section();
 		$this->add_style_icon_section();
+		$this->add_style_text_section();
 		$this->add_style_cta_section();
 		$this->add_style_box_section();
 	}

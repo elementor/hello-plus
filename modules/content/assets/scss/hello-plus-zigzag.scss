@@ -11,6 +11,7 @@
 	--zigzag-image-width: 50%;
 	--zigzag-icon-width: 50%;
 	--zigzag-image-position: center center;
+	--zigzag-img-width: 100%;
 	--zigzag-elements-gap: 32px;
 	--zigzag-icon-size: 256px;
 	--zigzag-icon-color: #555963;
@@ -258,5 +259,11 @@
 			padding-inline: 0;
 			width: 100%;
 		}
+	}
+
+
+	&.has-image-stretch {
+		--zigzag-image-height: 100%;
+		--zigzag-img-width: 100%;
 	}
 }

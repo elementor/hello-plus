@@ -34,6 +34,7 @@ class Widget_Zig_Zag_Render {
 		$entrance_animation = $this->settings['zigzag_animation'] ?? '';
 		$has_entrance_animation = ! empty( $entrance_animation ) && 'none' !== $entrance_animation;
 		$has_alternate_animation = 'yes' === $this->settings['animation_alternate'];
+		$image_stretch = $this->settings['image_stretch'];
 
 		$layout_classnames = [
 			self::LAYOUT_CLASSNAME,
@@ -50,6 +51,10 @@ class Widget_Zig_Zag_Render {
 
 		if ( $has_alternate_animation ) {
 			$layout_classnames[] = 'has-alternate-animation';
+		}
+
+		if ( 'yes' === $image_stretch ) {
+			$layout_classnames[] = 'has-image-stretch';
 		}
 
 		$this->widget->add_render_attribute( 'layout', [

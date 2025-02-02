@@ -1,0 +1,30 @@
+@mixin ellipsis {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+@mixin absolute-center {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+@mixin start($value) {
+	body.rtl & {
+		right: $value;
+	}
+	body:not(.rtl) & {
+		left: $value;
+	}
+}
+
+@mixin end($value) {
+	body.rtl & {
+		left: $value;
+	}
+	body:not(.rtl) & {
+		right: $value;
+	}
+}

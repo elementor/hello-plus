@@ -10,7 +10,8 @@ use Elementor\{
 	Controls_Manager,
 	Group_Control_Background,
 	Group_Control_Box_Shadow,
-	Group_Control_Typography
+	Group_Control_Typography,
+	Repeater
 };
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
@@ -21,6 +22,7 @@ use HelloPlus\Modules\TemplateParts\Classes\{
 };
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
+use HelloPlus\Classes\Ehp_Button;
 
 class Ehp_Header extends Ehp_Widget_Base {
 
@@ -45,11 +47,11 @@ class Ehp_Header extends Ehp_Widget_Base {
 	}
 
 	public function get_style_depends(): array {
-		return [ 'helloplus-header' ];
+		return [ 'helloplus-header', 'helloplus-button' ];
 	}
 
 	public function get_script_depends(): array {
-		return [ 'helloplus-header' ];
+		return [ 'helloplus-header-fe' ];
 	}
 
 	protected function render(): void {
@@ -65,20 +67,87 @@ class Ehp_Header extends Ehp_Widget_Base {
 	}
 
 	protected function add_content_tab() {
+		$this->add_content_layout_section();
 		$this->add_content_site_logo_section();
 		$this->add_content_navigation_section();
+		$this->add_content_contact_buttons_section();
 		$this->add_content_cta_section();
 	}
 
 	protected function add_style_tab() {
 		$this->add_style_site_identity_section();
 		$this->add_style_navigation_section();
+		$this->add_style_contact_button_section();
 		$this->add_style_cta_section();
 		$this->add_style_box_section();
 	}
 
 	public function add_custom_advanced_sections(): void {
 		$this->add_advanced_behavior_section();
+	}
+
+	protected function add_content_layout_section() {
+		$this->start_controls_section(
+			'layout_section',
+			[
+				'label' => esc_html__( 'Layout', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_control(
+			'layout_preset_select',
+			[
+				'label' => esc_html__( 'Preset', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'identity' => esc_html__( 'Identity', 'hello-plus' ),
+					'navigate' => esc_html__( 'Navigate', 'hello-plus' ),
+					'connect' => esc_html__( 'Connect', 'hello-plus' ),
+				],
+				'default' => 'navigate',
+				'tablet_default' => 'navigate',
+				'mobile_default' => 'navigate',
+			]
+		);
+
+		$this->add_control(
+			'layout_info_connect',
+			[
+				'type' => Controls_Manager::ALERT,
+				'alert_type' => 'info',
+				'content' => esc_html__( 'Focus on direct interaction with clear contact options.', 'hello-plus' ),
+				'condition' => [
+					'layout_preset_select' => 'connect',
+				],
+			]
+		);
+
+		$this->add_control(
+			'layout_info_navigate',
+			[
+				'type' => Controls_Manager::ALERT,
+				'alert_type' => 'info',
+				'content' => esc_html__( 'Guide visitors with a centered menu.', 'hello-plus' ),
+				'condition' => [
+					'layout_preset_select' => 'navigate',
+				],
+			]
+		);
+
+		$this->add_control(
+			'layout_info_identity',
+			[
+				'type' => Controls_Manager::ALERT,
+				'alert_type' => 'info',
+				'content' => esc_html__( 'Spotlight your brand with your logo or site name in the center.', 'hello-plus' ),
+				'condition' => [
+					'layout_preset_select' => 'identity',
+				],
+			]
+		);
+
+		$this->end_controls_section();
 	}
 
 	protected function add_content_site_logo_section() {
@@ -314,112 +383,325 @@ class Ehp_Header extends Ehp_Widget_Base {
 		$this->end_controls_section();
 	}
 
-	protected function add_content_cta_section() {
+	protected function add_content_contact_buttons_section() {
 		$this->start_controls_section(
-			'content_cta',
+			'contact_buttons',
 			[
-				'label' => esc_html__( 'Call to Action', 'hello-plus' ),
+				'label' => esc_html__( 'Contact Button', 'hello-plus' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
 
 		$this->add_control(
-			'primary_cta_button_text',
+			'contact_buttons_show',
 			[
-				'label' => esc_html__( 'Primary CTA', 'hello-plus' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => esc_html__( 'Schedule Now', 'hello-plus' ),
-				'dynamic' => [
-					'active' => true,
-				],
-			]
-		);
-
-		$this->add_control(
-			'primary_cta_button_link',
-			[
-				'label' => esc_html__( 'Link', 'hello-plus' ),
-				'type' => Controls_Manager::URL,
-				'dynamic' => [
-					'active' => true,
-				],
-				'default' => [
-					'url' => '',
-					'is_external' => true,
-				],
-			]
-		);
-
-		$this->add_control(
-			'primary_cta_button_icon',
-			[
-				'label' => esc_html__( 'Icon', 'hello-plus' ),
-				'type' => Controls_Manager::ICONS,
-				'label_block' => false,
-				'skin' => 'inline',
-			]
-		);
-
-		$this->add_control(
-			'secondary_cta_show',
-			[
-				'label' => esc_html__( 'Secondary CTA', 'hello-plus' ),
+				'label' => esc_html__( 'Show', 'hello-plus' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Show', 'hello-plus' ),
-				'label_off' => esc_html__( 'Hide', 'hello-plus' ),
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
 				'return_value' => 'yes',
 				'default' => 'no',
-				'separator' => 'before',
 			]
 		);
 
-		$this->add_control(
-			'secondary_cta_button_text',
+		$repeater = new Repeater();
+
+		$repeater->add_control(
+			'contact_buttons_icon',
 			[
-				'label' => esc_html__( 'Secondary CTA', 'hello-plus' ),
+				'label' => esc_html__( 'Icon', 'hello-plus' ),
+				'type' => Controls_Manager::ICONS,
+				'default' => [
+					'value' => 'fas fa-map-marker-alt',
+					'library' => 'fa-solid',
+				],
+				'recommended' => [
+					'fa-solid' => [
+						'envelope',
+						'phone-alt',
+						'phone',
+						'mobile',
+						'mobile-alt',
+						'sms',
+						'comment-dots',
+						'map-marker-alt',
+						'map-marker',
+						'location-arrow',
+						'map',
+						'link',
+						'globe',
+					],
+					'fa-regular' => [
+						'envelope',
+						'comment-dots',
+						'map',
+					],
+					'fa-brands' => [
+						'whatsapp',
+						'whatsapp-square',
+						'skype',
+						'facebook-messenger',
+						'viber',
+						'waze',
+					],
+				],
+			]
+		);
+
+		$repeater->add_control(
+			'contact_buttons_label',
+			[
+				'label' => esc_html__( 'Label', 'hello-plus' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => esc_html__( 'Contact Us', 'hello-plus' ),
+				'default' => esc_html__( 'Visit', 'hello-plus' ),
 				'dynamic' => [
 					'active' => true,
 				],
+			]
+		);
+
+		$repeater->add_control(
+			'contact_buttons_platform',
+			[
+				'label' => esc_html__( 'Platform', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'email' => esc_html__( 'Email', 'hello-plus' ),
+					'telephone' => esc_html__( 'Telephone', 'hello-plus' ),
+					'sms' => esc_html__( 'SMS', 'hello-plus' ),
+					'whatsapp' => esc_html__( 'Whatsapp', 'hello-plus' ),
+					'skype' => esc_html__( 'Skype', 'hello-plus' ),
+					'messenger' => esc_html__( 'Messenger', 'hello-plus' ),
+					'viber' => esc_html__( 'Viber', 'hello-plus' ),
+					'map' => esc_html__( 'Map', 'hello-plus' ),
+					'waze' => esc_html__( 'Waze', 'hello-plus' ),
+					'url' => esc_html__( 'URL', 'hello-plus' ),
+				],
+				'default' => 'map',
+			],
+		);
+
+		$repeater->add_control(
+			'contact_buttons_mail',
+			[
+				'label' => esc_html__( 'Email', 'hello-plus' ),
+				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
+				'ai' => [
+					'active' => false,
+				],
+				'label_block' => true,
+				'placeholder' => esc_html__( '@', 'hello-plus' ),
+				'default' => '',
 				'condition' => [
-					'secondary_cta_show' => 'yes',
+					'contact_buttons_platform' => 'email',
+				],
+			],
+		);
+
+		$repeater->add_control(
+			'contact_buttons_mail_subject',
+			[
+				'label' => esc_html__( 'Subject', 'hello-plus' ),
+				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
+				'label_block' => true,
+				'default' => '',
+				'condition' => [
+					'contact_buttons_platform' => 'email',
+				],
+			],
+		);
+
+		$repeater->add_control(
+			'contact_buttons_mail_body',
+			[
+				'label' => esc_html__( 'Message', 'hello-plus' ),
+				'type' => Controls_Manager::TEXTAREA,
+				'default' => '',
+				'condition' => [
+					'contact_buttons_platform' => 'email',
 				],
 			]
 		);
 
-		$this->add_control(
-			'secondary_cta_button_link',
+		$repeater->add_control(
+			'contact_buttons_number',
+			[
+				'label' => esc_html__( 'Number', 'hello-plus' ),
+				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => false,
+				],
+				'ai' => [
+					'active' => false,
+				],
+				'label_block' => true,
+				'placeholder' => esc_html__( '+', 'hello-plus' ),
+				'condition' => [
+					'contact_buttons_platform' => [
+						'sms',
+						'whatsapp',
+						'viber',
+						'telephone',
+					],
+				],
+			],
+		);
+
+		$repeater->add_control(
+			'contact_buttons_username',
+			[
+				'label' => esc_html__( 'Username', 'hello-plus' ),
+				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
+				'ai' => [
+					'active' => false,
+				],
+				'label_block' => true,
+				'placeholder' => esc_html__( 'Enter your username', 'hello-plus' ),
+				'condition' => [
+					'contact_buttons_platform' => [
+						'messenger',
+						'skype',
+					],
+				],
+			],
+		);
+
+		$repeater->add_control(
+			'contact_buttons_url',
 			[
 				'label' => esc_html__( 'Link', 'hello-plus' ),
 				'type' => Controls_Manager::URL,
 				'dynamic' => [
 					'active' => true,
 				],
+				'ai' => [
+					'active' => false,
+				],
+				'autocomplete' => true,
+				'label_block' => true,
+				'condition' => [
+					'contact_buttons_platform' => [
+						'url',
+					],
+				],
 				'default' => [
-					'url' => '',
 					'is_external' => true,
 				],
+				'placeholder' => esc_html__( 'https://www.', 'hello-plus' ),
+			],
+		);
+
+		$repeater->add_control(
+			'contact_buttons_waze',
+			[
+				'label' => esc_html__( 'Link', 'hello-plus' ),
+				'type' => Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				],
+				'ai' => [
+					'active' => false,
+				],
+				'autocomplete' => true,
+				'label_block' => true,
 				'condition' => [
-					'secondary_cta_show' => 'yes',
+					'contact_buttons_platform' => [
+						'waze',
+					],
+				],
+				'default' => [
+					'is_external' => true,
+				],
+				'placeholder' => esc_html__( 'https://ul.waze.com/ul?place=', 'hello-plus' ),
+			],
+		);
+
+		$repeater->add_control(
+			'contact_buttons_map',
+			[
+				'label' => esc_html__( 'Link', 'hello-plus' ),
+				'type' => Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				],
+				'ai' => [
+					'active' => false,
+				],
+				'autocomplete' => true,
+				'label_block' => true,
+				'condition' => [
+					'contact_buttons_platform' => [
+						'map',
+					],
+				],
+				'default' => [
+					'is_external' => true,
+				],
+				'placeholder' => esc_html__( 'https://maps.app.goo.gl', 'hello-plus' ),
+			],
+		);
+
+		$repeater->add_control(
+			'contact_buttons_action',
+			[
+				'label' => esc_html__( 'Action', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'chat',
+				'dynamic' => [
+					'active' => true,
+				],
+				'options' => [
+					'call' => 'Call',
+					'chat' => 'Chat',
+				],
+				'condition' => [
+					'contact_buttons_platform' => [
+						'viber',
+						'skype',
+					],
 				],
 			]
 		);
 
 		$this->add_control(
-			'secondary_cta_button_icon',
+			'contact_buttons_repeater',
 			[
-				'label' => esc_html__( 'Icon', 'hello-plus' ),
-				'type' => Controls_Manager::ICONS,
-				'label_block' => false,
-				'skin' => 'inline',
+				'type' => Controls_Manager::REPEATER,
+				'fields' => $repeater->get_controls(),
+				'prevent_empty' => true,
+				'button_text' => esc_html__( 'Add Item', 'hello-plus' ),
+				'title_field' => '{{{ contact_buttons_label }}}',
 				'condition' => [
-					'secondary_cta_show' => 'yes',
+					'contact_buttons_show' => 'yes',
+				],
+				'default' => [
+					[
+						'contact_buttons_label' => esc_html__( 'Visit', 'hello-plus' ),
+						'selected_icon' => [
+							'value' => 'fas fa-map-marker-alt',
+							'library' => 'fa-solid',
+						],
+						'contact_buttons_platform' => 'map',
+					],
 				],
 			]
 		);
 
 		$this->end_controls_section();
+	}
+
+	protected function add_content_cta_section() {
+		$button = new Ehp_Button( $this, [ 'widget_name' => 'header' ] );
+		$button->add_content_section();
 	}
 
 	protected function add_style_site_identity_section() {
@@ -428,31 +710,6 @@ class Ehp_Header extends Ehp_Widget_Base {
 			[
 				'label' => esc_html__( 'Site Identity', 'hello-plus' ),
 				'tab' => Controls_Manager::TAB_STYLE,
-			]
-		);
-
-		$this->add_control(
-			'style_align_logo',
-			[
-				'label' => esc_html__( 'Align Logo', 'hello-plus' ),
-				'type' => Controls_Manager::CHOOSE,
-				'options' => [
-					'start' => [
-						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => 'eicon-align-start-h',
-					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'hello-plus' ),
-						'icon' => 'eicon-align-center-h',
-					],
-				],
-				'default' => 'start',
-				'tablet_default' => 'start',
-				'mobile_default' => 'start',
-				'condition' => [
-					'site_logo_brand_select' => 'logo',
-				],
-				'description' => esc_html__( 'Logo will be aligned to start on smaller screens', 'hello-plus' ),
 			]
 		);
 
@@ -487,31 +744,6 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'condition' => [
 					'site_logo_brand_select' => 'logo',
 				],
-			]
-		);
-
-		$this->add_control(
-			'style_align_title',
-			[
-				'label' => esc_html__( 'Align Site Name', 'hello-plus' ),
-				'type' => Controls_Manager::CHOOSE,
-				'options' => [
-					'start' => [
-						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => 'eicon-align-start-h',
-					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'hello-plus' ),
-						'icon' => 'eicon-align-center-h',
-					],
-				],
-				'default' => 'start',
-				'tablet_default' => 'start',
-				'mobile_default' => 'start',
-				'condition' => [
-					'site_logo_brand_select' => 'title',
-				],
-				'description' => esc_html__( 'Site Name will be aligned to start on smaller screens', 'hello-plus' ),
 			]
 		);
 
@@ -555,6 +787,33 @@ class Ehp_Header extends Ehp_Widget_Base {
 			[
 				'label' => esc_html__( 'Navigation', 'hello-plus' ),
 				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'style_align_menu',
+			[
+				'label' => esc_html__( 'Align Menu', 'hello-plus' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'start' => [
+						'title' => esc_html__( 'Start', 'hello-plus' ),
+						'icon' => 'eicon-align-start-h',
+					],
+					'end' => [
+						'title' => esc_html__( 'End', 'hello-plus' ),
+						'icon' => 'eicon-align-end-h',
+					],
+				],
+				'default' => 'start',
+				'tablet_default' => 'start',
+				'mobile_default' => 'start',
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-align-menu: {{VALUE}}',
+				],
+				'condition' => [
+					'layout_preset_select' => 'connect',
+				],
 			]
 		);
 
@@ -879,12 +1138,29 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'label' => esc_html__( 'Shape', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'default' => 'Default',
-					'sharp' => 'Sharp',
-					'rounded' => 'Rounded',
-					'round' => 'Round',
+					'default' => esc_html__( 'Default', 'hello-plus' ),
+					'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
+					'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
+					'round' => esc_html__( 'Round', 'hello-plus' ),
+					'custom' => esc_html__( 'Custom', 'hello-plus' ),
 				],
 				'default' => 'default',
+			]
+		);
+
+		$this->add_control(
+			'submenu_shape_custom',
+			[
+				'label' => esc_html__( 'Border Radius', 'hello-plus' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em', 'rem' ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-submenu-border-radius-custom-block-end: {{BOTTOM}}{{UNIT}}; --header-submenu-border-radius-custom-block-start: {{TOP}}{{UNIT}}; --header-submenu-border-radius-custom-inline-end: {{RIGHT}}{{UNIT}}; --header-submenu-border-radius-custom-inline-start: {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+				'condition' => [
+					'style_submenu_shape' => 'custom',
+				],
 			]
 		);
 
@@ -1068,6 +1344,170 @@ class Ehp_Header extends Ehp_Widget_Base {
 		$this->end_controls_section();
 	}
 
+	protected function add_style_contact_button_section() {
+		$this->start_controls_section(
+			'style_contact_button',
+			[
+				'label' => esc_html__( 'Contact Button', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'contact_buttons_link_type',
+			[
+				'label' => esc_html__( 'Link Type', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'icon' => esc_html__( 'Icon', 'hello-plus' ),
+					'label' => esc_html__( 'Label', 'hello-plus' ),
+				],
+				'default' => 'icon',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'contact_buttons_typography',
+				'selector' => '{{WRAPPER}} .ehp-header__contact-button-label',
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_ACCENT,
+				],
+				'condition' => [
+					'contact_buttons_link_type' => 'label',
+				],
+			]
+		);
+
+		$this->start_controls_tabs(
+			'contact_button_tabs'
+		);
+
+		$this->start_controls_tab(
+			'contact_button_normal_tab',
+			[
+				'label' => esc_html__( 'Normal', 'hello-plus' ),
+			]
+		);
+
+		$this->add_control(
+			'contact_buttons_color',
+			[
+				'label' => esc_html__( 'Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-contact-button-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'contact_button_hover_tab',
+			[
+				'label' => esc_html__( 'Hover', 'hello-plus' ),
+			]
+		);
+
+		$this->add_control(
+			'contact_buttons_color_hover',
+			[
+				'label' => esc_html__( 'Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_ACCENT,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-contact-button-color-hover: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'contact_button_hover_animation',
+			[
+				'label' => esc_html__( 'Hover Animation', 'hello-plus' ),
+				'type' => Controls_Manager::HOVER_ANIMATION,
+				'frontend_available' => true,
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_responsive_control(
+			'contact_buttons_size',
+			[
+				'label' => esc_html__( 'Size', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'min' => 1,
+						'max' => 50,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 16,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-contact-button-size: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
+				'condition' => [
+					'contact_buttons_link_type' => 'icon',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'contact_buttons_spacing',
+			[
+				'label' => esc_html__( 'Spacing', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'min' => 1,
+						'max' => 50,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 12,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-contact-button-spacing: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'contact_buttons_responsive_display',
+			[
+				'label' => esc_html__( 'Responsive Display', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'navbar' => esc_html__( 'Navbar', 'hello-plus' ),
+					'dropdown' => esc_html__( 'Dropdown', 'hello-plus' ),
+				],
+				'default' => 'navbar',
+				'separator' => 'before',
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
 	protected function add_style_cta_section() {
 		$this->start_controls_section(
 			'style_cta',
@@ -1077,9 +1517,8 @@ class Ehp_Header extends Ehp_Widget_Base {
 			]
 		);
 
-		$this->add_cta_button_controls( 'primary' );
-
-		$this->add_cta_button_controls( 'secondary', true );
+		$button = new Ehp_Button( $this, [ 'widget_name' => 'header' ] );
+		$button->add_style_controls();
 
 		$this->add_control(
 			'cta_responsive_width',
@@ -1090,33 +1529,6 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'options' => [
 					'default' => esc_html__( 'Default', 'hello-plus' ),
 					'stretch' => esc_html__( 'Stretch', 'hello-plus' ),
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_responsive_control(
-			'cta_button_spacing',
-			[
-				'label' => esc_html__( 'Space Between', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-						'step' => 1,
-					],
-				],
-				'default' => [
-					'size' => 16,
-					'unit' => 'px',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-header' => '--header-buttons-space-between: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'secondary_cta_show' => 'yes',
 				],
 				'separator' => 'before',
 			]
@@ -1156,6 +1568,40 @@ class Ehp_Header extends Ehp_Widget_Base {
 					'color' => [
 						'default' => '#F6F7F8',
 					],
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'box_element_spacing',
+			[
+				'label' => __( 'Element Spacing', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 32,
+					'unit' => 'px',
+				],
+				'tablet_default' => [
+					'size' => 32,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 32,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-element-spacing: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'layout_preset_select' => 'connect',
 				],
 			]
 		);
@@ -1246,326 +1692,6 @@ class Ehp_Header extends Ehp_Widget_Base {
 		$this->end_controls_section();
 	}
 
-	protected function add_cta_button_controls( string $type, bool $add_condition = false ) {
-		$is_primary = 'primary' === $type;
-		$label = $is_primary ? esc_html__( 'Primary CTA', 'hello-plus' ) : esc_html__( 'Secondary CTA', 'hello-plus' );
-		$show_button_border_default = $is_primary ? 'no' : 'yes';
-		$background_color_default = $is_primary ? Global_Colors::COLOR_ACCENT : '';
-
-		$add_type_condition = $add_condition ? [
-			$type . '_cta_show' => 'yes',
-		] : [];
-
-		$this->add_control(
-			$type . '_button_label',
-			[
-				'label' => $label,
-				'type' => Controls_Manager::HEADING,
-				'condition' => $add_type_condition,
-			]
-		);
-
-		$this->add_control(
-			$type . '_button_type',
-			[
-				'label' => esc_html__( 'Type', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'button',
-				'options' => [
-					'button' => esc_html__( 'Button', 'hello-plus' ),
-					'link' => esc_html__( 'Link', 'hello-plus' ),
-				],
-				'condition' => $add_type_condition,
-			]
-		);
-
-		$this->add_responsive_control(
-			$type . '_button_icon_position',
-			[
-				'label' => esc_html__( 'Icon Position', 'hello-plus' ),
-				'type' => Controls_Manager::CHOOSE,
-				'default' => is_rtl() ? 'row' : 'row-reverse',
-				'toggle' => false,
-				'options' => [
-					'row' => [
-						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => 'eicon-h-align-left',
-					],
-					'row-reverse' => [
-						'title' => esc_html__( 'End', 'hello-plus' ),
-						'icon' => 'eicon-h-align-right',
-					],
-				],
-				'selectors_dictionary' => [
-					'left' => is_rtl() ? 'row-reverse' : 'row',
-					'right' => is_rtl() ? 'row' : 'row-reverse',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-header__button--' . $type => 'flex-direction: {{VALUE}};',
-				],
-				'condition' => array_merge([
-					$type . '_cta_button_icon[value]!' => '',
-				], $add_type_condition),
-			]
-		);
-
-		$this->add_control(
-			$type . '_button_icon_spacing',
-			[
-				'label' => esc_html__( 'Icon Spacing', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
-				'range' => [
-					'px' => [
-						'max' => 100,
-					],
-					'em' => [
-						'max' => 5,
-					],
-					'rem' => [
-						'max' => 5,
-					],
-					'%' => [
-						'max' => 100,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-header' => '--header-button-' . $type . '-icon-spacing: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => array_merge([
-					$type . '_cta_button_icon[value]!' => '',
-				], $add_type_condition),
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => $type . '_button_typography',
-				'selector' => '{{WRAPPER}} .ehp-header__button--' . $type,
-				'global' => [
-					'default' => Global_Typography::TYPOGRAPHY_ACCENT,
-				],
-				'condition' => $add_type_condition,
-			]
-		);
-
-		$this->start_controls_tabs(
-			$type . '_button_style'
-		);
-
-		$this->start_controls_tab(
-			$type . '_button_normal_tab',
-			[
-				'label' => esc_html__( 'Normal', 'hello-plus' ),
-				'condition' => $add_type_condition,
-			]
-		);
-
-		$this->add_control(
-			$type . '_button_text_color',
-			[
-				'label' => esc_html__( 'Text Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_SECONDARY,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-header' => '--header-button-' . $type . '-text-color: {{VALUE}}',
-				],
-				'condition' => $add_type_condition,
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Background::get_type(),
-			[
-				'name' => $type . '_button_background',
-				'types' => [ 'classic', 'gradient' ],
-				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .is-type-button.ehp-header__button--' . $type,
-				'fields_options' => [
-					'background' => [
-						'default' => 'classic',
-					],
-					'color' => [
-						'global' => [
-							'default' => $background_color_default,
-						],
-					],
-				],
-				'condition' => array_merge([
-					$type . '_button_type' => 'button',
-				], $add_type_condition),
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->start_controls_tab(
-			$type . '_button_hover_tab',
-			[
-				'label' => esc_html__( 'Hover', 'hello-plus' ),
-				'condition' => $add_type_condition,
-			]
-		);
-
-		$this->add_control(
-			$type . '_hover_button_text_color',
-			[
-				'label' => esc_html__( 'Text Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_TEXT,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-header' => '--header-button-' . $type . '-text-color-hover: {{VALUE}}',
-				],
-				'condition' => $add_type_condition,
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Background::get_type(),
-			[
-				'name' => $type . '_button_background_hover',
-				'types' => [ 'classic', 'gradient' ],
-				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .is-type-button.ehp-header__button--' . $type . ':hover, {{WRAPPER}} .is-type-button.ehp-header__button--' . $type . ':focus',
-				'fields_options' => [
-					'background' => [
-						'default' => 'classic',
-					],
-					'color' => [
-						'global' => [
-							'default' => $background_color_default,
-						],
-					],
-				],
-				'condition' => array_merge([
-					$type . '_button_type' => 'button',
-				], $add_type_condition),
-			]
-		);
-
-		$this->add_control(
-			$type . '_button_hover_animation',
-			[
-				'label' => esc_html__( 'Hover Animation', 'hello-plus' ),
-				'type' => Controls_Manager::HOVER_ANIMATION,
-				'condition' => $add_type_condition,
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->end_controls_tabs();
-
-		$this->add_control(
-			$type . '_show_button_border',
-			[
-				'label' => esc_html__( 'Border', 'hello-plus' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
-				'label_off' => esc_html__( 'No', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => $show_button_border_default,
-				'separator' => 'before',
-				'condition' => array_merge([
-					$type . '_button_type' => 'button',
-				], $add_type_condition),
-			]
-		);
-
-		$this->add_control(
-			$type . '_button_border_width',
-			[
-				'label' => __( 'Border Width', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 10,
-						'step' => 1,
-					],
-				],
-				'default' => [
-					'size' => 1,
-					'unit' => 'px',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-header' => '--header-button-' . $type . '-border-width: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => array_merge([
-					$type . '_show_button_border' => 'yes',
-				], $add_type_condition),
-			]
-		);
-
-		$this->add_control(
-			$type . '_button_border_color',
-			[
-				'label' => esc_html__( 'Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_TEXT,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-header' => '--header-button-' . $type . '-border-color: {{VALUE}}',
-				],
-				'condition' => array_merge([
-					$type . '_show_button_border' => 'yes',
-				], $add_type_condition),
-			]
-		);
-
-		$this->add_control(
-			$type . '_button_shape',
-			[
-				'label' => esc_html__( 'Shape', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'default',
-				'options' => [
-					'default' => esc_html__( 'Default', 'hello-plus' ),
-					'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
-					'round' => esc_html__( 'Round', 'hello-plus' ),
-					'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
-				],
-				'condition' => array_merge([
-					$type . '_button_type' => 'button',
-				], $add_type_condition),
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Box_Shadow::get_type(),
-			[
-				'name' => $type . '_button_box_shadow',
-				'selector' => '{{WRAPPER}} .ehp-header__button--' . $type,
-				'condition' => array_merge([
-					$type . '_button_type' => 'button',
-				], $add_type_condition),
-			]
-		);
-
-		$this->add_responsive_control(
-			$type . '_button_padding',
-			[
-				'label' => esc_html__( 'Padding', 'hello-plus' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em', 'rem' ],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-header' => '--header-button-' . $type . '-padding-block-end: {{BOTTOM}}{{UNIT}}; --header-button-' . $type . '-padding-block-start: {{TOP}}{{UNIT}}; --header-button-' . $type . '-padding-inline-end: {{RIGHT}}{{UNIT}}; --header-button-' . $type . '-padding-inline-start: {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before',
-				'condition' => array_merge([
-					$type . '_button_type' => 'button',
-				], $add_type_condition),
-			]
-		);
-	}
-
 	private function add_advanced_behavior_section(): void {
 		$this->start_controls_section(
 			'advanced_behavior_section',
@@ -1636,7 +1762,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'behavior_float_shape',
 			[
 				'label' => esc_html__( 'Shape', 'hello-plus' ),
@@ -1647,9 +1773,26 @@ class Ehp_Header extends Ehp_Widget_Base {
 					'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
 					'round' => esc_html__( 'Round', 'hello-plus' ),
 					'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
+					'custom' => esc_html__( 'Custom', 'hello-plus' ),
 				],
 				'condition' => [
 					'behavior_float' => 'yes',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'behavior_float_shape_custom',
+			[
+				'label' => esc_html__( 'Border Radius', 'hello-plus' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em', 'rem' ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-float-border-radius-custom-block-end: {{BOTTOM}}{{UNIT}}; --header-float-border-radius-custom-block-start: {{TOP}}{{UNIT}}; --header-float-border-radius-custom-inline-end: {{RIGHT}}{{UNIT}}; --header-float-border-radius-custom-inline-start: {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+				'condition' => [
+					'behavior_float_shape' => 'custom',
 				],
 			]
 		);
@@ -1909,6 +2052,58 @@ class Ehp_Header extends Ehp_Widget_Base {
 				],
 				'condition' => [
 					'behavior_sticky_change_bg' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'blur_background',
+			[
+				'label' => esc_html__( 'Blur Background', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+			]
+		);
+
+		$this->add_control(
+			'blur_background_info',
+			[
+				'type' => Controls_Manager::ALERT,
+				'alert_type' => 'info',
+				'content' => esc_html__( 'Add ', 'hello-plus' ) . ' <a href="https://elementor.com/help/choose-color/" target="_blank">' . esc_html__( 'transparency', 'hello-plus' ) . '</a>' . esc_html__( ' to both the Box and On Scroll background colors for Blur Background to take effect.', 'hello-plus' ),
+				'condition' => [
+					'blur_background' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'blur_background_level',
+			[
+				'label' => esc_html__( 'Blur Level', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'min' => 1,
+						'max' => 15,
+					],
+					'%' => [
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'size' => 7,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-blur-background-level: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'blur_background' => 'yes',
 				],
 			]
 		);

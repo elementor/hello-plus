@@ -4,7 +4,7 @@
  * Description: Puts the PLUS in Elementor's Hello+ themes
  * Plugin URI: https://elementor.com
  * Author: Elementor.com
- * Version: 1.1.1
+ * Version: 1.1.3
  * License: GPL-3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
  *
@@ -12,7 +12,7 @@
  *
  * @package HelloPlus
  *
- * Hello+ Plugin is a free WordPress plugin crafted for seamless use with Elementor’s Hello Themes,
+ * Hello+ Plugin is a free WordPress plugin crafted for seamless use with Elementor’s Hello Biz Theme,
  * tailored to help beginner web creators, but far from limited to just them, to build professional websites with ease.
  * It features a guided setup, dedicated kits, streamlined management tools,
  * and specialized widgets (Hello Widgets) to ensure a fast, efficient site-building experience
@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'HELLOPLUS_VERSION', '1.1.1' );
+define( 'HELLOPLUS_VERSION', '1.1.3' );
 define( 'HELLO_PLUS_VERSION', HELLOPLUS_VERSION );
 
 define( 'HELLOPLUS__FILE__', __FILE__ );
@@ -44,7 +44,7 @@ define( 'HELLOPLUS_STYLE_PATH', HELLOPLUS_ASSETS_PATH . 'css/' );
 define( 'HELLOPLUS_STYLE_URL', HELLOPLUS_ASSETS_URL . 'css/' );
 define( 'HELLOPLUS_IMAGES_PATH', HELLOPLUS_ASSETS_PATH . 'images/' );
 define( 'HELLOPLUS_IMAGES_URL', HELLOPLUS_ASSETS_URL . 'images/' );
-define( 'HELLOPLUS_MIN_ELEMENTOR_VERSION', '3.26.4' );
+define( 'HELLOPLUS_MIN_ELEMENTOR_VERSION', '3.27.1' );
 
 // Init the Plugin class
 require HELLOPLUS_PATH . '/plugin.php';

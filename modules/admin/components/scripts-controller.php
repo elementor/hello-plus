@@ -10,11 +10,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Scripts_Controller {
-
-	public function __construct() {
-		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_hello_plus_onboarding_scripts' ] );
-	}
-
 	public function enqueue_hello_plus_onboarding_scripts() {
 		$screen = get_current_screen();
 
@@ -43,5 +38,9 @@ class Scripts_Controller {
 		);
 
 		wp_set_script_translations( $handle, 'hello-plus' );
+	}
+
+	public function __construct() {
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_hello_plus_onboarding_scripts' ] );
 	}
 }

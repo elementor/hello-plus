@@ -9,6 +9,7 @@ use Elementor\Group_Control_Image_Size;
 use Elementor\Icons_Manager;
 use Elementor\Utils;
 use HelloPlus\Modules\Content\Widgets\Flex_Hero;
+use HelloPlus\Classes\Ehp_Button;
 
 class Widget_Flex_Hero_Render {
 	protected Flex_Hero $widget;
@@ -153,64 +154,11 @@ class Widget_Flex_Hero_Render {
 	}
 
 	protected function render_button( $type ) {
-		$button_text = $this->settings[ $type . '_cta_button_text' ];
-		$button_link = $this->settings[ $type . '_cta_button_link' ];
-		$button_icon = $this->settings[ $type . '_cta_button_icon' ];
-		$button_hover_animation = $this->settings[ $type . '_button_hover_animation' ] ?? '';
-		$button_has_border = $this->settings[ $type . '_show_button_border' ];
-		$button_type = $this->settings[ $type . '_button_type' ] ?? '';
-		$button_classnames = [ self::BUTTON_CLASSNAME ];
-		$button_corner_shape = $this->settings[ $type . '_button_shape' ] ?? '';
-		$button_corner_shape_mobile = $this->settings[ $type . '_button_shape_mobile' ] ?? '';
-		$button_corner_shape_tablet = $this->settings[ $type . '_button_shape_tablet' ] ?? '';
-
-		$button_classnames[] = 'ehp-flex-hero__button--' . $type;
-
-		if ( ! empty( $button_type ) ) {
-			$button_classnames[] = 'is-type-' . $button_type;
-		}
-
-		if ( $button_hover_animation ) {
-			$button_classnames[] = 'elementor-animation-' . $button_hover_animation;
-		}
-
-		if ( 'yes' === $button_has_border ) {
-			$button_classnames[] = 'has-border';
-		}
-
-		if ( ! empty( $button_corner_shape ) ) {
-			$button_classnames[] = 'has-shape-' . $button_corner_shape;
-
-			if ( ! empty( $button_corner_shape_mobile ) ) {
-				$button_classnames[] = 'has-shape-sm-' . $button_corner_shape_mobile;
-			}
-
-			if ( ! empty( $button_corner_shape_tablet ) ) {
-				$button_classnames[] = 'has-shape-md-' . $button_corner_shape_tablet;
-			}
-		}
-
-		$this->widget->add_render_attribute( $type . '-button', [
-			'class' => $button_classnames,
+		$button = new Ehp_Button( $this->widget, [
+			'type' => $type,
+			'widget_name' => 'flex-hero',
 		] );
-
-		if ( ! empty( $button_link ) ) {
-			$this->widget->add_link_attributes( $type . '-button', $button_link );
-		}
-
-		?>
-		<a <?php $this->widget->print_render_attribute_string( $type . '-button' ); ?>>
-			<?php
-				Icons_Manager::render_icon( $button_icon,
-					[
-						'aria-hidden' => 'true',
-						'class' => 'ehp-flex-hero__button-icon',
-					]
-				);
-			?>
-			<?php echo esc_html( $button_text ); ?>
-		</a>
-		<?php
+		$button->render();
 	}
 
 	public function get_attachment_image_html_filter( $html ) {

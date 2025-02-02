@@ -22,8 +22,10 @@ use Elementor\Core\Kits\Documents\Tabs\{
 class Ehp_Button {
 	private $context = [];
 	private $defaults = [];
-	private $widget_settings = [];
 	private ?Widget_Base $widget = null;
+
+	// initialized on render:
+	private $widget_settings = [];
 
 	const EHP_PREFIX = 'ehp-';
 	const CLASSNAME_BUTTON = 'ehp-button';
@@ -36,6 +38,7 @@ class Ehp_Button {
 	public function render() {
 		$type = $this->context['type'] ?? '';
 		$widget_name = $this->context['widget_name'];
+		$this->widget_settings = $this->widget->get_settings_for_display();
 
 		$button_text = $this->get_control_value( 'button_text', '', 'cta_button_text' );
 		$button_link = $this->get_control_value( 'button_link', [], 'cta_button_link' );
@@ -651,6 +654,5 @@ class Ehp_Button {
 		$this->widget = $widget;
 		$this->context = $context;
 		$this->defaults = $defaults;
-		$this->widget_settings = $widget->get_settings_for_display();
 	}
 }

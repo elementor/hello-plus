@@ -153,4 +153,26 @@ class Utils {
 	public static function is_elementor_version_supported( string $version ): bool {
 		return version_compare( $version, HELLOPLUS_MIN_ELEMENTOR_VERSION, 'ge' );
 	}
+
+	public static function get_elementor_api_get_args( $args ): array {
+		$get_args = [];
+
+		$headers = apply_filters( 'stg-cf-headers', $args['headers'] ?? [] );
+		$body_request = [];
+
+		$site_key = \Elementor\API::get_site_key();
+		if ( ! empty( $site_key ) ) {
+			$body_request['site_key'] = $site_key;
+		}
+
+		if ( ! empty( $headers ) ) {
+			$get_args['headers'] = $headers;
+		}
+
+		if ( ! empty( $body_request ) ) {
+			$get_args['body'] = $body_request;
+		}
+
+		return $get_args;
+	}
 }

@@ -1,6 +1,9 @@
 <?php
 namespace HelloPlus\Modules\TemplateParts\Classes\Sources;
 
+use Elementor\API;
+use HelloPlus\Includes\Utils;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
@@ -27,9 +30,9 @@ class Source_Remote_Ehp extends \Elementor\TemplateLibrary\Source_Remote {
 		$query_args = $this->get_url_params( $editor_layout_type );
 		$url = add_query_arg( $query_args, static::API_TEMPLATES_URL );
 
-		$response = wp_remote_get( $url, [
-			'headers' => apply_filters( 'stg-cf-headers', [] ),
-		] );
+		$get_args = Utils::get_elementor_api_get_args( [] );
+
+		$response = wp_remote_get( $url, $get_args );
 
 		if ( is_wp_error( $response ) || 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
 			return false;

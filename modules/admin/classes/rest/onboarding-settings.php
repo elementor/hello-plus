@@ -76,7 +76,9 @@ class Onboarding_Settings {
 	 * @throws \Exception
 	 */
 	public function call_and_check( string $url ) {
-		$response = wp_remote_get( $url );
+		$get_args = Utils::get_elementor_api_get_args( [] );
+
+		$response = wp_remote_get( $url, $get_args );
 
 		if ( is_wp_error( $response ) ) {
 			if ( 0 === strpos( $url, Kit_Library::DEFAULT_BASE_ENDPOINT ) ) {

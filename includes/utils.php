@@ -158,7 +158,7 @@ class Utils {
 		$get_args = [];
 
 		$headers = apply_filters( 'stg-cf-headers', $args['headers'] ?? [] );
-		$body_request = [];
+		$body_request = $args['body'] ?? [];
 
 		$site_key = \Elementor\API::get_site_key();
 		if ( ! empty( $site_key ) ) {

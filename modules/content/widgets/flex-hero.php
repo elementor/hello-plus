@@ -243,42 +243,17 @@ class Flex_Hero extends Widget_Base {
 				'columns' => 1,
 				'options' => [
 					'showcase' => [
-						'title' => esc_html__( 'Highlight key concepts with a balanced layout.', 'hello-plus' ),
+						'title' => esc_html__( 'Showcase: highlight key concepts with a balanced layout.', 'hello-plus' ),
 						'image' => HELLOPLUS_IMAGES_URL . 'showcase.svg',
 						'hover_image' => true,
 					],
 					'storytelling' => [
-						'title' => esc_html__( 'Focus on a narrative with supporting visuals.', 'hello-plus' ),
+						'title' => esc_html__( 'Storytellng: focus on a narrative with supporting visuals.', 'hello-plus' ),
 						'image' => HELLOPLUS_IMAGES_URL . 'storytelling.svg',
 						'hover_image' => true,
 					],
 				],
 				'frontend_available' => true,
-			]
-		);
-
-		$this->add_control(
-			'layout_preset_showcase_info',
-			[
-				'type' => Controls_Manager::ALERT,
-				'alert_type' => 'info',
-
-				'content' => esc_html__( 'Highlight key concepts with a balanced layout.', 'hello-plus' ),
-				'condition' => [
-					'layout_preset' => 'showcase',
-				],
-			]
-		);
-
-		$this->add_control(
-			'layout_preset_storytelling_info',
-			[
-				'type' => Controls_Manager::ALERT,
-				'alert_type' => 'info',
-				'content' => esc_html__( 'Focus on a narrative with supporting visuals.', 'hello-plus' ),
-				'condition' => [
-					'layout_preset' => 'storytelling',
-				],
 			]
 		);
 

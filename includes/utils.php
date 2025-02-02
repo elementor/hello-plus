@@ -154,9 +154,7 @@ class Utils {
 		return version_compare( $version, HELLOPLUS_MIN_ELEMENTOR_VERSION, 'ge' );
 	}
 
-	public static function get_elementor_api_get_args( $args ): array {
-		$get_args = [];
-
+	public static function get_elementor_api_get_args( array $args = [] ): array {
 		$headers = apply_filters( 'stg-cf-headers', $args['headers'] ?? [] );
 		$body_request = $args['body'] ?? [];
 
@@ -166,13 +164,13 @@ class Utils {
 		}
 
 		if ( ! empty( $headers ) ) {
-			$get_args['headers'] = $headers;
+			$args['headers'] = $headers;
 		}
 
 		if ( ! empty( $body_request ) ) {
-			$get_args['body'] = $body_request;
+			$args['body'] = $body_request;
 		}
 
-		return $get_args;
+		return $args;
 	}
 }

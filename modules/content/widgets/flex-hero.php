@@ -18,6 +18,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Utils as Elementor_Utils;
 
 use HelloPlus\Modules\Content\Base\Traits\Shared_Content_Traits;
+use HelloPlus\Modules\Content\Classes\Choose_Img_Control;
 use HelloPlus\Modules\Content\Classes\Render\Widget_Flex_Hero_Render;
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 use HelloPlus\Classes\Ehp_Button;
@@ -66,7 +67,6 @@ class Flex_Hero extends Widget_Base {
 	}
 
 	protected function add_content_section() {
-		$this->add_content_layout_section();
 		$this->add_content_text_section();
 		$this->add_content_cta_section();
 		$this->add_content_image_section();
@@ -78,55 +78,6 @@ class Flex_Hero extends Widget_Base {
 		$this->add_style_cta_section();
 		$this->add_style_image_section();
 		$this->add_style_box_section();
-	}
-
-	protected function add_content_layout_section() {
-		$this->start_controls_section(
-			'content_layout',
-			[
-				'label' => esc_html__( 'Layout', 'hello-plus' ),
-				'tab' => Controls_Manager::TAB_CONTENT,
-			]
-		);
-
-		$this->add_control(
-			'layout_preset',
-			[
-				'label' => esc_html__( 'Preset', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'showcase',
-				'options' => [
-					'showcase' => esc_html__( 'Showcase', 'hello-plus' ),
-					'storytelling' => esc_html__( 'Storytelling', 'hello-plus' ),
-				],
-			]
-		);
-
-		$this->add_control(
-			'layout_preset_showcase_info',
-			[
-				'type' => Controls_Manager::ALERT,
-				'alert_type' => 'info',
-				'content' => esc_html__( 'Highlight key concepts with a balanced layout.', 'hello-plus' ),
-				'condition' => [
-					'layout_preset' => 'showcase',
-				],
-			]
-		);
-
-		$this->add_control(
-			'layout_preset_storytelling_info',
-			[
-				'type' => Controls_Manager::ALERT,
-				'alert_type' => 'info',
-				'content' => esc_html__( 'Focus on a narrative with supporting visuals.', 'hello-plus' ),
-				'condition' => [
-					'layout_preset' => 'storytelling',
-				],
-			]
-		);
-
-		$this->end_controls_section();
 	}
 
 	protected function add_content_text_section() {
@@ -279,6 +230,55 @@ class Flex_Hero extends Widget_Base {
 			[
 				'label' => esc_html__( 'Layout', 'hello-plus' ),
 				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'layout_preset',
+			[
+				'label' => esc_html__( 'Preset', 'hello-plus' ),
+				'type' => Choose_Img_Control::CONTROL_NAME,
+				'default' => 'showcase',
+				'label_block' => true,
+				'columns' => 1,
+				'options' => [
+					'showcase' => [
+						'title' => esc_html__( 'Highlight key concepts with a balanced layout.', 'hello-plus' ),
+						'image' => HELLOPLUS_IMAGES_URL . 'showcase.svg',
+						'hover_image' => true,
+					],
+					'storytelling' => [
+						'title' => esc_html__( 'Focus on a narrative with supporting visuals.', 'hello-plus' ),
+						'image' => HELLOPLUS_IMAGES_URL . 'storytelling.svg',
+						'hover_image' => true,
+					],
+				],
+				'frontend_available' => true,
+			]
+		);
+
+		$this->add_control(
+			'layout_preset_showcase_info',
+			[
+				'type' => Controls_Manager::ALERT,
+				'alert_type' => 'info',
+
+				'content' => esc_html__( 'Highlight key concepts with a balanced layout.', 'hello-plus' ),
+				'condition' => [
+					'layout_preset' => 'showcase',
+				],
+			]
+		);
+
+		$this->add_control(
+			'layout_preset_storytelling_info',
+			[
+				'type' => Controls_Manager::ALERT,
+				'alert_type' => 'info',
+				'content' => esc_html__( 'Focus on a narrative with supporting visuals.', 'hello-plus' ),
+				'condition' => [
+					'layout_preset' => 'storytelling',
+				],
 			]
 		);
 

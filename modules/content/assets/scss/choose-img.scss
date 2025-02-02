@@ -9,12 +9,16 @@
 
 		& .elementor-choices-element {
 			width: auto;
-			flex: 1 1;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
 			justify-content: center;
 			gap: 4px;
+
+			& .elementor-choices-image {
+				width: 100%;
+				height: auto;
+			}
 		}
 	}
 

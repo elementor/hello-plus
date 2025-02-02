@@ -1,5 +1,12 @@
 $remote-templates-items-space: 30px;
 
+#elementor-template-library-templates[data-template-source="remote-ehp"] {
+
+	& #elementor-template-library-filter-subtype {
+		display: none;
+	}
+}
+
 .elementor-template-library-template-remote-ehp {
 	margin: calc( #{$remote-templates-items-space} / 2 );
 	padding: 8px;

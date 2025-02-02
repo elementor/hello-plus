@@ -8,15 +8,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use Elementor\{
 	Controls_Manager,
-	// Group_Control_Background,
-	// Group_Control_Box_Shadow,
-	// Group_Control_Typography,
-	// Icons_Manager,
+	Group_Control_Css_Filter,
+	Group_Control_Box_Shadow,
+	Group_Control_Image_Size,
 	Widget_Base
 };
+
 use Elementor\Core\Kits\Documents\Tabs\{
-	// Global_Colors,
-	// Global_Typography
+	Global_Typography,
+	Global_Colors,
 };
 
 use Elementor\Utils as Elementor_Utils;
@@ -33,6 +33,41 @@ class Ehp_Image {
 		$this->context = $context;
 	}
 
+	public function get_attachment_image_html_filter( $html ) {
+		$settings = $this->widget->get_settings_for_display();
+		$widget_name = $this->context['widget_name'];
+
+		$image_shape = $settings['image_shape'];
+		$image_shape_mobile = $settings['image_shape_mobile'];
+		$image_shape_tablet = $settings['image_shape_tablet'];
+
+		$image_classnames = [
+			self::CLASSNAME_IMAGE . '__img',
+			self::EHP_PREFIX . $widget_name . '__img',
+		];
+
+		$has_border = $settings['show_image_border'];
+
+		if ( 'yes' === $has_border ) {
+			$image_classnames[] = 'has-border';
+		}
+
+		if ( ! empty( $image_shape ) ) {
+			$image_classnames[] = 'has-shape-' . $image_shape;
+
+			if ( ! empty( $image_shape_mobile ) ) {
+				$image_classnames[] = 'has-shape-sm-' . $image_shape_mobile;
+			}
+
+			if ( ! empty( $image_shape_tablet ) ) {
+				$image_classnames[] = 'has-shape-md-' . $image_shape_tablet;
+			}
+		}
+
+		$html = str_replace( '<img ', '<img class="' . esc_attr( implode( ' ', $image_classnames ) ) . '" ', $html );
+		return $html;
+	}
+
 	public function render() {
 		$settings = $this->widget->get_settings_for_display();
 		$widget_name = $this->context['widget_name'];
@@ -41,7 +76,7 @@ class Ehp_Image {
 		$has_image = ! empty( $image['url'] );
 		$image_wrapper_classnames = [
 			self::CLASSNAME_IMAGE,
-			self::EHP_PREFIX . $widget_name . '__image',
+			self::EHP_PREFIX . $widget_name . '__image-container',
 		];
 
 		$this->widget->add_render_attribute( 'image', [
@@ -53,7 +88,7 @@ class Ehp_Image {
 			<div <?php $this->widget->print_render_attribute_string( 'image' ); ?>>
 				<?php
 					add_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_attachment_image_html_filter' ], 10, 4 );
-					Group_Control_Image_Size::print_attachment_image_html( $settings, 'image' );
+					Group_Control_Image_Size::print_attachment_image_html( $settings , 'image' );
 					remove_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_attachment_image_html_filter' ], 10 );
 				?>
 			</div>
@@ -74,10 +109,10 @@ class Ehp_Image {
 		);
 	}
 
-	public function add_style_section() {
+	public function add_style_controls() {
 		$widget_name = $this->context['widget_name'];
 		$defaults = [
-			'has_min_height' => $this->defaults['has_min_height'] || false,
+			'has_min_height' => $this->defaults['has_min_height'] ?? false,
 		];
 
 		$this->widget->add_control(
@@ -112,9 +147,6 @@ class Ehp_Image {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-' . $widget_name => '--' . $widget_name . '-image-height: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'image_stretch!' => 'yes',
 				],
 			]
 		);
@@ -201,7 +233,7 @@ class Ehp_Image {
 			Group_Control_Css_Filter::get_type(),
 			[
 				'name' => 'image_css_filters',
-				'selector' => '{{WRAPPER}} .ehp-' . $widget_name . '__image img',
+				'selector' => '{{WRAPPER}} .ehp-' . $widget_name . '__image-container img',
 			]
 		);
 
@@ -285,7 +317,7 @@ class Ehp_Image {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-' . $widget_name => '--' . $widget_name . '-image-border-radius-custom-block-end: {{BOTTOM}}{{UNIT}}; --' . $widget_name . '-image-border-radius-custom-block-start: {{TOP}}{{UNIT}}; --' . $widget_name . '-image-border-radius-custom-inline-end: {{RIGHT}}{{UNIT}}; --' . $widget_name . '-image-border-radius-custom-inline-start: {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-' . $widget_name => '--' . $widget_name . '-image-border-radius-block-end: {{BOTTOM}}{{UNIT}}; --' . $widget_name . '-image-border-radius-block-start: {{TOP}}{{UNIT}}; --' . $widget_name . '-image-border-radius-inline-end: {{RIGHT}}{{UNIT}}; --' . $widget_name . '-image-border-radius-inline-start: {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 				'condition' => [
@@ -298,8 +330,14 @@ class Ehp_Image {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'image_box_shadow',
-				'selector' => '{{WRAPPER}} .ehp-' . $widget_name . '__image img',
+				'selector' => '{{WRAPPER}} .ehp-' . $widget_name . '__image-container img',
 			]
 		);
+	}
+
+	public function __construct( Widget_Base $widget, $context = [], $defaults = [] ) {
+		$this->widget = $widget;
+		$this->context = $context;
+		$this->defaults = $defaults;
 	}
 }

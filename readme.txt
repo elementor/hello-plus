@@ -9,16 +9,16 @@ License: GPL-3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 Resources URI: https://github.com/elementor/hello-plus
 
-Hello+ is a free WordPress plugin designed to work seamlessly with Elementor’s Hello Themes. It adds the Plus in the Hello themes.
+Hello+ is a free WordPress plugin designed to work seamlessly with Elementor’s Hello Biz Theme. It adds the Plus in the Hello Biz theme.
 
 == Description ==
 
-Hello+ is a free WordPress plugin designed to work seamlessly with Elementor’s Hello Themes (e.g. [Hello Biz](https://wordpress.org/themes/hello-biz/)).
+Hello+ is a free WordPress plugin designed to work seamlessly with Elementor’s [Hello Biz](https://wordpress.org/themes/hello-biz/) Theme.
 It provides a robust foundation for users to craft unique designs using Elementor’s drag-and-drop site builder and the Hello Themes.
 
 Hello+ offers a guided setup, purpose-built design kits, streamlined management tools,
 and specialized Hello Widgets to deliver a fast and efficient site-building experience.
-Hello+ is designed to complement Elementor’s Hello Themes (e.g. [Hello Biz](https://wordpress.org/themes/hello-biz/)),
+Hello+ is designed to complement Elementor’s [Hello Biz](https://wordpress.org/themes/hello-biz/) Theme,
 an essential companion that must be installed alongside Hello+ for optimal functionality.
 Click [here](https://wordpress.org/themes/hello-biz/) to install Hello Biz.
 

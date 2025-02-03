@@ -6,6 +6,7 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 		elementor.channels.editor.on( 'helloPlusLogo:change', this.openSiteIdentity );
 		elementor.hooks.addFilter( 'elements/widget/controls/common/default', this.resetCommonControls.bind( this ) );
 		elementor.hooks.addFilter( 'elements/widget/controls/common-optimized/default', this.resetCommonControls.bind( this ) );
+		elementor.hooks.addFilter( 'templates/source/is-remote', this.setSourceAsRemote.bind( this ) );
 
 		const types = [
 			'core/modal/close/ehp-footer',
@@ -17,6 +18,14 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 		} );
 
 		window.templatesModule = this;
+	}
+
+	setSourceAsRemote( isRemote, activeSource ) {
+		if ( 'remote-ehp' === activeSource ) {
+			return true;
+		}
+
+		return isRemote;
 	}
 
 	redirectToHelloPlus() {

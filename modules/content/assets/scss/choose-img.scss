@@ -1,0 +1,58 @@
+@import "../../../../assets/dev/scss/variables";
+
+.elementor-control-type-choose-img {
+
+	& .elementor-choices-img {
+		display: grid;
+		row-gap: 4px;
+		column-gap: 4px;
+
+		& .elementor-choices-element {
+			width: auto;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			gap: 4px;
+
+			& .elementor-choices-image {
+				width: 100%;
+				height: auto;
+			}
+		}
+	}
+
+	& .elementor-label-block {
+
+		.elementor-choices {
+			width: 100%;
+		}
+	}
+
+	& .elementor-choices.elementor-choices-img {
+
+		& >  label.elementor-choices-label {
+			padding: 8px;
+		}
+
+		& input.e-choose-placeholder + .elementor-choices-label,
+		& input:checked + .elementor-choices-label {
+			border: 2px solid $e-pink-300;
+			background-color: initial;
+			border-radius: 3px;
+
+		}
+	}
+}
+
+.elementor-choices {
+
+	&.elementor-choices-img {
+		height: fit-content;
+		line-height: normal;
+	}
+}
+
+.elementor-label-block > .elementor-control-content > .elementor-control-field > .elementor-control-input-wrapper > .elementor-choices label.elementor-choices-label {
+	flex: 1 1;
+}

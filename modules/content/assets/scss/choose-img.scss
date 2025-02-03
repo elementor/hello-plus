@@ -2,70 +2,57 @@
 
 .elementor-control-type-choose-img {
 
-	& .elementor-choices-img {
-		display: grid;
-		row-gap: 4px;
-		column-gap: 4px;
+	& .elementor-choices {
+		width: 100%;
 
-		& .elementor-choices-element {
-			width: auto;
+		&-img {
+			column-gap: 4px;
+			display: grid;
+			grid-template-columns: repeat(var(--elementor-choices-columns), 1fr); 
+			height: fit-content;
+			line-height: normal;
+			row-gap: 4px;
+		}
+
+		&-element {
+			align-items: center;
 			display: flex;
 			flex-direction: column;
-			align-items: center;
-			justify-content: center;
 			gap: 4px;
+			justify-content: center;
 			padding: 4px;
-
-			& .elementor-choices-image {
-				width: 100%;
-				height: auto;
-			}
+			width: auto;
 		}
-	}
 
-	& .elementor-label-block {
-
-		.elementor-choices {
+		&-image {
+			height: auto;
 			width: 100%;
 		}
-	}
 
-	& .elementor-choices.elementor-choices-img {
-		& >  label.elementor-choices-label {
+		&-label {
+			flex-basis: unset !important; // to override elementor core styles
 			padding: 8px;
-		}
-
-		& > .elementor-choices-label {
 			transition: transform .2s;
 		}
 
-		& input:not(:checked) + .elementor-choices-label {
-			opacity: 0.7;
-		}
+		& input {
 
-		& input:hover + .elementor-choices-label {
-			opacity: 1;
-			transform: scale(1.05);
-		}
+			&:not(:checked) + .elementor-choices-label {
+				opacity: 0.7;
+			}
 
-		& input.e-choose-placeholder + .elementor-choices-label,
-		& input:checked + .elementor-choices-label {
-			border: 2px solid $e-pink-300;
-			background-color: initial;
-			border-radius: 3px;
-			opacity: 1;
+			&:hover + .elementor-choices-label {
+				opacity: 1;
+				transform: scale(1.05);
+			}
+
+			&.e-choose-placeholder + .elementor-choices-label,
+			&:checked + .elementor-choices-label {
+				background-color: initial;
+				border: 2px solid $e-pink-300;
+				border-radius: 3px;
+				opacity: 1;
+			}
 		}
 	}
-}
-
-.elementor-choices {
-
-	&.elementor-choices-img {
-		height: fit-content;
-		line-height: normal;
-	}
-}
-
-.elementor-label-block > .elementor-control-content > .elementor-control-field > .elementor-control-input-wrapper > .elementor-choices label.elementor-choices-label {
-	flex: 1 1;
 }

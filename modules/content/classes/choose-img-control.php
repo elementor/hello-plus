@@ -29,8 +29,8 @@ class Choose_Img_Control extends Control_Choose {
 			<label class="elementor-control-title">{{{ data.label }}}</label>
 			<div class="elementor-control-input-wrapper">
 				<div
-						class="elementor-choices elementor-choices-img elementor-choices-img-grid"
-						style="grid-template-columns: repeat({{ data.columns }}, 1fr);">
+						class="elementor-choices elementor-choices-img"
+						style="--elementor-choices-columns: {{ data.columns }};">
 
 					<# _.each( data.options, function( options, value ) { #>
 					<div class="elementor-choices-element">

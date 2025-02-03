@@ -94,36 +94,23 @@ class Flex_Hero extends Widget_Base {
 			'layout_preset',
 			[
 				'label' => esc_html__( 'Preset', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
+				'type' => Choose_Img_Control::CONTROL_NAME,
 				'default' => 'showcase',
+				'label_block' => true,
+				'columns' => 1,
 				'options' => [
-					'showcase' => esc_html__( 'Showcase', 'hello-plus' ),
-					'storytelling' => esc_html__( 'Storytelling', 'hello-plus' ),
+					'showcase' => [
+						'title' => esc_html__( 'Showcase: Highlight key concepts with a balanced layout.', 'hello-plus' ),
+						'image' => HELLOPLUS_IMAGES_URL . 'showcase.svg',
+						'hover_image' => true,
+					],
+					'storytelling' => [
+						'title' => esc_html__( 'Storytelling: Focus on a narrative with supporting visuals.', 'hello-plus' ),
+						'image' => HELLOPLUS_IMAGES_URL . 'storytelling.svg',
+						'hover_image' => true,
+					],
 				],
-			]
-		);
-
-		$this->add_control(
-			'layout_preset_showcase_info',
-			[
-				'type' => Controls_Manager::ALERT,
-				'alert_type' => 'info',
-				'content' => esc_html__( 'Highlight key concepts with a balanced layout.', 'hello-plus' ),
-				'condition' => [
-					'layout_preset' => 'showcase',
-				],
-			]
-		);
-
-		$this->add_control(
-			'layout_preset_storytelling_info',
-			[
-				'type' => Controls_Manager::ALERT,
-				'alert_type' => 'info',
-				'content' => esc_html__( 'Focus on a narrative with supporting visuals.', 'hello-plus' ),
-				'condition' => [
-					'layout_preset' => 'storytelling',
-				],
+				'frontend_available' => true,
 			]
 		);
 

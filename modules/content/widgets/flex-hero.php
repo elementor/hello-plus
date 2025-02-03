@@ -97,7 +97,7 @@ class Flex_Hero extends Widget_Base {
 				'type' => Choose_Img_Control::CONTROL_NAME,
 				'default' => 'showcase',
 				'label_block' => true,
-				'columns' => 1,
+				'columns' => 2,
 				'options' => [
 					'showcase' => [
 						'title' => esc_html__( 'Showcase: Highlight key concepts with a balanced layout.', 'hello-plus' ),

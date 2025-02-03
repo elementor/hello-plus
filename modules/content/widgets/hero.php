@@ -158,7 +158,7 @@ class Hero extends Widget_Base {
 			'primary_cta_button_text_placeholder' => esc_html__( 'Contact us', 'hello-plus' ),
 		];
 
-		$button = new Ehp_Button( $this, [ 'widget_name' => 'cta' ], $defaults );
+		$button = new Ehp_Button( $this, [ 'widget_name' => 'hero' ], $defaults );
 		$button->add_content_section();
 	}
 
@@ -365,7 +365,11 @@ class Hero extends Widget_Base {
 			]
 		);
 
-		$button = new Ehp_Button( $this, [ 'widget_name' => 'hero' ] );
+		$defaults = [
+			'has_secondary_cta' => false,
+		];
+
+		$button = new Ehp_Button( $this, [ 'widget_name' => 'hero' ], $defaults );
 		$button->add_style_controls();
 
 		$this->end_controls_section();

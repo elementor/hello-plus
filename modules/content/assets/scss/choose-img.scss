@@ -8,7 +8,7 @@
 		&-img {
 			column-gap: 4px;
 			display: grid;
-			grid-template-columns: repeat(var(--elementor-choices-columns), 1fr); 
+			grid-template-columns: repeat(var(--elementor-choices-columns), 1fr);
 			height: fit-content;
 			line-height: normal;
 			row-gap: 4px;
@@ -27,6 +27,10 @@
 		&-image {
 			height: auto;
 			width: 100%;
+
+			&:hover {
+				background-color: var(--e-a-bg-hover);
+			}
 		}
 
 		&-label {

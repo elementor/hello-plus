@@ -18,6 +18,7 @@
 			& .elementor-choices-image {
 				width: 100%;
 				height: auto;
+				position: relative;
 			}
 		}
 	}
@@ -29,10 +30,14 @@
 		}
 	}
 
-	& .elementor-choices.elementor-choices-img {
+	& .elementor-choices-element {
 
 		& >  label.elementor-choices-label {
 			padding: 8px;
+
+			&:hover {
+				background-color: var(--e-a-bg-hover);
+			}
 		}
 
 		& input.e-choose-placeholder + .elementor-choices-label,

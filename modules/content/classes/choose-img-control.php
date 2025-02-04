@@ -69,7 +69,7 @@ class Choose_Img_Control extends Control_Choose {
 		return [
 			'options' => [],
 			'toggle' => true,
-			'columns' => 1,
+			'columns' => 2,
 		];
 	}
 }

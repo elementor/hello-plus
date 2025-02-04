@@ -50,10 +50,6 @@
 	--cta-box-border-color: #{$global-colors-secondary};
 	--cta-box-border-width: 1px;
 
-	--cta-image-position: center center;
-	--cta-image-border-width: 1px;
-	--cta-image-border-color: #{$global-colors-secondary};
-
 	--cta-border-radius-default: #{$corners-shape-default};
 	--cta-border-radius-sharp: #{$corners-shape-sharp};
 	--cta-border-radius-rounded: #{$corners-shape-rounded};
@@ -524,10 +520,10 @@
 		// }
 	// }
 
-	&.has-image-stretch {
-		--cta-image-height: 100%;
-		--cta-image-width: 100%;
-	}
+	// &.has-image-stretch {
+	// 	--cta-image-height: 100%;
+	// 	--cta-image-width: 100%;
+	// }
 
 	&__overlay {
 		height: 100%;

@@ -56,20 +56,12 @@
 	--flex-hero-box-border-color: #{$global-colors-secondary};
 	--flex-hero-box-border-width: 1px;
 
-	--flex-hero-image-position: center center;
-	--flex-hero-image-border-width: 1px;
-	--flex-hero-image-border-color: #{$global-colors-secondary};
-
 	--flex-hero-border-radius-default: #{$corners-shape-default};
 	--flex-hero-border-radius-sharp: #{$corners-shape-sharp};
 	--flex-hero-border-radius-rounded: #{$corners-shape-rounded};
 	--flex-hero-border-radius-round: #{$corners-shape-round};
 	--flex-hero-border-radius-oval: #{$corners-shape-oval};
 
-	--flex-hero-image-border-radius-custom-block-end: #{$corners-shape-sharp};
-	--flex-hero-image-border-radius-custom-block-start: #{$corners-shape-sharp};
-	--flex-hero-image-border-radius-custom-inline-end: #{$corners-shape-sharp};
-	--flex-hero-image-border-radius-custom-inline-start: #{$corners-shape-sharp};
 	--flex-hero-box-border-radius-custom-block-end: #{$corners-shape-sharp};
 	--flex-hero-box-border-radius-custom-block-start: #{$corners-shape-sharp};
 	--flex-hero-box-border-radius-custom-inline-end: #{$corners-shape-sharp};
@@ -214,6 +206,19 @@
 		--ehp-button-secondary-border-radius-block-start: var(--flex-hero-button-secondary-border-radius-block-start);
 		--ehp-button-secondary-border-radius-inline-end: var(--flex-hero-button-secondary-border-radius-inline-end);
 		--ehp-button-secondary-border-radius-inline-start: var(--flex-hero-button-secondary-border-radius-inline-start);
+	}
+
+	& .ehp-image {
+		--ehp-image-height: var(--flex-hero-image-height);
+		--ehp-image-min-height: var(--flex-hero-image-min-height);
+		--ehp-image-position: var(--flex-hero-image-position);
+		--ehp-image-width: var(--flex-hero-image-width);
+		--ehp-image-border-color: var(--flex-hero-image-border-color);
+		--ehp-image-border-width: var(--flex-hero-image-border-width);
+		--ehp-image-border-radius-block-end: var(--flex-hero-image-border-radius-block-end);
+		--ehp-image-border-radius-block-start: var(--flex-hero-image-border-radius-block-start);
+		--ehp-image-border-radius-inline-end: var(--flex-hero-image-border-radius-inline-end);
+		--ehp-image-border-radius-inline-start: var(--flex-hero-image-border-radius-inline-start);
 	}
 
 	@mixin custom-shape-box() {
@@ -404,64 +409,77 @@
 		}
 	}
 
-	&__image {
-		align-items: center;
-		display: flex;
-		justify-content: center;
-		z-index: 2;
+	// &__image {
+	// 	align-items: center;
+	// 	display: flex;
+	// 	justify-content: center;
+	// 	z-index: 2;
 
-		.elementor & img {
-			height: var(--flex-hero-image-height);
-			object-fit: cover;
-			object-position: var(--flex-hero-image-position);
-			min-height: var(--flex-hero-image-min-height);
-			width: var(--flex-hero-image-width);
+	// 	.elementor & img {
+	// 		height: var(--flex-hero-image-height);
+	// 		object-fit: cover;
+	// 		object-position: var(--flex-hero-image-position);
+	// 		min-height: var(--flex-hero-image-min-height);
+	// 		width: var(--flex-hero-image-width);
 
-			@mixin custom-shape-image() {
-				&-rounded {
-					--flex-hero-border-shape-rounded: #{$corners-image-shape-rounded};
-				}
+	// 		@mixin custom-shape-image() {
+	// 			&-rounded {
+	// 				--flex-hero-border-shape-rounded: #{$corners-image-shape-rounded};
+	// 			}
 
-				&-round {
-					--flex-hero-border-shape-round: #{$corners-image-shape-round};
-				}
+	// 			&-round {
+	// 				--flex-hero-border-shape-round: #{$corners-image-shape-round};
+	// 			}
 
-				&-custom {
-					--flex-hero-border-radius-block-end: var(--flex-hero-image-border-radius-custom-block-end);
-					--flex-hero-border-radius-block-start: var(--flex-hero-image-border-radius-custom-block-start);
-					--flex-hero-border-radius-inline-end: var(--flex-hero-image-border-radius-custom-inline-end);
-					--flex-hero-border-radius-inline-start: var(--flex-hero-image-border-radius-custom-inline-start);
-				}
-			}
+	// 			&-custom {
+	// 				--flex-hero-border-radius-block-end: var(--flex-hero-image-border-radius-custom-block-end);
+	// 				--flex-hero-border-radius-block-start: var(--flex-hero-image-border-radius-custom-block-start);
+	// 				--flex-hero-border-radius-inline-end: var(--flex-hero-image-border-radius-custom-inline-end);
+	// 				--flex-hero-border-radius-inline-start: var(--flex-hero-image-border-radius-custom-inline-start);
+	// 			}
+	// 		}
 		
-			&.has-shape {
-				@include custom-shape-image();
+	// 		&.has-shape {
+	// 			@include custom-shape-image();
 		
-				&-md {
-					@media screen and (max-width: $screen-desktop-min) {
-						@include custom-shape-image();
-					}
-				}
+	// 			&-md {
+	// 				@media screen and (max-width: $screen-desktop-min) {
+	// 					@include custom-shape-image();
+	// 				}
+	// 			}
 	
-				&-sm {
-					@media screen and (max-width: $screen-tablet-min) {
-						@include custom-shape-image();
-					}
-				}
-			}
+	// 			&-sm {
+	// 				@media screen and (max-width: $screen-tablet-min) {
+	// 					@include custom-shape-image();
+	// 				}
+	// 			}
+	// 		}
 
-			&.has-border {
-				border-color: var(--flex-hero-image-border-color);
-				border-style: solid;
-				border-width: var(--flex-hero-image-border-width);
-			}
-		}
+	// 		&.has-border {
+	// 			border-color: var(--flex-hero-image-border-color);
+	// 			border-style: solid;
+	// 			border-width: var(--flex-hero-image-border-width);
+	// 		}
+	// 	}
+	// }
+
+	& .ehp-image {
+		--ehp-image-height: var(--flex-hero-image-height);
+		--ehp-image-min-height: var(--flex-hero-image-min-height);
+		--ehp-image-position: var(--flex-hero-image-position);
+		--ehp-image-width: var(--flex-hero-image-width);
+		--ehp-image-border-color: var(--flex-hero-image-border-color);
+		--ehp-image-border-width: var(--flex-hero-image-border-width);
+		--ehp-image-border-radius-block-end: var(--flex-hero-image-border-radius-block-end);
+		--ehp-image-border-radius-block-start: var(--flex-hero-image-border-radius-block-start);
+		--ehp-image-border-radius-inline-end: var(--flex-hero-image-border-radius-inline-end);
+		--ehp-image-border-radius-inline-start: var(--flex-hero-image-border-radius-inline-start);
 	}
 
-	&.has-image-stretch {
-		--flex-hero-image-height: 100%;
-		--flex-hero-image-width: 100%;
-	}
+	// &.has-image-stretch {
+	// 	--flex-hero-image-height: 100%;
+	// 	--flex-hero-image-width: 100%;
+	// }
 
 	&__overlay {
 		height: 100%;

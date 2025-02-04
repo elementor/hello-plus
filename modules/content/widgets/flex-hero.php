@@ -21,7 +21,10 @@ use HelloPlus\Modules\Content\Base\Traits\Shared_Content_Traits;
 use HelloPlus\Modules\Content\Classes\Choose_Img_Control;
 use HelloPlus\Modules\Content\Classes\Render\Widget_Flex_Hero_Render;
 use HelloPlus\Modules\Theme\Module as Theme_Module;
-use HelloPlus\Classes\Ehp_Button;
+use HelloPlus\Classes\{
+	Ehp_Button,
+	Ehp_Image,
+};
 
 class Flex_Hero extends Widget_Base {
 
@@ -48,7 +51,7 @@ class Flex_Hero extends Widget_Base {
 	}
 
 	public function get_style_depends(): array {
-		return [ 'helloplus-flex-hero', 'helloplus-button' ];
+		return [ 'helloplus-flex-hero', 'helloplus-button', 'helloplus-image' ];
 	}
 
 	protected function render(): void {
@@ -247,16 +250,8 @@ class Flex_Hero extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'image',
-			[
-				'label' => esc_html__( 'Choose Image', 'hello-plus' ),
-				'type' => Controls_Manager::MEDIA,
-				'default' => [
-					'url' => Elementor_Utils::get_placeholder_image_src(),
-				],
-			]
-		);
+		$image = new Ehp_Image( $this, [ 'widget_name' => 'flex-hero' ] );
+		$image->add_content_section();
 
 		$this->end_controls_section();
 	}
@@ -565,225 +560,232 @@ class Flex_Hero extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'image_stretch',
-			[
-				'label' => esc_html__( 'Stretch', 'hello-plus' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
-				'label_off' => esc_html__( 'No', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => 'no',
-			]
-		);
+		$defaults = [
+			'has_min_height' => true,
+		];
 
-		$this->add_responsive_control(
-			'image_height',
-			[
-				'label' => esc_html__( 'Height', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
-				'range' => [
-					'px' => [
-						'max' => 1500,
-					],
-					'%' => [
-						'max' => 100,
-					],
-				],
-				'default' => [
-					'size' => 380,
-					'unit' => 'px',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-height: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'image_stretch!' => 'yes',
-				],
-			]
-		);
+		$image = new Ehp_Image( $this, [ 'widget_name' => 'flex-hero' ], $defaults );
+		$image->add_style_controls();
 
-		$this->add_responsive_control(
-			'image_width',
-			[
-				'label' => esc_html__( 'Width', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
-				'range' => [
-					'px' => [
-						'max' => 1500,
-					],
-					'%' => [
-						'max' => 100,
-					],
-				],
-				'default' => [
-					'size' => 100,
-					'unit' => '%',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-width: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'image_stretch!' => 'yes',
-				],
-			]
-		);
+		// $this->add_control(
+		// 	'image_stretch',
+		// 	[
+		// 		'label' => esc_html__( 'Stretch', 'hello-plus' ),
+		// 		'type' => Controls_Manager::SWITCHER,
+		// 		'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+		// 		'label_off' => esc_html__( 'No', 'hello-plus' ),
+		// 		'return_value' => 'yes',
+		// 		'default' => 'no',
+		// 	]
+		// );
 
-		$this->add_responsive_control(
-			'image_min_height',
-			[
-				'label' => esc_html__( 'Min Height', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
-				'range' => [
-					'px' => [
-						'max' => 1500,
-					],
-					'%' => [
-						'max' => 100,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-min-height: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'image_stretch' => 'yes',
-				],
-			]
-		);
+		// $this->add_responsive_control(
+		// 	'image_height',
+		// 	[
+		// 		'label' => esc_html__( 'Height', 'hello-plus' ),
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+		// 		'range' => [
+		// 			'px' => [
+		// 				'max' => 1500,
+		// 			],
+		// 			'%' => [
+		// 				'max' => 100,
+		// 			],
+		// 		],
+		// 		'default' => [
+		// 			'size' => 380,
+		// 			'unit' => 'px',
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-height: {{SIZE}}{{UNIT}};',
+		// 		],
+		// 		'condition' => [
+		// 			'image_stretch!' => 'yes',
+		// 		],
+		// 	]
+		// );
 
-		$this->add_responsive_control(
-			'image_position',
-			[
-				'label' => esc_html__( 'Position', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'desktop_default' => 'center center',
-				'tablet_default' => 'center center',
-				'mobile_default' => 'center center',
-				'options' => [
-					'' => esc_html__( 'Default', 'hello-plus' ),
-					'center center' => esc_html__( 'Center Center', 'hello-plus' ),
-					'center left' => esc_html__( 'Center Left', 'hello-plus' ),
-					'center right' => esc_html__( 'Center Right', 'hello-plus' ),
-					'top center' => esc_html__( 'Top Center', 'hello-plus' ),
-					'top left' => esc_html__( 'Top Left', 'hello-plus' ),
-					'top right' => esc_html__( 'Top Right', 'hello-plus' ),
-					'bottom center' => esc_html__( 'Bottom Center', 'hello-plus' ),
-					'bottom left' => esc_html__( 'Bottom Left', 'hello-plus' ),
-					'bottom right' => esc_html__( 'Bottom Right', 'hello-plus' ),
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-position: {{VALUE}}',
-				],
-			]
-		);
+		// $this->add_responsive_control(
+		// 	'image_width',
+		// 	[
+		// 		'label' => esc_html__( 'Width', 'hello-plus' ),
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+		// 		'range' => [
+		// 			'px' => [
+		// 				'max' => 1500,
+		// 			],
+		// 			'%' => [
+		// 				'max' => 100,
+		// 			],
+		// 		],
+		// 		'default' => [
+		// 			'size' => 100,
+		// 			'unit' => '%',
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-width: {{SIZE}}{{UNIT}};',
+		// 		],
+		// 		'condition' => [
+		// 			'image_stretch!' => 'yes',
+		// 		],
+		// 	]
+		// );
 
-		$this->add_group_control(
-			Group_Control_Css_Filter::get_type(),
-			[
-				'name' => 'image_css_filters',
-				'selector' => '{{WRAPPER}} .ehp-flex-hero__image img',
-			]
-		);
+		// $this->add_responsive_control(
+		// 	'image_min_height',
+		// 	[
+		// 		'label' => esc_html__( 'Min Height', 'hello-plus' ),
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+		// 		'range' => [
+		// 			'px' => [
+		// 				'max' => 1500,
+		// 			],
+		// 			'%' => [
+		// 				'max' => 100,
+		// 			],
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-min-height: {{SIZE}}{{UNIT}};',
+		// 		],
+		// 		'condition' => [
+		// 			'image_stretch' => 'yes',
+		// 		],
+		// 	]
+		// );
 
-		$this->add_control(
-			'show_image_border',
-			[
-				'label' => esc_html__( 'Border', 'hello-plus' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
-				'label_off' => esc_html__( 'No', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => 'no',
-				'separator' => 'before',
-			]
-		);
+		// $this->add_responsive_control(
+		// 	'image_position',
+		// 	[
+		// 		'label' => esc_html__( 'Position', 'hello-plus' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'desktop_default' => 'center center',
+		// 		'tablet_default' => 'center center',
+		// 		'mobile_default' => 'center center',
+		// 		'options' => [
+		// 			'' => esc_html__( 'Default', 'hello-plus' ),
+		// 			'center center' => esc_html__( 'Center Center', 'hello-plus' ),
+		// 			'center left' => esc_html__( 'Center Left', 'hello-plus' ),
+		// 			'center right' => esc_html__( 'Center Right', 'hello-plus' ),
+		// 			'top center' => esc_html__( 'Top Center', 'hello-plus' ),
+		// 			'top left' => esc_html__( 'Top Left', 'hello-plus' ),
+		// 			'top right' => esc_html__( 'Top Right', 'hello-plus' ),
+		// 			'bottom center' => esc_html__( 'Bottom Center', 'hello-plus' ),
+		// 			'bottom left' => esc_html__( 'Bottom Left', 'hello-plus' ),
+		// 			'bottom right' => esc_html__( 'Bottom Right', 'hello-plus' ),
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-position: {{VALUE}}',
+		// 		],
+		// 	]
+		// );
 
-		$this->add_control(
-			'image_border_width',
-			[
-				'label' => __( 'Border Width', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 10,
-						'step' => 1,
-					],
-				],
-				'default' => [
-					'size' => 1,
-					'unit' => 'px',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-border-width: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'show_image_border' => 'yes',
-				],
-			]
-		);
+		// $this->add_group_control(
+		// 	Group_Control_Css_Filter::get_type(),
+		// 	[
+		// 		'name' => 'image_css_filters',
+		// 		'selector' => '{{WRAPPER}} .ehp-flex-hero__image img',
+		// 	]
+		// );
 
-		$this->add_control(
-			'image_border_color',
-			[
-				'label' => esc_html__( 'Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_TEXT,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-border-color: {{VALUE}}',
-				],
-				'condition' => [
-					'show_image_border' => 'yes',
-				],
-			]
-		);
+		// $this->add_control(
+		// 	'show_image_border',
+		// 	[
+		// 		'label' => esc_html__( 'Border', 'hello-plus' ),
+		// 		'type' => Controls_Manager::SWITCHER,
+		// 		'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+		// 		'label_off' => esc_html__( 'No', 'hello-plus' ),
+		// 		'return_value' => 'yes',
+		// 		'default' => 'no',
+		// 		'separator' => 'before',
+		// 	]
+		// );
 
-		$this->add_responsive_control(
-			'image_shape',
-			[
-				'label' => esc_html__( 'Shape', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'sharp',
-				'options' => [
-					'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
-					'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
-					'round' => esc_html__( 'Round', 'hello-plus' ),
-					'oval' => esc_html__( 'Oval', 'hello-plus' ),
-					'custom' => esc_html__( 'Custom', 'hello-plus' ),
-				],
-				'frontend_available' => true,
-			]
-		);
+		// $this->add_control(
+		// 	'image_border_width',
+		// 	[
+		// 		'label' => __( 'Border Width', 'hello-plus' ),
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'size_units' => [ 'px' ],
+		// 		'range' => [
+		// 			'px' => [
+		// 				'min' => 0,
+		// 				'max' => 10,
+		// 				'step' => 1,
+		// 			],
+		// 		],
+		// 		'default' => [
+		// 			'size' => 1,
+		// 			'unit' => 'px',
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-border-width: {{SIZE}}{{UNIT}};',
+		// 		],
+		// 		'condition' => [
+		// 			'show_image_border' => 'yes',
+		// 		],
+		// 	]
+		// );
 
-		$this->add_responsive_control(
-			'image_shape_custom',
-			[
-				'label' => esc_html__( 'Border Radius', 'hello-plus' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em', 'rem' ],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-border-radius-custom-block-end: {{BOTTOM}}{{UNIT}}; --flex-hero-image-border-radius-custom-block-start: {{TOP}}{{UNIT}}; --flex-hero-image-border-radius-custom-inline-end: {{RIGHT}}{{UNIT}}; --flex-hero-image-border-radius-custom-inline-start: {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before',
-				'condition' => [
-					'image_shape' => 'custom',
-				],
-			]
-		);
+		// $this->add_control(
+		// 	'image_border_color',
+		// 	[
+		// 		'label' => esc_html__( 'Color', 'hello-plus' ),
+		// 		'type' => Controls_Manager::COLOR,
+		// 		'global' => [
+		// 			'default' => Global_Colors::COLOR_TEXT,
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-border-color: {{VALUE}}',
+		// 		],
+		// 		'condition' => [
+		// 			'show_image_border' => 'yes',
+		// 		],
+		// 	]
+		// );
 
-		$this->add_group_control(
-			Group_Control_Box_Shadow::get_type(),
-			[
-				'name' => 'image_box_shadow',
-				'selector' => '{{WRAPPER}} .ehp-flex-hero__image img',
-			]
-		);
+		// $this->add_responsive_control(
+		// 	'image_shape',
+		// 	[
+		// 		'label' => esc_html__( 'Shape', 'hello-plus' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'default' => 'sharp',
+		// 		'options' => [
+		// 			'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
+		// 			'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
+		// 			'round' => esc_html__( 'Round', 'hello-plus' ),
+		// 			'oval' => esc_html__( 'Oval', 'hello-plus' ),
+		// 			'custom' => esc_html__( 'Custom', 'hello-plus' ),
+		// 		],
+		// 		'frontend_available' => true,
+		// 	]
+		// );
+
+		// $this->add_responsive_control(
+		// 	'image_shape_custom',
+		// 	[
+		// 		'label' => esc_html__( 'Border Radius', 'hello-plus' ),
+		// 		'type' => Controls_Manager::DIMENSIONS,
+		// 		'size_units' => [ 'px', '%', 'em', 'rem' ],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-image-border-radius-custom-block-end: {{BOTTOM}}{{UNIT}}; --flex-hero-image-border-radius-custom-block-start: {{TOP}}{{UNIT}}; --flex-hero-image-border-radius-custom-inline-end: {{RIGHT}}{{UNIT}}; --flex-hero-image-border-radius-custom-inline-start: {{LEFT}}{{UNIT}};',
+		// 		],
+		// 		'separator' => 'before',
+		// 		'condition' => [
+		// 			'image_shape' => 'custom',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_group_control(
+		// 	Group_Control_Box_Shadow::get_type(),
+		// 	[
+		// 		'name' => 'image_box_shadow',
+		// 		'selector' => '{{WRAPPER}} .ehp-flex-hero__image img',
+		// 	]
+		// );
 
 		$this->end_controls_section();
 	}

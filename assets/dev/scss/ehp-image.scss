@@ -5,7 +5,7 @@
 	--ehp-image-min-height: 0;
 	--ehp-image-position: center;
 	--ehp-image-width: 100%;
-	--ehp-image-border-color: #000;
+	--ehp-image-border-color: #{$global-colors-secondary};
 	--ehp-image-border-width: 0;
 	--ehp-image-border-radius-block-end:  #{$corners-shape-default};
 	--ehp-image-border-radius-block-start:  #{$corners-shape-default};
@@ -80,5 +80,10 @@
 			border-style: solid;
 			border-width: var(--ehp-image-border-width);
 		}
+	}
+
+	&.has-image-stretch {
+		--ehp-image-height: 100%;
+		--ehp-image-width: 100%;
 	}
 }

@@ -336,10 +336,6 @@ class CTA extends Widget_Base {
 						'max' => 100,
 					],
 				],
-				'default' => [
-					'size' => 1200,
-					'unit' => 'px',
-				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-cta' => '--cta-content-width: {{SIZE}}{{UNIT}};',
 				],

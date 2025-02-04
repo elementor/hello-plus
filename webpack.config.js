@@ -21,6 +21,8 @@ const entryPoints = {
 	'css/helloplus-cta': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-cta.scss' ),
 	'css/helloplus-flex-hero': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-flex-hero.scss' ),
 	'js/helloplus-zigzag-fe': path.resolve( modulesDir, 'content/assets/js/frontend', 'hello-plus-zigzag-fe.js' ),
+	'css/helloplus-control-choose-img': path.resolve( modulesDir, 'content/assets/scss', 'choose-img.scss' ),
+	'js/helloplus-control-choose-img': path.resolve( modulesDir, 'content/assets/js', 'editor.js' ),
 
 	// Template Parts module
 	'css/helloplus-template-parts-editor': path.resolve( modulesDir, 'template-parts/assets/scss', 'editor.scss' ),
@@ -53,6 +55,10 @@ module.exports = {
 
 			new CopyWebpackPlugin( {
 				patterns: [
+					{
+						from: path.resolve( modulesDir, 'content/assets/images' ),
+						to: imagesPath,
+					},
 					{
 						from: path.resolve( modulesDir, 'forms/assets/images' ),
 						to: imagesPath,

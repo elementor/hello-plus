@@ -6,7 +6,6 @@
 
 	--cta-elements-spacing: 40px;
 	--cta-buttons-space-between: 16px;
-	--cta-content-width: 1304px;
 	--cta-content-alignment: center;
 	--cta-buttons-vertical-position: start;
 	--cta-content-position-vertical: start;
@@ -259,6 +258,7 @@
 			@media screen and (min-width: $screen-desktop-min) {
 				.ehp-cta__elements-container {
 					flex-direction: row;
+					justify-content: space-between;
 				}
 
 				.ehp-cta__text-container {

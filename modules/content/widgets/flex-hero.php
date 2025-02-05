@@ -105,7 +105,7 @@ class Flex_Hero extends Widget_Base {
 						'hover_image' => true,
 					],
 					'storytelling' => [
-						'title' => wp_kses_post( "Storytelling\nFocus on a narrative\nwith supporting visuals." ),
+						'title' => wp_kses_post( "Storytelling:\nFocus on a narrative\nwith supporting visuals." ),
 						'image' => HELLOPLUS_IMAGES_URL . 'storytelling.svg',
 						'hover_image' => true,
 					],

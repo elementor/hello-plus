@@ -100,7 +100,7 @@ class Flex_Hero extends Widget_Base {
 				'columns' => 2,
 				'options' => [
 					'showcase' => [
-						'title' => wp_kses_post( "Showcase\nHighlight key concepts\nwith a balanced layout." ),
+						'title' => wp_kses_post( "Showcase:\nHighlight key concepts\nwith a balanced layout." ),
 						'image' => HELLOPLUS_IMAGES_URL . 'showcase.svg',
 						'hover_image' => true,
 					],

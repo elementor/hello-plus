@@ -868,14 +868,6 @@ class CTA extends Widget_Base {
 					'size' => 40,
 					'unit' => 'px',
 				],
-				'tablet_default' => [
-					'size' => 40,
-					'unit' => 'px',
-				],
-				'mobile_default' => [
-					'size' => 40,
-					'unit' => 'px',
-				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-cta' => '--cta-elements-spacing: {{SIZE}}{{UNIT}};',
 				],

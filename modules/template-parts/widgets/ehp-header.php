@@ -700,7 +700,10 @@ class Ehp_Header extends Ehp_Widget_Base {
 	}
 
 	protected function add_content_cta_section() {
-		$button = new Ehp_Button( $this, [ 'widget_name' => 'header' ] );
+		$defaults = [
+			'secondary_cta_show' => 'no',
+		];
+		$button = new Ehp_Button( $this, [ 'widget_name' => 'header' ], $defaults );
 		$button->add_content_section();
 	}
 

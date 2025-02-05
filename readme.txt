@@ -3,7 +3,7 @@ Contributors: elemntor
 Tags: elementor, themes, hello themes, hello plus, widgets
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.1.3
+Stable tag: 1.2.0
 Requires PHP: 7.4
 License: GPL-3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -79,6 +79,12 @@ To install Hello+, follow the steps below:
 For documentation and tutorials, visit our [Knowledge Base](https://elementor.com/help/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme).
 
 == Changelog ==
+= 1.2.0 - 2025-02-04 =
+* New: Hello+ Header & Footer Templates Library
+* Tweak: CTA Widget layout options
+* Tweak: Zigzag Widget layout options
+* Tweak: Unify CTA Buttons functionality across Zigzag, CTA, Hero and Flex-Hero widgets
+
 = 1.1.3 - 2025-01-30 =
 * Fix: Form Lite submission
 

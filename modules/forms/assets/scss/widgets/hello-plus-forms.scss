@@ -94,13 +94,13 @@
 			@include column-width-sizes();
 
 			&-md {
-				@media screen and (max-width: $screen-desktop-min) {
+				@media screen and (max-width: $screen-tablet-max) {
 					@include column-width-sizes();
 				}
 			}
 
 			&-sm {
-				@media screen and (max-width: $screen-tablet-min) {
+				@media screen and (max-width: $screen-mobile-max) {
 					@include column-width-sizes();
 				}
 			}

@@ -285,6 +285,17 @@
 			}
 		}
 
+		&-focus,
+		&-showcase {
+
+			.ehp-cta__buttons-wrapper {
+
+				@media screen and (max-width: $screen-mobile-max) {
+					flex-direction: column;
+				}
+			}
+		}
+
 		&-showcase {
 			--cta-content-alignment: start;
 
@@ -421,13 +432,13 @@
 			@include cta-width();
 
 			&-md {
-				@media screen and (max-width: $screen-desktop-min) {
+				@media screen and (max-width: $screen-tablet-max) {
 					@include cta-width();
 				}
 			}
 
 			&-sm {
-				@media screen and (max-width: $screen-tablet-min) {
+				@media screen and (max-width: $screen-mobile-max) {
 					@include cta-width();
 				}
 			}

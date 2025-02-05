@@ -297,7 +297,7 @@ class CTA extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'cta_vertical_position',
 			[
 				'label' => esc_html__( 'Vertical Position', 'hello-plus' ),

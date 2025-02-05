@@ -78,6 +78,9 @@ To install Hello+, follow the steps below:
 
 For documentation and tutorials, visit our [Knowledge Base](https://elementor.com/help/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme).
 
+= How can I report security bugs? =
+> You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability](https://patchstack.com/database/wordpress/plugin/hello-plus/vdp?pin=yjNmZ24tOxHkDmPZ&vero_id=security%40elementor.com&vero_conv=8O2Z42Yf8LaWeP3OA-siS16QfE_q7upzmkxRQDKcUlDak9P0YG5dwcvRZzblPc1KzxVu3qPDRapdqd9jMv4vmWKMdwo4Iu5PjeWFsSbZPTtq).
+
 == Changelog ==
 = 1.2.0 - 2025-02-04 =
 * New: Hello+ Header & Footer Templates Library

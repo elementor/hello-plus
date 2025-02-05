@@ -76,6 +76,9 @@ To install Hello+, follow the steps below:
 = Is my site secure with Hello+? =
 > The security of your website is extremely important to us and we take proactive measures to assure that your websites are secure. We have a dedicated team of security professionals that implements industry best-practices for maximum security and compliance, 24/7.
 
+= How can I report security bugs? =
+> You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability](https://patchstack.com/database/wordpress/plugin/hello-plus/vdp?pin=yjNmZ24tOxHkDmPZ&vero_id=security%40elementor.com&vero_conv=8O2Z42Yf8LaWeP3OA-siS16QfE_q7upzmkxRQDKcUlDak9P0YG5dwcvRZzblPc1KzxVu3qPDRapdqd9jMv4vmWKMdwo4Iu5PjeWFsSbZPTtq).
+
 For documentation and tutorials, visit our [Knowledge Base](https://elementor.com/help/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme).
 
 == Changelog ==

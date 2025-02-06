@@ -107,12 +107,9 @@ class Ehp_Button {
 	 * @return mixed
 	 */
 	protected function get_control_value( string $defaults_key, $default_value, ?string $settings_key = null ) {
-		$settings = $this->widget->get_settings_for_display();
-
 		$type = ! empty( $this->context['type'] ) ? $this->context['type'] . '_' : '';
 		$settings_key = $type . ( $settings_key ?? $defaults_key );
-		return $this->defaults[ $defaults_key ] ?? $settings[ $settings_key ] ?? $default_value;
-	}
+		return $this->defaults[ $defaults_key ] ?? $this->widget_settings[ $settings_key ] ?? $default_value;	}
 
 	public function add_content_section() {
 		$defaults = [

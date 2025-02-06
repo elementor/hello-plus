@@ -134,7 +134,8 @@ class Widget_Zig_Zag_Render {
 	private function render_image_container( $settings, $key ) {
 		$defaults = [
 			'settings' => $settings,
-			'image' => $key,
+			'image_key' => $key,
+			'image' => $settings[ $key ],
 		];
 
 		$image = new Ehp_Image( $this->widget, [

@@ -71,7 +71,7 @@ class Ehp_Image {
 		$settings = $this->widget->get_settings_for_display();
 		$widget_name = $this->context['widget_name'];
 
-		$image = $this->defaults['settings'][ $this->defaults['image'] ] ?? $settings['image'];
+		$image = $this->defaults['image'] ?? $settings['image'];
 
 		$has_image = ! empty( $image['url'] );
 		$image_wrapper_classnames = [
@@ -84,14 +84,14 @@ class Ehp_Image {
 		] );
 
 		$settings_control_value = $this->defaults['settings'] ?? $settings;
-		$key_control_value = $this->defaults['image'] ?? 'image';
+		$image_key = $this->defaults['image_key'] ?? 'image';
 
 		if ( $has_image ) :
 			?>
 			<div <?php $this->widget->print_render_attribute_string( 'image' ); ?>>
 				<?php
 					add_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_attachment_image_html_filter' ], 10, 4 );
-					Group_Control_Image_Size::print_attachment_image_html( $settings_control_value, $key_control_value );
+					Group_Control_Image_Size::print_attachment_image_html( $settings_control_value, $image_key );
 					remove_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_attachment_image_html_filter' ], 10 );
 				?>
 			</div>

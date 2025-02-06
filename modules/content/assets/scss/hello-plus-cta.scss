@@ -477,65 +477,6 @@
 		text-align: var(--cta-content-alignment);
 	}
 
-	// &__image-container {
-		// align-items: center;
-		// display: flex;
-		// justify-content: center;
-		// z-index: 2;
-
-		// .elementor & img {
-		// 	height: var(--cta-image-height);
-		// 	object-fit: cover;
-		// 	object-position: var(--cta-image-position);
-		// 	min-height: var(--cta-image-min-height);
-		// 	width: var(--cta-image-width);
-
-		// 	@mixin custom-shape-image() {
-		// 		&-rounded {
-		// 			--cta-border-shape-rounded: #{$corners-image-shape-rounded};
-		// 		}
-
-		// 		&-round {
-		// 			--cta-border-shape-round: #{$corners-image-shape-round};
-		// 		}
-
-		// 		&-custom {
-		// 			--cta-border-radius-block-end: var(--cta-image-border-radius-custom-block-end);
-		// 			--cta-border-radius-block-start: var(--cta-image-border-radius-custom-block-start);
-		// 			--cta-border-radius-inline-end: var(--cta-image-border-radius-custom-inline-end);
-		// 			--cta-border-radius-inline-start: var(--cta-image-border-radius-custom-inline-start);
-		// 		}
-		// 	}
-		
-		// 	&.has-shape {
-		// 		@include custom-shape-image();
-
-		// 	&-md {
-		// 		@media screen and (max-width: $screen-tablet-max) {
-		// 			@include custom-shape-image();
-		// 		}
-		// 	}
-
-		// 	&-sm {
-		// 		@media screen and (max-width: $screen-mobile-max) {
-		// 			@include custom-shape-image();
-		// 		}
-		// 	}
-		// }
-
-		// 	&.has-border {
-		// 		border-color: var(--cta-image-border-color);
-		// 		border-style: solid;
-		// 		border-width: var(--cta-image-border-width);
-		// 	}
-		// }
-	// }
-
-	// &.has-image-stretch {
-	// 	--cta-image-height: 100%;
-	// 	--cta-image-width: 100%;
-	// }
-
 	&__overlay {
 		height: 100%;
 		left: 0;

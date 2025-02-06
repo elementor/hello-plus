@@ -11,7 +11,10 @@ use Elementor\Icons_Manager;
 use Elementor\Utils;
 
 use HelloPlus\Modules\Content\Widgets\Zig_Zag;
-use HelloPlus\Classes\Ehp_Button;
+use HelloPlus\Classes\{
+	Ehp_Button,
+	Ehp_Image,
+};
 
 class Widget_Zig_Zag_Render {
 	protected Zig_Zag $widget;
@@ -119,13 +122,25 @@ class Widget_Zig_Zag_Render {
 		] );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'graphic-element-container-' . $key ); ?>>
-			<?php if ( $is_image ) : ?>
-				<?php Group_Control_Image_Size::print_attachment_image_html( $item, 'image_graphic_image' ); ?>
-			<?php elseif ( $is_icon ) : ?>
-				<?php Icons_Manager::render_icon( $item['icon_graphic_icon'], [ 'aria-hidden' => 'true' ] ); ?>
-			<?php endif; ?>
+			<?php if ( $is_image ) {
+				$this->render_image_container( $item, 'image_graphic_image' );
+			} elseif ( $is_icon ) {
+				Icons_Manager::render_icon( $item['icon_graphic_icon'], [ 'aria-hidden' => 'true' ] );
+			} ?>
 		</div>
 		<?php
+	}
+
+	private function render_image_container( $settings, $key ) {
+		$defaults = [
+			'settings' => $settings,
+			'image' => $key,
+		];
+
+		$image = new Ehp_Image( $this->widget, [
+			'widget_name' => 'zigzag',
+		], $defaults );
+		$image->render();
 	}
 
 	private function render_text_element_container( $item, $key ) {

@@ -26,6 +26,8 @@ class Ehp_Image {
 	private $defaults = [];
 	private ?Widget_Base $widget = null;
 
+	private $widget_settings = [];
+
 	const EHP_PREFIX = 'ehp-';
 	const CLASSNAME_IMAGE = 'ehp-image';
 
@@ -37,23 +39,20 @@ class Ehp_Image {
 		$settings = $this->widget->get_settings_for_display();
 		$widget_name = $this->context['widget_name'];
 
-		$image_shape = $settings['image_shape'];
-		$image_shape_mobile = $settings['image_shape_mobile'];
-		$image_shape_tablet = $settings['image_shape_tablet'];
-
 		$image_classnames = [
 			self::CLASSNAME_IMAGE . '__img',
 			self::EHP_PREFIX . $widget_name . '__img',
-		];
+		];;
 
-		$has_border = $settings['show_image_border'];
-
-		if ( 'yes' === $has_border ) {
+		if ( ! empty ( $settings['show_image_border'] ) && 'yes' === $settings['show_image_border'] ) {
 			$image_classnames[] = 'has-border';
 		}
 
-		if ( ! empty( $image_shape ) ) {
-			$image_classnames[] = 'has-shape-' . $image_shape;
+		if ( ! empty( $settings['image_shape'] ) ) {
+			$image_shape_mobile = $settings['image_shape_mobile'];
+			$image_shape_tablet = $settings['image_shape_tablet'];
+
+			$image_classnames[] = 'has-shape-' . $settings['image_shape'];
 
 			if ( ! empty( $image_shape_mobile ) ) {
 				$image_classnames[] = 'has-shape-sm-' . $image_shape_mobile;
@@ -72,7 +71,8 @@ class Ehp_Image {
 		$settings = $this->widget->get_settings_for_display();
 		$widget_name = $this->context['widget_name'];
 
-		$image = $settings['image'];
+		$image = $this->defaults['settings'][ $this->defaults['image'] ] ?? $settings['image'];
+
 		$has_image = ! empty( $image['url'] );
 		$image_wrapper_classnames = [
 			self::CLASSNAME_IMAGE,
@@ -83,12 +83,15 @@ class Ehp_Image {
 			'class' => $image_wrapper_classnames,
 		] );
 
+		$settings_control_value = $this->defaults['settings'] ?? $settings;
+		$key_control_value = $this->defaults['image'] ?? 'image';
+
 		if ( $has_image ) :
 			?>
 			<div <?php $this->widget->print_render_attribute_string( 'image' ); ?>>
 				<?php
 					add_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_attachment_image_html_filter' ], 10, 4 );
-					Group_Control_Image_Size::print_attachment_image_html( $settings , 'image' );
+					Group_Control_Image_Size::print_attachment_image_html( $settings_control_value, $key_control_value );
 					remove_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_attachment_image_html_filter' ], 10 );
 				?>
 			</div>
@@ -113,6 +116,8 @@ class Ehp_Image {
 		$widget_name = $this->context['widget_name'];
 		$defaults = [
 			'has_min_height' => $this->defaults['has_min_height'] ?? false,
+			'has_image_width_slider' => $this->defaults['has_image_width_slider'] ?? true,
+			'has_image_width_dropdown' => $this->defaults['has_image_width_dropdown'] ?? false,
 		];
 
 		$this->widget->add_control(
@@ -151,32 +156,56 @@ class Ehp_Image {
 			]
 		);
 
-		$this->widget->add_responsive_control(
-			'image_width',
-			[
-				'label' => esc_html__( 'Width', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
-				'range' => [
-					'px' => [
-						'max' => 1500,
+		if ( $defaults['has_image_width_slider'] ) {
+			$this->widget->add_responsive_control(
+				'image_width',
+				[
+					'label' => esc_html__( 'Width', 'hello-plus' ),
+					'type' => Controls_Manager::SLIDER,
+					'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+					'range' => [
+						'px' => [
+							'max' => 1500,
+						],
+						'%' => [
+							'max' => 100,
+						],
 					],
-					'%' => [
-						'max' => 100,
+					'default' => [
+						'size' => 100,
+						'unit' => '%',
 					],
-				],
-				'default' => [
-					'size' => 100,
-					'unit' => '%',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-' . $widget_name => '--' . $widget_name . '-image-width: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'image_stretch!' => 'yes',
-				],
-			]
-		);
+					'selectors' => [
+						'{{WRAPPER}} .ehp-' . $widget_name => '--' . $widget_name . '-image-width: {{SIZE}}{{UNIT}};',
+					],
+					'condition' => [
+						'image_stretch!' => 'yes',
+					],
+				]
+			);
+		}
+
+		if ( $defaults['has_image_width_dropdown'] ) {
+			$this->widget->add_responsive_control(
+				'image_width',
+				[
+					'label' => esc_html__( 'Width', 'hello-plus' ),
+					'type' => Controls_Manager::SELECT,
+					'options' => [
+						'50%' => '50%',
+						'40%' => '40%',
+						'30%' => '30%',
+					],
+					'default' => '50%',
+					'selectors' => [
+						'{{WRAPPER}} .ehp-' . $widget_name => '--' . $widget_name . '-image-width: {{VALUE}};',
+					],
+					'condition' => [
+						'image_stretch!' => 'yes',
+					],
+				]
+			);
+		}
 
 		if ( $defaults['has_min_height'] ) {
 			$this->widget->add_responsive_control(

@@ -10,7 +10,7 @@
 	--zigzag-content-position: center;
 	--zigzag-image-width: 50%;
 	--zigzag-icon-width: 50%;
-	--zigzag-image-position: center center;
+	// --zigzag-image-position: center center;
 	--zigzag-elements-gap: 32px;
 	--zigzag-icon-size: 256px;
 	--zigzag-icon-color: #555963;
@@ -82,6 +82,18 @@
 		--ehp-button-primary-border-radius-inline-start: var(--zigzag-button-primary-border-radius-inline-start);
 	}
 
+	& .ehp-image {
+		--ehp-image-height: var(--zigzag-image-height);
+		--ehp-image-min-height: var(--zigzag-image-min-height);
+		--ehp-image-position: var(--zigzag-image-position);
+		--ehp-image-border-color: var(--zigzag-image-border-color);
+		--ehp-image-border-width: var(--zigzag-image-border-width);
+		--ehp-image-border-radius-block-end: var(--zigzag-image-border-radius-block-end);
+		--ehp-image-border-radius-block-start: var(--zigzag-image-border-radius-block-start);
+		--ehp-image-border-radius-inline-end: var(--zigzag-image-border-radius-inline-end);
+		--ehp-image-border-radius-inline-start: var(--zigzag-image-border-radius-inline-start);
+	}
+
 	&__button-container {
 		display: flex;
 	}
@@ -124,13 +136,13 @@
 		&.has-image {
 			width: var(--zigzag-image-width);
 
-			.elementor & img {
-				aspect-ratio: 16 / 9;
-				height: var(--zigzag-image-height);
-				object-fit: cover;
-				object-position: var(--zigzag-image-position);
-				width: 100%;
-			}
+			// .elementor & img {
+			// 	aspect-ratio: 16 / 9;
+			// 	height: var(--zigzag-image-height);
+			// 	object-fit: cover;
+			// 	object-position: var(--zigzag-image-position);
+			// 	width: 100%;
+			// }
 		}
 
 		&.has-icon {
@@ -262,8 +274,8 @@
 
 
 	&.has-image-stretch {
-		--zigzag-image-width: 50%;
-		--zigzag-icon-width: 50%;
+		// --zigzag-image-width: 50%;
+		// --zigzag-icon-width: 50%;
 		
 		& .ehp-zigzag__item-container {
 			padding-inline: 0;

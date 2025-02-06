@@ -96,7 +96,7 @@ class Widget_Hero_Render {
 
 	protected function render_image_container() {
 		$image = new Ehp_Image( $this->widget, [
-			'widget_name' => 'flex-hero',
+			'widget_name' => 'hero',
 		] );
 		$image->render();
 	}

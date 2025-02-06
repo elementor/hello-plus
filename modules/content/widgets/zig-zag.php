@@ -23,7 +23,10 @@ use HelloPlus\Modules\Content\Classes\{
 	Render\Widget_Zig_Zag_Render
 };
 use HelloPlus\Modules\Theme\Module as Theme_Module;
-use HelloPlus\Classes\Ehp_Button;
+use HelloPlus\Classes\{
+	Ehp_Button,
+	Ehp_Image,
+};
 
 class Zig_Zag extends Widget_Base {
 
@@ -48,7 +51,7 @@ class Zig_Zag extends Widget_Base {
 	}
 
 	public function get_style_depends(): array {
-		return [ 'helloplus-zigzag', 'helloplus-button' ];
+		return [ 'helloplus-zigzag', 'helloplus-button', 'helloplus-image' ];
 	}
 
 	public function get_script_depends(): array {
@@ -360,87 +363,75 @@ class Zig_Zag extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'image_stretch',
-			[
-				'label' => esc_html__( 'Stretch', 'hello-plus' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
-				'label_off' => esc_html__( 'No', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => 'no',
-			]
-		);
+		$defaults = [
+			'has_image_width_slider' => false,
+			'has_image_width_dropdown' => true,
+		];
 
-		$this->add_responsive_control(
-			'image_height',
-			[
-				'label' => esc_html__( 'Height', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
-				'range' => [
-					'px' => [
-						'max' => 1500,
-					],
-					'%' => [
-						'max' => 100,
-					],
-				],
-				'default' => [
-					'size' => 440,
-					'unit' => 'px',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-image-height: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
+		$image = new Ehp_Image( $this, [ 'widget_name' => 'zigzag' ], $defaults );
+		$image->add_style_controls();
 
-		$this->add_responsive_control(
-			'image_width',
-			[
-				'label' => esc_html__( 'Width', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'50%' => '50%',
-					'40%' => '40%',
-					'30%' => '30%',
-				],
-				'default' => '50%',
-				'selectors' => [
-					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-image-width: {{VALUE}};',
-				],
-				'condition' => [
-					'image_stretch!' => 'yes',
-				],
-			]
-		);
+		// $this->add_control(
+		// 	'image_stretch',
+		// 	[
+		// 		'label' => esc_html__( 'Stretch', 'hello-plus' ),
+		// 		'type' => Controls_Manager::SWITCHER,
+		// 		'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+		// 		'label_off' => esc_html__( 'No', 'hello-plus' ),
+		// 		'return_value' => 'yes',
+		// 		'default' => 'no',
+		// 	]
+		// );
 
-		$this->add_responsive_control(
-			'image_position',
-			[
-				'label' => esc_html__( 'Position', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'desktop_default' => 'center center',
-				'tablet_default' => 'center center',
-				'mobile_default' => 'center center',
-				'options' => [
-					'' => esc_html__( 'Default', 'hello-plus' ),
-					'center center' => esc_html__( 'Center Center', 'hello-plus' ),
-					'center left' => esc_html__( 'Center Left', 'hello-plus' ),
-					'center right' => esc_html__( 'Center Right', 'hello-plus' ),
-					'top center' => esc_html__( 'Top Center', 'hello-plus' ),
-					'top left' => esc_html__( 'Top Left', 'hello-plus' ),
-					'top right' => esc_html__( 'Top Right', 'hello-plus' ),
-					'bottom center' => esc_html__( 'Bottom Center', 'hello-plus' ),
-					'bottom left' => esc_html__( 'Bottom Left', 'hello-plus' ),
-					'bottom right' => esc_html__( 'Bottom Right', 'hello-plus' ),
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-image-position: {{VALUE}}',
-				],
-			]
-		);
+		// $this->add_responsive_control(
+		// 	'image_height',
+		// 	[
+		// 		'label' => esc_html__( 'Height', 'hello-plus' ),
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+		// 		'range' => [
+		// 			'px' => [
+		// 				'max' => 1500,
+		// 			],
+		// 			'%' => [
+		// 				'max' => 100,
+		// 			],
+		// 		],
+		// 		'default' => [
+		// 			'size' => 440,
+		// 			'unit' => 'px',
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .ehp-zigzag' => '--zigzag-image-height: {{SIZE}}{{UNIT}};',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_responsive_control(
+		// 	'image_position',
+		// 	[
+		// 		'label' => esc_html__( 'Position', 'hello-plus' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'desktop_default' => 'center center',
+		// 		'tablet_default' => 'center center',
+		// 		'mobile_default' => 'center center',
+		// 		'options' => [
+		// 			'' => esc_html__( 'Default', 'hello-plus' ),
+		// 			'center center' => esc_html__( 'Center Center', 'hello-plus' ),
+		// 			'center left' => esc_html__( 'Center Left', 'hello-plus' ),
+		// 			'center right' => esc_html__( 'Center Right', 'hello-plus' ),
+		// 			'top center' => esc_html__( 'Top Center', 'hello-plus' ),
+		// 			'top left' => esc_html__( 'Top Left', 'hello-plus' ),
+		// 			'top right' => esc_html__( 'Top Right', 'hello-plus' ),
+		// 			'bottom center' => esc_html__( 'Bottom Center', 'hello-plus' ),
+		// 			'bottom left' => esc_html__( 'Bottom Left', 'hello-plus' ),
+		// 			'bottom right' => esc_html__( 'Bottom Right', 'hello-plus' ),
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .ehp-zigzag' => '--zigzag-image-position: {{VALUE}}',
+		// 		],
+		// 	]
+		// );
 
 		$this->end_controls_section();
 	}

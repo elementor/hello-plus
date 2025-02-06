@@ -108,13 +108,13 @@
 		@include shapes();
 
 		&-md {
-			@media screen and (max-width: $screen-desktop-min) {
+			@media screen and (max-width: $screen-tablet-max) {
 				@include shapes();
 			}
 		}
 
 		&-sm {
-			@media screen and (max-width: $screen-tablet-min) {
+			@media screen and (max-width: $screen-mobile-max) {
 				@include shapes();
 			}
 		}
@@ -137,13 +137,13 @@
 		@include custom-shape-box();
 
 		&-md {
-			@media screen and (max-width: $screen-desktop-min) {
+			@media screen and (max-width: $screen-tablet-max) {
 				@include custom-shape-box();
 			}
 		}
 
 		&-sm {
-			@media screen and (max-width: $screen-tablet-min) {
+			@media screen and (max-width: $screen-mobile-max) {
 				@include custom-shape-box();
 			}
 		}
@@ -277,6 +277,17 @@
 			}
 		}
 
+		&-focus,
+		&-showcase {
+
+			.ehp-cta__buttons-wrapper {
+
+				@media screen and (max-width: $screen-mobile-max) {
+					flex-direction: column;
+				}
+			}
+		}
+
 		&-showcase {
 			--cta-content-alignment: start;
 
@@ -320,13 +331,13 @@
 					@include image-horizontal-position();
 
 					&-md {
-						@media screen and (max-width: $screen-desktop-min) {
+						@media screen and (max-width: $screen-tablet-max) {
 							@include image-horizontal-position();
 						}
 					}
 
 					&-sm {
-						@media screen and (max-width: $screen-tablet-min) {
+						@media screen and (max-width: $screen-mobile-max) {
 							@include image-horizontal-position();
 						}
 					}
@@ -426,13 +437,13 @@
 			@include cta-width();
 
 			&-md {
-				@media screen and (max-width: $screen-desktop-min) {
+				@media screen and (max-width: $screen-tablet-max) {
 					@include cta-width();
 				}
 			}
 
 			&-sm {
-				@media screen and (max-width: $screen-tablet-min) {
+				@media screen and (max-width: $screen-mobile-max) {
 					@include cta-width();
 				}
 			}
@@ -498,19 +509,19 @@
 		
 		// 	&.has-shape {
 		// 		@include custom-shape-image();
-		
-		// 		&-md {
-		// 			@media screen and (max-width: $screen-desktop-min) {
-		// 				@include custom-shape-image();
-		// 			}
-		// 		}
-	
-		// 		&-sm {
-		// 			@media screen and (max-width: $screen-tablet-min) {
-		// 				@include custom-shape-image();
-		// 			}
+
+		// 	&-md {
+		// 		@media screen and (max-width: $screen-tablet-max) {
+		// 			@include custom-shape-image();
 		// 		}
 		// 	}
+
+		// 	&-sm {
+		// 		@media screen and (max-width: $screen-mobile-max) {
+		// 			@include custom-shape-image();
+		// 		}
+		// 	}
+		// }
 
 		// 	&.has-border {
 		// 		border-color: var(--cta-image-border-color);

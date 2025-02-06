@@ -409,19 +409,6 @@
 		}
 	}
 
-	& .ehp-image {
-		--ehp-image-height: var(--flex-hero-image-height);
-		--ehp-image-min-height: var(--flex-hero-image-min-height);
-		--ehp-image-position: var(--flex-hero-image-position);
-		--ehp-image-width: var(--flex-hero-image-width);
-		--ehp-image-border-color: var(--flex-hero-image-border-color);
-		--ehp-image-border-width: var(--flex-hero-image-border-width);
-		--ehp-image-border-radius-block-end: var(--flex-hero-image-border-radius-block-end);
-		--ehp-image-border-radius-block-start: var(--flex-hero-image-border-radius-block-start);
-		--ehp-image-border-radius-inline-end: var(--flex-hero-image-border-radius-inline-end);
-		--ehp-image-border-radius-inline-start: var(--flex-hero-image-border-radius-inline-start);
-	}
-
 	&__overlay {
 		height: 100%;
 		left: 0;

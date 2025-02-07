@@ -42,9 +42,9 @@ class Ehp_Image {
 		$image_classnames = [
 			self::CLASSNAME_IMAGE . '__img',
 			self::EHP_PREFIX . $widget_name . '__img',
-		];;
+		];
 
-		if ( ! empty ( $settings['show_image_border'] ) && 'yes' === $settings['show_image_border'] ) {
+		if ( ! empty( $settings['show_image_border'] ) && 'yes' === $settings['show_image_border'] ) {
 			$image_classnames[] = 'has-border';
 		}
 

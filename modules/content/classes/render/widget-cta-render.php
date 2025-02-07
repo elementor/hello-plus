@@ -200,5 +200,4 @@ class Widget_CTA_Render {
 		] );
 		$button->render();
 	}
-
 }

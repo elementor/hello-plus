@@ -195,8 +195,8 @@ abstract class Ehp_Document_Base extends Library_Document {
 	public function allow_only_one_active_document( $return_data, $document ) {
 		$title = static::get_title();
 		/* translators: %s: Template name (e.g. Hello+ Header). */
-		$message = sprintf( __( 'Looks like you already have an active %s, Please navigate to Elementor\'s "Saved Templates" area and choose one. Don\'t worry, your changes are not lost, but saved as "draft".', 'hello-plus' ), $title );
-		throw new \Exception( $message );
+		$message = sprintf( __( 'Looks like you already have an active %s. Please navigate to Elementor\'s "Saved Templates" area and choose one. Don\'t worry, your changes are not lost, just saved as "draft".', 'hello-plus' ), $title );
+		throw new \Exception( esc_html( $message ) );
 	}
 
 	protected function get_remote_library_config() {

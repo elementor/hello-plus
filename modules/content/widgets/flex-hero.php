@@ -24,6 +24,7 @@ use HelloPlus\Modules\Theme\Module as Theme_Module;
 use HelloPlus\Classes\{
 	Ehp_Button,
 	Ehp_Image,
+	Ehp_Shapes,
 };
 
 class Flex_Hero extends Widget_Base {
@@ -51,7 +52,7 @@ class Flex_Hero extends Widget_Base {
 	}
 
 	public function get_style_depends(): array {
-		return [ 'helloplus-flex-hero', 'helloplus-button', 'helloplus-image' ];
+		return [ 'helloplus-flex-hero', 'helloplus-button', 'helloplus-image', 'helloplus-shapes' ];
 	}
 
 	protected function render(): void {
@@ -781,35 +782,41 @@ class Flex_Hero extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'box_shape',
-			[
-				'label' => esc_html__( 'Shape', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'sharp',
-				'options' => [
-					'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
-					'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
-					'custom' => esc_html__( 'Custom', 'hello-plus' ),
-				],
-				'frontend_available' => true,
-			]
-		);
+		$shapes = new Ehp_Shapes( $this, [
+			'widget_name' => 'flex-hero',
+			'container_type' => 'box',
+		] );
+		$shapes->add_style_controls();
 
-		$this->add_responsive_control(
-			'box_shape_custom',
-			[
-				'label' => esc_html__( 'Border Radius', 'hello-plus' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em', 'rem' ],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-box-border-radius-custom-block-end: {{BOTTOM}}{{UNIT}}; --flex-hero-box-border-radius-custom-block-start: {{TOP}}{{UNIT}}; --flex-hero-box-border-radius-custom-inline-end: {{RIGHT}}{{UNIT}}; --flex-hero-box-border-radius-custom-inline-start: {{LEFT}}{{UNIT}};',
-				],
-				'condition' => [
-					'box_shape' => 'custom',
-				],
-			]
-		);
+		// $this->add_responsive_control(
+		// 	'box_shape',
+		// 	[
+		// 		'label' => esc_html__( 'Shape', 'hello-plus' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'default' => 'sharp',
+		// 		'options' => [
+		// 			'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
+		// 			'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
+		// 			'custom' => esc_html__( 'Custom', 'hello-plus' ),
+		// 		],
+		// 		'frontend_available' => true,
+		// 	]
+		// );
+
+		// $this->add_responsive_control(
+		// 	'box_shape_custom',
+		// 	[
+		// 		'label' => esc_html__( 'Border Radius', 'hello-plus' ),
+		// 		'type' => Controls_Manager::DIMENSIONS,
+		// 		'size_units' => [ 'px', '%', 'em', 'rem' ],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-box-border-radius-custom-block-end: {{BOTTOM}}{{UNIT}}; --flex-hero-box-border-radius-custom-block-start: {{TOP}}{{UNIT}}; --flex-hero-box-border-radius-custom-inline-end: {{RIGHT}}{{UNIT}}; --flex-hero-box-border-radius-custom-inline-start: {{LEFT}}{{UNIT}};',
+		// 		],
+		// 		'condition' => [
+		// 			'box_shape' => 'custom',
+		// 		],
+		// 	]
+		// );
 
 		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),

@@ -19,6 +19,10 @@ use Elementor\Core\Kits\Documents\Tabs\{
 	Global_Typography
 };
 
+use HelloPlus\Classes\{
+	Ehp_Shapes,
+};
+
 class Ehp_Button {
 	private $context = [];
 	private $defaults = [];
@@ -45,9 +49,9 @@ class Ehp_Button {
 		$button_icon = $this->get_control_value( 'button_icon', '', 'cta_button_icon' );
 		$button_hover_animation = $this->get_control_value( 'button_hover_animation', '' );
 		$button_has_border = $this->get_control_value( 'show_button_border', '' );
-		$button_corner_shape = $this->get_control_value( 'button_shape', '' );
-		$button_corner_shape_mobile = $this->get_control_value( 'button_shape_mobile', '' );
-		$button_corner_shape_tablet = $this->get_control_value( 'button_shape_tablet', '' );
+		// $button_corner_shape = $this->get_control_value( 'button_shape', '' );
+		// $button_corner_shape_mobile = $this->get_control_value( 'button_shape_mobile', '' );
+		// $button_corner_shape_tablet = $this->get_control_value( 'button_shape_tablet', '' );
 		$button_type = $this->get_control_value( 'button_type', '' );
 
 		$button_classnames = [
@@ -69,17 +73,24 @@ class Ehp_Button {
 			$button_classnames[] = 'has-border';
 		}
 
-		if ( ! empty( $button_corner_shape ) ) {
-			$button_classnames[] = 'has-shape-' . $button_corner_shape;
+		// if ( ! empty( $button_corner_shape ) ) {
+		// 	$button_classnames[] = 'has-shape-' . $button_corner_shape;
 
-			if ( ! empty( $button_corner_shape_mobile ) ) {
-				$button_classnames[] = 'has-shape-sm-' . $button_corner_shape_mobile;
-			}
+		// 	if ( ! empty( $button_corner_shape_mobile ) ) {
+		// 		$button_classnames[] = 'has-shape-sm-' . $button_corner_shape_mobile;
+		// 	}
 
-			if ( ! empty( $button_corner_shape_tablet ) ) {
-				$button_classnames[] = 'has-shape-md-' . $button_corner_shape_tablet;
-			}
-		}
+		// 	if ( ! empty( $button_corner_shape_tablet ) ) {
+		// 		$button_classnames[] = 'has-shape-md-' . $button_corner_shape_tablet;
+		// 	}
+		// }
+
+		$shapes = new Ehp_Shapes( $this->widget, [
+			'container_type' => 'button',
+			'widget_name' => $widget_name,
+			'render_attribute' => $type . '-button',
+		] );
+		$shapes->render_shape_classnames();
 
 		$this->widget->add_render_attribute( $type . '-button', [
 			'class' => $button_classnames,
@@ -585,6 +596,13 @@ class Ehp_Button {
 				], $add_type_condition),
 			]
 		);
+
+		$shapes = new Ehp_Shapes( $this, [
+			'widget_name' => $this->context['widget_name'],
+			'container_type' => 'button',
+			'prefix' => $type,
+		] );
+		$shapes->add_style_controls();
 
 		$this->widget->add_control(
 			$type . '_button_shape',

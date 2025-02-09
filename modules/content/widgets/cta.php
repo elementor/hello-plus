@@ -297,7 +297,7 @@ class CTA extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'cta_vertical_position',
 			[
 				'label' => esc_html__( 'Vertical Position', 'hello-plus' ),
@@ -340,10 +340,6 @@ class CTA extends Widget_Base {
 					'%' => [
 						'max' => 100,
 					],
-				],
-				'default' => [
-					'size' => 1200,
-					'unit' => 'px',
 				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-cta' => '--cta-content-width: {{SIZE}}{{UNIT}};',
@@ -869,14 +865,6 @@ class CTA extends Widget_Base {
 					],
 				],
 				'default' => [
-					'size' => 40,
-					'unit' => 'px',
-				],
-				'tablet_default' => [
-					'size' => 40,
-					'unit' => 'px',
-				],
-				'mobile_default' => [
 					'size' => 40,
 					'unit' => 'px',
 				],

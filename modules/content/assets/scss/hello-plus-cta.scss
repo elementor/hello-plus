@@ -6,7 +6,6 @@
 
 	--cta-elements-spacing: 40px;
 	--cta-buttons-space-between: 16px;
-	--cta-content-width: 1304px;
 	--cta-content-alignment: center;
 	--cta-buttons-vertical-position: start;
 	--cta-content-position-vertical: start;
@@ -117,13 +116,13 @@
 		@include shapes();
 
 		&-md {
-			@media screen and (max-width: $screen-desktop-min) {
+			@media screen and (max-width: $screen-tablet-max) {
 				@include shapes();
 			}
 		}
 
 		&-sm {
-			@media screen and (max-width: $screen-tablet-min) {
+			@media screen and (max-width: $screen-mobile-max) {
 				@include shapes();
 			}
 		}
@@ -146,13 +145,13 @@
 		@include custom-shape-box();
 
 		&-md {
-			@media screen and (max-width: $screen-desktop-min) {
+			@media screen and (max-width: $screen-tablet-max) {
 				@include custom-shape-box();
 			}
 		}
 
 		&-sm {
-			@media screen and (max-width: $screen-tablet-min) {
+			@media screen and (max-width: $screen-mobile-max) {
 				@include custom-shape-box();
 			}
 		}
@@ -263,6 +262,7 @@
 			@media screen and (min-width: $screen-desktop-min) {
 				.ehp-cta__elements-container {
 					flex-direction: row;
+					justify-content: space-between;
 				}
 
 				.ehp-cta__text-container {
@@ -282,6 +282,17 @@
 			.ehp-cta__elements-container {
 				display: flex;
 				flex-direction: column;
+			}
+		}
+
+		&-focus,
+		&-showcase {
+
+			.ehp-cta__buttons-wrapper {
+
+				@media screen and (max-width: $screen-mobile-max) {
+					flex-direction: column;
+				}
 			}
 		}
 
@@ -328,13 +339,13 @@
 					@include image-horizontal-position();
 
 					&-md {
-						@media screen and (max-width: $screen-desktop-min) {
+						@media screen and (max-width: $screen-tablet-max) {
 							@include image-horizontal-position();
 						}
 					}
 
 					&-sm {
-						@media screen and (max-width: $screen-tablet-min) {
+						@media screen and (max-width: $screen-mobile-max) {
 							@include image-horizontal-position();
 						}
 					}
@@ -421,13 +432,13 @@
 			@include cta-width();
 
 			&-md {
-				@media screen and (max-width: $screen-desktop-min) {
+				@media screen and (max-width: $screen-tablet-max) {
 					@include cta-width();
 				}
 			}
 
 			&-sm {
-				@media screen and (max-width: $screen-tablet-min) {
+				@media screen and (max-width: $screen-mobile-max) {
 					@include cta-width();
 				}
 			}
@@ -495,13 +506,13 @@
 				@include custom-shape-image();
 		
 				&-md {
-					@media screen and (max-width: $screen-desktop-min) {
+					@media screen and (max-width: $screen-tablet-max) {
 						@include custom-shape-image();
 					}
 				}
 	
 				&-sm {
-					@media screen and (max-width: $screen-tablet-min) {
+					@media screen and (max-width: $screen-mobile-max) {
 						@include custom-shape-image();
 					}
 				}

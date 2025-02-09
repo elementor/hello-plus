@@ -4,7 +4,8 @@
  * Description: Puts the PLUS in Elementor's Hello+ themes
  * Plugin URI: https://elementor.com
  * Author: Elementor.com
- * Version: 1.1.3
+ * Author URI: https://elementor.com/?utm_source=wp-plugins&utm_campaign=author-uri&utm_medium=wp-dash
+ * Version: 1.2.0
  * License: GPL-3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
  *
@@ -29,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'HELLOPLUS_VERSION', '1.1.3' );
+define( 'HELLOPLUS_VERSION', '1.2.0' );
 define( 'HELLO_PLUS_VERSION', HELLOPLUS_VERSION );
 
 define( 'HELLOPLUS__FILE__', __FILE__ );

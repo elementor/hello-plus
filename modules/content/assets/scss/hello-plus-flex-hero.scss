@@ -171,13 +171,13 @@
 		@include shapes();
 
 		&-md {
-			@media screen and (max-width: $screen-desktop-min) {
+			@media screen and (max-width: $screen-tablet-max) {
 				@include shapes();
 			}
 		}
 
 		&-sm {
-			@media screen and (max-width: $screen-tablet-min) {
+			@media screen and (max-width: $screen-mobile-max) {
 				@include shapes();
 			}
 		}
@@ -233,13 +233,13 @@
 		@include custom-shape-box();
 
 		&-md {
-			@media screen and (max-width: $screen-desktop-min) {
+			@media screen and (max-width: $screen-tablet-max) {
 				@include custom-shape-box();
 			}
 		}
 
 		&-sm {
-			@media screen and (max-width: $screen-tablet-min) {
+			@media screen and (max-width: $screen-mobile-max) {
 				@include custom-shape-box();
 			}
 		}
@@ -340,13 +340,13 @@
 		@include responsive-image-position();
 
 		&-md {
-			@media screen and (max-width: $screen-desktop-min) {
+			@media screen and (max-width: $screen-tablet-max) {
 				@include responsive-image-position();
 			}
 		}
 
 		&-sm {
-			@media screen and (max-width: $screen-tablet-min) {
+			@media screen and (max-width: $screen-mobile-max) {
 				@include responsive-image-position();
 			}
 		}
@@ -438,13 +438,13 @@
 				@include custom-shape-image();
 		
 				&-md {
-					@media screen and (max-width: $screen-desktop-min) {
+					@media screen and (max-width: $screen-tablet-max) {
 						@include custom-shape-image();
 					}
 				}
 	
 				&-sm {
-					@media screen and (max-width: $screen-tablet-min) {
+					@media screen and (max-width: $screen-mobile-max) {
 						@include custom-shape-image();
 					}
 				}

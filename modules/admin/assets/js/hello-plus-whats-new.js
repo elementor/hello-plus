@@ -51,8 +51,6 @@ const App = () => {
         };
     }, [] );
 
-    console.log( whatsNew );
-
     return (
 	<div>
 		<Modal

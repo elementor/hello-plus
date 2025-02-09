@@ -85,6 +85,7 @@ $remote-templates-items-space: 30px;
 
 	.elementor-template-library-template-body {
 		position: relative;
+		min-height: 65px;
 	}
 
 	@media (max-width: $editor-screen-lg-min) {

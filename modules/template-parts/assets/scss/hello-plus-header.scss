@@ -185,13 +185,13 @@
 		@include shapes();
 
 		&-md {
-			@media screen and (max-width: $screen-desktop-min) {
+			@media screen and (max-width: $screen-tablet-max) {
 				@include shapes();
 			}
 		}
 
 		&-sm {
-			@media screen and (max-width: $screen-tablet-min) {
+			@media screen and (max-width: $screen-mobile-max) {
 				@include shapes();
 			}
 		}
@@ -210,13 +210,13 @@
 		@include custom-shape-float();
 
 		&-md {
-			@media screen and (max-width: $screen-desktop-min) {
+			@media screen and (max-width: $screen-tablet-max) {
 				@include custom-shape-float();
 			}
 		}
 
 		&-sm {
-			@media screen and (max-width: $screen-tablet-min) {
+			@media screen and (max-width: $screen-mobile-max) {
 				@include custom-shape-float();
 			}
 		}

@@ -17,9 +17,9 @@ use Elementor\Modules\PageTemplates\Module as Page_Templates_Module;
 use WP_Query;
 
 /**
- * class Document_Base
+ * class Ehp_Document_Base
  **/
-abstract class Document_Base extends Library_Document {
+abstract class Ehp_Document_Base extends Library_Document {
 
 	const LOCATION = '';
 
@@ -130,7 +130,7 @@ abstract class Document_Base extends Library_Document {
 			$post_id = filter_input( INPUT_GET, 'elementor-preview', FILTER_VALIDATE_INT );
 			$document = Theme_Utils::elementor()->documents->get( $post_id );
 
-			if ( $document instanceof Document_Base ) {
+			if ( $document instanceof Ehp_Document_Base ) {
 				return;
 			}
 		}
@@ -163,7 +163,40 @@ abstract class Document_Base extends Library_Document {
 			$data['settings']['template'] = Page_Templates_Module::TEMPLATE_CANVAS;
 		}
 
+		$active_documents = static::get_active_document();
+		if ( ! empty( $active_documents ) ) {
+			$data = $this->maybe_save_as_draft( $active_documents, $data );
+		}
+
 		return parent::save( $data );
+	}
+
+	protected function maybe_save_as_draft( $active_documents, $data ): array {
+		if ( ! empty( $data['settings']['post_status'] ) && 'publish' === $data['settings']['post_status'] ) {
+
+			$document_id = $this->get_main_id();
+
+			if ( ! in_array( $document_id, $active_documents, true ) ) {
+				$data['settings']['post_status'] = 'draft';
+				add_filter( 'elementor/documents/ajax_save/return_data', [ $this, 'allow_only_one_active_document' ], 10, 2 );
+			}
+		}
+
+		return $data;
+	}
+
+	/**
+	 * @param $return_data
+	 * @param $document
+	 *
+	 * @return mixed
+	 * @throws \Exception
+	 */
+	public function allow_only_one_active_document( $return_data, $document ) {
+		$title = static::get_title();
+		/* translators: %s: Template name (e.g. Hello+ Header). */
+		$message = sprintf( __( 'Looks like you already have an active %s, Please navigate to Elementor\'s "Saved Templates" area and choose one. Don\'t worry, your changes are not lost, but saved as "draft".', 'hello-plus' ), $title );
+		throw new \Exception( $message );
 	}
 
 	protected function get_remote_library_config() {

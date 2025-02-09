@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * class Footer
  **/
-class Ehp_Footer extends Document_Base {
+class Ehp_Footer extends Ehp_Document_Base {
 	const LOCATION = 'footer';
 
 	public static function get_template_hook(): string {

@@ -37,7 +37,7 @@ class Document {
 		$namespace = $this->get_documents_namespace();
 
 		foreach ( $documents as $document ) {
-			/** @var \HelloPlus\Modules\TemplateParts\Documents\Document_Base $doc_class */
+			/** @var \HelloPlus\Modules\TemplateParts\Documents\Ehp_Document_Base $doc_class */
 			$doc_class = $namespace . $document;
 
 			// add the doc type to Elementor documents:

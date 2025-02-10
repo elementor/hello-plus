@@ -12,6 +12,7 @@ use Elementor\{
 	Utils
 };
 
+use HelloPlus\Modules\TemplateParts\Classes\Traits\Shared_Header_Traits;
 use HelloPlus\Modules\TemplateParts\Widgets\Ehp_Header;
 use HelloPlus\Classes\Ehp_Button;
 
@@ -19,6 +20,8 @@ use HelloPlus\Classes\Ehp_Button;
  * class Widget_Header_Render
  */
 class Widget_Header_Render {
+    use Shared_Header_Traits;
+
 	const LAYOUT_CLASSNAME = 'ehp-header';
 	const SITE_LINK_CLASSNAME = 'ehp-header__site-link';
 	const CTAS_CONTAINER_CLASSNAME = 'ehp-header__ctas-container';
@@ -148,6 +151,14 @@ class Widget_Header_Render {
 		if ( $site_link ) {
 			$this->widget->add_link_attributes( 'site-link', $site_link );
 		}
+
+		$custom_logo_id = get_theme_mod( 'custom_logo' );
+
+		if ( $custom_logo_id ) {
+			$this->settings['site_logo_image']['url'] = $this->get_site_logo_url();
+			$this->settings['site_logo_image']['id'] = $custom_logo_id;
+		}
+
 		?>
 		<a <?php $this->widget->print_render_attribute_string( 'site-link' ); ?>>
 			<?php if ( 'logo' === $site_logo_brand_select ) {

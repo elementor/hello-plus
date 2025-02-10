@@ -12,7 +12,6 @@ use Elementor\{
 	Utils
 };
 
-use HelloPlus\Modules\TemplateParts\Classes\Traits\Shared_Header_Traits;
 use HelloPlus\Modules\TemplateParts\Widgets\Ehp_Header;
 use HelloPlus\Classes\Ehp_Button;
 

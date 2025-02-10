@@ -323,7 +323,6 @@ class Zig_Zag extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-content-position: {{VALUE}};',
 				],
-				'separator' => 'before',
 			]
 		);
 
@@ -344,7 +343,6 @@ class Zig_Zag extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-content-width: {{SIZE}}{{UNIT}};',
 				],
-				'separator' => 'before',
 			]
 		);
 
@@ -417,26 +415,6 @@ class Zig_Zag extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'icon_zigzag_size',
-			[
-				'label' => esc_html__( 'Icon Size', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
-				'range' => [
-					'px' => [
-						'max' => 300,
-					],
-					'%' => [
-						'max' => 100,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-icon-size: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
 		$this->add_control(
 			'has_alternate_icon_color',
 			[
@@ -463,6 +441,26 @@ class Zig_Zag extends Widget_Base {
 				],
 				'condition' => [
 					'has_alternate_icon_color' => 'yes',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'icon_zigzag_size',
+			[
+				'label' => esc_html__( 'Icon Size', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 300,
+					],
+					'%' => [
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-icon-size: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -517,7 +515,7 @@ class Zig_Zag extends Widget_Base {
 			[
 				'label' => esc_html__( 'Description', 'hello-plus' ),
 				'type' => Controls_Manager::HEADING,
-				'separator' => 'default',
+				'separator' => 'before',
 			]
 		);
 

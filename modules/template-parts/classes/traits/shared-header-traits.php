@@ -44,4 +44,15 @@ trait Shared_Header_Traits {
 	public function get_and_advance_nav_menu_index(): int {
 		return $this->nav_menu_index++;
 	}
+
+	public function add_site_logo_if_present( array $site_logo_image ) {
+		$custom_logo_id = get_theme_mod( 'custom_logo' );
+
+		if ( $custom_logo_id ) {
+			$site_logo_image['url'] = $this->get_site_logo_url();
+			$site_logo_image['id'] = $custom_logo_id;
+		}
+
+		return $site_logo_image;
+	}
 }

@@ -106,11 +106,8 @@ class Widget_Footer_Render {
 			$this->widget->add_link_attributes( 'site-link', $site_link );
 		}
 
-		$custom_logo_id = get_theme_mod( 'custom_logo' );
-
-		if ( $custom_logo_id ) {
-			$this->settings['site_logo_image']['url'] = $this->widget->get_site_logo_url();
-			$this->settings['site_logo_image']['id'] = $custom_logo_id;
+		if ( $site_logo_image ) {
+			$this->settings['site_logo_image'] = $this->widget->add_site_logo_if_present( $this->settings['site_logo_image'] );
 		}
 
 		?>
@@ -118,7 +115,7 @@ class Widget_Footer_Render {
 			<?php if ( $site_logo_image ) { ?>
 				<?php Group_Control_Image_Size::print_attachment_image_html( $this->settings, 'site_logo_image' ); ?>
 			<?php } else {
-				$site_title_output = sprintf( '<%1$s %2$s %3$s>%4$s</%1$s>', Utils::validate_html_tag( $site_title_tag ), $this->widget->print_render_attribute_string( 'heading' ), 'class="ehp-footer__site-title"', esc_html( $site_title_text ) );
+				$site_title_output = sprintf( '<%1$s %2$s %3$s>%4$s</%1$s>', Utils::validate_html_tag( $site_title_tag ), $this->widget->get_render_attribute_string( 'heading' ), 'class="ehp-footer__site-title"', esc_html( $site_title_text ) );
 				// Escaped above
 				Utils::print_unescaped_internal_string( $site_title_output );
 			} ?>

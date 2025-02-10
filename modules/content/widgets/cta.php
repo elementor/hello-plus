@@ -480,6 +480,7 @@ class CTA extends Widget_Base {
 			[
 				'label' => esc_html__( 'Description', 'hello-plus' ),
 				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
 			]
 		);
 

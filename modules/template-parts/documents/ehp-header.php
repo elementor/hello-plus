@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * class Header
  **/
-class Ehp_Header extends Document_Base {
+class Ehp_Header extends Ehp_Document_Base {
 	const LOCATION = 'header';
 
 	public static function get_template_hook(): string {

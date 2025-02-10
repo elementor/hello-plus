@@ -330,7 +330,7 @@ class Ehp_Button {
 					'label' => $label,
 					'type' => Controls_Manager::HEADING,
 					'condition' => $add_type_condition,
-					'separator' => 'primary' === $type ? 'before' : '',
+					'separator' => 'primary' === $type ? '' : 'before',
 				]
 			);
 		}

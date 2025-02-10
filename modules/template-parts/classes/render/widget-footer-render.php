@@ -105,6 +105,14 @@ class Widget_Footer_Render {
 		if ( $site_link ) {
 			$this->widget->add_link_attributes( 'site-link', $site_link );
 		}
+
+		$custom_logo_id = get_theme_mod( 'custom_logo' );
+
+		if ( $custom_logo_id ) {
+			$this->settings['site_logo_image']['url'] = $this->widget->get_site_logo_url();
+			$this->settings['site_logo_image']['id'] = $custom_logo_id;
+		}
+
 		?>
 		<a <?php $this->widget->print_render_attribute_string( 'site-link' ); ?>>
 			<?php if ( $site_logo_image ) { ?>

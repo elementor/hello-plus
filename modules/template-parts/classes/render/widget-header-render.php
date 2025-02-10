@@ -20,7 +20,6 @@ use HelloPlus\Classes\Ehp_Button;
  * class Widget_Header_Render
  */
 class Widget_Header_Render {
-	use Shared_Header_Traits;
 
 	const LAYOUT_CLASSNAME = 'ehp-header';
 	const SITE_LINK_CLASSNAME = 'ehp-header__site-link';
@@ -155,7 +154,7 @@ class Widget_Header_Render {
 		$custom_logo_id = get_theme_mod( 'custom_logo' );
 
 		if ( $custom_logo_id ) {
-			$this->settings['site_logo_image']['url'] = $this->get_site_logo_url();
+			$this->settings['site_logo_image']['url'] = $this->widget->get_site_logo_url();
 			$this->settings['site_logo_image']['id'] = $custom_logo_id;
 		}
 

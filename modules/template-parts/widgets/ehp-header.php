@@ -1206,7 +1206,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 						'icon' => 'eicon-align-start-h',
 					],
 					'center' => [
-						'title' => esc_html__( 'End', 'hello-plus' ),
+						'title' => esc_html__( 'Center', 'hello-plus' ),
 						'icon' => 'eicon-align-center-h',
 					],
 				],

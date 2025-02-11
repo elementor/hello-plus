@@ -1,22 +1,15 @@
 <?php
-
 namespace HelloPlus\Modules\Content\Classes\Render;
-
-use Elementor\Group_Control_Background;
-use Elementor\Group_Control_Box_Shadow;
-use Elementor\Group_Control_Image_Size;
-use Elementor\Group_Control_Typography;
-use Elementor\Controls_Manager;
-use Elementor\Icons_Manager;
-use Elementor\Repeater;
-use Elementor\Widget_Base;
-use Elementor\Utils;
 
 use HelloPlus\Modules\Content\Widgets\CTA;
 use HelloPlus\Classes\{
 	Ehp_Button,
 	Ehp_Image,
 };
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Widget_CTA_Render {
 	protected CTA $widget;

@@ -366,6 +366,8 @@ class CTA extends Widget_Base {
 				],
 				'frontend_available' => true,
 				'default' => is_rtl() ? 'start' : 'end',
+				'tablet_default' => is_rtl() ? 'start' : 'end',
+				'mobile_default' => is_rtl() ? 'start' : 'end',
 				'condition' => [
 					'layout_preset' => 'showcase',
 				],

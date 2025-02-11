@@ -14,9 +14,9 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     bgcolor: 'background.paper',
-    border: '2px solid #000',
+    border: '1px solid #000',
     boxShadow: 24,
-    p: 4,
+    p: 2,
     maxHeight: '80vh',
     overflowY: 'auto',
 };
@@ -40,6 +40,7 @@ const App = () => {
         } );
 
         const button = document.getElementById( 'hello-plus-whats-new-link' );
+
         if ( button ) {
             button.addEventListener( 'click', handleOpen );
         }
@@ -54,15 +55,14 @@ const App = () => {
     return (
 	<div>
 		<Modal
-
 			open={ open }
 			onClose={ handleClose }
 			aria-labelledby="modal-modal-title"
 			aria-describedby="modal-modal-description"
             >
 			<Box sx={ style }>
-				<Typography variant={ 'h6' }>{ __( 'Changelog', 'hello-plus' ) }</Typography>
-				<Stack direction={ 'column' } gap={ 2 } sx={ { mt: 2 } }>
+				<Typography variant={ 'h4' }>{ __( 'Changelog', 'hello-plus' ) }</Typography>
+				<Stack direction={ 'column' } gap={ 1 } sx={ { mt: 2 } }>
 					{ whatsNew.map( ( item ) => <Update key={ item.id } { ...item } /> ) }
 				</Stack>
 			</Box>

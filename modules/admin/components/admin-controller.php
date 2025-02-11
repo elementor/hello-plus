@@ -12,7 +12,7 @@ class Admin_Controller {
 
 		if ( HELLOPLUS_PLUGIN_BASE === $plugin_file ) {
 			$row_meta = [
-				'whatsnew' => '<a href="https://go.elementor.com/docs-admin-plugins/" id="hello-plus-whats-new-link" aria-label="' . esc_attr( esc_html__( 'What\'s new', 'hello-plus' ) ) . '" target="_blank">' . esc_html__( 'What\'s new', 'hello-plus' ) . '</a><div id="hello-plus-whats-new"></div>',
+				'changelog' => '<a href="#" id="hello-plus-whats-new-link" aria-label="' . esc_attr( esc_html__( 'Changelog', 'hello-plus' ) ) . '" >' . esc_html__( 'Changelog', 'hello-plus' ) . '</a><div id="hello-plus-whats-new"></div>',
 			];
 
 			$plugin_meta = array_merge( $plugin_meta, $row_meta );

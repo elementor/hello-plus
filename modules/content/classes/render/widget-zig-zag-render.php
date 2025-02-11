@@ -184,13 +184,13 @@ class Widget_Zig_Zag_Render {
 				<p <?php $this->widget->print_render_attribute_string( 'description-' . $key ); ?>><?php echo esc_html( $description_text ); ?></p>
 			<?php } ?>
 			<?php if ( ! empty( $item[ $graphic_element . '_button_text' ] ) ) {
-				$this->render_cta_button( $item );
+				$this->render_cta_button( $item, $key );
 			} ?>
 		</div>
 		<?php
 	}
 
-	public function render_cta_button( $item ) {
+	public function render_cta_button( $item, $key ) {
 		$graphic_element = $this->settings['graphic_element'];
 
 		$defaults = [
@@ -208,6 +208,7 @@ class Widget_Zig_Zag_Render {
 		$button = new Ehp_Button( $this->widget, [
 			'type' => 'primary',
 			'widget_name' => 'zigzag',
+			'key' => $key,
 		], $defaults );
 		?>
 		<div class="ehp-zigzag__button-container">

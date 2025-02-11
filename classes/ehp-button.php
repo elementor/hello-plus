@@ -42,6 +42,9 @@ class Ehp_Button {
 	public function render() {
 		$type = $this->context['type'] ?? '';
 		$widget_name = $this->context['widget_name'];
+		$key = $this->context['key'] ?? '';
+		$key_attr = $key ? '-' . $key : '';
+
 		$this->widget_settings = $this->widget->get_settings_for_display();
 
 		$button_text = $this->get_control_value( 'button_text', '', 'cta_button_text' );
@@ -89,10 +92,12 @@ class Ehp_Button {
 			'container_type' => 'button',
 			'widget_name' => $widget_name,
 			'render_attribute' => $type . '-button',
+			'prefix' => $type,
+			'key' => $key,
 		] );
 		$shapes->render_shape_classnames();
 
-		$this->widget->add_render_attribute( $type . '-button', [
+		$this->widget->add_render_attribute( $type . '-button' . $key_attr, [
 			'class' => $button_classnames,
 		] );
 
@@ -597,48 +602,51 @@ class Ehp_Button {
 			]
 		);
 
-		$shapes = new Ehp_Shapes( $this, [
+		$shapes = new Ehp_Shapes( $this->widget, [
 			'widget_name' => $this->context['widget_name'],
 			'container_type' => 'button',
 			'prefix' => $type,
+			'condition' => array_merge([
+				$type . '_button_type' => 'button',
+			], $add_type_condition),
 		] );
 		$shapes->add_style_controls();
 
-		$this->widget->add_control(
-			$type . '_button_shape',
-			[
-				'label' => esc_html__( 'Shape', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'default',
-				'options' => [
-					'default' => esc_html__( 'Default', 'hello-plus' ),
-					'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
-					'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
-					'round' => esc_html__( 'Round', 'hello-plus' ),
-					'oval' => esc_html__( 'Oval', 'hello-plus' ),
-					'custom' => esc_html__( 'Custom', 'hello-plus' ),
-				],
-				'condition' => array_merge([
-					$type . '_button_type' => 'button',
-				], $add_type_condition),
-			]
-		);
+		// $this->widget->add_control(
+		// 	$type . '_button_shape',
+		// 	[
+		// 		'label' => esc_html__( 'Shape', 'hello-plus' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'default' => 'default',
+		// 		'options' => [
+		// 			'default' => esc_html__( 'Default', 'hello-plus' ),
+		// 			'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
+		// 			'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
+		// 			'round' => esc_html__( 'Round', 'hello-plus' ),
+		// 			'oval' => esc_html__( 'Oval', 'hello-plus' ),
+		// 			'custom' => esc_html__( 'Custom', 'hello-plus' ),
+		// 		],
+				// 'condition' => array_merge([
+				// 	$type . '_button_type' => 'button',
+				// ], $add_type_condition),
+		// 	]
+		// );
 
-		$this->widget->add_responsive_control(
-			$type . '_button_shape_custom',
-			[
-				'label' => esc_html__( 'Border Radius', 'hello-plus' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em', 'rem' ],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-' . $widget_name => '--' . $widget_name . '-button-' . $type . '-border-radius-block-end: {{BOTTOM}}{{UNIT}}; --' . $widget_name . '-button-' . $type . '-border-radius-block-start: {{TOP}}{{UNIT}}; --' . $widget_name . '-button-' . $type . '-border-radius-inline-end: {{RIGHT}}{{UNIT}}; --' . $widget_name . '-button-' . $type . '-border-radius-inline-start: {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before',
-				'condition' => array_merge([
-					$type . '_button_shape' => 'custom',
-				], $add_type_condition),
-			]
-		);
+		// $this->widget->add_responsive_control(
+		// 	$type . '_button_shape_custom',
+		// 	[
+		// 		'label' => esc_html__( 'Border Radius', 'hello-plus' ),
+		// 		'type' => Controls_Manager::DIMENSIONS,
+		// 		'size_units' => [ 'px', '%', 'em', 'rem' ],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .ehp-' . $widget_name => '--' . $widget_name . '-button-' . $type . '-border-radius-block-end: {{BOTTOM}}{{UNIT}}; --' . $widget_name . '-button-' . $type . '-border-radius-block-start: {{TOP}}{{UNIT}}; --' . $widget_name . '-button-' . $type . '-border-radius-inline-end: {{RIGHT}}{{UNIT}}; --' . $widget_name . '-button-' . $type . '-border-radius-inline-start: {{LEFT}}{{UNIT}};',
+		// 		],
+		// 		'separator' => 'before',
+		// 		'condition' => array_merge([
+		// 			$type . '_button_shape' => 'custom',
+		// 		], $add_type_condition),
+		// 	]
+		// );
 
 		$this->widget->add_group_control(
 			Group_Control_Box_Shadow::get_type(),

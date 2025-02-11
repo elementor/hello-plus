@@ -29,10 +29,10 @@
 	--flex-hero-button-primary-padding-block-start: 8px;
 	--flex-hero-button-primary-padding-inline-end: 16px;
 	--flex-hero-button-primary-padding-inline-start: 16px;
-	--flex-hero-button-primary-border-radius-block-end: #{$corners-shape-default};
-	--flex-hero-button-primary-border-radius-block-start: #{$corners-shape-default};
-	--flex-hero-button-primary-border-radius-inline-end: #{$corners-shape-default};
-	--flex-hero-button-primary-border-radius-inline-start: #{$corners-shape-default};
+	// --flex-hero-button-primary-border-radius-block-end: #{$corners-shape-default};
+	// --flex-hero-button-primary-border-radius-block-start: #{$corners-shape-default};
+	// --flex-hero-button-primary-border-radius-inline-end: #{$corners-shape-default};
+	// --flex-hero-button-primary-border-radius-inline-start: #{$corners-shape-default};
 
 	--flex-hero-button-secondary-icon-spacing: 10px;
 	--flex-hero-button-secondary-icon-size: 16px;
@@ -44,10 +44,10 @@
 	--flex-hero-button-secondary-padding-block-start: 8px;
 	--flex-hero-button-secondary-padding-inline-end: 16px;
 	--flex-hero-button-secondary-padding-inline-start: 16px;
-	--flex-hero-button-secondary-border-radius-block-end: #{$corners-shape-default};
-	--flex-hero-button-secondary-border-radius-block-start: #{$corners-shape-default};
-	--flex-hero-button-secondary-border-radius-inline-end: #{$corners-shape-default};
-	--flex-hero-button-secondary-border-radius-inline-start: #{$corners-shape-default};
+	// --flex-hero-button-secondary-border-radius-block-end: #{$corners-shape-default};
+	// --flex-hero-button-secondary-border-radius-block-start: #{$corners-shape-default};
+	// --flex-hero-button-secondary-border-radius-inline-end: #{$corners-shape-default};
+	// --flex-hero-button-secondary-border-radius-inline-start: #{$corners-shape-default};
 
 	--flex-hero-box-padding-block-end: 60px;
 	--flex-hero-box-padding-block-start: 60px;
@@ -222,10 +222,10 @@
 	}
 
 	&.shape-type-box.has-shape-custom {
-		--ehp-shapes-border-radius-block-end: var(--flex-hero-box-border-radius-custom-block-end);
-		--ehp-shapes-border-radius-block-start: var(--flex-hero-box-border-radius-custom-block-start);
-		--ehp-shapes-border-radius-inline-end: var(--flex-hero-box-border-radius-custom-inline-end);
-		--ehp-shapes-border-radius-inline-start: var(--flex-hero-box-border-radius-custom-inline-start);
+		--ehp-shapes-border-radius-block-end: var(--flex-hero-box-border-radius-block-end);
+		--ehp-shapes-border-radius-block-start: var(--flex-hero-box-border-radius-block-start);
+		--ehp-shapes-border-radius-inline-end: var(--flex-hero-box-border-radius-inline-end);
+		--ehp-shapes-border-radius-inline-start: var(--flex-hero-box-border-radius-inline-start);
 	}
 
 	// @mixin custom-shape-box() {

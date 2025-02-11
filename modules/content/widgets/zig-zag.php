@@ -51,7 +51,7 @@ class Zig_Zag extends Widget_Base {
 	}
 
 	public function get_style_depends(): array {
-		return [ 'helloplus-zigzag', 'helloplus-button', 'helloplus-image' ];
+		return [ 'helloplus-zigzag', 'helloplus-button', 'helloplus-image', 'helloplus-shapes' ];
 	}
 
 	public function get_script_depends(): array {

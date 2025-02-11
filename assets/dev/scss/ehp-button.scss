@@ -13,10 +13,10 @@ a.ehp-button:not([href]):not([tabindex]) {
 	--ehp-button-primary-padding-inline-end: 16px;
 	--ehp-button-primary-padding-inline-start: 16px;
 	--ehp-button-primary-border-radius: 0;
-	--ehp-button-primary-border-radius-block-end: #{$corners-shape-default};
-	--ehp-button-primary-border-radius-block-start: #{$corners-shape-default};
-	--ehp-button-primary-border-radius-inline-end: #{$corners-shape-default};
-	--ehp-button-primary-border-radius-inline-start: #{$corners-shape-default};
+	// --ehp-button-primary-border-radius-block-end: #{$corners-shape-default};
+	// --ehp-button-primary-border-radius-block-start: #{$corners-shape-default};
+	// --ehp-button-primary-border-radius-inline-end: #{$corners-shape-default};
+	// --ehp-button-primary-border-radius-inline-start: #{$corners-shape-default};
 
 	--ehp-button-secondary-icon-spacing: 10px;
 	--ehp-button-secondary-icon-size: 16px;
@@ -28,11 +28,11 @@ a.ehp-button:not([href]):not([tabindex]) {
 	--ehp-button-secondary-padding-block-start: 8px;
 	--ehp-button-secondary-padding-inline-end: 16px;
 	--ehp-button-secondary-padding-inline-start: 16px;
-	--ehp-button-secondary-border-radius: #{$corners-shape-default};
-	--ehp-button-secondary-border-radius-block-end: #{$corners-shape-default};
-	--ehp-button-secondary-border-radius-block-start: #{$corners-shape-default};
-	--ehp-button-secondary-border-radius-inline-end: #{$corners-shape-default};
-	--ehp-button-secondary-border-radius-inline-start: #{$corners-shape-default};
+	// --ehp-button-secondary-border-radius: #{$corners-shape-default};
+	// --ehp-button-secondary-border-radius-block-end: #{$corners-shape-default};
+	// --ehp-button-secondary-border-radius-block-start: #{$corners-shape-default};
+	// --ehp-button-secondary-border-radius-inline-end: #{$corners-shape-default};
+	// --ehp-button-secondary-border-radius-inline-start: #{$corners-shape-default};
 
 	--ehp-button-text-color: var(--ehp-button-primary-text-color);
 	--ehp-button-text-color-hover: var(--ehp-button-primary-text-color-hover);
@@ -49,11 +49,11 @@ a.ehp-button:not([href]):not([tabindex]) {
 	--ehp-button-border-radius-inline-end: var(--ehp-button-primary-border-radius-inline-end);
 	--ehp-button-border-radius-inline-start: var(--ehp-button-primary-border-radius-inline-start);
 
-	--ehp-button-border-radius-default: #{$corners-shape-default};
-	--ehp-button-border-radius-sharp: #{$corners-shape-sharp};
-	--ehp-button-border-radius-rounded: #{$corners-shape-rounded};
-	--ehp-button-border-radius-round: #{$corners-shape-round};
-	--ehp-button-border-radius-oval: #{$corners-shape-oval};
+	// --ehp-button-border-radius-default: #{$corners-shape-default};
+	// --ehp-button-border-radius-sharp: #{$corners-shape-sharp};
+	// --ehp-button-border-radius-rounded: #{$corners-shape-rounded};
+	// --ehp-button-border-radius-round: #{$corners-shape-round};
+	// --ehp-button-border-radius-oval: #{$corners-shape-oval};
 
 	align-items: center;
 	display: flex;
@@ -105,49 +105,57 @@ a.ehp-button:not([href]):not([tabindex]) {
 		}
 	}
 
-	@mixin shapes() {
-		&-sharp {
-			border-radius: var(--ehp-button-border-radius-sharp);
-		}
+	// @mixin shapes() {
+	// 	&-sharp {
+	// 		border-radius: var(--ehp-button-border-radius-sharp);
+	// 	}
 	
-		&-rounded {
-			border-radius: var(--ehp-button-border-radius-rounded);
-		}
+	// 	&-rounded {
+	// 		border-radius: var(--ehp-button-border-radius-rounded);
+	// 	}
 	
-		&-round {
-			border-radius: var(--ehp-button-border-radius-round);
-		}
+	// 	&-round {
+	// 		border-radius: var(--ehp-button-border-radius-round);
+	// 	}
 
-		&-default {
-			border-radius: var(--ehp-button-border-radius-default);
-		}
+	// 	&-default {
+	// 		border-radius: var(--ehp-button-border-radius-default);
+	// 	}
 	
-		&-oval {
-			border-radius: var(--ehp-button-border-radius-oval);
-		}
+	// 	&-oval {
+	// 		border-radius: var(--ehp-button-border-radius-oval);
+	// 	}
 
-		&-custom {
-			border-top-left-radius: var(--ehp-button-border-radius-block-end);
-			border-top-right-radius: var(--ehp-button-border-radius-block-start);
-			border-bottom-right-radius: var(--ehp-button-border-radius-inline-end);
-			border-bottom-left-radius: var(--ehp-button-border-radius-inline-start);
-		}
-	}
+	// 	&-custom {
+	// 		border-top-left-radius: var(--ehp-button-border-radius-block-end);
+	// 		border-top-right-radius: var(--ehp-button-border-radius-block-start);
+	// 		border-bottom-right-radius: var(--ehp-button-border-radius-inline-end);
+	// 		border-bottom-left-radius: var(--ehp-button-border-radius-inline-start);
+	// 	}
+	// }
 
-	&.has-shape {
-		@include shapes();
+	// &.has-shape {
+	// 	@include shapes();
 
-		&-md {
-			@media screen and (max-width: $screen-tablet-max) {
-				@include shapes();
-			}
-		}
+	// 	&-md {
+	// 		@media screen and (max-width: $screen-tablet-max) {
+	// 			@include shapes();
+	// 		}
+	// 	}
 
-		&-sm {
-			@media screen and (max-width: $screen-mobile-max) {
-				@include shapes();
-			}
-		}
+	// 	&-sm {
+	// 		@media screen and (max-width: $screen-mobile-max) {
+	// 			@include shapes();
+	// 		}
+	// 	}
+	// }
+
+
+	&.has-shape-custom {
+		--ehp-shapes-border-radius-block-end: var(--ehp-button-primary-border-radius-block-end);
+		--ehp-shapes-border-radius-block-start: var(--ehp-button-primary-border-radius-block-start);
+		--ehp-shapes-border-radius-inline-end: var(--ehp-button-primary-border-radius-inline-end);
+		--ehp-shapes-border-radius-inline-start: var(--ehp-button-primary-border-radius-inline-start);
 	}
 
 	.ehp-button__icon {
@@ -172,4 +180,11 @@ a.ehp-button--secondary:not([href]):not([tabindex]) {
 	--ehp-button-border-radius-block-start: var(--ehp-button-secondary-border-radius-block-start);
 	--ehp-button-border-radius-inline-end: var(--ehp-button-secondary-border-radius-inline-end);
 	--ehp-button-border-radius-inline-start: var(--ehp-button-secondary-border-radius-inline-start);
+
+	&.has-shape-custom {
+		--ehp-shapes-border-radius-block-end: var(--ehp-button-secondary-border-radius-block-end);
+		--ehp-shapes-border-radius-block-start: var(--ehp-button-secondary-border-radius-block-start);
+		--ehp-shapes-border-radius-inline-end: var(--ehp-button-secondary-border-radius-inline-end);
+		--ehp-shapes-border-radius-inline-start: var(--ehp-button-secondary-border-radius-inline-start);
+	}
 }

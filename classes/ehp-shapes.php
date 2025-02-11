@@ -18,6 +18,31 @@ class Ehp_Shapes {
 
 	private $widget_settings = [];
 
+	private function get_options() {
+		return [
+			'button' => [
+				'default' => esc_html__( 'Default', 'hello-plus' ),
+				'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
+				'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
+				'round' => esc_html__( 'Round', 'hello-plus' ),
+				'oval' => esc_html__( 'Oval', 'hello-plus' ),
+				'custom' => esc_html__( 'Custom', 'hello-plus' ),
+			],
+			'box' => [
+				'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
+				'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
+				'custom' => esc_html__( 'Custom', 'hello-plus' ),
+			],
+			'image' => [
+				'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
+				'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
+				'round' => esc_html__( 'Round', 'hello-plus' ),
+				'oval' => esc_html__( 'Oval', 'hello-plus' ),
+				'custom' => esc_html__( 'Custom', 'hello-plus' ),
+			],
+		];
+	}
+
 	public function set_context( array $context ) {
 		$this->context = $context;
 	}
@@ -25,13 +50,19 @@ class Ehp_Shapes {
 	public function render_shape_classnames() {
 		$this->widget_settings = $this->widget->get_settings_for_display();
 		$type = $this->context['container_type'];
-		
-		$shape = $this->widget_settings[ $type . '_shape' ];
+		$content_prefix = $this->context['prefix'] ?? '';
+		$prefix = $content_prefix . '_' ?? '';
+		$prefix_attr = $content_prefix . '-' ?? '';
+		$key = $this->context['key'] ?? '';
+		$key_attr = $key ? '-' . $key : '';
+
+		$shape = $this->widget_settings[ $prefix . $type . '_shape' ] ?? '';
+
 		$shape_classnames = [];
 
 		if ( ! empty( $shape ) ) {
-			$shape_mobile = $this->widget_settings[ $type . '_shape_mobile' ];
-			$shape_tablet = $this->widget_settings[ $type . '_shape_tablet' ];
+			$shape_mobile = $this->widget_settings[ $prefix .  $type . '_shape_mobile' ];
+			$shape_tablet = $this->widget_settings[ $prefix .  $type . '_shape_tablet' ];
 
 			$shape_classnames[] = 'has-shape-' . $shape;
 			$shape_classnames[] = 'shape-type-' . $type;
@@ -44,7 +75,7 @@ class Ehp_Shapes {
 				$shape_classnames[] = 'has-shape-md-' . $shape_tablet;
 			}
 
-			$this->widget->add_render_attribute( $this->context['render_attribute'], [
+			$this->widget->add_render_attribute( $this->context['render_attribute'] . $key_attr, [
 				'class' => $shape_classnames,
 			] );
 		}
@@ -53,22 +84,31 @@ class Ehp_Shapes {
 	public function add_style_controls() {
 		$widget_name = $this->context['widget_name'];
 		$type = $this->context['container_type'];
-		$prefix = $this->context['prefix'] ?? '';
+		$context_prefix = $this->context['prefix'] ?? '';
+		$condition = $this->context['condition'] ?? [];
+
+		$prefix = $context_prefix . '_' ?? '';
+		$prefix_attr = '-' . $context_prefix ?? '';
+
+		$defaults = [
+			'button' => 'default',
+			'box' => 'sharp',
+			'image' => 'sharp',
+		];
 
 		$this->widget->add_responsive_control(
 			$prefix . $type . '_shape',
 			[
 				'label' => esc_html__( 'Shape', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => 'sharp',
-				'options' => [
-					'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
-					'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
-					'custom' => esc_html__( 'Custom', 'hello-plus' ),
-				],
+				'default' => $defaults[ $type ] ?? $default,
+				'options' => $this->get_options()[ $type ],
 				'frontend_available' => true,
+				'condition' => $condition,
 			]
 		);
+
+		$prefix_property = "--{$widget_name}-{$type}{$prefix_attr}-border-radius";
 
 		$this->widget->add_responsive_control(
 			$prefix . $type . '_shape_custom',
@@ -77,11 +117,11 @@ class Ehp_Shapes {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem' ],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-' . $widget_name => '--' . $widget_name . '-box-border-radius-custom-block-end: {{BOTTOM}}{{UNIT}}; --' . $widget_name . '-box-border-radius-custom-block-start: {{TOP}}{{UNIT}}; --' . $widget_name . '-box-border-radius-custom-inline-end: {{RIGHT}}{{UNIT}}; --' . $widget_name . '-box-border-radius-custom-inline-start: {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-' . $widget_name => "{$prefix_property}-block-end: {{BOTTOM}}{{UNIT}}; {$prefix_property}-block-start: {{TOP}}{{UNIT}}; {$prefix_property}-inline-end: {{RIGHT}}{{UNIT}}; {$prefix_property}-inline-start: {{LEFT}}{{UNIT}};",
 				],
-				'condition' => [
-					$type . '_shape' => 'custom',
-				],
+				'condition' => array_merge( $condition, [
+					$prefix . $type . '_shape' => 'custom',
+				] ),
 			]
 		);
 	}

@@ -23,7 +23,7 @@ class Whats_New {
 		return $notificator->get_notifications_by_conditions( true );
 	}
 
-	public function register_routes() {
+	public function rest_api_init() {
 		register_rest_route(
 			'elementor-hello-plus/v1',
 			'/whats-new',

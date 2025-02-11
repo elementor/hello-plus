@@ -33,7 +33,7 @@ const App = () => {
     const handleClose = () => setOpen( false );
 
     useEffect( () => {
-        apiFetch( { path: '/elementor-hello-biz/v1/whats-new' } ).then( ( response ) => {
+        apiFetch( { path: '/elementor-hello-plus/v1/whats-new' } ).then( ( response ) => {
             setWhatsNew( response );
         } ).catch( () => {
             setWhatsNew( [] );
@@ -59,7 +59,7 @@ const App = () => {
 			onClose={ handleClose }
 			aria-labelledby="modal-modal-title"
 			aria-describedby="modal-modal-description"
-            >
+                >
 			<Box sx={ style }>
 				<Typography variant={ 'h4' }>{ __( 'Changelog', 'hello-plus' ) }</Typography>
 				<Stack direction={ 'column' } gap={ 1 } sx={ { mt: 2 } }>

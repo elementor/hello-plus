@@ -7,21 +7,24 @@ import { __ } from '@wordpress/i18n';
 
 export const PreviewWithImage = ( { title, thumbnail, onClick } ) => {
 	return (
-		<Stack direction="column" >
-			<Typography variant="body2" sx={ { height: 45, color: 'text.secondary' } }>{ title }</Typography>
+		<Stack direction="column" sx={ { border: '1px solid var(--e-a-border-color)', borderRadius: 1 } } >
+			<Box sx={ { minHeight: 40 } }>
+				<Typography variant="body1" sx={ { color: 'text.secondary', fontWeight: 500, p: 1.25 } }>{ title }</Typography>
+			</Box>
+
 			<Box sx={ {
 				position: 'relative',
 				cursor: 'pointer',
-				boxShadow: 3,
 				display: 'flex',
 				aspectRatio: '1',
 				overflow: 'hidden',
+				p: 1.25,
+				borderTop: '1px solid var(--e-a-border-color)',
 			} }>
 				<Image
 					src={ thumbnail }
 					alt={ title }
 					sx={ {
-						borderRadius: 1,
 						width: '100%',
 						height: 'auto',
 						objectFit: 'cover',
@@ -29,10 +32,10 @@ export const PreviewWithImage = ( { title, thumbnail, onClick } ) => {
 				<Box
 					sx={ {
 						position: 'absolute',
-						top: 0,
-						left: 0,
-						width: '100%',
-						height: '100%',
+						top: 10,
+						left: 10,
+						width: 'calc(100% - 20px)',
+						height: 'calc(100% - 20px)',
 						backgroundColor: 'rgba(0, 0, 0, 0.5)',
 						color: 'white',
 						display: 'flex',
@@ -48,7 +51,7 @@ export const PreviewWithImage = ( { title, thumbnail, onClick } ) => {
 					onClick={ onClick }
 				>
 					<EyeIcon sx={ { mr: 1 } } />
-					<Typography variant="body2" sx={ { color: 'text.primary' } }>{ __( 'View Demo', 'hello-plus' ) }</Typography>
+					<Typography variant="body2" sx={ { color: 'theme.palette.common.white' } }>{ __( 'View Demo', 'hello-plus' ) }</Typography>
 				</Box>
 			</Box>
 		</Stack>

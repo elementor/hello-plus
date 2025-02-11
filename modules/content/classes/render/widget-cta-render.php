@@ -7,6 +7,8 @@ use HelloPlus\Classes\{
 	Ehp_Image,
 };
 
+use Elementor\Utils;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }

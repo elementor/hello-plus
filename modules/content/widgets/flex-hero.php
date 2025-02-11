@@ -21,6 +21,7 @@ use HelloPlus\Modules\Theme\Module as Theme_Module;
 use HelloPlus\Classes\{
 	Ehp_Button,
 	Ehp_Image,
+	Ehp_Padding,
 };
 
 class Flex_Hero extends Widget_Base {
@@ -816,25 +817,11 @@ class Flex_Hero extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'box_padding',
-			[
-				'label' => esc_html__( 'Padding', 'hello-plus' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-box-padding-block-end: {{BOTTOM}}{{UNIT}}; --flex-hero-box-padding-block-start: {{TOP}}{{UNIT}}; --flex-hero-box-padding-inline-end: {{RIGHT}}{{UNIT}}; --flex-hero-box-padding-inline-start: {{LEFT}}{{UNIT}};',
-				],
-				'default' => [
-					'top' => '60',
-					'right' => '60',
-					'bottom' => '60',
-					'left' => '60',
-					'unit' => 'px',
-				],
-				'separator' => 'before',
-			]
-		);
+		$padding = new Ehp_Padding( $this, [
+			'widget_name' => 'flex-hero',
+			'container_prefix' => 'box',
+		] );
+		$padding->add_style_controls();
 
 		$this->add_control(
 			'box_full_screen_height',

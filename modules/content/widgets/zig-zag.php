@@ -25,6 +25,7 @@ use HelloPlus\Modules\Theme\Module as Theme_Module;
 use HelloPlus\Classes\{
 	Ehp_Button,
 	Ehp_Image,
+	Ehp_Padding,
 };
 
 class Zig_Zag extends Widget_Base {
@@ -675,25 +676,18 @@ class Zig_Zag extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'box_padding',
-			[
-				'label' => esc_html__( 'Padding', 'hello-plus' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-box-padding-block-end: {{BOTTOM}}{{UNIT}}; --zigzag-box-padding-block-start: {{TOP}}{{UNIT}}; --zigzag-box-padding-inline-end: {{RIGHT}}{{UNIT}}; --zigzag-box-padding-inline-start: {{LEFT}}{{UNIT}};',
-				],
-				'default' => [
-					'top' => 60,
-					'right' => 0,
-					'bottom' => 60,
-					'left' => 0,
-					'isLinked' => true,
-				],
-				'separator' => 'before',
-			]
-		);
+		$padding = new Ehp_Padding( $this, [
+			'widget_name' => 'zigzag',
+			'container_prefix' => 'box',
+			'default_padding' => [
+				'top' => 60,
+				'right' => 0,
+				'bottom' => 60,
+				'left' => 0,
+				'unit' => 'px',
+			],
+		] );
+		$padding->add_style_controls();
 
 		$this->add_control(
 			'animation_label',

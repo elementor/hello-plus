@@ -20,6 +20,7 @@ use HelloPlus\Modules\Theme\Module as Theme_Module;
 use HelloPlus\Classes\{
 	Ehp_Button,
 	Ehp_Image,
+	Ehp_Padding,
 };
 
 use Elementor\Utils as Elementor_Utils;
@@ -679,25 +680,11 @@ class CTA extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'box_padding',
-			[
-				'label' => esc_html__( 'Padding', 'hello-plus' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em', 'rem' ],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-box-padding-block-end: {{BOTTOM}}{{UNIT}}; --cta-box-padding-block-start: {{TOP}}{{UNIT}}; --cta-box-padding-inline-end: {{RIGHT}}{{UNIT}}; --cta-box-padding-inline-start: {{LEFT}}{{UNIT}};',
-				],
-				'default' => [
-					'top' => '60',
-					'right' => '60',
-					'bottom' => '60',
-					'left' => '60',
-					'unit' => 'px',
-				],
-				'separator' => 'before',
-			]
-		);
+		$padding = new Ehp_Padding( $this, [
+			'widget_name' => 'cta',
+			'container_prefix' => 'box',
+		] );
+		$padding->add_style_controls();
 
 		$this->add_control(
 			'show_box_border',

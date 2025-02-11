@@ -22,7 +22,10 @@ use HelloPlus\Modules\TemplateParts\Classes\{
 };
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
-use HelloPlus\Classes\Ehp_Button;
+use HelloPlus\Classes\{
+	Ehp_Button,
+	Ehp_Padding,
+};
 
 class Ehp_Header extends Ehp_Widget_Base {
 
@@ -1673,24 +1676,18 @@ class Ehp_Header extends Ehp_Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'box_padding',
-			[
-				'label' => esc_html__( 'Padding', 'hello-plus' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em', 'rem' ],
-				'default' => [
-					'top' => 16,
-					'right' => 32,
-					'bottom' => 16,
-					'left' => 32,
-					'unit' => 'px',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-header' => '--header-box-padding-block-end: {{BOTTOM}}{{UNIT}}; --header-box-padding-block-start: {{TOP}}{{UNIT}}; --header-box-padding-inline-end: {{RIGHT}}{{UNIT}}; --header-box-padding-inline-start: {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
+		$padding = new Ehp_Padding( $this, [
+			'widget_name' => 'header',
+			'container_prefix' => 'box',
+			'default_padding' => [
+				'top' => 16,
+				'right' => 32,
+				'bottom' => 16,
+				'left' => 32,
+				'unit' => 'px',
+			],
+		] );
+		$padding->add_style_controls();
 
 		$this->end_controls_section();
 	}

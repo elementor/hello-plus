@@ -26,8 +26,6 @@ class Ehp_Image {
 	private $defaults = [];
 	private ?Widget_Base $widget = null;
 
-	private $widget_settings = [];
-
 	const EHP_PREFIX = 'ehp-';
 	const CLASSNAME_IMAGE = 'ehp-image';
 

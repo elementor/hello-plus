@@ -194,7 +194,7 @@ abstract class Ehp_Document_Base extends Library_Document {
 	 */
 	public function allow_only_one_active_document( $return_data, $document ) {
 		/* translators: %s: location (e.g. "header"). */
-		$message = sprintf( __( 'Your new %1$s has been saved as a "Draft". To make it your active %1$s, you need to deactivate the current one first. Navigate to Elementor > Saved Templates, and change your current %1$s\'s status to "Draft". Then publish your new %1$s.', 'hello-plus' ), static::LOCATION );
+		$message = sprintf( __( 'Your new %1$s has been saved as a "Draft". Activate this %1$s by navigating to Elementor > Saved Templates, and change your current %1$s\'s status to "Draft". Then publish your new %1$s.', 'hello-plus' ), static::LOCATION );
 		throw new \Exception( esc_html( $message ) );
 	}
 

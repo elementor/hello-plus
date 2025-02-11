@@ -357,17 +357,17 @@ class CTA extends Widget_Base {
 				'options' => [
 					'start' => [
 						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => 'eicon-h-align-left',
+						'icon' => 'eicon-h-align-' . ( is_rtl() ? 'right' : 'left' ),
 					],
 					'end' => [
 						'title' => esc_html__( 'End', 'hello-plus' ),
-						'icon' => 'eicon-h-align-right',
+						'icon' => 'eicon-h-align-' . ( is_rtl() ? 'left' : 'right' ),
 					],
 				],
 				'frontend_available' => true,
-				'default' => is_rtl() ? 'end' : 'start',
-				'tablet_default' => is_rtl() ? 'end' : 'start',
-				'mobile_default' => is_rtl() ? 'end' : 'start',
+				'default' => is_rtl() ? 'start' : 'end',
+				'tablet_default' => is_rtl() ? 'start' : 'end',
+				'mobile_default' => is_rtl() ? 'start' : 'end',
 				'condition' => [
 					'layout_preset' => 'showcase',
 				],

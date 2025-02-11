@@ -351,7 +351,7 @@ class Flex_Hero extends Widget_Base {
 				'options' => [
 					'start' => [
 						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => 'eicon-align-start-h',
+						'icon' => 'eicon-align-' . ( is_rtl() ? 'end' : 'start' ) . '-h',
 					],
 					'center' => [
 						'title' => esc_html__( 'Center', 'hello-plus' ),

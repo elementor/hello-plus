@@ -5,11 +5,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use Elementor\Group_Control_Image_Size;
-use Elementor\Icons_Manager;
 use Elementor\Utils;
 use HelloPlus\Modules\Content\Widgets\Flex_Hero;
-use HelloPlus\Classes\Ehp_Button;
+use HelloPlus\Classes\{
+	Ehp_Button,
+	Ehp_Image,
+};
 
 class Widget_Flex_Hero_Render {
 	protected Flex_Hero $widget;
@@ -93,7 +94,7 @@ class Widget_Flex_Hero_Render {
 		<div <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
 			<?php
 				$this->render_content_container();
-				$this->render_image();
+				$this->render_image_container();
 			?>
 		</div>
 		<?php
@@ -161,53 +162,10 @@ class Widget_Flex_Hero_Render {
 		$button->render();
 	}
 
-	public function get_attachment_image_html_filter( $html ) {
-		$image_classnames = 'ehp-flex-hero__img';
-		$image_shape = $this->settings['image_shape'];
-		$image_shape_mobile = $this->settings['image_shape_mobile'];
-		$image_shape_tablet = $this->settings['image_shape_tablet'];
-
-		$has_border = $this->settings['show_image_border'];
-
-		if ( 'yes' === $has_border ) {
-			$image_classnames .= ' has-border';
-		}
-
-		if ( ! empty( $image_shape ) ) {
-			$image_classnames .= ' has-shape-' . $image_shape;
-
-			if ( ! empty( $image_shape_mobile ) ) {
-				$image_classnames .= ' has-shape-sm-' . $image_shape_mobile;
-			}
-
-			if ( ! empty( $image_shape_tablet ) ) {
-				$image_classnames .= ' has-shape-md-' . $image_shape_tablet;
-			}
-		}
-
-		$html = str_replace( '<img ', '<img class="' . esc_attr( $image_classnames ) . '" ', $html );
-		return $html;
-	}
-
-	public function render_image() {
-		$image = $this->settings['image'];
-		$has_image = ! empty( $image['url'] );
-		$image_wrapper_classnames = self::IMAGE_CLASSNAME;
-
-		$this->widget->add_render_attribute( 'image', [
-			'class' => $image_wrapper_classnames,
+	protected function render_image_container() {
+		$image = new Ehp_Image( $this->widget, [
+			'widget_name' => 'flex-hero',
 		] );
-
-		if ( $has_image ) :
-			?>
-			<div <?php $this->widget->print_render_attribute_string( 'image' ); ?>>
-				<?php
-					add_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_attachment_image_html_filter' ], 10, 4 );
-					Group_Control_Image_Size::print_attachment_image_html( $this->settings, 'image' );
-					remove_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_attachment_image_html_filter' ], 10 );
-				?>
-			</div>
-			<?php
-		endif; //has_image
+		$image->render();
 	}
 }

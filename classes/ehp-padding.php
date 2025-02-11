@@ -12,10 +12,10 @@ use Elementor\{
 };
 
 class Ehp_Padding {
-    private $context = [];
+	private $context = [];
 	private ?Widget_Base $widget = null;
 
-    private $widget_settings = [];
+	private $widget_settings = [];
 
 	public function set_context( array $context ) {
 		$this->context = $context;
@@ -25,27 +25,27 @@ class Ehp_Padding {
 		$widget_name = $this->context['widget_name'];
 		$container_prefix = $this->context['container_prefix'] ?? '';
 		$type_prefix = $this->context['type_prefix'] ?? '';
-	
+
 		$prefix = implode( '-', array_filter( [
 			$widget_name,
 			$container_prefix,
-			$type_prefix
+			$type_prefix,
 		] ) );
-	
+
 		$is_rtl = is_rtl();
 		$inline_end_value = $is_rtl ? 'LEFT' : 'RIGHT';
 		$inline_start_value = $is_rtl ? 'RIGHT' : 'LEFT';
-	
+
 		$properties = [
-			"padding-block-end" => "{{BOTTOM}}{{UNIT}}",
-			"padding-block-start" => "{{TOP}}{{UNIT}}",
-			"padding-inline-end" => "{{{$inline_end_value}}}{{UNIT}}",
-			"padding-inline-start" => "{{{$inline_start_value}}}{{UNIT}}",
+			'padding-block-end' => '{{BOTTOM}}{{UNIT}}',
+			'padding-block-start' => '{{TOP}}{{UNIT}}',
+			'padding-inline-end' => "{{{$inline_end_value}}}{{UNIT}}",
+			'padding-inline-start' => "{{{$inline_start_value}}}{{UNIT}}",
 		];
-	
-		$css_rules = array_map(fn($value, $prop) => "--{$prefix}-{$prop}: {$value};", $properties, array_keys($properties));
-	
-		return implode(' ', $css_rules);
+
+		$css_rules = array_map( fn( $value, $prop ) => "--{$prefix}-{$prop}: {$value};", $properties, array_keys( $properties ) );
+
+		return implode( ' ', $css_rules );
 	}
 
 	public function add_style_controls() {
@@ -54,7 +54,7 @@ class Ehp_Padding {
 
 		$container_prefix = $this->context['container_prefix'] ?? '';
 		$type_prefix = $this->context['type_prefix'] ?? '';
-		$padding_prefix = implode('_', array_filter( [ $type_prefix, $container_prefix, 'padding' ] ));
+		$padding_prefix = implode( '_', array_filter( [ $type_prefix, $container_prefix, 'padding' ] ) );
 
 		$this->widget->add_responsive_control(
 			$padding_prefix,
@@ -80,7 +80,7 @@ class Ehp_Padding {
 		);
 	}
 
-    public function __construct( Widget_Base $widget, $context = [] ) {
+	public function __construct( Widget_Base $widget, $context = [] ) {
 		$this->widget = $widget;
 		$this->context = $context;
 	}

@@ -533,14 +533,14 @@ class Widget_Header_Render {
 
 	public function handle_sub_menu_classes() {
 		$submenu_layout = $this->settings['style_submenu_layout'] ?? 'horizontal';
-		$submenu_shape = $this->settings['style_submenu_shape'];
+		// $submenu_shape = $this->settings['style_submenu_shape'];
 
 		$dropdown_classnames = [ 'ehp-header__dropdown' ];
 		$dropdown_classnames[] = 'has-layout-' . $submenu_layout;
 
-		if ( ! empty( $submenu_shape ) ) {
-			$dropdown_classnames[] = 'has-shape-' . $submenu_shape;
-		}
+		// if ( ! empty( $submenu_shape ) ) {
+		// 	$dropdown_classnames[] = 'has-shape-' . $submenu_shape;
+		// }
 
 		return $dropdown_classnames;
 	}

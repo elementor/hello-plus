@@ -102,10 +102,10 @@
 	--header-border-radius-round: #{$corners-shape-round};
 	--header-border-radius-oval: #{$corners-shape-oval};
 
-	--header-button-border-radius-custom-block-end: #{$corners-shape-default};
-	--header-button-border-radius-custom-block-start: #{$corners-shape-default};
-	--header-button-border-radius-custom-inline-end: #{$corners-shape-default};
-	--header-button-border-radius-custom-inline-start: #{$corners-shape-default};
+	// --header-button-border-radius-custom-block-end: #{$corners-shape-default};
+	// --header-button-border-radius-custom-block-start: #{$corners-shape-default};
+	// --header-button-border-radius-custom-inline-end: #{$corners-shape-default};
+	// --header-button-border-radius-custom-inline-start: #{$corners-shape-default};
 
 	display: flex;
 	max-width: var(--header-float-width);
@@ -151,76 +151,76 @@
 		backdrop-filter: blur(var(--header-blur-background-level));
 	}
 
-	@mixin shapes() {
-		&-sharp {
-			border-radius: var(--header-border-radius-sharp);
-		}
+	// // @mixin shapes() {
+	// // 	&-sharp {
+	// // 		border-radius: var(--header-border-radius-sharp);
+	// // 	}
 	
-		&-rounded {
-			border-radius: var(--header-border-radius-rounded);
-		}
+	// // 	&-rounded {
+	// // 		border-radius: var(--header-border-radius-rounded);
+	// // 	}
 	
-		&-round {
-			border-radius: var(--header-border-radius-round);
-		}
+	// // 	&-round {
+	// // 		border-radius: var(--header-border-radius-round);
+	// // 	}
 
-		&-default {
-			border-radius: var(--header-border-radius-default);
-		}
+	// // 	&-default {
+	// // 		border-radius: var(--header-border-radius-default);
+	// // 	}
 	
-		&-oval {
-			border-radius: var(--header-border-radius-oval);
-		}
+	// // 	&-oval {
+	// // 		border-radius: var(--header-border-radius-oval);
+	// // 	}
 
-		&-custom {
-			border-top-left-radius: var(--header-border-radius-block-end);
-			border-top-right-radius: var(--header-border-radius-block-start);
-			border-bottom-right-radius: var(--header-border-radius-inline-end);
-			border-bottom-left-radius: var(--header-border-radius-inline-start);
-		}
-	}
+	// // 	&-custom {
+	// // 		border-top-left-radius: var(--header-border-radius-block-end);
+	// // 		border-top-right-radius: var(--header-border-radius-block-start);
+	// // 		border-bottom-right-radius: var(--header-border-radius-inline-end);
+	// // 		border-bottom-left-radius: var(--header-border-radius-inline-start);
+	// // 	}
+	// // }
 
-	& .has-shape,
-	&.has-shape {
-		@include shapes();
+	// // & .has-shape,
+	// // &.has-shape {
+	// // 	@include shapes();
 
-		&-md {
-			@media screen and (max-width: $screen-tablet-max) {
-				@include shapes();
-			}
-		}
+	// // 	&-md {
+	// // 		@media screen and (max-width: $screen-tablet-max) {
+	// // 			@include shapes();
+	// // 		}
+	// // 	}
 
-		&-sm {
-			@media screen and (max-width: $screen-mobile-max) {
-				@include shapes();
-			}
-		}
-	}
+	// // 	&-sm {
+	// // 		@media screen and (max-width: $screen-mobile-max) {
+	// // 			@include shapes();
+	// // 		}
+	// // 	}
+	// // }
 
-	@mixin custom-shape-float() {
-		&-custom {
-			--header-border-radius-block-end: var(--header-float-border-radius-custom-block-end);
-			--header-border-radius-block-start: var(--header-float-border-radius-custom-block-start);
-			--header-border-radius-inline-end: var(--header-float-border-radius-custom-inline-end);
-			--header-border-radius-inline-start: var(--header-float-border-radius-custom-inline-start);
-		}
-	}
+	// @mixin custom-shape-float() {
+	// 	&-custom {
+	// 		--header-border-radius-block-end: var(--header-float-border-radius-custom-block-end);
+	// 		--header-border-radius-block-start: var(--header-float-border-radius-custom-block-start);
+	// 		--header-border-radius-inline-end: var(--header-float-border-radius-custom-inline-end);
+	// 		--header-border-radius-inline-start: var(--header-float-border-radius-custom-inline-start);
+	// 	}
+	// }
 
-	&.has-behavior-float.has-shape {
-		@include custom-shape-float();
+	// &.has-behavior-float.has-shape {
+	// 	@include custom-shape-float();
 
-		&-md {
-			@media screen and (max-width: $screen-tablet-max) {
-				@include custom-shape-float();
-			}
-		}
+	// 	&-md {
+	// 		@media screen and (max-width: $screen-tablet-max) {
+	// 			@include custom-shape-float();
+	// 		}
+	// 	}
 
-		&-sm {
-			@media screen and (max-width: $screen-mobile-max) {
-				@include custom-shape-float();
-			}
-		}
-	}
+	// 	&-sm {
+	// 		@media screen and (max-width: $screen-mobile-max) {
+	// 			@include custom-shape-float();
+	// 		}
+	// 	}
+	// }
 
 	&__elements-container {
 		display: grid;
@@ -385,18 +385,18 @@
 			flex-grow: 1;
 		}
 
-		@mixin custom-shape-submenu() {
-			&-custom {
-				--header-border-radius-block-end: var(--header-submenu-border-radius-custom-block-end);
-				--header-border-radius-block-start: var(--header-submenu-border-radius-custom-block-start);
-				--header-border-radius-inline-end: var(--header-submenu-border-radius-custom-inline-end);
-				--header-border-radius-inline-start: var(--header-submenu-border-radius-custom-inline-start);
-			}
-		}
+		// @mixin custom-shape-submenu() {
+		// 	&-custom {
+		// 		--header-border-radius-block-end: var(--header-submenu-border-radius-custom-block-end);
+		// 		--header-border-radius-block-start: var(--header-submenu-border-radius-custom-block-start);
+		// 		--header-border-radius-inline-end: var(--header-submenu-border-radius-custom-inline-end);
+		// 		--header-border-radius-inline-start: var(--header-submenu-border-radius-custom-inline-start);
+		// 	}
+		// }
 	
-		&.has-shape {
-			@include custom-shape-submenu();
-		}
+		// &.has-shape {
+		// 	@include custom-shape-submenu();
+		// }
 
 		&[aria-hidden="true"] {
 			display: none;

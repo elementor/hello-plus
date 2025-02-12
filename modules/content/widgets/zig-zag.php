@@ -633,7 +633,7 @@ class Zig_Zag extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'space_rows',
+			'column_gap',
 			[
 				'label' => esc_html__( 'Column Gap', 'hello-plus' ),
 				'type' => Controls_Manager::SLIDER,
@@ -648,15 +648,27 @@ class Zig_Zag extends Widget_Base {
 						'max' => 100,
 					],
 				],
+				'default' => [
+					'size' => 100,
+					'unit' => 'px',
+				],
+				'tablet_default' => [
+					'size' => 60,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 60,
+					'unit' => 'px',
+				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-rows-spacing: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-column-gap: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
 		);
 
 		$this->add_responsive_control(
-			'elements_gap',
+			'row_gap',
 			[
 				'label' => esc_html__( 'Row Gap', 'hello-plus' ),
 				'type' => Controls_Manager::SLIDER,
@@ -669,8 +681,20 @@ class Zig_Zag extends Widget_Base {
 						'max' => 100,
 					],
 				],
+				'default' => [
+					'size' => 120,
+					'unit' => 'px',
+				],
+				'tablet_default' => [
+					'size' => 40,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 32,
+					'unit' => 'px',
+				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-elements-gap: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-row-gap: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);

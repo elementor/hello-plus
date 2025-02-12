@@ -3,14 +3,12 @@
 .ehp-zigzag {
 	--zigzag-title-color: #000000;
 	--zigzag-description-color: #000000;
-	--zigzag-rows-spacing: 60px;
 	--zigzag-wrapper-border-width: 2px;
 	--zigzag-wrapper-border-color: #000000;
 	--zigzag-wrapper-border-radius: 0;
 	--zigzag-content-position: center;
 	--zigzag-image-width: 50%;
 	--zigzag-icon-width: 50%;
-	--zigzag-elements-gap: 32px;
 	--zigzag-icon-size: 256px;
 	--zigzag-icon-color: #555963;
 	--zigzag-icon-color-alternate: #61CE70;
@@ -46,15 +44,6 @@
 	background-color: transparent;
 	display: flex;
 	flex-direction: column;
-
-	@media screen and (min-width: $screen-tablet-min) {
-		--zigzag-elements-gap: 40px;
-		--zigzag-rows-spacing: 100px;
-	}
-
-	@media screen and (min-width: $screen-desktop-min) {
-		--zigzag-elements-gap: 120px;
-	}
 
 	&.has-border {
 		border-color: var(--zigzag-wrapper-border-color);
@@ -164,16 +153,12 @@
 
 	&__item-container {
 		display: flex;
-		gap: var(--zigzag-elements-gap);
-		padding-block: calc(var(--zigzag-rows-spacing) / 2);
+		gap: var(--zigzag-column-gap);
+		padding-block: calc(var(--zigzag-row-gap) / 2);
 		padding-inline-start: var(--zigzag-box-padding-inline-start);
 		padding-inline-end: var(--zigzag-box-padding-inline-end);
 		max-width: var(--zigzag-content-width);
 		width: 100%;
-
-		@media screen and (max-width: $screen-tablet-max) {
-			gap: var(--zigzag-elements-gap);
-		}
 	}
 
 	&.has-entrance-animation {

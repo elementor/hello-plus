@@ -166,7 +166,7 @@ class CTA extends Widget_Base {
 			]
 		);
 
-		$image = new Ehp_Image( $this, [ 'widget_name' => 'cta' ] );
+		$image = new Ehp_Image( $this, [ 'widget_name' => $this->get_name() ] );
 		$image->add_content_section();
 
 		$this->end_controls_section();
@@ -422,14 +422,14 @@ class CTA extends Widget_Base {
 			]
 		);
 
-		$image = new Ehp_Image( $this, [ 'widget_name' => 'cta' ] );
+		$image = new Ehp_Image( $this, [ 'widget_name' => $this->get_name() ] );
 		$image->add_style_controls();
 
 		$this->end_controls_section();
 	}
 
 	protected function add_content_cta_section() {
-		$button = new Ehp_Button( $this, [ 'widget_name' => 'cta' ] );
+		$button = new Ehp_Button( $this, [ 'widget_name' => $this->get_name() ] );
 		$button->add_content_section();
 	}
 
@@ -521,7 +521,7 @@ class CTA extends Widget_Base {
 			]
 		);
 
-		$button = new Ehp_Button( $this, [ 'widget_name' => 'cta' ] );
+		$button = new Ehp_Button( $this, [ 'widget_name' => $this->get_name() ] );
 		$button->add_style_controls();
 
 		$this->add_responsive_control(
@@ -681,7 +681,7 @@ class CTA extends Widget_Base {
 		);
 
 		$padding = new Ehp_Padding( $this, [
-			'widget_name' => 'cta',
+			'widget_name' => $this->get_name(),
 			'container_prefix' => 'box',
 		] );
 		$padding->add_style_controls();

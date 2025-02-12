@@ -112,7 +112,7 @@ class Widget_CTA_Render {
 
 	protected function render_image_container() {
 		$image = new Ehp_Image( $this->widget, [
-			'widget_name' => 'cta',
+			'widget_name' => $this->widget->get_name(),
 		] );
 		$image->render();
 	}
@@ -191,7 +191,7 @@ class Widget_CTA_Render {
 	public function render_button( $type ) {
 		$button = new Ehp_Button( $this->widget, [
 			'type' => $type,
-			'widget_name' => 'cta',
+			'widget_name' => $this->widget->get_name(),
 		] );
 		$button->render();
 	}

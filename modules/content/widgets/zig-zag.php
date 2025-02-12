@@ -366,7 +366,7 @@ class Zig_Zag extends Widget_Base {
 			'has_image_width_dropdown' => true,
 		];
 
-		$image = new Ehp_Image( $this, [ 'widget_name' => 'zigzag' ], $defaults );
+		$image = new Ehp_Image( $this, [ 'widget_name' => $this->get_name() ], $defaults );
 		$image->add_style_controls();
 
 		$this->end_controls_section();
@@ -561,7 +561,7 @@ class Zig_Zag extends Widget_Base {
 			'button_default_type' => 'link',
 		];
 
-		$button = new Ehp_Button( $this, [ 'widget_name' => 'zigzag' ], $defaults );
+		$button = new Ehp_Button( $this, [ 'widget_name' => $this->get_name() ], $defaults );
 		$button->add_button_type_controls(
 			[
 				'type' => 'primary',
@@ -677,7 +677,7 @@ class Zig_Zag extends Widget_Base {
 		);
 
 		$padding = new Ehp_Padding( $this, [
-			'widget_name' => 'zigzag',
+			'widget_name' => $this->get_name(),
 			'container_prefix' => 'box',
 			'default_padding' => [
 				'top' => 60,

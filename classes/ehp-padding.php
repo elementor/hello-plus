@@ -15,8 +15,6 @@ class Ehp_Padding {
 	private $context = [];
 	private ?Widget_Base $widget = null;
 
-	private $widget_settings = [];
-
 	public function set_context( array $context ) {
 		$this->context = $context;
 	}

@@ -83,7 +83,7 @@ class Widget_Hero_Render {
 	public function render_cta_button() {
 		$button = new Ehp_Button( $this->widget, [
 			'type' => 'primary',
-			'widget_name' => 'hero',
+			'widget_name' => $this->widget->get_name(),
 		] );
 		?>
 		<div class="ehp-hero__button-container">
@@ -94,7 +94,7 @@ class Widget_Hero_Render {
 
 	protected function render_image_container() {
 		$image = new Ehp_Image( $this->widget, [
-			'widget_name' => 'hero',
+			'widget_name' => $this->widget->get_name(),
 		] );
 		$image->render();
 	}

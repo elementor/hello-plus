@@ -19,6 +19,7 @@ use HelloPlus\Modules\Theme\Module as Theme_Module;
 use HelloPlus\Classes\{
 	Ehp_Button,
 	Ehp_Image,
+	Ehp_Padding,
 };
 
 class Hero extends Widget_Base {
@@ -158,7 +159,7 @@ class Hero extends Widget_Base {
 			'primary_cta_button_text_placeholder' => esc_html__( 'Contact us', 'hello-plus' ),
 		];
 
-		$button = new Ehp_Button( $this, [ 'widget_name' => 'hero' ], $defaults );
+		$button = new Ehp_Button( $this, [ 'widget_name' => $this->get_name() ], $defaults );
 		$button->add_content_section();
 	}
 
@@ -171,7 +172,7 @@ class Hero extends Widget_Base {
 			]
 		);
 
-		$image = new Ehp_Image( $this, [ 'widget_name' => 'hero' ] );
+		$image = new Ehp_Image( $this, [ 'widget_name' => $this->get_name() ] );
 		$image->add_content_section();
 
 		$this->end_controls_section();
@@ -361,7 +362,7 @@ class Hero extends Widget_Base {
 			'has_secondary_cta' => false,
 		];
 
-		$button = new Ehp_Button( $this, [ 'widget_name' => 'hero' ], $defaults );
+		$button = new Ehp_Button( $this, [ 'widget_name' => $this->get_name() ], $defaults );
 		$button->add_style_controls();
 
 		$this->end_controls_section();
@@ -376,7 +377,7 @@ class Hero extends Widget_Base {
 			]
 		);
 
-		$image = new Ehp_Image( $this, [ 'widget_name' => 'hero' ] );
+		$image = new Ehp_Image( $this, [ 'widget_name' => $this->get_name() ] );
 		$image->add_style_controls();
 
 		$this->end_controls_section();
@@ -453,25 +454,11 @@ class Hero extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'style_box_padding',
-			[
-				'label' => esc_html__( 'Padding', 'hello-plus' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em', 'rem' ],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-box-padding-block-end: {{BOTTOM}}{{UNIT}}; --hero-box-padding-block-start: {{TOP}}{{UNIT}}; --hero-box-padding-inline-end: {{RIGHT}}{{UNIT}}; --hero-box-padding-inline-start: {{LEFT}}{{UNIT}};',
-				],
-				'default' => [
-					'top' => 60,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-					'unit' => 'px',
-				],
-				'separator' => 'before',
-			]
-		);
+		$padding = new Ehp_Padding( $this, [
+			'widget_name' => $this->get_name(),
+			'container_prefix' => 'box',
+		] );
+		$padding->add_style_controls();
 
 		$this->add_control(
 			'box_full_screen_height',

@@ -138,7 +138,7 @@ class Widget_Zig_Zag_Render {
 		];
 
 		$image = new Ehp_Image( $this->widget, [
-			'widget_name' => 'zigzag',
+			'widget_name' => $this->widget->get_name(),
 		], $defaults );
 		$image->render();
 	}
@@ -206,7 +206,7 @@ class Widget_Zig_Zag_Render {
 
 		$button = new Ehp_Button( $this->widget, [
 			'type' => 'primary',
-			'widget_name' => 'zigzag',
+			'widget_name' => $this->widget->get_name(),
 		], $defaults );
 		?>
 		<div class="ehp-zigzag__button-container">

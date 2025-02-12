@@ -25,11 +25,6 @@
 	--footer-icon-color: #28292B;
 	--footer-icon-color-hover: #555963;
 
-	--footer-box-padding-block-start: 40px;
-	--footer-box-padding-block-end: 40px;
-	--footer-box-padding-inline-start: 40px;
-	--footer-box-padding-inline-end: 40px;
-
 	--footer-vertical-gap-content-default: 20px;
 	--footer-vertical-gap-copyright-default: 60px;
 	--footer-vertical-gap-content-narrow: 16px;
@@ -51,20 +46,6 @@
 	padding-block-end: var(--footer-box-padding-block-end);
 	padding-inline-start: var(--footer-box-padding-inline-start);
 	padding-inline-end: var(--footer-box-padding-inline-end);
-
-	@media screen and (min-width: $screen-tablet-min) {
-		--footer-box-padding-block-start: 60px;
-		--footer-box-padding-block-end: 60px;
-		--footer-box-padding-inline-start: 60px;
-		--footer-box-padding-inline-end: 60px;
-	}
-
-	@media screen and (min-width: $screen-desktop-min) {
-		--footer-box-padding-block-start: 100px;
-		--footer-box-padding-block-end: 100px;
-		--footer-box-padding-inline-start: 100px;
-		--footer-box-padding-inline-end: 100px;
-	}
 
 	&.has-box-border {
 		border-top: var(--footer-box-border-width) solid var(--footer-box-border-color);

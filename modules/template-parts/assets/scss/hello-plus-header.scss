@@ -26,10 +26,6 @@
 	--header-button-primary-text-color-hover: #{$global-colors-text};
 	--header-button-primary-border-width: 0;
 	--header-button-primary-border-color: transparent;
-	--header-button-primary-padding-block-end: 8px;
-	--header-button-primary-padding-block-start: 8px;
-	--header-button-primary-padding-inline-end: 16px;
-	--header-button-primary-padding-inline-start: 16px;
 	--header-button-primary-border-radius-block-end: #{$corners-shape-default};
 	--header-button-primary-border-radius-block-start: #{$corners-shape-default};
 	--header-button-primary-border-radius-inline-end: #{$corners-shape-default};
@@ -41,10 +37,6 @@
 	--header-button-secondary-text-color-hover: #{$global-colors-secondary};
 	--header-button-secondary-border-width: 2px;
 	--header-button-secondary-border-color: #{$global-colors-secondary};
-	--header-button-secondary-padding-block-end: 8px;
-	--header-button-secondary-padding-block-start: 8px;
-	--header-button-secondary-padding-inline-end: 16px;
-	--header-button-secondary-padding-inline-start: 16px;
 	--header-button-secondary-border-radius-block-end: #{$corners-shape-default};
 	--header-button-secondary-border-radius-block-start: #{$corners-shape-default};
 	--header-button-secondary-border-radius-inline-end: #{$corners-shape-default};
@@ -62,7 +54,8 @@
 	--header-pointer-hover-underline-color: #0052FF;
 	--header-pointer-hover-highlight-bg-color: #E0EAFF;
 	--header-pointer-hover-highlight-padding-inline-default: 8px;
-	--header-pointer-hover-highlight-padding-block-default: 4px;--header-pointer-hover-highlight-padding-inline-thin: 6px;
+	--header-pointer-hover-highlight-padding-block-default: 4px;
+	--header-pointer-hover-highlight-padding-inline-thin: 6px;
 	--header-pointer-hover-highlight-padding-block-thin: 2px;
 	--header-pointer-hover-highlight-padding-inline-thick: 8px;
 	--header-pointer-hover-highlight-padding-block-thick: 8px;
@@ -74,7 +67,8 @@
 	--header-focus-active-underline-color: #0052FF;
 	--header-focus-active-highlight-bg-color: #E0EAFF;
 	--header-focus-active-highlight-padding-inline-default: 8px;
-	--header-focus-active-highlight-padding-block-default: 4px;--header-focus-active-highlight-padding-inline-thin: 6px;
+	--header-focus-active-highlight-padding-block-default: 4px;
+	--header-focus-active-highlight-padding-inline-thin: 6px;
 	--header-focus-active-highlight-padding-block-thin: 2px;
 	--header-focus-active-highlight-padding-inline-thick: 8px;
 	--header-focus-active-highlight-padding-block-thick: 8px;
@@ -86,10 +80,6 @@
 	--header-dropdown-divider-color: #E0E1E2;
 	--header-dropdown-divider-width: 1px;
 
-	--header-box-padding-block-start: 16px;
-	--header-box-padding-block-end: 16px;
-	--header-box-padding-inline-start: 32px;
-	--header-box-padding-inline-end: 32px;
 	--header-box-border-width: 1px;
 	--header-box-border-color: #555963;
 	

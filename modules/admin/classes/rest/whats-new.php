@@ -15,9 +15,8 @@ class Whats_New {
 		require_once HELLO_BIZ_PATH . '/vendor/autoload.php';
 
 		$notificator = new Theme_Notifications(
-			'hello-elementor',
-			'3.1.0',
-			'theme'
+			'hello-plus',
+			HELLO_PLUS_VERSION,
 		);
 
 		return $notificator->get_notifications_by_conditions( true );

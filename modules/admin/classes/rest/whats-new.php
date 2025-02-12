@@ -12,11 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Whats_New {
 
 	public function get_notifications() {
-		require_once HELLO_BIZ_PATH . '/vendor/autoload.php';
+		require_once HELLOPLUS_PATH . '/vendor/autoload.php';
 
 		$notificator = new Theme_Notifications(
 			'hello-plus',
-			HELLO_PLUS_VERSION,
+			HELLOPLUS_VERSION,
 		);
 
 		return $notificator->get_notifications_by_conditions( true );

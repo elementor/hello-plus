@@ -257,6 +257,8 @@
 	}
 
 	&.has-image-stretch {
+		--flex-hero-image-width: 100%;
+
 		padding: 0;
 
 		@media screen and (min-width: $screen-desktop-min) {

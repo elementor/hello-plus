@@ -156,6 +156,8 @@
 	}
 
 	&.has-image-stretch {
+		--cta-image-width: 100%;
+
 		padding: 0;
 
 		&.has-preset-showcase {

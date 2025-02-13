@@ -177,22 +177,17 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 	}
 
 	isResponsiveBreakpoint() {
-		const device = this.getCurrentDevice();
-		return this.elements.main.classList.contains( `has-navigation-breakpoint-${ device }-portrait` );
-	}
+		const responsiveBreakpoint = this.elements.main.getAttribute( 'data-responsive-breakpoint' );
 
-	getCurrentDevice() {
-		const { mobilePortrait, tabletPortrait, mobile, tablet, desktop } = this.getSettings( 'constants' );
-
-		const isMobile = window.innerWidth <= mobilePortrait;
-		const isTablet = window.innerWidth <= tabletPortrait;
-
-		if ( isMobile ) {
-			return mobile;
-		} else if ( isTablet ) {
-			return tablet;
+		if ( ! responsiveBreakpoint ) {
+			return false;
 		}
-		return desktop;
+
+		const { mobilePortrait, tabletPortrait } = this.getSettings( 'constants' );
+
+		const breakpointValue = 'tablet-portrait' === responsiveBreakpoint ? tabletPortrait : mobilePortrait;
+
+		return window.innerWidth <= breakpointValue;
 	}
 
     toggleNavigation() {

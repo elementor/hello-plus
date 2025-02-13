@@ -55,18 +55,20 @@ class Onboarding_Settings {
 		try {
 			$kits = $this->call_and_check( $endpoint_url );
 
-			foreach ( $kits as $index => $kit ) {
-				$kits[ $index ]['manifest'] = $this->call_and_check(
+			$sorted_kits = $this->sort_kits_by_index( 'featured_index', $kits );
+
+			foreach ( $sorted_kits as $index => $kit ) {
+				$sorted_kits[ $index ]['manifest'] = $this->call_and_check(
 					Kit_Library::DEFAULT_BASE_ENDPOINT . '/kits/' . $kit['_id'] . '/manifest'
 				);
 			}
 
-			set_transient( self::KITS_TRANSIENT, $kits, 24 * HOUR_IN_SECONDS );
+			set_transient( self::KITS_TRANSIENT, $sorted_kits, 24 * HOUR_IN_SECONDS );
 		} catch ( \Exception $e ) {
 			return [];
 		}
 
-		return $kits;
+		return $sorted_kits;
 	}
 
 	/**
@@ -122,6 +124,18 @@ class Onboarding_Settings {
 				],
 			]
 		);
+	}
+
+	private function sort_kits_by_index( string $index_name, array $kits ): array {
+		if ( empty( $kits[0][ $index_name ] ) ) {
+			$index_name = 'featured_index';
+		}
+
+		usort($kits, function( $kit_1, $kit_2 ) use ( $index_name ) {
+			return $kit_1[ $index_name ] <=> $kit_2[ $index_name ];
+		} );
+
+		return $kits;
 	}
 
 	public function __construct() {

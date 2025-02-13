@@ -87,13 +87,15 @@ export default elementorModules.frontend.handlers.Base.extend( {
 						.find( '#form-field-' + key )
 						.parent()
 						.addClass( 'elementor-error' )
-						.append( '<span class="elementor-message elementor-message-danger elementor-help-inline elementor-form-help-inline" role="alert"></span>' ).text( title )
+						.append( jQuery( '<span class="elementor-message elementor-message-danger elementor-help-inline elementor-form-help-inline" role="alert"></span>' ).text( title ) )
 						.find( ':input' ).attr( 'aria-invalid', 'true' );
 				} );
 
 				$form.trigger( 'error' );
 			}
-			$form.append( '<div class="elementor-message elementor-message-danger" role="alert"></div>' ).text( response.data.message );
+
+			var errorMessage = jQuery( '<div class="elementor-message elementor-message-danger" role="alert"></div>' ).text( response.data.message );
+			$form.append( errorMessage );
 		} else {
 			$form.trigger( 'submit_success', response.data );
 
@@ -109,7 +111,8 @@ export default elementorModules.frontend.handlers.Base.extend( {
 			}
 
 			if ( 'undefined' !== typeof response.data.message && '' !== response.data.message ) {
-				$form.append( '<div class="' + successClass + '" role="alert"></div>' ).text( response.data.message );
+				var successMessage = jQuery( '<div class="' + successClass + '" role="alert"></div>' ).text( response.data.message );
+				$form.append( successMessage );
 			}
 		}
 	},
@@ -117,7 +120,8 @@ export default elementorModules.frontend.handlers.Base.extend( {
 	onError( xhr, desc ) {
 		const $form = this.elements.$form;
 
-		$form.append( '<div class="elementor-message elementor-message-danger" role="alert"></div>' ).text( desc );
+		var dangerMessage = jQuery( '<div class="' + successClass + '" role="alert"></div>' ).text( desc );
+		$form.append( dangerMessage );
 
 		this.elements.$submitButton
 			.html( this.elements.$submitButton.text() )

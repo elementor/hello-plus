@@ -41,6 +41,13 @@ class Module extends Module_Base {
 			[ 'elementor-frontend' ],
 			HELLOPLUS_VERSION
 		);
+
+		wp_register_style(
+			'helloplus-image',
+			HELLOPLUS_STYLE_URL . 'helloplus-image.css',
+			[ 'elementor-frontend' ],
+			HELLOPLUS_VERSION
+		);
 	}
 
 	/**

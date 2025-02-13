@@ -18,6 +18,7 @@ use Elementor\Core\Kits\Documents\Tabs\{
 	Global_Colors,
 	Global_Typography
 };
+use HelloPlus\Classes\Ehp_Padding;
 
 class Ehp_Button {
 	private $context = [];
@@ -371,11 +372,11 @@ class Ehp_Button {
 				'options' => [
 					'row' => [
 						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => 'eicon-h-align-left',
+						'icon' => 'eicon-h-align-' . ( is_rtl() ? 'right' : 'left' ),
 					],
 					'row-reverse' => [
 						'title' => esc_html__( 'End', 'hello-plus' ),
-						'icon' => 'eicon-h-align-right',
+						'icon' => 'eicon-h-align-' . ( is_rtl() ? 'left' : 'right' ),
 					],
 				],
 				'selectors_dictionary' => [
@@ -633,21 +634,22 @@ class Ehp_Button {
 			]
 		);
 
-		$this->widget->add_responsive_control(
-			$type . '_button_padding',
-			[
-				'label' => esc_html__( 'Padding', 'hello-plus' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em', 'rem' ],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-' . $widget_name => '--' . $widget_name . '-button-' . $type . '-padding-block-end: {{BOTTOM}}{{UNIT}}; --' . $widget_name . '-button-' . $type . '-padding-block-start: {{TOP}}{{UNIT}}; --' . $widget_name . '-button-' . $type . '-padding-inline-end: {{RIGHT}}{{UNIT}}; --' . $widget_name . '-button-' . $type . '-padding-inline-start: {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before',
-				'condition' => array_merge([
-					$type . '_button_type' => 'button',
-				], $add_type_condition),
-			]
-		);
+		$padding = new Ehp_Padding( $this->widget, [
+			'widget_name' => $widget_name,
+			'container_prefix' => 'button',
+			'type_prefix' => $type,
+			'default_padding' => [
+				'top' => '8',
+				'right' => '16',
+				'bottom' => '8',
+				'left' => '16',
+				'unit' => 'px',
+			],
+			'condition' => array_merge([
+				$type . '_button_type' => 'button',
+			], $add_type_condition),
+		] );
+		$padding->add_style_controls();
 	}
 
 	public function __construct( Widget_Base $widget, $context = [], $defaults = [] ) {

@@ -5,11 +5,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use Elementor\Group_Control_Image_Size;
-use Elementor\Icons_Manager;
 use Elementor\Utils;
 use HelloPlus\Modules\Content\Widgets\Hero;
-use HelloPlus\Classes\Ehp_Button;
+use HelloPlus\Classes\{
+	Ehp_Button,
+	Ehp_Image,
+};
 
 class Widget_Hero_Render {
 	protected Hero $widget;
@@ -43,7 +44,7 @@ class Widget_Hero_Render {
 			<?php
 				$this->render_text_container();
 				$this->render_cta_button();
-				$this->render_image();
+				$this->render_image_container();
 			?>
 		</div>
 		<?php
@@ -82,7 +83,7 @@ class Widget_Hero_Render {
 	public function render_cta_button() {
 		$button = new Ehp_Button( $this->widget, [
 			'type' => 'primary',
-			'widget_name' => 'hero',
+			'widget_name' => $this->widget->get_name(),
 		] );
 		?>
 		<div class="ehp-hero__button-container">
@@ -91,22 +92,10 @@ class Widget_Hero_Render {
 		<?php
 	}
 
-	public function render_image() {
-		$image = $this->settings['image'];
-		$has_image = ! empty( $image['url'] );
-		$image_classnames = self::IMAGE_CLASSNAME;
-
-		$this->widget->add_render_attribute( 'image', [
-			'class' => $image_classnames,
+	protected function render_image_container() {
+		$image = new Ehp_Image( $this->widget, [
+			'widget_name' => $this->widget->get_name(),
 		] );
-		?>
-		<div <?php $this->widget->print_render_attribute_string( 'image' ); ?>>
-			<?php
-			if ( $has_image ) {
-				Group_Control_Image_Size::print_attachment_image_html( $this->settings, 'image' );
-			}
-			?>
-		</div>
-		<?php
+		$image->render();
 	}
 }

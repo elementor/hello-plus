@@ -4,53 +4,71 @@ import Box from '@elementor/ui/Box';
 import Image from '@elementor/ui/Image';
 import EyeIcon from '@elementor/icons/EyeIcon';
 import { __ } from '@wordpress/i18n';
+import { styled } from '@elementor/ui/styles';
+
+const Container = styled( Stack )( ( { theme } ) => ( {
+	border: `1px solid ${ theme.palette.divider }`,
+	borderRadius: theme.shape.borderRadius,
+} ) );
+
+const Title = styled( Typography )( ( { theme } ) => ( {
+	color: theme.palette.text.secondary,
+	fontWeight: 500,
+	padding: theme.spacing( 1.25 ),
+} ) );
+
+const ImageContainer = styled( Box )( ( { theme } ) => ( {
+	position: 'relative',
+	cursor: 'pointer',
+	display: 'flex',
+	aspectRatio: '1',
+	overflow: 'hidden',
+	padding: theme.spacing( 1.25 ),
+	borderTop: `1px solid ${ theme.palette.divider }`,
+} ) );
+
+const Overlay = styled( Box )( () => ( {
+	position: 'absolute',
+	top: 10,
+	left: 10,
+	width: 'calc(100% - 20px)',
+	height: 'calc(100% - 20px)',
+	backgroundColor: 'rgba(0, 0, 0, 0.5)',
+	color: 'white',
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'center',
+	flexDirection: 'column',
+	opacity: 0,
+	transition: 'opacity 0.3s',
+	'&:hover': {
+		opacity: 1,
+	},
+} ) );
 
 export const PreviewWithImage = ( { title, thumbnail, onClick } ) => {
 	return (
-		<Stack direction="column" >
-			<Typography variant="body2" sx={ { height: 45, color: 'text.secondary' } }>{ title }</Typography>
-			<Box sx={ {
-				position: 'relative',
-				cursor: 'pointer',
-				boxShadow: 3,
-				display: 'flex',
-				aspectRatio: '1',
-				overflow: 'hidden',
-			} }>
+		<Container direction="column">
+			<Box sx={ { minHeight: 40 } }>
+				<Title variant="body1">{ title }</Title>
+			</Box>
+
+			<ImageContainer>
 				<Image
 					src={ thumbnail }
 					alt={ title }
 					sx={ {
-						borderRadius: 1,
 						width: '100%',
 						height: 'auto',
 						objectFit: 'cover',
 				} } />
-				<Box
-					sx={ {
-						position: 'absolute',
-						top: 0,
-						left: 0,
-						width: '100%',
-						height: '100%',
-						backgroundColor: 'rgba(0, 0, 0, 0.5)',
-						color: 'white',
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'center',
-						flexDirection: 'column',
-						opacity: 0,
-						transition: 'opacity 0.3s',
-						'&:hover': {
-							opacity: 1,
-						},
-					} }
+				<Overlay
 					onClick={ onClick }
 				>
 					<EyeIcon sx={ { mr: 1 } } />
-					<Typography variant="body2" sx={ { color: 'text.primary' } }>{ __( 'View Demo', 'hello-plus' ) }</Typography>
-				</Box>
-			</Box>
-		</Stack>
+					<Typography variant="body2" sx={ { color: 'theme.palette.common.white' } }>{ __( 'View Demo', 'hello-plus' ) }</Typography>
+				</Overlay>
+			</ImageContainer>
+		</Container>
 	);
 };

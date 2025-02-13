@@ -8,18 +8,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Background;
-use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Widget_Base;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 
-use Elementor\Utils as Elementor_Utils;
-
 use HelloPlus\Modules\Content\Base\Traits\Shared_Content_Traits;
 use HelloPlus\Modules\Content\Classes\Render\Widget_Hero_Render;
 use HelloPlus\Modules\Theme\Module as Theme_Module;
-use HelloPlus\Classes\Ehp_Button;
+use HelloPlus\Classes\{
+	Ehp_Button,
+	Ehp_Image,
+	Ehp_Padding,
+};
 
 class Hero extends Widget_Base {
 
@@ -46,7 +47,7 @@ class Hero extends Widget_Base {
 	}
 
 	public function get_style_depends(): array {
-		return [ 'helloplus-hero', 'helloplus-button' ];
+		return [ 'helloplus-hero', 'helloplus-button', 'helloplus-image' ];
 	}
 
 	protected function render(): void {
@@ -158,7 +159,7 @@ class Hero extends Widget_Base {
 			'primary_cta_button_text_placeholder' => esc_html__( 'Contact us', 'hello-plus' ),
 		];
 
-		$button = new Ehp_Button( $this, [ 'widget_name' => 'hero' ], $defaults );
+		$button = new Ehp_Button( $this, [ 'widget_name' => $this->get_name() ], $defaults );
 		$button->add_content_section();
 	}
 
@@ -171,16 +172,8 @@ class Hero extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'image',
-			[
-				'label' => esc_html__( 'Choose Image', 'hello-plus' ),
-				'type' => Controls_Manager::MEDIA,
-				'default' => [
-					'url' => Elementor_Utils::get_placeholder_image_src(),
-				],
-			]
-		);
+		$image = new Ehp_Image( $this, [ 'widget_name' => $this->get_name() ] );
+		$image->add_content_section();
 
 		$this->end_controls_section();
 	}
@@ -369,7 +362,7 @@ class Hero extends Widget_Base {
 			'has_secondary_cta' => false,
 		];
 
-		$button = new Ehp_Button( $this, [ 'widget_name' => 'hero' ], $defaults );
+		$button = new Ehp_Button( $this, [ 'widget_name' => $this->get_name() ], $defaults );
 		$button->add_style_controls();
 
 		$this->end_controls_section();
@@ -384,90 +377,8 @@ class Hero extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'image_full_width',
-			[
-				'label' => esc_html__( 'Full Width', 'hello-plus' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
-				'label_off' => esc_html__( 'No', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => 'no',
-			]
-		);
-
-		$this->add_responsive_control(
-			'image_width',
-			[
-				'label' => esc_html__( 'Width', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
-				'range' => [
-					'px' => [
-						'max' => 1600,
-					],
-					'%' => [
-						'max' => 100,
-					],
-				],
-				'default' => [
-					'size' => 1304,
-					'unit' => 'px',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-image-width: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'image_full_width!' => 'yes',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'image_height',
-			[
-				'label' => esc_html__( 'Height', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
-				'range' => [
-					'px' => [
-						'max' => 1600,
-					],
-					'%' => [
-						'max' => 100,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-image-height: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'image_position',
-			[
-				'label' => esc_html__( 'Position', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'desktop_default' => 'center center',
-				'tablet_default' => 'center center',
-				'mobile_default' => 'center center',
-				'options' => [
-					'' => esc_html__( 'Default', 'hello-plus' ),
-					'center center' => esc_html__( 'Center Center', 'hello-plus' ),
-					'center left' => esc_html__( 'Center Left', 'hello-plus' ),
-					'center right' => esc_html__( 'Center Right', 'hello-plus' ),
-					'top center' => esc_html__( 'Top Center', 'hello-plus' ),
-					'top left' => esc_html__( 'Top Left', 'hello-plus' ),
-					'top right' => esc_html__( 'Top Right', 'hello-plus' ),
-					'bottom center' => esc_html__( 'Bottom Center', 'hello-plus' ),
-					'bottom left' => esc_html__( 'Bottom Left', 'hello-plus' ),
-					'bottom right' => esc_html__( 'Bottom Right', 'hello-plus' ),
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-image-position: {{VALUE}}',
-				],
-			]
-		);
+		$image = new Ehp_Image( $this, [ 'widget_name' => $this->get_name() ] );
+		$image->add_style_controls();
 
 		$this->end_controls_section();
 	}
@@ -543,25 +454,11 @@ class Hero extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'style_box_padding',
-			[
-				'label' => esc_html__( 'Padding', 'hello-plus' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em', 'rem' ],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-hero' => '--hero-box-padding-block-end: {{BOTTOM}}{{UNIT}}; --hero-box-padding-block-start: {{TOP}}{{UNIT}}; --hero-box-padding-inline-end: {{RIGHT}}{{UNIT}}; --hero-box-padding-inline-start: {{LEFT}}{{UNIT}};',
-				],
-				'default' => [
-					'top' => 60,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-					'unit' => 'px',
-				],
-				'separator' => 'before',
-			]
-		);
+		$padding = new Ehp_Padding( $this, [
+			'widget_name' => $this->get_name(),
+			'container_prefix' => 'box',
+		] );
+		$padding->add_style_controls();
 
 		$this->add_control(
 			'box_full_screen_height',

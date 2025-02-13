@@ -23,23 +23,10 @@
 	--hero-button-primary-text-color-hover: #{$global-colors-text};
 	--hero-button-primary-border-width: 0;
 	--hero-button-primary-border-color: transparent;
-	--hero-button-primary-padding-block-end: 8px;
-	--hero-button-primary-padding-block-start: 8px;
-	--hero-button-primary-padding-inline-end: 16px;
-	--hero-button-primary-padding-inline-start: 16px;
 	--hero-button-primary-border-radius-block-end: #{$corners-shape-default};
 	--hero-button-primary-border-radius-block-start: #{$corners-shape-default};
 	--hero-button-primary-border-radius-inline-end: #{$corners-shape-default};
 	--hero-button-primary-border-radius-inline-start: #{$corners-shape-default};
-
-	--hero-box-padding-block-end: 0;
-	--hero-box-padding-block-start: 0;
-	--hero-box-padding-inline-end: 0;
-	--hero-box-padding-inline-start: 0;
-
-	--hero-image-width: 100%;
-	--hero-image-height: 380px;
-	--hero-image-position: center center;
 
 	display: flex;
 	flex-direction: column;
@@ -143,6 +130,19 @@
 		--ehp-button-primary-border-radius-inline-start: var(--hero-button-primary-border-radius-inline-start);
 	}
 
+	& .ehp-image {
+		--ehp-image-height: var(--hero-image-height);
+		--ehp-image-min-height: var(--hero-image-min-height);
+		--ehp-image-position: var(--hero-image-position);
+		--ehp-image-width: var(--hero-image-width);
+		--ehp-image-border-color: var(--hero-image-border-color);
+		--ehp-image-border-width: var(--hero-image-border-width);
+		--ehp-image-border-radius-block-end: var(--hero-image-border-radius-block-end);
+		--ehp-image-border-radius-block-start: var(--hero-image-border-radius-block-start);
+		--ehp-image-border-radius-inline-end: var(--hero-image-border-radius-inline-end);
+		--ehp-image-border-radius-inline-start: var(--hero-image-border-radius-inline-start);
+	}
+
 	&__heading {
 		color: var(--hero-heading-color);
 		margin: 0;
@@ -158,18 +158,5 @@
 	&__heading,
 	&__subheading {
 		margin-bottom: var(--hero-content-text-gap);
-	}
-
-	&__image {
-		display: flex;
-		justify-content: center;
-		overflow: hidden;
-
-		.elementor & img {
-			height: var(--hero-image-height);
-			object-fit: cover;
-			object-position: var(--hero-image-position);
-			width: var(--hero-image-width);
-		}
 	}
 }

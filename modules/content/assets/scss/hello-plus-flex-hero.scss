@@ -25,10 +25,6 @@
 	--flex-hero-button-primary-text-color-hover: #{$global-colors-text};
 	--flex-hero-button-primary-border-width: 0;
 	--flex-hero-button-primary-border-color: transparent;
-	--flex-hero-button-primary-padding-block-end: 8px;
-	--flex-hero-button-primary-padding-block-start: 8px;
-	--flex-hero-button-primary-padding-inline-end: 16px;
-	--flex-hero-button-primary-padding-inline-start: 16px;
 	// --flex-hero-button-primary-border-radius-block-end: #{$corners-shape-default};
 	// --flex-hero-button-primary-border-radius-block-start: #{$corners-shape-default};
 	// --flex-hero-button-primary-border-radius-inline-end: #{$corners-shape-default};
@@ -40,19 +36,11 @@
 	--flex-hero-button-secondary-text-color-hover: #{$global-colors-secondary};
 	--flex-hero-button-secondary-border-width: 2px;
 	--flex-hero-button-secondary-border-color: #{$global-colors-secondary};
-	--flex-hero-button-secondary-padding-block-end: 8px;
-	--flex-hero-button-secondary-padding-block-start: 8px;
-	--flex-hero-button-secondary-padding-inline-end: 16px;
-	--flex-hero-button-secondary-padding-inline-start: 16px;
 	// --flex-hero-button-secondary-border-radius-block-end: #{$corners-shape-default};
 	// --flex-hero-button-secondary-border-radius-block-start: #{$corners-shape-default};
 	// --flex-hero-button-secondary-border-radius-inline-end: #{$corners-shape-default};
 	// --flex-hero-button-secondary-border-radius-inline-start: #{$corners-shape-default};
 
-	--flex-hero-box-padding-block-end: 60px;
-	--flex-hero-box-padding-block-start: 60px;
-	--flex-hero-box-padding-inline-end: 60px;
-	--flex-hero-box-padding-inline-start: 60px;
 	--flex-hero-box-border-color: #{$global-colors-secondary};
 	--flex-hero-box-border-width: 1px;
 
@@ -264,6 +252,8 @@
 	}
 
 	&.has-image-stretch {
+		--flex-hero-image-width: 100%;
+
 		padding: 0;
 
 		@media screen and (min-width: $screen-desktop-min) {

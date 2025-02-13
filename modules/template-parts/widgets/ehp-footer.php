@@ -21,6 +21,10 @@ use HelloPlus\Modules\TemplateParts\Classes\{
 	Control_Media_Preview,
 };
 
+use HelloPlus\Classes\{
+	Ehp_Padding,
+};
+
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
 class Ehp_Footer extends Ehp_Widget_Base {
@@ -1102,38 +1106,32 @@ class Ehp_Footer extends Ehp_Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'footer_padding',
-			[
-				'label' => esc_html__( 'Padding', 'hello-plus' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 100,
-					'right' => 100,
-					'bottom' => 100,
-					'left' => 100,
-					'unit' => 'px',
-				],
-				'tablet_default' => [
-					'top' => 60,
-					'right' => 60,
-					'bottom' => 60,
-					'left' => 60,
-					'unit' => 'px',
-				],
-				'mobile_default' => [
-					'top' => 40,
-					'right' => 40,
-					'bottom' => 40,
-					'left' => 40,
-					'unit' => 'px',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-footer' => '--footer-box-padding-block-end: {{BOTTOM}}{{UNIT}}; --footer-box-padding-block-start: {{TOP}}{{UNIT}}; --footer-box-padding-inline-end: {{RIGHT}}{{UNIT}}; --footer-box-padding-inline-start: {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
+		$padding = new Ehp_Padding( $this, [
+			'widget_name' => 'footer',
+			'container_prefix' => 'box',
+			'default_padding' => [
+				'top' => 100,
+				'right' => 100,
+				'bottom' => 100,
+				'left' => 100,
+				'unit' => 'px',
+			],
+			'tablet_default_padding' => [
+				'top' => 60,
+				'right' => 60,
+				'bottom' => 60,
+				'left' => 60,
+				'unit' => 'px',
+			],
+			'mobile_default_padding' => [
+				'top' => 40,
+				'right' => 40,
+				'bottom' => 40,
+				'left' => 40,
+				'unit' => 'px',
+			],
+		] );
+		$padding->add_style_controls();
 
 		$this->end_controls_section();
 	}

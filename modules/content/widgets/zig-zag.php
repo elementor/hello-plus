@@ -25,6 +25,7 @@ use HelloPlus\Modules\Theme\Module as Theme_Module;
 use HelloPlus\Classes\{
 	Ehp_Button,
 	Ehp_Image,
+	Ehp_Padding,
 };
 
 class Zig_Zag extends Widget_Base {
@@ -365,7 +366,7 @@ class Zig_Zag extends Widget_Base {
 			'has_image_width_dropdown' => true,
 		];
 
-		$image = new Ehp_Image( $this, [ 'widget_name' => 'zigzag' ], $defaults );
+		$image = new Ehp_Image( $this, [ 'widget_name' => $this->get_name() ], $defaults );
 		$image->add_style_controls();
 
 		$this->end_controls_section();
@@ -560,7 +561,7 @@ class Zig_Zag extends Widget_Base {
 			'button_default_type' => 'link',
 		];
 
-		$button = new Ehp_Button( $this, [ 'widget_name' => 'zigzag' ], $defaults );
+		$button = new Ehp_Button( $this, [ 'widget_name' => $this->get_name() ], $defaults );
 		$button->add_button_type_controls(
 			[
 				'type' => 'primary',
@@ -633,7 +634,7 @@ class Zig_Zag extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'space_rows',
+			'column_gap',
 			[
 				'label' => esc_html__( 'Column Gap', 'hello-plus' ),
 				'type' => Controls_Manager::SLIDER,
@@ -648,15 +649,27 @@ class Zig_Zag extends Widget_Base {
 						'max' => 100,
 					],
 				],
+				'default' => [
+					'size' => 100,
+					'unit' => 'px',
+				],
+				'tablet_default' => [
+					'size' => 60,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 60,
+					'unit' => 'px',
+				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-rows-spacing: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-column-gap: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
 		);
 
 		$this->add_responsive_control(
-			'elements_gap',
+			'row_gap',
 			[
 				'label' => esc_html__( 'Row Gap', 'hello-plus' ),
 				'type' => Controls_Manager::SLIDER,
@@ -669,31 +682,36 @@ class Zig_Zag extends Widget_Base {
 						'max' => 100,
 					],
 				],
+				'default' => [
+					'size' => 120,
+					'unit' => 'px',
+				],
+				'tablet_default' => [
+					'size' => 40,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 32,
+					'unit' => 'px',
+				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-elements-gap: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-row-gap: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
 
-		$this->add_responsive_control(
-			'box_padding',
-			[
-				'label' => esc_html__( 'Padding', 'hello-plus' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-box-padding-block-end: {{BOTTOM}}{{UNIT}}; --zigzag-box-padding-block-start: {{TOP}}{{UNIT}}; --zigzag-box-padding-inline-end: {{RIGHT}}{{UNIT}}; --zigzag-box-padding-inline-start: {{LEFT}}{{UNIT}};',
-				],
-				'default' => [
-					'top' => 60,
-					'right' => 0,
-					'bottom' => 60,
-					'left' => 0,
-					'isLinked' => true,
-				],
-				'separator' => 'before',
-			]
-		);
+		$padding = new Ehp_Padding( $this, [
+			'widget_name' => $this->get_name(),
+			'container_prefix' => 'box',
+			'default_padding' => [
+				'top' => 60,
+				'right' => 0,
+				'bottom' => 60,
+				'left' => 0,
+				'unit' => 'px',
+			],
+		] );
+		$padding->add_style_controls();
 
 		$this->add_control(
 			'animation_label',

@@ -23,19 +23,10 @@
 	--hero-button-primary-text-color-hover: #{$global-colors-text};
 	--hero-button-primary-border-width: 0;
 	--hero-button-primary-border-color: transparent;
-	--hero-button-primary-padding-block-end: 8px;
-	--hero-button-primary-padding-block-start: 8px;
-	--hero-button-primary-padding-inline-end: 16px;
-	--hero-button-primary-padding-inline-start: 16px;
 	// --hero-button-primary-border-radius-block-end: #{$corners-shape-default};
 	// --hero-button-primary-border-radius-block-start: #{$corners-shape-default};
 	// --hero-button-primary-border-radius-inline-end: #{$corners-shape-default};
 	// --hero-button-primary-border-radius-inline-start: #{$corners-shape-default};
-
-	--hero-box-padding-block-end: 0;
-	--hero-box-padding-block-start: 0;
-	--hero-box-padding-inline-end: 0;
-	--hero-box-padding-inline-start: 0;
 
 	display: flex;
 	flex-direction: column;

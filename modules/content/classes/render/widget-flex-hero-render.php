@@ -165,14 +165,14 @@ class Widget_Flex_Hero_Render {
 	protected function render_button( $type ) {
 		$button = new Ehp_Button( $this->widget, [
 			'type' => $type,
-			'widget_name' => 'flex-hero',
+			'widget_name' => $this->widget->get_name(),
 		] );
 		$button->render();
 	}
 
 	protected function render_image_container() {
 		$image = new Ehp_Image( $this->widget, [
-			'widget_name' => 'flex-hero',
+			'widget_name' => $this->widget->get_name(),
 		] );
 		$image->render();
 	}

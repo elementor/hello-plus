@@ -81,9 +81,4 @@
 			border-width: var(--ehp-image-border-width);
 		}
 	}
-
-	&.has-image-stretch {
-		--ehp-image-height: 100%;
-		--ehp-image-width: 100%;
-	}
 }

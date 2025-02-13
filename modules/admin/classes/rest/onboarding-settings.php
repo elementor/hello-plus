@@ -131,7 +131,7 @@ class Onboarding_Settings {
 			$index_name = 'featured_index';
 		}
 
-		usort($kits, function( $kit_1, $kit_2 ) use ( $index_name ) {
+		usort($kits, function ( $kit_1, $kit_2 ) use ( $index_name ) {
 			return $kit_1[ $index_name ] <=> $kit_2[ $index_name ];
 		} );
 

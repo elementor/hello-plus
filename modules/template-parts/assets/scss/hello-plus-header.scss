@@ -97,6 +97,11 @@
 	--header-button-border-radius-custom-inline-end: #{$corners-shape-default};
 	--header-button-border-radius-custom-inline-start: #{$corners-shape-default};
 
+	--header-box-padding-block-start: 16px;
+	--header-box-padding-block-end: 16px;
+	--header-box-padding-inline-start: 32px;
+	--header-box-padding-inline-end: 32px;
+
 	display: flex;
 	max-width: var(--header-float-width);
 	padding-block-start: var(--header-box-padding-block-start);
@@ -284,6 +289,7 @@
 
 	&__navigation {
 		order: 1;
+		z-index: 999;
 
 		&[aria-hidden="true"] {
 			display: none;

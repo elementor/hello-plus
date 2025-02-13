@@ -133,7 +133,7 @@ class Onboarding_Settings {
 
 		$sort_by_time = false;
 
-		if ( in_array( $sort_by, [ 'created_at', 'updated_at', 'created' ] ) ) {
+		if ( in_array( $sort_by, [ 'created_at', 'updated_at', 'created' ], true ) ) {
 			$sort_by_time = true;
 		}
 

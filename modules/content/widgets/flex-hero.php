@@ -102,12 +102,12 @@ class Flex_Hero extends Widget_Base {
 				'options' => [
 					'showcase' => [
 						'title' => wp_kses_post( "Showcase:\nHighlight key concepts\nwith a balanced layout." ),
-						'image' => HELLOPLUS_IMAGES_URL . 'showcase.svg',
+						'image' => HELLOPLUS_IMAGES_URL . 'flex-hero-showcase.svg',
 						'hover_image' => true,
 					],
 					'storytelling' => [
 						'title' => wp_kses_post( "Storytelling:\nFocus on a narrative\nwith supporting visuals." ),
-						'image' => HELLOPLUS_IMAGES_URL . 'storytelling.svg',
+						'image' => HELLOPLUS_IMAGES_URL . 'flex-hero-storytelling.svg',
 						'hover_image' => true,
 					],
 				],

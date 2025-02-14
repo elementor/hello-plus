@@ -15,6 +15,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 
 use HelloPlus\Modules\Content\Base\Traits\Shared_Content_Traits;
+use HelloPlus\Modules\Content\Classes\Choose_Img_Control;
 use HelloPlus\Modules\Content\Classes\Render\Widget_CTA_Render;
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 use HelloPlus\Classes\{
@@ -92,62 +93,33 @@ class CTA extends Widget_Base {
 			'layout_preset',
 			[
 				'label' => esc_html__( 'Preset', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'focus' => esc_html__( 'Focus', 'hello-plus' ),
-					'streamline' => esc_html__( 'Streamline', 'hello-plus' ),
-					'showcase' => esc_html__( 'Showcase', 'hello-plus' ),
-					'storytelling' => esc_html__( 'Storytelling', 'hello-plus' ),
-				],
+				'type' => Choose_Img_Control::CONTROL_NAME,
 				'default' => 'focus',
-			]
-		);
-
-		$this->add_control(
-			'layout_info_focus',
-			[
-				'type' => Controls_Manager::ALERT,
-				'alert_type' => 'info',
-				'content' => esc_html__( 'Highlight a single, full-width CTA to maximize impact.', 'hello-plus' ),
-				'condition' => [
-					'layout_preset' => 'focus',
+				'label_block' => true,
+				'columns' => 2,
+				'options' => [
+					'focus' => [
+						'title' => wp_kses_post( "Focus:\nHighlight a single, full-width\nCTA to maximize impact." ),
+						'image' => HELLOPLUS_IMAGES_URL . 'cta-focus.svg',
+						'hover_image' => true,
+					],
+					'streamline' => [
+						'title' => wp_kses_post( "Streamline:\nPair alongside other CTAs\nand elements for a seamless flow." ),
+						'image' => HELLOPLUS_IMAGES_URL . 'cta-streamline.svg',
+						'hover_image' => true,
+					],
+					'showcase' => [
+						'title' => wp_kses_post( "Showcase:\nHighlight key concepts\nwith a balanced layout." ),
+						'image' => HELLOPLUS_IMAGES_URL . 'cta-showcase.svg',
+						'hover_image' => true,
+					],
+					'storytelling' => [
+						'title' => wp_kses_post( "Storytelling:\nFocus on a narrative\nwith supporting visuals." ),
+						'image' => HELLOPLUS_IMAGES_URL . 'cta-storytelling.svg',
+						'hover_image' => true,
+					],
 				],
-			]
-		);
-
-		$this->add_control(
-			'layout_info_streamline',
-			[
-				'type' => Controls_Manager::ALERT,
-				'alert_type' => 'info',
-				'content' => esc_html__( 'Pair alongside other CTAs and elements for a seamless flow.', 'hello-plus' ),
-				'condition' => [
-					'layout_preset' => 'streamline',
-				],
-			]
-		);
-
-		$this->add_control(
-			'layout_info_storytelling',
-			[
-				'type' => Controls_Manager::ALERT,
-				'alert_type' => 'info',
-				'content' => esc_html__( 'Focus on a narrative with supporting visuals.', 'hello-plus' ),
-				'condition' => [
-					'layout_preset' => 'storytelling',
-				],
-			]
-		);
-
-		$this->add_control(
-			'layout_info_showcase',
-			[
-				'type' => Controls_Manager::ALERT,
-				'alert_type' => 'info',
-				'content' => esc_html__( 'Highlight key concepts with a balanced layout.', 'hello-plus' ),
-				'condition' => [
-					'layout_preset' => 'showcase',
-				],
+				'frontend_available' => true,
 			]
 		);
 
@@ -366,9 +338,9 @@ class CTA extends Widget_Base {
 					],
 				],
 				'frontend_available' => true,
-				'default' => is_rtl() ? 'start' : 'end',
-				'tablet_default' => is_rtl() ? 'start' : 'end',
-				'mobile_default' => is_rtl() ? 'start' : 'end',
+				'default' => is_rtl() ? 'end' : 'start',
+				'tablet_default' => is_rtl() ? 'end' : 'start',
+				'mobile_default' => is_rtl() ? 'end' : 'start',
 				'condition' => [
 					'layout_preset' => 'showcase',
 				],

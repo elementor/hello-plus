@@ -20,6 +20,7 @@ use HelloPlus\Modules\TemplateParts\Classes\{
 	Render\Widget_Header_Render,
 	Control_Media_Preview,
 };
+use HelloPlus\Modules\Content\Classes\Choose_Img_Control;
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 use HelloPlus\Classes\{
@@ -102,53 +103,82 @@ class Ehp_Header extends Ehp_Widget_Base {
 			'layout_preset_select',
 			[
 				'label' => esc_html__( 'Preset', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'identity' => esc_html__( 'Identity', 'hello-plus' ),
-					'navigate' => esc_html__( 'Navigate', 'hello-plus' ),
-					'connect' => esc_html__( 'Connect', 'hello-plus' ),
-				],
+				'type' => Choose_Img_Control::CONTROL_NAME,
 				'default' => 'navigate',
-				'tablet_default' => 'navigate',
-				'mobile_default' => 'navigate',
+				'label_block' => true,
+				'columns' => 2,
+				'options' => [
+					'identity' => [
+						'title' => wp_kses_post( "Identity:\nSpotlight your brand\nwith your logo or site name\nin the center." ),
+						'image' => HELLOPLUS_IMAGES_URL . 'header-identity.svg',
+						'hover_image' => true,
+					],
+					'navigate' => [
+						'title' => wp_kses_post( "Navigate:\nGuide visitors with a\ncentered menu." ),
+						'image' => HELLOPLUS_IMAGES_URL . 'header-navigate.svg',
+						'hover_image' => true,
+					],
+					'connect' => [
+						'title' => wp_kses_post( "Connect:\nFocus on direct interaction\nwith clear contact options." ),
+						'image' => HELLOPLUS_IMAGES_URL . 'header-connect.svg',
+						'hover_image' => true,
+					],
+				],
+				'frontend_available' => true,
 			]
 		);
 
-		$this->add_control(
-			'layout_info_connect',
-			[
-				'type' => Controls_Manager::ALERT,
-				'alert_type' => 'info',
-				'content' => esc_html__( 'Focus on direct interaction with clear contact options.', 'hello-plus' ),
-				'condition' => [
-					'layout_preset_select' => 'connect',
-				],
-			]
-		);
+		// $this->add_control(
+		// 	'layout_preset_select',
+		// 	[
+		// 		'label' => esc_html__( 'Preset', 'hello-plus' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'options' => [
+		// 			'identity' => esc_html__( 'Identity', 'hello-plus' ),
+		// 			'navigate' => esc_html__( 'Navigate', 'hello-plus' ),
+		// 			'connect' => esc_html__( 'Connect', 'hello-plus' ),
+		// 		],
+		// 		'default' => 'navigate',
+		// 		'tablet_default' => 'navigate',
+		// 		'mobile_default' => 'navigate',
+		// 	]
+		// );
 
-		$this->add_control(
-			'layout_info_navigate',
-			[
-				'type' => Controls_Manager::ALERT,
-				'alert_type' => 'info',
-				'content' => esc_html__( 'Guide visitors with a centered menu.', 'hello-plus' ),
-				'condition' => [
-					'layout_preset_select' => 'navigate',
-				],
-			]
-		);
+		// $this->add_control(
+		// 	'layout_info_connect',
+		// 	[
+		// 		'type' => Controls_Manager::ALERT,
+		// 		'alert_type' => 'info',
+		// 		'content' => esc_html__( 'Focus on direct interaction with clear contact options.', 'hello-plus' ),
+		// 		'condition' => [
+		// 			'layout_preset_select' => 'connect',
+		// 		],
+		// 	]
+		// );
 
-		$this->add_control(
-			'layout_info_identity',
-			[
-				'type' => Controls_Manager::ALERT,
-				'alert_type' => 'info',
-				'content' => esc_html__( 'Spotlight your brand with your logo or site name in the center.', 'hello-plus' ),
-				'condition' => [
-					'layout_preset_select' => 'identity',
-				],
-			]
-		);
+		// $this->add_control(
+		// 	'layout_info_navigate',
+		// 	[
+		// 		'type' => Controls_Manager::ALERT,
+		// 		'alert_type' => 'info',
+		// 		'content' => esc_html__( 'Guide visitors with a centered menu.', 'hello-plus' ),
+		// 		'condition' => [
+		// 			'layout_preset_select' => 'navigate',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'layout_info_identity',
+		// 	[
+		// 		'type' => Controls_Manager::ALERT,
+		// 		'alert_type' => 'info',
+		// 		'content' => esc_html__( 'Spotlight your brand with your logo or site name in the center.', 'hello-plus' ),
+		// 		'condition' => [
+		// 			'layout_preset_select' => 'identity',
+		// 		],
+		// 	]
+		// );
 
 		$this->end_controls_section();
 	}

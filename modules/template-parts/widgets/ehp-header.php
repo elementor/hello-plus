@@ -128,58 +128,6 @@ class Ehp_Header extends Ehp_Widget_Base {
 			]
 		);
 
-		// $this->add_control(
-		// 	'layout_preset_select',
-		// 	[
-		// 		'label' => esc_html__( 'Preset', 'hello-plus' ),
-		// 		'type' => Controls_Manager::SELECT,
-		// 		'options' => [
-		// 			'identity' => esc_html__( 'Identity', 'hello-plus' ),
-		// 			'navigate' => esc_html__( 'Navigate', 'hello-plus' ),
-		// 			'connect' => esc_html__( 'Connect', 'hello-plus' ),
-		// 		],
-		// 		'default' => 'navigate',
-		// 		'tablet_default' => 'navigate',
-		// 		'mobile_default' => 'navigate',
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'layout_info_connect',
-		// 	[
-		// 		'type' => Controls_Manager::ALERT,
-		// 		'alert_type' => 'info',
-		// 		'content' => esc_html__( 'Focus on direct interaction with clear contact options.', 'hello-plus' ),
-		// 		'condition' => [
-		// 			'layout_preset_select' => 'connect',
-		// 		],
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'layout_info_navigate',
-		// 	[
-		// 		'type' => Controls_Manager::ALERT,
-		// 		'alert_type' => 'info',
-		// 		'content' => esc_html__( 'Guide visitors with a centered menu.', 'hello-plus' ),
-		// 		'condition' => [
-		// 			'layout_preset_select' => 'navigate',
-		// 		],
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'layout_info_identity',
-		// 	[
-		// 		'type' => Controls_Manager::ALERT,
-		// 		'alert_type' => 'info',
-		// 		'content' => esc_html__( 'Spotlight your brand with your logo or site name in the center.', 'hello-plus' ),
-		// 		'condition' => [
-		// 			'layout_preset_select' => 'identity',
-		// 		],
-		// 	]
-		// );
-
 		$this->end_controls_section();
 	}
 

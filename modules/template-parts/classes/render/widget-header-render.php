@@ -45,7 +45,9 @@ class Widget_Header_Render {
 		$has_blur_background = $this->settings['blur_background'];
 
 		if ( ! empty( $navigation_breakpoint ) ) {
-			$layout_classnames[] = 'has-navigation-breakpoint-' . $navigation_breakpoint;
+			$this->widget->add_render_attribute( 'layout', [
+				'data-responsive-breakpoint' => $navigation_breakpoint,
+			] );
 		}
 
 		if ( 'yes' === $box_border ) {

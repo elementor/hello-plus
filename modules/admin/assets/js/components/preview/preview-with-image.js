@@ -21,7 +21,6 @@ const ImageContainer = styled( Box )( ( { theme } ) => ( {
 	position: 'relative',
 	cursor: 'pointer',
 	display: 'flex',
-	aspectRatio: '1',
 	overflow: 'hidden',
 	padding: theme.spacing( 1.25 ),
 	borderTop: `1px solid ${ theme.palette.divider }`,

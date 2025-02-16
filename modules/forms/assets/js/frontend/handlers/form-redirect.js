@@ -8,20 +8,19 @@ export default elementorModules.frontend.handlers.Base.extend( {
 	},
 
 	getDefaultElements() {
-		var selectors = this.getSettings( 'selectors' ),
-			elements = {};
-
-		elements.$form = this.$element.find( selectors.form );
-
-		return elements;
+		const selectors = this.getSettings( 'selectors' );
+		return {
+			$form: this.$element[ 0 ].querySelector( selectors.form ),
+			$submitButton: this.$element[ 0 ].querySelector( selectors.submitButton ),
+		};
 	},
 
 	bindEvents() {
-		this.elements.$form.on( 'form_destruct', this.handleSubmit );
+		this.elements.$form.addEventListener( 'form_destruct', this.handleSubmit.bind( this ) );
 	},
 
 	handleSubmit( event, response ) {
-		if ( 'undefined' !== typeof response.data.redirect_url ) {
+		if ( response && response.data && response.data.redirect_url ) {
 			location.href = response.data.redirect_url;
 		}
 	},

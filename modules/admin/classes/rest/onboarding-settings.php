@@ -63,7 +63,7 @@ class Onboarding_Settings {
 				);
 			}
 
-			set_transient( self::KITS_TRANSIENT, $sorted_kits, 24 * HOUR_IN_SECONDS );
+			set_transient( self::KITS_TRANSIENT, $sorted_kits, HOUR_IN_SECONDS / 6 );
 		} catch ( \Exception $e ) {
 			return [];
 		}

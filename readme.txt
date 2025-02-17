@@ -3,7 +3,7 @@ Contributors: elemntor
 Tags: elementor, themes, hello themes, hello plus, widgets
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 Requires PHP: 7.4
 License: GPL-3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -82,6 +82,12 @@ For documentation and tutorials, visit our [Knowledge Base](https://elementor.co
 > You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability](https://patchstack.com/database/wordpress/plugin/hello-plus/vdp?pin=yjNmZ24tOxHkDmPZ&vero_id=security%40elementor.com&vero_conv=8O2Z42Yf8LaWeP3OA-siS16QfE_q7upzmkxRQDKcUlDak9P0YG5dwcvRZzblPc1KzxVu3qPDRapdqd9jMv4vmWKMdwo4Iu5PjeWFsSbZPTtq).
 
 == Changelog ==
+= 1.2.1 - 2025-02-16 =
+* Tweak: Kits thumbnails overview
+* Tweak: Improve RTL support
+* Fix: Form Lite - Message Style Not Applied
+* Fix: Header - Toggle doesn't open menu on responsive
+
 = 1.2.0 - 2025-02-11 =
 * New: Hello+ Header & Footer Templates Library
 * Tweak: CTA Widget layout options

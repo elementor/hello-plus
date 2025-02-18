@@ -25,10 +25,10 @@
 	--flex-hero-button-primary-text-color-hover: #{$global-colors-text};
 	--flex-hero-button-primary-border-width: 0;
 	--flex-hero-button-primary-border-color: transparent;
-	// --flex-hero-button-primary-border-radius-block-end: #{$corners-shape-default};
-	// --flex-hero-button-primary-border-radius-block-start: #{$corners-shape-default};
-	// --flex-hero-button-primary-border-radius-inline-end: #{$corners-shape-default};
-	// --flex-hero-button-primary-border-radius-inline-start: #{$corners-shape-default};
+	--flex-hero-button-primary-border-radius-block-end: #{$corners-shape-default};
+	--flex-hero-button-primary-border-radius-block-start: #{$corners-shape-default};
+	--flex-hero-button-primary-border-radius-inline-end: #{$corners-shape-default};
+	--flex-hero-button-primary-border-radius-inline-start: #{$corners-shape-default};
 
 	--flex-hero-button-secondary-icon-spacing: 10px;
 	--flex-hero-button-secondary-icon-size: 16px;
@@ -50,10 +50,14 @@
 	// --flex-hero-border-radius-round: #{$corners-shape-round};
 	// --flex-hero-border-radius-oval: #{$corners-shape-oval};
 
-	// --flex-hero-box-border-radius-custom-block-end: #{$corners-shape-sharp};
-	// --flex-hero-box-border-radius-custom-block-start: #{$corners-shape-sharp};
-	// --flex-hero-box-border-radius-custom-inline-end: #{$corners-shape-sharp};
-	// --flex-hero-box-border-radius-custom-inline-start: #{$corners-shape-sharp};
+	// --flex-hero-box-border-radius-block-end: #{$corners-shape-sharp};
+	// --flex-hero-box-border-radius-block-start: #{$corners-shape-sharp};
+	// --flex-hero-box-border-radius-inline-end: #{$corners-shape-sharp};
+	// --flex-hero-box-border-radius-inline-start: #{$corners-shape-sharp};
+	// --flex-hero-image-border-radius-block-end: #{$corners-shape-sharp};
+	// --flex-hero-image-border-radius-block-start: #{$corners-shape-sharp};
+	// --flex-hero-image-border-radius-inline-end: #{$corners-shape-sharp};
+	// --flex-hero-image-border-radius-inline-start: #{$corners-shape-sharp};
 
 	display: flex;
 	gap: var(--flex-hero-gap);
@@ -209,11 +213,20 @@
 		--ehp-image-border-radius-inline-start: var(--flex-hero-image-border-radius-inline-start);
 	}
 
-	&.shape-type-box.has-shape-custom {
-		--ehp-shapes-border-radius-block-end: var(--flex-hero-box-border-radius-block-end);
-		--ehp-shapes-border-radius-block-start: var(--flex-hero-box-border-radius-block-start);
-		--ehp-shapes-border-radius-inline-end: var(--flex-hero-box-border-radius-inline-end);
-		--ehp-shapes-border-radius-inline-start: var(--flex-hero-box-border-radius-inline-start);
+	&.has-shape-custom.shape-type {
+		&-box {
+			--ehp-shapes-border-radius-block-end: var(--flex-hero-box-border-radius-block-end);
+			--ehp-shapes-border-radius-block-start: var(--flex-hero-box-border-radius-block-start);
+			--ehp-shapes-border-radius-inline-end: var(--flex-hero-box-border-radius-inline-end);
+			--ehp-shapes-border-radius-inline-start: var(--flex-hero-box-border-radius-inline-start);
+		}
+
+		&-image {
+			--ehp-shapes-border-radius-block-end: var(--flex-hero-image-border-radius-block-end);
+			--ehp-shapes-border-radius-block-start: var(--flex-hero-image-border-radius-block-start);
+			--ehp-shapes-border-radius-inline-end: var(--flex-hero-image-border-radius-inline-end);
+			--ehp-shapes-border-radius-inline-start: var(--flex-hero-image-border-radius-inline-start);
+		}
 	}
 
 	// @mixin custom-shape-box() {

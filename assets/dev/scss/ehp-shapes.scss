@@ -39,7 +39,8 @@
 	}
 }
 
-.has-shape {
+.has-shape,
+.elementor img.has-shape {
 	@include shapes();
 
 	&-md {

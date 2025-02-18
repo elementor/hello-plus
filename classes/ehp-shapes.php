@@ -17,6 +17,9 @@ class Ehp_Shapes {
 	private ?Widget_Base $widget = null;
 
 	private $widget_settings = [];
+	private $control_prefix = '';
+	private $prefix_attr = '';
+	private $key_attr = '';
 
 	public function set_context( array $context ) {
 		$this->context = $context;
@@ -44,25 +47,21 @@ class Ehp_Shapes {
 		}, $options);
 	}
 
-	public function render_shape_classnames() {
+	public function get_shape_classnames() {
 		$this->widget_settings = $this->widget->get_settings_for_display();
-		$type = $this->context['container_type'];
 		$content_prefix = $this->context['prefix'] ?? '';
-		$prefix = $content_prefix . '_' ?? '';
-		$prefix_attr = $content_prefix . '-' ?? '';
-		$key = $this->context['key'] ?? '';
-		$key_attr = $key ? '-' . $key : '';
+		$container_type = $this->context['container_type'];
 
-		$shape = $this->widget_settings[ $prefix . $type . '_shape' ] ?? '';
+		$shape = $this->widget_settings[ $this->control_prefix . $container_type . '_shape' ] ?? '';
 
 		$shape_classnames = [];
 
 		if ( ! empty( $shape ) ) {
-			$shape_mobile = $this->widget_settings[ $prefix .  $type . '_shape_mobile' ];
-			$shape_tablet = $this->widget_settings[ $prefix .  $type . '_shape_tablet' ];
+			$shape_mobile = $this->widget_settings[ $this->control_prefix .  $container_type . '_shape_mobile' ];
+			$shape_tablet = $this->widget_settings[ $this->control_prefix .  $container_type . '_shape_tablet' ];
 
 			$shape_classnames[] = 'has-shape-' . $shape;
-			$shape_classnames[] = 'shape-type-' . $type;
+			$shape_classnames[] = 'shape-type-' . $container_type;
 
 			if ( ! empty( $shape_mobile ) ) {
 				$shape_classnames[] = 'has-shape-sm-' . $shape_mobile;
@@ -71,8 +70,19 @@ class Ehp_Shapes {
 			if ( ! empty( $shape_tablet ) ) {
 				$shape_classnames[] = 'has-shape-md-' . $shape_tablet;
 			}
+		}
 
-			$this->widget->add_render_attribute( $this->context['render_attribute'] . $key_attr, [
+		return $shape_classnames;
+	}
+
+	public function add_shape_attributes() {
+		$this->widget_settings = $this->widget->get_settings_for_display();
+		$shape = $this->widget_settings[ $this->control_prefix . $this->context['container_type'] . '_shape' ] ?? '';
+
+		if ( ! empty( $shape ) ) {
+			$shape_classnames = $this->get_shape_classnames();
+
+			$this->widget->add_render_attribute( $this->context['render_attribute'] . $this->key_attr, [
 				'class' => $shape_classnames,
 			] );
 		}
@@ -80,13 +90,9 @@ class Ehp_Shapes {
 
 	public function add_style_controls() {
 		$widget_name = $this->context['widget_name'];
-		$type = $this->context['container_type'];
-		$context_prefix = $this->context['prefix'] ?? '';
+		$container_type = $this->context['container_type'];
 		$condition = $this->context['condition'] ?? [];
 		$is_responsive = $this->context['is_responsive'] ?? true;
-
-		$prefix = $context_prefix . '_' ?? '';
-		$prefix_attr = '-' . $context_prefix ?? '';
 
 		$defaults = [
 			'button' => 'default',
@@ -95,50 +101,63 @@ class Ehp_Shapes {
 			'submenu' => 'default',
 		];
 
-		$control_options = [
-			'label' => esc_html__( 'Shape', 'hello-plus' ),
-			'type' => Controls_Manager::SELECT,
-			'default' => $defaults[ $type ] ?? $default,
-			'options' => $this->get_options()[ $type ],
-			'frontend_available' => true,
-			'condition' => $condition,
-		];
-
 		if ( $is_responsive ) {
 			$this->widget->add_responsive_control(
-				$prefix . $type . '_shape',
-				$control_options
+				$this->control_prefix . $container_type . '_shape',
+				[
+					'label' => esc_html__( 'Shape', 'hello-plus' ),
+					'type' => Controls_Manager::SELECT,
+					'default' => $defaults[ $container_type ] ?? $default,
+					'options' => $this->get_options()[ $container_type ],
+					'frontend_available' => true,
+					'condition' => $condition,
+				]
 			);
 		} else {
 			$this->widget->add_control(
-				$prefix . $type . '_shape',
-				$control_options
+				$this->control_prefix . $container_type . '_shape',
+				[
+					'label' => esc_html__( 'Shape', 'hello-plus' ),
+					'type' => Controls_Manager::SELECT,
+					'default' => $defaults[ $container_type ] ?? $default,
+					'options' => $this->get_options()[ $container_type ],
+					'frontend_available' => true,
+					'condition' => $condition,
+				]
 			);
 		}
 
-		$prefix_property = "--{$widget_name}-{$type}{$prefix_attr}-border-radius";
-
-		$custom_control_options = [
-			'label' => esc_html__( 'Border Radius', 'hello-plus' ),
-			'type' => Controls_Manager::DIMENSIONS,
-			'size_units' => [ 'px', '%', 'em', 'rem' ],
-			'selectors' => [
-				'{{WRAPPER}} .ehp-' . $widget_name => "{$prefix_property}-block-end: {{BOTTOM}}{{UNIT}}; {$prefix_property}-block-start: {{TOP}}{{UNIT}}; {$prefix_property}-inline-end: {{RIGHT}}{{UNIT}}; {$prefix_property}-inline-start: {{LEFT}}{{UNIT}};",
-			],
-			'condition' => array_merge( $condition, [
-				$prefix . $type . '_shape' => 'custom',
-			] ),
-		];
+		$prefix_property = "--{$widget_name}-{$container_type}{$this->prefix_attr}-border-radius";
 
 		if ( $is_responsive ) {
 			$this->widget->add_responsive_control(
-				$prefix . $type . '_shape_custom',
-				$custom_control_options
+				$this->control_prefix . $container_type . '_shape_custom',
+				[
+					'label' => esc_html__( 'Border Radius', 'hello-plus' ),
+					'type' => Controls_Manager::DIMENSIONS,
+					'size_units' => [ 'px', '%', 'em', 'rem' ],
+					'selectors' => [
+						'{{WRAPPER}} .ehp-' . $widget_name => "{$prefix_property}-block-end: {{BOTTOM}}{{UNIT}}; {$prefix_property}-block-start: {{TOP}}{{UNIT}}; {$prefix_property}-inline-end: {{RIGHT}}{{UNIT}}; {$prefix_property}-inline-start: {{LEFT}}{{UNIT}};",
+					],
+					'condition' => array_merge( $condition, [
+						$this->control_prefix . $container_type . '_shape' => 'custom',
+					] ),
+				]
 			);
 		} else {
 			$this->widget->add_control(
-				$prefix . $type . '_shape_custom',
-				$custom_control_options
+				$this->control_prefix . $container_type . '_shape_custom',
+				[
+					'label' => esc_html__( 'Border Radius', 'hello-plus' ),
+					'type' => Controls_Manager::DIMENSIONS,
+					'size_units' => [ 'px', '%', 'em', 'rem' ],
+					'selectors' => [
+						'{{WRAPPER}} .ehp-' . $widget_name => "{$prefix_property}-block-end: {{BOTTOM}}{{UNIT}}; {$prefix_property}-block-start: {{TOP}}{{UNIT}}; {$prefix_property}-inline-end: {{RIGHT}}{{UNIT}}; {$prefix_property}-inline-start: {{LEFT}}{{UNIT}};",
+					],
+					'condition' => array_merge( $condition, [
+						$this->control_prefix . $container_type . '_shape' => 'custom',
+					] ),
+				]
 			);
 		}
 	}
@@ -147,5 +166,9 @@ class Ehp_Shapes {
 		$this->widget = $widget;
 		$this->context = $context;
 		$this->defaults = $defaults;
+
+		$this->control_prefix = ! empty( $this->context['prefix'] ) ? $this->context['prefix'] . '_' : '';
+		$this->prefix_attr = ! empty( $this->context['prefix'] ) ? '-' . $this->context['prefix'] : '';
+		$this->key_attr = ! empty( $this->context['key'] ) ? '-' . $this->context['key'] : '';
 	}
 }

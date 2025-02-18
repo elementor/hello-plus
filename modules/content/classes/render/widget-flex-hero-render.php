@@ -81,7 +81,7 @@ class Widget_Flex_Hero_Render {
 			'widget_name' => 'flex-hero',
 			'render_attribute' => 'layout',
 		] );
-		$shapes->render_shape_classnames();
+		$shapes->add_shape_attributes();
 
 		// if ( ! empty( $box_shape ) ) {
 		// 	$layout_classnames[] = 'has-shape-' . $box_shape;

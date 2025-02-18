@@ -13,10 +13,10 @@ a.ehp-button:not([href]):not([tabindex]) {
 	--ehp-button-primary-padding-inline-end: 16px;
 	--ehp-button-primary-padding-inline-start: 16px;
 	--ehp-button-primary-border-radius: 0;
-	// --ehp-button-primary-border-radius-block-end: #{$corners-shape-default};
-	// --ehp-button-primary-border-radius-block-start: #{$corners-shape-default};
-	// --ehp-button-primary-border-radius-inline-end: #{$corners-shape-default};
-	// --ehp-button-primary-border-radius-inline-start: #{$corners-shape-default};
+	--ehp-button-primary-border-radius-block-end: #{$corners-shape-default};
+	--ehp-button-primary-border-radius-block-start: #{$corners-shape-default};
+	--ehp-button-primary-border-radius-inline-end: #{$corners-shape-default};
+	--ehp-button-primary-border-radius-inline-start: #{$corners-shape-default};
 
 	--ehp-button-secondary-icon-spacing: 10px;
 	--ehp-button-secondary-icon-size: 16px;

@@ -14,14 +14,15 @@ use Elementor\{
 	Icons_Manager,
 	Widget_Base
 };
+
 use Elementor\Core\Kits\Documents\Tabs\{
 	Global_Colors,
 	Global_Typography
 };
-use HelloPlus\Classes\Ehp_Padding;
 
 use HelloPlus\Classes\{
 	Ehp_Shapes,
+	Ehp_Padding,
 };
 
 class Ehp_Button {
@@ -98,7 +99,7 @@ class Ehp_Button {
 			'prefix' => $type,
 			'key' => $key,
 		] );
-		$shapes->render_shape_classnames();
+		$shapes->add_shape_attributes();
 
 		$this->widget->add_render_attribute( $type . '-button' . $key_attr, [
 			'class' => $button_classnames,

@@ -69,9 +69,7 @@ abstract class Form_Base extends Widget_Base {
 			[
 				'select-wrapper' . $i => [
 					'class' => [
-						'ehp-form__field',
-						'elementor-field',
-						'ehp-form__select',
+						'ehp-form__select-wrapper',
 						'remove-before',
 						esc_attr( $item['css_classes'] ),
 					],
@@ -80,7 +78,10 @@ abstract class Form_Base extends Widget_Base {
 					'name' => $this->get_attribute_name( $item ) . ( ! empty( $item['allow_multiple'] ) ? '[]' : '' ),
 					'id' => $this->get_attribute_id( $item ),
 					'class' => [
+						'ehp-form__field',
+						'elementor-field',
 						'elementor-field-textual',
+						'ehp-form__select',
 						'elementor-size-' . $item['input_size'],
 					],
 				],

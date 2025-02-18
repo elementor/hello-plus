@@ -365,6 +365,7 @@
 			}
 
 			&-end {
+				flex-direction: row-reverse;
 				&.has-image-stretch .ehp-flex-hero__content-container {
 					padding-block-start: var(--flex-hero-box-padding-block-start);
 					padding-block-end: var(--flex-hero-box-padding-block-end);

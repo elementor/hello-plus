@@ -13,6 +13,7 @@ use Elementor\Widget_Base;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 
+use HelloPlus\Includes\Utils;
 use HelloPlus\Modules\Content\Base\Traits\Shared_Content_Traits;
 use HelloPlus\Modules\Content\Classes\Render\Widget_Hero_Render;
 use HelloPlus\Modules\Theme\Module as Theme_Module;
@@ -22,6 +23,9 @@ use HelloPlus\Classes\{
 	Ehp_Padding,
 };
 
+/**
+ * @deprecated 1.3.0 Use `Flex Hero` widget instead.
+ */
 class Hero extends Widget_Base {
 
 	use Shared_Content_Traits;
@@ -46,6 +50,11 @@ class Hero extends Widget_Base {
 		return 'eicon-ehp-hero';
 	}
 
+	/* Deprecated Widget */
+	public function show_in_panel() {
+		return false;
+	}
+
 	public function get_style_depends(): array {
 		return [ 'helloplus-hero', 'helloplus-button', 'helloplus-image' ];
 	}
@@ -57,6 +66,8 @@ class Hero extends Widget_Base {
 	}
 
 	protected function register_controls() {
+		$this->deprecated_notice( Utils::plugin_title(), '1.3.0', '', esc_html__( 'Flex Hero', 'hello-plus' ) );
+
 		$this->add_content_section();
 		$this->add_style_section();
 	}

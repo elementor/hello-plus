@@ -49,7 +49,7 @@ class Ehp_Image {
 		}
 
 		$shapes = new Ehp_Shapes( $this->widget, [
-			'container_type' => 'image',
+			'container_prefix' => 'image',
 			'widget_name' => $widget_name,
 			// 'render_attribute' => $type . '-button',
 			// 'prefix' => $type,
@@ -366,7 +366,7 @@ class Ehp_Image {
 
 		$shapes = new Ehp_Shapes( $this->widget, [
 			'widget_name' => $widget_name,
-			'container_type' => 'image',
+			'container_prefix' => 'image',
 		] );
 		$shapes->add_style_controls();
 

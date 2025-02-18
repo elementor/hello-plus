@@ -93,10 +93,10 @@ class Ehp_Button {
 		// }
 
 		$shapes = new Ehp_Shapes( $this->widget, [
-			'container_type' => 'button',
 			'widget_name' => $widget_name,
+			'container_prefix' => 'button',
+			'type_prefix' => $type,
 			'render_attribute' => $type . '-button',
-			'prefix' => $type,
 			'key' => $key,
 		] );
 		$shapes->add_shape_attributes();
@@ -608,8 +608,8 @@ class Ehp_Button {
 
 		$shapes = new Ehp_Shapes( $this->widget, [
 			'widget_name' => $this->context['widget_name'],
-			'container_type' => 'button',
-			'prefix' => $type,
+			'container_prefix' => 'button',
+			'type_prefix' => $type,
 			'condition' => array_merge([
 				$type . '_button_type' => 'button',
 			], $add_type_condition),

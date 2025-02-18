@@ -781,8 +781,8 @@ class Flex_Hero extends Widget_Base {
 		);
 
 		$shapes = new Ehp_Shapes( $this, [
-			'widget_name' => 'flex-hero',
-			'container_type' => 'box',
+			'widget_name' => $this->get_name(),
+			'container_prefix' => 'box',
 		] );
 		$shapes->add_style_controls();
 

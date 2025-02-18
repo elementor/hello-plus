@@ -1119,7 +1119,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 
 		$shapes = new Ehp_Shapes( $this, [
 			'widget_name' => 'header',
-			'container_type' => 'submenu',
+			'container_prefix' => 'submenu',
 			'is_responsive' => false,
 		] );
 		$shapes->add_style_controls();

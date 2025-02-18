@@ -77,9 +77,9 @@ class Widget_Flex_Hero_Render {
 		}
 
 		$shapes = new Ehp_Shapes( $this->widget, [
-			'container_type' => 'box',
-			'widget_name' => 'flex-hero',
+			'container_prefix' => 'box',
 			'render_attribute' => 'layout',
+			'widget_name' => $this->widget->get_name(),
 		] );
 		$shapes->add_shape_attributes();
 

@@ -13,7 +13,6 @@ use Elementor\{
 
 class Ehp_Shapes {
 	private $context = [];
-	private $defaults = [];
 	private ?Widget_Base $widget = null;
 
 	private $widget_settings = [];
@@ -40,6 +39,7 @@ class Ehp_Shapes {
 			'submenu' => ['default', 'sharp', 'rounded', 'round', 'oval', 'custom'],
 			'box' => ['sharp', 'rounded', 'custom'],
 			'image' => ['sharp', 'rounded', 'round', 'oval', 'custom'],
+			'float' => ['default', 'sharp', 'round', 'rounded', 'custom'],
 		];
 	
 		return array_map(function ($keys) use ($options_names) {
@@ -50,24 +50,27 @@ class Ehp_Shapes {
 	public function get_shape_classnames() {
 		$this->widget_settings = $this->widget->get_settings_for_display();
 		$container_prefix = $this->context['container_prefix'];
+		$is_responsive = $this->context['is_responsive'] ?? true;
 
 		$shape = $this->widget_settings[ $this->control_prefix . $container_prefix . '_shape' ] ?? '';
 
 		$shape_classnames = [];
 
 		if ( ! empty( $shape ) ) {
-			$shape_mobile = $this->widget_settings[ $this->control_prefix .  $container_prefix . '_shape_mobile' ];
-			$shape_tablet = $this->widget_settings[ $this->control_prefix .  $container_prefix . '_shape_tablet' ];
-
 			$shape_classnames[] = 'has-shape-' . $shape;
 			$shape_classnames[] = 'shape-type-' . $container_prefix;
 
-			if ( ! empty( $shape_mobile ) ) {
-				$shape_classnames[] = 'has-shape-sm-' . $shape_mobile;
-			}
+			if ( $is_responsive ) {
+				$shape_mobile = $this->widget_settings[ $this->control_prefix .  $container_prefix . '_shape_mobile' ];
+				$shape_tablet = $this->widget_settings[ $this->control_prefix .  $container_prefix . '_shape_tablet' ];
 
-			if ( ! empty( $shape_tablet ) ) {
-				$shape_classnames[] = 'has-shape-md-' . $shape_tablet;
+				if ( ! empty( $shape_mobile ) ) {
+					$shape_classnames[] = 'has-shape-sm-' . $shape_mobile;
+				}
+	
+				if ( ! empty( $shape_tablet ) ) {
+					$shape_classnames[] = 'has-shape-md-' . $shape_tablet;
+				}
 			}
 		}
 
@@ -106,7 +109,7 @@ class Ehp_Shapes {
 				[
 					'label' => esc_html__( 'Shape', 'hello-plus' ),
 					'type' => Controls_Manager::SELECT,
-					'default' => $defaults[ $container_prefix ] ?? $default,
+					'default' => $defaults[ $container_prefix ] ?? 'default',
 					'options' => $this->get_options()[ $container_prefix ],
 					'frontend_available' => true,
 					'condition' => $condition,
@@ -161,10 +164,9 @@ class Ehp_Shapes {
 		}
 	}
 
-	public function __construct( Widget_Base $widget, $context = [], $defaults = [] ) {
+	public function __construct( Widget_Base $widget, $context = [] ) {
 		$this->widget = $widget;
 		$this->context = $context;
-		$this->defaults = $defaults;
 
 		$this->control_prefix = ! empty( $this->context['type_prefix'] ) ? $this->context['type_prefix'] . '_' : '';
 		$this->prefix_attr = ! empty( $this->context['type_prefix'] ) ? '-' . $this->context['type_prefix'] : '';

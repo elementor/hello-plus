@@ -13,7 +13,10 @@ use Elementor\{
 };
 
 use HelloPlus\Modules\TemplateParts\Widgets\Ehp_Header;
-use HelloPlus\Classes\Ehp_Button;
+use HelloPlus\Classes\{
+	Ehp_Button,
+	Ehp_Shapes,
+};
 
 /**
  * class Widget_Header_Render
@@ -39,9 +42,9 @@ class Widget_Header_Render {
 		$layout_preset = $this->settings['layout_preset_select'];
 		$behavior_scale_logo = $this->settings['behavior_sticky_scale_logo'];
 		$behavior_scale_title = $this->settings['behavior_sticky_scale_title'];
-		$behavior_float_shape = $this->settings['behavior_float_shape'];
-		$behavior_float_shape_tablet = $this->settings['behavior_float_shape_tablet'] ?? '';
-		$behavior_float_shape_mobile = $this->settings['behavior_float_shape_mobile'] ?? '';
+		// $behavior_float_shape = $this->settings['behavior_float_shape'];
+		// $behavior_float_shape_tablet = $this->settings['behavior_float_shape_tablet'] ?? '';
+		// $behavior_float_shape_mobile = $this->settings['behavior_float_shape_mobile'] ?? '';
 		$has_blur_background = $this->settings['blur_background'];
 
 		if ( ! empty( $navigation_breakpoint ) ) {
@@ -66,17 +69,24 @@ class Widget_Header_Render {
 			$layout_classnames[] = 'has-behavior-sticky-scale-title';
 		}
 
-		if ( ! empty( $behavior_float_shape ) ) {
-			$layout_classnames[] = 'has-shape-' . $behavior_float_shape;
+		$shapes = new Ehp_Shapes( $this->widget, [
+			'container_prefix' => 'float',
+			'render_attribute' => 'layout',
+			'widget_name' => 'header',
+		] );
+		$shapes->add_shape_attributes();
 
-			if ( ! empty( $behavior_float_shape_mobile ) ) {
-				$layout_classnames[] = 'has-shape-sm-' . $behavior_float_shape_mobile;
-			}
+		// if ( ! empty( $behavior_float_shape ) ) {
+		// 	$layout_classnames[] = 'has-shape-' . $behavior_float_shape;
 
-			if ( ! empty( $behavior_float_shape_tablet ) ) {
-				$layout_classnames[] = 'has-shape-md-' . $behavior_float_shape_tablet;
-			}
-		}
+		// 	if ( ! empty( $behavior_float_shape_mobile ) ) {
+		// 		$layout_classnames[] = 'has-shape-sm-' . $behavior_float_shape_mobile;
+		// 	}
+
+		// 	if ( ! empty( $behavior_float_shape_tablet ) ) {
+		// 		$layout_classnames[] = 'has-shape-md-' . $behavior_float_shape_tablet;
+		// 	}
+		// }
 
 		if ( ! empty( $behavior_on_scroll ) ) {
 			$layout_classnames[] = 'has-behavior-onscroll-' . $behavior_on_scroll;
@@ -550,7 +560,14 @@ class Widget_Header_Render {
 		// 	$dropdown_classnames[] = 'has-shape-' . $submenu_shape;
 		// }
 
-		return $dropdown_classnames;
+		$shapes = new Ehp_Shapes( $this->widget, [
+			'container_prefix' => 'submenu',
+			'widget_name' => 'header',
+			'is_responsive' => false,
+		] );
+		$classnames = array_merge( $dropdown_classnames, $shapes->get_shape_classnames() );
+
+		return $classnames;
 	}
 
 	public function handle_walker_menu_start_el( $item_output, $item ) {

@@ -56,9 +56,6 @@ class Ehp_Button {
 		$button_icon = $this->get_control_value( 'button_icon', '', 'cta_button_icon' );
 		$button_hover_animation = $this->get_control_value( 'button_hover_animation', '' );
 		$button_has_border = $this->get_control_value( 'show_button_border', '' );
-		// $button_corner_shape = $this->get_control_value( 'button_shape', '' );
-		// $button_corner_shape_mobile = $this->get_control_value( 'button_shape_mobile', '' );
-		// $button_corner_shape_tablet = $this->get_control_value( 'button_shape_tablet', '' );
 		$button_type = $this->get_control_value( 'button_type', '' );
 
 		$button_classnames = [
@@ -615,42 +612,6 @@ class Ehp_Button {
 			], $add_type_condition),
 		] );
 		$shapes->add_style_controls();
-
-		// $this->widget->add_control(
-		// 	$type . '_button_shape',
-		// 	[
-		// 		'label' => esc_html__( 'Shape', 'hello-plus' ),
-		// 		'type' => Controls_Manager::SELECT,
-		// 		'default' => 'default',
-		// 		'options' => [
-		// 			'default' => esc_html__( 'Default', 'hello-plus' ),
-		// 			'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
-		// 			'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
-		// 			'round' => esc_html__( 'Round', 'hello-plus' ),
-		// 			'oval' => esc_html__( 'Oval', 'hello-plus' ),
-		// 			'custom' => esc_html__( 'Custom', 'hello-plus' ),
-		// 		],
-				// 'condition' => array_merge([
-				// 	$type . '_button_type' => 'button',
-				// ], $add_type_condition),
-		// 	]
-		// );
-
-		// $this->widget->add_responsive_control(
-		// 	$type . '_button_shape_custom',
-		// 	[
-		// 		'label' => esc_html__( 'Border Radius', 'hello-plus' ),
-		// 		'type' => Controls_Manager::DIMENSIONS,
-		// 		'size_units' => [ 'px', '%', 'em', 'rem' ],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .ehp-' . $widget_name => '--' . $widget_name . '-button-' . $type . '-border-radius-block-end: {{BOTTOM}}{{UNIT}}; --' . $widget_name . '-button-' . $type . '-border-radius-block-start: {{TOP}}{{UNIT}}; --' . $widget_name . '-button-' . $type . '-border-radius-inline-end: {{RIGHT}}{{UNIT}}; --' . $widget_name . '-button-' . $type . '-border-radius-inline-start: {{LEFT}}{{UNIT}};',
-		// 		],
-		// 		'separator' => 'before',
-		// 		'condition' => array_merge([
-		// 			$type . '_button_shape' => 'custom',
-		// 		], $add_type_condition),
-		// 	]
-		// );
 
 		$this->widget->add_group_control(
 			Group_Control_Box_Shadow::get_type(),

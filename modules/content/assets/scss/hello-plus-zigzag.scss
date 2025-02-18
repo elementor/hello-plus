@@ -26,10 +26,10 @@
 	--zigzag-button-primary-text-color-hover: #{$global-colors-text};
 	--zigzag-button-primary-border-width: 0;
 	--zigzag-button-primary-border-color: transparent;
-	// --zigzag-button-primary-border-radius-block-end: #{$corners-shape-default};
-	// --zigzag-button-primary-border-radius-block-start: #{$corners-shape-default};
-	// --zigzag-button-primary-border-radius-inline-end: #{$corners-shape-default};
-	// --zigzag-button-primary-border-radius-inline-start: #{$corners-shape-default};
+	--zigzag-button-primary-border-radius-block-end: #{$corners-shape-default};
+	--zigzag-button-primary-border-radius-block-start: #{$corners-shape-default};
+	--zigzag-button-primary-border-radius-inline-end: #{$corners-shape-default};
+	--zigzag-button-primary-border-radius-inline-start: #{$corners-shape-default};
 
 	align-items: center;
 	background-color: transparent;
@@ -40,7 +40,6 @@
 		border-color: var(--zigzag-wrapper-border-color);
 		border-style: solid;
 		border-width: var(--zigzag-wrapper-border-width);
-		border-radius: var(--zigzag-wrapper-border-radius);
 	}
 
 	& a.ehp-zigzag__button,

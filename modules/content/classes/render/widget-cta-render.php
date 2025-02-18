@@ -36,10 +36,6 @@ class Widget_CTA_Render {
 		$image_stretch = $this->settings['image_stretch'];
 		$has_border = $this->settings['show_box_border'];
 
-		// $box_shape = $this->settings['box_shape'];
-		// $box_shape_mobile = $this->settings['box_shape_mobile'];
-		// $box_shape_tablet = $this->settings['box_shape_tablet'];
-
 		if ( ! empty( $layout_full_height_controls ) ) {
 			foreach ( $layout_full_height_controls as $breakpoint ) {
 				$layout_classnames[] = ' is-full-height-' . $breakpoint;
@@ -60,18 +56,6 @@ class Widget_CTA_Render {
 			'widget_name' => $this->widget->get_name(),
 		] );
 		$shapes->add_shape_attributes();
-
-		// if ( ! empty( $box_shape ) ) {
-		// 	$layout_classnames[] = 'has-shape-' . $box_shape;
-
-		// 	if ( ! empty( $box_shape_mobile ) ) {
-		// 		$layout_classnames[] = 'has-shape-sm-' . $box_shape_mobile;
-		// 	}
-
-		// 	if ( ! empty( $box_shape_tablet ) ) {
-		// 		$layout_classnames[] = 'has-shape-md-' . $box_shape_tablet;
-		// 	}
-		// }
 
 		$this->widget->add_render_attribute( 'layout', [
 			'class' => $layout_classnames,

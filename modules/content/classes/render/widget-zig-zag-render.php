@@ -198,9 +198,6 @@ class Widget_Zig_Zag_Render {
 			'button_icon' => $item[ $graphic_element . '_button_icon' ] ?? '',
 			'button_hover_animation' => $this->settings['primary_button_hover_animation'] ?? '',
 			'button_has_border' => $this->settings['primary_show_button_border'],
-			'button_corner_shape' => $this->settings['primary_button_shape'] ?? '',
-			'button_shape_mobile' => $this->settings['primary_button_shape_mobile'] ?? '',
-			'button_shape_tablet' => $this->settings['primary_button_shape_tablet'] ?? '',
 			'button_type' => $this->settings['primary_button_type'] ?? '',
 		];
 

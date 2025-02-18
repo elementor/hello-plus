@@ -19,10 +19,10 @@
 	--cta-button-primary-text-color-hover: #{$global-colors-text};
 	--cta-button-primary-border-width: 0;
 	--cta-button-primary-border-color: transparent;
-	// --cta-button-primary-border-radius-block-end: #{$corners-shape-default};
-	// --cta-button-primary-border-radius-block-start: #{$corners-shape-default};
-	// --cta-button-primary-border-radius-inline-end: #{$corners-shape-default};
-	// --cta-button-primary-border-radius-inline-start: #{$corners-shape-default};
+	--cta-button-primary-border-radius-block-end: #{$corners-shape-default};
+	--cta-button-primary-border-radius-block-start: #{$corners-shape-default};
+	--cta-button-primary-border-radius-inline-end: #{$corners-shape-default};
+	--cta-button-primary-border-radius-inline-start: #{$corners-shape-default};
 
 	--cta-button-secondary-icon-spacing: 10px;
 	--cta-button-secondary-icon-size: 16px;
@@ -30,24 +30,9 @@
 	--cta-button-secondary-text-color-hover: #{$global-colors-secondary};
 	--cta-button-secondary-border-width: 2px;
 	--cta-button-secondary-border-color: #{$global-colors-secondary};
-	// --cta-button-secondary-border-radius-block-end: #{$corners-shape-default};
-	// --cta-button-secondary-border-radius-block-start: #{$corners-shape-default};
-	// --cta-button-secondary-border-radius-inline-end: #{$corners-shape-default};
-	// --cta-button-secondary-border-radius-inline-start: #{$corners-shape-default};
 
 	--cta-box-border-color: #{$global-colors-secondary};
 	--cta-box-border-width: 1px;
-
-	// --cta-border-radius-default: #{$corners-shape-default};
-	// --cta-border-radius-sharp: #{$corners-shape-sharp};
-	// --cta-border-radius-rounded: #{$corners-shape-rounded};
-	// --cta-border-radius-round: #{$corners-shape-round};
-	// --cta-border-radius-oval: #{$corners-shape-oval};
-
-	// --cta-box-border-radius-custom-block-end: #{$corners-shape-sharp};
-	// --cta-box-border-radius-custom-block-start: #{$corners-shape-sharp};
-	// --cta-box-border-radius-custom-inline-end: #{$corners-shape-sharp};
-	// --cta-box-border-radius-custom-inline-start: #{$corners-shape-sharp};
 
 	--cta-text-container-flex-grow-default: 0;
 	--cta-text-container-flex-grow-end: 1;
@@ -61,81 +46,6 @@
 	padding-block-start: var(--cta-box-padding-block-start);
 	padding-inline-end: var(--cta-box-padding-inline-end);
 	padding-inline-start: var(--cta-box-padding-inline-start);
-
-	// @mixin shapes() {
-	// 	&-sharp {
-	// 		border-radius: var(--cta-border-radius-sharp);
-	// 	}
-	
-	// 	&-rounded {
-	// 		border-radius: var(--cta-border-radius-rounded);
-	// 	}
-	
-	// 	&-round {
-	// 		border-radius: var(--cta-border-radius-round);
-	// 	}
-
-	// 	&-default {
-	// 		border-radius: var(--cta-border-radius-default);
-	// 	}
-	
-	// 	&-oval {
-	// 		border-radius: var(--cta-border-radius-oval);
-	// 	}
-
-	// 	&-custom {
-	// 		border-top-left-radius: var(--cta-border-radius-block-end);
-	// 		border-top-right-radius: var(--cta-border-radius-block-start);
-	// 		border-bottom-right-radius: var(--cta-border-radius-inline-end);
-	// 		border-bottom-left-radius: var(--cta-border-radius-inline-start);
-	// 	}
-	// }
-
-	// & .has-shape,
-	// &.has-shape {
-	// 	@include shapes();
-
-	// 	&-md {
-	// 		@media screen and (max-width: $screen-tablet-max) {
-	// 			@include shapes();
-	// 		}
-	// 	}
-
-	// 	&-sm {
-	// 		@media screen and (max-width: $screen-mobile-max) {
-	// 			@include shapes();
-	// 		}
-	// 	}
-	// }
-
-	// @mixin custom-shape-box() {
-	// 	&-rounded {
-	// 		--cta-border-shape-rounded: #{$corners-box-shape-rounded};
-	// 	}
-
-	// 	&-custom {
-	// 		--cta-border-radius-block-end: var(--cta-box-border-radius-custom-block-end);
-	// 		--cta-border-radius-block-start: var(--cta-box-border-radius-custom-block-start);
-	// 		--cta-border-radius-inline-end: var(--cta-box-border-radius-custom-inline-end);
-	// 		--cta-border-radius-inline-start: var(--cta-box-border-radius-custom-inline-start);
-	// 	}
-	// }
-
-	// &.has-shape {
-	// 	@include custom-shape-box();
-
-	// 	&-md {
-	// 		@media screen and (max-width: $screen-tablet-max) {
-	// 			@include custom-shape-box();
-	// 		}
-	// 	}
-
-	// 	&-sm {
-	// 		@media screen and (max-width: $screen-mobile-max) {
-	// 			@include custom-shape-box();
-	// 		}
-	// 	}
-	// }
 
 	&.has-border {
 		border-color: var(--cta-box-border-color);

@@ -51,26 +51,8 @@ class Ehp_Image {
 		$shapes = new Ehp_Shapes( $this->widget, [
 			'container_prefix' => 'image',
 			'widget_name' => $widget_name,
-			// 'render_attribute' => $type . '-button',
-			// 'prefix' => $type,
-			// 'key' => $key,
 		] );
 		$image_classnames = array_merge( $image_classnames, $shapes->get_shape_classnames() );
-
-		// if ( ! empty( $settings['image_shape'] ) ) {
-		// 	$image_shape_mobile = $settings['image_shape_mobile'];
-		// 	$image_shape_tablet = $settings['image_shape_tablet'];
-
-		// 	$image_classnames[] = 'has-shape-' . $settings['image_shape'];
-
-		// 	if ( ! empty( $image_shape_mobile ) ) {
-		// 		$image_classnames[] = 'has-shape-sm-' . $image_shape_mobile;
-		// 	}
-
-		// 	if ( ! empty( $image_shape_tablet ) ) {
-		// 		$image_classnames[] = 'has-shape-md-' . $image_shape_tablet;
-		// 	}
-		// }
 
 		$html = str_replace( '<img ', '<img class="' . esc_attr( implode( ' ', $image_classnames ) ) . '" ', $html );
 		return $html;
@@ -330,39 +312,6 @@ class Ehp_Image {
 				],
 			]
 		);
-
-		// $this->widget->add_responsive_control(
-		// 	'image_shape',
-		// 	[
-		// 		'label' => esc_html__( 'Shape', 'hello-plus' ),
-		// 		'type' => Controls_Manager::SELECT,
-		// 		'default' => 'sharp',
-		// 		'options' => [
-		// 			'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
-		// 			'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
-		// 			'round' => esc_html__( 'Round', 'hello-plus' ),
-		// 			'oval' => esc_html__( 'Oval', 'hello-plus' ),
-		// 			'custom' => esc_html__( 'Custom', 'hello-plus' ),
-		// 		],
-		// 		'frontend_available' => true,
-		// 	]
-		// );
-
-		// $this->widget->add_responsive_control(
-		// 	'image_shape_custom',
-		// 	[
-		// 		'label' => esc_html__( 'Border Radius', 'hello-plus' ),
-		// 		'type' => Controls_Manager::DIMENSIONS,
-		// 		'size_units' => [ 'px', '%', 'em', 'rem' ],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .ehp-' . $widget_name => '--' . $widget_name . '-image-border-radius-block-end: {{BOTTOM}}{{UNIT}}; --' . $widget_name . '-image-border-radius-block-start: {{TOP}}{{UNIT}}; --' . $widget_name . '-image-border-radius-inline-end: {{RIGHT}}{{UNIT}}; --' . $widget_name . '-image-border-radius-inline-start: {{LEFT}}{{UNIT}};',
-		// 		],
-		// 		'separator' => 'before',
-				// 'condition' => [
-				// 	'image_shape' => 'custom',
-				// ],
-		// 	]
-		// );
 
 		$shapes = new Ehp_Shapes( $this->widget, [
 			'widget_name' => $widget_name,

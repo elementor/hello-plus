@@ -721,36 +721,6 @@ class CTA extends Widget_Base {
 		] );
 		$shapes->add_style_controls();
 
-		// $this->add_responsive_control(
-		// 	'box_shape',
-		// 	[
-		// 		'label' => esc_html__( 'Shape', 'hello-plus' ),
-		// 		'type' => Controls_Manager::SELECT,
-		// 		'default' => 'sharp',
-		// 		'options' => [
-		// 			'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
-		// 			'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
-		// 			'custom' => esc_html__( 'Custom', 'hello-plus' ),
-		// 		],
-		// 		'frontend_available' => true,
-		// 	]
-		// );
-
-		// $this->add_responsive_control(
-		// 	'box_shape_custom',
-		// 	[
-		// 		'label' => esc_html__( 'Border Radius', 'hello-plus' ),
-		// 		'type' => Controls_Manager::DIMENSIONS,
-		// 		'size_units' => [ 'px', '%', 'em', 'rem' ],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .ehp-cta' => '--cta-box-border-radius-custom-block-end: {{BOTTOM}}{{UNIT}}; --cta-box-border-radius-custom-block-start: {{TOP}}{{UNIT}}; --cta-box-border-radius-custom-inline-end: {{RIGHT}}{{UNIT}}; --cta-box-border-radius-custom-inline-start: {{LEFT}}{{UNIT}};',
-		// 		],
-		// 		'condition' => [
-		// 			'box_shape' => 'custom',
-		// 		],
-		// 	]
-		// );
-
 		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
 			[

@@ -381,7 +381,25 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
 				'label_off' => esc_html__( 'No', 'hello-plus' ),
 				'return_value' => 'yes',
-				'default' => 'no',
+				'default' => '',
+				'condition' => [
+					'layout_preset_select!' => 'connect',
+				],
+			]
+		);
+
+		$this->add_control(
+			'contact_buttons_show_connect',
+			[
+				'label' => esc_html__( 'Show', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'yes',
+				'condition' => [
+					'layout_preset_select' => 'connect',
+				],
 			]
 		);
 
@@ -661,8 +679,40 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'prevent_empty' => true,
 				'button_text' => esc_html__( 'Add Item', 'hello-plus' ),
 				'title_field' => '{{{ contact_buttons_label }}}',
-				'condition' => [
-					'contact_buttons_show' => 'yes',
+				'conditions' => [
+					'relation' => 'or',
+					'terms' => [
+						[
+							'relation' => 'and',
+							'terms' => [
+								[
+									'name' => 'layout_preset_select',
+									'operator' => '!==',
+									'value' => 'connect',
+								],
+								[
+									'name' => 'contact_buttons_show',
+									'operator' => '==',
+									'value' => 'yes',
+								],
+							],
+						],
+						[
+							'relation' => 'and',
+							'terms' => [
+								[
+									'name' => 'layout_preset_select',
+									'operator' => '==',
+									'value' => 'connect',
+								],
+								[
+									'name' => 'contact_buttons_show_connect',
+									'operator' => '==',
+									'value' => 'yes',
+								],
+							],
+						],
+					],
 				],
 				'default' => [
 					[

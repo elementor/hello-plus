@@ -593,7 +593,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 					],
 				],
 				'default' => [
-					'is_external' => true,
+					'is_external' => false,
 				],
 				'placeholder' => esc_html__( 'https://www.', 'hello-plus' ),
 			],
@@ -618,7 +618,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 					],
 				],
 				'default' => [
-					'is_external' => true,
+					'is_external' => false,
 				],
 				'placeholder' => esc_html__( 'https://ul.waze.com/ul?place=', 'hello-plus' ),
 			],
@@ -643,7 +643,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 					],
 				],
 				'default' => [
-					'is_external' => true,
+					'is_external' => false,
 				],
 				'placeholder' => esc_html__( 'https://maps.app.goo.gl', 'hello-plus' ),
 			],

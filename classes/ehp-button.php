@@ -160,7 +160,7 @@ class Ehp_Button {
 				],
 				'default' => [
 					'url' => '',
-					'is_external' => true,
+					'is_external' => false,
 				],
 			]
 		);
@@ -214,7 +214,7 @@ class Ehp_Button {
 					],
 					'default' => [
 						'url' => '',
-						'is_external' => true,
+						'is_external' => false,
 					],
 					'condition' => [
 						'secondary_cta_show' => 'yes',

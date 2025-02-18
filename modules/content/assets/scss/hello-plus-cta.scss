@@ -344,6 +344,19 @@
 				}
 			}
 		}
+
+		&-storytelling {
+
+			& .ehp-cta__elements-container {
+				max-width: unset;
+			}
+
+			& .ehp-cta__text-container,
+			& .ehp-cta__ctas-container {
+				margin: 0 auto;
+				max-width: var(--cta-content-width);
+			}
+		}
 	}
 
 	& a.ehp-button,

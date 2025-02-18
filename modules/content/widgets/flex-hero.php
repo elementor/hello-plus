@@ -21,8 +21,8 @@ use HelloPlus\Modules\Theme\Module as Theme_Module;
 use HelloPlus\Classes\{
 	Ehp_Button,
 	Ehp_Image,
-	Ehp_Shapes,
 	Ehp_Padding,
+	Ehp_Shapes,
 };
 
 class Flex_Hero extends Widget_Base {

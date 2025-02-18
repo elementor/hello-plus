@@ -5,6 +5,7 @@ use HelloPlus\Modules\Content\Widgets\CTA;
 use HelloPlus\Classes\{
 	Ehp_Button,
 	Ehp_Image,
+	Ehp_Shapes,
 };
 
 use Elementor\Utils;
@@ -35,9 +36,9 @@ class Widget_CTA_Render {
 		$image_stretch = $this->settings['image_stretch'];
 		$has_border = $this->settings['show_box_border'];
 
-		$box_shape = $this->settings['box_shape'];
-		$box_shape_mobile = $this->settings['box_shape_mobile'];
-		$box_shape_tablet = $this->settings['box_shape_tablet'];
+		// $box_shape = $this->settings['box_shape'];
+		// $box_shape_mobile = $this->settings['box_shape_mobile'];
+		// $box_shape_tablet = $this->settings['box_shape_tablet'];
 
 		if ( ! empty( $layout_full_height_controls ) ) {
 			foreach ( $layout_full_height_controls as $breakpoint ) {
@@ -53,17 +54,24 @@ class Widget_CTA_Render {
 			$layout_classnames[] = 'has-border';
 		}
 
-		if ( ! empty( $box_shape ) ) {
-			$layout_classnames[] = 'has-shape-' . $box_shape;
+		$shapes = new Ehp_Shapes( $this->widget, [
+			'container_prefix' => 'box',
+			'render_attribute' => 'layout',
+			'widget_name' => $this->widget->get_name(),
+		] );
+		$shapes->add_shape_attributes();
 
-			if ( ! empty( $box_shape_mobile ) ) {
-				$layout_classnames[] = 'has-shape-sm-' . $box_shape_mobile;
-			}
+		// if ( ! empty( $box_shape ) ) {
+		// 	$layout_classnames[] = 'has-shape-' . $box_shape;
 
-			if ( ! empty( $box_shape_tablet ) ) {
-				$layout_classnames[] = 'has-shape-md-' . $box_shape_tablet;
-			}
-		}
+		// 	if ( ! empty( $box_shape_mobile ) ) {
+		// 		$layout_classnames[] = 'has-shape-sm-' . $box_shape_mobile;
+		// 	}
+
+		// 	if ( ! empty( $box_shape_tablet ) ) {
+		// 		$layout_classnames[] = 'has-shape-md-' . $box_shape_tablet;
+		// 	}
+		// }
 
 		$this->widget->add_render_attribute( 'layout', [
 			'class' => $layout_classnames,

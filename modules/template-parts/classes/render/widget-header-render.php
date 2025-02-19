@@ -259,6 +259,7 @@ class Widget_Header_Render {
 	private function render_menu_toggle() {
 		$toggle_icon = $this->settings['navigation_menu_icon'];
 		$toggle_classname = 'ehp-header__button-toggle';
+		$show_contact_buttons = 'yes' === $this->settings['contact_buttons_show'] || 'yes' === $this->settings['contact_buttons_show_connect'];
 
 		$this->widget->add_render_attribute( 'button-toggle', [
 			'class' => $toggle_classname,
@@ -270,7 +271,7 @@ class Widget_Header_Render {
 
 		?>
 		<div class="ehp-header__side-toggle">
-			<?php if ( 'yes' === $this->settings['contact_buttons_show'] ) {
+			<?php if ( $show_contact_buttons ) {
 				$this->render_contact_buttons();
 			} ?>
 			<button <?php $this->widget->print_render_attribute_string( 'button-toggle' ); ?>>
@@ -293,6 +294,7 @@ class Widget_Header_Render {
 	protected function render_ctas_container() {
 		$responsive_button_width = $this->settings['cta_responsive_width'] ?? '';
 		$ctas_container_classnames = self::CTAS_CONTAINER_CLASSNAME;
+		$show_contact_buttons = 'yes' === $this->settings['contact_buttons_show'] || 'yes' === $this->settings['contact_buttons_show_connect'];
 
 		if ( '' !== $responsive_button_width ) {
 			$ctas_container_classnames .= ' has-responsive-width-' . $responsive_button_width;
@@ -304,7 +306,7 @@ class Widget_Header_Render {
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'ctas-container' ); ?>>
 			<?php
-			if ( 'yes' === $this->settings['contact_buttons_show'] ) {
+			if ( $show_contact_buttons ) {
 				$this->render_contact_buttons();
 			}
 			?>

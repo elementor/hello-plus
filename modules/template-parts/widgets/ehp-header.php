@@ -1120,7 +1120,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 		$shapes = new Ehp_Shapes( $this, [
 			'widget_name' => 'header',
 			'container_prefix' => 'submenu',
-			'control_prefix' => 'style_submenu',
+			'control_prefix' => 'style',
 			'is_responsive' => false,
 		] );
 		$shapes->add_style_controls();
@@ -1752,7 +1752,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 		$shapes = new Ehp_Shapes( $this, [
 			'widget_name' => 'header',
 			'container_prefix' => 'float',
-			'control_prefix' => 'behavior_float',
+			'control_prefix' => 'behavior',
 			'condition' => [
 				'behavior_float' => 'yes',
 			],

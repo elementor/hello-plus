@@ -68,6 +68,7 @@ class Widget_Header_Render {
 
 		$shapes = new Ehp_Shapes( $this->widget, [
 			'container_prefix' => 'float',
+			'control_prefix' => 'behavior',
 			'render_attribute' => 'layout',
 			'widget_name' => 'header',
 		] );
@@ -542,6 +543,7 @@ class Widget_Header_Render {
 
 		$shapes = new Ehp_Shapes( $this->widget, [
 			'container_prefix' => 'submenu',
+			'control_prefix' => 'style',
 			'widget_name' => 'header',
 			'is_responsive' => false,
 		] );

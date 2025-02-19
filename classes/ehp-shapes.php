@@ -101,6 +101,7 @@ class Ehp_Shapes {
 			'box' => 'sharp',
 			'image' => 'sharp',
 			'submenu' => 'default',
+			'float' => 'default',
 		];
 
 		if ( $is_responsive ) {
@@ -121,7 +122,7 @@ class Ehp_Shapes {
 				[
 					'label' => esc_html__( 'Shape', 'hello-plus' ),
 					'type' => Controls_Manager::SELECT,
-					'default' => $defaults[ $container_prefix ] ?? $default,
+					'default' => $defaults[ $container_prefix ] ?? 'default',
 					'options' => $this->get_options()[ $container_prefix ],
 					'frontend_available' => true,
 					'condition' => $condition,
@@ -168,7 +169,7 @@ class Ehp_Shapes {
 		$this->widget = $widget;
 		$this->context = $context;
 
-		$this->control_prefix = ! empty( $this->context['type_prefix'] ) ? $this->context['type_prefix'] . '_' : '';
+		$this->control_prefix = ($this->context['control_prefix'] ?? $this->context['type_prefix'] ?? '') . '_';
 		$this->prefix_attr = ! empty( $this->context['type_prefix'] ) ? '-' . $this->context['type_prefix'] : '';
 		$this->key_attr = ! empty( $this->context['key'] ) ? '-' . $this->context['key'] : '';
 	}

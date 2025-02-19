@@ -77,18 +77,6 @@ class Ehp_Button {
 			$button_classnames[] = 'has-border';
 		}
 
-		// if ( ! empty( $button_corner_shape ) ) {
-		// 	$button_classnames[] = 'has-shape-' . $button_corner_shape;
-
-		// 	if ( ! empty( $button_corner_shape_mobile ) ) {
-		// 		$button_classnames[] = 'has-shape-sm-' . $button_corner_shape_mobile;
-		// 	}
-
-		// 	if ( ! empty( $button_corner_shape_tablet ) ) {
-		// 		$button_classnames[] = 'has-shape-md-' . $button_corner_shape_tablet;
-		// 	}
-		// }
-
 		$shapes = new Ehp_Shapes( $this->widget, [
 			'widget_name' => $widget_name,
 			'container_prefix' => 'button',
@@ -606,6 +594,7 @@ class Ehp_Button {
 		$shapes = new Ehp_Shapes( $this->widget, [
 			'widget_name' => $this->context['widget_name'],
 			'container_prefix' => 'button',
+			'control_prefix' => $type,
 			'type_prefix' => $type,
 			'condition' => array_merge([
 				$type . '_button_type' => 'button',

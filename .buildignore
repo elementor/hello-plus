@@ -11,7 +11,6 @@ package.json
 phpcs.xml
 README.md
 webpack.config.js
-vendor/
 .wporg-assets/
 
 .github/

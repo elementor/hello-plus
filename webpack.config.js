@@ -14,6 +14,7 @@ const modulesDir = process.cwd() + '/modules/';
 const entryPoints = {
 	// Admin module:
 	'js/helloplus-onboarding': path.resolve( modulesDir, 'admin/assets/js', 'hello-plus-onboarding.js' ),
+	'js/helloplus-whats-new': path.resolve( modulesDir, 'admin/assets/js', 'hello-plus-whats-new.js' ),
 
 	// Content module
 	'css/helloplus-zigzag': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-zigzag.scss' ),

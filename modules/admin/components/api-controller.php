@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use HelloPlus\Modules\Admin\Classes\Rest\Whats_New;
 use HelloPlus\Modules\Admin\Classes\Ajax\Setup_Wizard;
 use HelloPlus\Modules\Admin\Classes\Rest\Onboarding_Settings;
 
@@ -26,6 +27,7 @@ class Api_Controller {
 
 	public function __construct() {
 		$this->endpoints['onboarding-settings'] = new Onboarding_Settings();
+		$this->endpoints['whats-new'] = new Whats_New();
 
 		$this->ajax_classes['setup-wizard'] = new Setup_Wizard();
 	}

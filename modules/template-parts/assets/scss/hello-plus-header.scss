@@ -136,10 +136,10 @@
 	}
 	
 	&.shape-type-float.has-shape-custom {
-		--ehp-shapes-border-radius-block-end: var(--header-float-border-radius-block-end);
-		--ehp-shapes-border-radius-block-start: var(--header-float-border-radius-block-start);
-		--ehp-shapes-border-radius-inline-end: var(--header-float-border-radius-inline-end);
-		--ehp-shapes-border-radius-inline-start: var(--header-float-border-radius-inline-start);
+		--ehp-shapes-border-radius-block-end: var(--header-float-border-radius-custom-block-end, var(--header-float-border-radius-block-end));
+		--ehp-shapes-border-radius-block-start: var(--header-float-border-radius-custom-block-start, var(--header-float-border-radius-block-start));
+		--ehp-shapes-border-radius-inline-end: var(--header-float-border-radius-custom-inline-end, var(--header-float-border-radius-inline-end));
+		--ehp-shapes-border-radius-inline-start: var(--header-float-border-radius-custom-inline-start, var(--header-float-border-radius-inline-start));
 	}
 
 	&__elements-container {
@@ -307,24 +307,11 @@
 		}
 
 		&.shape-type-submenu.has-shape-custom {
-			--ehp-shapes-border-radius-block-end: var(--header-submenu-border-radius-block-end);
-			--ehp-shapes-border-radius-block-start: var(--header-submenu-border-radius-block-start);
-			--ehp-shapes-border-radius-inline-end: var(--header-submenu-border-radius-inline-end);
-			--ehp-shapes-border-radius-inline-start: var(--header-submenu-border-radius-inline-start);
+			--ehp-shapes-border-radius-block-end: var(--header-submenu-border-radius-custom-block-end, var(--header-submenu-border-radius-block-end));
+			--ehp-shapes-border-radius-block-start: var(--header-submenu-border-radius-custom-block-start, var(--header-submenu-border-radius-block-start));
+			--ehp-shapes-border-radius-inline-end: var(--header-submenu-border-radius-custom-inline-end, var(--header-submenu-border-radius-inline-end));
+			--ehp-shapes-border-radius-inline-start: var(--header-submenu-border-radius-custom-inline-start, var(--header-submenu-border-radius-inline-start));
 		}
-
-		// @mixin custom-shape-submenu() {
-		// 	&-custom {
-		// 		--header-border-radius-block-end: var(--header-submenu-border-radius-custom-block-end);
-		// 		--header-border-radius-block-start: var(--header-submenu-border-radius-custom-block-start);
-		// 		--header-border-radius-inline-end: var(--header-submenu-border-radius-custom-inline-end);
-		// 		--header-border-radius-inline-start: var(--header-submenu-border-radius-custom-inline-start);
-		// 	}
-		// }
-	
-		// &.has-shape {
-		// 	@include custom-shape-submenu();
-		// }
 
 		&[aria-hidden="true"] {
 			display: none;

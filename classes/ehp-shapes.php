@@ -33,7 +33,7 @@ class Ehp_Shapes {
 			'oval' => esc_html__( 'Oval', 'hello-plus' ),
 			'custom' => esc_html__( 'Custom', 'hello-plus' ),
 		];
-	
+
 		$options = [
 			'button' => [ 'default', 'sharp', 'rounded', 'round', 'oval', 'custom' ],
 			'submenu' => [ 'default', 'sharp', 'rounded', 'round', 'oval', 'custom' ],

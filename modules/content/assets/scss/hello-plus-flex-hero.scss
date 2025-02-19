@@ -150,17 +150,17 @@
 
 	&.has-shape-custom.shape-type {
 		&-box {
-			--ehp-shapes-border-radius-block-end: var(--flex-hero-box-border-radius-block-end);
-			--ehp-shapes-border-radius-block-start: var(--flex-hero-box-border-radius-block-start);
-			--ehp-shapes-border-radius-inline-end: var(--flex-hero-box-border-radius-inline-end);
-			--ehp-shapes-border-radius-inline-start: var(--flex-hero-box-border-radius-inline-start);
+			--ehp-shapes-border-radius-block-end: var(--flex-hero-box-border-radius-block-end, var(--flex-hero-box-border-radius-custom-block-end));
+			--ehp-shapes-border-radius-block-start: var(--flex-hero-box-border-radius-block-start, var(--flex-hero-box-border-radius-custom-block-start));
+			--ehp-shapes-border-radius-inline-end: var(--flex-hero-box-border-radius-inline-end, var(--flex-hero-box-border-radius-custom-inline-end));
+			--ehp-shapes-border-radius-inline-start: var(--flex-hero-box-border-radius-inline-start, var(--flex-hero-box-border-radius-custom-inline-start));
 		}
 
 		&-image {
-			--ehp-shapes-border-radius-block-end: var(--flex-hero-image-border-radius-block-end);
-			--ehp-shapes-border-radius-block-start: var(--flex-hero-image-border-radius-block-start);
-			--ehp-shapes-border-radius-inline-end: var(--flex-hero-image-border-radius-inline-end);
-			--ehp-shapes-border-radius-inline-start: var(--flex-hero-image-border-radius-inline-start);
+			--ehp-shapes-border-radius-block-end: var(--flex-hero-image-border-radius-block-end, var(--flex-hero-image-border-radius-custom-block-end));
+			--ehp-shapes-border-radius-block-start: var(--flex-hero-image-border-radius-block-start, var(--flex-hero-image-border-radius-custom-block-start));
+			--ehp-shapes-border-radius-inline-end: var(--flex-hero-image-border-radius-inline-end, var(--flex-hero-image-border-radius-custom-inline-end));
+			--ehp-shapes-border-radius-inline-start: var(--flex-hero-image-border-radius-inline-start, var(--flex-hero-image-border-radius-custom-inline-start));
 		}
 	}
 

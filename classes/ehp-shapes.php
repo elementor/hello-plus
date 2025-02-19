@@ -169,7 +169,9 @@ class Ehp_Shapes {
 		$this->widget = $widget;
 		$this->context = $context;
 
-		$this->control_prefix = ($this->context['control_prefix'] ?? $this->context['type_prefix'] ?? '') . '_';
+		$control_prefix = ($this->context['control_prefix'] ?? $this->context['type_prefix'] ?? '');
+		$this->control_prefix = $control_prefix !== '' ? $control_prefix . '_' : '';
+
 		$this->prefix_attr = ! empty( $this->context['type_prefix'] ) ? '-' . $this->context['type_prefix'] : '';
 		$this->key_attr = ! empty( $this->context['key'] ) ? '-' . $this->context['key'] : '';
 	}

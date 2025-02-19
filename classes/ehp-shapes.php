@@ -26,25 +26,25 @@ class Ehp_Shapes {
 
 	private function get_options() {
 		$options_names = [
-			'default' => esc_html__('Default', 'hello-plus'),
-			'sharp' => esc_html__('Sharp', 'hello-plus'),
-			'rounded' => esc_html__('Rounded', 'hello-plus'),
-			'round' => esc_html__('Round', 'hello-plus'),
-			'oval' => esc_html__('Oval', 'hello-plus'),
-			'custom' => esc_html__('Custom', 'hello-plus'),
+			'default' => esc_html__( 'Default', 'hello-plus' ),
+			'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
+			'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
+			'round' => esc_html__( 'Round', 'hello-plus' ),
+			'oval' => esc_html__( 'Oval', 'hello-plus' ),
+			'custom' => esc_html__( 'Custom', 'hello-plus' ),
 		];
 	
 		$options = [
-			'button' => ['default', 'sharp', 'rounded', 'round', 'oval', 'custom'],
-			'submenu' => ['default', 'sharp', 'rounded', 'round', 'oval', 'custom'],
-			'box' => ['sharp', 'rounded', 'custom'],
-			'image' => ['sharp', 'rounded', 'round', 'oval', 'custom'],
-			'float' => ['default', 'sharp', 'round', 'rounded', 'custom'],
+			'button' => [ 'default', 'sharp', 'rounded', 'round', 'oval', 'custom' ],
+			'submenu' => [ 'default', 'sharp', 'rounded', 'round', 'oval', 'custom' ],
+			'box' => [ 'sharp', 'rounded', 'custom' ],
+			'image' => [ 'sharp', 'rounded', 'round', 'oval', 'custom' ],
+			'float' => [ 'default', 'sharp', 'round', 'rounded', 'custom' ],
 		];
-	
-		return array_map(function ($keys) use ($options_names) {
-			return array_intersect_key($options_names, array_flip($keys));
-		}, $options);
+
+		return array_map( function ( $keys ) use ( $options_names ) {
+			return array_intersect_key( $options_names, array_flip( $keys ) );
+		}, $options );
 	}
 
 	public function get_shape_classnames() {
@@ -61,13 +61,13 @@ class Ehp_Shapes {
 			$shape_classnames[] = 'shape-type-' . $container_prefix;
 
 			if ( $is_responsive ) {
-				$shape_mobile = $this->widget_settings[ $this->control_prefix .  $container_prefix . '_shape_mobile' ];
-				$shape_tablet = $this->widget_settings[ $this->control_prefix .  $container_prefix . '_shape_tablet' ];
+				$shape_mobile = $this->widget_settings[ $this->control_prefix . $container_prefix . '_shape_mobile' ];
+				$shape_tablet = $this->widget_settings[ $this->control_prefix . $container_prefix . '_shape_tablet' ];
 
 				if ( ! empty( $shape_mobile ) ) {
 					$shape_classnames[] = 'has-shape-sm-' . $shape_mobile;
 				}
-	
+
 				if ( ! empty( $shape_tablet ) ) {
 					$shape_classnames[] = 'has-shape-md-' . $shape_tablet;
 				}
@@ -169,8 +169,8 @@ class Ehp_Shapes {
 		$this->widget = $widget;
 		$this->context = $context;
 
-		$control_prefix = ($this->context['control_prefix'] ?? $this->context['type_prefix'] ?? '');
-		$this->control_prefix = $control_prefix !== '' ? $control_prefix . '_' : '';
+		$control_prefix = ( $this->context['control_prefix'] ?? $this->context['type_prefix'] ?? '' );
+		$this->control_prefix = '' !== $control_prefix ? $control_prefix . '_' : '';
 
 		$this->prefix_attr = ! empty( $this->context['type_prefix'] ) ? '-' . $this->context['type_prefix'] : '';
 		$this->key_attr = ! empty( $this->context['key'] ) ? '-' . $this->context['key'] : '';

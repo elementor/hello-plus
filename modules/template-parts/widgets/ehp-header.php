@@ -1125,38 +1125,6 @@ class Ehp_Header extends Ehp_Widget_Base {
 		] );
 		$shapes->add_style_controls();
 
-		// $this->add_control(
-		// 	'style_submenu_shape',
-		// 	[
-		// 		'label' => esc_html__( 'Shape', 'hello-plus' ),
-		// 		'type' => Controls_Manager::SELECT,
-		// 		'options' => [
-		// 			'default' => esc_html__( 'Default', 'hello-plus' ),
-		// 			'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
-		// 			'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
-		// 			'round' => esc_html__( 'Round', 'hello-plus' ),
-		// 			'custom' => esc_html__( 'Custom', 'hello-plus' ),
-		// 		],
-		// 		'default' => 'default',
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'submenu_shape_custom',
-		// 	[
-		// 		'label' => esc_html__( 'Border Radius', 'hello-plus' ),
-		// 		'type' => Controls_Manager::DIMENSIONS,
-		// 		'size_units' => [ 'px', '%', 'em', 'rem' ],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .ehp-header' => '--header-submenu-border-radius-custom-block-end: {{BOTTOM}}{{UNIT}}; --header-submenu-border-radius-custom-block-start: {{TOP}}{{UNIT}}; --header-submenu-border-radius-custom-inline-end: {{RIGHT}}{{UNIT}}; --header-submenu-border-radius-custom-inline-start: {{LEFT}}{{UNIT}};',
-		// 		],
-		// 		'separator' => 'before',
-				// 'condition' => [
-				// 	'style_submenu_shape' => 'custom',
-				// ],
-		// 	]
-		// );
-
 		$this->add_control(
 			'style_responsive_menu_label',
 			[
@@ -1758,41 +1726,6 @@ class Ehp_Header extends Ehp_Widget_Base {
 			],
 		] );
 		$shapes->add_style_controls();
-
-		// $this->add_responsive_control(
-		// 	'behavior_float_shape',
-		// 	[
-		// 		'label' => esc_html__( 'Shape', 'hello-plus' ),
-		// 		'type' => Controls_Manager::SELECT,
-		// 		'default' => 'default',
-		// 		'options' => [
-		// 			'default' => esc_html__( 'Default', 'hello-plus' ),
-		// 			'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
-		// 			'round' => esc_html__( 'Round', 'hello-plus' ),
-		// 			'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
-		// 			'custom' => esc_html__( 'Custom', 'hello-plus' ),
-		// 		],
-		// 		'condition' => [
-		// 			'behavior_float' => 'yes',
-		// 		],
-		// 	]
-		// );
-
-		// $this->add_responsive_control(
-		// 	'behavior_float_shape_custom',
-		// 	[
-		// 		'label' => esc_html__( 'Border Radius', 'hello-plus' ),
-		// 		'type' => Controls_Manager::DIMENSIONS,
-		// 		'size_units' => [ 'px', '%', 'em', 'rem' ],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .ehp-header' => '--header-float-border-radius-custom-block-end: {{BOTTOM}}{{UNIT}}; --header-float-border-radius-custom-block-start: {{TOP}}{{UNIT}}; --header-float-border-radius-custom-inline-end: {{RIGHT}}{{UNIT}}; --header-float-border-radius-custom-inline-start: {{LEFT}}{{UNIT}};',
-		// 		],
-		// 		'separator' => 'before',
-		// 		'condition' => [
-		// 			'behavior_float_shape' => 'custom',
-		// 		],
-		// 	]
-		// );
 
 		$this->add_control(
 			'behavior_onscroll_label',

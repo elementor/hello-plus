@@ -47,7 +47,7 @@ class Ehp_Button {
 		$key = $this->context['key'] ?? '';
 		$key_attr = $key ? '-' . $key : '';
 
-		$this->widget->remove_render_attribute(  $type . '-button' . $key_attr );
+		$this->widget->remove_render_attribute( $type . '-button' . $key_attr );
 
 		$this->widget_settings = $this->widget->get_settings_for_display();
 

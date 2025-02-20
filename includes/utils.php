@@ -158,7 +158,7 @@ class Utils {
 		return __( 'Hello+', 'hello-plus' );
 	}
 
-	public static function get_widgets_depends() {
+	public static function get_widgets_depends(): array {
 		return [ 'helloplus-button', 'helloplus-image', 'helloplus-shapes' ];
 	}
 }

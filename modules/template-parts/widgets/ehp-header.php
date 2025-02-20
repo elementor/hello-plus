@@ -53,7 +53,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 	}
 
 	public function get_style_depends(): array {
-		return array_merge( ['helloplus-header'], Utils::get_widgets_depends() );
+		return array_merge( [ 'helloplus-header' ], Utils::get_widgets_depends() );
 	}
 
 	public function get_script_depends(): array {

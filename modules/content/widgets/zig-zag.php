@@ -52,7 +52,7 @@ class Zig_Zag extends Widget_Base {
 	}
 
 	public function get_style_depends(): array {
-		return array_merge( ['helloplus-zigzag'], Utils::get_widgets_depends() );
+		return array_merge( [ 'helloplus-zigzag' ], Utils::get_widgets_depends() );
 	}
 
 	public function get_script_depends(): array {

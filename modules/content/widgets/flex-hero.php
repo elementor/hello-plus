@@ -51,7 +51,7 @@ class Flex_Hero extends Widget_Base {
 	}
 
 	public function get_style_depends(): array {
-		return array_merge( ['helloplus-flex-hero'], Utils::get_widgets_depends() );
+		return array_merge( [ 'helloplus-flex-hero' ], Utils::get_widgets_depends() );
 	}
 
 	protected function render(): void {

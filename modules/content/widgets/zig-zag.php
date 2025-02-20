@@ -10,12 +10,12 @@ use Elementor\Controls_Manager;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Typography;
 use Elementor\Repeater;
-use Elementor\Utils;
 use Elementor\Widget_Base;
 use Elementor\Core\Kits\Documents\Tabs\{
 	Global_Typography,
 	Global_Colors
 };
+use Elementor\Utils as Elementor_Utils;
 
 use HelloPlus\Modules\Content\Classes\{
 	Control_Zig_Zag_Animation,
@@ -27,6 +27,7 @@ use HelloPlus\Classes\{
 	Ehp_Image,
 	Ehp_Padding,
 };
+use HelloPlus\Includes\Utils;
 
 class Zig_Zag extends Widget_Base {
 
@@ -51,7 +52,7 @@ class Zig_Zag extends Widget_Base {
 	}
 
 	public function get_style_depends(): array {
-		return [ 'helloplus-zigzag', 'helloplus-button', 'helloplus-image' ];
+		return array_merge( [ 'helloplus-zigzag' ], Utils::get_widgets_depends() );
 	}
 
 	public function get_script_depends(): array {
@@ -161,7 +162,7 @@ class Zig_Zag extends Widget_Base {
 					'label' => esc_html__( 'Image', 'hello-plus' ),
 					'type' => Controls_Manager::MEDIA,
 					'default' => [
-						'url' => Utils::get_placeholder_image_src(),
+						'url' => Elementor_Utils::get_placeholder_image_src(),
 					],
 				]
 			);

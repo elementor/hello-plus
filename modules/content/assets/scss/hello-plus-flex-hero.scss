@@ -36,24 +36,9 @@
 	--flex-hero-button-secondary-text-color-hover: #{$global-colors-secondary};
 	--flex-hero-button-secondary-border-width: 2px;
 	--flex-hero-button-secondary-border-color: #{$global-colors-secondary};
-	--flex-hero-button-secondary-border-radius-block-end: #{$corners-shape-default};
-	--flex-hero-button-secondary-border-radius-block-start: #{$corners-shape-default};
-	--flex-hero-button-secondary-border-radius-inline-end: #{$corners-shape-default};
-	--flex-hero-button-secondary-border-radius-inline-start: #{$corners-shape-default};
 
 	--flex-hero-box-border-color: #{$global-colors-secondary};
 	--flex-hero-box-border-width: 1px;
-
-	--flex-hero-border-radius-default: #{$corners-shape-default};
-	--flex-hero-border-radius-sharp: #{$corners-shape-sharp};
-	--flex-hero-border-radius-rounded: #{$corners-shape-rounded};
-	--flex-hero-border-radius-round: #{$corners-shape-round};
-	--flex-hero-border-radius-oval: #{$corners-shape-oval};
-
-	--flex-hero-box-border-radius-custom-block-end: #{$corners-shape-sharp};
-	--flex-hero-box-border-radius-custom-block-start: #{$corners-shape-sharp};
-	--flex-hero-box-border-radius-custom-inline-end: #{$corners-shape-sharp};
-	--flex-hero-box-border-radius-custom-inline-start: #{$corners-shape-sharp};
 
 	display: flex;
 	gap: var(--flex-hero-gap);
@@ -117,52 +102,6 @@
 		@include full-height($screen-widescreen-min, null);
 	}
 
-	@mixin shapes() {
-		&-sharp {
-			border-radius: var(--flex-hero-border-radius-sharp);
-		}
-	
-		&-rounded {
-			border-radius: var(--flex-hero-border-radius-rounded);
-		}
-	
-		&-round {
-			border-radius: var(--flex-hero-border-radius-round);
-		}
-
-		&-default {
-			border-radius: var(--flex-hero-border-radius-default);
-		}
-	
-		&-oval {
-			border-radius: var(--flex-hero-border-radius-oval);
-		}
-
-		&-custom {
-			border-top-left-radius: var(--flex-hero-border-radius-block-end);
-			border-top-right-radius: var(--flex-hero-border-radius-block-start);
-			border-bottom-right-radius: var(--flex-hero-border-radius-inline-end);
-			border-bottom-left-radius: var(--flex-hero-border-radius-inline-start);
-		}
-	}
-
-	& .has-shape,
-	&.has-shape {
-		@include shapes();
-
-		&-md {
-			@media screen and (max-width: $screen-tablet-max) {
-				@include shapes();
-			}
-		}
-
-		&-sm {
-			@media screen and (max-width: $screen-mobile-max) {
-				@include shapes();
-			}
-		}
-	}
-
 	& a.ehp-button,
 	& a.ehp-button:not([href]):not([tabindex]) {
 		--ehp-button-primary-icon-spacing: var(--flex-hero-button-primary-icon-spacing);
@@ -209,32 +148,19 @@
 		--ehp-image-border-radius-inline-start: var(--flex-hero-image-border-radius-inline-start);
 	}
 
-	@mixin custom-shape-box() {
-		&-rounded {
-			--flex-hero-border-shape-rounded: #{$corners-box-shape-rounded};
+	&.has-shape-custom.shape-type {
+		&-box {
+			--ehp-shapes-border-radius-block-end: var(--flex-hero-box-border-radius-block-end, var(--flex-hero-box-border-radius-custom-block-end));
+			--ehp-shapes-border-radius-block-start: var(--flex-hero-box-border-radius-block-start, var(--flex-hero-box-border-radius-custom-block-start));
+			--ehp-shapes-border-radius-inline-end: var(--flex-hero-box-border-radius-inline-end, var(--flex-hero-box-border-radius-custom-inline-end));
+			--ehp-shapes-border-radius-inline-start: var(--flex-hero-box-border-radius-inline-start, var(--flex-hero-box-border-radius-custom-inline-start));
 		}
 
-		&-custom {
-			--flex-hero-border-radius-block-end: var(--flex-hero-box-border-radius-custom-block-end);
-			--flex-hero-border-radius-block-start: var(--flex-hero-box-border-radius-custom-block-start);
-			--flex-hero-border-radius-inline-end: var(--flex-hero-box-border-radius-custom-inline-end);
-			--flex-hero-border-radius-inline-start: var(--flex-hero-box-border-radius-custom-inline-start);
-		}
-	}
-
-	&.has-shape {
-		@include custom-shape-box();
-
-		&-md {
-			@media screen and (max-width: $screen-tablet-max) {
-				@include custom-shape-box();
-			}
-		}
-
-		&-sm {
-			@media screen and (max-width: $screen-mobile-max) {
-				@include custom-shape-box();
-			}
+		&-image {
+			--ehp-shapes-border-radius-block-end: var(--flex-hero-image-border-radius-block-end, var(--flex-hero-image-border-radius-custom-block-end));
+			--ehp-shapes-border-radius-block-start: var(--flex-hero-image-border-radius-block-start, var(--flex-hero-image-border-radius-custom-block-start));
+			--ehp-shapes-border-radius-inline-end: var(--flex-hero-image-border-radius-inline-end, var(--flex-hero-image-border-radius-custom-inline-end));
+			--ehp-shapes-border-radius-inline-start: var(--flex-hero-image-border-radius-inline-start, var(--flex-hero-image-border-radius-custom-inline-start));
 		}
 	}
 

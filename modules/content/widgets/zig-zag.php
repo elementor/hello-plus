@@ -225,7 +225,6 @@ class Zig_Zag extends Widget_Base {
 				],
 				'default' => [
 					'url' => '',
-					'is_external' => false,
 				],
 			]
 		);

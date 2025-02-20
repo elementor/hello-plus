@@ -162,10 +162,6 @@ class Ehp_Button {
 				'dynamic' => [
 					'active' => true,
 				],
-				'default' => [
-					'url' => '',
-					'is_external' => true,
-				],
 			]
 		);
 
@@ -215,10 +211,6 @@ class Ehp_Button {
 					'type' => Controls_Manager::URL,
 					'dynamic' => [
 						'active' => true,
-					],
-					'default' => [
-						'url' => '',
-						'is_external' => true,
 					],
 					'condition' => [
 						'secondary_cta_show' => 'yes',

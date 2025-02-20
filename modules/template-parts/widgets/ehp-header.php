@@ -28,6 +28,7 @@ use HelloPlus\Classes\{
 	Ehp_Shapes,
 	Ehp_Padding,
 };
+use HelloPlus\Includes\Utils;
 
 class Ehp_Header extends Ehp_Widget_Base {
 
@@ -52,7 +53,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 	}
 
 	public function get_style_depends(): array {
-		return [ 'helloplus-header', 'helloplus-button', 'helloplus-shapes' ];
+		return array_merge( ['helloplus-header'], Utils::get_widgets_depends() );
 	}
 
 	public function get_script_depends(): array {

@@ -24,6 +24,7 @@ use HelloPlus\Classes\{
 	Ehp_Padding,
 	Ehp_Shapes,
 };
+use HelloPlus\Includes\Utils;
 
 use Elementor\Utils as Elementor_Utils;
 
@@ -52,7 +53,7 @@ class CTA extends Widget_Base {
 	}
 
 	public function get_style_depends(): array {
-		return [ 'helloplus-cta', 'helloplus-button', 'helloplus-image', 'helloplus-shapes' ];
+		return array_merge( ['helloplus-cta'], Utils::get_widgets_depends() );
 	}
 
 	protected function render(): void {

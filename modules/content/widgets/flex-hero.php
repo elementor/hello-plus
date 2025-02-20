@@ -24,6 +24,7 @@ use HelloPlus\Classes\{
 	Ehp_Padding,
 	Ehp_Shapes,
 };
+use HelloPlus\Includes\Utils;
 
 class Flex_Hero extends Widget_Base {
 
@@ -50,7 +51,7 @@ class Flex_Hero extends Widget_Base {
 	}
 
 	public function get_style_depends(): array {
-		return [ 'helloplus-flex-hero', 'helloplus-button', 'helloplus-image', 'helloplus-shapes' ];
+		return array_merge( ['helloplus-flex-hero'], Utils::get_widgets_depends() );
 	}
 
 	protected function render(): void {

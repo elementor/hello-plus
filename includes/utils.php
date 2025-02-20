@@ -157,4 +157,8 @@ class Utils {
 	public static function plugin_title(): string {
 		return __( 'Hello+', 'hello-plus' );
 	}
+
+	public static function get_widgets_depends() {
+		return [ 'helloplus-button', 'helloplus-image', 'helloplus-shapes' ];
+	}
 }

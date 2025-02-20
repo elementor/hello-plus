@@ -158,9 +158,6 @@ class Ehp_Button {
 				'dynamic' => [
 					'active' => true,
 				],
-				'default' => [
-					'url' => '',
-				],
 			]
 		);
 
@@ -210,9 +207,6 @@ class Ehp_Button {
 					'type' => Controls_Manager::URL,
 					'dynamic' => [
 						'active' => true,
-					],
-					'default' => [
-						'url' => '',
 					],
 					'condition' => [
 						'secondary_cta_show' => 'yes',

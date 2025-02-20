@@ -223,9 +223,6 @@ class Zig_Zag extends Widget_Base {
 				'dynamic' => [
 					'active' => true,
 				],
-				'default' => [
-					'url' => '',
-				],
 			]
 		);
 

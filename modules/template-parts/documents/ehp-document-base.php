@@ -7,6 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use HelloPlus\Includes\Utils;
+
 use Elementor\{
 	TemplateLibrary\Source_Local,
 	Modules\Library\Documents\Library_Document
@@ -75,6 +76,29 @@ abstract class Ehp_Document_Base extends Library_Document {
 		return HELLOPLUS_PATH . '/modules/template-parts/templates/';
 	}
 
+	public function filter_admin_row_actions( $actions ) {
+		$actions = parent::filter_admin_row_actions( $actions );
+
+		return $this->set_as_entire_site( $actions );
+	}
+
+	public function set_as_entire_site( $actions ) {
+		$active_doc = static::get_active_document();
+
+		if ( empty( $active_doc ) || $this->get_main_id() !== $active_doc[0] ) {
+			$actions['set_as_entire_site'] = sprintf(
+				'<a href="?post=%s&action=hello_plus_set_as_entire_site&_wpnonce=%s&redirect_to=%s">%s</a>',
+				$this->get_post()->ID,
+				wp_create_nonce( 'hello_plus_set_as_entire_site_' . $this->get_post()->ID ),
+				urlencode( add_query_arg( null, null ) ),
+				esc_html__( 'Set as Entire Site', 'elementor' )
+			);
+		}
+
+		return $actions;
+	}
+
+
 	/**
 	 * Retrieve the template-document post.
 	 * There should be only one, so return null if not found, or found too many.
@@ -92,6 +116,9 @@ abstract class Ehp_Document_Base extends Library_Document {
 			'post_type' => Source_Local::CPT,
 			'fields' => 'ids',
 			'lazy_load_term_meta' => true,
+			'no_found_rows' => true,
+			'update_post_term_cache' => false,
+			'post_status' => 'publish',
 			'tax_query' => [
 				[
 					'taxonomy' => static::TAXONOMY_TYPE_SLUG,
@@ -121,6 +148,9 @@ abstract class Ehp_Document_Base extends Library_Document {
 	 * @return void
 	 */
 	public static function register_hooks(): void {
+		add_action( 'display_post_states', [ static::get_class_full_name(), 'display_post_states' ], 10, 2 );
+		add_action( 'admin_notices', [ static::get_class_full_name(), 'maybe_display_notice' ] );
+
 		$post = static::get_document_post();
 		if ( is_null( $post ) ) {
 			return;
@@ -141,6 +171,36 @@ abstract class Ehp_Document_Base extends Library_Document {
 
 		$method_name = defined( 'ELEMENTOR_PRO_VERSION' ) ? 'maybe_get_template' : 'get_template';
 		add_action( static::get_template_hook(), [ static::get_class_full_name(), $method_name ], 10, 2 );
+	}
+
+	public static function maybe_display_notice() {
+		$posts = static::get_all_document_posts();
+
+		if ( count( $posts ) > 1  && 'edit-elementor_library' === get_current_screen()->id ) {
+			$admin_notices = Utils::elementor()->admin->get_component( 'admin-notices' );
+
+			$options = [
+				'title' => sprintf( esc_html__( 'More than one %s published.', 'elementor' ), static::get_title() ),
+				'description' => sprintf(
+					esc_html__( 'We noticed that you have more than one %s published. This is an issue that will prevent it from rendering on the front end', 'elementor' ),
+					static::get_title(),
+				),
+				'type' => 'error',
+				'icon' => false,
+
+			];
+
+			$admin_notices->print_admin_notice( $options );
+		}
+	}
+
+	public static function display_post_states( array $post_states, \WP_Post $post ): array {
+		$active_doc = static::get_active_document();
+		if ( ! empty( $active_doc ) && $active_doc[0] === $post->ID ) {
+			$post_states['active'] = sprintf( esc_html__( 'Active %s', 'hello-plus' ), static::get_title() );
+		}
+
+		return $post_states;
 	}
 
 	public static function maybe_get_template( ?string $name, array $args ): void {

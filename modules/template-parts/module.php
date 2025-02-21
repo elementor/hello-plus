@@ -123,7 +123,7 @@ class Module extends Module_Base {
 		add_action( 'elementor/editor/after_enqueue_styles', [ $this, 'enqueue_editor_styles' ] );
 		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'enqueue_editor_scripts' ] );
 		add_action( 'elementor/controls/register', [ $this, 'register_controls' ] );
-		add_action( 'admin_init', function() {
+		add_action( 'admin_init', function () {
 			$action = sanitize_key( filter_input( INPUT_GET, 'action' ) );
 
 			switch ( $action ) {
@@ -132,11 +132,11 @@ class Module extends Module_Base {
 					check_admin_referer( 'hello_plus_set_as_entire_site_' . $post );
 
 					$redirect_to = filter_input( INPUT_GET, 'redirect_to', FILTER_SANITIZE_URL );
-					error_log( $redirect_to );
 
 					$document = Utils::elementor()->documents->get( $post );
 					$class_name = get_class( $document );
 					$post_ids = $class_name::get_all_document_posts( [ 'posts_per_page' => -1 ] );
+
 					foreach ( $post_ids as $post_id ) {
 						wp_update_post( [
 							'ID' => $post_id,

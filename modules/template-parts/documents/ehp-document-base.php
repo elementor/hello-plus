@@ -90,8 +90,8 @@ abstract class Ehp_Document_Base extends Library_Document {
 				'<a href="?post=%s&action=hello_plus_set_as_entire_site&_wpnonce=%s&redirect_to=%s">%s</a>',
 				$this->get_post()->ID,
 				wp_create_nonce( 'hello_plus_set_as_entire_site_' . $this->get_post()->ID ),
-				urlencode( add_query_arg( null, null ) ),
-				esc_html__( 'Set as Entire Site', 'elementor' )
+				rawurlencode( add_query_arg( null, null ) ),
+				esc_html__( 'Set as Entire Site', 'hello-plus' )
 			);
 		}
 
@@ -176,13 +176,13 @@ abstract class Ehp_Document_Base extends Library_Document {
 	public static function maybe_display_notice() {
 		$posts = static::get_all_document_posts();
 
-		if ( count( $posts ) > 1  && 'edit-elementor_library' === get_current_screen()->id ) {
+		if ( count( $posts ) > 1 && 'edit-elementor_library' === get_current_screen()->id ) {
 			$admin_notices = Utils::elementor()->admin->get_component( 'admin-notices' );
 
 			$options = [
-				'title' => sprintf( esc_html__( 'More than one %s published.', 'elementor' ), static::get_title() ),
+				'title' => sprintf( esc_html__( 'More than one %s published.', 'hello-plus' ), static::get_title() ),
 				'description' => sprintf(
-					esc_html__( 'We noticed that you have more than one %s published. This is an issue that will prevent it from rendering on the front end', 'elementor' ),
+					esc_html__( 'We noticed that you have more than one %s published. This is an issue that will prevent it from rendering on the front end', 'hello-plus' ),
 					static::get_title(),
 				),
 				'type' => 'error',

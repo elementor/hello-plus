@@ -35,8 +35,7 @@ class Form_Actions_Registrar extends Registrar {
 	 * @return void
 	 */
 	public function init() {
-		add_action( 'elementor/init', function() {
-			error_log(var_export(Utils::are_submissions_enabled(), true));
+		add_action( 'elementor/init', function () {
 			if (
 				Utils::are_submissions_enabled()
 			) {
@@ -48,6 +47,5 @@ class Form_Actions_Registrar extends Registrar {
 				$this->register( new $class_name() );
 			}
 		} );
-
 	}
 }

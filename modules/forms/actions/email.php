@@ -22,7 +22,6 @@ class Email extends Action_Base {
 	}
 
 	public function register_settings_section( $widget ) {
-
 	}
 
 	public function on_export( $element ) {

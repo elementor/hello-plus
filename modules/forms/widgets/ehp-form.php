@@ -824,9 +824,9 @@ class Ehp_Form extends Form_Base {
 
 		if ( ! Utils::are_submissions_enabled() ) {
 			$this->add_control(
-				 'collect_submit_promotion',
+				'collect_submit_promotion',
 				[
-					'label' => esc_html__( 'Collect Submissions', 'elementor' ),
+					'label' => esc_html__( 'Collect Submissions', 'hello-plus' ),
 					'type' => Promotion_Control::TYPE,
 				]
 			);

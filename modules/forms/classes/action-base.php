@@ -27,7 +27,7 @@ abstract class Action_Base {
 	/**
 	 * @param Ehp_Form $form
 	 */
-	abstract public function register_settings_section( $form );
+	abstract public function register_settings_section( $widget );
 
 	/**
 	 * @param array $element

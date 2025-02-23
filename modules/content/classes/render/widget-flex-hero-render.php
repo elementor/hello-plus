@@ -10,6 +10,7 @@ use HelloPlus\Modules\Content\Widgets\Flex_Hero;
 use HelloPlus\Classes\{
 	Ehp_Button,
 	Ehp_Image,
+	Ehp_Shapes,
 };
 
 class Widget_Flex_Hero_Render {
@@ -46,9 +47,6 @@ class Widget_Flex_Hero_Render {
 		$image_stretch = $this->settings['image_stretch'];
 		$layout_image_position = $this->settings['layout_image_position'];
 		$has_border = $this->settings['show_box_border'];
-		$box_shape = $this->settings['box_shape'];
-		$box_shape_mobile = $this->settings['box_shape_mobile'];
-		$box_shape_tablet = $this->settings['box_shape_tablet'];
 
 		if ( ! empty( $layout_full_height_controls ) ) {
 			foreach ( $layout_full_height_controls as $breakpoint ) {
@@ -75,17 +73,12 @@ class Widget_Flex_Hero_Render {
 			$this->maybe_add_layout_responsive_classes( $layout_classnames );
 		}
 
-		if ( ! empty( $box_shape ) ) {
-			$layout_classnames[] = 'has-shape-' . $box_shape;
-
-			if ( ! empty( $box_shape_mobile ) ) {
-				$layout_classnames[] = 'has-shape-sm-' . $box_shape_mobile;
-			}
-
-			if ( ! empty( $box_shape_tablet ) ) {
-				$layout_classnames[] = 'has-shape-md-' . $box_shape_tablet;
-			}
-		}
+		$shapes = new Ehp_Shapes( $this->widget, [
+			'container_prefix' => 'box',
+			'render_attribute' => 'layout',
+			'widget_name' => $this->widget->get_name(),
+		] );
+		$shapes->add_shape_attributes();
 
 		$this->widget->add_render_attribute( 'layout', [
 			'class' => $layout_classnames,

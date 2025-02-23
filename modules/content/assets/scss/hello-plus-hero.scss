@@ -23,10 +23,6 @@
 	--hero-button-primary-text-color-hover: #{$global-colors-text};
 	--hero-button-primary-border-width: 0;
 	--hero-button-primary-border-color: transparent;
-	--hero-button-primary-border-radius-block-end: #{$corners-shape-default};
-	--hero-button-primary-border-radius-block-start: #{$corners-shape-default};
-	--hero-button-primary-border-radius-inline-end: #{$corners-shape-default};
-	--hero-button-primary-border-radius-inline-start: #{$corners-shape-default};
 
 	display: flex;
 	flex-direction: column;

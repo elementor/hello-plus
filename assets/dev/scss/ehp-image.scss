@@ -12,12 +12,6 @@
 	--ehp-image-border-radius-inline-end:  #{$corners-shape-default};
 	--ehp-image-border-radius-inline-start:  #{$corners-shape-default};
 
-	--ehp-image-border-radius-default: #{$corners-shape-default};
-	--ehp-image-border-radius-sharp: #{$corners-shape-sharp};
-	--ehp-image-border-radius-rounded: #{$corners-image-shape-rounded};
-	--ehp-image-border-radius-round: #{$corners-image-shape-round};
-	--ehp-image-border-radius-oval: #{$corners-shape-oval};
-
 	align-items: center;
 	display: flex;
 	justify-content: center;
@@ -30,49 +24,11 @@
 		min-height: var(--ehp-image-min-height);
 		width: var(--ehp-image-width);
 
-		@mixin shapes() {
-			&-sharp {
-				border-radius: var(--ehp-image-border-radius-sharp);
-			}
-		
-			&-rounded {
-				border-radius: var(--ehp-image-border-radius-rounded);
-			}
-		
-			&-round {
-				border-radius: var(--ehp-image-border-radius-round);
-			}
-	
-			&-default {
-				border-radius: var(--ehp-image-border-radius-default);
-			}
-		
-			&-oval {
-				border-radius: var(--ehp-image-border-radius-oval);
-			}
-	
-			&-custom {
-				border-top-left-radius: var(--ehp-image-border-radius-block-end);
-				border-top-right-radius: var(--ehp-image-border-radius-block-start);
-				border-bottom-right-radius: var(--ehp-image-border-radius-inline-end);
-				border-bottom-left-radius: var(--ehp-image-border-radius-inline-start);
-			}
-		}
-
-		&.has-shape {
-			@include shapes();
-
-			&-md {
-				@media screen and (max-width: $screen-tablet-max) {
-					@include shapes();
-				}
-			}
-
-			&-sm {
-				@media screen and (max-width: $screen-mobile-max) {
-					@include shapes();
-				}
-			}
+		&.has-shape-custom {
+			--ehp-shapes-border-radius-block-end: var(--ehp-image-border-radius-block-end);
+			--ehp-shapes-border-radius-block-start: var(--ehp-image-border-radius-block-start);
+			--ehp-shapes-border-radius-inline-end: var(--ehp-image-border-radius-inline-end);
+			--ehp-shapes-border-radius-inline-start: var(--ehp-image-border-radius-inline-start);
 		}
 
 		&.has-border {

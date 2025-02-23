@@ -168,4 +168,8 @@ class Utils {
 				\ElementorPro\License\APi::BC_VALIDATION_CALLBACK
 			);
 	}
+	
+	public static function get_widgets_depends(): array {
+		return [ 'helloplus-button', 'helloplus-image', 'helloplus-shapes' ];
+	}
 }

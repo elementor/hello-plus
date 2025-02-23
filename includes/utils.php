@@ -153,4 +153,12 @@ class Utils {
 	public static function is_elementor_version_supported( string $version ): bool {
 		return version_compare( $version, HELLOPLUS_MIN_ELEMENTOR_VERSION, 'ge' );
 	}
+
+	public static function plugin_title(): string {
+		return __( 'Hello+', 'hello-plus' );
+	}
+
+	public static function get_widgets_depends(): array {
+		return [ 'helloplus-button', 'helloplus-image', 'helloplus-shapes' ];
+	}
 }

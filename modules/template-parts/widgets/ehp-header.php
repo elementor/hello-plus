@@ -20,12 +20,15 @@ use HelloPlus\Modules\TemplateParts\Classes\{
 	Render\Widget_Header_Render,
 	Control_Media_Preview,
 };
+use HelloPlus\Modules\Content\Classes\Choose_Img_Control;
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 use HelloPlus\Classes\{
 	Ehp_Button,
+	Ehp_Shapes,
 	Ehp_Padding,
 };
+use HelloPlus\Includes\Utils;
 
 class Ehp_Header extends Ehp_Widget_Base {
 
@@ -50,7 +53,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 	}
 
 	public function get_style_depends(): array {
-		return [ 'helloplus-header', 'helloplus-button' ];
+		return array_merge( [ 'helloplus-header' ], Utils::get_widgets_depends() );
 	}
 
 	public function get_script_depends(): array {
@@ -102,51 +105,28 @@ class Ehp_Header extends Ehp_Widget_Base {
 			'layout_preset_select',
 			[
 				'label' => esc_html__( 'Preset', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'identity' => esc_html__( 'Identity', 'hello-plus' ),
-					'navigate' => esc_html__( 'Navigate', 'hello-plus' ),
-					'connect' => esc_html__( 'Connect', 'hello-plus' ),
-				],
+				'type' => Choose_Img_Control::CONTROL_NAME,
 				'default' => 'navigate',
-				'tablet_default' => 'navigate',
-				'mobile_default' => 'navigate',
-			]
-		);
-
-		$this->add_control(
-			'layout_info_connect',
-			[
-				'type' => Controls_Manager::ALERT,
-				'alert_type' => 'info',
-				'content' => esc_html__( 'Focus on direct interaction with clear contact options.', 'hello-plus' ),
-				'condition' => [
-					'layout_preset_select' => 'connect',
+				'label_block' => true,
+				'columns' => 2,
+				'options' => [
+					'identity' => [
+						'title' => wp_kses_post( "Identity:\nSpotlight your brand\nwith your logo or site name\nin the center." ),
+						'image' => HELLOPLUS_IMAGES_URL . 'header-identity.svg',
+						'hover_image' => true,
+					],
+					'navigate' => [
+						'title' => wp_kses_post( "Navigate:\nGuide visitors with a\ncentered menu." ),
+						'image' => HELLOPLUS_IMAGES_URL . 'header-navigate.svg',
+						'hover_image' => true,
+					],
+					'connect' => [
+						'title' => wp_kses_post( "Connect:\nFocus on direct interaction\nwith clear contact options." ),
+						'image' => HELLOPLUS_IMAGES_URL . 'header-connect.svg',
+						'hover_image' => true,
+					],
 				],
-			]
-		);
-
-		$this->add_control(
-			'layout_info_navigate',
-			[
-				'type' => Controls_Manager::ALERT,
-				'alert_type' => 'info',
-				'content' => esc_html__( 'Guide visitors with a centered menu.', 'hello-plus' ),
-				'condition' => [
-					'layout_preset_select' => 'navigate',
-				],
-			]
-		);
-
-		$this->add_control(
-			'layout_info_identity',
-			[
-				'type' => Controls_Manager::ALERT,
-				'alert_type' => 'info',
-				'content' => esc_html__( 'Spotlight your brand with your logo or site name in the center.', 'hello-plus' ),
-				'condition' => [
-					'layout_preset_select' => 'identity',
-				],
+				'frontend_available' => true,
 			]
 		);
 
@@ -403,7 +383,25 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
 				'label_off' => esc_html__( 'No', 'hello-plus' ),
 				'return_value' => 'yes',
-				'default' => 'no',
+				'default' => '',
+				'condition' => [
+					'layout_preset_select!' => 'connect',
+				],
+			]
+		);
+
+		$this->add_control(
+			'contact_buttons_show_connect',
+			[
+				'label' => esc_html__( 'Show', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'yes',
+				'condition' => [
+					'layout_preset_select' => 'connect',
+				],
 			]
 		);
 
@@ -596,9 +594,6 @@ class Ehp_Header extends Ehp_Widget_Base {
 						'url',
 					],
 				],
-				'default' => [
-					'is_external' => true,
-				],
 				'placeholder' => esc_html__( 'https://www.', 'hello-plus' ),
 			],
 		);
@@ -621,9 +616,6 @@ class Ehp_Header extends Ehp_Widget_Base {
 						'waze',
 					],
 				],
-				'default' => [
-					'is_external' => true,
-				],
 				'placeholder' => esc_html__( 'https://ul.waze.com/ul?place=', 'hello-plus' ),
 			],
 		);
@@ -645,9 +637,6 @@ class Ehp_Header extends Ehp_Widget_Base {
 					'contact_buttons_platform' => [
 						'map',
 					],
-				],
-				'default' => [
-					'is_external' => true,
 				],
 				'placeholder' => esc_html__( 'https://maps.app.goo.gl', 'hello-plus' ),
 			],
@@ -683,8 +672,40 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'prevent_empty' => true,
 				'button_text' => esc_html__( 'Add Item', 'hello-plus' ),
 				'title_field' => '{{{ contact_buttons_label }}}',
-				'condition' => [
-					'contact_buttons_show' => 'yes',
+				'conditions' => [
+					'relation' => 'or',
+					'terms' => [
+						[
+							'relation' => 'and',
+							'terms' => [
+								[
+									'name' => 'layout_preset_select',
+									'operator' => '!==',
+									'value' => 'connect',
+								],
+								[
+									'name' => 'contact_buttons_show',
+									'operator' => '==',
+									'value' => 'yes',
+								],
+							],
+						],
+						[
+							'relation' => 'and',
+							'terms' => [
+								[
+									'name' => 'layout_preset_select',
+									'operator' => '==',
+									'value' => 'connect',
+								],
+								[
+									'name' => 'contact_buttons_show_connect',
+									'operator' => '==',
+									'value' => 'yes',
+								],
+							],
+						],
+					],
 				],
 				'default' => [
 					[
@@ -1138,37 +1159,13 @@ class Ehp_Header extends Ehp_Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'style_submenu_shape',
-			[
-				'label' => esc_html__( 'Shape', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'default' => esc_html__( 'Default', 'hello-plus' ),
-					'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
-					'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
-					'round' => esc_html__( 'Round', 'hello-plus' ),
-					'custom' => esc_html__( 'Custom', 'hello-plus' ),
-				],
-				'default' => 'default',
-			]
-		);
-
-		$this->add_control(
-			'submenu_shape_custom',
-			[
-				'label' => esc_html__( 'Border Radius', 'hello-plus' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em', 'rem' ],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-header' => '--header-submenu-border-radius-custom-block-end: {{BOTTOM}}{{UNIT}}; --header-submenu-border-radius-custom-block-start: {{TOP}}{{UNIT}}; --header-submenu-border-radius-custom-inline-end: {{RIGHT}}{{UNIT}}; --header-submenu-border-radius-custom-inline-start: {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before',
-				'condition' => [
-					'style_submenu_shape' => 'custom',
-				],
-			]
-		);
+		$shapes = new Ehp_Shapes( $this, [
+			'widget_name' => 'header',
+			'container_prefix' => 'submenu',
+			'control_prefix' => 'style',
+			'is_responsive' => false,
+		] );
+		$shapes->add_style_controls();
 
 		$this->add_control(
 			'style_responsive_menu_label',
@@ -1762,40 +1759,15 @@ class Ehp_Header extends Ehp_Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'behavior_float_shape',
-			[
-				'label' => esc_html__( 'Shape', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'default',
-				'options' => [
-					'default' => esc_html__( 'Default', 'hello-plus' ),
-					'sharp' => esc_html__( 'Sharp', 'hello-plus' ),
-					'round' => esc_html__( 'Round', 'hello-plus' ),
-					'rounded' => esc_html__( 'Rounded', 'hello-plus' ),
-					'custom' => esc_html__( 'Custom', 'hello-plus' ),
-				],
-				'condition' => [
-					'behavior_float' => 'yes',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'behavior_float_shape_custom',
-			[
-				'label' => esc_html__( 'Border Radius', 'hello-plus' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em', 'rem' ],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-header' => '--header-float-border-radius-custom-block-end: {{BOTTOM}}{{UNIT}}; --header-float-border-radius-custom-block-start: {{TOP}}{{UNIT}}; --header-float-border-radius-custom-inline-end: {{RIGHT}}{{UNIT}}; --header-float-border-radius-custom-inline-start: {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before',
-				'condition' => [
-					'behavior_float_shape' => 'custom',
-				],
-			]
-		);
+		$shapes = new Ehp_Shapes( $this, [
+			'widget_name' => 'header',
+			'container_prefix' => 'float',
+			'control_prefix' => 'behavior',
+			'condition' => [
+				'behavior_float' => 'yes',
+			],
+		] );
+		$shapes->add_style_controls();
 
 		$this->add_control(
 			'behavior_onscroll_label',

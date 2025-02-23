@@ -13,7 +13,10 @@ use Elementor\{
 };
 
 use HelloPlus\Modules\TemplateParts\Widgets\Ehp_Header;
-use HelloPlus\Classes\Ehp_Button;
+use HelloPlus\Classes\{
+	Ehp_Button,
+	Ehp_Shapes,
+};
 
 /**
  * class Widget_Header_Render
@@ -39,13 +42,12 @@ class Widget_Header_Render {
 		$layout_preset = $this->settings['layout_preset_select'];
 		$behavior_scale_logo = $this->settings['behavior_sticky_scale_logo'];
 		$behavior_scale_title = $this->settings['behavior_sticky_scale_title'];
-		$behavior_float_shape = $this->settings['behavior_float_shape'];
-		$behavior_float_shape_tablet = $this->settings['behavior_float_shape_tablet'] ?? '';
-		$behavior_float_shape_mobile = $this->settings['behavior_float_shape_mobile'] ?? '';
 		$has_blur_background = $this->settings['blur_background'];
 
 		if ( ! empty( $navigation_breakpoint ) ) {
-			$layout_classnames[] = 'has-navigation-breakpoint-' . $navigation_breakpoint;
+			$this->widget->add_render_attribute( 'layout', [
+				'data-responsive-breakpoint' => $navigation_breakpoint,
+			] );
 		}
 
 		if ( 'yes' === $box_border ) {
@@ -64,17 +66,13 @@ class Widget_Header_Render {
 			$layout_classnames[] = 'has-behavior-sticky-scale-title';
 		}
 
-		if ( ! empty( $behavior_float_shape ) ) {
-			$layout_classnames[] = 'has-shape-' . $behavior_float_shape;
-
-			if ( ! empty( $behavior_float_shape_mobile ) ) {
-				$layout_classnames[] = 'has-shape-sm-' . $behavior_float_shape_mobile;
-			}
-
-			if ( ! empty( $behavior_float_shape_tablet ) ) {
-				$layout_classnames[] = 'has-shape-md-' . $behavior_float_shape_tablet;
-			}
-		}
+		$shapes = new Ehp_Shapes( $this->widget, [
+			'container_prefix' => 'float',
+			'control_prefix' => 'behavior',
+			'render_attribute' => 'layout',
+			'widget_name' => 'header',
+		] );
+		$shapes->add_shape_attributes();
 
 		if ( ! empty( $behavior_on_scroll ) ) {
 			$layout_classnames[] = 'has-behavior-onscroll-' . $behavior_on_scroll;
@@ -261,6 +259,7 @@ class Widget_Header_Render {
 	private function render_menu_toggle() {
 		$toggle_icon = $this->settings['navigation_menu_icon'];
 		$toggle_classname = 'ehp-header__button-toggle';
+		$show_contact_buttons = 'yes' === $this->settings['contact_buttons_show'] || 'yes' === $this->settings['contact_buttons_show_connect'];
 
 		$this->widget->add_render_attribute( 'button-toggle', [
 			'class' => $toggle_classname,
@@ -272,7 +271,7 @@ class Widget_Header_Render {
 
 		?>
 		<div class="ehp-header__side-toggle">
-			<?php if ( 'yes' === $this->settings['contact_buttons_show'] ) {
+			<?php if ( $show_contact_buttons ) {
 				$this->render_contact_buttons();
 			} ?>
 			<button <?php $this->widget->print_render_attribute_string( 'button-toggle' ); ?>>
@@ -295,6 +294,7 @@ class Widget_Header_Render {
 	protected function render_ctas_container() {
 		$responsive_button_width = $this->settings['cta_responsive_width'] ?? '';
 		$ctas_container_classnames = self::CTAS_CONTAINER_CLASSNAME;
+		$show_contact_buttons = 'yes' === $this->settings['contact_buttons_show'] || 'yes' === $this->settings['contact_buttons_show_connect'];
 
 		if ( '' !== $responsive_button_width ) {
 			$ctas_container_classnames .= ' has-responsive-width-' . $responsive_button_width;
@@ -306,7 +306,7 @@ class Widget_Header_Render {
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'ctas-container' ); ?>>
 			<?php
-			if ( 'yes' === $this->settings['contact_buttons_show'] ) {
+			if ( $show_contact_buttons ) {
 				$this->render_contact_buttons();
 			}
 			?>
@@ -539,16 +539,19 @@ class Widget_Header_Render {
 
 	public function handle_sub_menu_classes() {
 		$submenu_layout = $this->settings['style_submenu_layout'] ?? 'horizontal';
-		$submenu_shape = $this->settings['style_submenu_shape'];
 
 		$dropdown_classnames = [ 'ehp-header__dropdown' ];
 		$dropdown_classnames[] = 'has-layout-' . $submenu_layout;
 
-		if ( ! empty( $submenu_shape ) ) {
-			$dropdown_classnames[] = 'has-shape-' . $submenu_shape;
-		}
+		$shapes = new Ehp_Shapes( $this->widget, [
+			'container_prefix' => 'submenu',
+			'control_prefix' => 'style',
+			'widget_name' => 'header',
+			'is_responsive' => false,
+		] );
+		$classnames = array_merge( $dropdown_classnames, $shapes->get_shape_classnames() );
 
-		return $dropdown_classnames;
+		return $classnames;
 	}
 
 	public function handle_walker_menu_start_el( $item_output, $item ) {

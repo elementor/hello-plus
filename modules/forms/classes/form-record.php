@@ -137,7 +137,7 @@ class Form_Record {
 			return $this->form_settings[ $setting ];
 		}
 
-		return null;
+		return [];
 	}
 
 	public function get_field( $args ) {

@@ -40,6 +40,7 @@ class Module extends Module_Base {
 			'Hero',
 			'CTA',
 			'Flex_Hero',
+			'Contact'
 		];
 	}
 

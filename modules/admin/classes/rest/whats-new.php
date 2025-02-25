@@ -5,16 +5,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use Elementor\WPNotificationsPackage\V110\Notifications as Theme_Notifications;
 use HelloPlus\Modules\Admin\Module;
 use WP_REST_Server;
 
 class Whats_New {
 	public function get_notifications() {
 		/**
-		 * @var \HelloPlus\Modules\Admin\Components\Notifications $notifications_component
+		 * @var \HelloPlus\Modules\Admin\Components\Notificator $notifications_component
 		 */
-		$notifications_component = Module::instance()->get_component( 'Notifications' );
+		$notifications_component = Module::instance()->get_component( 'Notificator' );
 		return $notifications_component->get_notifications_by_conditions( true );
 	}
 

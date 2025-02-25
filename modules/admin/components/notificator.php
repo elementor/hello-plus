@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use Elementor\WPNotificationsPackage\V110\Notifications as Theme_Notifications;
 
-class Notifications {
+class Notificator {
 	private ?Theme_Notifications $notificator = null;
 
 	public function get_notifications_by_conditions( $force_request = false ) {

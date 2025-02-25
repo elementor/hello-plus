@@ -134,7 +134,12 @@ class Form_Record {
 
 	public function get_form_settings( $setting ) {
 		if ( isset( $this->form_settings[ $setting ] ) ) {
-			return $this->form_settings[ $setting ];
+			$setting_value = $this->form_settings[ $setting ];
+			if ( 'submit_actions' === $setting ) {
+				$setting_value = [ $setting_value ];
+			}
+
+			return $setting_value;
 		}
 
 		return [];

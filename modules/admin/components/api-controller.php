@@ -6,10 +6,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use HelloPlus\Modules\Admin\Classes\Rest\Whats_New;
 use HelloPlus\Modules\Admin\Classes\Ajax\Setup_Wizard;
 use HelloPlus\Modules\Admin\Classes\Rest\Onboarding_Settings;
-
+use HelloPlus\Modules\Admin\Classes\Rest\Whats_New;
 
 class Api_Controller {
 

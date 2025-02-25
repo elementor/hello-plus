@@ -1,25 +1,21 @@
 <?php
-
 namespace HelloPlus\Modules\Admin\Classes\Rest;
-
-use Elementor\WPNotificationsPackage\V110\Notifications as Theme_Notifications;
-use WP_REST_Server;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use Elementor\WPNotificationsPackage\V110\Notifications as Theme_Notifications;
+use HelloPlus\Modules\Admin\Module;
+use WP_REST_Server;
+
 class Whats_New {
-
 	public function get_notifications() {
-		require_once HELLOPLUS_PATH . '/vendor/autoload.php';
-
-		$notificator = new Theme_Notifications(
-			'hello-plus',
-			HELLOPLUS_VERSION,
-		);
-
-		return $notificator->get_notifications_by_conditions( true );
+		/**
+		 * @var \HelloPlus\Modules\Admin\Components\Notifications $notifications_component
+		 */
+		$notifications_component = Module::instance()->get_component( 'Notifications' );
+		return $notifications_component->get_notifications_by_conditions( true );
 	}
 
 	public function rest_api_init() {

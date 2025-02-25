@@ -31,6 +31,7 @@ class Module extends Module_Base {
 			'Scripts_Controller',
 			'Admin_Menu_Controller',
 			'Admin_Controller',
+			'Notifications',
 		];
 	}
 }

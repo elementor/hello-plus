@@ -6,7 +6,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use HelloPlus\Modules\Admin\Module;
-use WP_REST_Server;
 
 class Whats_New {
 	public function get_notifications() {
@@ -22,7 +21,7 @@ class Whats_New {
 			'elementor-hello-plus/v1',
 			'/whats-new',
 			[
-				'methods' => WP_REST_Server::READABLE,
+				'methods' => \WP_REST_Server::READABLE,
 				'callback' => [ $this, 'get_notifications' ],
 				'permission_callback' => function () {
 					return current_user_can( 'manage_options' );

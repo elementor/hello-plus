@@ -91,7 +91,7 @@ class Contact extends Widget_Base {
 			[
 				'label' => esc_html__( 'Preset', 'hello-plus' ),
 				'type' => Choose_Img_Control::CONTROL_NAME,
-				'default' => 'focus',
+				'default' => 'locate',
 				'label_block' => true,
 				'columns' => 2,
 				'options' => [
@@ -107,7 +107,7 @@ class Contact extends Widget_Base {
 					],
 					'quick-info' => [
 						'title' => wp_kses_post( "Quick info: Share\nessential business\ndetails at a glance for\nfast access." ),
-						'image' => HELLOPLUS_IMAGES_URL . 'contact-touchpoint.svg',
+						'image' => HELLOPLUS_IMAGES_URL . 'contact-quick-info.svg',
 						'hover_image' => true,
 					],
 				],
@@ -999,7 +999,7 @@ class Contact extends Widget_Base {
 					'default' => Global_Colors::COLOR_PRIMARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-heading-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-contact' => '--contact-text-heading-color: {{VALUE}}',
 				],
 			]
 		);
@@ -1008,7 +1008,7 @@ class Contact extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'heading_typography',
-				'selector' => '{{WRAPPER}} .ehp-flex-hero__heading',
+				'selector' => '{{WRAPPER}} .ehp-contact__heading',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
 				],
@@ -1033,7 +1033,7 @@ class Contact extends Widget_Base {
 					'default' => Global_Colors::COLOR_TEXT,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-subheading-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-contact' => '--contact-text-description-color: {{VALUE}}',
 				],
 			]
 		);
@@ -1042,7 +1042,7 @@ class Contact extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'description_typography',
-				'selector' => '{{WRAPPER}} .ehp-flex-hero__subheading',
+				'selector' => '{{WRAPPER}} .ehp-contact__description',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
@@ -1068,7 +1068,7 @@ class Contact extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-element-spacing: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-contact' => '--contact-text-spacing: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -1719,7 +1719,7 @@ class Contact extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-elements-spacing: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-contact' => '--contact-box-gap: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]

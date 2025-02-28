@@ -102,4 +102,41 @@
 	&__contact-text {
 		color: var(--contact-contact-text-color);
 	}
+
+	&__social-icons-container {
+		display: flex;
+		gap: var(--contact-social-icon-gap);
+	}
+
+	&__social-link {
+
+		& .ehp-contact__contact-social-icon {
+			transition: $transition;
+			
+			&:is(svg) {
+				fill: var(--contact-social-icon-color);
+				height: var(--contact-social-icon-size);
+				width: var(--contact-social-icon-size);
+			}
+
+			&:is(i) {
+				color: var(--contact-social-icon-color);
+				font-size: var(--contact-social-icon-size);
+			}
+		}
+
+		&:hover,
+		&:focus {
+
+			& .ehp-contact__contact-social-icon {
+				color: var(--contact-social-icon-hover-color);
+				transition: $transition;
+
+				&:is(svg) {
+					fill: var(--contact-social-icon-hover-color);
+					transition: $transition;
+				}
+			}
+		}
+	}
 }

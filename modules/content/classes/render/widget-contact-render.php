@@ -186,8 +186,7 @@ class Widget_Contact_Render {
 						<span class="ehp-contact__contact-link-label"><?php echo esc_html( $contact_link['group_' . $group_number . '_label'] ); ?></span>
 					</a>
 				<?php
-			}
-			?>
+			} ?>
 		</div>
 		<?php
 	}
@@ -200,23 +199,59 @@ class Widget_Contact_Render {
 			$subheading_output = sprintf( '<h3 class="ehp-contact__group-subheading">%s</h3>', esc_html( $subheading_text ) );
 			// Escaped above
 			Utils::print_unescaped_internal_string( $subheading_output );
-		} ?>
-		<?php if ( '' !== $text_text ) {
+		}
+		if ( '' !== $text_text ) {
 			$text_output = sprintf( '<div class="ehp-contact__contact-text">%s</div>', esc_html( $text_text ) );
 			// Escaped above
 			Utils::print_unescaped_internal_string( $text_output );
-		} ?>
-		<?php
+		}
 	}
 
 	protected function render_social_icons_group( $group_number ) {
 		$subheading_text = $this->settings['group_' . $group_number . '_social_subheading'];
-		?>
-		<?php if ( '' !== $subheading_text ) {
-			$subheading_output = sprintf( '<h3 class="ehp-contact__group-social-subheading">%s</h3>', esc_html( $subheading_text ) );
+		$repeater = $this->settings[ 'group_' . $group_number . '_social_repeater' ];
+
+		if ( '' !== $subheading_text ) {
+			$subheading_output = sprintf( '<h3 class="ehp-contact__group-subheading">%s</h3>', esc_html( $subheading_text ) );
 			// Escaped above
 			Utils::print_unescaped_internal_string( $subheading_output );
 		} ?>
+		<div class="ehp-contact__social-icons-container">
+			<?php
+			foreach ( $repeater as $key => $social_icon ) {
+				$icon = $social_icon['group_' . $group_number . '_social_icon'] ?? [];
+				$label = $social_icon['group_' . $group_number . '_social_label'] ?? '';
+				$url = $social_icon['group_' . $group_number . '_social_link'] ?? [];
+				$hover_animation = $this->settings['contact_details_social_icon_hover_animation'];
+
+				$social_icon_classnames = [ 'ehp-contact__social-link' ];
+
+				if ( ! empty( $hover_animation ) ) {
+					$social_icon_classnames[] = 'elementor-animation-' . $hover_animation;
+				}
+
+				$this->widget->add_render_attribute( 'social-icon-' . $key, [
+					'aria-label' => esc_attr( $label ),
+					'class' => $social_icon_classnames,
+					'rel' => 'noopener noreferrer',
+				] );
+
+				if ( ! empty( $url['url'] ) ) {
+					$this->widget->add_link_attributes( 'social-icon-' . $key, $url );
+				}
+				?>
+				<a <?php $this->widget->print_render_attribute_string( 'social-icon-' . $key ); ?>>
+					<?php Icons_Manager::render_icon( $icon,
+						[
+							'aria-hidden' => 'true',
+							'class' => 'ehp-contact__contact-social-icon',
+						]
+					); ?>
+				</a>
+				<?php
+			}
+			?>
+		</div>
 		<?php
 	}
 

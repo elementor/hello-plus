@@ -714,7 +714,7 @@ class Contact extends Widget_Base {
 				],
 				'autocomplete' => true,
 				'label_block' => true,
-				'placeholder' => esc_html__( 'https://www.instagram.com', 'hello-plus' ),
+				'placeholder' => esc_html__( 'Enter your URL', 'hello-plus' ),
 			]
 		);
 
@@ -736,6 +736,9 @@ class Contact extends Widget_Base {
 							'value' => 'fab fa-instagram',
 							'library' => 'fa-brands',
 						],
+						'group_' . $group_number . '_social_link' => [
+							'url' => 'https://www.instagram.com/',
+						],
 					],
 					[
 						'group_' . $group_number . '_social_subheading' => esc_html__( 'Tiktok', 'hello-plus' ),
@@ -743,12 +746,18 @@ class Contact extends Widget_Base {
 							'value' => 'fab fa-tiktok',
 							'library' => 'fa-brands',
 						],
+						'group_' . $group_number . '_social_link' => [
+							'url' => 'https://www.tiktok.com/',
+						],
 					],
 					[
 						'group_' . $group_number . '_social_subheading' => esc_html__( 'X (Twitter)', 'hello-plus' ),
 						'group_' . $group_number . '_social_icon' => [
 							'value' => 'fab fa-x-twitter',
 							'library' => 'fa-brands',
+						],
+						'group_' . $group_number . '_social_link' => [
+							'url' => 'https://www.twitter.com/',
 						],
 					],
 				],
@@ -1419,7 +1428,7 @@ class Contact extends Widget_Base {
 					'default' => Global_Colors::COLOR_SECONDARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta__icon' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-contact' => '--contact-social-icon-color: {{VALUE}}',
 				],
 			]
 		);
@@ -1442,7 +1451,7 @@ class Contact extends Widget_Base {
 					'default' => Global_Colors::COLOR_SECONDARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta__icon:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-contact' => '--contact-social-icon-hover-color: {{VALUE}}',
 				],
 			]
 		);
@@ -1477,7 +1486,7 @@ class Contact extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta__icon' => 'font-size: {{SIZE}}{{UNIT}}',
+					'{{WRAPPER}} .ehp-contact' => '--contact-social-icon-size: {{SIZE}}{{UNIT}}',
 				],
 				'separator' => 'before',
 			]
@@ -1500,7 +1509,7 @@ class Contact extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta__icon' => 'margin-right: {{SIZE}}{{UNIT}}',
+					'{{WRAPPER}} .ehp-contact' => '--contact-social-icon-gap: {{SIZE}}{{UNIT}}',
 				],
 			]
 		);

@@ -1151,7 +1151,7 @@ class Contact extends Widget_Base {
 					'default' => Global_Colors::COLOR_SECONDARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-contact' => '--contact-links-subheading-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-contact' => '--contact-group-subheading-color: {{VALUE}}',
 				],
 			]
 		);
@@ -1160,7 +1160,7 @@ class Contact extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'contact_details_subheading_typography',
-				'selector' => '{{WRAPPER}} .ehp-contact__group-links-subheading',
+				'selector' => '{{WRAPPER}} .ehp-contact__group-subheading',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
 				],
@@ -1186,7 +1186,7 @@ class Contact extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-contact' => '--contact-group-subheading-spacing: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-contact' => '--contact-group-spacing: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -1371,7 +1371,7 @@ class Contact extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'contact_details_text_typography',
-				'selector' => '{{WRAPPER}} .ehp-cta__text',
+				'selector' => '{{WRAPPER}} .ehp-contact__contact-text',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
@@ -1387,7 +1387,7 @@ class Contact extends Widget_Base {
 					'default' => Global_Colors::COLOR_TEXT,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta__text' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-contact' => '--contact-contact-text-color: {{VALUE}}',
 				],
 			]
 		);

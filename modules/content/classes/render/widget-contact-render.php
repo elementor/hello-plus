@@ -118,14 +118,12 @@ class Widget_Contact_Render {
 		$subheading_text = $this->settings['group_' . $group_number . '_links_subheading'];
 
 		?>
-		<div class="ehp-contact__group-links">
-			<?php if ( '' !== $subheading_text ) {
-				$subheading_output = sprintf( '<h3 class="ehp-contact__group-links-subheading">%s</h3>', esc_html( $subheading_text ) );
-				// Escaped above
-				Utils::print_unescaped_internal_string( $subheading_output );
-			} ?>
-			<?php $this->render_contact_links( $group_number ); ?>
-		</div>
+		<?php if ( '' !== $subheading_text ) {
+			$subheading_output = sprintf( '<h3 class="ehp-contact__group-subheading">%s</h3>', esc_html( $subheading_text ) );
+			// Escaped above
+			Utils::print_unescaped_internal_string( $subheading_output );
+		} ?>
+		<?php $this->render_contact_links( $group_number ); ?>
 		<?php
 	}
 
@@ -196,27 +194,29 @@ class Widget_Contact_Render {
 
 	protected function render_contact_text_group( $group_number ) {
 		$subheading_text = $this->settings['group_' . $group_number . '_text_subheading'];
+		$text_text = $this->settings['group_' . $group_number . '_text_textarea'];
 		?>
-		<div class="ehp-contact__group-text">
-			<?php if ( '' !== $subheading_text ) {
-				$subheading_output = sprintf( '<h3 class="ehp-contact__group-text-subheading">%s</h3>', esc_html( $subheading_text ) );
-				// Escaped above
-				Utils::print_unescaped_internal_string( $subheading_output );
-			} ?>
-		</div>
+		<?php if ( '' !== $subheading_text ) {
+			$subheading_output = sprintf( '<h3 class="ehp-contact__group-subheading">%s</h3>', esc_html( $subheading_text ) );
+			// Escaped above
+			Utils::print_unescaped_internal_string( $subheading_output );
+		} ?>
+		<?php if ( '' !== $text_text ) {
+			$text_output = sprintf( '<div class="ehp-contact__contact-text">%s</div>', esc_html( $text_text ) );
+			// Escaped above
+			Utils::print_unescaped_internal_string( $text_output );
+		} ?>
 		<?php
 	}
 
 	protected function render_social_icons_group( $group_number ) {
 		$subheading_text = $this->settings['group_' . $group_number . '_social_subheading'];
 		?>
-		<div class="ehp-contact__group-social">
-			<?php if ( '' !== $subheading_text ) {
-				$subheading_output = sprintf( '<h3 class="ehp-contact__group-social-subheading">%s</h3>', esc_html( $subheading_text ) );
-				// Escaped above
-				Utils::print_unescaped_internal_string( $subheading_output );
-			} ?>
-		</div>
+		<?php if ( '' !== $subheading_text ) {
+			$subheading_output = sprintf( '<h3 class="ehp-contact__group-social-subheading">%s</h3>', esc_html( $subheading_text ) );
+			// Escaped above
+			Utils::print_unescaped_internal_string( $subheading_output );
+		} ?>
 		<?php
 	}
 

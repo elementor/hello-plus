@@ -38,14 +38,14 @@
 		gap: var(--contact-text-spacing);
 	}
 
-	&__group-links {
+	&__group {
 		display: flex;
 		flex-direction: column;
-		gap: var(--contact-group-subheading-spacing);
+		gap: var(--contact-group-spacing);
 	}
 
-	&__group-links-subheading {
-		color: var(--contact-links-subheading-color);
+	&__group-subheading {
+		color: var(--contact-group-subheading-color);
 		margin: 0;
 	}
 
@@ -97,5 +97,9 @@
 				transition: $transition;
 			}
 		}
+	}
+
+	&__contact-text {
+		color: var(--contact-contact-text-color);
 	}
 }

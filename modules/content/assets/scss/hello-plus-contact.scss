@@ -37,4 +37,65 @@
 		flex-direction: column;
 		gap: var(--contact-text-spacing);
 	}
+
+	&__group-links {
+		display: flex;
+		flex-direction: column;
+		gap: var(--contact-group-subheading-spacing);
+	}
+
+	&__group-links-subheading {
+		color: var(--contact-links-subheading-color);
+		margin: 0;
+	}
+
+	&__links-container {
+		display: flex;
+		flex-direction: column;
+		gap: var(--contact-links-spacing);
+	}
+	
+	&__contact-link {
+		display: flex;
+		gap: var(--contact-link-icon-gap);
+
+		& .ehp-contact__contact-link-icon {
+			transition: $transition;
+			
+			&:is(svg) {
+				fill: var(--contact-link-icon-color);
+				height: var(--contact-link-icon-size);
+				width: var(--contact-link-icon-size);
+			}
+
+			&:is(i) {
+				color: var(--contact-link-icon-color);
+				font-size: var(--contact-link-icon-size);
+			}
+		}
+	
+		& .ehp-contact__contact-link-label {
+			color: var(--contact-link-label-color);
+			transition: $transition;
+		}
+		
+		&:hover,
+		&:focus {
+
+			& .ehp-contact__contact-link-icon {
+				color: var(--contact-link-icon-hover-color);
+				transition: $transition;
+
+				&:is(svg) {
+					fill: var(--contact-link-icon-hover-color);
+					transition: $transition;
+				}
+			}
+	
+			& .ehp-contact__contact-link-label {
+				color: var(--contact-link-label-hover-color);
+				transition: $transition;
+			}
+		}
+	}
 }

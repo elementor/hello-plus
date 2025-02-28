@@ -9,6 +9,7 @@ use HelloPlus\Includes\Utils;
 use HelloPlus\Classes\{
 	Ehp_Padding,
 	Ehp_Shapes,
+	Ehp_Social_Platforms,
 };
 
 use Elementor\{
@@ -347,8 +348,38 @@ class Contact extends Widget_Base {
 				'label' => esc_html__( 'Icon', 'hello-plus' ),
 				'type' => Controls_Manager::ICONS,
 				'default' => [
-					'value' => 'fas fa-star',
+					'value' => 'fas fa-phone',
 					'library' => 'fa-solid',
+				],
+				'recommended' => [
+					'fa-solid' => [
+						'envelope',
+						'phone-alt',
+						'phone',
+						'mobile',
+						'mobile-alt',
+						'sms',
+						'comment-dots',
+						'map-marker-alt',
+						'map-marker',
+						'location-arrow',
+						'map',
+						'link',
+						'globe',
+					],
+					'fa-regular' => [
+						'envelope',
+						'comment-dots',
+						'map',
+					],
+					'fa-brands' => [
+						'whatsapp',
+						'whatsapp-square',
+						'skype',
+						'facebook-messenger',
+						'viber',
+						'waze',
+					],
 				],
 			]
 		);
@@ -383,7 +414,7 @@ class Contact extends Widget_Base {
 					'waze' => esc_html__( 'Waze', 'hello-plus' ),
 					'url' => esc_html__( 'URL', 'hello-plus' ),
 				],
-				'default' => 'map',
+				'default' => 'telephone',
 			],
 		);
 
@@ -630,10 +661,26 @@ class Contact extends Widget_Base {
 	}
 
 	protected function add_social_controls( $group_number, $group_condition ) {
+		$this->add_control(
+			'group_' . $group_number . '_social_subheading',
+			[
+				'label' => esc_html__( 'Subheading', 'hello-plus' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => esc_html__( 'Follow', 'hello-plus' ),
+				'placeholder' => esc_html__( 'Type your text here', 'hello-plus' ),
+				'dynamic' => [
+					'active' => true,
+				],
+				'condition' => array_merge( $group_condition, [
+					'group_' . $group_number . '_type' => 'social-icons',
+				] ),
+			]
+		);
+
 		$repeater = new Repeater();
 
 		$repeater->add_control(
-			'group_' . $group_number . '_social_subheading',
+			'group_' . $group_number . '_social_label',
 			[
 				'label' => esc_html__( 'Accessible Name', 'hello-plus' ),
 				'type' => Controls_Manager::TEXT,
@@ -1104,7 +1151,7 @@ class Contact extends Widget_Base {
 					'default' => Global_Colors::COLOR_SECONDARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-subheading-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-contact' => '--contact-links-subheading-color: {{VALUE}}',
 				],
 			]
 		);
@@ -1113,7 +1160,7 @@ class Contact extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'contact_details_subheading_typography',
-				'selector' => '{{WRAPPER}} .ehp-flex-hero__subheading',
+				'selector' => '{{WRAPPER}} .ehp-contact__group-links-subheading',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
 				],
@@ -1135,11 +1182,11 @@ class Contact extends Widget_Base {
 					],
 				],
 				'default' => [
-					'size' => 32,
+					'size' => 8,
 					'unit' => 'px',
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-element-spacing: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-contact' => '--contact-group-subheading-spacing: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -1172,7 +1219,7 @@ class Contact extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-cta' => '--cta-spacing: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-contact' => '--contact-links-spacing: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -1181,7 +1228,7 @@ class Contact extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'contact_details_typography',
-				'selector' => '{{WRAPPER}} .ehp-cta__text',
+				'selector' => '{{WRAPPER}} .ehp-contact__contact-link',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
@@ -1206,7 +1253,7 @@ class Contact extends Widget_Base {
 					'default' => Global_Colors::COLOR_PRIMARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta__icon' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-contact' => '--contact-link-icon-color: {{VALUE}}',
 				],
 			]
 		);
@@ -1220,7 +1267,7 @@ class Contact extends Widget_Base {
 					'default' => Global_Colors::COLOR_TEXT,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta__text' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-contact' => '--contact-link-label-color: {{VALUE}}',
 				],
 			]
 		);
@@ -1243,7 +1290,7 @@ class Contact extends Widget_Base {
 					'default' => Global_Colors::COLOR_PRIMARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta__icon:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-contact' => '--contact-link-icon-hover-color: {{VALUE}}',
 				],
 			]
 		);
@@ -1257,7 +1304,7 @@ class Contact extends Widget_Base {
 					'default' => Global_Colors::COLOR_TEXT,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta__text:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-contact' => '--contact-link-label-hover-color: {{VALUE}}',
 				],
 			]
 		);
@@ -1283,7 +1330,7 @@ class Contact extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta__icon' => 'font-size: {{SIZE}}{{UNIT}}',
+					'{{WRAPPER}} .ehp-contact' => '--contact-link-icon-size: {{SIZE}}{{UNIT}}',
 				],
 				'separator' => 'before',
 			]
@@ -1306,7 +1353,7 @@ class Contact extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta__icon' => 'margin-right: {{SIZE}}{{UNIT}}',
+					'{{WRAPPER}} .ehp-contact' => '--contact-link-icon-gap: {{SIZE}}{{UNIT}}',
 				],
 			]
 		);
@@ -1397,6 +1444,15 @@ class Contact extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .ehp-cta__icon:hover' => 'color: {{VALUE}}',
 				],
+			]
+		);
+
+		$this->add_control(
+			'contact_details_social_icon_hover_animation',
+			[
+				'label' => esc_html__( 'Hover Animation', 'hello-plus' ),
+				'type' => Controls_Manager::HOVER_ANIMATION,
+				'frontend_available' => true,
 			]
 		);
 

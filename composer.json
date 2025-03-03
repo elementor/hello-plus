@@ -12,6 +12,11 @@
 	},
 	"scripts": {
 		"lint": "vendor/bin/phpcs --standard=./phpcs.xml --ignore=node_modules,vendor,build .",
-		"lint:fix": "vendor/bin/phpcbf --ignore=node_modules,vendor,build ."
+		"lint:fix": "vendor/bin/phpcbf --ignore=node_modules,vendor,build .",
+		"test": "phpunit"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^10.5",
+		"elementor/elementor-editor-testing": "0.0.3"
 	}
 }

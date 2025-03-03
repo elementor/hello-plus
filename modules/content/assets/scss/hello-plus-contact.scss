@@ -1,6 +1,7 @@
 @import "../../../../assets/dev/scss/variables";
 
 .ehp-contact {
+	align-items: var(--contact-content-position);
 	display: flex;
 	flex-direction: column;
 	gap: var(--contact-box-gap);
@@ -9,10 +10,32 @@
 	padding-block-start: var(--contact-box-padding-block-start);
 	padding-block-end: var(--contact-box-padding-block-end);
 
+	@mixin map-position {
+		&-start {
+
+			& .ehp-contact__map-container {
+				order: 1;
+			}
+
+			& .ehp-contact__text-container {
+				order: 2;
+			}
+		}
+
+		&-end {
+			& .ehp-contact__map-container {
+				order: 2;
+			}
+
+			& .ehp-contact__text-container {
+				order: 1;
+			}
+		}
+	}
+
 	&.has-preset {
 
 		&-locate {
-			
 			@media screen and (min-width: $screen-desktop-min) {
 				flex-direction: row;
 
@@ -20,6 +43,53 @@
 				& .ehp-contact__map-container {
 					width: 50%;
 				}
+			}
+
+			&.has-map-h-position {
+				@include map-position();
+
+				&-md {
+					@media screen and (max-width: $screen-tablet-max) {
+						@include map-position();
+					}
+				}
+
+				&-sm {
+					@media screen and (max-width: $screen-mobile-max) {
+						@include map-position();
+					}
+				}
+			}
+		}
+
+		&-touchpoint {
+
+			&.has-map-v-position {
+				@include map-position();
+
+				&-md {
+					@media screen and (max-width: $screen-tablet-max) {
+						@include map-position();
+					}
+				}
+
+				&-sm {
+					@media screen and (max-width: $screen-mobile-max) {
+						@include map-position();
+					}
+				}
+			}
+		}
+
+		&-quick-info,
+		&-touchpoint {
+
+			& .ehp-contact__headings {
+				text-align: var(--contact-content-alignment);
+			}
+
+			& .ehp-contact__groups {
+				justify-content: var(--contact-content-alignment);
 			}
 		}
 	}
@@ -36,6 +106,14 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--contact-text-spacing);
+		max-width: var(--contact-content-width);
+	}
+
+	&__groups {
+		column-gap: var(--contact-layout-columns-column-gap);
+		display: grid;
+		grid-template-columns: repeat(var(--contact-layout-columns), auto);
+		row-gap: var(--contact-layout-columns-row-gap);
 	}
 
 	&__group {
@@ -138,5 +216,9 @@
 				}
 			}
 		}
+	}
+
+	&__map-container {
+		width: 100%;
 	}
 }

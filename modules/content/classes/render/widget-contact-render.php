@@ -32,6 +32,33 @@ class Widget_Contact_Render {
 		$layout_full_height_controls = $this->settings['box_full_screen_height_controls'] ?? '';
 		$show_map = 'quick-info' !== $this->settings['layout_preset'];
 
+		$map_position_horizontal = $this->settings['map_position_horizontal'];
+		$map_position_vertical = $this->settings['map_position_vertical'];
+
+		if ( ! empty( $map_position_horizontal ) ) {
+			$layout_classnames[] = 'has-map-h-position-' . $map_position_horizontal;
+
+			if ( ! empty( $map_position_horizontal_tablet ) ) {
+				$layout_classnames[] = 'has-map-h-position-md-' . $map_position_horizontal_tablet;
+			}
+
+			if ( ! empty( $map_position_horizontal_mobile ) ) {
+				$layout_classnames[] = 'has-map-h-position-sm-' . $map_position_horizontal_mobile;
+			}
+		}
+
+		if ( ! empty( $map_position_vertical ) ) {
+			$layout_classnames[] = 'has-map-v-position-' . $map_position_vertical;
+
+			if ( ! empty( $map_position_vertical_tablet ) ) {
+				$layout_classnames[] = 'has-map-v-position-md-' . $map_position_vertical_tablet;
+			}
+
+			if ( ! empty( $map_position_vertical_mobile ) ) {
+				$layout_classnames[] = 'has-map-v-position-sm-' . $map_position_vertical_mobile;
+			}
+		}
+
 		$this->widget->add_render_attribute( 'layout', [
 			'class' => $layout_classnames,
 		] );

@@ -301,6 +301,13 @@ class Contact extends Widget_Base {
 			);
 		}
 
+		$group_types = [
+			'1' => 'contact-links',
+			'3' => 'contact-links',
+			'2' => 'text',
+			'4' => 'social-icons',
+		];
+
 		$this->add_control(
 			'group_' . $group_number . '_type',
 			[
@@ -311,7 +318,7 @@ class Contact extends Widget_Base {
 					'text' => esc_html__( 'Text', 'hello-plus' ),
 					'social-icons' => esc_html__( 'Social Icons', 'hello-plus' ),
 				],
-				'default' => 'contact-links',
+				'default' => $group_types[$group_number] ?? '',
 				'condition' => $group_condition,
 			]
 		);
@@ -324,12 +331,19 @@ class Contact extends Widget_Base {
 	}
 
 	protected function add_contact_links_controls( $group_number, $group_condition ) {
+		$group_subheadings = [
+			'1' => esc_html__( 'Let\'s talk', 'hello-plus' ),
+			'2' => esc_html__( 'Hours', 'hello-plus' ),
+			'3' => esc_html__( 'Visit', 'hello-plus' ),
+			'4' => esc_html__( 'Follow', 'hello-plus' ),
+		];
+
 		$this->add_control(
 			'group_' . $group_number . '_links_subheading',
 			[
 				'label' => esc_html__( 'Subheading', 'hello-plus' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => esc_html__( 'Let\'s talk', 'hello-plus' ),
+				'default' => $group_subheadings[ $group_number ] ?? '',
 				'placeholder' => esc_html__( 'Type your text here', 'hello-plus' ),
 				'dynamic' => [
 					'active' => true,
@@ -600,6 +614,39 @@ class Contact extends Widget_Base {
 			]
 		);
 
+		$shared_defaults = [
+			[
+				'group_' . $group_number . '_icon' => [
+					'value' => 'fas fa-phone',
+					'library' => 'fa-solid',
+				],
+				'group_' . $group_number . '_label' => esc_html__( 'Call', 'hello-plus' ),
+				'group_' . $group_number . '_platform' => 'telephone',
+			],
+			[
+				'group_' . $group_number . '_icon' => [
+					'value' => 'fas fa-envelope',
+					'library' => 'fa-solid',
+				],
+				'group_' . $group_number . '_label' => esc_html__( 'Email', 'hello-plus' ),
+				'group_' . $group_number . '_platform' => 'email',
+			],
+		];
+
+		$repeater_defaults = [
+			'1' => $shared_defaults,
+			'2' => $shared_defaults,
+			'3' => [
+				'group_' . $group_number . '_icon' => [
+					'value' => 'fas fa-map-marker-alt',
+					'library' => 'fa-solid',
+				],
+				'group_' . $group_number . '_label' => esc_html__( 'Visit', 'hello-plus' ),
+				'group_' . $group_number . '_platform' => 'telephone',
+			],
+			'4' => $shared_defaults,
+		];
+
 		$this->add_control(
 			'group_' . $group_number . '_repeater',
 			[
@@ -612,16 +659,7 @@ class Contact extends Widget_Base {
 				'condition' => array_merge( $group_condition, [
 					'group_' . $group_number . '_type' => 'contact-links',
 				] ),
-				'default' => [
-					[
-						'contact_buttons_label' => esc_html__( 'Call', 'hello-plus' ),
-						'selected_icon' => [
-							'value' => 'fas fa-map-marker-alt',
-							'library' => 'fa-solid',
-						],
-						'contact_buttons_platform' => 'telephone',
-					],
-				],
+				'default' => $repeater_defaults[ $group_number ] ?? [],
 			]
 		);
 	}
@@ -798,7 +836,7 @@ class Contact extends Widget_Base {
 				'mobile_default' => 'start',
 				'frontend_available' => true,
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-cta' => '--cta-content-alignment: {{VALUE}};',
+					'{{WRAPPER}} .ehp-contact' => '--contact-content-position: {{VALUE}};',
 				],
 				'condition' => [
 					'layout_preset' => 'locate',
@@ -826,7 +864,7 @@ class Contact extends Widget_Base {
 				'mobile_default' => 'center',
 				'frontend_available' => true,
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-cta' => '--cta-content-alignment: {{VALUE}};',
+					'{{WRAPPER}} .ehp-contact' => '--contact-content-position: {{VALUE}};',
 				],
 				'condition' => [
 					'layout_preset' => [
@@ -857,7 +895,7 @@ class Contact extends Widget_Base {
 				'mobile_default' => 'start',
 				'frontend_available' => true,
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-cta' => '--cta-content-alignment: {{VALUE}};',
+					'{{WRAPPER}} .ehp-contact' => '--contact-content-alignment: {{VALUE}};',
 				],
 				'conditions' => [
 					'relation' => 'or',
@@ -901,8 +939,13 @@ class Contact extends Widget_Base {
 						'max' => 100,
 					],
 				],
+				'frontend_available' => true,
+				'default' => [
+					'size' => 800,
+					'unit' => 'px',
+				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-content-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-contact' => '--contact-content-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'layout_preset' => [
@@ -937,12 +980,8 @@ class Contact extends Widget_Base {
 					'4' => esc_html__( '4', 'hello-plus' ),
 				],
 				'default' => '1',
-				'frontend_available' => true,
 				'selectors' => [
-					// '{{WRAPPER}} .ehp-cta' => '--cta-columns: {{VALUE}};',
-				],
-				'condition' => [
-					'layout_preset' => [ 'locate', 'touchpoint' ],
+					'{{WRAPPER}} .ehp-contact' => '--contact-layout-columns: {{VALUE}};',
 				],
 			]
 		);
@@ -958,9 +997,8 @@ class Contact extends Widget_Base {
 					'unit' => 'px',
 				],
 				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
-				// 'description' => esc_html__( 'Sets the default space between widgets (Default: 20px)', 'elementor' ),
 				'selectors' => [
-					'{{SELECTOR}}' => '--gap: {{ROW}}{{UNIT}} {{COLUMN}}{{UNIT}};--row-gap: {{ROW}}{{UNIT}};--column-gap: {{COLUMN}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-contact' => '--contact-layout-columns-row-gap: {{ROW}}{{UNIT}};--contact-layout-columns-column-gap: {{COLUMN}}{{UNIT}};',
 				],
 				'validators' => [
 					'Number' => [
@@ -1016,9 +1054,6 @@ class Contact extends Widget_Base {
 				'tablet_default' => 'end',
 				'mobile_default' => 'end',
 				'frontend_available' => true,
-				'selectors' => [
-					// '{{WRAPPER}} .ehp-cta' => '--cta-content-alignment: {{VALUE}};',
-				],
 				'condition' => [
 					'layout_preset' => 'touchpoint',
 				],

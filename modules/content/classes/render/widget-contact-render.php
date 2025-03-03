@@ -32,45 +32,73 @@ class Widget_Contact_Render {
 		$layout_full_height_controls = $this->settings['box_full_screen_height_controls'] ?? '';
 		$show_map = 'quick-info' !== $this->settings['layout_preset'];
 
+		if ( 'yes' ===  $this->settings['show_box_border'] ) {
+			$layout_classnames[] = 'has-border';
+		}
+
+		if ( ! empty( $layout_full_height_controls ) ) {
+			foreach ( $layout_full_height_controls as $breakpoint ) {
+				$layout_classnames[] = ' is-full-height-' . $breakpoint;
+			}
+		}
+
+		$elements_container_classnames = [
+			self::LAYOUT_CLASSNAME . '__elements-container',
+		];
+
 		$map_position_horizontal = $this->settings['map_position_horizontal'];
 		$map_position_vertical = $this->settings['map_position_vertical'];
 
+		$shapes = new Ehp_Shapes( $this->widget, [
+			'container_prefix' => 'box',
+			'render_attribute' => 'layout',
+			'widget_name' => $this->widget->get_name(),
+		] );
+		$shapes->add_shape_attributes();
+
 		if ( ! empty( $map_position_horizontal ) ) {
-			$layout_classnames[] = 'has-map-h-position-' . $map_position_horizontal;
+			$elements_container_classnames[] = 'has-map-h-position-' . $map_position_horizontal;
 
 			if ( ! empty( $map_position_horizontal_tablet ) ) {
-				$layout_classnames[] = 'has-map-h-position-md-' . $map_position_horizontal_tablet;
+				$elements_container_classnames[] = 'has-map-h-position-md-' . $map_position_horizontal_tablet;
 			}
 
 			if ( ! empty( $map_position_horizontal_mobile ) ) {
-				$layout_classnames[] = 'has-map-h-position-sm-' . $map_position_horizontal_mobile;
+				$elements_container_classnames[] = 'has-map-h-position-sm-' . $map_position_horizontal_mobile;
 			}
 		}
 
 		if ( ! empty( $map_position_vertical ) ) {
-			$layout_classnames[] = 'has-map-v-position-' . $map_position_vertical;
+			$elements_container_classnames[] = 'has-map-v-position-' . $map_position_vertical;
 
 			if ( ! empty( $map_position_vertical_tablet ) ) {
-				$layout_classnames[] = 'has-map-v-position-md-' . $map_position_vertical_tablet;
+				$elements_container_classnames[] = 'has-map-v-position-md-' . $map_position_vertical_tablet;
 			}
 
 			if ( ! empty( $map_position_vertical_mobile ) ) {
-				$layout_classnames[] = 'has-map-v-position-sm-' . $map_position_vertical_mobile;
+				$elements_container_classnames[] = 'has-map-v-position-sm-' . $map_position_vertical_mobile;
 			}
 		}
 
 		$this->widget->add_render_attribute( 'layout', [
 			'class' => $layout_classnames,
 		] );
+
+		$this->widget->add_render_attribute( 'elements-container', [
+			'class' => $elements_container_classnames,
+		] );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
-			<?php
-				$this->render_text_container();
-				
-				if ( $show_map ) {
-					$this->render_map_container();
-				}
-			?>
+			<div class="ehp-contact__overlay"></div>
+			<div <?php $this->widget->print_render_attribute_string( 'elements-container' ); ?>>
+				<?php
+					$this->render_text_container();
+					
+					if ( $show_map ) {
+						$this->render_map_container();
+					}
+				?>
+			</div>
 		</div>
 		<?php
 	}
@@ -141,17 +169,20 @@ class Widget_Contact_Render {
 		<?php
 	}
 
-	protected function render_contact_links_group( $group_number ) {
-		$subheading_text = $this->settings['group_' . $group_number . '_links_subheading'];
+	protected function render_subheading( $group_number, $subheading_type ) {
+		$subheading_text = $this->settings['group_' . $group_number . '_' . $subheading_type . '_subheading'];
+		$subheading_tag = $this->settings['subheading_tag'];
 
-		?>
-		<?php if ( '' !== $subheading_text ) {
-			$subheading_output = sprintf( '<h3 class="ehp-contact__group-subheading">%s</h3>', esc_html( $subheading_text ) );
+		if ( '' !== $subheading_text ) {
+			$subheading_output = sprintf( '<%1$s class="ehp-contact__group-subheading">%2$s</%1$s>', Utils::validate_html_tag( $subheading_tag ), esc_html( $subheading_text ) );
 			// Escaped above
 			Utils::print_unescaped_internal_string( $subheading_output );
-		} ?>
-		<?php $this->render_contact_links( $group_number ); ?>
-		<?php
+		}
+	}
+
+	protected function render_contact_links_group( $group_number ) {
+		$this->render_subheading( $group_number, 'links' );
+		$this->render_contact_links( $group_number );
 	}
 
 	protected function render_contact_links( $group_number ) {
@@ -219,14 +250,10 @@ class Widget_Contact_Render {
 	}
 
 	protected function render_contact_text_group( $group_number ) {
-		$subheading_text = $this->settings['group_' . $group_number . '_text_subheading'];
 		$text_text = $this->settings['group_' . $group_number . '_text_textarea'];
-		?>
-		<?php if ( '' !== $subheading_text ) {
-			$subheading_output = sprintf( '<h3 class="ehp-contact__group-subheading">%s</h3>', esc_html( $subheading_text ) );
-			// Escaped above
-			Utils::print_unescaped_internal_string( $subheading_output );
-		}
+
+		$this->render_subheading( $group_number, 'text' );
+
 		if ( '' !== $text_text ) {
 			$text_output = sprintf( '<div class="ehp-contact__contact-text">%s</div>', esc_html( $text_text ) );
 			// Escaped above
@@ -235,14 +262,10 @@ class Widget_Contact_Render {
 	}
 
 	protected function render_social_icons_group( $group_number ) {
-		$subheading_text = $this->settings['group_' . $group_number . '_social_subheading'];
 		$repeater = $this->settings[ 'group_' . $group_number . '_social_repeater' ];
 
-		if ( '' !== $subheading_text ) {
-			$subheading_output = sprintf( '<h3 class="ehp-contact__group-subheading">%s</h3>', esc_html( $subheading_text ) );
-			// Escaped above
-			Utils::print_unescaped_internal_string( $subheading_output );
-		} ?>
+		$this->render_subheading( $group_number, 'social' );
+		?>
 		<div class="ehp-contact__social-icons-container">
 			<?php
 			foreach ( $repeater as $key => $social_icon ) {

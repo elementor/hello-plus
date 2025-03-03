@@ -11,6 +11,7 @@ use HelloPlus\Classes\{
 	Ehp_Shapes,
 	Ehp_Social_Platforms,
 };
+use HelloPlus\Modules\Content\Base\Traits\Shared_Content_Traits;
 
 use Elementor\{
 	Controls_Manager,
@@ -28,6 +29,8 @@ use Elementor\Modules\DynamicTags\Module as TagsModule;
 use Elementor\Settings;
 
 class Contact extends Widget_Base {
+	use Shared_Content_Traits;
+
     public function get_name(): string {
 		return 'contact';
 	}
@@ -215,6 +218,27 @@ class Contact extends Widget_Base {
 		$this->add_group_controls( '3' );
 
 		$this->add_group_controls( '4' );
+
+		$this->add_control(
+			'subheading_tag',
+			[
+				'label' => esc_html__( 'Subheading HTML Tag', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => 'H1',
+					'h2' => 'H2',
+					'h3' => 'H3',
+					'h4' => 'H4',
+					'h5' => 'H5',
+					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'p' => 'p',
+				],
+				'default' => 'h3',
+				'separator' => 'before',
+			]
+		);
 
 		$this->end_controls_section();
 	}
@@ -1730,7 +1754,7 @@ class Contact extends Widget_Base {
 				'name' => 'background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .ehp-cta',
+				'selector' => '{{WRAPPER}} .ehp-contact',
 			]
 		);
 
@@ -1748,7 +1772,7 @@ class Contact extends Widget_Base {
 			[
 				'name' => 'background_overlay',
 				'types' => [ 'classic', 'gradient' ],
-				'selector' => '{{WRAPPER}} .ehp-cta__overlay',
+				'selector' => '{{WRAPPER}} .ehp-contact__overlay',
 				'frontend_available' => true,
 			]
 		);
@@ -1770,7 +1794,7 @@ class Contact extends Widget_Base {
 					'size' => 0.5,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-overlay-opacity: {{SIZE}};',
+					'{{WRAPPER}} .ehp-contact' => '--contact-overlay-opacity: {{SIZE}};',
 				],
 			]
 		);
@@ -1794,7 +1818,7 @@ class Contact extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-elements-spacing: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-contact' => '--contact-elements-spacing: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -1856,7 +1880,7 @@ class Contact extends Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-box-border-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-contact' => '--contact-box-border-width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'show_box_border' => 'yes',
@@ -1873,7 +1897,7 @@ class Contact extends Widget_Base {
 					'default' => Global_Colors::COLOR_TEXT,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-box-border-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-contact' => '--contact-box-border-color: {{VALUE}}',
 				],
 				'condition' => [
 					'show_box_border' => 'yes',
@@ -1891,7 +1915,7 @@ class Contact extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'box_box_shadow',
-				'selector' => '{{WRAPPER}} .ehp-cta',
+				'selector' => '{{WRAPPER}} .ehp-contact',
 			]
 		);
 
@@ -1913,6 +1937,23 @@ class Contact extends Widget_Base {
 				'tablet_default' => '',
 				'mobile_default' => '',
 				'separator' => 'before',
+			]
+		);
+
+		$configured_breakpoints = $this->get_configured_breakpoints();
+
+		$this->add_control(
+			'box_full_screen_height_controls',
+			[
+				'label' => esc_html__( 'Apply Full Screen Height on', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT2,
+				'label_block' => true,
+				'multiple' => true,
+				'options' => $configured_breakpoints['devices_options'],
+				'default' => $configured_breakpoints['active_devices'],
+				'condition' => [
+					'box_full_screen_height' => 'yes',
+				],
 			]
 		);
 

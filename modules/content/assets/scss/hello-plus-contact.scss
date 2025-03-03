@@ -1,10 +1,13 @@
 @import "../../../../assets/dev/scss/variables";
 
 .ehp-contact {
-	align-items: var(--contact-content-position);
+	--contact-box-height: auto;
+	--contact-box-full-height: 100vh;
+
 	display: flex;
-	flex-direction: column;
-	gap: var(--contact-box-gap);
+	justify-content: center;
+	height: 100%;
+	min-height: var(--contact-box-height);
 	padding-inline-start: var(--contact-box-padding-inline-start);
 	padding-inline-end: var(--contact-box-padding-inline-end);
 	padding-block-start: var(--contact-box-padding-block-start);
@@ -33,6 +36,62 @@
 		}
 	}
 
+	@supports (height: 100dvh) {
+		--cta-box-full-height: 100dvh;
+	}
+
+	@mixin full-height($min: null, $max: null) {
+		$query: null;
+
+		@if $min != null and $max != null {
+			$query: "(min-width: " + $min + ") and (max-width: " + $max + ")";
+		} @else if $max != null {
+			$query: "(max-width: " + $max + ")";
+		} @else if $min != null {
+			$query: "(min-width: " + $min + ")";
+		}
+
+		@if $query != null {
+			@media #{$query} {
+				--contact-box-height: var(--contact-box-full-height, 100vh);
+
+				align-items: center;
+			};
+		}
+	}
+
+	&.is-full-height-mobile {
+		@include full-height(null, $screen-mobile-max);
+	}
+
+	&.is-full-height-mobile_extra {
+		@include full-height($screen-mobile-extra-min, $screen-mobile-extra-max);
+	}
+
+	&.is-full-height-tablet {
+		@include full-height($screen-tablet-min, $screen-tablet-max);
+	}
+
+	&.is-full-height-tablet_extra {
+		@include full-height($screen-tablet-extra-min, $screen-tablet-extra-max);
+	}
+
+	&.is-full-height-laptop {
+		@include full-height($screen-laptop-min, $screen-laptop-max);
+	}
+
+	&.is-full-height-desktop {
+		@include full-height($screen-desktop-min, null);
+
+		&.is-full-height-widescreen {
+			@include full-height($screen-desktop-min, $screen-desktop-max);
+		}
+	}
+
+	&.is-full-height-widescreen {
+		@include full-height($screen-widescreen-min, null);
+	}
+
 	&.has-preset {
 
 		&-locate {
@@ -45,7 +104,7 @@
 				}
 			}
 
-			&.has-map-h-position {
+			& .ehp-contact__elements-container.has-map-h-position {
 				@include map-position();
 
 				&-md {
@@ -64,7 +123,7 @@
 
 		&-touchpoint {
 
-			&.has-map-v-position {
+			& .ehp-contact__elements-container.has-map-v-position {
 				@include map-position();
 
 				&-md {
@@ -94,18 +153,50 @@
 		}
 	}
 
+	&.has-border {
+		border-color: var(--contact-box-border-color);
+		border-style: solid;
+		border-width: var(--contact-box-border-width);
+	}
+
+	&.has-shape-custom.shape-type {
+		&-box {
+			--ehp-shapes-border-radius-block-end: var(--contact-box-border-radius-block-end, var(--contact-box-border-radius-custom-block-end));
+			--ehp-shapes-border-radius-block-start: var(--contact-box-border-radius-block-start, var(--contact-box-border-radius-custom-block-start));
+			--ehp-shapes-border-radius-inline-end: var(--contact-box-border-radius-inline-end, var(--contact-box-border-radius-custom-inline-end));
+			--ehp-shapes-border-radius-inline-start: var(--contact-box-border-radius-inline-start, var(--contact-box-border-radius-custom-inline-start));
+		}
+
+		&-map {
+			--ehp-shapes-border-radius-block-end: var(--contact-map-border-radius-block-end, var(--contact-map-border-radius-custom-block-end));
+			--ehp-shapes-border-radius-block-start: var(--contact-map-border-radius-block-start, var(--contact-map-border-radius-custom-block-start));
+			--ehp-shapes-border-radius-inline-end: var(--contact-map-border-radius-inline-end, var(--contact-map-border-radius-custom-inline-end));
+			--ehp-shapes-border-radius-inline-start: var(--contact-map-border-radius-inline-start, var(--contact-map-border-radius-custom-inline-start));
+		}
+	}
+
+	&__elements-container {
+		align-items: var(--contact-content-position);
+		display: flex;
+		flex-direction: column;
+		gap: var(--contact-box-gap);
+		z-index: 1;
+	}
+
 	&__heading {
 		color: var(--contact-text-heading-color);
+		margin: 0 0 var(--contact-text-spacing);
 	}
 
 	&__description {
 		color: var(--contact-text-description-color);
+		margin: 0;
 	}
 
 	&__text-container {
 		display: flex;
 		flex-direction: column;
-		gap: var(--contact-text-spacing);
+		gap: var(--contact-elements-spacing);
 		max-width: var(--contact-content-width);
 	}
 
@@ -220,5 +311,15 @@
 
 	&__map-container {
 		width: 100%;
+	}
+
+	&__overlay {
+		height: 100%;
+		left: 0;
+		opacity: var(--contact-overlay-opacity);
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: 1;
 	}
 }

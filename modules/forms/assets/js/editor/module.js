@@ -27,7 +27,7 @@ export default class FormsModule extends elementorModules.editor.utils.Module {
 			upgrade_text: __( 'Upgrade', 'hello-plus' ),
 			upgrade_url: 'https://go.elementor.com/go-pro-button-widget-control/',
 			image: 'https://assets.elementor.com/free-to-pro-upsell/v1/images/cta.jpg',
-			image_alt: 'Upgrade',
+			image_alt: __( 'Upgrade', 'hello-plus' ),
 		};
 	}
 

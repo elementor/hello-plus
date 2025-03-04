@@ -29,15 +29,7 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 	}
 
 	redirectToHelloPlus() {
-		console.log( elementor.documents.getCurrent() );
-		const document = elementor.documents.getCurrent();
-		$e.internal( 'document/save/save', {
-			status: document.container.settings.get( 'post_status' ),
-			document,
-			onSuccess: () => {
-				window.location.href = elementor.config.close_modal_redirect_hello_plus;
-			},
-		} );
+		window.location.href = elementor.config.close_modal_redirect_hello_plus;
 	}
 
 	async openSiteIdentity() {

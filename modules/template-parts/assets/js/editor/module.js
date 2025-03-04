@@ -29,6 +29,7 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 	}
 
 	redirectToHelloPlus() {
+		$e.internal( 'document/save/set-is-modified', { status: false } );
 		window.location.href = elementor.config.close_modal_redirect_hello_plus;
 	}
 

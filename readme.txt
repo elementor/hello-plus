@@ -84,7 +84,7 @@ For documentation and tutorials, visit our [Knowledge Base](https://elementor.co
 == Changelog ==
 = 1.3.0 - 2025-03-04 =
 * New: Layout Presets
-* New: Hello+ Header & Footer - on click to set as entire site
+* New: Hello+ Header & Footer - one click to set as entire site
 * Tweak: Add plugin changelog button
 * Deprecate: Hero Widget, replaced by Flex Hero
 

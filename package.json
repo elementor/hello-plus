@@ -3,31 +3,32 @@
 	"slug": "hello-plus",
 	"homepage": "https://elementor.com/",
 	"description": "A quick-start theme for Elementor.",
-	"version": "1.2.1",
+	"version": "1.3.0",
 	"scripts": {
 		"start": "wp-scripts start",
-		"build": "wp-scripts build",
-		"build:prod": "wp-scripts build --env=production",
+		"build:dev": "composer update && composer install && wp-scripts build",
+		"build": "composer install --no-dev && wp-scripts build --env=production",
 		"lint:js": "wp-scripts lint-js",
 		"clean": "rimraf build && rimraf $npm_package_name",
-		"build:dir": "npm run clean && npm run build:prod && rsync -av --exclude-from=.buildignore . hello-plus",
+		"build:dir": "npm run clean && npm run build:dev && rsync -av --exclude-from=.buildignore . hello-plus",
 		"package": "npm run clean && npm run build && rsync -av --exclude-from=.buildignore . $npm_package_name",
 		"package:zip": "npm run package && zip -r $npm_package_name.$npm_package_version.zip ./$npm_package_name/*"
 	},
 	"devDependencies": {
 		"@wordpress/eslint-plugin": "^21.6.0",
 		"@wordpress/scripts": "^30.7.0",
+		"copy-webpack-plugin": "^12.0.2",
 		"eslint-plugin-babel": "^5.3.1",
 		"eslint-plugin-no-jquery": "^3.0.2",
 		"eslint-plugin-react": "^7.35.2",
 		"path": "^0.12.7",
 		"webpack-cli": "^5.1.4",
-		"webpack-remove-empty-scripts": "^1.0.4",
-		"copy-webpack-plugin": "^12.0.2"
+		"webpack-remove-empty-scripts": "^1.0.4"
 	},
 	"dependencies": {
 		"@elementor/icons": "1.12.0",
 		"@elementor/ui": "1.20.3",
+		"composer": "^4.1.0",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1"
 	}

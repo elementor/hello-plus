@@ -9,7 +9,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 use Elementor\App\Modules\KitLibrary\Connect\Kit_Library;
 use HelloPlus\Includes\Utils;
 use HelloPlus\Modules\Admin\Classes\Menu\Pages\Setup_Wizard;
-use WP_REST_Server;
 
 class Onboarding_Settings {
 	const KITS_TRANSIENT = 'helloplus_elementor_kits';
@@ -19,7 +18,7 @@ class Onboarding_Settings {
 			'elementor-hello-plus/v1',
 			'/onboarding-settings',
 			[
-				'methods' => WP_REST_Server::READABLE,
+				'methods' => \WP_REST_Server::READABLE,
 				'callback' => [ $this, 'get_onboarding_settings' ],
 				'permission_callback' => function () {
 					return current_user_can( 'manage_options' );

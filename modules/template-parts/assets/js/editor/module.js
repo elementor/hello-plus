@@ -29,8 +29,15 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 	}
 
 	redirectToHelloPlus() {
-		$e.internal( 'document/save/set-is-modified', { status: false } );
-		window.location.href = elementor.config.close_modal_redirect_hello_plus;
+		console.log( elementor.documents.getCurrent() );
+		const document = elementor.documents.getCurrent();
+		$e.internal( 'document/save/save', {
+			status: document.container.settings.get( 'post_status' ),
+			document,
+			onSuccess: () => {
+				window.location.href = elementor.config.close_modal_redirect_hello_plus;
+			},
+		} );
 	}
 
 	async openSiteIdentity() {

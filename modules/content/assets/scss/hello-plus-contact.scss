@@ -5,7 +5,6 @@
 	--contact-box-full-height: 100vh;
 
 	display: flex;
-	justify-content: center;
 	height: 100%;
 	min-height: var(--contact-box-height);
 	padding-inline-start: var(--contact-box-padding-inline-start);
@@ -96,7 +95,10 @@
 
 		&-locate {
 			@media screen and (min-width: $screen-desktop-min) {
-				flex-direction: row;
+				
+				& .ehp-contact__elements-container {
+					flex-direction: row;
+				}
 
 				& .ehp-contact__text-container,
 				& .ehp-contact__map-container {
@@ -153,32 +155,60 @@
 		}
 	}
 
+	&.has-map-stretch {
+		--contact-map-width: 100%;
+
+		padding: 0;
+
+		&.has-preset-locate {
+
+			& .ehp-contact__map-container {
+				height: 100%;
+			}
+
+			& .ehp-contact__elements-container {
+				gap: 0;
+			}
+
+			& .ehp-contact__text-container {
+				padding-block-end: var(--contact-box-padding-block-end);
+				padding-block-start: var(--contact-box-padding-block-start);
+				padding-inline-end: var(--contact-box-padding-inline-end);
+				padding-inline-start: var(--contact-box-padding-inline-start);
+			}
+		}
+
+		&.has-preset-touchpoint {
+
+			& .ehp-contact__elements-container {
+				padding-block-end: var(--contact-box-padding-block-end);
+			}
+
+			& .ehp-contact__text-container {
+				padding-inline-end: var(--contact-box-padding-inline-end);
+				padding-inline-start: var(--contact-box-padding-inline-start);
+			}
+		}
+	}
+
 	&.has-border {
 		border-color: var(--contact-box-border-color);
 		border-style: solid;
 		border-width: var(--contact-box-border-width);
 	}
 
-	&.has-shape-custom.shape-type {
-		&-box {
-			--ehp-shapes-border-radius-block-end: var(--contact-box-border-radius-block-end, var(--contact-box-border-radius-custom-block-end));
-			--ehp-shapes-border-radius-block-start: var(--contact-box-border-radius-block-start, var(--contact-box-border-radius-custom-block-start));
-			--ehp-shapes-border-radius-inline-end: var(--contact-box-border-radius-inline-end, var(--contact-box-border-radius-custom-inline-end));
-			--ehp-shapes-border-radius-inline-start: var(--contact-box-border-radius-inline-start, var(--contact-box-border-radius-custom-inline-start));
-		}
-
-		&-map {
-			--ehp-shapes-border-radius-block-end: var(--contact-map-border-radius-block-end, var(--contact-map-border-radius-custom-block-end));
-			--ehp-shapes-border-radius-block-start: var(--contact-map-border-radius-block-start, var(--contact-map-border-radius-custom-block-start));
-			--ehp-shapes-border-radius-inline-end: var(--contact-map-border-radius-inline-end, var(--contact-map-border-radius-custom-inline-end));
-			--ehp-shapes-border-radius-inline-start: var(--contact-map-border-radius-inline-start, var(--contact-map-border-radius-custom-inline-start));
-		}
+	&.has-shape-custom.shape-type-box {
+		--ehp-shapes-border-radius-block-end: var(--contact-box-border-radius-block-end, var(--contact-box-border-radius-custom-block-end));
+		--ehp-shapes-border-radius-block-start: var(--contact-box-border-radius-block-start, var(--contact-box-border-radius-custom-block-start));
+		--ehp-shapes-border-radius-inline-end: var(--contact-box-border-radius-inline-end, var(--contact-box-border-radius-custom-inline-end));
+		--ehp-shapes-border-radius-inline-start: var(--contact-box-border-radius-inline-start, var(--contact-box-border-radius-custom-inline-start));
 	}
 
 	&__elements-container {
 		align-items: var(--contact-content-position);
 		display: flex;
 		flex-direction: column;
+		flex-grow: 1;
 		gap: var(--contact-box-gap);
 		z-index: 1;
 	}
@@ -310,7 +340,34 @@
 	}
 
 	&__map-container {
+		display: flex;
+		height: 100%;
+		justify-content: center;
 		width: 100%;
+	}
+
+	&__map {
+		height: var(--contact-map-height);
+		overflow: hidden;
+		width: var(--contact-map-width);
+
+		& iframe {
+			height: 100%;
+			width: 100%;
+		}
+
+		&.has-border {
+			border-color: var(--contact-map-border-color);
+			border-style: solid;
+			border-width: var(--contact-map-border-width);
+		}
+
+		&.has-shape-custom.shape-type-map {
+			--ehp-shapes-border-radius-block-end: var(--contact-map-border-radius-block-end, var(--contact-map-border-radius-custom-block-end));
+			--ehp-shapes-border-radius-block-start: var(--contact-map-border-radius-block-start, var(--contact-map-border-radius-custom-block-start));
+			--ehp-shapes-border-radius-inline-end: var(--contact-map-border-radius-inline-end, var(--contact-map-border-radius-custom-inline-end));
+			--ehp-shapes-border-radius-inline-start: var(--contact-map-border-radius-inline-start, var(--contact-map-border-radius-custom-inline-start));
+		}
 	}
 
 	&__overlay {

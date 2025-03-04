@@ -275,7 +275,7 @@ class Contact extends Widget_Base {
 
 		$default_address = esc_html__( 'London Eye, London, United Kingdom', 'elementor' );
 		$this->add_control(
-			'address',
+			'map_address',
 			[
 				'label' => esc_html__( 'Location', 'elementor' ),
 				'type' => Controls_Manager::TEXT,
@@ -1724,7 +1724,7 @@ class Contact extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'map_box_shadow',
-				'selector' => '{{WRAPPER}} .ehp-contact__map-container',
+				'selector' => '{{WRAPPER}} .ehp-contact__map',
 			]
 		);
 

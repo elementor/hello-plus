@@ -42,6 +42,10 @@ class Widget_Contact_Render {
 			}
 		}
 
+		if ( 'yes' === $this->settings['map_stretch'] ) {
+			$layout_classnames[] = 'has-map-stretch';
+		}
+
 		$elements_container_classnames = [
 			self::LAYOUT_CLASSNAME . '__elements-container',
 		];
@@ -89,7 +93,7 @@ class Widget_Contact_Render {
 		] );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
-			<div class="ehp-contact__overlay"></div>
+			<div class="<?php echo self::LAYOUT_CLASSNAME; ?>__overlay"></div>
 			<div <?php $this->widget->print_render_attribute_string( 'elements-container' ); ?>>
 				<?php
 					$this->render_text_container();
@@ -121,7 +125,7 @@ class Widget_Contact_Render {
 		] );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'text-container' ); ?>>
-			<div class="ehp-contact__headings">
+			<div class="<?php echo self::LAYOUT_CLASSNAME; ?>__headings">
 				<?php if ( '' !== $heading_text ) {
 					$heading_output = sprintf( '<%1$s class="%2$s">%3$s</%1$s>', Utils::validate_html_tag( $heading_tag ), $heading_classname, esc_html( $heading_text ) );
 					// Escaped above
@@ -133,7 +137,7 @@ class Widget_Contact_Render {
 					Utils::print_unescaped_internal_string( $description_output );
 				} ?>
 			</div>
-			<div class="ehp-contact__groups">
+			<div class="<?php echo self::LAYOUT_CLASSNAME; ?>__groups">
 				<?php
 					$this->render_contact_group( '1' );
 					
@@ -155,7 +159,7 @@ class Widget_Contact_Render {
 	protected function render_contact_group( $group_number ) {
 		$group_type = $this->settings['group_' . $group_number . '_type'];
 		?>
-		<div class="ehp-contact__group">
+		<div class="<?php echo self::LAYOUT_CLASSNAME; ?>__group">
 			<?php
 				if ( 'contact-links' === $group_type ) {
 					$this->render_contact_links_group( $group_number );
@@ -174,7 +178,7 @@ class Widget_Contact_Render {
 		$subheading_tag = $this->settings['subheading_tag'];
 
 		if ( '' !== $subheading_text ) {
-			$subheading_output = sprintf( '<%1$s class="ehp-contact__group-subheading">%2$s</%1$s>', Utils::validate_html_tag( $subheading_tag ), esc_html( $subheading_text ) );
+			$subheading_output = sprintf( '<%1$s class="%3$s">%2$s</%1$s>', Utils::validate_html_tag( $subheading_tag ), esc_html( $subheading_text ), self::LAYOUT_CLASSNAME . '__subheading' );
 			// Escaped above
 			Utils::print_unescaped_internal_string( $subheading_output );
 		}
@@ -191,7 +195,7 @@ class Widget_Contact_Render {
 
 		$ehp_platforms = new Ehp_Social_Platforms( $this->widget );
 		?>
-		<div class="ehp-contact__links-container">
+		<div class="<?php echo self::LAYOUT_CLASSNAME; ?>__links-container">
 			<?php
 			foreach ( $repeater as $key => $contact_link ) {
 				$link = [
@@ -211,7 +215,7 @@ class Widget_Contact_Render {
 	
 				$icon = $contact_link['group_' . $group_number . '_icon'];
 	
-				$contact_link_classnames = [ 'ehp-contact__contact-link' ];
+				$contact_link_classnames = [ self::LAYOUT_CLASSNAME . '__contact-link' ];
 	
 				if ( ! empty( $hover_animation ) ) {
 					$contact_link_classnames[] = 'elementor-animation-' . $hover_animation;
@@ -238,10 +242,10 @@ class Widget_Contact_Render {
 						<?php Icons_Manager::render_icon( $icon,
 							[
 								'aria-hidden' => 'true',
-								'class' => 'ehp-contact__contact-link-icon',
+								'class' => self::LAYOUT_CLASSNAME . '__contact-link-icon',
 							]
 						); ?>
-						<span class="ehp-contact__contact-link-label"><?php echo esc_html( $contact_link['group_' . $group_number . '_label'] ); ?></span>
+						<span class="<?php echo self::LAYOUT_CLASSNAME; ?>__contact-link-label"><?php echo esc_html( $contact_link['group_' . $group_number . '_label'] ); ?></span>
 					</a>
 				<?php
 			} ?>
@@ -255,7 +259,7 @@ class Widget_Contact_Render {
 		$this->render_subheading( $group_number, 'text' );
 
 		if ( '' !== $text_text ) {
-			$text_output = sprintf( '<div class="ehp-contact__contact-text">%s</div>', esc_html( $text_text ) );
+			$text_output = sprintf( '<div class="%2$s">%1$s</div>', esc_html( $text_text ), self::LAYOUT_CLASSNAME . '__contact-text' );
 			// Escaped above
 			Utils::print_unescaped_internal_string( $text_output );
 		}
@@ -266,7 +270,7 @@ class Widget_Contact_Render {
 
 		$this->render_subheading( $group_number, 'social' );
 		?>
-		<div class="ehp-contact__social-icons-container">
+		<div class="<?php echo self::LAYOUT_CLASSNAME; ?>__social-icons-container">
 			<?php
 			foreach ( $repeater as $key => $social_icon ) {
 				$icon = $social_icon['group_' . $group_number . '_social_icon'] ?? [];
@@ -274,7 +278,7 @@ class Widget_Contact_Render {
 				$url = $social_icon['group_' . $group_number . '_social_link'] ?? [];
 				$hover_animation = $this->settings['contact_details_social_icon_hover_animation'];
 
-				$social_icon_classnames = [ 'ehp-contact__social-link' ];
+				$social_icon_classnames = [ self::LAYOUT_CLASSNAME . '__social-link' ];
 
 				if ( ! empty( $hover_animation ) ) {
 					$social_icon_classnames[] = 'elementor-animation-' . $hover_animation;
@@ -294,7 +298,7 @@ class Widget_Contact_Render {
 					<?php Icons_Manager::render_icon( $icon,
 						[
 							'aria-hidden' => 'true',
-							'class' => 'ehp-contact__contact-social-icon',
+							'class' => self::LAYOUT_CLASSNAME . '__contact-social-icon',
 						]
 					); ?>
 				</a>
@@ -310,12 +314,57 @@ class Widget_Contact_Render {
 			self::LAYOUT_CLASSNAME . '__map-container',
 		];
 
+		if ( 0 === absint( $this->settings['map_zoom']['size'] ) ) {
+			$this->settings['map_zoom']['size'] = 10;
+		}
+
+		$api_key = esc_html( get_option( 'elementor_google_maps_api_key' ) );
+
+		$params = [
+			rawurlencode( $this->settings['map_address'] ),
+			absint( $this->settings['map_zoom']['size'] ),
+		];
+
+		if ( $api_key ) {
+			$params[] = $api_key;
+
+			$url = 'https://www.google.com/maps/embed/v1/place?key=%3$s&q=%1$s&amp;zoom=%2$d';
+		} else {
+			$url = 'https://maps.google.com/maps?q=%1$s&amp;t=m&amp;z=%2$d&amp;output=embed&amp;iwloc=near';
+		}
+
 		$this->widget->add_render_attribute( 'map-container', [
 			'class' => $map_container_classnames,
 		] );
+
+		$map_classnames = [
+			self::LAYOUT_CLASSNAME . '__map',
+			'elementor-custom-embed',
+		];
+
+		if ( 'yes' === $this->settings['show_map_border'] ) {
+			$map_classnames[] = 'has-border';
+		}
+
+		$shapes = new Ehp_Shapes( $this->widget, [
+			'container_prefix' => 'map',
+			'render_attribute' => 'map',
+			'widget_name' => $this->widget->get_name(),
+		] );
+		$shapes->add_shape_attributes();
+
+		$this->widget->add_render_attribute( 'map', [
+			'class' => $map_classnames,
+		] );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'map-container' ); ?>>
-			Map container
+			<div <?php $this->widget->print_render_attribute_string( 'map' ); ?>>
+				<iframe loading="lazy"
+						src="<?php echo esc_url( vsprintf( $url, $params ) ); ?>"
+						title="<?php echo esc_attr( $this->settings['map_address'] ); ?>"
+						aria-label="<?php echo esc_attr( $this->settings['map_address'] ); ?>"
+				></iframe>
+			</div>
 		</div>
 		<?php
 	}

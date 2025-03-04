@@ -20,7 +20,6 @@
 	--flex-hero-subheading-color: #{$global-colors-secondary};
 
 	--flex-hero-button-primary-icon-spacing: 10px;
-	--flex-hero-button-primary-icon-size: 16px;
 	--flex-hero-button-primary-text-color: #{$global-colors-white};
 	--flex-hero-button-primary-text-color-hover: #{$global-colors-text};
 	--flex-hero-button-primary-border-width: 0;
@@ -31,7 +30,6 @@
 	--flex-hero-button-primary-border-radius-inline-start: #{$corners-shape-default};
 
 	--flex-hero-button-secondary-icon-spacing: 10px;
-	--flex-hero-button-secondary-icon-size: 16px;
 	--flex-hero-button-secondary-text-color: #{$global-colors-secondary};
 	--flex-hero-button-secondary-text-color-hover: #{$global-colors-secondary};
 	--flex-hero-button-secondary-border-width: 2px;
@@ -105,7 +103,6 @@
 	& a.ehp-button,
 	& a.ehp-button:not([href]):not([tabindex]) {
 		--ehp-button-primary-icon-spacing: var(--flex-hero-button-primary-icon-spacing);
-		--ehp-button-primary-icon-size: var(--flex-hero-button-primary-icon-size);
 		--ehp-button-primary-text-color: var(--flex-hero-button-primary-text-color);
 		--ehp-button-primary-text-color-hover: var(--flex-hero-button-primary-text-color-hover);
 		--ehp-button-primary-border-width: var(--flex-hero-button-primary-border-width);
@@ -120,7 +117,6 @@
 		--ehp-button-primary-border-radius-inline-start: var(--flex-hero-button-primary-border-radius-inline-start);
 
 		--ehp-button-secondary-icon-spacing: var(--flex-hero-button-secondary-icon-spacing);
-		--ehp-button-secondary-icon-size: var(--flex-hero-button-secondary-icon-size);
 		--ehp-button-secondary-text-color: var(--flex-hero-button-secondary-text-color);
 		--ehp-button-secondary-text-color-hover: var(--flex-hero-button-secondary-text-color-hover);
 		--ehp-button-secondary-border-width: var(--flex-hero-button-secondary-border-width);

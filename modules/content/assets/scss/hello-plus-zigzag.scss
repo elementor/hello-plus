@@ -21,7 +21,6 @@
 	--zigzag-animation-duration-fast: 0.8s;
 
 	--zigzag-button-primary-icon-spacing: 10px;
-	--zigzag-button-primary-icon-size: 16px;
 	--zigzag-button-primary-text-color: #{$global-colors-white};
 	--zigzag-button-primary-text-color-hover: #{$global-colors-text};
 	--zigzag-button-primary-border-width: 0;
@@ -45,7 +44,6 @@
 	& a.ehp-zigzag__button,
 	& a.ehp-zigzag__button:not([href]):not([tabindex]) {
 		--ehp-button-primary-icon-spacing: var(--zigzag-button-primary-icon-spacing);
-		--ehp-button-primary-icon-size: var(--zigzag-button-primary-icon-size);
 		--ehp-button-primary-text-color: var(--zigzag-button-primary-text-color);
 		--ehp-button-primary-text-color-hover: var(--zigzag-button-primary-text-color-hover);
 		--ehp-button-primary-border-width: var(--zigzag-button-primary-border-width);

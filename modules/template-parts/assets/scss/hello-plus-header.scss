@@ -21,7 +21,6 @@
 	--header-scroll-down: 0;
 
 	--header-button-primary-icon-spacing: 10px;
-	--header-button-primary-icon-size: 16px;
 	--header-button-primary-text-color: #{$global-colors-white};
 	--header-button-primary-text-color-hover: #{$global-colors-text};
 	--header-button-primary-border-width: 0;
@@ -32,7 +31,6 @@
 	--header-button-primary-border-radius-inline-start: #{$corners-shape-default};
 
 	--header-button-secondary-icon-spacing: 10px;
-	--header-button-secondary-icon-size: 16px;
 	--header-button-secondary-text-color: #{$global-colors-secondary};
 	--header-button-secondary-text-color-hover: #{$global-colors-secondary};
 	--header-button-secondary-border-width: 2px;
@@ -182,7 +180,6 @@
 	& a.ehp-button,
 	& a.ehp-button:not([href]):not([tabindex]) {
 		--ehp-button-primary-icon-spacing: var(--header-button-primary-icon-spacing);
-		--ehp-button-primary-icon-size: var(--header-button-primary-icon-size);
 		--ehp-button-primary-text-color: var(--header-button-primary-text-color);
 		--ehp-button-primary-text-color-hover: var(--header-button-primary-text-color-hover);
 		--ehp-button-primary-border-width: var(--header-button-primary-border-width);
@@ -197,7 +194,6 @@
 		--ehp-button-primary-border-radius-inline-start: var(--header-button-primary-border-radius-inline-start);
 
 		--ehp-button-secondary-icon-spacing: var(--header-button-secondary-icon-spacing);
-		--ehp-button-secondary-icon-size: var(--header-button-secondary-icon-size);
 		--ehp-button-secondary-text-color: var(--header-button-secondary-text-color);
 		--ehp-button-secondary-text-color-hover: var(--header-button-secondary-text-color-hover);
 		--ehp-button-secondary-border-width: var(--header-button-secondary-border-width);

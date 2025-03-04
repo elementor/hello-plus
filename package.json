@@ -12,7 +12,8 @@
 		"clean": "rimraf build && rimraf $npm_package_name",
 		"build:dir": "npm run clean && npm run build:dev && rsync -av --exclude-from=.buildignore . hello-plus",
 		"package": "npm run clean && npm run build && rsync -av --exclude-from=.buildignore . $npm_package_name",
-		"package:zip": "npm run package && zip -r $npm_package_name.$npm_package_version.zip ./$npm_package_name/*"
+		"package:zip": "npm run package && zip -r $npm_package_name.$npm_package_version.zip ./$npm_package_name/*",
+		"test:php": "docker-compose -f bin/docker-compose.yml run --rm wordpress_phpunit phpunit"
 	},
 	"devDependencies": {
 		"@wordpress/eslint-plugin": "^21.6.0",

@@ -13,8 +13,8 @@
 	</php>
 
 	<testsuites>
-		<testsuite name="hello-plus.php">
-			<directory prefix="test-" suffix=".php">./tests/phpunit/hello-plus.php/</directory>
+		<testsuite name="hello-plus">
+			<directory prefix="test-" suffix=".php">./tests/phpunit/hello-plus/</directory>
 		</testsuite>
 	</testsuites>
 

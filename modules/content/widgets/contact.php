@@ -31,7 +31,7 @@ use Elementor\Settings;
 class Contact extends Widget_Base {
 	use Shared_Content_Traits;
 
-    public function get_name(): string {
+	public function get_name(): string {
 		return 'contact';
 	}
 
@@ -89,8 +89,8 @@ class Contact extends Widget_Base {
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
-
-        $this->add_control(
+		
+		$this->add_control(
 			'layout_preset',
 			[
 				'label' => esc_html__( 'Preset', 'hello-plus' ),
@@ -118,9 +118,9 @@ class Contact extends Widget_Base {
 				'frontend_available' => true,
 			]
 		);
-        
+
 		$this->end_controls_section();
-    }
+	}
 
 	protected function add_text_content_section() {
 		$this->start_controls_section(
@@ -263,7 +263,7 @@ class Contact extends Widget_Base {
 						'alert_type' => 'info',
 						'content' => sprintf(
 							/* translators: 1: Integration settings link open tag, 2: Create API key link open tag, 3: Link close tag. */
-							esc_html__( 'Set your Google Maps API Key in Elementor\'s %1$sIntegrations Settings%3$s page. Create your key %2$shere.%3$s', 'elementor' ),
+							esc_html__( 'Set your Google Maps API Key in Elementor\'s %1$sIntegrations Settings%3$s page. Create your key %2$shere.%3$s', 'hello-plus' ),
 							'<a href="' . Settings::get_settings_tab_url( 'integrations' ) . '" target="_blank">',
 							'<a href="https://developers.google.com/maps/documentation/embed/get-api-key" target="_blank">',
 							'</a>'
@@ -273,11 +273,11 @@ class Contact extends Widget_Base {
 			}
 		}
 
-		$default_address = esc_html__( 'London Eye, London, United Kingdom', 'elementor' );
+		$default_address = esc_html__( 'London Eye, London, United Kingdom', 'hello-plus' );
 		$this->add_control(
 			'map_address',
 			[
-				'label' => esc_html__( 'Location', 'elementor' ),
+				'label' => esc_html__( 'Location', 'hello-plus' ),
 				'type' => Controls_Manager::TEXT,
 				'dynamic' => [
 					'active' => true,
@@ -298,7 +298,7 @@ class Contact extends Widget_Base {
 	}
 
 	protected function add_group_controls( $group_number ) {
-		$group_condition = $group_number == 1 ? [] : [
+		$group_condition = 1 === $group_number ? [] : [
 			'group_' . $group_number . '_switcher' => 'yes',
 		];
 
@@ -306,7 +306,7 @@ class Contact extends Widget_Base {
 			$this->add_control(
 				'group_' . $group_number . '_heading',
 				[
-					'label' => esc_html__( 'Group ' . $group_number, 'hello-plus' ),
+					'label' =>sprintf( esc_html__( 'Group %d', 'hello-plus' ), $group_number ),
 					'type' => Controls_Manager::HEADING,
 				]
 			);
@@ -314,7 +314,7 @@ class Contact extends Widget_Base {
 			$this->add_control(
 				'group_' . $group_number . '_switcher',
 				[
-					'label' => esc_html__( 'Group ' . $group_number, 'hello-plus' ),
+					'label' =>sprintf( esc_html__( 'Group %d', 'hello-plus' ), $group_number ),
 					'type' => Controls_Manager::SWITCHER,
 					'label_on' => esc_html__( 'Show', 'hello-plus' ),
 					'label_off' => esc_html__( 'Hide', 'hello-plus' ),
@@ -342,7 +342,7 @@ class Contact extends Widget_Base {
 					'text' => esc_html__( 'Text', 'hello-plus' ),
 					'social-icons' => esc_html__( 'Social Icons', 'hello-plus' ),
 				],
-				'default' => $group_types[$group_number] ?? '',
+				'default' => $group_types[ $group_number ] ?? '',
 				'condition' => $group_condition,
 			]
 		);
@@ -1588,7 +1588,7 @@ class Contact extends Widget_Base {
 		$this->add_control(
 			'map_zoom',
 			[
-				'label' => esc_html__( 'Zoom', 'elementor' ),
+				'label' => esc_html__( 'Zoom', 'hello-plus' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 10,

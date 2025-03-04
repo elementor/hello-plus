@@ -32,7 +32,7 @@ class Widget_Contact_Render {
 		$layout_full_height_controls = $this->settings['box_full_screen_height_controls'] ?? '';
 		$show_map = 'quick-info' !== $this->settings['layout_preset'];
 
-		if ( 'yes' ===  $this->settings['show_box_border'] ) {
+		if ( 'yes' === $this->settings['show_box_border'] ) {
 			$layout_classnames[] = 'has-border';
 		}
 
@@ -93,14 +93,14 @@ class Widget_Contact_Render {
 		] );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
-			<div class="<?php echo self::LAYOUT_CLASSNAME; ?>__overlay"></div>
+			<div class="<?php echo esc_html( self::LAYOUT_CLASSNAME ); ?>__overlay"></div>
 			<div <?php $this->widget->print_render_attribute_string( 'elements-container' ); ?>>
 				<?php
 					$this->render_text_container();
-					
-					if ( $show_map ) {
-						$this->render_map_container();
-					}
+
+				if ( $show_map ) {
+					$this->render_map_container();
+				}
 				?>
 			</div>
 		</div>
@@ -125,7 +125,7 @@ class Widget_Contact_Render {
 		] );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'text-container' ); ?>>
-			<div class="<?php echo self::LAYOUT_CLASSNAME; ?>__headings">
+			<div class="<?php echo esc_html( self::LAYOUT_CLASSNAME ); ?>__headings">
 				<?php if ( '' !== $heading_text ) {
 					$heading_output = sprintf( '<%1$s class="%2$s">%3$s</%1$s>', Utils::validate_html_tag( $heading_tag ), $heading_classname, esc_html( $heading_text ) );
 					// Escaped above
@@ -137,19 +137,19 @@ class Widget_Contact_Render {
 					Utils::print_unescaped_internal_string( $description_output );
 				} ?>
 			</div>
-			<div class="<?php echo self::LAYOUT_CLASSNAME; ?>__groups">
+			<div class="<?php echo esc_html( self::LAYOUT_CLASSNAME ); ?>__groups">
 				<?php
 					$this->render_contact_group( '1' );
-					
-					if ( 'yes' === $this->settings['group_2_switcher'] ) {
-						$this->render_contact_group( '2' );
-					}
-					if ( 'yes' === $this->settings['group_3_switcher'] ) {
-						$this->render_contact_group( '3' );
-					}
-					if ( 'yes' === $this->settings['group_4_switcher'] ) {
-						$this->render_contact_group( '4' );
-					}
+
+				if ( 'yes' === $this->settings['group_2_switcher'] ) {
+					$this->render_contact_group( '2' );
+				}
+				if ( 'yes' === $this->settings['group_3_switcher'] ) {
+					$this->render_contact_group( '3' );
+				}
+				if ( 'yes' === $this->settings['group_4_switcher'] ) {
+					$this->render_contact_group( '4' );
+				}
 				?>
 			</div>
 		</div>
@@ -157,17 +157,17 @@ class Widget_Contact_Render {
 	}
 
 	protected function render_contact_group( $group_number ) {
-		$group_type = $this->settings['group_' . $group_number . '_type'];
+		$group_type = $this->settings[ 'group_' . $group_number . '_type' ];
 		?>
-		<div class="<?php echo self::LAYOUT_CLASSNAME; ?>__group">
+		<div class="<?php echo esc_html( self::LAYOUT_CLASSNAME ); ?>__group">
 			<?php
-				if ( 'contact-links' === $group_type ) {
-					$this->render_contact_links_group( $group_number );
-				} else if ( 'text' === $group_type ) {
-					$this->render_contact_text_group( $group_number );
-				} else if ( 'social-icons' === $group_type ) {
-					$this->render_social_icons_group( $group_number );
-				}
+			if ( 'contact-links' === $group_type ) {
+				$this->render_contact_links_group( $group_number );
+			} elseif ( 'text' === $group_type ) {
+				$this->render_contact_text_group( $group_number );
+			} elseif ( 'social-icons' === $group_type ) {
+				$this->render_social_icons_group( $group_number );
+			}
 			?>
 		</div>
 		<?php
@@ -195,48 +195,48 @@ class Widget_Contact_Render {
 
 		$ehp_platforms = new Ehp_Social_Platforms( $this->widget );
 		?>
-		<div class="<?php echo self::LAYOUT_CLASSNAME; ?>__links-container">
+		<div class="<?php echo esc_html( self::LAYOUT_CLASSNAME ); ?>__links-container">
 			<?php
 			foreach ( $repeater as $key => $contact_link ) {
 				$link = [
-					'platform' => $contact_link['group_' . $group_number . '_platform'],
-					'number' => $contact_link['group_' . $group_number . '_number'] ?? '',
-					'username' => $contact_link['group_' . $group_number . '_username'] ?? '',
+					'platform' => $contact_link[ 'group_' . $group_number . '_platform' ],
+					'number' => $contact_link[ 'group_' . $group_number . '_number' ] ?? '',
+					'username' => $contact_link[ 'group_' . $group_number . '_username' ] ?? '',
 					'email_data' => [
-						'group_' . $group_number . '_mail' => $contact_link['group_' . $group_number . '_mail'] ?? '',
-						'group_' . $group_number . '_mail_subject' => $contact_link['group_' . $group_number . '_mail_subject'] ?? '',
-						'group_' . $group_number . '_mail_body' => $contact_link['group_' . $group_number . '_mail_body'] ?? '',
+						'group_' . $group_number . '_mail' => $contact_link[ 'group_' . $group_number . '_mail' ] ?? '',
+						'group_' . $group_number . '_mail_subject' => $contact_link[ 'group_' . $group_number . '_mail_subject' ] ?? '',
+						'group_' . $group_number . '_mail_body' => $contact_link[ 'group_' . $group_number . '_mail_body' ] ?? '',
 					],
-					'viber_action' => $contact_link['group_' . $group_number . '_viber_action'] ?? '',
-					'url' => $contact_link['group_' . $group_number . '_url'] ?? '',
-					'location' => $contact_link['group_' . $group_number . '_waze'] ?? '',
-					'map' => $contact_link['group_' . $group_number . '_map'] ?? '',
+					'viber_action' => $contact_link[ 'group_' . $group_number . '_viber_action' ] ?? '',
+					'url' => $contact_link[ 'group_' . $group_number . '_url' ] ?? '',
+					'location' => $contact_link[ 'group_' . $group_number . '_waze' ] ?? '',
+					'map' => $contact_link[ 'group_' . $group_number . '_map' ] ?? '',
 				];
-	
-				$icon = $contact_link['group_' . $group_number . '_icon'];
-	
+
+				$icon = $contact_link[ 'group_' . $group_number . '_icon' ];
+
 				$contact_link_classnames = [ self::LAYOUT_CLASSNAME . '__contact-link' ];
-	
+
 				if ( ! empty( $hover_animation ) ) {
 					$contact_link_classnames[] = 'elementor-animation-' . $hover_animation;
 				}
-	
+
 				$this->widget->add_render_attribute( 'contact-link-' . $key, [
-					'aria-label' => esc_attr( $contact_link['group_' . $group_number . '_label'] ),
+					'aria-label' => esc_attr( $contact_link[ 'group_' . $group_number . '_label' ] ),
 					'class' => $contact_link_classnames,
 				] );
-	
-				if ( $ehp_platforms->is_url_link( $contact_link['group_' . $group_number . '_platform'] ) ) {
+
+				if ( $ehp_platforms->is_url_link( $contact_link[ 'group_' . $group_number . '_platform' ] ) ) {
 					$ehp_platforms->render_link_attributes( $link, 'contact-link-' . $key );
 				} else {
 					$formatted_link = $ehp_platforms->get_formatted_link( $link, 'contact_icon' );
-	
+
 					$this->widget->add_render_attribute( 'contact-link-' . $key, [
 						'href' => $formatted_link,
 						'rel' => 'noopener noreferrer',
 					] );
 				}
-				
+
 				?>
 				<a <?php $this->widget->print_render_attribute_string( 'contact-link-' . $key ); ?>>
 						<?php Icons_Manager::render_icon( $icon,
@@ -245,7 +245,7 @@ class Widget_Contact_Render {
 								'class' => self::LAYOUT_CLASSNAME . '__contact-link-icon',
 							]
 						); ?>
-						<span class="<?php echo self::LAYOUT_CLASSNAME; ?>__contact-link-label"><?php echo esc_html( $contact_link['group_' . $group_number . '_label'] ); ?></span>
+						<span class="<?php echo esc_html( self::LAYOUT_CLASSNAME ); ?>__contact-link-label"><?php echo esc_html( $contact_link[ 'group_' . $group_number . '_label' ] ); ?></span>
 					</a>
 				<?php
 			} ?>
@@ -270,13 +270,13 @@ class Widget_Contact_Render {
 
 		$this->render_subheading( $group_number, 'social' );
 		?>
-		<div class="<?php echo self::LAYOUT_CLASSNAME; ?>__social-icons-container">
+		<div class="<?php echo esc_html( self::LAYOUT_CLASSNAME ); ?>__social-icons-container">
 			<?php
 			foreach ( $repeater as $key => $social_icon ) {
-				$icon = $social_icon['group_' . $group_number . '_social_icon'] ?? [];
-				$label = $social_icon['group_' . $group_number . '_social_label'] ?? '';
-				$url = $social_icon['group_' . $group_number . '_social_link'] ?? [];
-				$hover_animation = $this->settings['contact_details_social_icon_hover_animation'];
+				$icon = $social_icon[ 'group_' . $group_number . '_social_icon' ] ?? [];
+				$label = $social_icon[ 'group_' . $group_number . '_social_label' ] ?? '';
+				$url = $social_icon[ 'group_' . $group_number . '_social_link' ] ?? [];
+				$hover_animation = $this->settings[ 'contact_details_social_icon_hover_animation' ];
 
 				$social_icon_classnames = [ self::LAYOUT_CLASSNAME . '__social-link' ];
 

@@ -298,7 +298,7 @@ class Contact extends Widget_Base {
 	}
 
 	protected function add_group_controls( $group_number ) {
-		$group_condition = 1 === $group_number ? [] : [
+		$group_condition = '1' === $group_number ? [] : [
 			'group_' . $group_number . '_switcher' => 'yes',
 		];
 

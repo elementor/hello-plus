@@ -174,8 +174,8 @@ class Widget_Contact_Render {
 	}
 
 	protected function render_subheading( $group_number, $subheading_type ) {
-		$subheading_text = $this->settings['group_' . $group_number . '_' . $subheading_type . '_subheading'];
-		$subheading_tag = $this->settings['subheading_tag'];
+		$subheading_text = $this->settings[ 'group_' . $group_number . '_' . $subheading_type . '_subheading' ];
+		$subheading_tag = $this->settings[ 'subheading_tag' ];
 
 		if ( '' !== $subheading_text ) {
 			$subheading_output = sprintf( '<%1$s class="%3$s">%2$s</%1$s>', Utils::validate_html_tag( $subheading_tag ), esc_html( $subheading_text ), self::LAYOUT_CLASSNAME . '__subheading' );
@@ -276,7 +276,7 @@ class Widget_Contact_Render {
 				$icon = $social_icon[ 'group_' . $group_number . '_social_icon' ] ?? [];
 				$label = $social_icon[ 'group_' . $group_number . '_social_label' ] ?? '';
 				$url = $social_icon[ 'group_' . $group_number . '_social_link' ] ?? [];
-				$hover_animation = $this->settings[ 'contact_details_social_icon_hover_animation' ];
+				$hover_animation = $this->settings['contact_details_social_icon_hover_animation'];
 
 				$social_icon_classnames = [ self::LAYOUT_CLASSNAME . '__social-link' ];
 

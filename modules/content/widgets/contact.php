@@ -48,7 +48,7 @@ class Contact extends Widget_Base {
 	}
 
 	public function get_icon(): string {
-		return 'eicon-ehp-cta';
+		return 'eicon-email-field';
 	}
 
 	public function get_style_depends(): array {
@@ -89,7 +89,7 @@ class Contact extends Widget_Base {
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
-		
+
 		$this->add_control(
 			'layout_preset',
 			[
@@ -306,7 +306,7 @@ class Contact extends Widget_Base {
 			$this->add_control(
 				'group_' . $group_number . '_heading',
 				[
-					'label' =>sprintf( esc_html__( 'Group %d', 'hello-plus' ), $group_number ),
+					'label' => sprintf( esc_html__( 'Group %d', 'hello-plus' ), $group_number ),
 					'type' => Controls_Manager::HEADING,
 				]
 			);
@@ -314,7 +314,7 @@ class Contact extends Widget_Base {
 			$this->add_control(
 				'group_' . $group_number . '_switcher',
 				[
-					'label' =>sprintf( esc_html__( 'Group %d', 'hello-plus' ), $group_number ),
+					'label' => sprintf( esc_html__( 'Group %d', 'hello-plus' ), $group_number ),
 					'type' => Controls_Manager::SWITCHER,
 					'label_on' => esc_html__( 'Show', 'hello-plus' ),
 					'label_off' => esc_html__( 'Hide', 'hello-plus' ),

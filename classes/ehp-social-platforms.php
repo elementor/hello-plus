@@ -16,7 +16,6 @@ class Ehp_Social_Platforms {
 	private $context = [];
 	private $defaults = [];
 	private ?Widget_Base $widget = null;
-	private ?Repeater $repeater = null;
 
 	// initialized on render:
 	private $widget_settings = [];
@@ -137,8 +136,8 @@ class Ehp_Social_Platforms {
 			[
 				'label' => esc_html__( 'Icon', 'hello-plus' ),
 				'type' => Controls_Manager::ICONS,
-				'default' => [
-					'value' => 'fas fa-phone',
+				'default' => $this->defaults['icon_default'] ?? [
+					'value' => 'fas fa-phone-alt',
 					'library' => 'fa-solid',
 				],
 				'recommended' => [
@@ -174,13 +173,12 @@ class Ehp_Social_Platforms {
 			]
 		);
 
-
 		$repeater->add_control(
 			$prefix_attr . '_label',
 			[
 				'label' => esc_html__( 'Label', 'hello-plus' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => esc_html__( 'Call', 'hello-plus' ),
+				'default' => $this->defaults['label_default'] ?? esc_html__( 'Visit', 'hello-plus' ),
 				'placeholder' => esc_html__( 'Type your text here', 'hello-plus' ),
 				'dynamic' => [
 					'active' => true,
@@ -205,7 +203,7 @@ class Ehp_Social_Platforms {
 					'waze' => esc_html__( 'Waze', 'hello-plus' ),
 					'url' => esc_html__( 'URL', 'hello-plus' ),
 				],
-				'default' => 'telephone',
+				'default' => $this->defaults['platform_default'] ?? 'telephone',
 			],
 		);
 
@@ -390,7 +388,6 @@ class Ehp_Social_Platforms {
 				],
 			]
 		);
-
 	}
 
 	public function __construct( Widget_Base $widget, $context = [], $defaults = [] ) {

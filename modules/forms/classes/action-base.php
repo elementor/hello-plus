@@ -25,7 +25,7 @@ abstract class Action_Base {
 	abstract public function run( Form_Record $record, Ajax_Handler $ajax_handler );
 
 	/**
-	 * @param Ehp_Form $form
+	 * @param Ehp_Form $widget
 	 */
 	abstract public function register_settings_section( $widget );
 

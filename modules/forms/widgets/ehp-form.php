@@ -839,7 +839,7 @@ class Ehp_Form extends Form_Base {
 					'label_on' => esc_html__( 'Yes', 'hello-plus' ),
 					'label_off' => esc_html__( 'No', 'hello-plus' ),
 					'return_value' => 'save-to-database',
-					'default' => '',
+					'default' => 'save-to-database',
 				]
 			);
 		}

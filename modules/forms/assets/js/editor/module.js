@@ -23,7 +23,7 @@ export default class FormsModule extends elementorModules.editor.utils.Module {
 
 		elementorPromotionsData.collect_submit = {
 			title: __( 'Collect Submissions', 'hello-plus' ),
-			description: [ __( 'Upgrade to Pro "Advanced Solo" to access and manage all your form submissions in one place.', 'hello-plus' ) ],
+			description: [ __( 'Unlock form submissions by upgrading to Elementor Pro on an eligible plan.', 'hello-plus' ) ],
 			upgrade_text: __( 'Upgrade', 'hello-plus' ),
 			upgrade_url: 'https://go.elementor.com/go-pro-button-widget-control/',
 			image: 'https://assets.elementor.com/free-to-pro-upsell/v1/images/cta.jpg',

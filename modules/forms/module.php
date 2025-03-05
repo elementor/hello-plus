@@ -93,6 +93,8 @@ class Module extends Module_Base {
 			HELLOPLUS_VERSION,
 			true
 		);
+
+		wp_set_script_translations( 'helloplus-forms-editor', 'hello-plus' );
 	}
 
 	public function register_scripts() {

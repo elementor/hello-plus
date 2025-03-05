@@ -175,7 +175,7 @@ class Widget_Contact_Render {
 
 	protected function render_subheading( $group_number, $subheading_type ) {
 		$subheading_text = $this->settings[ 'group_' . $group_number . '_' . $subheading_type . '_subheading' ];
-		$subheading_tag = $this->settings[ 'subheading_tag' ];
+		$subheading_tag = $this->settings['subheading_tag'];
 
 		if ( '' !== $subheading_text ) {
 			$subheading_output = sprintf( '<%1$s class="%3$s">%2$s</%1$s>', Utils::validate_html_tag( $subheading_tag ), esc_html( $subheading_text ), self::LAYOUT_CLASSNAME . '__subheading' );
@@ -254,7 +254,7 @@ class Widget_Contact_Render {
 	}
 
 	protected function render_contact_text_group( $group_number ) {
-		$text_text = $this->settings['group_' . $group_number . '_text_textarea'];
+		$text_text = $this->settings[ 'group_' . $group_number . '_text_textarea' ];
 
 		$this->render_subheading( $group_number, 'text' );
 

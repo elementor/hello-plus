@@ -546,13 +546,13 @@ class Contact extends Widget_Base {
 				'fields' => $repeater->get_controls(),
 				'prevent_empty' => true,
 				'button_text' => esc_html__( 'Add Item', 'hello-plus' ),
-				'title_field' => '{{{ group_' . $group_number . '_social_subheading }}}',
+				'title_field' => '{{{ group_' . $group_number . '_social_label }}}',
 				'condition' => array_merge( $group_condition, [
 					'group_' . $group_number . '_type' => 'social-icons',
 				] ),
 				'default' => [
 					[
-						'group_' . $group_number . '_social_subheading' => esc_html__( 'Instagram', 'hello-plus' ),
+						'group_' . $group_number . '_social_label' => esc_html__( 'Instagram', 'hello-plus' ),
 						'group_' . $group_number . '_social_icon' => [
 							'value' => 'fab fa-instagram',
 							'library' => 'fa-brands',
@@ -562,7 +562,7 @@ class Contact extends Widget_Base {
 						],
 					],
 					[
-						'group_' . $group_number . '_social_subheading' => esc_html__( 'Tiktok', 'hello-plus' ),
+						'group_' . $group_number . '_social_label' => esc_html__( 'Tiktok', 'hello-plus' ),
 						'group_' . $group_number . '_social_icon' => [
 							'value' => 'fab fa-tiktok',
 							'library' => 'fa-brands',
@@ -572,7 +572,7 @@ class Contact extends Widget_Base {
 						],
 					],
 					[
-						'group_' . $group_number . '_social_subheading' => esc_html__( 'X (Twitter)', 'hello-plus' ),
+						'group_' . $group_number . '_social_label' => esc_html__( 'X (Twitter)', 'hello-plus' ),
 						'group_' . $group_number . '_social_icon' => [
 							'value' => 'fab fa-x-twitter',
 							'library' => 'fa-brands',

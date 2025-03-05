@@ -14,7 +14,6 @@
 	--cta-description-color: #28292B;
 
 	--cta-button-primary-icon-spacing: 10px;
-	--cta-button-primary-icon-size: 16px;
 	--cta-button-primary-text-color: #{$global-colors-white};
 	--cta-button-primary-text-color-hover: #{$global-colors-text};
 	--cta-button-primary-border-width: 0;
@@ -25,7 +24,6 @@
 	--cta-button-primary-border-radius-inline-start: #{$corners-shape-default};
 
 	--cta-button-secondary-icon-spacing: 10px;
-	--cta-button-secondary-icon-size: 16px;
 	--cta-button-secondary-text-color: #{$global-colors-secondary};
 	--cta-button-secondary-text-color-hover: #{$global-colors-secondary};
 	--cta-button-secondary-border-width: 2px;
@@ -272,7 +270,6 @@
 	& a.ehp-button,
 	& a.ehp-button:not([href]):not([tabindex]) {
 		--ehp-button-primary-icon-spacing: var(--cta-button-primary-icon-spacing);
-		--ehp-button-primary-icon-size: var(--cta-button-primary-icon-size);
 		--ehp-button-primary-text-color: var(--cta-button-primary-text-color);
 		--ehp-button-primary-text-color-hover: var(--cta-button-primary-text-color-hover);
 		--ehp-button-primary-border-width: var(--cta-button-primary-border-width);
@@ -287,7 +284,6 @@
 		--ehp-button-primary-border-radius-inline-start: var(--cta-button-primary-border-radius-inline-start);
 
 		--ehp-button-secondary-icon-spacing: var(--cta-button-secondary-icon-spacing);
-		--ehp-button-secondary-icon-size: var(--cta-button-secondary-icon-size);
 		--ehp-button-secondary-text-color: var(--cta-button-secondary-text-color);
 		--ehp-button-secondary-text-color-hover: var(--cta-button-secondary-text-color-hover);
 		--ehp-button-secondary-border-width: var(--cta-button-secondary-border-width);

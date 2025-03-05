@@ -380,263 +380,270 @@ class Contact extends Widget_Base {
 
 		$repeater = new Repeater();
 
-		$repeater->add_control(
-			'group_' . $group_number . '_icon',
-			[
-				'label' => esc_html__( 'Icon', 'hello-plus' ),
-				'type' => Controls_Manager::ICONS,
-				'default' => [
-					'value' => 'fas fa-phone',
-					'library' => 'fa-solid',
-				],
-				'recommended' => [
-					'fa-solid' => [
-						'envelope',
-						'phone-alt',
-						'phone',
-						'mobile',
-						'mobile-alt',
-						'sms',
-						'comment-dots',
-						'map-marker-alt',
-						'map-marker',
-						'location-arrow',
-						'map',
-						'link',
-						'globe',
-					],
-					'fa-regular' => [
-						'envelope',
-						'comment-dots',
-						'map',
-					],
-					'fa-brands' => [
-						'whatsapp',
-						'whatsapp-square',
-						'skype',
-						'facebook-messenger',
-						'viber',
-						'waze',
-					],
-				],
-			]
-		);
+		$social_platforms = new Ehp_Social_Platforms( $this, [
+			'prefix_attr' => 'group_' . $group_number,
+			'repeater' => $repeater,
+		] );
 
-		$repeater->add_control(
-			'group_' . $group_number . '_label',
-			[
-				'label' => esc_html__( 'Label', 'hello-plus' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => esc_html__( 'Call', 'hello-plus' ),
-				'placeholder' => esc_html__( 'Type your text here', 'hello-plus' ),
-				'dynamic' => [
-					'active' => true,
-				],
-			]
-		);
+		$social_platforms->add_repeater_controls();
 
-		$repeater->add_control(
-			'group_' . $group_number . '_platform',
-			[
-				'label' => esc_html__( 'Platform', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'email' => esc_html__( 'Email', 'hello-plus' ),
-					'telephone' => esc_html__( 'Telephone', 'hello-plus' ),
-					'sms' => esc_html__( 'SMS', 'hello-plus' ),
-					'whatsapp' => esc_html__( 'Whatsapp', 'hello-plus' ),
-					'skype' => esc_html__( 'Skype', 'hello-plus' ),
-					'messenger' => esc_html__( 'Messenger', 'hello-plus' ),
-					'viber' => esc_html__( 'Viber', 'hello-plus' ),
-					'map' => esc_html__( 'Map', 'hello-plus' ),
-					'waze' => esc_html__( 'Waze', 'hello-plus' ),
-					'url' => esc_html__( 'URL', 'hello-plus' ),
-				],
-				'default' => 'telephone',
-			],
-		);
+		// $repeater->add_control(
+		// 	'group_' . $group_number . '_icon',
+		// 	[
+		// 		'label' => esc_html__( 'Icon', 'hello-plus' ),
+		// 		'type' => Controls_Manager::ICONS,
+		// 		'default' => [
+		// 			'value' => 'fas fa-phone',
+		// 			'library' => 'fa-solid',
+		// 		],
+		// 		'recommended' => [
+		// 			'fa-solid' => [
+		// 				'envelope',
+		// 				'phone-alt',
+		// 				'phone',
+		// 				'mobile',
+		// 				'mobile-alt',
+		// 				'sms',
+		// 				'comment-dots',
+		// 				'map-marker-alt',
+		// 				'map-marker',
+		// 				'location-arrow',
+		// 				'map',
+		// 				'link',
+		// 				'globe',
+		// 			],
+		// 			'fa-regular' => [
+		// 				'envelope',
+		// 				'comment-dots',
+		// 				'map',
+		// 			],
+		// 			'fa-brands' => [
+		// 				'whatsapp',
+		// 				'whatsapp-square',
+		// 				'skype',
+		// 				'facebook-messenger',
+		// 				'viber',
+		// 				'waze',
+		// 			],
+		// 		],
+		// 	]
+		// );
 
-		$repeater->add_control(
-			'group_' . $group_number . '_mail',
-			[
-				'label' => esc_html__( 'Email', 'hello-plus' ),
-				'type' => Controls_Manager::TEXT,
-				'dynamic' => [
-					'active' => true,
-				],
-				'ai' => [
-					'active' => false,
-				],
-				'label_block' => true,
-				'placeholder' => esc_html__( '@', 'hello-plus' ),
-				'default' => '',
-				'condition' => [
-					'group_' . $group_number . '_platform' => 'email',
-				],
-			],
-		);
+		// $repeater->add_control(
+		// 	'group_' . $group_number . '_label',
+		// 	[
+		// 		'label' => esc_html__( 'Label', 'hello-plus' ),
+		// 		'type' => Controls_Manager::TEXT,
+		// 		'default' => esc_html__( 'Call', 'hello-plus' ),
+		// 		'placeholder' => esc_html__( 'Type your text here', 'hello-plus' ),
+		// 		'dynamic' => [
+		// 			'active' => true,
+		// 		],
+		// 	]
+		// );
 
-		$repeater->add_control(
-			'group_' . $group_number . '_mail_subject',
-			[
-				'label' => esc_html__( 'Subject', 'hello-plus' ),
-				'type' => Controls_Manager::TEXT,
-				'dynamic' => [
-					'active' => true,
-				],
-				'label_block' => true,
-				'default' => '',
-				'condition' => [
-					'group_' . $group_number . '_platform' => 'email',
-				],
-			],
-		);
+		// $repeater->add_control(
+		// 	'group_' . $group_number . '_platform',
+		// 	[
+		// 		'label' => esc_html__( 'Platform', 'hello-plus' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'options' => [
+		// 			'email' => esc_html__( 'Email', 'hello-plus' ),
+		// 			'telephone' => esc_html__( 'Telephone', 'hello-plus' ),
+		// 			'sms' => esc_html__( 'SMS', 'hello-plus' ),
+		// 			'whatsapp' => esc_html__( 'Whatsapp', 'hello-plus' ),
+		// 			'skype' => esc_html__( 'Skype', 'hello-plus' ),
+		// 			'messenger' => esc_html__( 'Messenger', 'hello-plus' ),
+		// 			'viber' => esc_html__( 'Viber', 'hello-plus' ),
+		// 			'map' => esc_html__( 'Map', 'hello-plus' ),
+		// 			'waze' => esc_html__( 'Waze', 'hello-plus' ),
+		// 			'url' => esc_html__( 'URL', 'hello-plus' ),
+		// 		],
+		// 		'default' => 'telephone',
+		// 	],
+		// );
 
-		$repeater->add_control(
-			'group_' . $group_number . '_mail_body',
-			[
-				'label' => esc_html__( 'Message', 'hello-plus' ),
-				'type' => Controls_Manager::TEXTAREA,
-				'default' => '',
-				'condition' => [
-					'group_' . $group_number . '_platform' => 'email',
-				],
-			]
-		);
+		// $repeater->add_control(
+		// 	'group_' . $group_number . '_mail',
+		// 	[
+		// 		'label' => esc_html__( 'Email', 'hello-plus' ),
+		// 		'type' => Controls_Manager::TEXT,
+		// 		'dynamic' => [
+		// 			'active' => true,
+		// 		],
+		// 		'ai' => [
+		// 			'active' => false,
+		// 		],
+		// 		'label_block' => true,
+		// 		'placeholder' => esc_html__( '@', 'hello-plus' ),
+		// 		'default' => '',
+		// 		'condition' => [
+		// 			'group_' . $group_number . '_platform' => 'email',
+		// 		],
+		// 	],
+		// );
 
-		$repeater->add_control(
-			'group_' . $group_number . '_number',
-			[
-				'label' => esc_html__( 'Number', 'hello-plus' ),
-				'type' => Controls_Manager::TEXT,
-				'dynamic' => [
-					'active' => false,
-				],
-				'ai' => [
-					'active' => false,
-				],
-				'label_block' => true,
-				'placeholder' => esc_html__( '+', 'hello-plus' ),
-				'condition' => [
-					'group_' . $group_number . '_platform' => [
-						'sms',
-						'whatsapp',
-						'viber',
-						'telephone',
-					],
-				],
-			],
-		);
+		// $repeater->add_control(
+		// 	'group_' . $group_number . '_mail_subject',
+		// 	[
+		// 		'label' => esc_html__( 'Subject', 'hello-plus' ),
+		// 		'type' => Controls_Manager::TEXT,
+		// 		'dynamic' => [
+		// 			'active' => true,
+		// 		],
+		// 		'label_block' => true,
+		// 		'default' => '',
+		// 		'condition' => [
+		// 			'group_' . $group_number . '_platform' => 'email',
+		// 		],
+		// 	],
+		// );
 
-		$repeater->add_control(
-			'group_' . $group_number . '_username',
-			[
-				'label' => esc_html__( 'Username', 'hello-plus' ),
-				'type' => Controls_Manager::TEXT,
-				'dynamic' => [
-					'active' => true,
-				],
-				'ai' => [
-					'active' => false,
-				],
-				'label_block' => true,
-				'placeholder' => esc_html__( 'Enter your username', 'hello-plus' ),
-				'condition' => [
-					'group_' . $group_number . '_platform' => [
-						'messenger',
-						'skype',
-					],
-				],
-			],
-		);
+		// $repeater->add_control(
+		// 	'group_' . $group_number . '_mail_body',
+		// 	[
+		// 		'label' => esc_html__( 'Message', 'hello-plus' ),
+		// 		'type' => Controls_Manager::TEXTAREA,
+		// 		'default' => '',
+		// 		'condition' => [
+		// 			'group_' . $group_number . '_platform' => 'email',
+		// 		],
+		// 	]
+		// );
 
-		$repeater->add_control(
-			'group_' . $group_number . '_url',
-			[
-				'label' => esc_html__( 'Link', 'hello-plus' ),
-				'type' => Controls_Manager::URL,
-				'dynamic' => [
-					'active' => true,
-				],
-				'ai' => [
-					'active' => false,
-				],
-				'autocomplete' => true,
-				'label_block' => true,
-				'condition' => [
-					'group_' . $group_number . '_platform' => [
-						'url',
-					],
-				],
-				'placeholder' => esc_html__( 'https://www.', 'hello-plus' ),
-			],
-		);
+		// $repeater->add_control(
+		// 	'group_' . $group_number . '_number',
+		// 	[
+		// 		'label' => esc_html__( 'Number', 'hello-plus' ),
+		// 		'type' => Controls_Manager::TEXT,
+		// 		'dynamic' => [
+		// 			'active' => false,
+		// 		],
+		// 		'ai' => [
+		// 			'active' => false,
+		// 		],
+		// 		'label_block' => true,
+		// 		'placeholder' => esc_html__( '+', 'hello-plus' ),
+		// 		'condition' => [
+		// 			'group_' . $group_number . '_platform' => [
+		// 				'sms',
+		// 				'whatsapp',
+		// 				'viber',
+		// 				'telephone',
+		// 			],
+		// 		],
+		// 	],
+		// );
 
-		$repeater->add_control(
-			'group_' . $group_number . '_waze',
-			[
-				'label' => esc_html__( 'Link', 'hello-plus' ),
-				'type' => Controls_Manager::URL,
-				'dynamic' => [
-					'active' => true,
-				],
-				'ai' => [
-					'active' => false,
-				],
-				'autocomplete' => true,
-				'label_block' => true,
-				'condition' => [
-					'group_' . $group_number . '_platform' => [
-						'waze',
-					],
-				],
-				'placeholder' => esc_html__( 'https://ul.waze.com/ul?place=', 'hello-plus' ),
-			],
-		);
+		// $repeater->add_control(
+		// 	'group_' . $group_number . '_username',
+		// 	[
+		// 		'label' => esc_html__( 'Username', 'hello-plus' ),
+		// 		'type' => Controls_Manager::TEXT,
+		// 		'dynamic' => [
+		// 			'active' => true,
+		// 		],
+		// 		'ai' => [
+		// 			'active' => false,
+		// 		],
+		// 		'label_block' => true,
+		// 		'placeholder' => esc_html__( 'Enter your username', 'hello-plus' ),
+		// 		'condition' => [
+		// 			'group_' . $group_number . '_platform' => [
+		// 				'messenger',
+		// 				'skype',
+		// 			],
+		// 		],
+		// 	],
+		// );
 
-		$repeater->add_control(
-			'group_' . $group_number . '_map',
-			[
-				'label' => esc_html__( 'Link', 'hello-plus' ),
-				'type' => Controls_Manager::URL,
-				'dynamic' => [
-					'active' => true,
-				],
-				'ai' => [
-					'active' => false,
-				],
-				'autocomplete' => true,
-				'label_block' => true,
-				'condition' => [
-					'group_' . $group_number . '_platform' => [
-						'map',
-					],
-				],
-				'placeholder' => esc_html__( 'https://maps.app.goo.gl', 'hello-plus' ),
-			],
-		);
+		// $repeater->add_control(
+		// 	'group_' . $group_number . '_url',
+		// 	[
+		// 		'label' => esc_html__( 'Link', 'hello-plus' ),
+		// 		'type' => Controls_Manager::URL,
+		// 		'dynamic' => [
+		// 			'active' => true,
+		// 		],
+		// 		'ai' => [
+		// 			'active' => false,
+		// 		],
+		// 		'autocomplete' => true,
+		// 		'label_block' => true,
+		// 		'condition' => [
+		// 			'group_' . $group_number . '_platform' => [
+		// 				'url',
+		// 			],
+		// 		],
+		// 		'placeholder' => esc_html__( 'https://www.', 'hello-plus' ),
+		// 	],
+		// );
 
-		$repeater->add_control(
-			'group_' . $group_number . '_action',
-			[
-				'label' => esc_html__( 'Action', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'chat',
-				'dynamic' => [
-					'active' => true,
-				],
-				'options' => [
-					'call' => 'Call',
-					'chat' => 'Chat',
-				],
-				'condition' => [
-					'group_' . $group_number . '_platform' => [
-						'viber',
-						'skype',
-					],
-				],
-			]
-		);
+		// $repeater->add_control(
+		// 	'group_' . $group_number . '_waze',
+		// 	[
+		// 		'label' => esc_html__( 'Link', 'hello-plus' ),
+		// 		'type' => Controls_Manager::URL,
+		// 		'dynamic' => [
+		// 			'active' => true,
+		// 		],
+		// 		'ai' => [
+		// 			'active' => false,
+		// 		],
+		// 		'autocomplete' => true,
+		// 		'label_block' => true,
+		// 		'condition' => [
+		// 			'group_' . $group_number . '_platform' => [
+		// 				'waze',
+		// 			],
+		// 		],
+		// 		'placeholder' => esc_html__( 'https://ul.waze.com/ul?place=', 'hello-plus' ),
+		// 	],
+		// );
+
+		// $repeater->add_control(
+		// 	'group_' . $group_number . '_map',
+		// 	[
+		// 		'label' => esc_html__( 'Link', 'hello-plus' ),
+		// 		'type' => Controls_Manager::URL,
+		// 		'dynamic' => [
+		// 			'active' => true,
+		// 		],
+		// 		'ai' => [
+		// 			'active' => false,
+		// 		],
+		// 		'autocomplete' => true,
+		// 		'label_block' => true,
+		// 		'condition' => [
+		// 			'group_' . $group_number . '_platform' => [
+		// 				'map',
+		// 			],
+		// 		],
+		// 		'placeholder' => esc_html__( 'https://maps.app.goo.gl', 'hello-plus' ),
+		// 	],
+		// );
+
+		// $repeater->add_control(
+		// 	'group_' . $group_number . '_action',
+		// 	[
+		// 		'label' => esc_html__( 'Action', 'hello-plus' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'default' => 'chat',
+		// 		'dynamic' => [
+		// 			'active' => true,
+		// 		],
+		// 		'options' => [
+		// 			'call' => 'Call',
+		// 			'chat' => 'Chat',
+		// 		],
+		// 		'condition' => [
+		// 			'group_' . $group_number . '_platform' => [
+		// 				'viber',
+		// 				'skype',
+		// 			],
+		// 		],
+		// 	]
+		// );
 
 		$shared_defaults = [
 			[

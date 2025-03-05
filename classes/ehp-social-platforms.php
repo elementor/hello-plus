@@ -8,6 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use Elementor\{
 	Controls_Manager,
+	Repeater,
 	Widget_Base
 };
 
@@ -15,6 +16,7 @@ class Ehp_Social_Platforms {
 	private $context = [];
 	private $defaults = [];
 	private ?Widget_Base $widget = null;
+	private ?Repeater $repeater = null;
 
 	// initialized on render:
 	private $widget_settings = [];
@@ -124,6 +126,271 @@ class Ehp_Social_Platforms {
 
 	public static function build_messenger_link( string $username ) {
 		return 'https://m.me/' . $username;
+	}
+
+	public function add_repeater_controls() {
+		$prefix_attr = $this->context['prefix_attr'];
+		$repeater = $this->context['repeater'];
+
+		$repeater->add_control(
+			$prefix_attr . '_icon',
+			[
+				'label' => esc_html__( 'Icon', 'hello-plus' ),
+				'type' => Controls_Manager::ICONS,
+				'default' => [
+					'value' => 'fas fa-phone',
+					'library' => 'fa-solid',
+				],
+				'recommended' => [
+					'fa-solid' => [
+						'envelope',
+						'phone-alt',
+						'phone',
+						'mobile',
+						'mobile-alt',
+						'sms',
+						'comment-dots',
+						'map-marker-alt',
+						'map-marker',
+						'location-arrow',
+						'map',
+						'link',
+						'globe',
+					],
+					'fa-regular' => [
+						'envelope',
+						'comment-dots',
+						'map',
+					],
+					'fa-brands' => [
+						'whatsapp',
+						'whatsapp-square',
+						'skype',
+						'facebook-messenger',
+						'viber',
+						'waze',
+					],
+				],
+			]
+		);
+
+
+		$repeater->add_control(
+			$prefix_attr . '_label',
+			[
+				'label' => esc_html__( 'Label', 'hello-plus' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => esc_html__( 'Call', 'hello-plus' ),
+				'placeholder' => esc_html__( 'Type your text here', 'hello-plus' ),
+				'dynamic' => [
+					'active' => true,
+				],
+			]
+		);
+
+		$repeater->add_control(
+			$prefix_attr . '_platform',
+			[
+				'label' => esc_html__( 'Platform', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'email' => esc_html__( 'Email', 'hello-plus' ),
+					'telephone' => esc_html__( 'Telephone', 'hello-plus' ),
+					'sms' => esc_html__( 'SMS', 'hello-plus' ),
+					'whatsapp' => esc_html__( 'Whatsapp', 'hello-plus' ),
+					'skype' => esc_html__( 'Skype', 'hello-plus' ),
+					'messenger' => esc_html__( 'Messenger', 'hello-plus' ),
+					'viber' => esc_html__( 'Viber', 'hello-plus' ),
+					'map' => esc_html__( 'Map', 'hello-plus' ),
+					'waze' => esc_html__( 'Waze', 'hello-plus' ),
+					'url' => esc_html__( 'URL', 'hello-plus' ),
+				],
+				'default' => 'telephone',
+			],
+		);
+
+		$repeater->add_control(
+			$prefix_attr . '_mail',
+			[
+				'label' => esc_html__( 'Email', 'hello-plus' ),
+				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
+				'ai' => [
+					'active' => false,
+				],
+				'label_block' => true,
+				'placeholder' => esc_html__( '@', 'hello-plus' ),
+				'default' => '',
+				'condition' => [
+					$prefix_attr . '_platform' => 'email',
+				],
+			],
+		);
+
+		$repeater->add_control(
+			$prefix_attr . '_mail_subject',
+			[
+				'label' => esc_html__( 'Subject', 'hello-plus' ),
+				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
+				'label_block' => true,
+				'default' => '',
+				'condition' => [
+					$prefix_attr . '_platform' => 'email',
+				],
+			],
+		);
+
+		$repeater->add_control(
+			$prefix_attr . '_mail_body',
+			[
+				'label' => esc_html__( 'Message', 'hello-plus' ),
+				'type' => Controls_Manager::TEXTAREA,
+				'default' => '',
+				'condition' => [
+					$prefix_attr . '_platform' => 'email',
+				],
+			]
+		);
+
+		$repeater->add_control(
+			$prefix_attr . '_number',
+			[
+				'label' => esc_html__( 'Number', 'hello-plus' ),
+				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => false,
+				],
+				'ai' => [
+					'active' => false,
+				],
+				'label_block' => true,
+				'placeholder' => esc_html__( '+', 'hello-plus' ),
+				'condition' => [
+					$prefix_attr . '_platform' => [
+						'sms',
+						'whatsapp',
+						'viber',
+						'telephone',
+					],
+				],
+			],
+		);
+
+		$repeater->add_control(
+			$prefix_attr . '_username',
+			[
+				'label' => esc_html__( 'Username', 'hello-plus' ),
+				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
+				'ai' => [
+					'active' => false,
+				],
+				'label_block' => true,
+				'placeholder' => esc_html__( 'Enter your username', 'hello-plus' ),
+				'condition' => [
+					$prefix_attr . '_platform' => [
+						'messenger',
+						'skype',
+					],
+				],
+			],
+		);
+
+		$repeater->add_control(
+			$prefix_attr . '_url',
+			[
+				'label' => esc_html__( 'Link', 'hello-plus' ),
+				'type' => Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				],
+				'ai' => [
+					'active' => false,
+				],
+				'autocomplete' => true,
+				'label_block' => true,
+				'condition' => [
+					$prefix_attr . '_platform' => [
+						'url',
+					],
+				],
+				'placeholder' => esc_html__( 'https://www.', 'hello-plus' ),
+			],
+		);
+
+		$repeater->add_control(
+			$prefix_attr . '_waze',
+			[
+				'label' => esc_html__( 'Link', 'hello-plus' ),
+				'type' => Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				],
+				'ai' => [
+					'active' => false,
+				],
+				'autocomplete' => true,
+				'label_block' => true,
+				'condition' => [
+					$prefix_attr . '_platform' => [
+						'waze',
+					],
+				],
+				'placeholder' => esc_html__( 'https://ul.waze.com/ul?place=', 'hello-plus' ),
+			],
+		);
+
+		$repeater->add_control(
+			$prefix_attr . '_map',
+			[
+				'label' => esc_html__( 'Link', 'hello-plus' ),
+				'type' => Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				],
+				'ai' => [
+					'active' => false,
+				],
+				'autocomplete' => true,
+				'label_block' => true,
+				'condition' => [
+					$prefix_attr . '_platform' => [
+						'map',
+					],
+				],
+				'placeholder' => esc_html__( 'https://maps.app.goo.gl', 'hello-plus' ),
+			],
+		);
+
+		$repeater->add_control(
+			$prefix_attr . '_action',
+			[
+				'label' => esc_html__( 'Action', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'chat',
+				'dynamic' => [
+					'active' => true,
+				],
+				'options' => [
+					'call' => 'Call',
+					'chat' => 'Chat',
+				],
+				'condition' => [
+					$prefix_attr . '_platform' => [
+						'viber',
+						'skype',
+					],
+				],
+			]
+		);
+
 	}
 
 	public function __construct( Widget_Base $widget, $context = [], $defaults = [] ) {

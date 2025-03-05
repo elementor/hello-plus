@@ -16,6 +16,7 @@ use HelloPlus\Modules\TemplateParts\Widgets\Ehp_Header;
 use HelloPlus\Classes\{
 	Ehp_Button,
 	Ehp_Shapes,
+	Ehp_Social_Platforms,
 };
 
 /**
@@ -335,6 +336,7 @@ class Widget_Header_Render {
 			'class' => $contact_buttons_classnames,
 		] );
 
+		$ehp_platforms = new Ehp_Social_Platforms( $this->widget );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'contact-buttons' ); ?>>
 			<?php
@@ -370,10 +372,10 @@ class Widget_Header_Render {
 					'class' => $button_classnames,
 				] );
 
-				if ( $this->is_url_link( $contact_button['contact_buttons_platform'] ) ) {
-					$this->render_link_attributes( $link, 'contact-button-' . $key );
+				if ($ehp_platforms->is_url_link( $contact_button['contact_buttons_platform'] ) ) {
+					$ehp_platforms->render_link_attributes( $link, 'contact-button-' . $key );
 				} else {
-					$formatted_link = $this->get_formatted_link( $link, 'contact_icon' );
+					$formatted_link = $ehp_platforms->get_formatted_link( $link, 'contact_icon' );
 
 					$this->widget->add_render_attribute( 'contact-button-' . $key, [
 						'href' => $formatted_link,
@@ -401,71 +403,71 @@ class Widget_Header_Render {
 		<?php
 	}
 
-	protected function is_url_link( $platform ) {
-		return 'url' === $platform || 'waze' === $platform || 'map' === $platform;
-	}
+	// protected function is_url_link( $platform ) {
+	// 	return 'url' === $platform || 'waze' === $platform || 'map' === $platform;
+	// }
 
-	protected function render_link_attributes( array $link, string $key ) {
-		switch ( $link['platform'] ) {
-			case 'waze':
-				if ( empty( $link['location']['url'] ) ) {
-					$link['location']['url'] = '#';
-				}
+	// protected function render_link_attributes( array $link, string $key ) {
+	// 	switch ( $link['platform'] ) {
+	// 		case 'waze':
+	// 			if ( empty( $link['location']['url'] ) ) {
+	// 				$link['location']['url'] = '#';
+	// 			}
 
-				$this->widget->add_link_attributes( $key, $link['location'] );
-				break;
-			case 'url':
-				if ( empty( $link['url']['url'] ) ) {
-					$link['url']['url'] = '#';
-				}
+	// 			$this->widget->add_link_attributes( $key, $link['location'] );
+	// 			break;
+	// 		case 'url':
+	// 			if ( empty( $link['url']['url'] ) ) {
+	// 				$link['url']['url'] = '#';
+	// 			}
 
-				$this->widget->add_link_attributes( $key, $link['url'] );
-				break;
-			case 'map':
-				if ( empty( $link['map']['url'] ) ) {
-					$link['map']['url'] = '#';
-				}
+	// 			$this->widget->add_link_attributes( $key, $link['url'] );
+	// 			break;
+	// 		case 'map':
+	// 			if ( empty( $link['map']['url'] ) ) {
+	// 				$link['map']['url'] = '#';
+	// 			}
 
-				$this->widget->add_link_attributes( $key, $link['map'] );
-				break;
-			default:
-				break;
-		}
-	}
+	// 			$this->widget->add_link_attributes( $key, $link['map'] );
+	// 			break;
+	// 		default:
+	// 			break;
+	// 	}
+	// }
 
-	protected function get_formatted_link( array $link, string $prefix ): string {
+	// protected function get_formatted_link( array $link, string $prefix ): string {
 
-		// Ensure we clear the default link value if the matching type value is empty
-		switch ( $link['platform'] ) {
-			case 'email':
-				$formatted_link = $this->build_email_link( $link['email_data'], $prefix );
-				break;
-			case 'sms':
-				$formatted_link = ! empty( $link['number'] ) ? 'sms:' . $link['number'] : '';
-				break;
-			case 'messenger':
-				$formatted_link = ! empty( $link['username'] ) ?
-					$this->build_messenger_link( $link['username'] ) :
-					'';
-				break;
-			case 'whatsapp':
-				$formatted_link = ! empty( $link['number'] ) ? 'https://wa.me/' . $link['number'] : '';
-				break;
-			case 'viber':
-				$formatted_link = $this->build_viber_link( $link['viber_action'], $link['number'] );
-				break;
-			case 'skype':
-				$formatted_link = ! empty( $link['username'] ) ? 'skype:' . $link['username'] . '?chat' : '';
-				break;
-			case 'telephone':
-				$formatted_link = ! empty( $link['number'] ) ? 'tel:' . $link['number'] : '';
-				break;
-			default:
-				break;
-		}
+	// 	// Ensure we clear the default link value if the matching type value is empty
+	// 	switch ( $link['platform'] ) {
+	// 		case 'email':
+	// 			$formatted_link = $this->build_email_link( $link['email_data'], $prefix );
+	// 			break;
+	// 		case 'sms':
+	// 			$formatted_link = ! empty( $link['number'] ) ? 'sms:' . $link['number'] : '';
+	// 			break;
+	// 		case 'messenger':
+	// 			$formatted_link = ! empty( $link['username'] ) ?
+	// 				$this->build_messenger_link( $link['username'] ) :
+	// 				'';
+	// 			break;
+	// 		case 'whatsapp':
+	// 			$formatted_link = ! empty( $link['number'] ) ? 'https://wa.me/' . $link['number'] : '';
+	// 			break;
+	// 		case 'viber':
+	// 			$formatted_link = $this->build_viber_link( $link['viber_action'], $link['number'] );
+	// 			break;
+	// 		case 'skype':
+	// 			$formatted_link = ! empty( $link['username'] ) ? 'skype:' . $link['username'] . '?chat' : '';
+	// 			break;
+	// 		case 'telephone':
+	// 			$formatted_link = ! empty( $link['number'] ) ? 'tel:' . $link['number'] : '';
+	// 			break;
+	// 		default:
+	// 			break;
+	// 	}
 
-		return esc_html( $formatted_link );
-	}
+	// 	return esc_html( $formatted_link );
+	// }
 
 	public static function build_email_link( array $data, string $prefix ) {
 		$email = $data[ $prefix . '_mail' ] ?? '';

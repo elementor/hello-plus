@@ -27,6 +27,7 @@ use HelloPlus\Classes\{
 	Ehp_Button,
 	Ehp_Shapes,
 	Ehp_Padding,
+	Ehp_Social_Platforms,
 };
 use HelloPlus\Includes\Utils;
 
@@ -407,262 +408,271 @@ class Ehp_Header extends Ehp_Widget_Base {
 
 		$repeater = new Repeater();
 
-		$repeater->add_control(
-			'contact_buttons_icon',
-			[
-				'label' => esc_html__( 'Icon', 'hello-plus' ),
-				'type' => Controls_Manager::ICONS,
-				'default' => [
-					'value' => 'fas fa-map-marker-alt',
-					'library' => 'fa-solid',
-				],
-				'recommended' => [
-					'fa-solid' => [
-						'envelope',
-						'phone-alt',
-						'phone',
-						'mobile',
-						'mobile-alt',
-						'sms',
-						'comment-dots',
-						'map-marker-alt',
-						'map-marker',
-						'location-arrow',
-						'map',
-						'link',
-						'globe',
-					],
-					'fa-regular' => [
-						'envelope',
-						'comment-dots',
-						'map',
-					],
-					'fa-brands' => [
-						'whatsapp',
-						'whatsapp-square',
-						'skype',
-						'facebook-messenger',
-						'viber',
-						'waze',
-					],
-				],
-			]
-		);
+		$repeater = new Repeater();
 
-		$repeater->add_control(
-			'contact_buttons_label',
-			[
-				'label' => esc_html__( 'Label', 'hello-plus' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => esc_html__( 'Visit', 'hello-plus' ),
-				'dynamic' => [
-					'active' => true,
-				],
-			]
-		);
+		$social_platforms = new Ehp_Social_Platforms( $this, [
+			'prefix_attr' => 'contact_buttons',
+			'repeater' => $repeater,
+		] );
 
-		$repeater->add_control(
-			'contact_buttons_platform',
-			[
-				'label' => esc_html__( 'Platform', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'email' => esc_html__( 'Email', 'hello-plus' ),
-					'telephone' => esc_html__( 'Telephone', 'hello-plus' ),
-					'sms' => esc_html__( 'SMS', 'hello-plus' ),
-					'whatsapp' => esc_html__( 'Whatsapp', 'hello-plus' ),
-					'skype' => esc_html__( 'Skype', 'hello-plus' ),
-					'messenger' => esc_html__( 'Messenger', 'hello-plus' ),
-					'viber' => esc_html__( 'Viber', 'hello-plus' ),
-					'map' => esc_html__( 'Map', 'hello-plus' ),
-					'waze' => esc_html__( 'Waze', 'hello-plus' ),
-					'url' => esc_html__( 'URL', 'hello-plus' ),
-				],
-				'default' => 'map',
-			],
-		);
+		$social_platforms->add_repeater_controls();
 
-		$repeater->add_control(
-			'contact_buttons_mail',
-			[
-				'label' => esc_html__( 'Email', 'hello-plus' ),
-				'type' => Controls_Manager::TEXT,
-				'dynamic' => [
-					'active' => true,
-				],
-				'ai' => [
-					'active' => false,
-				],
-				'label_block' => true,
-				'placeholder' => esc_html__( '@', 'hello-plus' ),
-				'default' => '',
-				'condition' => [
-					'contact_buttons_platform' => 'email',
-				],
-			],
-		);
+		// $repeater->add_control(
+		// 	'contact_buttons_icon',
+		// 	[
+		// 		'label' => esc_html__( 'Icon', 'hello-plus' ),
+		// 		'type' => Controls_Manager::ICONS,
+		// 		'default' => [
+		// 			'value' => 'fas fa-map-marker-alt',
+		// 			'library' => 'fa-solid',
+		// 		],
+		// 		'recommended' => [
+		// 			'fa-solid' => [
+		// 				'envelope',
+		// 				'phone-alt',
+		// 				'phone',
+		// 				'mobile',
+		// 				'mobile-alt',
+		// 				'sms',
+		// 				'comment-dots',
+		// 				'map-marker-alt',
+		// 				'map-marker',
+		// 				'location-arrow',
+		// 				'map',
+		// 				'link',
+		// 				'globe',
+		// 			],
+		// 			'fa-regular' => [
+		// 				'envelope',
+		// 				'comment-dots',
+		// 				'map',
+		// 			],
+		// 			'fa-brands' => [
+		// 				'whatsapp',
+		// 				'whatsapp-square',
+		// 				'skype',
+		// 				'facebook-messenger',
+		// 				'viber',
+		// 				'waze',
+		// 			],
+		// 		],
+		// 	]
+		// );
 
-		$repeater->add_control(
-			'contact_buttons_mail_subject',
-			[
-				'label' => esc_html__( 'Subject', 'hello-plus' ),
-				'type' => Controls_Manager::TEXT,
-				'dynamic' => [
-					'active' => true,
-				],
-				'label_block' => true,
-				'default' => '',
-				'condition' => [
-					'contact_buttons_platform' => 'email',
-				],
-			],
-		);
+		// $repeater->add_control(
+		// 	'contact_buttons_label',
+		// 	[
+		// 		'label' => esc_html__( 'Label', 'hello-plus' ),
+		// 		'type' => Controls_Manager::TEXT,
+		// 		'default' => esc_html__( 'Visit', 'hello-plus' ),
+		// 		'dynamic' => [
+		// 			'active' => true,
+		// 		],
+		// 	]
+		// );
 
-		$repeater->add_control(
-			'contact_buttons_mail_body',
-			[
-				'label' => esc_html__( 'Message', 'hello-plus' ),
-				'type' => Controls_Manager::TEXTAREA,
-				'default' => '',
-				'condition' => [
-					'contact_buttons_platform' => 'email',
-				],
-			]
-		);
+		// $repeater->add_control(
+		// 	'contact_buttons_platform',
+		// 	[
+		// 		'label' => esc_html__( 'Platform', 'hello-plus' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'options' => [
+		// 			'email' => esc_html__( 'Email', 'hello-plus' ),
+		// 			'telephone' => esc_html__( 'Telephone', 'hello-plus' ),
+		// 			'sms' => esc_html__( 'SMS', 'hello-plus' ),
+		// 			'whatsapp' => esc_html__( 'Whatsapp', 'hello-plus' ),
+		// 			'skype' => esc_html__( 'Skype', 'hello-plus' ),
+		// 			'messenger' => esc_html__( 'Messenger', 'hello-plus' ),
+		// 			'viber' => esc_html__( 'Viber', 'hello-plus' ),
+		// 			'map' => esc_html__( 'Map', 'hello-plus' ),
+		// 			'waze' => esc_html__( 'Waze', 'hello-plus' ),
+		// 			'url' => esc_html__( 'URL', 'hello-plus' ),
+		// 		],
+		// 		'default' => 'map',
+		// 	],
+		// );
 
-		$repeater->add_control(
-			'contact_buttons_number',
-			[
-				'label' => esc_html__( 'Number', 'hello-plus' ),
-				'type' => Controls_Manager::TEXT,
-				'dynamic' => [
-					'active' => false,
-				],
-				'ai' => [
-					'active' => false,
-				],
-				'label_block' => true,
-				'placeholder' => esc_html__( '+', 'hello-plus' ),
-				'condition' => [
-					'contact_buttons_platform' => [
-						'sms',
-						'whatsapp',
-						'viber',
-						'telephone',
-					],
-				],
-			],
-		);
+		// $repeater->add_control(
+		// 	'contact_buttons_mail',
+		// 	[
+		// 		'label' => esc_html__( 'Email', 'hello-plus' ),
+		// 		'type' => Controls_Manager::TEXT,
+		// 		'dynamic' => [
+		// 			'active' => true,
+		// 		],
+		// 		'ai' => [
+		// 			'active' => false,
+		// 		],
+		// 		'label_block' => true,
+		// 		'placeholder' => esc_html__( '@', 'hello-plus' ),
+		// 		'default' => '',
+		// 		'condition' => [
+		// 			'contact_buttons_platform' => 'email',
+		// 		],
+		// 	],
+		// );
 
-		$repeater->add_control(
-			'contact_buttons_username',
-			[
-				'label' => esc_html__( 'Username', 'hello-plus' ),
-				'type' => Controls_Manager::TEXT,
-				'dynamic' => [
-					'active' => true,
-				],
-				'ai' => [
-					'active' => false,
-				],
-				'label_block' => true,
-				'placeholder' => esc_html__( 'Enter your username', 'hello-plus' ),
-				'condition' => [
-					'contact_buttons_platform' => [
-						'messenger',
-						'skype',
-					],
-				],
-			],
-		);
+		// $repeater->add_control(
+		// 	'contact_buttons_mail_subject',
+		// 	[
+		// 		'label' => esc_html__( 'Subject', 'hello-plus' ),
+		// 		'type' => Controls_Manager::TEXT,
+		// 		'dynamic' => [
+		// 			'active' => true,
+		// 		],
+		// 		'label_block' => true,
+		// 		'default' => '',
+		// 		'condition' => [
+		// 			'contact_buttons_platform' => 'email',
+		// 		],
+		// 	],
+		// );
 
-		$repeater->add_control(
-			'contact_buttons_url',
-			[
-				'label' => esc_html__( 'Link', 'hello-plus' ),
-				'type' => Controls_Manager::URL,
-				'dynamic' => [
-					'active' => true,
-				],
-				'ai' => [
-					'active' => false,
-				],
-				'autocomplete' => true,
-				'label_block' => true,
-				'condition' => [
-					'contact_buttons_platform' => [
-						'url',
-					],
-				],
-				'placeholder' => esc_html__( 'https://www.', 'hello-plus' ),
-			],
-		);
+		// $repeater->add_control(
+		// 	'contact_buttons_mail_body',
+		// 	[
+		// 		'label' => esc_html__( 'Message', 'hello-plus' ),
+		// 		'type' => Controls_Manager::TEXTAREA,
+		// 		'default' => '',
+		// 		'condition' => [
+		// 			'contact_buttons_platform' => 'email',
+		// 		],
+		// 	]
+		// );
 
-		$repeater->add_control(
-			'contact_buttons_waze',
-			[
-				'label' => esc_html__( 'Link', 'hello-plus' ),
-				'type' => Controls_Manager::URL,
-				'dynamic' => [
-					'active' => true,
-				],
-				'ai' => [
-					'active' => false,
-				],
-				'autocomplete' => true,
-				'label_block' => true,
-				'condition' => [
-					'contact_buttons_platform' => [
-						'waze',
-					],
-				],
-				'placeholder' => esc_html__( 'https://ul.waze.com/ul?place=', 'hello-plus' ),
-			],
-		);
+		// $repeater->add_control(
+		// 	'contact_buttons_number',
+		// 	[
+		// 		'label' => esc_html__( 'Number', 'hello-plus' ),
+		// 		'type' => Controls_Manager::TEXT,
+		// 		'dynamic' => [
+		// 			'active' => false,
+		// 		],
+		// 		'ai' => [
+		// 			'active' => false,
+		// 		],
+		// 		'label_block' => true,
+		// 		'placeholder' => esc_html__( '+', 'hello-plus' ),
+		// 		'condition' => [
+		// 			'contact_buttons_platform' => [
+		// 				'sms',
+		// 				'whatsapp',
+		// 				'viber',
+		// 				'telephone',
+		// 			],
+		// 		],
+		// 	],
+		// );
 
-		$repeater->add_control(
-			'contact_buttons_map',
-			[
-				'label' => esc_html__( 'Link', 'hello-plus' ),
-				'type' => Controls_Manager::URL,
-				'dynamic' => [
-					'active' => true,
-				],
-				'ai' => [
-					'active' => false,
-				],
-				'autocomplete' => true,
-				'label_block' => true,
-				'condition' => [
-					'contact_buttons_platform' => [
-						'map',
-					],
-				],
-				'placeholder' => esc_html__( 'https://maps.app.goo.gl', 'hello-plus' ),
-			],
-		);
+		// $repeater->add_control(
+		// 	'contact_buttons_username',
+		// 	[
+		// 		'label' => esc_html__( 'Username', 'hello-plus' ),
+		// 		'type' => Controls_Manager::TEXT,
+		// 		'dynamic' => [
+		// 			'active' => true,
+		// 		],
+		// 		'ai' => [
+		// 			'active' => false,
+		// 		],
+		// 		'label_block' => true,
+		// 		'placeholder' => esc_html__( 'Enter your username', 'hello-plus' ),
+		// 		'condition' => [
+		// 			'contact_buttons_platform' => [
+		// 				'messenger',
+		// 				'skype',
+		// 			],
+		// 		],
+		// 	],
+		// );
 
-		$repeater->add_control(
-			'contact_buttons_action',
-			[
-				'label' => esc_html__( 'Action', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'chat',
-				'dynamic' => [
-					'active' => true,
-				],
-				'options' => [
-					'call' => 'Call',
-					'chat' => 'Chat',
-				],
-				'condition' => [
-					'contact_buttons_platform' => [
-						'viber',
-						'skype',
-					],
-				],
-			]
-		);
+		// $repeater->add_control(
+		// 	'contact_buttons_url',
+		// 	[
+		// 		'label' => esc_html__( 'Link', 'hello-plus' ),
+		// 		'type' => Controls_Manager::URL,
+		// 		'dynamic' => [
+		// 			'active' => true,
+		// 		],
+		// 		'ai' => [
+		// 			'active' => false,
+		// 		],
+		// 		'autocomplete' => true,
+		// 		'label_block' => true,
+		// 		'condition' => [
+		// 			'contact_buttons_platform' => [
+		// 				'url',
+		// 			],
+		// 		],
+		// 		'placeholder' => esc_html__( 'https://www.', 'hello-plus' ),
+		// 	],
+		// );
+
+		// $repeater->add_control(
+		// 	'contact_buttons_waze',
+		// 	[
+		// 		'label' => esc_html__( 'Link', 'hello-plus' ),
+		// 		'type' => Controls_Manager::URL,
+		// 		'dynamic' => [
+		// 			'active' => true,
+		// 		],
+		// 		'ai' => [
+		// 			'active' => false,
+		// 		],
+		// 		'autocomplete' => true,
+		// 		'label_block' => true,
+		// 		'condition' => [
+		// 			'contact_buttons_platform' => [
+		// 				'waze',
+		// 			],
+		// 		],
+		// 		'placeholder' => esc_html__( 'https://ul.waze.com/ul?place=', 'hello-plus' ),
+		// 	],
+		// );
+
+		// $repeater->add_control(
+		// 	'contact_buttons_map',
+		// 	[
+		// 		'label' => esc_html__( 'Link', 'hello-plus' ),
+		// 		'type' => Controls_Manager::URL,
+		// 		'dynamic' => [
+		// 			'active' => true,
+		// 		],
+		// 		'ai' => [
+		// 			'active' => false,
+		// 		],
+		// 		'autocomplete' => true,
+		// 		'label_block' => true,
+		// 		'condition' => [
+		// 			'contact_buttons_platform' => [
+		// 				'map',
+		// 			],
+		// 		],
+		// 		'placeholder' => esc_html__( 'https://maps.app.goo.gl', 'hello-plus' ),
+		// 	],
+		// );
+
+		// $repeater->add_control(
+		// 	'contact_buttons_action',
+		// 	[
+		// 		'label' => esc_html__( 'Action', 'hello-plus' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'default' => 'chat',
+		// 		'dynamic' => [
+		// 			'active' => true,
+		// 		],
+		// 		'options' => [
+		// 			'call' => 'Call',
+		// 			'chat' => 'Chat',
+		// 		],
+		// 		'condition' => [
+		// 			'contact_buttons_platform' => [
+		// 				'viber',
+		// 				'skype',
+		// 			],
+		// 		],
+		// 	]
+		// );
 
 		$this->add_control(
 			'contact_buttons_repeater',

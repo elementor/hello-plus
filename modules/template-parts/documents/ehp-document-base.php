@@ -180,12 +180,14 @@ abstract class Ehp_Document_Base extends Library_Document {
 	}
 
 	public static function maybe_display_notice() {
-		if ( static::are_multiple_post_published() && 'edit-elementor_library' === get_current_screen()->id ) {
+		if ( 'edit-elementor_library' === get_current_screen()->id && static::are_multiple_post_published() ) {
 			$admin_notices = Utils::elementor()->admin->get_component( 'admin-notices' );
 
 			$options = [
+				/* translators: %s: Widget Name (e.g. "Hello+ Header"). */
 				'title' => sprintf( esc_html__( 'More than one %s published.', 'hello-plus' ), static::get_title() ),
 				'description' => sprintf(
+					/* translators: %s: Widget Name (e.g. "Hello+ Header"). */
 					esc_html__( 'Please notice! Your site allows only one %s at a time. Please move one to ‘Draft’', 'hello-plus' ),
 					static::get_title(),
 				),
@@ -217,9 +219,15 @@ abstract class Ehp_Document_Base extends Library_Document {
 	}
 
 	public static function are_multiple_post_published() {
-		$posts = static::get_all_document_posts();
+		static $are_multiple_post_published;
 
-		return count( $posts ) > 1;
+		if ( ! isset( $are_multiple_post_published ) ) {
+			$posts = static::get_all_document_posts();
+
+			$are_multiple_post_published = count( $posts ) > 1;
+		}
+
+		return $are_multiple_post_published;
 	}
 
 	public static function maybe_get_template( ?string $name, array $args ): void {

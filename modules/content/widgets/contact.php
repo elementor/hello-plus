@@ -115,7 +115,6 @@ class Contact extends Widget_Base {
 						'hover_image' => true,
 					],
 				],
-				'frontend_available' => true,
 			]
 		);
 
@@ -413,7 +412,6 @@ class Contact extends Widget_Base {
 					'fa-brands' => [
 						'whatsapp',
 						'whatsapp-square',
-						'skype',
 						'facebook-messenger',
 						'viber',
 						'waze',
@@ -445,7 +443,6 @@ class Contact extends Widget_Base {
 					'telephone' => esc_html__( 'Telephone', 'hello-plus' ),
 					'sms' => esc_html__( 'SMS', 'hello-plus' ),
 					'whatsapp' => esc_html__( 'Whatsapp', 'hello-plus' ),
-					'skype' => esc_html__( 'Skype', 'hello-plus' ),
 					'messenger' => esc_html__( 'Messenger', 'hello-plus' ),
 					'viber' => esc_html__( 'Viber', 'hello-plus' ),
 					'map' => esc_html__( 'Map', 'hello-plus' ),
@@ -544,7 +541,6 @@ class Contact extends Widget_Base {
 				'condition' => [
 					'group_' . $group_number . '_platform' => [
 						'messenger',
-						'skype',
 					],
 				],
 			],
@@ -632,7 +628,6 @@ class Contact extends Widget_Base {
 				'condition' => [
 					'group_' . $group_number . '_platform' => [
 						'viber',
-						'skype',
 					],
 				],
 			]
@@ -858,7 +853,6 @@ class Contact extends Widget_Base {
 				'default' => 'start',
 				'tablet_default' => 'start',
 				'mobile_default' => 'start',
-				'frontend_available' => true,
 				'selectors' => [
 					'{{WRAPPER}} .ehp-contact' => '--contact-content-position: {{VALUE}};',
 				],
@@ -886,7 +880,6 @@ class Contact extends Widget_Base {
 				'default' => 'center',
 				'tablet_default' => 'center',
 				'mobile_default' => 'center',
-				'frontend_available' => true,
 				'selectors' => [
 					'{{WRAPPER}} .ehp-contact' => '--contact-content-position: {{VALUE}};',
 				],
@@ -917,7 +910,6 @@ class Contact extends Widget_Base {
 				'default' => 'start',
 				'tablet_default' => 'start',
 				'mobile_default' => 'start',
-				'frontend_available' => true,
 				'selectors' => [
 					'{{WRAPPER}} .ehp-contact' => '--contact-content-alignment: {{VALUE}};',
 				],
@@ -963,7 +955,6 @@ class Contact extends Widget_Base {
 						'max' => 100,
 					],
 				],
-				'frontend_available' => true,
 				'default' => [
 					'size' => 800,
 					'unit' => 'px',
@@ -1048,7 +1039,6 @@ class Contact extends Widget_Base {
 						'icon' => 'eicon-h-align-' . ( is_rtl() ? 'left' : 'right' ),
 					],
 				],
-				'frontend_available' => true,
 				'default' => 'end',
 				'tablet_default' => 'end',
 				'mobile_default' => 'end',
@@ -1077,7 +1067,6 @@ class Contact extends Widget_Base {
 				'default' => 'end',
 				'tablet_default' => 'end',
 				'mobile_default' => 'end',
-				'frontend_available' => true,
 				'condition' => [
 					'layout_preset' => 'touchpoint',
 				],
@@ -1377,6 +1366,14 @@ class Contact extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'contact_details_text_hover_animation',
+			[
+				'label' => esc_html__( 'Hover Animation', 'hello-plus' ),
+				'type' => Controls_Manager::HOVER_ANIMATION,
+			]
+		);
+
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
@@ -1520,7 +1517,6 @@ class Contact extends Widget_Base {
 			[
 				'label' => esc_html__( 'Hover Animation', 'hello-plus' ),
 				'type' => Controls_Manager::HOVER_ANIMATION,
-				'frontend_available' => true,
 			]
 		);
 
@@ -1773,7 +1769,6 @@ class Contact extends Widget_Base {
 				'name' => 'background_overlay',
 				'types' => [ 'classic', 'gradient' ],
 				'selector' => '{{WRAPPER}} .ehp-contact__overlay',
-				'frontend_available' => true,
 			]
 		);
 

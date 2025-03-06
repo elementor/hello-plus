@@ -93,7 +93,7 @@ class Widget_Contact_Render {
 		] );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
-			<div class="<?php echo esc_html( self::LAYOUT_CLASSNAME ); ?>__overlay"></div>
+			<div class="<?php echo esc_attr( self::LAYOUT_CLASSNAME ); ?>__overlay"></div>
 			<div <?php $this->widget->print_render_attribute_string( 'elements-container' ); ?>>
 				<?php
 					$this->render_text_container();
@@ -125,7 +125,7 @@ class Widget_Contact_Render {
 		] );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'text-container' ); ?>>
-			<div class="<?php echo esc_html( self::LAYOUT_CLASSNAME ); ?>__headings">
+			<div class="<?php echo esc_attr( self::LAYOUT_CLASSNAME ); ?>__headings">
 				<?php if ( '' !== $heading_text ) {
 					$heading_output = sprintf( '<%1$s class="%2$s">%3$s</%1$s>', Utils::validate_html_tag( $heading_tag ), $heading_classname, esc_html( $heading_text ) );
 					// Escaped above
@@ -137,7 +137,7 @@ class Widget_Contact_Render {
 					Utils::print_unescaped_internal_string( $description_output );
 				} ?>
 			</div>
-			<div class="<?php echo esc_html( self::LAYOUT_CLASSNAME ); ?>__groups">
+			<div class="<?php echo esc_attr( self::LAYOUT_CLASSNAME ); ?>__groups">
 				<?php
 					$this->render_contact_group( '1' );
 
@@ -159,7 +159,7 @@ class Widget_Contact_Render {
 	protected function render_contact_group( $group_number ) {
 		$group_type = $this->settings[ 'group_' . $group_number . '_type' ];
 		?>
-		<div class="<?php echo esc_html( self::LAYOUT_CLASSNAME ); ?>__group">
+		<div class="<?php echo esc_attr( self::LAYOUT_CLASSNAME ); ?>__group">
 			<?php
 			if ( 'contact-links' === $group_type ) {
 				$this->render_contact_links_group( $group_number );
@@ -191,11 +191,11 @@ class Widget_Contact_Render {
 
 	protected function render_contact_links( $group_number ) {
 		$repeater = $this->settings[ 'group_' . $group_number . '_repeater' ];
-		$hover_animation = $this->settings['contact_details_social_icon_hover_animation'];
+		$hover_animation = $this->settings['contact_details_text_hover_animation'];
 
 		$ehp_platforms = new Ehp_Social_Platforms( $this->widget );
 		?>
-		<div class="<?php echo esc_html( self::LAYOUT_CLASSNAME ); ?>__links-container">
+		<div class="<?php echo esc_attr( self::LAYOUT_CLASSNAME ); ?>__links-container">
 			<?php
 			foreach ( $repeater as $key => $contact_link ) {
 				$link = [
@@ -245,7 +245,7 @@ class Widget_Contact_Render {
 								'class' => self::LAYOUT_CLASSNAME . '__contact-link-icon',
 							]
 						); ?>
-						<span class="<?php echo esc_html( self::LAYOUT_CLASSNAME ); ?>__contact-link-label"><?php echo esc_html( $contact_link[ 'group_' . $group_number . '_label' ] ); ?></span>
+						<span class="<?php echo esc_attr( self::LAYOUT_CLASSNAME ); ?>__contact-link-label"><?php echo esc_html( $contact_link[ 'group_' . $group_number . '_label' ] ); ?></span>
 					</a>
 				<?php
 			} ?>
@@ -270,7 +270,7 @@ class Widget_Contact_Render {
 
 		$this->render_subheading( $group_number, 'social' );
 		?>
-		<div class="<?php echo esc_html( self::LAYOUT_CLASSNAME ); ?>__social-icons-container">
+		<div class="<?php echo esc_attr( self::LAYOUT_CLASSNAME ); ?>__social-icons-container">
 			<?php
 			foreach ( $repeater as $key => $social_icon ) {
 				$icon = $social_icon[ 'group_' . $group_number . '_social_icon' ] ?? [];

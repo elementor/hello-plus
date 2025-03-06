@@ -76,9 +76,6 @@ class Ehp_Social_Platforms {
 			case 'viber':
 				$formatted_link = $this->build_viber_link( $link['viber_action'], $link['number'] );
 				break;
-			case 'skype':
-				$formatted_link = ! empty( $link['username'] ) ? 'skype:' . $link['username'] . '?chat' : '';
-				break;
 			case 'telephone':
 				$formatted_link = ! empty( $link['number'] ) ? 'tel:' . $link['number'] : '';
 				break;

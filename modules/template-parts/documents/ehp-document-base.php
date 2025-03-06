@@ -199,7 +199,7 @@ abstract class Ehp_Document_Base extends Library_Document {
 	}
 
 	public static function display_post_states( array $post_states, \WP_Post $post ): array {
-		if ( static::are_multiple_post_published() && 'publish' === $post->post_status ) {
+		if ( 'publish' === $post->post_status && static::are_multiple_post_published() ) {
 			$document = Utils::elementor()->documents->get( $post->ID );
 
 			if ( $document instanceof static ) {

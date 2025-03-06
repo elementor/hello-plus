@@ -79,6 +79,11 @@ abstract class Ehp_Document_Base extends Library_Document {
 	public function filter_admin_row_actions( $actions ) {
 		$actions = parent::filter_admin_row_actions( $actions );
 
+		if ( ! Utils::are_we_on_elementor_domains() ) {
+			unset( $actions['edit'] );
+			unset( $actions['inline hide-if-no-js'] );
+		}
+
 		return $this->set_as_entire_site( $actions );
 	}
 

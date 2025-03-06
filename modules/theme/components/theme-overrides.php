@@ -82,7 +82,7 @@ class Theme_Overrides {
 		add_filter( 'hello-plus-theme/rest/admin-config', [ $this, 'admin_config' ] );
 		add_filter( 'elementor/editor/localize_settings', [ $this, 'localize_settings' ] );
 
-		add_filter( 'hello-plus-theme/display-default-header', [ $this, 'display_default_header' ] );
-		add_filter( 'hello-plus-theme/display-default-footer', [ $this, 'display_default_footer' ] );
+		add_filter( 'hello-plus-theme/display-default-header', [ $this, 'display_default_header' ], 100 );
+		add_filter( 'hello-plus-theme/display-default-footer', [ $this, 'display_default_footer' ], 100 );
 	}
 }

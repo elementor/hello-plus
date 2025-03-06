@@ -1,3 +1,4 @@
+import { __ } from '@wordpress/i18n';
 import Component from './component';
 import FieldsMapControl from './fields-map-control';
 import FieldsRepeaterControl from './fields-repeater-control';
@@ -19,6 +20,8 @@ export default class FormsModule extends elementorModules.editor.utils.Module {
 
 		elementor.addControlView( 'Fields_map', FieldsMapControl );
 		elementor.addControlView( 'form-fields-repeater', FieldsRepeaterControl );
+
+		elementorPromotionsData.collect_submit = window.ehpFormsPromotionData;
 	}
 
 	onElementorInitComponents() {

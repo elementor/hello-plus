@@ -21,40 +21,6 @@ class Redirect extends Action_Base {
 	}
 
 	public function register_settings_section( $widget ) {
-		$widget->start_controls_section(
-			'section_redirect',
-			[
-				'label' => esc_html__( 'Redirect', 'hello-plus' ),
-				'condition' => [
-					'submit_actions' => $this->get_name(),
-				],
-			]
-		);
-
-		$widget->add_control(
-			'redirect_to',
-			[
-				'label' => esc_html__( 'Redirect To', 'hello-plus' ),
-				'type' => Controls_Manager::TEXT,
-				'placeholder' => esc_html__( 'https://your-link.com', 'hello-plus' ),
-				'ai' => [
-					'active' => false,
-				],
-				'dynamic' => [
-					'active' => true,
-					'categories' => [
-						TagsModule::POST_META_CATEGORY,
-						TagsModule::TEXT_CATEGORY,
-						TagsModule::URL_CATEGORY,
-					],
-				],
-				'label_block' => true,
-				'render_type' => 'none',
-				'classes' => 'elementor-control-direction-ltr',
-			]
-		);
-
-		$widget->end_controls_section();
 	}
 
 	public function on_export( $element ) {

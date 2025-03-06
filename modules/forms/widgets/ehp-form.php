@@ -7,6 +7,7 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Typography;
 use Elementor\Modules\DynamicTags\Module as TagsModule;
+use Elementor\Modules\Promotions\Controls\Promotion_Control;
 use Elementor\Repeater;
 use HelloPlus\Includes\Utils;
 use HelloPlus\Modules\Forms\Classes\Form_Base;
@@ -82,6 +83,7 @@ class Ehp_Form extends Form_Base {
 		$this->add_content_form_fields_section();
 		$this->add_content_button_section();
 		$this->add_content_actions_after_submit_section();
+		$this->add_action_sections();
 		$this->add_content_additional_options_section();
 
 		$this->add_style_text_section();
@@ -90,6 +92,14 @@ class Ehp_Form extends Form_Base {
 		$this->add_style_buttons_section();
 		$this->add_style_messages_section();
 		$this->add_style_box_section();
+	}
+
+	protected function add_action_sections() {
+		$actions = Module::instance()->actions_registrar->get();
+
+		foreach ( $actions as $action ) {
+			$action->register_settings_section( $this );
+		}
 	}
 
 	protected function add_content_text_section(): void {
@@ -804,6 +814,35 @@ class Ehp_Form extends Form_Base {
 				],
 			]
 		);
+
+		$this->add_control(
+			'submission_divider',
+			[
+				'type' => Controls_Manager::DIVIDER,
+			]
+		);
+
+		if ( ! Utils::are_submissions_enabled() ) {
+			$this->add_control(
+				'collect_submit_promotion',
+				[
+					'label' => esc_html__( 'Collect Submissions', 'hello-plus' ),
+					'type' => Promotion_Control::TYPE,
+				]
+			);
+		} else {
+			$this->add_control(
+				'submit_actions',
+				[
+					'label' => esc_html__( 'Save Submissions', 'hello-plus' ),
+					'type' => Controls_Manager::SWITCHER,
+					'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+					'label_off' => esc_html__( 'No', 'hello-plus' ),
+					'return_value' => 'save-to-database',
+					'default' => 'save-to-database',
+				]
+			);
+		}
 
 		$this->end_controls_section();
 	}

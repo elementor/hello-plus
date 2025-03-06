@@ -46,7 +46,7 @@ class Theme_Overrides {
 	}
 
 	public function localize_settings( $data ) {
-		$data['close_modal_redirect_hello_plus'] = admin_url( 'admin.php?page=' . Utils::get_theme_slug() );
+		$data['close_modal_redirect_hello_plus'] = admin_url( 'edit.php?post_type=elementor_library&tabs_group=library&elementor_library_type=' );
 
 		return $data;
 	}

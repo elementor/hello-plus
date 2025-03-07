@@ -53,9 +53,8 @@ a.ehp-button:not([href]):not([tabindex]) {
 	}
 
 	&.has-border {
-		border-color: var(--ehp-button-border-color);
-		border-style: solid;
-		border-width: var(--ehp-button-border-width);
+		--ehp-border-color: var(--ehp-button-border-color);
+		--ehp-border-width: var(--ehp-button-border-width);
 	}
 
 	&.is-type-button {
@@ -123,6 +122,11 @@ a.ehp-button--secondary:not([href]):not([tabindex]) {
 	--ehp-button-border-radius-block-start: var(--ehp-button-secondary-border-radius-block-start);
 	--ehp-button-border-radius-inline-end: var(--ehp-button-secondary-border-radius-inline-end);
 	--ehp-button-border-radius-inline-start: var(--ehp-button-secondary-border-radius-inline-start);
+	
+	&.has-border {
+		--ehp-border-color: var(--ehp-button-secondary-border-color);
+		--ehp-border-width: var(--ehp-button-secondary-border-width);
+	}
 
 	&.has-shape-custom {
 		--ehp-shapes-border-radius-block-end: var(--ehp-button-secondary-border-radius-block-end);

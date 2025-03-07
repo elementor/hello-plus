@@ -8,6 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use Elementor\Utils;
 use HelloPlus\Modules\Content\Widgets\Flex_Hero;
 use HelloPlus\Classes\{
+	Ehp_Border,
 	Ehp_Button,
 	Ehp_Image,
 	Ehp_Shapes,
@@ -46,7 +47,6 @@ class Widget_Flex_Hero_Render {
 		$layout_preset = $this->settings['layout_preset'];
 		$image_stretch = $this->settings['image_stretch'];
 		$layout_image_position = $this->settings['layout_image_position'];
-		$has_border = $this->settings['show_box_border'];
 
 		if ( ! empty( $layout_full_height_controls ) ) {
 			foreach ( $layout_full_height_controls as $breakpoint ) {
@@ -62,9 +62,12 @@ class Widget_Flex_Hero_Render {
 			$layout_classnames[] = 'has-image-stretch';
 		}
 
-		if ( 'yes' === $has_border ) {
-			$layout_classnames[] = 'has-border';
-		}
+		$ehp_border = new Ehp_Border( $this->widget, [
+			'container_prefix' => 'box',
+			'render_attribute' => 'layout',
+			'widget_name' => $this->widget->get_name(),
+		] );
+		$ehp_border->add_border_attributes();
 
 		if ( ! empty( $layout_image_position ) ) {
 			$layout_classnames[] = 'has-image-position-' . $layout_image_position;

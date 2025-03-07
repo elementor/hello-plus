@@ -32,9 +32,8 @@
 		}
 
 		&.has-border {
-			border-color: var(--ehp-image-border-color);
-			border-style: solid;
-			border-width: var(--ehp-image-border-width);
+			--ehp-border-color: var(--ehp-image-border-color);
+			--ehp-border-width: var(--ehp-image-border-width);
 		}
 	}
 }

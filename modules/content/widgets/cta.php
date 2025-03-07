@@ -19,6 +19,7 @@ use HelloPlus\Modules\Content\Classes\Choose_Img_Control;
 use HelloPlus\Modules\Content\Classes\Render\Widget_CTA_Render;
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 use HelloPlus\Classes\{
+	Ehp_Border,
 	Ehp_Button,
 	Ehp_Image,
 	Ehp_Padding,
@@ -660,61 +661,12 @@ class CTA extends Widget_Base {
 		] );
 		$padding->add_style_controls();
 
-		$this->add_control(
-			'show_box_border',
-			[
-				'label' => esc_html__( 'Border', 'hello-plus' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
-				'label_off' => esc_html__( 'No', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => 'no',
-				'separator' => 'before',
-			]
-		);
+		$ehp_border = new Ehp_Border( $this, [
+			'widget_name' => $this->get_name(),
+			'container_prefix' => 'box',
+		] );
 
-		$this->add_control(
-			'box_border_width',
-			[
-				'label' => __( 'Border Width', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 10,
-						'step' => 1,
-					],
-				],
-				'default' => [
-					'size' => 1,
-					'unit' => 'px',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-box-border-width: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'show_box_border' => 'yes',
-				],
-			]
-		);
-
-		$this->add_control(
-			'box_border_color',
-			[
-				'label' => esc_html__( 'Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_TEXT,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-box-border-color: {{VALUE}}',
-				],
-				'condition' => [
-					'show_box_border' => 'yes',
-				],
-			]
-		);
+		$ehp_border->add_style_controls();
 
 		$shapes = new Ehp_Shapes( $this, [
 			'widget_name' => $this->get_name(),

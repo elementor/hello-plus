@@ -21,7 +21,10 @@ use Elementor\Core\Kits\Documents\Tabs\{
 
 use Elementor\Utils as Elementor_Utils;
 
-use HelloPlus\Classes\Ehp_Shapes;
+use HelloPlus\Classes\{
+	Ehp_Border,
+	Ehp_Shapes,
+};
 
 class Ehp_Image {
 	private $context = [];
@@ -44,9 +47,11 @@ class Ehp_Image {
 			self::EHP_PREFIX . $widget_name . '__img',
 		];
 
-		if ( ! empty( $settings['show_image_border'] ) && 'yes' === $settings['show_image_border'] ) {
-			$image_classnames[] = 'has-border';
-		}
+		$ehp_border = new Ehp_Border( $this->widget, [
+			'container_prefix' => 'image',
+			'widget_name' => $widget_name,
+		] );
+		$image_classnames = array_merge( $image_classnames, $ehp_border->get_border_classname() );
 
 		$shapes = new Ehp_Shapes( $this->widget, [
 			'container_prefix' => 'image',
@@ -257,61 +262,11 @@ class Ehp_Image {
 			]
 		);
 
-		$this->widget->add_control(
-			'show_image_border',
-			[
-				'label' => esc_html__( 'Border', 'hello-plus' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
-				'label_off' => esc_html__( 'No', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => 'no',
-				'separator' => 'before',
-			]
-		);
-
-		$this->widget->add_control(
-			'image_border_width',
-			[
-				'label' => __( 'Border Width', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 10,
-						'step' => 1,
-					],
-				],
-				'default' => [
-					'size' => 1,
-					'unit' => 'px',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-' . $widget_name => '--' . $widget_name . '-image-border-width: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'show_image_border' => 'yes',
-				],
-			]
-		);
-
-		$this->widget->add_control(
-			'image_border_color',
-			[
-				'label' => esc_html__( 'Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_TEXT,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-' . $widget_name => '--' . $widget_name . '-image-border-color: {{VALUE}}',
-				],
-				'condition' => [
-					'show_image_border' => 'yes',
-				],
-			]
-		);
+		$ehp_border = new Ehp_Border( $this->widget, [
+			'widget_name' => $this->context['widget_name'],
+			'container_prefix' => 'image',
+		] );
+		$ehp_border->add_style_controls();
 
 		$shapes = new Ehp_Shapes( $this->widget, [
 			'widget_name' => $widget_name,

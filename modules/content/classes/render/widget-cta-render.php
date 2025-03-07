@@ -3,6 +3,7 @@ namespace HelloPlus\Modules\Content\Classes\Render;
 
 use HelloPlus\Modules\Content\Widgets\CTA;
 use HelloPlus\Classes\{
+	Ehp_Border,
 	Ehp_Button,
 	Ehp_Image,
 	Ehp_Shapes,
@@ -34,7 +35,6 @@ class Widget_CTA_Render {
 
 		$show_image = 'storytelling' === $this->settings['layout_preset'] || 'showcase' === $this->settings['layout_preset'];
 		$image_stretch = $this->settings['image_stretch'];
-		$has_border = $this->settings['show_box_border'];
 
 		if ( ! empty( $layout_full_height_controls ) ) {
 			foreach ( $layout_full_height_controls as $breakpoint ) {
@@ -46,9 +46,12 @@ class Widget_CTA_Render {
 			$layout_classnames[] = 'has-image-stretch';
 		}
 
-		if ( 'yes' === $has_border ) {
-			$layout_classnames[] = 'has-border';
-		}
+		$ehp_border = new Ehp_Border( $this->widget, [
+			'container_prefix' => 'box',
+			'render_attribute' => 'layout',
+			'widget_name' => $this->widget->get_name(),
+		] );
+		$ehp_border->add_border_attributes();
 
 		$shapes = new Ehp_Shapes( $this->widget, [
 			'container_prefix' => 'box',

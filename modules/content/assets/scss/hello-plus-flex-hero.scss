@@ -161,9 +161,8 @@
 	}
 
 	&.has-border {
-		border-color: var(--flex-hero-box-border-color);
-		border-style: solid;
-		border-width: var(--flex-hero-box-border-width);
+		--ehp-border-color: var(--flex-hero-box-border-color);
+		--ehp-border-width: var(--flex-hero-box-border-width);
 	}
 
 	&.has-image-stretch {

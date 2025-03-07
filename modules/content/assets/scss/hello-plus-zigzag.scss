@@ -4,8 +4,6 @@
 	--zigzag-title-color: #000000;
 	--zigzag-description-color: #000000;
 	--zigzag-wrapper-border-width: 2px;
-	--zigzag-wrapper-border-color: #000000;
-	--zigzag-wrapper-border-radius: 0;
 	--zigzag-content-position: center;
 	--zigzag-image-width: 50%;
 	--zigzag-icon-width: 50%;
@@ -34,12 +32,6 @@
 	background-color: transparent;
 	display: flex;
 	flex-direction: column;
-
-	&.has-border {
-		border-color: var(--zigzag-wrapper-border-color);
-		border-style: solid;
-		border-width: var(--zigzag-wrapper-border-width);
-	}
 
 	& a.ehp-zigzag__button,
 	& a.ehp-zigzag__button:not([href]):not([tabindex]) {

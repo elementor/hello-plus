@@ -41,6 +41,7 @@ const entryPoints = {
 	'css/helloplus-button': path.resolve( process.cwd(), 'assets/dev/scss', 'ehp-button.scss' ),
 	'css/helloplus-image': path.resolve( process.cwd(), 'assets/dev/scss', 'ehp-image.scss' ),
 	'css/helloplus-shapes': path.resolve( process.cwd(), 'assets/dev/scss', 'ehp-shapes.scss' ),
+	'css/helloplus-border': path.resolve( process.cwd(), 'assets/dev/scss', 'ehp-border.scss' ),
 };
 
 module.exports = {

@@ -1,0 +1,11 @@
+@import "./variables";
+
+.has-border,
+.elementor .ehp-image img.has-border {
+	--ehp-border-color: #{$global-colors-secondary};
+	--ehp-border-width: 1px;
+
+    border-color: var(--ehp-border-color);
+    border-style: solid;
+    border-width: var(--ehp-border-width);
+}

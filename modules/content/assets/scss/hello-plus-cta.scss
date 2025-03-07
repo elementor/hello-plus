@@ -46,9 +46,8 @@
 	padding-inline-start: var(--cta-box-padding-inline-start);
 
 	&.has-border {
-		border-color: var(--cta-box-border-color);
-		border-style: solid;
-		border-width: var(--cta-box-border-width);
+		--ehp-border-color: var(--cta-box-border-color);
+		--ehp-border-width: var(--cta-box-border-width);
 	}
 
 	&.has-image-stretch {

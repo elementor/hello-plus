@@ -21,6 +21,7 @@ use Elementor\Core\Kits\Documents\Tabs\{
 };
 
 use HelloPlus\Classes\{
+	Ehp_Border,
 	Ehp_Shapes,
 	Ehp_Padding,
 };
@@ -55,7 +56,6 @@ class Ehp_Button {
 		$button_link = $this->get_control_value( 'button_link', [], 'cta_button_link' );
 		$button_icon = $this->get_control_value( 'button_icon', '', 'cta_button_icon' );
 		$button_hover_animation = $this->get_control_value( 'button_hover_animation', '' );
-		$button_has_border = $this->get_control_value( 'show_button_border', '' );
 		$button_type = $this->get_control_value( 'button_type', '' );
 
 		$button_classnames = [
@@ -73,9 +73,14 @@ class Ehp_Button {
 			$button_classnames[] = 'elementor-animation-' . $button_hover_animation;
 		}
 
-		if ( 'yes' === $button_has_border ) {
-			$button_classnames[] = 'has-border';
-		}
+		$shapes = new Ehp_Border( $this->widget, [
+			'widget_name' => $widget_name,
+			'container_prefix' => 'button',
+			'type_prefix' => $type,
+			'render_attribute' => $type . '-button',
+			'key' => $key,
+		] );
+		$shapes->add_border_attributes();
 
 		$shapes = new Ehp_Shapes( $this->widget, [
 			'widget_name' => $widget_name,
@@ -524,64 +529,16 @@ class Ehp_Button {
 
 		$this->widget->end_controls_tabs();
 
-		$this->widget->add_control(
-			$type . '_show_button_border',
-			[
-				'label' => esc_html__( 'Border', 'hello-plus' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
-				'label_off' => esc_html__( 'No', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => $show_button_border_default,
-				'separator' => 'before',
-				'condition' => array_merge([
-					$type . '_button_type' => 'button',
-				], $add_type_condition),
-			]
-		);
-
-		$this->widget->add_control(
-			$type . '_button_border_width',
-			[
-				'label' => __( 'Border Width', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 10,
-						'step' => 1,
-					],
-				],
-				'default' => [
-					'size' => 1,
-					'unit' => 'px',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-' . $widget_name => '--' . $widget_name . '-button-' . $type . '-border-width: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => array_merge([
-					$type . '_show_button_border' => 'yes',
-				], $add_type_condition),
-			]
-		);
-
-		$this->widget->add_control(
-			$type . '_button_border_color',
-			[
-				'label' => esc_html__( 'Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_SECONDARY,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-' . $widget_name => '--' . $widget_name . '-button-' . $type . '-border-color: {{VALUE}}',
-				],
-				'condition' => array_merge([
-					$type . '_show_button_border' => 'yes',
-				], $add_type_condition),
-			]
-		);
+		$ehp_border = new Ehp_Border( $this->widget, [
+			'widget_name' => $this->context['widget_name'],
+			'container_prefix' => 'button',
+			'control_prefix' => $type,
+			'type_prefix' => $type,
+			'condition' => array_merge([
+				$type . '_button_type' => 'button',
+			], $add_type_condition),
+		] );
+		$ehp_border->add_style_controls();
 
 		$shapes = new Ehp_Shapes( $this->widget, [
 			'widget_name' => $this->context['widget_name'],

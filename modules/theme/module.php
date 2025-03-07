@@ -55,6 +55,13 @@ class Module extends Module_Base {
 			[ 'elementor-frontend' ],
 			HELLOPLUS_VERSION
 		);
+
+		wp_register_style(
+			'helloplus-border',
+			HELLOPLUS_STYLE_URL . 'helloplus-border.css',
+			[ 'elementor-frontend' ],
+			HELLOPLUS_VERSION
+		);
 	}
 
 	/**

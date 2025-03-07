@@ -84,6 +84,10 @@
 				display: inline-block;
 			}
 		}
+
+		&.has-border {
+			border: 0;
+		}
 	}
 
 	&__field-group,

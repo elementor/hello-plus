@@ -2,6 +2,8 @@
 
 namespace HelloPlus\Modules\Forms\Registrars;
 
+use HelloPlus\Includes\Utils;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -33,9 +35,17 @@ class Form_Actions_Registrar extends Registrar {
 	 * @return void
 	 */
 	public function init() {
-		foreach ( static::FEATURE_NAME_CLASS_NAME_MAP as $action ) {
-			$class_name = 'HelloPlus\Modules\Forms\Actions\\' . $action;
-			$this->register( new $class_name() );
-		}
+		add_action( 'elementor/init', function () {
+			if (
+				Utils::are_submissions_enabled()
+			) {
+				$this->register( new \ElementorPro\Modules\Forms\Submissions\Actions\Save_To_Database() );
+			}
+
+			foreach ( static::FEATURE_NAME_CLASS_NAME_MAP as $action ) {
+				$class_name = 'HelloPlus\Modules\Forms\Actions\\' . $action;
+				$this->register( new $class_name() );
+			}
+		} );
 	}
 }

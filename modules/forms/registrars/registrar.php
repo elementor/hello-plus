@@ -47,7 +47,6 @@ class Registrar {
 		}
 
 		$this->items[ $id ] = $instance;
-
 		return true;
 	}
 

@@ -235,14 +235,16 @@ class Widget_Form_Render {
 		<div <?php $this->widget->print_render_attribute_string( 'submit-group' ); ?>>
 			<button <?php $this->widget->print_render_attribute_string( 'button' ); ?>>
 				<?php if ( ! empty( $button_icon ) || ! empty( $button_icon['value'] ) ) : ?>
-					<?php
-					Icons_Manager::render_icon( $button_icon,
-						[
-							'aria-hidden' => 'true',
-							'class' => 'ehp-form__button-icon',
-						],
-					);
-					?>
+					<span class="ehp-form__button-icon-wrapper">
+						<?php
+						Icons_Manager::render_icon( $button_icon,
+							[
+								'aria-hidden' => 'true',
+								'class' => 'ehp-form__button-icon',
+							],
+						);
+						?>
+					</span>
 				<?php endif; ?>
 
 				<?php if ( ! empty( $button_text ) ) : ?>

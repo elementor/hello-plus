@@ -426,6 +426,7 @@
 	&__contact-button {
 		
 		& .ehp-header__contact-button-icon,
+		& .ehp-header__contact-button-icon-wrapper,
 		& .ehp-header__contact-button-label {
 			color: var(--header-contact-button-color);
 		}
@@ -433,19 +434,21 @@
 		&:hover,
 		&:focus {
 			& .ehp-header__contact-button-icon,
+			& .ehp-header__contact-button-icon-wrapper,
 			& .ehp-header__contact-button-label {
 				color: var(--header-contact-button-color-hover);
 			}
 		}
 	}
 
-	&__contact-button-icon {
+	&__contact-button-icon-wrapper {
 		
-		&:is(i) {
+		& i {
 			font-size: var(--header-contact-button-size);
 		}
 
-		&:is(svg) {
+		& svg {
+			fill: currentColor;
 			height: var(--header-contact-button-size);
 			width: var(--header-contact-button-size);
 		}

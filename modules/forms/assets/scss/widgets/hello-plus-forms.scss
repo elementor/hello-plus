@@ -239,12 +239,17 @@
 		}
 	}
 
-	&__button-icon {
-		color: inherit; // inherit the button color
-		fill: currentColor; // inherit the button color
-		font-size: 1em; // relative to the button font-size
-		height: 1em; // relative to the button font-size
-		width: 1em; // relative to the button font-size
+	&__button-icon-wrapper {
+		& svg {
+			fill: currentColor; // inherit the button color
+			height: 1em; // relative to the button font-size
+			width: 1em; // relative to the button font-size
+		}
+
+		& i {
+			color: inherit; // inherit the button color
+			font-size: 1em; // relative to the button font-size
+		}
 	}
 
 	&__select {

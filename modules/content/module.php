@@ -51,7 +51,7 @@ class Module extends Module_Base {
 		wp_register_script(
 			'helloplus-zigzag-fe',
 			HELLOPLUS_SCRIPTS_URL . 'helloplus-zigzag-fe.js',
-			[ 'elementor-frontend', 'elementor-common', 'elementor-frontend-modules' ],
+			[ 'elementor-frontend' ],
 			HELLOPLUS_VERSION,
 			true
 		);

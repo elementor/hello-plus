@@ -237,9 +237,7 @@
 				border-radius: $corners-shape-default;
 			}
 		}
-	}
 
-	&__button-icon-wrapper {
 		& svg {
 			fill: currentColor; // inherit the button color
 			height: 1em; // relative to the button font-size

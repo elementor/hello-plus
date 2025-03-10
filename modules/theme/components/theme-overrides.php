@@ -46,7 +46,7 @@ class Theme_Overrides {
 	}
 
 	public function localize_settings( $data ) {
-		$data['close_modal_redirect_hello_plus'] = admin_url( 'admin.php?page=' . Utils::get_theme_slug() );
+		$data['close_modal_redirect_hello_plus'] = admin_url( 'edit.php?post_type=elementor_library&tabs_group=library&elementor_library_type=' );
 
 		return $data;
 	}
@@ -82,7 +82,7 @@ class Theme_Overrides {
 		add_filter( 'hello-plus-theme/rest/admin-config', [ $this, 'admin_config' ] );
 		add_filter( 'elementor/editor/localize_settings', [ $this, 'localize_settings' ] );
 
-		add_filter( 'hello-plus-theme/display-default-header', [ $this, 'display_default_header' ] );
-		add_filter( 'hello-plus-theme/display-default-footer', [ $this, 'display_default_footer' ] );
+		add_filter( 'hello-plus-theme/display-default-header', [ $this, 'display_default_header' ], 100 );
+		add_filter( 'hello-plus-theme/display-default-footer', [ $this, 'display_default_footer' ], 100 );
 	}
 }

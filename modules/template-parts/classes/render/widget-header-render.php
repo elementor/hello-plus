@@ -372,7 +372,7 @@ class Widget_Header_Render {
 					'class' => $button_classnames,
 				] );
 
-				if ($ehp_platforms->is_url_link( $contact_button['contact_buttons_platform'] ) ) {
+				if ( $ehp_platforms->is_url_link( $contact_button['contact_buttons_platform'] ) ) {
 					$ehp_platforms->render_link_attributes( $link, 'contact-button-' . $key );
 				} else {
 					$formatted_link = $ehp_platforms->get_formatted_link( $link, 'contact_icon' );

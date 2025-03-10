@@ -415,7 +415,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 			'platform_default' => 'map',
 		];
 
-		$repeater = new Repeater;
+		$repeater = new Repeater();
 
 		$social_platforms = new Ehp_Social_Platforms( $this, [
 			'prefix_attr' => 'contact_buttons',

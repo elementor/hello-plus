@@ -384,7 +384,6 @@ class Contact extends Widget_Base {
 			],
 			'label_default' => esc_html__( 'Call', 'hello-plus' ),
 			'platform_default' => 'telephone',
-			'repeater_default'
 		];
 
 		$repeater = new Repeater();

@@ -8,7 +8,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use Elementor\{
 	Controls_Manager,
-	Repeater,
 	Widget_Base
 };
 

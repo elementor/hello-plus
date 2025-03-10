@@ -18,7 +18,7 @@ define( 'HELLO_PLUS_TESTS', true );
  */
 define( 'PLUGIN_FILE', getenv( 'PLUGIN_FILE' ) );
 define( 'PLUGIN_FOLDER', basename( dirname( __DIR__ ) ) );
-define( 'PLUGIN_PATH', PLUGIN_FOLDER . '/' . PLUGIN_FILE );
+define( 'PLUGIN_PATH', THEME_FOLDER . '/' . THEME_FILE );
 
 $elementor_plugin_path = 'elementor/elementor.php';
 
@@ -39,7 +39,7 @@ tests_add_filter( 'muplugins_loaded', function () {
 
 	require $elementor_plugin_path;
 
-	require dirname( __DIR__ ) . '/' . PLUGIN_FILE;
+	require dirname( __DIR__ ) . '/' . THEME_FILE;
 } );
 
 // Removes all sql tables on shutdown

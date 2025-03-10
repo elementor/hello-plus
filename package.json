@@ -16,6 +16,8 @@
 		"test:php": "docker-compose -f bin/docker-compose.yml run --rm wordpress_phpunit phpunit"
 	},
 	"devDependencies": {
+		"@playwright/test": "1.51.0",
+		"@typescript-eslint/parser": "^6.21.0",
 		"@wordpress/eslint-plugin": "^21.6.0",
 		"@wordpress/scripts": "^30.7.0",
 		"copy-webpack-plugin": "^12.0.2",

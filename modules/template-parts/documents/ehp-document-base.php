@@ -242,6 +242,7 @@ abstract class Ehp_Document_Base extends Library_Document {
 				return;
 			}
 		}
+
 		static::get_template( $name, $args );
 	}
 

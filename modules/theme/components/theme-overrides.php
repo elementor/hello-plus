@@ -61,7 +61,17 @@ class Theme_Overrides {
 
 	protected function display_default_header_footer( bool $display, string $location ): bool {
 		if ( ! Utils::elementor()->preview->is_preview_mode() ) {
-			return $display;
+			error_log(var_export( Ehp_Header::are_multiple_post_published() , true));
+			switch ( $location ) {
+				case 'header':
+					return Ehp_Header::are_multiple_post_published();
+
+				case 'footer':
+					return Ehp_Footer::are_multiple_post_published();
+
+				default:
+					return $display;
+			}
 		}
 
 		$preview_post_id = filter_input( INPUT_GET, 'elementor-preview', FILTER_VALIDATE_INT );

@@ -39,6 +39,7 @@ class Ehp_Shapes {
 			'submenu' => [ 'default', 'sharp', 'rounded', 'round', 'oval', 'custom' ],
 			'box' => [ 'sharp', 'rounded', 'custom' ],
 			'image' => [ 'sharp', 'rounded', 'round', 'oval', 'custom' ],
+			'map' => [ 'sharp', 'rounded', 'round', 'oval', 'custom' ],
 			'float' => [ 'default', 'sharp', 'round', 'rounded', 'custom' ],
 		];
 
@@ -97,11 +98,9 @@ class Ehp_Shapes {
 		$is_responsive = $this->context['is_responsive'] ?? true;
 
 		$defaults = [
-			'button' => 'default',
 			'box' => 'sharp',
 			'image' => 'sharp',
-			'submenu' => 'default',
-			'float' => 'default',
+			'map' => 'sharp',
 		];
 
 		if ( $is_responsive ) {

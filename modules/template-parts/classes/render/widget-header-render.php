@@ -386,17 +386,14 @@ class Widget_Header_Render {
 				?>
 
 				<a <?php $this->widget->print_render_attribute_string( 'contact-button-' . $key ); ?>>
-				<?php if ( 'icon' === $link_type ) { ?>
-					<span class="ehp-header__contact-button-icon-wrapper">
-						<?php
-						Icons_Manager::render_icon( $icon,
+				<?php if ( 'icon' === $link_type ) {
+					Icons_Manager::render_icon( $icon,
 						[
 							'aria-hidden' => 'true',
 							'class' => 'ehp-header__contact-button-icon',
-						] );
-						?>
-					</span>
-				<?php } ?>
+						]
+					);
+				} ?>
 				<?php if ( 'label' === $link_type ) { ?>
 					<span class="ehp-header__contact-button-label"><?php echo esc_html( $contact_button['contact_buttons_label'] ); ?></span>
 				<?php } ?>

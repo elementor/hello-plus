@@ -239,14 +239,13 @@
 		}
 
 		& svg {
-			fill: currentColor; // inherit the button color
-			height: 1em; // relative to the button font-size
-			width: 1em; // relative to the button font-size
+			fill: currentColor;
+			height: 1em;
+			width: 1em;
 		}
 
 		& i {
-			color: inherit; // inherit the button color
-			font-size: 1em; // relative to the button font-size
+			color: inherit;
 		}
 	}
 

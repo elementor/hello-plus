@@ -425,30 +425,36 @@
 
 	&__contact-button {
 		
-		& .ehp-header__contact-button-icon,
-		& .ehp-header__contact-button-icon-wrapper,
+		& i,
 		& .ehp-header__contact-button-label {
 			color: var(--header-contact-button-color);
+			transition: $transition;
+		}
+
+		& svg {
+			fill: var(--header-contact-button-color);
+			transition: $transition;
 		}
 
 		&:hover,
 		&:focus {
-			& .ehp-header__contact-button-icon,
-			& .ehp-header__contact-button-icon-wrapper,
+			& i,
 			& .ehp-header__contact-button-label {
 				color: var(--header-contact-button-color-hover);
+				transition: $transition;
+			}
+
+			& svg {
+				fill: var(--header-contact-button-color-hover);
+				transition: $transition;
 			}
 		}
-	}
 
-	&__contact-button-icon-wrapper {
-		
 		& i {
 			font-size: var(--header-contact-button-size);
 		}
 
 		& svg {
-			fill: currentColor;
 			height: var(--header-contact-button-size);
 			width: var(--header-contact-button-size);
 		}

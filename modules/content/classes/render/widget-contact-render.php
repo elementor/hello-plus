@@ -239,14 +239,12 @@ class Widget_Contact_Render {
 
 				?>
 				<a <?php $this->widget->print_render_attribute_string( 'contact-link-' . $key ); ?>>
-						<span class="<?php echo esc_attr( self::LAYOUT_CLASSNAME ); ?>__contact-link-icon-wrapper">
-							<?php Icons_Manager::render_icon( $icon,
-								[
-									'aria-hidden' => 'true',
-									'class' => self::LAYOUT_CLASSNAME . '__contact-link-icon',
-								]
-							); ?>
-						</span>
+						<?php Icons_Manager::render_icon( $icon,
+							[
+								'aria-hidden' => 'true',
+								'class' => self::LAYOUT_CLASSNAME . '__contact-link-icon',
+							]
+						); ?>
 						<span class="<?php echo esc_attr( self::LAYOUT_CLASSNAME ); ?>__contact-link-label"><?php echo esc_html( $contact_link[ 'group_' . $group_number . '_label' ] ); ?></span>
 					</a>
 				<?php

@@ -253,12 +253,19 @@
 		flex-direction: column;
 		gap: var(--contact-links-spacing);
 	}
+	
+	&__contact-link {
+		display: flex;
+		gap: var(--contact-link-icon-gap);
 
-	&__contact-link-icon-wrapper {
-
+		& i,
 		& svg,
-		& i {
+		& .ehp-contact__contact-link-label {
 			transition: $transition;
+		}
+	
+		& .ehp-contact__contact-link-label {
+			color: var(--contact-link-label-color);
 		}
 
 		& svg {
@@ -271,33 +278,26 @@
 			color: var(--contact-link-icon-color);
 			font-size: var(--contact-link-icon-size);
 		}
-	}
-	
-	&__contact-link {
-		display: flex;
-		gap: var(--contact-link-icon-gap);
-	
-		& .ehp-contact__contact-link-label {
-			color: var(--contact-link-label-color);
-			transition: $transition;
-		}
 		
 		&:hover,
 		&:focus {
 
-			& .ehp-contact__contact-link-icon {
-				color: var(--contact-link-icon-hover-color);
+			& i,
+			& svg,
+			& .ehp-contact__contact-link-label {
 				transition: $transition;
+			}
 
-				&:is(svg) {
-					fill: var(--contact-link-icon-hover-color);
-					transition: $transition;
-				}
+			& i {
+				color: var(--contact-link-icon-hover-color);
+			}
+
+			& svg {
+				fill: var(--contact-link-icon-hover-color);
 			}
 	
 			& .ehp-contact__contact-link-label {
 				color: var(--contact-link-label-hover-color);
-				transition: $transition;
 			}
 		}
 	}

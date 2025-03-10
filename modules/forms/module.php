@@ -98,8 +98,8 @@ class Module extends Module_Base {
 			'title'        => __( 'Collect Submissions', 'hello-plus' ),
 			'description'  => [ __( 'Unlock form submissions by upgrading to Elementor Pro on an eligible plan.', 'hello-plus' ) ],
 			'upgrade_text' => __( 'Upgrade', 'hello-plus' ),
-			'upgrade_url'  => 'https://go.elementor.com/go-pro-button-widget-control/',
-			'image'        => 'https://assets.elementor.com/free-to-pro-upsell/v1/images/cta.jpg',
+			'upgrade_url'  => 'https://elementor.com/pro/',
+			'image'        => HELLOPLUS_IMAGES_URL . 'collect-submission.jpg',
 			'image_alt'    => __( 'Upgrade', 'hello-plus' ),
 		];
 

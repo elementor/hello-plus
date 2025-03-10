@@ -21,6 +21,7 @@ const entryPoints = {
 	'css/helloplus-hero': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-hero.scss' ),
 	'css/helloplus-cta': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-cta.scss' ),
 	'css/helloplus-flex-hero': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-flex-hero.scss' ),
+	'css/helloplus-contact': path.resolve( modulesDir, 'content/assets/scss', 'hello-plus-contact.scss' ),
 	'js/helloplus-zigzag-fe': path.resolve( modulesDir, 'content/assets/js/frontend', 'hello-plus-zigzag-fe.js' ),
 	'css/helloplus-control-choose-img': path.resolve( modulesDir, 'content/assets/scss', 'choose-img.scss' ),
 	'js/helloplus-control-choose-img': path.resolve( modulesDir, 'content/assets/js', 'editor.js' ),

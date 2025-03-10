@@ -1,4 +1,3 @@
-import { __ } from '@wordpress/i18n';
 import Component from './component';
 import FieldsMapControl from './fields-map-control';
 import FieldsRepeaterControl from './fields-repeater-control';

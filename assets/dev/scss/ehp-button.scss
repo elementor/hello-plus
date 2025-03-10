@@ -97,11 +97,11 @@ a.ehp-button:not([href]):not([tabindex]) {
 		--ehp-shapes-border-radius-inline-start: var(--ehp-button-primary-border-radius-inline-start);
 	}
 
-	i.ehp-button__icon {
+	& i {
 		color: currentColor;
 	}
 
-	svg.ehp-button__icon {
+	& svg {
 		fill: currentColor;
 		height: 1em;
 		width: 1em;

@@ -258,42 +258,46 @@
 		display: flex;
 		gap: var(--contact-link-icon-gap);
 
-		& .ehp-contact__contact-link-icon {
+		& i,
+		& svg,
+		& .ehp-contact__contact-link-label {
 			transition: $transition;
-			
-			&:is(svg) {
-				fill: var(--contact-link-icon-color);
-				height: var(--contact-link-icon-size);
-				width: var(--contact-link-icon-size);
-			}
-
-			&:is(i) {
-				color: var(--contact-link-icon-color);
-				font-size: var(--contact-link-icon-size);
-			}
 		}
 	
 		& .ehp-contact__contact-link-label {
 			color: var(--contact-link-label-color);
-			transition: $transition;
+		}
+
+		& svg {
+			fill: var(--contact-link-icon-color);
+			height: var(--contact-link-icon-size);
+			width: var(--contact-link-icon-size);
+		}
+
+		& i {
+			color: var(--contact-link-icon-color);
+			font-size: var(--contact-link-icon-size);
 		}
 		
 		&:hover,
 		&:focus {
 
-			& .ehp-contact__contact-link-icon {
-				color: var(--contact-link-icon-hover-color);
+			& i,
+			& svg,
+			& .ehp-contact__contact-link-label {
 				transition: $transition;
+			}
 
-				&:is(svg) {
-					fill: var(--contact-link-icon-hover-color);
-					transition: $transition;
-				}
+			& i {
+				color: var(--contact-link-icon-hover-color);
+			}
+
+			& svg {
+				fill: var(--contact-link-icon-hover-color);
 			}
 	
 			& .ehp-contact__contact-link-label {
 				color: var(--contact-link-label-hover-color);
-				transition: $transition;
 			}
 		}
 	}

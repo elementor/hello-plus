@@ -160,7 +160,6 @@ class Ehp_Social_Platforms {
 					'fa-brands' => [
 						'whatsapp',
 						'whatsapp-square',
-						'skype',
 						'facebook-messenger',
 						'viber',
 						'waze',
@@ -192,7 +191,6 @@ class Ehp_Social_Platforms {
 					'telephone' => esc_html__( 'Telephone', 'hello-plus' ),
 					'sms' => esc_html__( 'SMS', 'hello-plus' ),
 					'whatsapp' => esc_html__( 'Whatsapp', 'hello-plus' ),
-					'skype' => esc_html__( 'Skype', 'hello-plus' ),
 					'messenger' => esc_html__( 'Messenger', 'hello-plus' ),
 					'viber' => esc_html__( 'Viber', 'hello-plus' ),
 					'map' => esc_html__( 'Map', 'hello-plus' ),
@@ -291,7 +289,6 @@ class Ehp_Social_Platforms {
 				'condition' => [
 					$prefix_attr . '_platform' => [
 						'messenger',
-						'skype',
 					],
 				],
 			],
@@ -379,7 +376,6 @@ class Ehp_Social_Platforms {
 				'condition' => [
 					$prefix_attr . '_platform' => [
 						'viber',
-						'skype',
 					],
 				],
 			]

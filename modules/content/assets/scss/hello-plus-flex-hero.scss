@@ -189,7 +189,7 @@
 				flex-direction: row;
 
 				& .ehp-flex-hero__content-container,
-				& .ehp-flex-hero__image {
+				& .ehp-flex-hero__image-wrapper {
 					flex-basis: 50%;
 				}
 			}
@@ -198,8 +198,9 @@
 				justify-content: var(--flex-hero-content-alignment-showcase);
 			}
 
-			& .ehp-flex-hero__image {
+			& .ehp-flex-hero__image-wrapper {
 				align-items: var(--flex-hero-content-alignment-showcase);
+				display: flex;
 			}
 		}
 
@@ -218,7 +219,6 @@
 
 	@mixin responsive-image-position() {
 		&-start {
-
 			& .ehp-flex-hero__content-container {
 				order: 2;
 			}
@@ -241,7 +241,7 @@
 			}
 			
 			& .ehp-flex-hero__image {
-				order: 1;
+				order: 2;
 			}
 
 			&.has-image-stretch .ehp-flex-hero__content-container {

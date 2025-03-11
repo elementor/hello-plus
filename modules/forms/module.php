@@ -93,6 +93,23 @@ class Module extends Module_Base {
 			HELLOPLUS_VERSION,
 			true
 		);
+
+		$promotion_data = [
+			'title'        => __( 'Collect Submissions', 'hello-plus' ),
+			'description'  => [ __( 'Unlock form submissions by upgrading to Elementor Pro on an eligible plan.', 'hello-plus' ) ],
+			'upgrade_text' => __( 'Upgrade', 'hello-plus' ),
+			'upgrade_url'  => 'https://elementor.com/pro/',
+			'image'        => HELLOPLUS_IMAGES_URL . 'collect-submission.jpg',
+			'image_alt'    => __( 'Upgrade', 'hello-plus' ),
+		];
+
+		wp_localize_script(
+			'helloplus-forms-editor',
+			'ehpFormsPromotionData',
+			$promotion_data
+		);
+
+		wp_set_script_translations( 'helloplus-forms-editor', 'hello-plus' );
 	}
 
 	public function register_scripts() {

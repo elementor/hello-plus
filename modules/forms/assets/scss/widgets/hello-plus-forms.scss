@@ -237,14 +237,17 @@
 				border-radius: $corners-shape-default;
 			}
 		}
-	}
 
-	&__button-icon {
-		color: inherit; // inherit the button color
-		fill: currentColor; // inherit the button color
-		font-size: 1em; // relative to the button font-size
-		height: 1em; // relative to the button font-size
-		width: 1em; // relative to the button font-size
+		& svg {
+			fill: currentColor;
+			height: 1em;
+			width: 1em;
+		}
+
+		& i {
+			color: inherit;
+			font-size: inherit;
+		}
 	}
 
 	&__select {

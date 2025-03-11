@@ -150,7 +150,6 @@ class Widget_CTA_Render {
 		$buttons_width_mobile = $this->settings['cta_width_mobile'];
 
 		$buttons_wrapper_classnames = [ 'ehp-cta__buttons-wrapper' ];
-
 		
 		$this->widget->add_render_attribute( 'buttons-wrapper', [
 			'class' => $buttons_wrapper_classnames,

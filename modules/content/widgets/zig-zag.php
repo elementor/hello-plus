@@ -65,6 +65,14 @@ class Zig_Zag extends Widget_Base {
 		$render_strategy->render();
 	}
 
+	public function public_add_inline_editing_attributes( $key, $mode ) {
+		return $this->add_inline_editing_attributes( $key, $mode );
+	}
+
+	public function public_get_repeater_setting_key( $setting_key, $repeater_key, $repeater_item_index ) {
+		return $this->get_repeater_setting_key( $setting_key, $repeater_key, $repeater_item_index );
+	}
+
 	protected function register_controls() {
 		$this->add_content_section();
 		$this->add_style_section();

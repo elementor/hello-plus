@@ -63,6 +63,10 @@ class Ehp_Footer extends Ehp_Widget_Base {
 	protected function render(): void {
 		$render_strategy = new Widget_Footer_Render( $this );
 
+		$this->add_inline_editing_attributes( 'footer_description', 'basic' );
+		$this->add_inline_editing_attributes( 'footer_contact_heading', 'basic' );
+		$this->add_inline_editing_attributes( 'footer_contact_information', 'basic' );
+
 		$render_strategy->render();
 	}
 

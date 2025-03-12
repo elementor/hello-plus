@@ -159,9 +159,15 @@ class Widget_Zig_Zag_Render {
 			self::TEXT_CONTAINER_CLASSNAME,
 		];
 
+		var_dump( $graphic_element . '_title' );
+
+		$zigzag_item_setting_key = $this->widget->public_get_repeater_setting_key( $graphic_element . '_title', $graphic_element . '_zigzag_items', $key );
+
 		$this->widget->add_render_attribute( 'description-' . $key, [
 			'class' => 'ehp-zigzag__description',
 		] );
+
+		$this->widget->public_add_inline_editing_attributes( $zigzag_item_setting_key, 'basic' );
 
 		if ( $is_graphic_icon ) {
 			$text_container_classnames[] = 'is-graphic-icon';
@@ -175,18 +181,31 @@ class Widget_Zig_Zag_Render {
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'text-container-' . $key ); ?>>
 			<?php if ( $has_title ) {
-				$title_output = sprintf( '<%1$s %2$s %3$s>%4$s</%1$s>', Utils::validate_html_tag( $title_tag ), $this->widget->get_render_attribute_string( 'heading' ), 'class="ehp-zigzag__title"', esc_html( $title_text ) );
-				// Escaped above
-				Utils::print_unescaped_internal_string( $title_output );
+				// $title_output = sprintf( '<%1$s %2$s %3$s>%4$s</%1$s>', Utils::validate_html_tag( $title_tag ), $this->widget->get_render_attribute_string( 'heading' ), 'class="ehp-zigzag__title"', esc_html( $title_text ) );
+				// // Escaped above
+				// Utils::print_unescaped_internal_string( $title_output );
+				$this->maybe_render_text_html( $graphic_element . '_title', 'ehp-zigzag__title', $item[ $graphic_element . '_title' ], $this->settings['zigzag_title_tag'] );
+				$this->maybe_render_text_html( $graphic_element . '_description', 'ehp-zigzag__description', $item[ $graphic_element . '_description' ], $this->settings['zigzag_description_tag'] );
 			} ?>
-			<?php if ( $has_description ) { ?>
-				<p <?php $this->widget->print_render_attribute_string( 'description-' . $key ); ?>><?php echo esc_html( $description_text ); ?></p>
-			<?php } ?>
+		
 			<?php if ( ! empty( $item[ $graphic_element . '_button_text' ] ) ) {
 				$this->render_cta_button( $item, $key );
 			} ?>
 		</div>
 		<?php
+	}
+
+	public function maybe_render_text_html( $render_key, $css_class, $settings_text, $settings_tag ) {
+		if ( '' !== $settings_text ) {
+			$this->widget->add_render_attribute( $render_key, 'class', $css_class );
+
+			$element = wp_kses_post( $settings_text );
+
+			$element_html = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $settings_tag ), $this->widget->get_render_attribute_string( $render_key ), $element );
+
+			// PHPCS - the variable $element_html holds safe data.
+			echo $element_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
 	}
 
 	public function render_cta_button( $item, $key ) {

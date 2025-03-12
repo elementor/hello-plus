@@ -110,38 +110,30 @@ class Widget_CTA_Render {
 	}
 
 	protected function render_text_container() {
-		$heading_text = $this->settings['heading_text'];
-		$heading_tag = $this->settings['heading_tag'];
-		$has_heading = '' !== $heading_text;
-
-		$description_text = $this->settings['description_text'];
-		$description_tag = $this->settings['description_tag'];
-		$has_description = '' !== $description_text;
-
-		$text_container_classnames = [ 'ehp-cta__text-container' ];
-
-		$this->widget->add_render_attribute( 'text-container', [
-			'class' => $text_container_classnames,
-		] );
 		?>
-		<div <?php $this->widget->print_render_attribute_string( 'text-container' ); ?>>
-			<?php if ( $has_heading ) {
-				$heading_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $heading_tag ), 'class="ehp-cta__heading"', esc_html( $heading_text ) );
-				// Escaped above
-				Utils::print_unescaped_internal_string( $heading_output );
-			} ?>
-			<?php if ( $has_description ) {
-				$description_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $description_tag ), 'class="ehp-cta__description"', esc_html( $description_text ) );
-				// Escaped above
-				Utils::print_unescaped_internal_string( $description_output );
-			} ?>
-
+		<div class="ehp-cta__text-container">
 			<?php
+			$this->maybe_render_text_html( 'heading_text', 'ehp-cta__heading', $this->settings['heading_text'], $this->settings['heading_tag'] );
+			$this->maybe_render_text_html( 'description_text', 'ehp-cta__description', $this->settings['description_text'], $this->settings['description_tag'] );
+
 			if ( 'showcase' === $this->settings['layout_preset'] ) {
 				$this->render_ctas_container();
 			} ?>
 		</div>
 		<?php
+	}
+
+	public function maybe_render_text_html( $render_key, $css_class, $settings_text, $settings_tag ) {
+		if ( '' !== $settings_text ) {
+			$this->widget->add_render_attribute( $render_key, 'class', $css_class );
+
+			$element = wp_kses_post( $settings_text );
+
+			$element_html = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $settings_tag ), $this->widget->get_render_attribute_string( $render_key ), $element );
+
+			// PHPCS - the variable $element_html holds safe data.
+			echo $element_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
 	}
 
 	protected function render_ctas_container() {
@@ -151,30 +143,23 @@ class Widget_CTA_Render {
 
 		$buttons_wrapper_classnames = [ 'ehp-cta__buttons-wrapper' ];
 
-		$this->widget->add_render_attribute( 'buttons-wrapper', [
-			'class' => $buttons_wrapper_classnames,
-		] );
-
-		$ctas_container_wrapper = [ 'ehp-cta__ctas-container' ];
-
 		if ( $buttons_width ) {
-			$ctas_container_wrapper[] = 'has-cta-width-' . $buttons_width;
+			$buttons_wrapper_classnames[] = 'has-cta-width-' . $buttons_width;
 
 			if ( $buttons_width_tablet ) {
-				$ctas_container_wrapper[] = 'has-cta-width-md-' . $buttons_width_tablet;
+				$buttons_wrapper_classnames[] = 'has-cta-width-md-' . $buttons_width_tablet;
 			}
 
 			if ( $buttons_width_mobile ) {
-				$ctas_container_wrapper[] = 'has-cta-width-sm-' . $buttons_width_mobile;
+				$buttons_wrapper_classnames[] = 'has-cta-width-sm-' . $buttons_width_mobile;
 			}
 		}
 
-		$this->widget->add_render_attribute( 'ctas-container', [
-			'class' => $ctas_container_wrapper,
+		$this->widget->add_render_attribute( 'buttons-wrapper', [
+			'class' => $buttons_wrapper_classnames,
 		] );
-
 		?>
-			<div <?php $this->widget->print_render_attribute_string( 'ctas-container' ); ?>>
+			<div class="ehp-cta__ctas-container">
 				<div <?php $this->widget->print_render_attribute_string( 'buttons-wrapper' ); ?>>
 					<?php if ( ! empty( $this->settings['primary_cta_button_text'] ) ) {
 						$this->render_button( 'primary' );

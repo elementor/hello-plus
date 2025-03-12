@@ -77,13 +77,18 @@ class Widget_Footer_Render {
 		$description_text = $this->settings['footer_description'];
 		$description_tag = $this->settings['footer_description_tag'] ?? 'p';
 		$has_description = '' !== $description_text;
+
+		$this->widget->add_render_attribute( 'footer_description', [
+			'class' => 'ehp-footer__description',
+		] );
 		?>
 		<div class="ehp-footer__side-content">
 			<?php $this->render_site_link(); ?>
 			<?php if ( $has_description ) {
-				$description_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $description_tag ), 'class="ehp-footer__description"', esc_html( $description_text ) );
+				$element_html = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $description_tag ), $this->widget->get_render_attribute_string( 'footer_description' ), esc_html( $description_text ) );
+
 				// Escaped above
-				Utils::print_unescaped_internal_string( $description_output );
+				Utils::print_unescaped_internal_string( $element_html );
 			} ?>
 			<?php $this->render_social_icons(); ?>
 		</div>
@@ -231,33 +236,32 @@ class Widget_Footer_Render {
 	}
 
 	public function render_contact(): void {
-		$contact_text = $this->settings['footer_contact_heading'];
-		$contact_tag = $this->settings['footer_contact_heading_tag'] ?? 'p';
-		$has_contact = '' !== $contact_text;
-
-		$contact_information_text = $this->settings['footer_contact_information'];
-		$contact_information_tag = $this->settings['footer_contact_information_tag'] ?? 'p';
-		$has_contact_information = '' !== $contact_information_text;
-
 		$this->widget->add_render_attribute( 'contact', [
 			'class' => 'ehp-footer__contact',
 		] );
 		?>
 		<div class="ehp-footer__contact-container">
 			<div <?php $this->widget->print_render_attribute_string( 'contact' ); ?>>
-				<?php if ( $has_contact ) {
-					$contact_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $contact_tag ), 'class="ehp-footer__contact-heading"', esc_html( $contact_text ) );
-					// Escaped above
-					Utils::print_unescaped_internal_string( $contact_output );
-				} ?>
-				<?php if ( $has_contact_information ) {
-					$contact_information_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $contact_information_tag ), 'class="ehp-footer__contact-information"', wp_kses_post( nl2br( esc_html( $contact_information_text ) ) ) );
-					// Escaped above
-					Utils::print_unescaped_internal_string( $contact_information_output );
-				} ?>
+				<?php
+					$this->maybe_render_text_html( 'footer_contact_heading', 'ehp-footer__contact-heading', $this->settings['footer_contact_heading'], $this->settings['footer_contact_heading_tag'] );
+					$this->maybe_render_text_html( 'footer_contact_information', 'ehp-footer__contact-information', $this->settings['footer_contact_information'], $this->settings['footer_contact_information_tag'] );
+				?>
 			</div>
 		</div>
 		<?php
+	}
+
+	public function maybe_render_text_html( $render_key, $css_class, $settings_text, $settings_tag ) {
+		if ( '' !== $settings_text ) {
+			$this->widget->add_render_attribute( $render_key, 'class', $css_class );
+
+			$element = wp_kses_post( $settings_text );
+
+			$element_html = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $settings_tag ), $this->widget->get_render_attribute_string( $render_key ), $element );
+
+			// PHPCS - the variable $element_html holds safe data.
+			echo $element_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
 	}
 
 	public function render_copyright(): void {

@@ -156,9 +156,15 @@ class Widget_Flex_Hero_Render {
 	}
 
 	protected function render_image_container() {
-		$image = new Ehp_Image( $this->widget, [
-			'widget_name' => $this->widget->get_name(),
-		] );
-		$image->render();
+		?>
+		<div class="ehp-flex-hero__image-wrapper">
+		<?php
+			$image = new Ehp_Image( $this->widget, [
+				'widget_name' => $this->widget->get_name(),
+			] );
+			$image->render();
+		?>
+		</div>
+		<?php
 	}
 }

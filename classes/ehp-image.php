@@ -99,6 +99,9 @@ class Ehp_Image {
 				'default' => [
 					'url' => Elementor_Utils::get_placeholder_image_src(),
 				],
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 	}

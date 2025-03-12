@@ -151,23 +151,30 @@ class Widget_CTA_Render {
 
 		$buttons_wrapper_classnames = [ 'ehp-cta__buttons-wrapper' ];
 
-		if ( $buttons_width ) {
-			$buttons_wrapper_classnames[] = 'has-cta-width-' . $buttons_width;
-
-			if ( $buttons_width_tablet ) {
-				$buttons_wrapper_classnames[] = 'has-cta-width-md-' . $buttons_width_tablet;
-			}
-
-			if ( $buttons_width_mobile ) {
-				$buttons_wrapper_classnames[] = 'has-cta-width-sm-' . $buttons_width_mobile;
-			}
-		}
-
 		$this->widget->add_render_attribute( 'buttons-wrapper', [
 			'class' => $buttons_wrapper_classnames,
 		] );
+
+		$ctas_container_wrapper = [ 'ehp-cta__ctas-container' ];
+
+		if ( $buttons_width ) {
+			$ctas_container_wrapper[] = 'has-cta-width-' . $buttons_width;
+
+			if ( $buttons_width_tablet ) {
+				$ctas_container_wrapper[] = 'has-cta-width-md-' . $buttons_width_tablet;
+			}
+
+			if ( $buttons_width_mobile ) {
+				$ctas_container_wrapper[] = 'has-cta-width-sm-' . $buttons_width_mobile;
+			}
+		}
+
+		$this->widget->add_render_attribute( 'ctas-container', [
+			'class' => $ctas_container_wrapper,
+		] );
+
 		?>
-			<div class="ehp-cta__ctas-container">
+			<div <?php $this->widget->print_render_attribute_string( 'ctas-container' ); ?>>
 				<div <?php $this->widget->print_render_attribute_string( 'buttons-wrapper' ); ?>>
 					<?php if ( ! empty( $this->settings['primary_cta_button_text'] ) ) {
 						$this->render_button( 'primary' );

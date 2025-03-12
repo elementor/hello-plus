@@ -140,7 +140,7 @@ class CTA extends Widget_Base {
 			]
 		);
 
-		$image = new Ehp_Image( $this, [ 'widget_name' => $this->get_name() ] );
+		$image = new Ehp_Image( $this, [ 'widget_name' => $this->get_name() ], [ 'is_dynamic' => true ] );
 		$image->add_content_section();
 
 		$this->end_controls_section();

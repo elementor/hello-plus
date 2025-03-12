@@ -100,7 +100,7 @@ class Ehp_Image {
 					'url' => Elementor_Utils::get_placeholder_image_src(),
 				],
 				'dynamic' => [
-					'active' => $this->defaults['is_dynamic'] ?? false,
+					'active' => true,
 				],
 			]
 		);

@@ -87,4 +87,10 @@ class Import extends Import_Runner_Base {
 
 		return $document_id;
 	}
+
+	public function get_import_session_metadata(): array {
+		return [
+			'product' => 'ehp',
+		];
+	}
 }

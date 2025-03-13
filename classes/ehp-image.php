@@ -99,6 +99,9 @@ class Ehp_Image {
 				'default' => [
 					'url' => Elementor_Utils::get_placeholder_image_src(),
 				],
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 	}
@@ -106,7 +109,6 @@ class Ehp_Image {
 	public function add_style_controls() {
 		$widget_name = $this->context['widget_name'];
 		$defaults = [
-			'has_min_height' => $this->defaults['has_min_height'] ?? false,
 			'has_image_width_slider' => $this->defaults['has_image_width_slider'] ?? true,
 			'has_image_width_dropdown' => $this->defaults['has_image_width_dropdown'] ?? false,
 		];
@@ -143,6 +145,9 @@ class Ehp_Image {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-' . $widget_name => '--' . $widget_name . '-image-height: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'image_stretch!' => 'yes',
 				],
 			]
 		);
@@ -198,30 +203,28 @@ class Ehp_Image {
 			);
 		}
 
-		if ( $defaults['has_min_height'] ) {
-			$this->widget->add_responsive_control(
-				'image_min_height',
-				[
-					'label' => esc_html__( 'Min Height', 'hello-plus' ),
-					'type' => Controls_Manager::SLIDER,
-					'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
-					'range' => [
-						'px' => [
-							'max' => 1500,
-						],
-						'%' => [
-							'max' => 100,
-						],
+		$this->widget->add_responsive_control(
+			'image_min_height',
+			[
+				'label' => esc_html__( 'Min Height', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 1500,
 					],
-					'selectors' => [
-						'{{WRAPPER}} .ehp-' . $widget_name => '--' . $widget_name . '-image-min-height: {{SIZE}}{{UNIT}};',
+					'%' => [
+						'max' => 100,
 					],
-					'condition' => [
-						'image_stretch' => 'yes',
-					],
-				]
-			);
-		}
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-' . $widget_name => '--' . $widget_name . '-image-min-height: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'image_stretch' => 'yes',
+				],
+			]
+		);
 
 		$this->widget->add_responsive_control(
 			'image_position',

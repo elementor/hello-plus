@@ -560,11 +560,7 @@ class Flex_Hero extends Widget_Base {
 			]
 		);
 
-		$defaults = [
-			'has_min_height' => true,
-		];
-
-		$image = new Ehp_Image( $this, [ 'widget_name' => $this->get_name() ], $defaults );
+		$image = new Ehp_Image( $this, [ 'widget_name' => $this->get_name() ] );
 		$image->add_style_controls();
 
 		$this->end_controls_section();

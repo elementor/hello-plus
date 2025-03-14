@@ -312,7 +312,7 @@ class Ehp_Social_Platforms {
 						'url',
 					],
 				],
-				'placeholder' => esc_html__( 'https://www.', 'hello-plus' ),
+				'placeholder' => esc_html__( 'https://', 'hello-plus' ),
 			],
 		);
 

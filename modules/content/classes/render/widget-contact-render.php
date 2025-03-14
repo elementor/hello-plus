@@ -50,9 +50,6 @@ class Widget_Contact_Render {
 			self::LAYOUT_CLASSNAME . '__elements-container',
 		];
 
-		$map_position_horizontal = $this->settings['map_position_horizontal'];
-		$map_position_vertical = $this->settings['map_position_vertical'];
-
 		$shapes = new Ehp_Shapes( $this->widget, [
 			'container_prefix' => 'box',
 			'render_attribute' => 'layout',
@@ -60,27 +57,27 @@ class Widget_Contact_Render {
 		] );
 		$shapes->add_shape_attributes();
 
-		if ( ! empty( $map_position_horizontal ) ) {
-			$elements_container_classnames[] = 'has-map-h-position-' . $map_position_horizontal;
+		if ( ! empty( $this->settings['map_position_horizontal'] ) ) {
+			$elements_container_classnames[] = 'has-map-h-position-' . $this->settings['map_position_horizontal'];
 
-			if ( ! empty( $map_position_horizontal_tablet ) ) {
-				$elements_container_classnames[] = 'has-map-h-position-md-' . $map_position_horizontal_tablet;
+			if ( ! empty( $this->settings['map_position_horizontal_tablet'] ) ) {
+				$elements_container_classnames[] = 'has-map-h-position-md-' . $this->settings['map_position_horizontal_tablet'];
 			}
 
-			if ( ! empty( $map_position_horizontal_mobile ) ) {
-				$elements_container_classnames[] = 'has-map-h-position-sm-' . $map_position_horizontal_mobile;
+			if ( ! empty( $this->settings['map_position_horizontal_mobile'] ) ) {
+				$elements_container_classnames[] = 'has-map-h-position-sm-' . $this->settings['map_position_horizontal_mobile'];
 			}
 		}
 
-		if ( ! empty( $map_position_vertical ) ) {
-			$elements_container_classnames[] = 'has-map-v-position-' . $map_position_vertical;
+		if ( ! empty( $this->settings['map_position_vertical'] ) ) {
+			$elements_container_classnames[] = 'has-map-v-position-' . $this->settings['map_position_vertical'];
 
-			if ( ! empty( $map_position_vertical_tablet ) ) {
-				$elements_container_classnames[] = 'has-map-v-position-md-' . $map_position_vertical_tablet;
+			if ( ! empty( $this->settings['map_position_vertical_tablet'] ) ) {
+				$elements_container_classnames[] = 'has-map-v-position-md-' . $this->settings['map_position_vertical_tablet'];
 			}
 
-			if ( ! empty( $map_position_vertical_mobile ) ) {
-				$elements_container_classnames[] = 'has-map-v-position-sm-' . $map_position_vertical_mobile;
+			if ( ! empty( $this->settings['map_position_vertical_mobile'] ) ) {
+				$elements_container_classnames[] = 'has-map-v-position-sm-' . $this->settings['map_position_vertical_mobile'];
 			}
 		}
 

@@ -22,13 +22,17 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 	}
 
 	filterBehviors( behaviors ) {
-		if ( this.isEhpDocument() ) {
+		if ( this.isEhpDocument() && this.notElementorDomain() ) {
 			const { contextMenu: { groups } } = behaviors;
 			behaviors.contextMenu.groups = groups
 				.map( this.filterOutUnsupportedActions() )
 				.filter( ( group ) => group.actions.length );
 		}
 		return behaviors;
+	}
+
+	notElementorDomain() {
+		return ! ehpTemplatePartsEditorSettings.isElementorDomain;
 	}
 
 	setSourceAsRemote( isRemote, activeSource ) {

@@ -823,7 +823,6 @@ class Contact extends Widget_Base {
 			[
 				'label' => esc_html__( 'Map Position', 'hello-plus' ),
 				'type' => Controls_Manager::CHOOSE,
-				'toggle' => false,
 				'options' => [
 					'start' => [
 						'title' => esc_html__( 'Start', 'hello-plus' ),
@@ -832,9 +831,11 @@ class Contact extends Widget_Base {
 					'end' => [
 						'title' => esc_html__( 'End', 'hello-plus' ),
 						'icon' => 'eicon-h-align-' . ( is_rtl() ? 'left' : 'right' ),
+				
 					],
 				],
 				'toggle' => false,
+				'frontend_available' => true,
 				'default' => 'end',
 				'tablet_default' => 'end',
 				'mobile_default' => 'end',
@@ -861,6 +862,7 @@ class Contact extends Widget_Base {
 					],
 				],
 				'toggle' => false,
+				'frontend_available' => true,
 				'default' => 'end',
 				'tablet_default' => 'end',
 				'mobile_default' => 'end',
@@ -1014,7 +1016,7 @@ class Contact extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'contact_details_subheading_typography',
-				'selector' => '{{WRAPPER}} .ehp-contact__group-subheading',
+				'selector' => '{{WRAPPER}} .ehp-contact__subheading',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
 				],
@@ -1048,7 +1050,7 @@ class Contact extends Widget_Base {
 		$this->add_control(
 			'style_contact_details_heading',
 			[
-				'label' => esc_html__( 'Contact Details', 'hello-plus' ),
+				'label' => esc_html__( 'Contact Links', 'hello-plus' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -1546,7 +1548,6 @@ class Contact extends Widget_Base {
 			[
 				'name' => 'background',
 				'types' => [ 'classic', 'gradient' ],
-				'exclude' => [ 'image' ],
 				'selector' => '{{WRAPPER}} .ehp-contact',
 			]
 		);
@@ -1714,6 +1715,8 @@ class Contact extends Widget_Base {
 		$padding = new Ehp_Padding( $this, [
 			'widget_name' => $this->get_name(),
 			'container_prefix' => 'box',
+			'tablet_default_padding' => [ 'top' => '32', 'right' => '32', 'bottom' => '32', 'left' => '32' ],
+			'mobile_default_padding' => [ 'top' => '32', 'right' => '32', 'bottom' => '32', 'left' => '32' ],
 		] );
 		$padding->add_style_controls();
 

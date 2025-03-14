@@ -678,7 +678,6 @@ class Contact extends Widget_Base {
 				'mobile_default' => 'start',
 				'selectors' => [
 					'{{WRAPPER}} .ehp-contact' => '--contact-content-alignment: {{VALUE}};',
-					'{{WRAPPER}} .ehp-contact__groups' => 'justify-items: {{VALUE}};',
 				],
 				'conditions' => [
 					'relation' => 'or',

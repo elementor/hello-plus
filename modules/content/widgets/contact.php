@@ -830,7 +830,6 @@ class Contact extends Widget_Base {
 					'end' => [
 						'title' => esc_html__( 'End', 'hello-plus' ),
 						'icon' => 'eicon-h-align-' . ( is_rtl() ? 'left' : 'right' ),
-				
 					],
 				],
 				'toggle' => false,
@@ -1714,8 +1713,18 @@ class Contact extends Widget_Base {
 		$padding = new Ehp_Padding( $this, [
 			'widget_name' => $this->get_name(),
 			'container_prefix' => 'box',
-			'tablet_default_padding' => [ 'top' => '32', 'right' => '32', 'bottom' => '32', 'left' => '32' ],
-			'mobile_default_padding' => [ 'top' => '32', 'right' => '32', 'bottom' => '32', 'left' => '32' ],
+			'tablet_default_padding' => [
+				'top' => '32',
+				'right' => '32',
+				'bottom' => '32',
+				'left' => '32'
+			],
+			'mobile_default_padding' => [
+				'top' => '32',
+				'right' => '32',
+				'bottom' => '32',
+				'left' => '32'
+			],
 		] );
 		$padding->add_style_controls();
 

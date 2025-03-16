@@ -98,6 +98,7 @@ class Contact extends Widget_Base {
 				'default' => 'locate',
 				'label_block' => true,
 				'columns' => 2,
+				'toggle' => false,
 				'options' => [
 					'locate' => [
 						'title' => wp_kses_post( "Locate: Highlight your\nlocation to help your\nclients find you." ),
@@ -355,7 +356,7 @@ class Contact extends Widget_Base {
 
 	protected function add_contact_links_controls( $group_number, $group_condition ) {
 		$group_subheadings = [
-			'1' => esc_html__( 'Let\'s talk', 'hello-plus' ),
+			'1' => htmlspecialchars_decode( __( 'Let\'s talk', 'hello-plus' ) ),
 			'2' => esc_html__( 'Hours', 'hello-plus' ),
 			'3' => esc_html__( 'Visit', 'hello-plus' ),
 			'4' => esc_html__( 'Follow', 'hello-plus' ),
@@ -379,7 +380,7 @@ class Contact extends Widget_Base {
 
 		$defaults = [
 			'icon_default' => [
-				'value' => 'fas fa-phone',
+				'value' => 'fas fa-phone-alt',
 				'library' => 'fa-solid',
 			],
 			'label_default' => esc_html__( 'Call', 'hello-plus' ),
@@ -398,7 +399,7 @@ class Contact extends Widget_Base {
 		$shared_defaults = [
 			[
 				'group_' . $group_number . '_icon' => [
-					'value' => 'fas fa-phone',
+					'value' => 'fas fa-phone-alt',
 					'library' => 'fa-solid',
 				],
 				'group_' . $group_number . '_label' => esc_html__( 'Call', 'hello-plus' ),
@@ -612,6 +613,7 @@ class Contact extends Widget_Base {
 						'icon' => 'eicon-align-end-v',
 					],
 				],
+				'toggle' => false,
 				'default' => 'start',
 				'tablet_default' => 'start',
 				'mobile_default' => 'start',
@@ -639,6 +641,7 @@ class Contact extends Widget_Base {
 						'icon' => 'eicon-align-center-h',
 					],
 				],
+				'toggle' => false,
 				'default' => 'center',
 				'tablet_default' => 'center',
 				'mobile_default' => 'center',
@@ -669,6 +672,7 @@ class Contact extends Widget_Base {
 						'icon' => 'eicon-align-center-h',
 					],
 				],
+				'toggle' => false,
 				'default' => 'start',
 				'tablet_default' => 'start',
 				'mobile_default' => 'start',
@@ -746,7 +750,7 @@ class Contact extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'contact_details_columns',
+			'contact_details_columns_locate',
 			[
 				'label' => esc_html__( 'Columns', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
@@ -757,13 +761,41 @@ class Contact extends Widget_Base {
 					'4' => esc_html__( '4', 'hello-plus' ),
 				],
 				'default' => '1',
+				'tablet_default' => '1',
+				'mobile_default' => '1',
 				'selectors' => [
 					'{{WRAPPER}} .ehp-contact' => '--contact-layout-columns: {{VALUE}};',
+				],
+				'condition' => [
+					'layout_preset' => 'locate',
 				],
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
+			'contact_details_columns_alt',
+			[
+				'label' => esc_html__( 'Columns', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'1' => esc_html__( '1', 'hello-plus' ),
+					'2' => esc_html__( '2', 'hello-plus' ),
+					'3' => esc_html__( '3', 'hello-plus' ),
+					'4' => esc_html__( '4', 'hello-plus' ),
+				],
+				'default' => '2',
+				'tablet_default' => '2',
+				'mobile_default' => '1',
+				'selectors' => [
+					'{{WRAPPER}} .ehp-contact' => '--contact-layout-columns: {{VALUE}};',
+				],
+				'condition' => [
+					'layout_preset' => [ 'touchpoint', 'quick-info' ],
+				],
+			]
+		);
+
+		$this->add_responsive_control(
 			'space_between_widgets',
 			[
 				'label' => esc_html__( 'Gaps', 'hello-plus' ),
@@ -790,7 +822,6 @@ class Contact extends Widget_Base {
 			[
 				'label' => esc_html__( 'Map Position', 'hello-plus' ),
 				'type' => Controls_Manager::CHOOSE,
-				'toggle' => false,
 				'options' => [
 					'start' => [
 						'title' => esc_html__( 'Start', 'hello-plus' ),
@@ -801,6 +832,8 @@ class Contact extends Widget_Base {
 						'icon' => 'eicon-h-align-' . ( is_rtl() ? 'left' : 'right' ),
 					],
 				],
+				'toggle' => false,
+				'frontend_available' => true,
 				'default' => 'end',
 				'tablet_default' => 'end',
 				'mobile_default' => 'end',
@@ -826,6 +859,8 @@ class Contact extends Widget_Base {
 						'icon' => 'eicon-align-end-v',
 					],
 				],
+				'toggle' => false,
+				'frontend_available' => true,
 				'default' => 'end',
 				'tablet_default' => 'end',
 				'mobile_default' => 'end',
@@ -979,7 +1014,7 @@ class Contact extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'contact_details_subheading_typography',
-				'selector' => '{{WRAPPER}} .ehp-contact__group-subheading',
+				'selector' => '{{WRAPPER}} .ehp-contact__subheading',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
 				],
@@ -1013,7 +1048,7 @@ class Contact extends Widget_Base {
 		$this->add_control(
 			'style_contact_details_heading',
 			[
-				'label' => esc_html__( 'Contact Details', 'hello-plus' ),
+				'label' => esc_html__( 'Contact Links', 'hello-plus' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -1511,7 +1546,6 @@ class Contact extends Widget_Base {
 			[
 				'name' => 'background',
 				'types' => [ 'classic', 'gradient' ],
-				'exclude' => [ 'image' ],
 				'selector' => '{{WRAPPER}} .ehp-contact',
 			]
 		);
@@ -1679,6 +1713,18 @@ class Contact extends Widget_Base {
 		$padding = new Ehp_Padding( $this, [
 			'widget_name' => $this->get_name(),
 			'container_prefix' => 'box',
+			'tablet_default_padding' => [
+				'top' => '32',
+				'right' => '32',
+				'bottom' => '32',
+				'left' => '32',
+			],
+			'mobile_default_padding' => [
+				'top' => '32',
+				'right' => '32',
+				'bottom' => '32',
+				'left' => '32',
+			],
 		] );
 		$padding->add_style_controls();
 

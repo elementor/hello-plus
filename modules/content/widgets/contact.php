@@ -1717,13 +1717,13 @@ class Contact extends Widget_Base {
 				'top' => '32',
 				'right' => '32',
 				'bottom' => '32',
-				'left' => '32'
+				'left' => '32',
 			],
 			'mobile_default_padding' => [
 				'top' => '32',
 				'right' => '32',
 				'bottom' => '32',
-				'left' => '32'
+				'left' => '32',
 			],
 		] );
 		$padding->add_style_controls();

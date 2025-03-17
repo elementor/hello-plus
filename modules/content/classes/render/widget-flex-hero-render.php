@@ -12,6 +12,7 @@ use HelloPlus\Classes\{
 	Ehp_Image,
 	Ehp_Shapes,
 };
+use \HelloPlus\Modules\Content\Base\Traits\Shared_Content_Traits;
 
 class Widget_Flex_Hero_Render {
 	protected Flex_Hero $widget;
@@ -19,6 +20,8 @@ class Widget_Flex_Hero_Render {
 	const CTAS_CONTAINER_CLASSNAME = 'ehp-flex-hero__ctas-container';
 	const BUTTON_CLASSNAME = 'ehp-flex-hero__button';
 	const IMAGE_CLASSNAME = 'ehp-flex-hero__image';
+
+	use Shared_Content_Traits;
 
 	protected array $settings;
 
@@ -109,19 +112,6 @@ class Widget_Flex_Hero_Render {
 		$this->maybe_render_text_html( 'intro_text', 'ehp-flex-hero__intro', $this->settings['intro_text'], $this->settings['intro_tag'] );
 		$this->maybe_render_text_html( 'heading_text', 'ehp-flex-hero__heading', $this->settings['heading_text'], $this->settings['heading_tag'] );
 		$this->maybe_render_text_html( 'subheading_text', 'ehp-flex-hero__subheading', $this->settings['subheading_text'], $this->settings['subheading_tag'] );
-	}
-
-	public function maybe_render_text_html( $render_key, $css_class, $settings_text, $settings_tag ) {
-		if ( '' !== $settings_text ) {
-			$this->widget->add_render_attribute( $render_key, 'class', $css_class );
-
-			$element = wp_kses_post( $settings_text );
-
-			$element_html = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $settings_tag ), $this->widget->get_render_attribute_string( $render_key ), $element );
-
-			// PHPCS - the variable $element_html holds safe data.
-			echo $element_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		}
 	}
 
 	protected function render_ctas_container() {

@@ -58,7 +58,34 @@ class Contact extends Widget_Base {
 	protected function render(): void {
 		$render_strategy = new Widget_Contact_Render( $this );
 
+		$this->add_inline_editing_attributes( 'heading_text', 'none' );
+		$this->add_inline_editing_attributes( 'description_text', 'none' );
+		$this->add_inline_editing_attributes( 'group_1_links_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_1_text_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_1_social_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_2_text_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_2_links_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_2_social_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_3_links_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_3_text_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_3_social_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_4_links_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_4_text_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_4_social_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_1_text_textarea', 'none' );
+		$this->add_inline_editing_attributes( 'group_2_text_textarea', 'none' );
+		$this->add_inline_editing_attributes( 'group_3_text_textarea', 'none' );
+		$this->add_inline_editing_attributes( 'group_4_text_textarea', 'none' );
+
 		$render_strategy->render();
+	}
+
+	public function public_add_inline_editing_attributes( $attribute, $default = 'basic' ) {
+		return $this->add_inline_editing_attributes( $attribute, $default );
+	}
+
+	public function public_get_repeater_setting_key( $setting_key, $repeater_key, $item_key ) {
+		return $this->get_repeater_setting_key( $setting_key, $repeater_key, $item_key );
 	}
 
 	protected function register_controls() {

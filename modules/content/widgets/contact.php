@@ -249,6 +249,9 @@ class Contact extends Widget_Base {
 			[
 				'label' => esc_html__( 'Map', 'hello-plus' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
+				'condition' => [
+					'layout_preset!' => 'quick-info',
+				],
 			]
 		);
 
@@ -1456,6 +1459,9 @@ class Contact extends Widget_Base {
 			[
 				'label' => esc_html__( 'Map', 'hello-plus' ),
 				'tab' => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'layout_preset!' => 'quick-info',
+				],
 			]
 		);
 

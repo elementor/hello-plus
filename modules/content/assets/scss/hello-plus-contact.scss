@@ -167,11 +167,8 @@
 
 		padding: 0;
 
-		&.has-preset-locate {
-
-			& .ehp-contact__map-container {
-				height: 100%;
-			}
+		&.has-preset-locate,
+		&.has-preset-touchpoint {
 
 			& .ehp-contact__elements-container {
 				gap: 0;
@@ -185,15 +182,10 @@
 			}
 		}
 
-		&.has-preset-touchpoint {
+		&.has-preset-locate {
 
-			& .ehp-contact__elements-container {
-				padding-block-end: var(--contact-box-padding-block-end);
-			}
-
-			& .ehp-contact__text-container {
-				padding-inline-end: var(--contact-box-padding-inline-end);
-				padding-inline-start: var(--contact-box-padding-inline-start);
+			& .ehp-contact__map-container {
+				height: 100%;
 			}
 		}
 	}

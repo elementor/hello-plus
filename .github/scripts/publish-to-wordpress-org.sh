@@ -28,10 +28,11 @@ echo "SVN installed"
 
 echo "Publish version: ${PLUGIN_VERSION}"
 
-PLUGIN_PATH="$GITHUB_WORKSPACE"
+PLUGIN_PATH="$GITHUB_WORKSPACE/${PLUGIN_SLUG}"
 SVN_PATH="$GITHUB_WORKSPACE/svn"
 
 cd $PLUGIN_PATH
+pwd
 mkdir -p $SVN_PATH
 cd $SVN_PATH
 

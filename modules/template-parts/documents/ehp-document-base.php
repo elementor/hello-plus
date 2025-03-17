@@ -77,14 +77,20 @@ abstract class Ehp_Document_Base extends Library_Document {
 	}
 
 	public function filter_admin_row_actions( $actions ) {
-		$actions = parent::filter_admin_row_actions( $actions );
+		$built_with_elementor = parent::filter_admin_row_actions( [] );
+
+		if ( isset( $actions['trash'] ) ) {
+			$delete = $actions['trash'];
+			unset( $actions['trash'] );
+			$actions['trash'] = $delete;
+		}
 
 		if ( ! Utils::are_we_on_elementor_domains() ) {
 			unset( $actions['edit'] );
 			unset( $actions['inline hide-if-no-js'] );
 		}
 
-		return $this->set_as_entire_site( $actions );
+		return $built_with_elementor + $this->set_as_entire_site( $actions );
 	}
 
 	public function set_as_entire_site( $actions ) {

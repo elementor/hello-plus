@@ -4,6 +4,11 @@
 	--contact-box-height: auto;
 	--contact-box-full-height: 100vh;
 
+	--contact-alignment-width-center: 80%;
+	--contact-alignment-width-start: 100%;
+	--contact-alignment-margin-center: 0 auto;
+	--contact-alignment-margin-start: 0;
+
 	display: flex;
 	height: 100%;
 	min-height: var(--contact-box-height);
@@ -151,11 +156,8 @@
 
 			& .ehp-contact__groups {
 				justify-content: var(--contact-content-alignment);
-				justify-items: var(--contact-content-alignment);
-			}
-
-			& .ehp-contact__group {
-				min-width: 150px;
+				margin: var(--contact-content-alignment-margin);
+				width: var(--contact-content-alignment-width);
 			}
 		}
 	}

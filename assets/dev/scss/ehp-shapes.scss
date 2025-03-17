@@ -65,5 +65,9 @@
 			--ehp-shapes-border-radius-rounded: #{$corners-image-shape-rounded};
 			--ehp-shapes-border-radius-round: #{$corners-image-shape-round};
 		}
+
+		&-logo {
+			--ehp-shapes-border-radius-round: #{$corners-logo-shape-round};
+		}
 	}
 }

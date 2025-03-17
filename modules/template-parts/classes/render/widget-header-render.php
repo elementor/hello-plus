@@ -132,6 +132,26 @@ class Widget_Header_Render {
 		$this->widget->add_render_attribute( '_wrapper', $wrapper_render_attributes );
 	}
 
+	public function get_attachment_image_html_filter( $html ) {
+		$logo_classnames = [
+			self::LAYOUT_CLASSNAME . '__site-logo',
+		];
+
+		if ( ! empty( $this->settings['show_logo_border'] ) && 'yes' === $this->settings['show_logo_border'] ) {
+			$logo_classnames[] = 'has-border';
+		}
+
+		$shapes = new Ehp_Shapes( $this->widget, [
+			'container_prefix' => 'logo',
+			'widget_name' => 'header',
+		] );
+
+		$logo_classnames = array_merge( $logo_classnames, $shapes->get_shape_classnames() );
+
+		$html = str_replace( '<img ', '<img class="' . esc_attr( implode( ' ', $logo_classnames ) ) . '" ', $html );
+		return $html;
+	}
+
 	public function render_site_link(): void {
 		$site_logo_brand_select = $this->settings['site_logo_brand_select'];
 
@@ -156,7 +176,9 @@ class Widget_Header_Render {
 		?>
 		<a <?php $this->widget->print_render_attribute_string( 'site-link' ); ?>>
 			<?php if ( 'logo' === $site_logo_brand_select ) {
+				add_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_attachment_image_html_filter' ], 10, 4 );
 				Group_Control_Image_Size::print_attachment_image_html( $this->settings, 'site_logo_image' );
+				remove_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_attachment_image_html_filter' ], 10 );
 			} ?>
 			<?php if ( 'title' === $site_logo_brand_select ) {
 				$site_title_output = sprintf( '<%1$s %2$s %3$s>%4$s</%1$s>', Utils::validate_html_tag( $site_title_tag ), $this->widget->get_render_attribute_string( 'heading' ), 'class="ehp-header__site-title"', esc_html( $site_title_text ) );

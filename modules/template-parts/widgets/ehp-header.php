@@ -10,6 +10,7 @@ use Elementor\{
 	Controls_Manager,
 	Group_Control_Background,
 	Group_Control_Box_Shadow,
+	Group_Control_Css_Filter,
 	Group_Control_Typography,
 	Repeater
 };
@@ -531,6 +532,108 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'condition' => [
 					'site_logo_brand_select' => 'logo',
 				],
+			]
+		);
+
+		$this->start_controls_tabs(
+			'style_site_identity_tabs'
+		);
+
+		$this->start_controls_tab(
+			'style_site_identity_normal_tab',
+			[
+				'label' => esc_html__( 'Normal', 'hello-plus' ),
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Css_Filter::get_type(),
+			[
+				'name' => 'image_css_filters',
+				'selector' => '{{WRAPPER}} .ehp-header__site-logo',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'style_site_identity_hover_tab',
+			[
+				'label' => esc_html__( 'Hover', 'hello-plus' ),
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_control(
+			'show_logo_border',
+			[
+				'label' => esc_html__( 'Border', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'logo_border_width',
+			[
+				'label' => __( 'Border Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 10,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 1,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-logo-border-width: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'show_logo_border' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'logo_border_color',
+			[
+				'label' => esc_html__( 'Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-logo-border-color: {{VALUE}}',
+				],
+				'condition' => [
+					'show_logo_border' => 'yes',
+				],
+			]
+		);
+
+		$shapes = new Ehp_Shapes( $this, [
+			'widget_name' => 'header',
+			'container_prefix' => 'logo',
+		] );
+		$shapes->add_style_controls();
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'logo_box_shadow',
+				'selector' => '{{WRAPPER}} .ehp-header__site-logo',
 			]
 		);
 

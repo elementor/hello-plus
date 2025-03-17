@@ -158,9 +158,13 @@
 	&__site-link {
 		align-items: center;
 		display: flex;
+	}
 
-		img {
-			width: var(--header-logo-width);
+	&__site-logo {
+		width: var(--header-logo-width);
+
+		&.has-border {
+			border: var(--header-logo-border-width) solid var(--header-logo-border-color);
 		}
 	}
 

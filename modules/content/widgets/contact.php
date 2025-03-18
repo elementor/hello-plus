@@ -80,14 +80,6 @@ class Contact extends Widget_Base {
 		$render_strategy->render();
 	}
 
-	public function public_add_inline_editing_attributes( $attribute, $default = 'basic' ) {
-		return $this->add_inline_editing_attributes( $attribute, $default );
-	}
-
-	public function public_get_repeater_setting_key( $setting_key, $repeater_key, $item_key ) {
-		return $this->get_repeater_setting_key( $setting_key, $repeater_key, $item_key );
-	}
-
 	protected function register_controls() {
 		$this->add_content_section();
 		$this->add_style_section();

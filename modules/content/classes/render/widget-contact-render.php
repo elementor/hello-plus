@@ -228,24 +228,16 @@ class Widget_Contact_Render {
 						'rel' => 'noopener noreferrer',
 					] );
 				}
-
-				$contact_link_label_setting_key = $this->widget->public_get_repeater_setting_key( 'group_' . $group_number . '_label', 'group_' . $group_number . '_repeater', $key );
-
-				error_log( 'Repeater Key: ' . $contact_link_label_setting_key );
-
-				$this->widget->add_render_attribute( $contact_link_label_setting_key, 'class', self::LAYOUT_CLASSNAME . '__contact-link-label' );
-
-				$this->widget->public_add_inline_editing_attributes( $contact_link_label_setting_key );
 				?>
 				<a <?php $this->widget->print_render_attribute_string( 'contact-link-' . $key ); ?>>
-						<?php Icons_Manager::render_icon( $icon,
-							[
-								'aria-hidden' => 'true',
-								'class' => self::LAYOUT_CLASSNAME . '__contact-link-icon',
-							]
-						); ?>
-						<span <?php $this->widget->print_render_attribute_string( $contact_link_label_setting_key ); ?>><?php echo esc_html( $this->widget->get_settings_for_display()['group_' . $group_number . '_repeater'][$key]['group_' . $group_number . '_label'] ); ?></span>
-					</a>
+					<?php Icons_Manager::render_icon( $icon,
+						[
+							'aria-hidden' => 'true',
+							'class' => self::LAYOUT_CLASSNAME . '__contact-link-icon',
+						]
+					); ?>
+					<span class="<?php echo esc_attr( self::LAYOUT_CLASSNAME ); ?>__contact-link-label"><?php echo esc_html( $contact_link[ 'group_' . $group_number . '_label' ] ); ?></span>
+				</a>
 				<?php
 			} ?>
 		</div>

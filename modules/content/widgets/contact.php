@@ -699,7 +699,7 @@ class Contact extends Widget_Base {
 				'tablet_default' => 'start',
 				'mobile_default' => 'start',
 				'selectors' => [
-					'{{WRAPPER}} .ehp-contact' => '--contact-content-alignment: {{VALUE}};',
+					'{{WRAPPER}} .ehp-contact' => '--contact-content-alignment: {{VALUE}}; --contact-content-alignment-width: var(--contact-alignment-width-{{VALUE}}); --contact-content-alignment-margin: var(--contact-alignment-margin-{{VALUE}});',
 				],
 				'conditions' => [
 					'relation' => 'or',

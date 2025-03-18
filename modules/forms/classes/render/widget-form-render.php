@@ -10,19 +10,29 @@ use HelloPlus\Includes\Utils;
 use Elementor\Icons_Manager;
 use Elementor\Utils as Elementor_Utils;
 
+use \HelloPlus\Traits\Shared_Traits;
+
 class Widget_Form_Render {
 	protected Ehp_Form $widget;
 	protected array $settings;
+
+	const LAYOUT_CLASSNAME = 'ehp-form';
+
+	use Shared_Traits;
 
 	public function render() {
 		$form_name = $this->settings['form_name'];
 
 		if ( ! empty( $form_name ) ) {
-			$this->widget->add_render_attribute( 'form', 'name', $form_name );
+			$this->widget->add_render_attribute( 'form', [
+				'name' => $form_name,
+				'class' => self::LAYOUT_CLASSNAME,
+				'method' => 'post',
+			] );
 		}
 
 		$this->widget->add_render_attribute( 'wrapper', [
-			'class' => 'ehp-form__wrapper',
+			'class' => self::LAYOUT_CLASSNAME . '__wrapper',
 		] );
 
 		$referer_title = trim( wp_title( '', false ) );
@@ -32,7 +42,7 @@ class Widget_Form_Render {
 		}
 
 		?>
-		<form class="ehp-form" method="post" <?php $this->widget->print_render_attribute_string( 'form' ); ?>>
+		<form <?php $this->widget->print_render_attribute_string( 'form' ); ?>>
 			<?php $this->render_text_container(); ?>
 			<input type="hidden" name="post_id" value="<?php echo (int) Utils::get_current_post_id(); ?>"/>
 			<input type="hidden" name="form_id" value="<?php echo esc_attr( $this->widget->get_id() ); ?>"/>
@@ -172,46 +182,35 @@ class Widget_Form_Render {
 	}
 
 	protected function render_button(): void {
-		$button_icon = $this->settings['selected_button_icon'];
-		$button_text = $this->settings['button_text'];
-		$button_css_id = $this->settings['button_css_id'];
-		$button_width = $this->settings['button_width'];
-		$button_width_tablet = $this->settings['button_width_tablet'];
-		$button_width_mobile = $this->settings['button_width_mobile'];
-		$button_hover_animation = $this->settings['button_hover_animation'];
-		$button_classnames = 'ehp-form__button';
-		$button_border = $this->settings['button_border_switcher'];
-		$button_corner_shape = $this->settings['button_shape'];
-		$button_type = $this->settings['button_type'];
+		$button_classnames = [ self::LAYOUT_CLASSNAME . '__button' ];
+		$submit_group_classnames = [ self::LAYOUT_CLASSNAME . '__submit-group' ];
 
-		$submit_group_classnames = 'ehp-form__submit-group';
+		if ( ! empty( $this->settings['button_width'] ) ) {
+			$submit_group_classnames[] = 'has-width-' . $this->settings['button_width'];
 
-		if ( ! empty( $button_width ) ) {
-			$submit_group_classnames .= ' has-width-' . $button_width;
-		}
+			if ( ! empty( $this->settings['button_width_tablet'] ) ) {
+				$submit_group_classnames[] = 'has-width-md-' . $this->settings['button_width_tablet'];
+			}
 
-		if ( ! empty( $button_width_tablet ) ) {
-			$submit_group_classnames .= ' has-width-md-' . $button_width_tablet;
-		}
-
-		if ( ! empty( $button_width_mobile ) ) {
-			$submit_group_classnames .= ' has-width-sm-' . $button_width_mobile;
+			if ( ! empty( $this->settings['button_width_mobile'] ) ) {
+				$submit_group_classnames[] = 'has-width-sm-' . $this->settings['button_width_mobile'];
+			}
 		}
 
 		$this->widget->add_render_attribute( 'submit-group', [
 			'class' => $submit_group_classnames,
 		] );
 
-		if ( 'yes' === $button_border ) {
-			$button_classnames .= ' has-border';
+		if ( 'yes' === $this->settings['button_border_switcher'] ) {
+			$button_classnames[] = 'has-border';
 		}
 
-		if ( ! empty( $button_corner_shape ) ) {
-			$button_classnames .= ' has-shape-' . $button_corner_shape;
+		if ( ! empty( $this->settings['button_shape'] ) ) {
+			$button_classnames[] = 'has-shape-' . $this->settings['button_shape'];
 		}
 
-		if ( ! empty( $button_type ) ) {
-			$button_classnames .= ' is-type-' . $button_type;
+		if ( ! empty( $this->settings['button_type'] ) ) {
+			$button_classnames[] = 'is-type-' . $this->settings['button_type'];
 		}
 
 		$this->widget->add_render_attribute( 'button', [
@@ -219,33 +218,32 @@ class Widget_Form_Render {
 			'type' => 'submit',
 		] );
 
-		if ( $button_hover_animation ) {
-			$this->widget->add_render_attribute( 'button', 'class', 'elementor-animation-' . $button_hover_animation );
+		if ( $this->settings['button_hover_animation'] ) {
+			$this->widget->add_render_attribute( 'button', 'class', 'elementor-animation-' . $this->settings['button_hover_animation'] );
 		}
 
-		if ( ! empty( $button_css_id ) ) {
-			$this->widget->add_render_attribute( 'button', 'id', $button_css_id );
+		if ( ! empty( $this->settings['button_css_id'] ) ) {
+			$this->widget->add_render_attribute( 'button', 'id', $this->settings['button_css_id'] );
 		}
 
 		$this->widget->add_render_attribute( 'button-text', [
-			'class' => 'ehp-form__button-text',
+			'class' => self::LAYOUT_CLASSNAME . '__button-text',
 		] );
-
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'submit-group' ); ?>>
 			<button <?php $this->widget->print_render_attribute_string( 'button' ); ?>>
-				<?php if ( ! empty( $button_icon ) || ! empty( $button_icon['value'] ) ) : ?>
+				<?php if ( ! empty( $this->settings['selected_button_icon'] ) || ! empty( $this->settings['selected_button_icon']['value'] ) ) : ?>
 					<?php
-					Icons_Manager::render_icon( $button_icon,
+					Icons_Manager::render_icon( $this->settings['selected_button_icon'],
 						[
 							'aria-hidden' => 'true',
-							'class' => 'ehp-form__button-icon',
+							'class' => self::LAYOUT_CLASSNAME . '__button-icon',
 						],
 					);
 					?>
 				<?php endif; ?>
 
-				<?php if ( ! empty( $button_text ) ) : ?>
+				<?php if ( ! empty( $this->settings['button_text'] ) ) : ?>
 					<span <?php $this->widget->print_render_attribute_string( 'button-text' ); ?>><?php $this->widget->print_unescaped_setting( 'button_text' ); ?></span>
 				<?php endif; ?>
 			</button>
@@ -254,23 +252,18 @@ class Widget_Form_Render {
 	}
 
 	protected function render_text_container(): void {
-		$heading_text = $this->settings['text_heading'];
-		$has_heading = ! empty( $this->settings['text_heading'] );
-		$heading_tag = $this->settings['text_heading_tag'];
+		$heading_classname = self::LAYOUT_CLASSNAME . '__heading';
+		$description_classname = self::LAYOUT_CLASSNAME . '__description';
 
-		$description_text = $this->settings['text_description'];
-		$has_description = ! empty( $description_text );
+		$this->widget->add_render_attribute( 'text-container', [
+			'class' => self::LAYOUT_CLASSNAME . '__text-container',
+		] );
 		?>
-		<div class="ehp-form__text-container">
-			<?php if ( $has_heading ) {
-				$heading_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Elementor_Utils::validate_html_tag( $heading_tag ), 'class="ehp-form__heading"', esc_html( $heading_text ) );
-				// Escaped above
-				Elementor_Utils::print_unescaped_internal_string( $heading_output );
-			} ?>
-
-			<?php if ( $has_description ) { ?>
-				<p class="ehp-form__description"><?php echo esc_html( $description_text ); ?></p>
-			<?php } ?>
+		<div <?php $this->widget->print_render_attribute_string( 'text-container' ); ?>>
+			<?php
+				$this->maybe_render_text_html( 'text_heading', $heading_classname, $this->settings['text_heading'], $this->settings['text_heading_tag'] );
+				$this->maybe_render_text_html( 'text_description', $description_classname, $this->settings['text_description'] );
+			?>
 		</div>
 		<?php
 	}

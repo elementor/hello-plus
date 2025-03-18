@@ -14,7 +14,7 @@ use Elementor\Widget_Base;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 
-use HelloPlus\Modules\Content\Base\Traits\Shared_Content_Traits;
+use HelloPlus\Classes\Traits\Shared_Traits;
 use HelloPlus\Modules\Content\Classes\Choose_Img_Control;
 use HelloPlus\Modules\Content\Classes\Render\Widget_CTA_Render;
 use HelloPlus\Modules\Theme\Module as Theme_Module;
@@ -30,7 +30,7 @@ use Elementor\Utils as Elementor_Utils;
 
 class CTA extends Widget_Base {
 
-	use Shared_Content_Traits;
+	use Shared_Traits;
 
 	public function get_name(): string {
 		return 'cta';

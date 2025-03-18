@@ -10,7 +10,7 @@ use HelloPlus\Classes\{
 
 use Elementor\Utils;
 
-use HelloPlus\Traits\Shared_Traits;
+use HelloPlus\Classes\Traits\Shared_Traits;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.

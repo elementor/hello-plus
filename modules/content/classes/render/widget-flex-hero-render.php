@@ -12,7 +12,7 @@ use HelloPlus\Classes\{
 	Ehp_Image,
 	Ehp_Shapes,
 };
-use HelloPlus\Traits\Shared_Traits;
+use HelloPlus\Classes\Traits\Shared_Traits;
 
 class Widget_Flex_Hero_Render {
 	protected Flex_Hero $widget;

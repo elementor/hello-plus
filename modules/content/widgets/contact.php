@@ -11,7 +11,7 @@ use HelloPlus\Classes\{
 	Ehp_Shapes,
 	Ehp_Social_Platforms,
 };
-use HelloPlus\Modules\Content\Base\Traits\Shared_Content_Traits;
+use HelloPlus\Classes\Traits\Shared_Traits;
 
 use Elementor\{
 	Controls_Manager,
@@ -29,7 +29,7 @@ use Elementor\Modules\DynamicTags\Module as TagsModule;
 use Elementor\Settings;
 
 class Contact extends Widget_Base {
-	use Shared_Content_Traits;
+	use Shared_Traits;
 
 	public function get_name(): string {
 		return 'contact';

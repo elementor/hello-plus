@@ -13,7 +13,7 @@ use Elementor\{
 
 use HelloPlus\Modules\TemplateParts\Widgets\Ehp_Footer;
 
-use HelloPlus\Traits\Shared_Traits;
+use HelloPlus\Classes\Traits\Shared_Traits;
 
 /**
  * class Widget_Footer_Render

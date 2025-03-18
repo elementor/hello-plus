@@ -10,7 +10,7 @@ use HelloPlus\Includes\Utils;
 use Elementor\Icons_Manager;
 use Elementor\Utils as Elementor_Utils;
 
-use HelloPlus\Traits\Shared_Traits;
+use HelloPlus\Classes\Traits\Shared_Traits;
 
 class Widget_Form_Render {
 	protected Ehp_Form $widget;

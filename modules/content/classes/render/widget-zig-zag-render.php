@@ -15,9 +15,13 @@ use HelloPlus\Classes\{
 	Ehp_Image,
 };
 
+use \HelloPlus\Traits\Shared_Traits;
+
 class Widget_Zig_Zag_Render {
 	protected Zig_Zag $widget;
 	const LAYOUT_CLASSNAME = 'ehp-zigzag';
+
+	use Shared_Traits;
 
 	protected array $settings;
 
@@ -183,19 +187,6 @@ class Widget_Zig_Zag_Render {
 			?>
 		</div>
 		<?php
-	}
-
-	public function maybe_render_text_html( $render_key, $css_class, $settings_text, $settings_tag = 'p' ) {
-		if ( '' !== $settings_text ) {
-			$this->widget->add_render_attribute( $render_key, 'class', $css_class );
-
-			$element = wp_kses_post( $settings_text );
-
-			$element_html = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $settings_tag ), $this->widget->get_render_attribute_string( $render_key ), $element );
-
-			// PHPCS - the variable $element_html holds safe data.
-			echo $element_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		}
 	}
 
 	public function render_cta_button( $item, $key ) {

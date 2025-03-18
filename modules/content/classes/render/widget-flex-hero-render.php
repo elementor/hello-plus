@@ -12,13 +12,13 @@ use HelloPlus\Classes\{
 	Ehp_Image,
 	Ehp_Shapes,
 };
-use \HelloPlus\Modules\Content\Base\Traits\Shared_Content_Traits;
+use \HelloPlus\Traits\Shared_Traits;
 
 class Widget_Flex_Hero_Render {
 	protected Flex_Hero $widget;
 	const LAYOUT_CLASSNAME = 'ehp-flex-hero';
 
-	use Shared_Content_Traits;
+	use Shared_Traits;
 
 	protected array $settings;
 

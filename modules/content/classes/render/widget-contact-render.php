@@ -14,7 +14,7 @@ use Elementor\{
 	Utils,
 };
 
-use \HelloPlus\Modules\Content\Base\Traits\Shared_Content_Traits;
+use \HelloPlus\Traits\Shared_Traits;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -24,7 +24,7 @@ class Widget_Contact_Render {
 	protected Contact $widget;
 	const LAYOUT_CLASSNAME = 'ehp-contact';
 
-	use Shared_Content_Traits;
+	use Shared_Traits;
 
 	protected array $settings;
 

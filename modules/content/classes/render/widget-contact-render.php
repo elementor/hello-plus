@@ -1,11 +1,11 @@
 <?php
 namespace HelloPlus\Modules\Content\Classes\Render;
 
+use HelloPlus\Classes\Widget_Utils;
 use HelloPlus\Modules\Content\Widgets\Contact;
 use HelloPlus\Classes\{
 	Ehp_Shapes,
 	Ehp_Social_Platforms,
-	Utils\Widget_Utils,
 };
 
 use Elementor\Icons_Manager;

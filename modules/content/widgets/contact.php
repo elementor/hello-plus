@@ -13,7 +13,7 @@ use HelloPlus\Classes\{
 	Ehp_Padding,
 	Ehp_Shapes,
 	Ehp_Social_Platforms,
-	Utils\Widget_Utils,
+	Widget_Utils,
 };
 
 use Elementor\{

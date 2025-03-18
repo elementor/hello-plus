@@ -8,9 +8,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 use HelloPlus\Modules\Forms\Widgets\Ehp_Form;
 use HelloPlus\Includes\Utils;
 use Elementor\Icons_Manager;
-use Elementor\Utils as Elementor_Utils;
 
-use HelloPlus\Classes\Utils\Widget_Utils;
+use HelloPlus\Classes\Widget_Utils;
 
 class Widget_Form_Render {
 	protected Ehp_Form $widget;

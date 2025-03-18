@@ -1,15 +1,13 @@
 <?php
 namespace HelloPlus\Modules\Content\Classes\Render;
 
+use HelloPlus\Classes\Widget_Utils;
 use HelloPlus\Modules\Content\Widgets\CTA;
 use HelloPlus\Classes\{
 	Ehp_Button,
 	Ehp_Image,
 	Ehp_Shapes,
-	Utils\Widget_Utils,
 };
-
-use Elementor\Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.

@@ -12,7 +12,7 @@ use Elementor\{
 };
 
 use HelloPlus\Modules\TemplateParts\Widgets\Ehp_Footer;
-use HelloPlus\Classes\Utils\Widget_Utils;
+use HelloPlus\Classes\Widget_Utils;
 
 /**
  * class Widget_Footer_Render

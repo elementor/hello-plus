@@ -20,7 +20,7 @@ use HelloPlus\Classes\{
 	Ehp_Button,
 	Ehp_Image,
 	Ehp_Padding,
-	Utils\Widget_Utils,
+	Widget_Utils,
 };
 
 /**

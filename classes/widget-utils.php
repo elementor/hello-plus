@@ -1,6 +1,6 @@
 <?php
 
-namespace HelloPlus\Classes\Utils;
+namespace HelloPlus\Classes;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -8,8 +8,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use HelloPlus\Includes\Utils as Theme_Utils;
 use Elementor\Widget_Base;
-
-use Elementor\Utils;
 
 class Widget_Utils {
 

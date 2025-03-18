@@ -6,16 +6,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use HelloPlus\Classes\Widget_Utils;
 use Elementor\{
 	Icons_Manager,
-	Utils,
 };
 
 use HelloPlus\Modules\Content\Widgets\Zig_Zag;
 use HelloPlus\Classes\{
 	Ehp_Button,
 	Ehp_Image,
-	Utils\Widget_Utils,
 };
 
 class Widget_Zig_Zag_Render {

@@ -5,13 +5,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use Elementor\Utils;
+use HelloPlus\Classes\Widget_Utils;
 use HelloPlus\Modules\Content\Widgets\Flex_Hero;
 use HelloPlus\Classes\{
 	Ehp_Button,
 	Ehp_Image,
 	Ehp_Shapes,
-	Utils\Widget_Utils,
 };
 
 class Widget_Flex_Hero_Render {

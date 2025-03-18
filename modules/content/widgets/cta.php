@@ -29,7 +29,7 @@ use HelloPlus\Classes\{
 	Ehp_Image,
 	Ehp_Padding,
 	Ehp_Shapes,
-	Utils\Widget_Utils,
+	Widget_Utils
 };
 use HelloPlus\Includes\Utils;
 

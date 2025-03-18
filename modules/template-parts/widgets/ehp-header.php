@@ -11,6 +11,7 @@ use Elementor\{
 	Group_Control_Background,
 	Group_Control_Box_Shadow,
 	Group_Control_Css_Filter,
+	Group_Control_Text_Shadow,
 	Group_Control_Typography,
 	Repeater
 };
@@ -535,6 +536,42 @@ class Ehp_Header extends Ehp_Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'style_title_heading',
+			[
+				'label' => esc_html__( 'Site Name', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+				'condition' => [
+					'site_logo_brand_select' => 'title',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'style_title_typography',
+				'selector' => '{{WRAPPER}} .ehp-header__site-title',
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+				'condition' => [
+					'site_logo_brand_select' => 'title',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Text_Shadow::get_type(),
+			[
+				'name' => 'title_shadow',
+				'selector' => '{{WRAPPER}} .ehp-header__site-title',
+				'condition' => [
+					'site_logo_brand_select' => 'title',
+				],
+			]
+		);
+
 		$this->start_controls_tabs(
 			'style_site_identity_tabs'
 		);
@@ -546,11 +583,31 @@ class Ehp_Header extends Ehp_Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'style_title_color',
+			[
+				'label' => esc_html__( 'Text Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_PRIMARY,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-site-title-color: {{VALUE}}',
+				],
+				'condition' => [
+					'site_logo_brand_select' => 'title',
+				],
+			]
+		);
+
 		$this->add_group_control(
 			Group_Control_Css_Filter::get_type(),
 			[
-				'name' => 'image_css_filters',
+				'name' => 'logo_css_filter',
 				'selector' => '{{WRAPPER}} .ehp-header__site-logo',
+				'condition' => [
+					'site_logo_brand_select' => 'logo',
+				],
 			]
 		);
 
@@ -560,6 +617,87 @@ class Ehp_Header extends Ehp_Widget_Base {
 			'style_site_identity_hover_tab',
 			[
 				'label' => esc_html__( 'Hover', 'hello-plus' ),
+			]
+		);
+
+		$this->add_control(
+			'style_title_color_hover',
+			[
+				'label' => esc_html__( 'Text Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_PRIMARY,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-site-title-color-hover: {{VALUE}}',
+				],
+				'condition' => [
+					'site_logo_brand_select' => 'title',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Css_Filter::get_type(),
+			[
+				'name' => 'image_hover_css_filters',
+				'selector' => '{{WRAPPER}} .ehp-header__site-logo:hover',
+				'condition' => [
+					'site_logo_brand_select' => 'logo',
+				],
+			]
+		);
+
+		$this->add_control(
+			'style_logo_hover_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration (s)', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 3,
+						'step' => 0.1,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header__site-logo' => 'transition-duration: {{SIZE}}s',
+				],
+				'condition' => [
+					'site_logo_brand_select' => 'logo',
+				],
+			]
+		);
+
+		$this->add_control(
+			'style_title_hover_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration (s)', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 3,
+						'step' => 0.1,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header__site-title' => 'transition-duration: {{SIZE}}s',
+				],
+				'condition' => [
+					'site_logo_brand_select' => 'title',
+				],
+			]
+		);
+
+		$this->add_control(
+			'style_logo_hover_animation',
+			[
+				'label' => esc_html__( 'Hover Animation', 'hello-plus' ),
+				'type' => Controls_Manager::HOVER_ANIMATION,
+				'condition' => [
+					'site_logo_brand_select' => 'logo',
+				],
 			]
 		);
 
@@ -577,6 +715,9 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'return_value' => 'yes',
 				'default' => 'no',
 				'separator' => 'before',
+				'condition' => [
+					'site_logo_brand_select' => 'logo',
+				],
 			]
 		);
 
@@ -600,8 +741,20 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .ehp-header' => '--header-logo-border-width: {{SIZE}}{{UNIT}};',
 				],
-				'condition' => [
-					'show_logo_border' => 'yes',
+				'conditions' => [
+					'relation' => 'and',
+					'terms' => [
+						[
+							'name' => 'show_logo_border',
+							'operator' => '==',
+							'value' => 'yes',
+						],
+						[
+							'name' => 'site_logo_brand_select',
+							'operator' => '==',
+							'value' => 'logo',
+						],
+					],
 				],
 			]
 		);
@@ -617,8 +770,20 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .ehp-header' => '--header-logo-border-color: {{VALUE}}',
 				],
-				'condition' => [
-					'show_logo_border' => 'yes',
+				'conditions' => [
+					'relation' => 'and',
+					'terms' => [
+						[
+							'name' => 'show_logo_border',
+							'operator' => '==',
+							'value' => 'yes',
+						],
+						[
+							'name' => 'site_logo_brand_select',
+							'operator' => '==',
+							'value' => 'logo',
+						],
+					],
 				],
 			]
 		);
@@ -626,6 +791,9 @@ class Ehp_Header extends Ehp_Widget_Base {
 		$shapes = new Ehp_Shapes( $this, [
 			'widget_name' => 'header',
 			'container_prefix' => 'logo',
+			'condition' => [
+				'site_logo_brand_select' => 'logo',
+			],
 		] );
 		$shapes->add_style_controls();
 
@@ -634,36 +802,8 @@ class Ehp_Header extends Ehp_Widget_Base {
 			[
 				'name' => 'logo_box_shadow',
 				'selector' => '{{WRAPPER}} .ehp-header__site-logo',
-			]
-		);
-
-		$this->add_control(
-			'style_title_color',
-			[
-				'label' => esc_html__( 'Text Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_PRIMARY,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-header' => '--header-site-title-color: {{VALUE}}',
-				],
 				'condition' => [
-					'site_logo_brand_select' => 'title',
-				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => 'style_title_typography',
-				'selector' => '{{WRAPPER}} .ehp-header__site-title',
-				'global' => [
-					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
-				],
-				'condition' => [
-					'site_logo_brand_select' => 'title',
+					'site_logo_brand_select' => 'logo',
 				],
 			]
 		);

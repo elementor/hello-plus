@@ -4,6 +4,7 @@
 	--header-logo-width: 68px;
 	--header-logo-width-sticky: 34px;
 	--header-site-title-color: #0052FF;
+	--header-site-title-color-hover: #0052FF;
 	--header-buttons-space-between: 16px;
 	--header-logo-order: 0;
 	--header-navigation-breakpoint: 767px;
@@ -155,6 +156,10 @@
 		}
 	}
 
+	&__site-link-container {
+		display: flex;
+	}
+
 	&__site-link {
 		align-items: center;
 		display: flex;
@@ -170,8 +175,12 @@
 
 	&__site-title {
 		color: var(--header-site-title-color);
-		font-weight: 600;
 		margin: 0;
+
+		.ehp-header__site-link:hover &,
+		.ehp-header__site-link:focus & {
+			color: var(--header-site-title-color-hover);
+		}
 	}
 
 	&__ctas-container {

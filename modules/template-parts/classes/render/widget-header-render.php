@@ -157,7 +157,12 @@ class Widget_Header_Render {
 
 		$site_title_text = $this->widget->get_site_title();
 		$site_title_tag = $this->settings['site_logo_title_tag'] ?? 'h2';
-		$site_link_classnames = self::SITE_LINK_CLASSNAME;
+		$hover_animation = $this->settings['style_logo_hover_animation'] ?? '';
+		$site_link_classnames = [ self::SITE_LINK_CLASSNAME ];
+
+		if ( ! empty( $hover_animation ) ) {
+			$site_link_classnames[] = 'elementor-animation-' . $hover_animation;
+		}
 
 		$this->widget->add_render_attribute( 'site-link', [
 			'class' => $site_link_classnames,
@@ -174,18 +179,20 @@ class Widget_Header_Render {
 		}
 
 		?>
-		<a <?php $this->widget->print_render_attribute_string( 'site-link' ); ?>>
-			<?php if ( 'logo' === $site_logo_brand_select ) {
-				add_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_attachment_image_html_filter' ], 10, 4 );
-				Group_Control_Image_Size::print_attachment_image_html( $this->settings, 'site_logo_image' );
-				remove_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_attachment_image_html_filter' ], 10 );
-			} ?>
-			<?php if ( 'title' === $site_logo_brand_select ) {
-				$site_title_output = sprintf( '<%1$s %2$s %3$s>%4$s</%1$s>', Utils::validate_html_tag( $site_title_tag ), $this->widget->get_render_attribute_string( 'heading' ), 'class="ehp-header__site-title"', esc_html( $site_title_text ) );
-				// Escaped above
-				Utils::print_unescaped_internal_string( $site_title_output );
-			} ?>
-		</a>
+		<div class="ehp-header__site-link-container">
+			<a <?php $this->widget->print_render_attribute_string( 'site-link' ); ?>>
+				<?php if ( 'logo' === $site_logo_brand_select ) {
+					add_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_attachment_image_html_filter' ], 10, 4 );
+					Group_Control_Image_Size::print_attachment_image_html( $this->settings, 'site_logo_image' );
+					remove_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_attachment_image_html_filter' ], 10 );
+				} ?>
+				<?php if ( 'title' === $site_logo_brand_select ) {
+					$site_title_output = sprintf( '<%1$s %2$s %3$s>%4$s</%1$s>', Utils::validate_html_tag( $site_title_tag ), $this->widget->get_render_attribute_string( 'heading' ), 'class="ehp-header__site-title"', esc_html( $site_title_text ) );
+					// Escaped above
+					Utils::print_unescaped_internal_string( $site_title_output );
+				} ?>
+			</a>
+		</div>
 		<?php
 	}
 

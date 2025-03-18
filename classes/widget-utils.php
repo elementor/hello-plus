@@ -7,7 +7,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use HelloPlus\Includes\Utils as Theme_Utils;
-use Elementor\Widget_Base;
 
 class Widget_Utils {
 
@@ -28,7 +27,7 @@ class Widget_Utils {
 		];
 	}
 
-	public static function maybe_render_text_html( Widget_Base $context, string $render_key, string $css_class, string $settings_text, string $settings_tag = 'p' ): void {
+	public static function maybe_render_text_html( \Elementor\Widget_Base $context, string $render_key, string $css_class, string $settings_text, string $settings_tag = 'p' ): void {
 		if ( '' === $settings_text ) {
 			return;
 		}

@@ -10,15 +10,13 @@ use HelloPlus\Includes\Utils;
 use Elementor\Icons_Manager;
 use Elementor\Utils as Elementor_Utils;
 
-use HelloPlus\Classes\Traits\Shared_Traits;
+use HelloPlus\Classes\Utils\Widget_Utils;
 
 class Widget_Form_Render {
 	protected Ehp_Form $widget;
 	protected array $settings;
 
 	const LAYOUT_CLASSNAME = 'ehp-form';
-
-	use Shared_Traits;
 
 	public function render() {
 		$form_name = $this->settings['form_name'];
@@ -261,8 +259,8 @@ class Widget_Form_Render {
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'text-container' ); ?>>
 			<?php
-				$this->maybe_render_text_html( 'text_heading', $heading_classname, $this->settings['text_heading'], $this->settings['text_heading_tag'] );
-				$this->maybe_render_text_html( 'text_description', $description_classname, $this->settings['text_description'] );
+				Widget_Utils::maybe_render_text_html( $this->widget, 'text_heading', $heading_classname, $this->settings['text_heading'], $this->settings['text_heading_tag'] );
+				Widget_Utils::maybe_render_text_html( $this->widget, 'text_description', $description_classname, $this->settings['text_description'] );
 			?>
 		</div>
 		<?php

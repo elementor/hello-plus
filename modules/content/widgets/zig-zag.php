@@ -6,16 +6,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use Elementor\Controls_Manager;
-use Elementor\Group_Control_Background;
-use Elementor\Group_Control_Typography;
-use Elementor\Repeater;
-use Elementor\Widget_Base;
+use Elementor\{
+	Controls_Manager,
+	Group_Control_Background,
+	Group_Control_Typography,
+	Repeater,
+	Widget_Base,
+	Utils as Elementor_Utils,
+};
 use Elementor\Core\Kits\Documents\Tabs\{
 	Global_Typography,
 	Global_Colors
 };
-use Elementor\Utils as Elementor_Utils;
 
 use HelloPlus\Modules\Content\Classes\{
 	Control_Zig_Zag_Animation,

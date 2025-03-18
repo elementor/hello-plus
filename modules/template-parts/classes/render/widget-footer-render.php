@@ -12,8 +12,7 @@ use Elementor\{
 };
 
 use HelloPlus\Modules\TemplateParts\Widgets\Ehp_Footer;
-
-use HelloPlus\Classes\Traits\Shared_Traits;
+use HelloPlus\Classes\Utils\Widget_Utils;
 
 /**
  * class Widget_Footer_Render
@@ -22,8 +21,6 @@ class Widget_Footer_Render {
 	protected Ehp_Footer $widget;
 	const LAYOUT_CLASSNAME = 'ehp-footer';
 	const SITE_LINK_CLASSNAME = 'ehp-footer__site-link';
-
-	use Shared_Traits;
 
 	protected array $settings;
 
@@ -246,8 +243,8 @@ class Widget_Footer_Render {
 		<div class="ehp-footer__contact-container">
 			<div <?php $this->widget->print_render_attribute_string( 'contact' ); ?>>
 				<?php
-					$this->maybe_render_text_html( 'footer_contact_heading', 'ehp-footer__contact-heading', $this->settings['footer_contact_heading'], $this->settings['footer_contact_heading_tag'] );
-					$this->maybe_render_text_html( 'footer_contact_information', 'ehp-footer__contact-information', $this->settings['footer_contact_information'], $this->settings['footer_contact_information_tag'] );
+					Widget_Utils::maybe_render_text_html( $this->widget, 'footer_contact_heading', 'ehp-footer__contact-heading', $this->settings['footer_contact_heading'], $this->settings['footer_contact_heading_tag'] );
+					Widget_Utils::maybe_render_text_html( $this->widget, 'footer_contact_information', 'ehp-footer__contact-information', $this->settings['footer_contact_information'], $this->settings['footer_contact_information_tag'] );
 				?>
 			</div>
 		</div>

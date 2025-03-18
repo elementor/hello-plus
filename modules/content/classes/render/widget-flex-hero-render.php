@@ -11,14 +11,12 @@ use HelloPlus\Classes\{
 	Ehp_Button,
 	Ehp_Image,
 	Ehp_Shapes,
+	Utils\Widget_Utils,
 };
-use HelloPlus\Classes\Traits\Shared_Traits;
 
 class Widget_Flex_Hero_Render {
 	protected Flex_Hero $widget;
 	const LAYOUT_CLASSNAME = 'ehp-flex-hero';
-
-	use Shared_Traits;
 
 	protected array $settings;
 
@@ -97,7 +95,7 @@ class Widget_Flex_Hero_Render {
 		$this->widget->add_render_attribute( 'content-container', 'class', self::LAYOUT_CLASSNAME . '__content-container' );
 		$this->widget->add_render_attribute( 'overlay', 'class', self::LAYOUT_CLASSNAME . '__overlay' );
 		?>
-			<div <?php $this->widget->print_render_attribute_string( 'content-container' ); ?>></div>
+			<div <?php $this->widget->print_render_attribute_string( 'overlay' ); ?>></div>
 			<div <?php $this->widget->print_render_attribute_string( 'content-container' ); ?>>
 				<?php
 					$this->render_text_container();
@@ -112,9 +110,9 @@ class Widget_Flex_Hero_Render {
 		$heading_classname = self::LAYOUT_CLASSNAME . '__heading';
 		$subheading_classname = self::LAYOUT_CLASSNAME . '__subheading';
 
-		$this->maybe_render_text_html( 'intro_text', $intro_classname, $this->settings['intro_text'], $this->settings['intro_tag'] );
-		$this->maybe_render_text_html( 'heading_text', $heading_classname, $this->settings['heading_text'], $this->settings['heading_tag'] );
-		$this->maybe_render_text_html( 'subheading_text', $subheading_classname, $this->settings['subheading_text'], $this->settings['subheading_tag'] );
+		Widget_Utils::maybe_render_text_html( $this->widget, 'intro_text', $intro_classname, $this->settings['intro_text'], $this->settings['intro_tag'] );
+		Widget_Utils::maybe_render_text_html( $this->widget, 'heading_text', $heading_classname, $this->settings['heading_text'], $this->settings['heading_tag'] );
+		Widget_Utils::maybe_render_text_html( $this->widget, 'subheading_text', $subheading_classname, $this->settings['subheading_text'], $this->settings['subheading_tag'] );
 	}
 
 	protected function render_ctas_container() {

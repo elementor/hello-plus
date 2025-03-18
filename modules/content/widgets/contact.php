@@ -13,7 +13,7 @@ use HelloPlus\Classes\{
 	Ehp_Padding,
 	Ehp_Shapes,
 	Ehp_Social_Platforms,
-	Traits\Shared_Traits,
+	Utils\Widget_Utils,
 };
 
 use Elementor\{
@@ -22,17 +22,16 @@ use Elementor\{
 	Group_Control_Background,
 	Group_Control_Box_Shadow,
 	Repeater,
+	Settings,
+	Widget_Base,
 };
 use Elementor\Core\Kits\Documents\Tabs\{
 	Global_Typography,
 	Global_Colors,
 };
-use Elementor\Widget_Base;
 use Elementor\Modules\DynamicTags\Module as TagsModule;
-use Elementor\Settings;
 
 class Contact extends Widget_Base {
-	use Shared_Traits;
 
 	public function get_name(): string {
 		return 'contact';
@@ -1852,7 +1851,7 @@ class Contact extends Widget_Base {
 			]
 		);
 
-		$configured_breakpoints = $this->get_configured_breakpoints();
+		$configured_breakpoints = Widget_Utils::get_configured_breakpoints();
 
 		$this->add_control(
 			'box_full_screen_height_controls',

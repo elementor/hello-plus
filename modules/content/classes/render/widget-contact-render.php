@@ -5,11 +5,10 @@ use HelloPlus\Modules\Content\Widgets\Contact;
 use HelloPlus\Classes\{
 	Ehp_Shapes,
 	Ehp_Social_Platforms,
+	Utils\Widget_Utils,
 };
 
 use Elementor\Icons_Manager;
-
-use HelloPlus\Classes\Traits\Shared_Traits;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -18,8 +17,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Widget_Contact_Render {
 	protected Contact $widget;
 	const LAYOUT_CLASSNAME = 'ehp-contact';
-
-	use Shared_Traits;
 
 	protected array $settings;
 
@@ -120,8 +117,8 @@ class Widget_Contact_Render {
 		<div <?php $this->widget->print_render_attribute_string( 'text-container' ); ?>>
 			<div <?php $this->widget->print_render_attribute_string( 'headings' ); ?>>
 				<?php
-					$this->maybe_render_text_html( 'heading_text', $heading_classname, $this->settings['heading_text'], $this->settings['heading_tag'] );
-					$this->maybe_render_text_html( 'description_text', $description_classname, $this->settings['description_text'], $this->settings['description_tag'] );
+					Widget_Utils::maybe_render_text_html( $this->widget, 'heading_text', $heading_classname, $this->settings['heading_text'], $this->settings['heading_tag'] );
+					Widget_Utils::maybe_render_text_html( $this->widget, 'description_text', $description_classname, $this->settings['description_text'], $this->settings['description_tag'] );
 				?>
 			</div>
 			<div <?php $this->widget->print_render_attribute_string( 'groups' ); ?>>
@@ -166,7 +163,7 @@ class Widget_Contact_Render {
 		$subheading_tag = $this->settings['subheading_tag'];
 		$subheading_classname = self::LAYOUT_CLASSNAME . '__subheading';
 
-		$this->maybe_render_text_html( 'group_' . $group_number . '_' . $subheading_type . '_subheading', $subheading_classname, $subheading_text, $subheading_tag );
+		Widget_Utils::maybe_render_text_html( $this->widget, 'group_' . $group_number . '_' . $subheading_type . '_subheading', $subheading_classname, $subheading_text, $subheading_tag );
 	}
 
 	protected function render_contact_links_group( $group_number ) {
@@ -232,7 +229,7 @@ class Widget_Contact_Render {
 								'class' => self::LAYOUT_CLASSNAME . '__contact-link-icon',
 							]
 						);
-						$this->maybe_render_text_html( 'group_' . $group_number . '_label', self::LAYOUT_CLASSNAME . '__contact-link-label', $contact_link[ 'group_' . $group_number . '_label' ], 'span' );
+						Widget_Utils::maybe_render_text_html( $this->widget, 'group_' . $group_number . '_label', self::LAYOUT_CLASSNAME . '__contact-link-label', $contact_link[ 'group_' . $group_number . '_label' ], 'span' );
 					?>
 				</a>
 				<?php
@@ -247,7 +244,7 @@ class Widget_Contact_Render {
 
 		$this->render_subheading( $group_number, 'text' );
 
-		$this->maybe_render_text_html( 'group_' . $group_number . '_text_textarea', $contact_text_classname, $text_text );
+		Widget_Utils::maybe_render_text_html( $this->widget, 'group_' . $group_number . '_text_textarea', $contact_text_classname, $text_text );
 	}
 
 	protected function render_social_icons_group( $group_number ) {

@@ -6,31 +6,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use Elementor\Controls_Manager;
-use Elementor\Group_Control_Background;
-use Elementor\Group_Control_Box_Shadow;
-use Elementor\Group_Control_Typography;
-use Elementor\Widget_Base;
-use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
-use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+use Elementor\{
+	Controls_Manager,
+	Group_Control_Background,
+	Group_Control_Box_Shadow,
+	Group_Control_Typography,
+	Widget_Base,
+	Utils as Elementor_Utils,
+};
+use Elementor\Core\Kits\Documents\Tabs\{
+	Global_Colors,
+	Global_Typography,
+};
 
-use HelloPlus\Classes\Traits\Shared_Traits;
-use HelloPlus\Modules\Content\Classes\Choose_Img_Control;
-use HelloPlus\Modules\Content\Classes\Render\Widget_CTA_Render;
 use HelloPlus\Modules\Theme\Module as Theme_Module;
+use HelloPlus\Modules\Content\Classes\{
+	Choose_Img_Control,
+	Render\Widget_CTA_Render,
+};
 use HelloPlus\Classes\{
 	Ehp_Button,
 	Ehp_Image,
 	Ehp_Padding,
 	Ehp_Shapes,
+	Utils\Widget_Utils,
 };
 use HelloPlus\Includes\Utils;
 
-use Elementor\Utils as Elementor_Utils;
 
 class CTA extends Widget_Base {
-
-	use Shared_Traits;
 
 	public function get_name(): string {
 		return 'cta';
@@ -748,7 +752,7 @@ class CTA extends Widget_Base {
 			]
 		);
 
-		$configured_breakpoints = $this->get_configured_breakpoints();
+		$configured_breakpoints = Widget_Utils::get_configured_breakpoints();
 
 		$this->add_control(
 			'box_full_screen_height_controls',

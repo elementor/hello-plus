@@ -1,15 +1,19 @@
 <?php
-namespace HelloPlus\Classes\Traits;
+
+namespace HelloPlus\Classes\Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
 use HelloPlus\Includes\Utils as Theme_Utils;
+use Elementor\Widget_Base;
 
-trait Shared_Traits {
+use Elementor\Utils;
 
-	protected function get_configured_breakpoints(): array {
+class Widget_Utils {
+
+	public static function get_configured_breakpoints(): array {
 		$active_devices = Theme_Utils::elementor()->breakpoints->get_active_devices_list( [ 'reverse' => true ] );
 		$active_breakpoint_instances = Theme_Utils::elementor()->breakpoints->get_active_breakpoints();
 
@@ -26,16 +30,16 @@ trait Shared_Traits {
 		];
 	}
 
-	protected function maybe_render_text_html( string $render_key, string $css_class, string $settings_text, string $settings_tag = 'p' ): void {
+	public static function maybe_render_text_html( Widget_Base $context, string $render_key, string $css_class, string $settings_text, string $settings_tag = 'p' ): void {
 		if ( '' === $settings_text ) {
 			return;
 		}
 
-		$this->widget->add_render_attribute( $render_key, 'class', $css_class );
+		$context->add_render_attribute( $render_key, 'class', $css_class );
 
 		$element = wp_kses_post( $settings_text );
 
-		$element_html = sprintf( '<%1$s %2$s>%3$s</%1$s>', \Elementor\Utils::validate_html_tag( $settings_tag ), $this->widget->get_render_attribute_string( $render_key ), $element );
+		$element_html = sprintf( '<%1$s %2$s>%3$s</%1$s>', \Elementor\Utils::validate_html_tag( $settings_tag ), $context->get_render_attribute_string( $render_key ), $element );
 
 		// PHPCS - the variable $element_html holds safe data.
 		echo $element_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

@@ -6,11 +6,10 @@ use HelloPlus\Classes\{
 	Ehp_Button,
 	Ehp_Image,
 	Ehp_Shapes,
+	Utils\Widget_Utils,
 };
 
 use Elementor\Utils;
-
-use HelloPlus\Classes\Traits\Shared_Traits;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -19,8 +18,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Widget_CTA_Render {
 	protected CTA $widget;
 	const LAYOUT_CLASSNAME = 'ehp-cta';
-
-	use Shared_Traits;
 
 	protected array $settings;
 
@@ -125,8 +122,8 @@ class Widget_CTA_Render {
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'text-container' ); ?>>
 			<?php
-			$this->maybe_render_text_html( 'heading_text', $heading_classname, $this->settings['heading_text'], $this->settings['heading_tag'] );
-			$this->maybe_render_text_html( 'description_text', $description_classname, $this->settings['description_text'], $this->settings['description_tag'] );
+			Widget_Utils::maybe_render_text_html( $this->widget, 'heading_text', $heading_classname, $this->settings['heading_text'], $this->settings['heading_tag'] );
+			Widget_Utils::maybe_render_text_html( $this->widget, 'description_text', $description_classname, $this->settings['description_text'], $this->settings['description_tag'] );
 
 			if ( 'showcase' === $this->settings['layout_preset'] ) {
 				$this->render_ctas_container();

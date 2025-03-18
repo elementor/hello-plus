@@ -6,22 +6,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use Elementor\Icons_Manager;
-use Elementor\Utils;
+use Elementor\{
+	Icons_Manager,
+	Utils,
+};
 
 use HelloPlus\Modules\Content\Widgets\Zig_Zag;
 use HelloPlus\Classes\{
 	Ehp_Button,
 	Ehp_Image,
+	Utils\Widget_Utils,
 };
-
-use HelloPlus\Classes\Traits\Shared_Traits;
 
 class Widget_Zig_Zag_Render {
 	protected Zig_Zag $widget;
 	const LAYOUT_CLASSNAME = 'ehp-zigzag';
-
-	use Shared_Traits;
 
 	protected array $settings;
 
@@ -178,8 +177,8 @@ class Widget_Zig_Zag_Render {
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'text-container-' . $key ); ?>>
 			<?php
-			$this->maybe_render_text_html( $graphic_element . '_title' . $key, $title_classname, $item[ $graphic_element . '_title' ], $this->settings['zigzag_title_tag'] );
-			$this->maybe_render_text_html( $graphic_element . '_description' . $key, $description_classname, $item[ $graphic_element . '_description' ] );
+			Widget_Utils::maybe_render_text_html( $this->widget, $graphic_element . '_title' . $key, $title_classname, $item[ $graphic_element . '_title' ], $this->settings['zigzag_title_tag'] );
+			Widget_Utils::maybe_render_text_html( $this->widget, $graphic_element . '_description' . $key, $description_classname, $item[ $graphic_element . '_description' ] );
 
 			if ( ! empty( $item[ $graphic_element . '_button_text' ] ) ) {
 				$this->render_cta_button( $item, $key );

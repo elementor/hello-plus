@@ -14,21 +14,19 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 
 use HelloPlus\Includes\Utils;
-use HelloPlus\Classes\Traits\Shared_Traits;
 use HelloPlus\Modules\Content\Classes\Render\Widget_Hero_Render;
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 use HelloPlus\Classes\{
 	Ehp_Button,
 	Ehp_Image,
 	Ehp_Padding,
+	Utils\Widget_Utils,
 };
 
 /**
  * @deprecated 1.3.0 Use `Flex Hero` widget instead.
  */
 class Hero extends Widget_Base {
-
-	use Shared_Traits;
 
 	public function get_name(): string {
 		return 'hero';
@@ -486,7 +484,7 @@ class Hero extends Widget_Base {
 			]
 		);
 
-		$configured_breakpoints = $this->get_configured_breakpoints();
+		$configured_breakpoints = Widget_Utils::get_configured_breakpoints();
 
 		$this->add_control(
 			'box_full_screen_height_controls',

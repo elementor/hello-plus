@@ -12,6 +12,9 @@ use Elementor\{
 };
 
 use HelloPlus\Modules\TemplateParts\Widgets\Ehp_Footer;
+use HelloPlus\Classes\{
+	Ehp_Shapes,
+};
 
 /**
  * class Widget_Footer_Render
@@ -90,6 +93,26 @@ class Widget_Footer_Render {
 		<?php
 	}
 
+	public function get_attachment_image_html_filter( $html ) {
+		$logo_classnames = [
+			self::LAYOUT_CLASSNAME . '__site-logo',
+		];
+
+		if ( ! empty( $this->settings['show_logo_border'] ) && 'yes' === $this->settings['show_logo_border'] ) {
+			$logo_classnames[] = 'has-border';
+		}
+
+		$shapes = new Ehp_Shapes( $this->widget, [
+			'container_prefix' => 'logo',
+			'widget_name' => 'footer',
+		] );
+
+		$logo_classnames = array_merge( $logo_classnames, $shapes->get_shape_classnames() );
+
+		$html = str_replace( '<img ', '<img class="' . esc_attr( implode( ' ', $logo_classnames ) ) . '" ', $html );
+		return $html;
+	}
+
 	public function render_site_link(): void {
 		$site_logo_image = $this->settings['site_logo_image'];
 		$site_title_text = $this->widget->get_site_title();
@@ -112,9 +135,11 @@ class Widget_Footer_Render {
 
 		?>
 		<a <?php $this->widget->print_render_attribute_string( 'site-link' ); ?>>
-			<?php if ( $site_logo_image ) { ?>
-				<?php Group_Control_Image_Size::print_attachment_image_html( $this->settings, 'site_logo_image' ); ?>
-			<?php } else {
+			<?php if ( $site_logo_image ) {
+				add_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_attachment_image_html_filter' ], 10, 4 );
+				Group_Control_Image_Size::print_attachment_image_html( $this->settings, 'site_logo_image' );
+				remove_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_attachment_image_html_filter' ], 10 );
+			} else {
 				$site_title_output = sprintf( '<%1$s %2$s %3$s>%4$s</%1$s>', Utils::validate_html_tag( $site_title_tag ), $this->widget->get_render_attribute_string( 'heading' ), 'class="ehp-footer__site-title"', esc_html( $site_title_text ) );
 				// Escaped above
 				Utils::print_unescaped_internal_string( $site_title_output );

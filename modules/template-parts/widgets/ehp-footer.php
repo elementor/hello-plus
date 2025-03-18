@@ -6,13 +6,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use Elementor\Controls_Manager;
-use Elementor\Group_Control_Background;
-use Elementor\Group_Control_Box_Shadow;
-use Elementor\Group_Control_Typography;
-use Elementor\Repeater;
-use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
-use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+use Elementor\{
+	Controls_Manager,
+	Group_Control_Background,
+	Group_Control_Box_Shadow,
+	Group_Control_Text_Shadow,
+	Group_Control_Typography,
+	Repeater,
+};
+use Elementor\Core\Kits\Documents\Tabs\{
+	Global_Colors,
+	Global_Typography,
+};
 
 use HelloPlus\Includes\Utils as Theme_Utils;
 
@@ -23,6 +28,7 @@ use HelloPlus\Modules\TemplateParts\Classes\{
 
 use HelloPlus\Classes\{
 	Ehp_Padding,
+	Ehp_Shapes,
 };
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
@@ -567,6 +573,254 @@ class Ehp_Footer extends Ehp_Widget_Base {
 				],
 				'condition' => [
 					'site_logo_brand_select' => 'title',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Text_Shadow::get_type(),
+			[
+				'name' => 'title_shadow',
+				'selector' => '{{WRAPPER}} .ehp-footer__site-title',
+				'condition' => [
+					'site_logo_brand_select' => 'title',
+				],
+			]
+		);
+
+		$this->start_controls_tabs(
+			'style_brand_tabs'
+		);
+
+		$this->start_controls_tab(
+			'style_brand_normal_tab',
+			[
+				'label' => esc_html__( 'Normal', 'hello-plus' ),
+			]
+		);
+
+		$this->add_control(
+			'style_title_color',
+			[
+				'label' => esc_html__( 'Text Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_PRIMARY,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-footer' => '--footer-site-title-color: {{VALUE}}',
+				],
+				'condition' => [
+					'site_logo_brand_select' => 'title',
+				],
+			]
+		);
+
+
+		$this->add_group_control(
+			Group_Control_Css_Filter::get_type(),
+			[
+				'name' => 'logo_css_filter',
+				'selector' => '{{WRAPPER}} .ehp-footer__site-logo',
+				'condition' => [
+					'site_logo_brand_select' => 'logo',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'style_brand_hover_tab',
+			[
+				'label' => esc_html__( 'Hover', 'hello-plus' ),
+			]
+		);
+
+		$this->add_control(
+			'style_title_color_hover',
+			[
+				'label' => esc_html__( 'Text Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_PRIMARY,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-footer' => '--footer-site-title-color-hover: {{VALUE}}',
+				],
+				'condition' => [
+					'site_logo_brand_select' => 'title',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Css_Filter::get_type(),
+			[
+				'name' => 'image_hover_css_filters',
+				'selector' => '{{WRAPPER}} .ehp-footer__site-logo:hover',
+				'condition' => [
+					'site_logo_brand_select' => 'logo',
+				],
+			]
+		);
+
+		$this->add_control(
+			'style_logo_hover_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration (s)', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 3,
+						'step' => 0.1,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-footer__site-logo' => 'transition-duration: {{SIZE}}s',
+				],
+				'condition' => [
+					'site_logo_brand_select' => 'logo',
+				],
+			]
+		);
+
+		$this->add_control(
+			'style_title_hover_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration (s)', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 3,
+						'step' => 0.1,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-footer__site-title' => 'transition-duration: {{SIZE}}s',
+				],
+				'condition' => [
+					'site_logo_brand_select' => 'title',
+				],
+			]
+		);
+
+		$this->add_control(
+			'style_logo_hover_animation',
+			[
+				'label' => esc_html__( 'Hover Animation', 'hello-plus' ),
+				'type' => Controls_Manager::HOVER_ANIMATION,
+				'condition' => [
+					'site_logo_brand_select' => 'logo',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_control(
+			'show_logo_border',
+			[
+				'label' => esc_html__( 'Border', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+				'separator' => 'before',
+				'condition' => [
+					'site_logo_brand_select' => 'logo',
+				],
+			]
+		);
+
+		$this->add_control(
+			'logo_border_width',
+			[
+				'label' => __( 'Border Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 10,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 1,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-footer' => '--footer-logo-border-width: {{SIZE}}{{UNIT}};',
+				],
+				'conditions' => [
+					'relation' => 'and',
+					'terms' => [
+						[
+							'name' => 'show_logo_border',
+							'operator' => '==',
+							'value' => 'yes',
+						],
+						[
+							'name' => 'site_logo_brand_select',
+							'operator' => '==',
+							'value' => 'logo',
+						],
+					],
+				],
+			]
+		);
+
+		$this->add_control(
+			'logo_border_color',
+			[
+				'label' => esc_html__( 'Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-footer' => '--footer-logo-border-color: {{VALUE}}',
+				],
+				'conditions' => [
+					'relation' => 'and',
+					'terms' => [
+						[
+							'name' => 'show_logo_border',
+							'operator' => '==',
+							'value' => 'yes',
+						],
+						[
+							'name' => 'site_logo_brand_select',
+							'operator' => '==',
+							'value' => 'logo',
+						],
+					],
+				],
+			]
+		);
+
+		$shapes = new Ehp_Shapes( $this, [
+			'widget_name' => 'footer',
+			'container_prefix' => 'logo',
+			'condition' => [
+				'site_logo_brand_select' => 'logo',
+			],
+		] );
+		$shapes->add_style_controls();
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'logo_box_shadow',
+				'selector' => '{{WRAPPER}} .ehp-footer__site-logo',
+				'condition' => [
+					'site_logo_brand_select' => 'logo',
 				],
 			]
 		);

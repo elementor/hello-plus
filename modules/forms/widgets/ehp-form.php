@@ -75,6 +75,9 @@ class Ehp_Form extends Form_Base {
 	protected function render(): void {
 		$render_strategy = new Widget_Form_Render( $this );
 
+		$this->add_inline_editing_attributes( 'text_heading', 'none' );
+		$this->add_inline_editing_attributes( 'text_description', 'none' );
+
 		$render_strategy->render();
 	}
 

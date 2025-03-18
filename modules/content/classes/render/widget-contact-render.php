@@ -1,18 +1,14 @@
 <?php
 namespace HelloPlus\Modules\Content\Classes\Render;
 
+use HelloPlus\Classes\Widget_Utils;
 use HelloPlus\Modules\Content\Widgets\Contact;
 use HelloPlus\Classes\{
-	Ehp_Button,
-	Ehp_Image,
 	Ehp_Shapes,
 	Ehp_Social_Platforms,
 };
 
-use Elementor\{
-	Icons_Manager,
-	Utils,
-};
+use Elementor\Icons_Manager;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -105,36 +101,27 @@ class Widget_Contact_Render {
 	}
 
 	protected function render_text_container() {
-		$heading_text = $this->settings['heading_text'];
-		$heading_tag = $this->settings['heading_tag'];
-
-		$description_text = $this->settings['description_text'];
-		$description_tag = $this->settings['description_tag'];
+		$heading_classname = self::LAYOUT_CLASSNAME . '__heading';
+		$description_classname = self::LAYOUT_CLASSNAME . '__description';
 
 		$text_container_classnames = [
 			self::LAYOUT_CLASSNAME . '__text-container',
 		];
-		$heading_classname = self::LAYOUT_CLASSNAME . '__heading';
-		$description_classname = self::LAYOUT_CLASSNAME . '__description';
 
 		$this->widget->add_render_attribute( 'text-container', [
 			'class' => $text_container_classnames,
 		] );
+		$this->widget->add_render_attribute( 'headings', 'class', self::LAYOUT_CLASSNAME . '__headings' );
+		$this->widget->add_render_attribute( 'groups', 'class', self::LAYOUT_CLASSNAME . '__groups' );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'text-container' ); ?>>
-			<div class="<?php echo esc_attr( self::LAYOUT_CLASSNAME ); ?>__headings">
-				<?php if ( '' !== $heading_text ) {
-					$heading_output = sprintf( '<%1$s class="%2$s">%3$s</%1$s>', Utils::validate_html_tag( $heading_tag ), $heading_classname, esc_html( $heading_text ) );
-					// Escaped above
-					Utils::print_unescaped_internal_string( $heading_output );
-				} ?>
-				<?php if ( '' !== $description_text ) {
-					$description_output = sprintf( '<%1$s class="%2$s">%3$s</%1$s>', Utils::validate_html_tag( $description_tag ), $description_classname, esc_html( $description_text ) );
-					// Escaped above
-					Utils::print_unescaped_internal_string( $description_output );
-				} ?>
+			<div <?php $this->widget->print_render_attribute_string( 'headings' ); ?>>
+				<?php
+					Widget_Utils::maybe_render_text_html( $this->widget, 'heading_text', $heading_classname, $this->settings['heading_text'], $this->settings['heading_tag'] );
+					Widget_Utils::maybe_render_text_html( $this->widget, 'description_text', $description_classname, $this->settings['description_text'], $this->settings['description_tag'] );
+				?>
 			</div>
-			<div class="<?php echo esc_attr( self::LAYOUT_CLASSNAME ); ?>__groups">
+			<div <?php $this->widget->print_render_attribute_string( 'groups' ); ?>>
 				<?php
 					$this->render_contact_group( '1' );
 
@@ -155,8 +142,9 @@ class Widget_Contact_Render {
 
 	protected function render_contact_group( $group_number ) {
 		$group_type = $this->settings[ 'group_' . $group_number . '_type' ];
+		$this->widget->add_render_attribute( 'group', 'class', self::LAYOUT_CLASSNAME . '__group' );
 		?>
-		<div class="<?php echo esc_attr( self::LAYOUT_CLASSNAME ); ?>__group">
+		<div <?php $this->widget->print_render_attribute_string( 'group' ); ?>>
 			<?php
 			if ( 'contact-links' === $group_type ) {
 				$this->render_contact_links_group( $group_number );
@@ -173,12 +161,9 @@ class Widget_Contact_Render {
 	protected function render_subheading( $group_number, $subheading_type ) {
 		$subheading_text = $this->settings[ 'group_' . $group_number . '_' . $subheading_type . '_subheading' ];
 		$subheading_tag = $this->settings['subheading_tag'];
+		$subheading_classname = self::LAYOUT_CLASSNAME . '__subheading';
 
-		if ( '' !== $subheading_text ) {
-			$subheading_output = sprintf( '<%1$s class="%3$s">%2$s</%1$s>', Utils::validate_html_tag( $subheading_tag ), esc_html( $subheading_text ), self::LAYOUT_CLASSNAME . '__subheading' );
-			// Escaped above
-			Utils::print_unescaped_internal_string( $subheading_output );
-		}
+		Widget_Utils::maybe_render_text_html( $this->widget, 'group_' . $group_number . '_' . $subheading_type . '_subheading', $subheading_classname, $subheading_text, $subheading_tag );
 	}
 
 	protected function render_contact_links_group( $group_number ) {
@@ -191,8 +176,10 @@ class Widget_Contact_Render {
 		$hover_animation = $this->settings['contact_details_text_hover_animation'];
 
 		$ehp_platforms = new Ehp_Social_Platforms( $this->widget );
+
+		$this->widget->add_render_attribute( 'links-container', 'class', self::LAYOUT_CLASSNAME . '__links-container' );
 		?>
-		<div class="<?php echo esc_attr( self::LAYOUT_CLASSNAME ); ?>__links-container">
+		<div <?php $this->widget->print_render_attribute_string( 'links-container' ); ?>>
 			<?php
 			foreach ( $repeater as $key => $contact_link ) {
 				$link = [
@@ -233,17 +220,18 @@ class Widget_Contact_Render {
 						'rel' => 'noopener noreferrer',
 					] );
 				}
-
 				?>
 				<a <?php $this->widget->print_render_attribute_string( 'contact-link-' . $key ); ?>>
-						<?php Icons_Manager::render_icon( $icon,
+					<?php
+						Icons_Manager::render_icon( $icon,
 							[
 								'aria-hidden' => 'true',
 								'class' => self::LAYOUT_CLASSNAME . '__contact-link-icon',
 							]
-						); ?>
-						<span class="<?php echo esc_attr( self::LAYOUT_CLASSNAME ); ?>__contact-link-label"><?php echo esc_html( $contact_link[ 'group_' . $group_number . '_label' ] ); ?></span>
-					</a>
+						);
+						Widget_Utils::maybe_render_text_html( $this->widget, 'group_' . $group_number . '_label', self::LAYOUT_CLASSNAME . '__contact-link-label', $contact_link[ 'group_' . $group_number . '_label' ], 'span' );
+					?>
+				</a>
 				<?php
 			} ?>
 		</div>
@@ -252,22 +240,20 @@ class Widget_Contact_Render {
 
 	protected function render_contact_text_group( $group_number ) {
 		$text_text = $this->settings[ 'group_' . $group_number . '_text_textarea' ];
+		$contact_text_classname = self::LAYOUT_CLASSNAME . '__contact-text';
 
 		$this->render_subheading( $group_number, 'text' );
 
-		if ( '' !== $text_text ) {
-			$text_output = sprintf( '<div class="%2$s">%1$s</div>', esc_html( $text_text ), self::LAYOUT_CLASSNAME . '__contact-text' );
-			// Escaped above
-			Utils::print_unescaped_internal_string( $text_output );
-		}
+		Widget_Utils::maybe_render_text_html( $this->widget, 'group_' . $group_number . '_text_textarea', $contact_text_classname, $text_text );
 	}
 
 	protected function render_social_icons_group( $group_number ) {
 		$repeater = $this->settings[ 'group_' . $group_number . '_social_repeater' ];
 
 		$this->render_subheading( $group_number, 'social' );
+		$this->widget->add_render_attribute( 'social-icons-container', 'class', self::LAYOUT_CLASSNAME . '__social-icons-container' );
 		?>
-		<div class="<?php echo esc_attr( self::LAYOUT_CLASSNAME ); ?>__social-icons-container">
+		<div <?php $this->widget->print_render_attribute_string( 'social-icons-container' ); ?>>
 			<?php
 			foreach ( $repeater as $key => $social_icon ) {
 				$icon = $social_icon[ 'group_' . $group_number . '_social_icon' ] ?? [];

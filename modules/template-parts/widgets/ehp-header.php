@@ -13,8 +13,10 @@ use Elementor\{
 	Group_Control_Typography,
 	Repeater
 };
-use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
-use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+use Elementor\Core\Kits\Documents\Tabs\{
+	Global_Typography,
+	Global_Colors,
+};
 
 use HelloPlus\Modules\TemplateParts\Classes\{
 	Render\Widget_Header_Render,

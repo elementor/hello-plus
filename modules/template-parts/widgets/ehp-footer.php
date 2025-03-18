@@ -6,13 +6,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use Elementor\Controls_Manager;
-use Elementor\Group_Control_Background;
-use Elementor\Group_Control_Box_Shadow;
-use Elementor\Group_Control_Typography;
-use Elementor\Repeater;
-use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
-use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+use Elementor\{
+	Controls_Manager,
+	Group_Control_Background,
+	Group_Control_Box_Shadow,
+	Group_Control_Typography,
+	Repeater,
+};
+use Elementor\Core\Kits\Documents\Tabs\{
+	Global_Typography,
+	Global_Colors,
+};
 
 use HelloPlus\Includes\Utils as Theme_Utils;
 
@@ -62,6 +66,10 @@ class Ehp_Footer extends Ehp_Widget_Base {
 
 	protected function render(): void {
 		$render_strategy = new Widget_Footer_Render( $this );
+
+		$this->add_inline_editing_attributes( 'footer_description', 'none' );
+		$this->add_inline_editing_attributes( 'footer_contact_heading', 'none' );
+		$this->add_inline_editing_attributes( 'footer_contact_information', 'none' );
 
 		$render_strategy->render();
 	}

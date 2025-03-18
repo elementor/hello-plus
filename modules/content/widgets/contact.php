@@ -1,6 +1,9 @@
 <?php
-
 namespace HelloPlus\Modules\Content\Widgets;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 use HelloPlus\Modules\Content\Classes\Choose_Img_Control;
 use HelloPlus\Modules\Content\Classes\Render\Widget_Contact_Render;
@@ -10,8 +13,8 @@ use HelloPlus\Classes\{
 	Ehp_Padding,
 	Ehp_Shapes,
 	Ehp_Social_Platforms,
+	Widget_Utils,
 };
-use HelloPlus\Modules\Content\Base\Traits\Shared_Content_Traits;
 
 use Elementor\{
 	Controls_Manager,
@@ -19,17 +22,16 @@ use Elementor\{
 	Group_Control_Background,
 	Group_Control_Box_Shadow,
 	Repeater,
+	Settings,
+	Widget_Base,
 };
 use Elementor\Core\Kits\Documents\Tabs\{
 	Global_Typography,
 	Global_Colors,
 };
-use Elementor\Widget_Base;
 use Elementor\Modules\DynamicTags\Module as TagsModule;
-use Elementor\Settings;
 
 class Contact extends Widget_Base {
-	use Shared_Content_Traits;
 
 	public function get_name(): string {
 		return 'contact';
@@ -57,6 +59,25 @@ class Contact extends Widget_Base {
 
 	protected function render(): void {
 		$render_strategy = new Widget_Contact_Render( $this );
+
+		$this->add_inline_editing_attributes( 'heading_text', 'none' );
+		$this->add_inline_editing_attributes( 'description_text', 'none' );
+		$this->add_inline_editing_attributes( 'group_1_links_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_1_text_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_1_social_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_2_text_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_2_links_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_2_social_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_3_links_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_3_text_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_3_social_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_4_links_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_4_text_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_4_social_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_1_text_textarea', 'none' );
+		$this->add_inline_editing_attributes( 'group_2_text_textarea', 'none' );
+		$this->add_inline_editing_attributes( 'group_3_text_textarea', 'none' );
+		$this->add_inline_editing_attributes( 'group_4_text_textarea', 'none' );
 
 		$render_strategy->render();
 	}
@@ -1830,7 +1851,7 @@ class Contact extends Widget_Base {
 			]
 		);
 
-		$configured_breakpoints = $this->get_configured_breakpoints();
+		$configured_breakpoints = Widget_Utils::get_configured_breakpoints();
 
 		$this->add_control(
 			'box_full_screen_height_controls',

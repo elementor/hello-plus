@@ -3,16 +3,11 @@ namespace HelloPlus\Modules\Content\Classes\Render;
 
 use HelloPlus\Modules\Content\Widgets\Contact;
 use HelloPlus\Classes\{
-	Ehp_Button,
-	Ehp_Image,
 	Ehp_Shapes,
 	Ehp_Social_Platforms,
 };
 
-use Elementor\{
-	Icons_Manager,
-	Utils,
-};
+use Elementor\Icons_Manager;
 
 use HelloPlus\Classes\Traits\Shared_Traits;
 

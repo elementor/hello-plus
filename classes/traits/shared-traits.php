@@ -26,7 +26,7 @@ trait Shared_Traits {
 		];
 	}
 
-	protected function maybe_render_text_html( $render_key, $css_class, $settings_text, $settings_tag = 'p' ): void {
+	protected function maybe_render_text_html( string $render_key, string $css_class, string $settings_text, string $settings_tag = 'p' ): void {
 		if ( '' === $settings_text ) {
 			return;
 		}

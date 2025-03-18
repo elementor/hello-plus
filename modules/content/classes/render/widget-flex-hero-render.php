@@ -12,7 +12,7 @@ use HelloPlus\Classes\{
 	Ehp_Image,
 	Ehp_Shapes,
 };
-use \HelloPlus\Traits\Shared_Traits;
+use HelloPlus\Traits\Shared_Traits;
 
 class Widget_Flex_Hero_Render {
 	protected Flex_Hero $widget;
@@ -94,8 +94,8 @@ class Widget_Flex_Hero_Render {
 	}
 
 	public function render_content_container() {
-		$this->widget->add_render_attribute( 'content-container', 'class', self::LAYOUT_CLASSNAME . '__content-container');
-		$this->widget->add_render_attribute( 'overlay', 'class', self::LAYOUT_CLASSNAME . '__overlay');
+		$this->widget->add_render_attribute( 'content-container', 'class', self::LAYOUT_CLASSNAME . '__content-container' );
+		$this->widget->add_render_attribute( 'overlay', 'class', self::LAYOUT_CLASSNAME . '__overlay' );
 		?>
 			<div <?php $this->widget->print_render_attribute_string( 'content-container' ); ?>></div>
 			<div <?php $this->widget->print_render_attribute_string( 'content-container' ); ?>>
@@ -149,7 +149,7 @@ class Widget_Flex_Hero_Render {
 	}
 
 	protected function render_image_container() {
-		$this->widget->add_render_attribute( 'image-wrapper', 'class', self::LAYOUT_CLASSNAME . '__image-wrapper');
+		$this->widget->add_render_attribute( 'image-wrapper', 'class', self::LAYOUT_CLASSNAME . '__image-wrapper' );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'image-wrapper' ); ?>>
 		<?php

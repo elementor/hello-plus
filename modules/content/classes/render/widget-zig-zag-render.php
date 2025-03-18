@@ -15,7 +15,7 @@ use HelloPlus\Classes\{
 	Ehp_Image,
 };
 
-use \HelloPlus\Traits\Shared_Traits;
+use HelloPlus\Traits\Shared_Traits;
 
 class Widget_Zig_Zag_Render {
 	protected Zig_Zag $widget;

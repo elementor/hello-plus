@@ -13,7 +13,7 @@ use Elementor\{
 
 use HelloPlus\Modules\TemplateParts\Widgets\Ehp_Footer;
 
-use \HelloPlus\Traits\Shared_Traits;
+use HelloPlus\Traits\Shared_Traits;
 
 /**
  * class Widget_Footer_Render
@@ -22,7 +22,7 @@ class Widget_Footer_Render {
 	protected Ehp_Footer $widget;
 	const LAYOUT_CLASSNAME = 'ehp-footer';
 	const SITE_LINK_CLASSNAME = 'ehp-footer__site-link';
-	
+
 	use Shared_Traits;
 
 	protected array $settings;

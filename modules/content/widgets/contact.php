@@ -1,6 +1,9 @@
 <?php
-
 namespace HelloPlus\Modules\Content\Widgets;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 use HelloPlus\Modules\Content\Classes\Choose_Img_Control;
 use HelloPlus\Modules\Content\Classes\Render\Widget_Contact_Render;
@@ -10,8 +13,8 @@ use HelloPlus\Classes\{
 	Ehp_Padding,
 	Ehp_Shapes,
 	Ehp_Social_Platforms,
+	Traits\Shared_Traits,
 };
-use HelloPlus\Classes\Traits\Shared_Traits;
 
 use Elementor\{
 	Controls_Manager,

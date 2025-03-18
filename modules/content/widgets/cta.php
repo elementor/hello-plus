@@ -12,7 +12,6 @@ use Elementor\{
 	Group_Control_Box_Shadow,
 	Group_Control_Typography,
 	Widget_Base,
-	Utils as Elementor_Utils,
 };
 use Elementor\Core\Kits\Documents\Tabs\{
 	Global_Colors,
@@ -32,7 +31,6 @@ use HelloPlus\Classes\{
 	Widget_Utils
 };
 use HelloPlus\Includes\Utils;
-
 
 class CTA extends Widget_Base {
 

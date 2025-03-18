@@ -109,12 +109,6 @@ class Widget_Contact_Render {
 	}
 
 	protected function render_text_container() {
-		$heading_text = $this->settings['heading_text'];
-		$heading_tag = $this->settings['heading_tag'];
-
-		$description_text = $this->settings['description_text'];
-		$description_tag = $this->settings['description_tag'];
-
 		$heading_classname = self::LAYOUT_CLASSNAME . '__heading';
 		$description_classname = self::LAYOUT_CLASSNAME . '__description';
 
@@ -125,15 +119,17 @@ class Widget_Contact_Render {
 		$this->widget->add_render_attribute( 'text-container', [
 			'class' => $text_container_classnames,
 		] );
+		$this->widget->add_render_attribute( 'headings', 'class', self::LAYOUT_CLASSNAME . '__headings' );
+		$this->widget->add_render_attribute( 'groups', 'class', self::LAYOUT_CLASSNAME . '__groups' );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'text-container' ); ?>>
-			<div class="<?php echo esc_attr( self::LAYOUT_CLASSNAME ); ?>__headings">
+			<div <?php $this->widget->print_render_attribute_string( 'headings' ); ?>>
 				<?php
-					$this->maybe_render_text_html( 'heading_text', $heading_classname, $heading_text, $heading_tag );
-					$this->maybe_render_text_html( 'description_text', $description_classname, $description_text, $description_tag );
+					$this->maybe_render_text_html( 'heading_text', $heading_classname, $this->settings['heading_text'], $this->settings['heading_tag'] );
+					$this->maybe_render_text_html( 'description_text', $description_classname, $this->settings['description_text'], $this->settings['description_tag'] );
 				?>
 			</div>
-			<div class="<?php echo esc_attr( self::LAYOUT_CLASSNAME ); ?>__groups">
+			<div <?php $this->widget->print_render_attribute_string( 'groups' ); ?>>
 				<?php
 					$this->render_contact_group( '1' );
 
@@ -154,8 +150,9 @@ class Widget_Contact_Render {
 
 	protected function render_contact_group( $group_number ) {
 		$group_type = $this->settings[ 'group_' . $group_number . '_type' ];
+		$this->widget->add_render_attribute( 'group', 'class', self::LAYOUT_CLASSNAME . '__group' );
 		?>
-		<div class="<?php echo esc_attr( self::LAYOUT_CLASSNAME ); ?>__group">
+		<div <?php $this->widget->print_render_attribute_string( 'group' ); ?>>
 			<?php
 			if ( 'contact-links' === $group_type ) {
 				$this->render_contact_links_group( $group_number );
@@ -172,8 +169,9 @@ class Widget_Contact_Render {
 	protected function render_subheading( $group_number, $subheading_type ) {
 		$subheading_text = $this->settings[ 'group_' . $group_number . '_' . $subheading_type . '_subheading' ];
 		$subheading_tag = $this->settings['subheading_tag'];
+		$subheading_classname = self::LAYOUT_CLASSNAME . '__subheading';
 
-		$this->maybe_render_text_html( 'group_' . $group_number . '_' . $subheading_type . '_subheading', self::LAYOUT_CLASSNAME . '__subheading', $subheading_text, $subheading_tag );
+		$this->maybe_render_text_html( 'group_' . $group_number . '_' . $subheading_type . '_subheading', $subheading_classname, $subheading_text, $subheading_tag );
 	}
 
 	protected function render_contact_links_group( $group_number ) {
@@ -186,8 +184,10 @@ class Widget_Contact_Render {
 		$hover_animation = $this->settings['contact_details_text_hover_animation'];
 
 		$ehp_platforms = new Ehp_Social_Platforms( $this->widget );
+
+		$this->widget->add_render_attribute( 'links-container', 'class', self::LAYOUT_CLASSNAME . '__links-container' );
 		?>
-		<div class="<?php echo esc_attr( self::LAYOUT_CLASSNAME ); ?>__links-container">
+		<div <?php $this->widget->print_render_attribute_string( 'links-container' ); ?>>
 			<?php
 			foreach ( $repeater as $key => $contact_link ) {
 				$link = [
@@ -246,18 +246,20 @@ class Widget_Contact_Render {
 
 	protected function render_contact_text_group( $group_number ) {
 		$text_text = $this->settings[ 'group_' . $group_number . '_text_textarea' ];
+		$contact_text_classname = self::LAYOUT_CLASSNAME . '__contact-text';
 
 		$this->render_subheading( $group_number, 'text' );
 
-		$this->maybe_render_text_html( 'group_' . $group_number . '_text_textarea', self::LAYOUT_CLASSNAME . '__contact-text', $text_text );
+		$this->maybe_render_text_html( 'group_' . $group_number . '_text_textarea', $contact_text_classname, $text_text );
 	}
 
 	protected function render_social_icons_group( $group_number ) {
 		$repeater = $this->settings[ 'group_' . $group_number . '_social_repeater' ];
 
 		$this->render_subheading( $group_number, 'social' );
+		$this->widget->add_render_attribute( 'social-icons-container', 'class', self::LAYOUT_CLASSNAME . '__social-icons-container' );
 		?>
-		<div class="<?php echo esc_attr( self::LAYOUT_CLASSNAME ); ?>__social-icons-container">
+		<div <?php $this->widget->print_render_attribute_string( 'social-icons-container' ); ?>>
 			<?php
 			foreach ( $repeater as $key => $social_icon ) {
 				$icon = $social_icon[ 'group_' . $group_number . '_social_icon' ] ?? [];

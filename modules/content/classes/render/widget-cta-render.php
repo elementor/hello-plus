@@ -10,6 +10,8 @@ use HelloPlus\Classes\{
 
 use Elementor\Utils;
 
+use \HelloPlus\Modules\Content\Base\Traits\Shared_Content_Traits;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -17,6 +19,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Widget_CTA_Render {
 	protected CTA $widget;
 	const LAYOUT_CLASSNAME = 'ehp-cta';
+
+	use Shared_Content_Traits;
 
 	protected array $settings;
 
@@ -62,7 +66,7 @@ class Widget_CTA_Render {
 		] );
 
 		$elements_container_classnames = [
-			'ehp-cta__elements-container',
+			self::LAYOUT_CLASSNAME . '__elements-container',
 		];
 		$image_position = $this->settings['image_horizontal_position'];
 		$image_position_tablet = $this->settings['image_horizontal_position_tablet'];
@@ -83,9 +87,11 @@ class Widget_CTA_Render {
 		$this->widget->add_render_attribute( 'elements-container', [
 			'class' => $elements_container_classnames,
 		] );
+
+		$this->widget->add_render_attribute( 'overlay', 'class', self::LAYOUT_CLASSNAME . '__overlay' );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
-			<div class="ehp-cta__overlay"></div>
+			<div <?php $this->widget->print_render_attribute_string( 'overlay' ); ?>></div>
 			<div <?php $this->widget->print_render_attribute_string( 'elements-container' ); ?>>
 				<?php
 				if ( $show_image ) {
@@ -110,11 +116,17 @@ class Widget_CTA_Render {
 	}
 
 	protected function render_text_container() {
+		$heading_classname = self::LAYOUT_CLASSNAME . '__heading';
+		$description_classname = self::LAYOUT_CLASSNAME . '__description';
+
+		$this->widget->add_render_attribute( 'text-container', [
+			'class' => self::LAYOUT_CLASSNAME . '__text-container',
+		] );
 		?>
-		<div class="ehp-cta__text-container">
+		<div <?php $this->widget->print_render_attribute_string( 'text-container' ); ?>>
 			<?php
-			$this->maybe_render_text_html( 'heading_text', 'ehp-cta__heading', $this->settings['heading_text'], $this->settings['heading_tag'] );
-			$this->maybe_render_text_html( 'description_text', 'ehp-cta__description', $this->settings['description_text'], $this->settings['description_tag'] );
+			$this->maybe_render_text_html( 'heading_text', $heading_classname, $this->settings['heading_text'], $this->settings['heading_tag'] );
+			$this->maybe_render_text_html( 'description_text', $description_classname, $this->settings['description_text'], $this->settings['description_tag'] );
 
 			if ( 'showcase' === $this->settings['layout_preset'] ) {
 				$this->render_ctas_container();
@@ -123,25 +135,12 @@ class Widget_CTA_Render {
 		<?php
 	}
 
-	public function maybe_render_text_html( $render_key, $css_class, $settings_text, $settings_tag ) {
-		if ( '' !== $settings_text ) {
-			$this->widget->add_render_attribute( $render_key, 'class', $css_class );
-
-			$element = wp_kses_post( $settings_text );
-
-			$element_html = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $settings_tag ), $this->widget->get_render_attribute_string( $render_key ), $element );
-
-			// PHPCS - the variable $element_html holds safe data.
-			echo $element_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		}
-	}
-
 	protected function render_ctas_container() {
 		$buttons_width = $this->settings['cta_width'];
 		$buttons_width_tablet = $this->settings['cta_width_tablet'];
 		$buttons_width_mobile = $this->settings['cta_width_mobile'];
 
-		$buttons_wrapper_classnames = [ 'ehp-cta__buttons-wrapper' ];
+		$buttons_wrapper_classnames = [ self::LAYOUT_CLASSNAME . '__buttons-wrapper' ];
 
 		if ( $buttons_width ) {
 			$buttons_wrapper_classnames[] = 'has-cta-width-' . $buttons_width;
@@ -158,8 +157,9 @@ class Widget_CTA_Render {
 		$this->widget->add_render_attribute( 'buttons-wrapper', [
 			'class' => $buttons_wrapper_classnames,
 		] );
+		$this->widget->add_render_attribute( 'ctas-container', 'class', self::LAYOUT_CLASSNAME . '__ctas-container' );
 		?>
-			<div class="ehp-cta__ctas-container">
+			<div <?php $this->widget->print_render_attribute_string( 'ctas-container' ); ?>>
 				<div <?php $this->widget->print_render_attribute_string( 'buttons-wrapper' ); ?>>
 					<?php if ( ! empty( $this->settings['primary_cta_button_text'] ) ) {
 						$this->render_button( 'primary' );

@@ -18,6 +18,8 @@ use HelloPlus\Classes\{
 	Widget_Utils,
 };
 
+use HelloPlus\Modules\TemplateParts\Classes\Ehp_Shared_Template_Parts;
+
 /**
  * class Widget_Footer_Render
  */
@@ -26,6 +28,8 @@ class Widget_Footer_Render {
 	const LAYOUT_CLASSNAME = 'ehp-footer';
 
 	protected array $settings;
+
+	protected int $nav_menu_index = 1;
 
 	public function render(): void {
 		$layout_classnames = self::LAYOUT_CLASSNAME;
@@ -89,8 +93,13 @@ class Widget_Footer_Render {
 		$this->widget->add_render_attribute( 'side-content', 'class', self::LAYOUT_CLASSNAME . '__side-content' );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'side-content' ); ?>>
-			<?php $this->render_site_link(); ?>
-			<?php if ( $has_description ) {
+			<?php
+				$ehp_shared_template_parts = new Ehp_Shared_Template_Parts( $this->widget, [
+					'widget_name' => 'footer',
+				] );
+				$ehp_shared_template_parts->render_site_link();
+			
+			if ( $has_description ) {
 				$element_html = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $description_tag ), $this->widget->get_render_attribute_string( 'footer_description' ), esc_html( $description_text ) );
 
 				// Escaped above
@@ -98,65 +107,6 @@ class Widget_Footer_Render {
 			} ?>
 			<?php $this->render_social_icons(); ?>
 		</div>
-		<?php
-	}
-
-	public function get_attachment_image_html_filter( $html ) {
-		$logo_classnames = [
-			self::LAYOUT_CLASSNAME . '__site-logo',
-		];
-
-		if ( ! empty( $this->settings['show_logo_border'] ) && 'yes' === $this->settings['show_logo_border'] ) {
-			$logo_classnames[] = 'has-border';
-		}
-
-		$shapes = new Ehp_Shapes( $this->widget, [
-			'container_prefix' => 'logo',
-			'widget_name' => 'footer',
-		] );
-
-		$logo_classnames = array_merge( $logo_classnames, $shapes->get_shape_classnames() );
-
-		$html = str_replace( '<img ', '<img class="' . esc_attr( implode( ' ', $logo_classnames ) ) . '" ', $html );
-		return $html;
-	}
-
-	public function render_site_link(): void {
-		$site_logo_image = $this->settings['site_logo_image'];
-		$hover_animation = $this->settings['style_logo_hover_animation'] ?? '';
-		$site_link_classnames = [ self::LAYOUT_CLASSNAME . '__site-link' ];
-		$site_title_tag = $this->settings['site_logo_title_tag'] ?? 'h2';
-
-		if ( ! empty( $hover_animation ) ) {
-			$site_link_classnames[] = 'elementor-animation-' . $hover_animation;
-		}
-
-		$this->widget->add_render_attribute( 'site-link', [
-			'class' => $site_link_classnames,
-		] );
-
-		$site_link = $this->get_link_url();
-
-		if ( $site_link ) {
-			$this->widget->add_link_attributes( 'site-link', $site_link );
-		}
-
-		if ( $site_logo_image ) {
-			$this->settings['site_logo_image'] = $this->widget->add_site_logo_if_present( $this->settings['site_logo_image'] );
-		}
-
-		$site_title_classname = self::LAYOUT_CLASSNAME . '__site-title';
-
-		?>
-		<a <?php $this->widget->print_render_attribute_string( 'site-link' ); ?>>
-			<?php if ( $site_logo_image ) {
-				add_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_attachment_image_html_filter' ], 10, 4 );
-				Group_Control_Image_Size::print_attachment_image_html( $this->settings, 'site_logo_image' );
-				remove_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_attachment_image_html_filter' ], 10 );
-			} else {
-				Widget_Utils::maybe_render_text_html( $this->widget, 'footer_site_title', $site_title_classname,  $this->widget->get_site_title(), $site_title_tag );
-			} ?>
-		</a>
 		<?php
 	}
 
@@ -207,7 +157,11 @@ class Widget_Footer_Render {
 	}
 
 	public function render_navigation(): void {
-		$available_menus = $this->widget->get_available_menus();
+		$shared_template_parts = new Ehp_Shared_Template_Parts( $this->widget, [
+			'widget_name' => 'header',
+		] );
+		$available_menus = $shared_template_parts->get_available_menus();
+
 		$menu_classname = self::LAYOUT_CLASSNAME . '__menu';
 
 		if ( ! $available_menus ) {
@@ -218,7 +172,7 @@ class Widget_Footer_Render {
 			'echo' => false,
 			'menu' => $this->settings['navigation_menu'],
 			'menu_class' => $menu_classname,
-			'menu_id' => 'menu-' . $this->widget->get_and_advance_nav_menu_index() . '-' . $this->widget->get_id(),
+			'menu_id' => 'menu-' . $this->get_and_advance_nav_menu_index() . '-' . $this->widget->get_id(),
 			'fallback_cb' => '__return_empty_string',
 			'container' => '',
 			'depth' => 1,
@@ -290,10 +244,6 @@ class Widget_Footer_Render {
 		<?php
 	}
 
-	public function get_link_url(): array {
-		return [ 'url' => $this->widget->get_site_url() ];
-	}
-
 	public function handle_link_classes( $atts, $item ) {
 		$classes = [ self::LAYOUT_CLASSNAME . '__menu-item' ];
 		$is_anchor = false !== strpos( $atts['href'], '#' );
@@ -320,6 +270,10 @@ class Widget_Footer_Render {
 		}
 
 		return $atts;
+	}
+
+	public function get_and_advance_nav_menu_index(): int {
+		return $this->nav_menu_index++;
 	}
 
 	public function __construct( Ehp_Footer $widget ) {

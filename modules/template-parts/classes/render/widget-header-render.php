@@ -20,6 +20,8 @@ use HelloPlus\Classes\{
 	Widget_Utils,
 };
 
+use HelloPlus\Modules\TemplateParts\Classes\Ehp_Shared_Template_Parts;
+
 /**
  * class Widget_Header_Render
  */
@@ -30,6 +32,8 @@ class Widget_Header_Render {
 	protected Ehp_Header $widget;
 
 	protected array $settings;
+
+	protected int $nav_menu_index = 1;
 
 	public function render(): void {
 		$layout_classnames = [
@@ -105,7 +109,10 @@ class Widget_Header_Render {
 		<header <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
 			<div <?php $this->widget->print_render_attribute_string( 'elements-container' ); ?>>
 				<?php
-				$this->render_site_link();
+				$ehp_shared_template_parts = new Ehp_Shared_Template_Parts( $this->widget, [
+					'widget_name' => 'header',
+				] );
+				$ehp_shared_template_parts->render_site_link();
 				$this->render_navigation();
 				$this->render_ctas_container();
 				?>
@@ -132,71 +139,12 @@ class Widget_Header_Render {
 		$this->widget->add_render_attribute( '_wrapper', $wrapper_render_attributes );
 	}
 
-	public function get_attachment_image_html_filter( $html ) {
-		$logo_classnames = [
-			self::LAYOUT_CLASSNAME . '__site-logo',
-		];
-
-		if ( ! empty( $this->settings['show_logo_border'] ) && 'yes' === $this->settings['show_logo_border'] ) {
-			$logo_classnames[] = 'has-border';
-		}
-
-		$shapes = new Ehp_Shapes( $this->widget, [
-			'container_prefix' => 'logo',
+	public function render_navigation(): void {
+		$shared_template_parts = new Ehp_Shared_Template_Parts( $this->widget, [
 			'widget_name' => 'header',
 		] );
+		$available_menus = $shared_template_parts->get_available_menus();
 
-		$logo_classnames = array_merge( $logo_classnames, $shapes->get_shape_classnames() );
-
-		$html = str_replace( '<img ', '<img class="' . esc_attr( implode( ' ', $logo_classnames ) ) . '" ', $html );
-		return $html;
-	}
-
-	public function render_site_link(): void {
-		$site_logo_brand_select = $this->settings['site_logo_brand_select'];
-		$hover_animation = $this->settings['style_logo_hover_animation'] ?? '';
-		$site_link_classnames = [ self::LAYOUT_CLASSNAME . '__site-link' ];
-
-		if ( ! empty( $hover_animation ) ) {
-			$site_link_classnames[] = 'elementor-animation-' . $hover_animation;
-		}
-
-		$this->widget->add_render_attribute( 'site-link', [
-			'class' => $site_link_classnames,
-		] );
-
-		$site_link = $this->get_link_url();
-
-		if ( $site_link ) {
-			$this->widget->add_link_attributes( 'site-link', $site_link );
-		}
-
-		if ( $this->settings['site_logo_image'] ) {
-			$this->settings['site_logo_image'] = $this->widget->add_site_logo_if_present( $this->settings['site_logo_image'] );
-		}
-
-		$this->widget->add_render_attribute( 'site-link-container', 'class', self::LAYOUT_CLASSNAME . '__site-link-container' );
-
-		$site_title_classname = self::LAYOUT_CLASSNAME . '__site-title';
-
-		?>
-		<div <?php $this->widget->print_render_attribute_string( 'site-link-container' ); ?>>
-			<a <?php $this->widget->print_render_attribute_string( 'site-link' ); ?>>
-				<?php if ( 'logo' === $site_logo_brand_select ) {
-					add_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_attachment_image_html_filter' ], 10, 4 );
-					Group_Control_Image_Size::print_attachment_image_html( $this->settings, 'site_logo_image' );
-					remove_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_attachment_image_html_filter' ], 10 );
-				} ?>
-				<?php if ( 'title' === $site_logo_brand_select ) {
-					Widget_Utils::maybe_render_text_html( $this->widget, 'header_site_title', $site_title_classname,  $this->widget->get_site_title(), $this->settings['site_logo_title_tag'] );
-				} ?>
-			</a>
-		</div>
-		<?php
-	}
-
-	public function render_navigation(): void {
-		$available_menus = $this->widget->get_available_menus();
 		$menu_classname = self::LAYOUT_CLASSNAME . '__menu';
 
 		if ( ! $available_menus ) {
@@ -226,7 +174,7 @@ class Widget_Header_Render {
 			'echo' => false,
 			'menu' => $settings['navigation_menu'],
 			'menu_class' => $menu_classname,
-			'menu_id' => 'menu-' . $this->widget->get_and_advance_nav_menu_index() . '-' . $this->widget->get_id(),
+			'menu_id' => 'menu-' . $this->get_and_advance_nav_menu_index() . '-' . $this->widget->get_id(),
 			'fallback_cb' => '__return_empty_string',
 			'container' => '',
 		];
@@ -496,10 +444,6 @@ class Widget_Header_Render {
 		$button->render();
 	}
 
-	public function get_link_url(): array {
-		return [ 'url' => $this->widget->get_site_url() ];
-	}
-
 	public function handle_link_classes( $atts, $item, $args, $depth ) {
 		$classes = [
 			self::LAYOUT_CLASSNAME . '__item',
@@ -563,6 +507,10 @@ class Widget_Header_Render {
 		}
 
 		return $item_output;
+	}
+
+	public function get_and_advance_nav_menu_index(): int {
+		return $this->nav_menu_index++;
 	}
 
 	public function __construct( Ehp_Header $widget ) {

@@ -18,7 +18,6 @@ use Elementor\{
 use Elementor\Core\Kits\Documents\Tabs\{
 	Global_Colors,
 	Global_Typography,
-
 };
 
 use HelloPlus\Includes\Utils as Theme_Utils;
@@ -26,6 +25,7 @@ use HelloPlus\Includes\Utils as Theme_Utils;
 use HelloPlus\Modules\TemplateParts\Classes\{
 	Render\Widget_Footer_Render,
 	Control_Media_Preview,
+	Ehp_Shared_Template_Parts,
 };
 
 use HelloPlus\Classes\{
@@ -109,72 +109,77 @@ class Ehp_Footer extends Ehp_Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'site_logo_brand_select',
-			[
-				'label' => esc_html__( 'Brand', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'logo' => 'Site Logo',
-					'title' => 'Site Name',
-				],
-				'default' => 'logo',
-				'tablet_default' => 'logo',
-				'mobile_default' => 'logo',
-			]
-		);
+		$shared_template_parts = new Ehp_Shared_Template_Parts( $this, [
+			'widget_name' => 'header',
+		] );
+		$shared_template_parts->add_content_brand_controls();
 
-		$this->add_control(
-			'site_logo_image',
-			[
-				'label' => esc_html__( 'Site Logo', 'hello-plus' ),
-				'type' => Control_Media_Preview::CONTROL_TYPE,
-				'src' => $this->get_site_logo_url(),
-				'default' => [
-					'url' => $this->get_site_logo_url(),
-				],
-				'condition' => [
-					'site_logo_brand_select' => 'logo',
-				],
-			],
-			[
-				'recursive' => true,
-			]
-		);
+		// $this->add_responsive_control(
+		// 	'site_logo_brand_select',
+		// 	[
+		// 		'label' => esc_html__( 'Brand', 'hello-plus' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'options' => [
+		// 			'logo' => esc_html__( 'Site Logo', 'hello-plus' ),
+		// 			'title' => esc_html__( 'Site Name', 'hello-plus' ),
+		// 		],
+		// 		'default' => 'logo',
+		// 		'tablet_default' => 'logo',
+		// 		'mobile_default' => 'logo',
+		// 	]
+		// );
 
-		$this->add_control(
-			'change_logo_cta',
-			[
-				'type' => Controls_Manager::BUTTON,
-				'label_block' => true,
-				'show_label' => false,
-				'button_type' => 'default elementor-button-center',
-				'text' => esc_html__( 'Change Site Logo', 'hello-plus' ),
-				'event' => 'helloPlusLogo:change',
-				'condition' => [
-					'site_logo_brand_select' => 'logo',
-				],
-			],
-			[
-				'position' => [
-					'of' => 'image',
-					'type' => 'control',
-					'at' => 'after',
-				],
-			]
-		);
+		// $this->add_control(
+		// 	'site_logo_image',
+		// 	[
+		// 		'label' => esc_html__( 'Site Logo', 'hello-plus' ),
+		// 		'type' => Control_Media_Preview::CONTROL_TYPE,
+		// 		'src' => $this->get_site_logo_url(),
+		// 		'default' => [
+		// 			'url' => $this->get_site_logo_url(),
+		// 		],
+		// 		'condition' => [
+		// 			'site_logo_brand_select' => 'logo',
+		// 		],
+		// 	],
+		// 	[
+		// 		'recursive' => true,
+		// 	]
+		// );
 
-		$this->add_control(
-			'site_logo_title_alert',
-			[
-				'type' => Controls_Manager::ALERT,
-				'alert_type' => 'info',
-				'content' => esc_html__( 'Go to', 'hello-plus' ) . ' <a href="#" onclick="templatesModule.openSiteIdentity( event )" >' . esc_html__( 'Site Identity > Site Description', 'hello-plus' ) . '</a>' . esc_html__( ' to edit the Site Name', 'hello-plus' ),
-				'condition' => [
-					'site_logo_brand_select' => 'title',
-				],
-			]
-		);
+		// $this->add_control(
+		// 	'change_logo_cta',
+		// 	[
+		// 		'type' => Controls_Manager::BUTTON,
+		// 		'label_block' => true,
+		// 		'show_label' => false,
+		// 		'button_type' => 'default elementor-button-center',
+		// 		'text' => esc_html__( 'Change Site Logo', 'hello-plus' ),
+		// 		'event' => 'helloPlusLogo:change',
+		// 		'condition' => [
+		// 			'site_logo_brand_select' => 'logo',
+		// 		],
+		// 	],
+		// 	[
+		// 		'position' => [
+		// 			'of' => 'image',
+		// 			'type' => 'control',
+		// 			'at' => 'after',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'site_logo_title_alert',
+		// 	[
+		// 		'type' => Controls_Manager::ALERT,
+		// 		'alert_type' => 'info',
+		// 		'content' => esc_html__( 'Go to', 'hello-plus' ) . ' <a href="#" onclick="templatesModule.openSiteIdentity( event )" >' . esc_html__( 'Site Identity > Site Description', 'hello-plus' ) . '</a>' . esc_html__( ' to edit the Site Name', 'hello-plus' ),
+		// 		'condition' => [
+		// 			'site_logo_brand_select' => 'title',
+		// 		],
+		// 	]
+		// );
 
 		$this->add_control(
 			'footer_description',
@@ -367,7 +372,11 @@ class Ehp_Footer extends Ehp_Widget_Base {
 			]
 		);
 
-		$menus = $this->get_available_menus();
+		$shared_template_parts = new Ehp_Shared_Template_Parts( $this, [
+			'widget_name' => 'header',
+		] );
+
+		$menus = $shared_template_parts->get_available_menus();
 
 		if ( ! empty( $menus ) ) {
 			$this->add_control(
@@ -493,326 +502,331 @@ class Ehp_Footer extends Ehp_Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'site_logo_heading',
-			[
-				'label' => esc_html__( 'Logo', 'hello-plus' ),
-				'type' => Controls_Manager::HEADING,
-				'condition' => [
-					'site_logo_brand_select' => 'logo',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'site_logo_width',
-			[
-				'label' => esc_html__( 'Width', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%' ],
-				'range' => [
-					'px' => [
-						'min' => 10,
-						'max' => 500,
-					],
-					'%' => [
-						'min' => 10,
-						'max' => 100,
-					],
-				],
-				'default' => [
-					'size' => 68,
-					'unit' => 'px',
-				],
-				'tablet_default' => [
-					'size' => 68,
-					'unit' => 'px',
-				],
-				'mobile_default' => [
-					'size' => 68,
-					'unit' => 'px',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-footer' => '--footer-logo-width: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'site_logo_brand_select' => 'logo',
-				],
-			]
-		);
-
-		$this->add_control(
-			'site_title_heading',
-			[
-				'label' => esc_html__( 'Site Name', 'hello-plus' ),
-				'type' => Controls_Manager::HEADING,
-				'condition' => [
-					'site_logo_brand_select' => 'title',
-				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => 'site_title_typography',
-				'label' => esc_html__( 'Typography', 'hello-plus' ),
-				'selector' => '{{WRAPPER}} .ehp-footer__site-title',
-				'global' => [
-					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
-				],
-				'condition' => [
-					'site_logo_brand_select' => 'title',
-				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Text_Shadow::get_type(),
-			[
-				'name' => 'title_shadow',
-				'selector' => '{{WRAPPER}} .ehp-footer__site-title',
-				'condition' => [
-					'site_logo_brand_select' => 'title',
-				],
-			]
-		);
-
-		$this->start_controls_tabs(
-			'style_brand_tabs'
-		);
-
-		$this->start_controls_tab(
-			'style_brand_normal_tab',
-			[
-				'label' => esc_html__( 'Normal', 'hello-plus' ),
-			]
-		);
-
-		$this->add_control(
-			'style_title_color',
-			[
-				'label' => esc_html__( 'Text Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_PRIMARY,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-footer' => '--footer-site-title-color: {{VALUE}}',
-				],
-				'condition' => [
-					'site_logo_brand_select' => 'title',
-				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Css_Filter::get_type(),
-			[
-				'name' => 'logo_css_filter',
-				'selector' => '{{WRAPPER}} .ehp-footer__site-logo',
-				'condition' => [
-					'site_logo_brand_select' => 'logo',
-				],
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->start_controls_tab(
-			'style_brand_hover_tab',
-			[
-				'label' => esc_html__( 'Hover', 'hello-plus' ),
-			]
-		);
-
-		$this->add_control(
-			'style_title_color_hover',
-			[
-				'label' => esc_html__( 'Text Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_PRIMARY,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-footer' => '--footer-site-title-color-hover: {{VALUE}}',
-				],
-				'condition' => [
-					'site_logo_brand_select' => 'title',
-				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Css_Filter::get_type(),
-			[
-				'name' => 'image_hover_css_filters',
-				'selector' => '{{WRAPPER}} .ehp-footer__site-logo:hover',
-				'condition' => [
-					'site_logo_brand_select' => 'logo',
-				],
-			]
-		);
-
-		$this->add_control(
-			'style_logo_hover_transition_duration',
-			[
-				'label' => esc_html__( 'Transition Duration (s)', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 3,
-						'step' => 0.1,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-footer__site-logo' => 'transition-duration: {{SIZE}}s',
-				],
-				'condition' => [
-					'site_logo_brand_select' => 'logo',
-				],
-			]
-		);
-
-		$this->add_control(
-			'style_title_hover_transition_duration',
-			[
-				'label' => esc_html__( 'Transition Duration (s)', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 3,
-						'step' => 0.1,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-footer__site-title' => 'transition-duration: {{SIZE}}s',
-				],
-				'condition' => [
-					'site_logo_brand_select' => 'title',
-				],
-			]
-		);
-
-		$this->add_control(
-			'style_logo_hover_animation',
-			[
-				'label' => esc_html__( 'Hover Animation', 'hello-plus' ),
-				'type' => Controls_Manager::HOVER_ANIMATION,
-				'condition' => [
-					'site_logo_brand_select' => 'logo',
-				],
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->end_controls_tabs();
-
-		$this->add_control(
-			'show_logo_border',
-			[
-				'label' => esc_html__( 'Border', 'hello-plus' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
-				'label_off' => esc_html__( 'No', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => 'no',
-				'separator' => 'before',
-				'condition' => [
-					'site_logo_brand_select' => 'logo',
-				],
-			]
-		);
-
-		$this->add_control(
-			'logo_border_width',
-			[
-				'label' => __( 'Border Width', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 10,
-						'step' => 1,
-					],
-				],
-				'default' => [
-					'size' => 1,
-					'unit' => 'px',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-footer' => '--footer-logo-border-width: {{SIZE}}{{UNIT}};',
-				],
-				'conditions' => [
-					'relation' => 'and',
-					'terms' => [
-						[
-							'name' => 'show_logo_border',
-							'operator' => '==',
-							'value' => 'yes',
-						],
-						[
-							'name' => 'site_logo_brand_select',
-							'operator' => '==',
-							'value' => 'logo',
-						],
-					],
-				],
-			]
-		);
-
-		$this->add_control(
-			'logo_border_color',
-			[
-				'label' => esc_html__( 'Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_TEXT,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-footer' => '--footer-logo-border-color: {{VALUE}}',
-				],
-				'conditions' => [
-					'relation' => 'and',
-					'terms' => [
-						[
-							'name' => 'show_logo_border',
-							'operator' => '==',
-							'value' => 'yes',
-						],
-						[
-							'name' => 'site_logo_brand_select',
-							'operator' => '==',
-							'value' => 'logo',
-						],
-					],
-				],
-			]
-		);
-
-		$shapes = new Ehp_Shapes( $this, [
+		$shared_template_parts = new Ehp_Shared_Template_Parts( $this, [
 			'widget_name' => 'footer',
-			'container_prefix' => 'logo',
-			'condition' => [
-				'site_logo_brand_select' => 'logo',
-			],
 		] );
-		$shapes->add_style_controls();
+		$shared_template_parts->add_style_brand_controls();
 
-		$this->add_group_control(
-			Group_Control_Box_Shadow::get_type(),
-			[
-				'name' => 'logo_box_shadow',
-				'selector' => '{{WRAPPER}} .ehp-footer__site-logo',
-				'condition' => [
-					'site_logo_brand_select' => 'logo',
-				],
-			]
-		);
+		// $this->add_control(
+		// 	'site_logo_heading',
+		// 	[
+		// 		'label' => esc_html__( 'Logo', 'hello-plus' ),
+		// 		'type' => Controls_Manager::HEADING,
+		// 		'condition' => [
+		// 			'site_logo_brand_select' => 'logo',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_responsive_control(
+		// 	'site_logo_width',
+		// 	[
+		// 		'label' => esc_html__( 'Width', 'hello-plus' ),
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'size_units' => [ 'px', '%' ],
+		// 		'range' => [
+		// 			'px' => [
+		// 				'min' => 10,
+		// 				'max' => 500,
+		// 			],
+		// 			'%' => [
+		// 				'min' => 10,
+		// 				'max' => 100,
+		// 			],
+		// 		],
+		// 		'default' => [
+		// 			'size' => 68,
+		// 			'unit' => 'px',
+		// 		],
+		// 		'tablet_default' => [
+		// 			'size' => 68,
+		// 			'unit' => 'px',
+		// 		],
+		// 		'mobile_default' => [
+		// 			'size' => 68,
+		// 			'unit' => 'px',
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .ehp-footer' => '--footer-logo-width: {{SIZE}}{{UNIT}};',
+		// 		],
+		// 		'condition' => [
+		// 			'site_logo_brand_select' => 'logo',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'site_title_heading',
+		// 	[
+		// 		'label' => esc_html__( 'Site Name', 'hello-plus' ),
+		// 		'type' => Controls_Manager::HEADING,
+		// 		'condition' => [
+		// 			'site_logo_brand_select' => 'title',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_group_control(
+		// 	Group_Control_Typography::get_type(),
+		// 	[
+		// 		'name' => 'site_title_typography',
+		// 		'label' => esc_html__( 'Typography', 'hello-plus' ),
+		// 		'selector' => '{{WRAPPER}} .ehp-footer__site-title',
+		// 		'global' => [
+		// 			'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+		// 		],
+		// 		'condition' => [
+		// 			'site_logo_brand_select' => 'title',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_group_control(
+		// 	Group_Control_Text_Shadow::get_type(),
+		// 	[
+		// 		'name' => 'title_shadow',
+		// 		'selector' => '{{WRAPPER}} .ehp-footer__site-title',
+		// 		'condition' => [
+		// 			'site_logo_brand_select' => 'title',
+		// 		],
+		// 	]
+		// );
+
+		// $this->start_controls_tabs(
+		// 	'style_brand_tabs'
+		// );
+
+		// $this->start_controls_tab(
+		// 	'style_brand_normal_tab',
+		// 	[
+		// 		'label' => esc_html__( 'Normal', 'hello-plus' ),
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'style_title_color',
+		// 	[
+		// 		'label' => esc_html__( 'Text Color', 'hello-plus' ),
+		// 		'type' => Controls_Manager::COLOR,
+		// 		'global' => [
+		// 			'default' => Global_Colors::COLOR_PRIMARY,
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .ehp-footer' => '--footer-site-title-color: {{VALUE}}',
+		// 		],
+		// 		'condition' => [
+		// 			'site_logo_brand_select' => 'title',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_group_control(
+		// 	Group_Control_Css_Filter::get_type(),
+		// 	[
+		// 		'name' => 'logo_css_filter',
+		// 		'selector' => '{{WRAPPER}} .ehp-footer__site-logo',
+		// 		'condition' => [
+		// 			'site_logo_brand_select' => 'logo',
+		// 		],
+		// 	]
+		// );
+
+		// $this->end_controls_tab();
+
+		// $this->start_controls_tab(
+		// 	'style_brand_hover_tab',
+		// 	[
+		// 		'label' => esc_html__( 'Hover', 'hello-plus' ),
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'style_title_color_hover',
+		// 	[
+		// 		'label' => esc_html__( 'Text Color', 'hello-plus' ),
+		// 		'type' => Controls_Manager::COLOR,
+		// 		'global' => [
+		// 			'default' => Global_Colors::COLOR_PRIMARY,
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .ehp-footer' => '--footer-site-title-color-hover: {{VALUE}}',
+		// 		],
+		// 		'condition' => [
+		// 			'site_logo_brand_select' => 'title',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_group_control(
+		// 	Group_Control_Css_Filter::get_type(),
+		// 	[
+		// 		'name' => 'image_hover_css_filters',
+		// 		'selector' => '{{WRAPPER}} .ehp-footer__site-logo:hover',
+		// 		'condition' => [
+		// 			'site_logo_brand_select' => 'logo',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'style_logo_hover_transition_duration',
+		// 	[
+		// 		'label' => esc_html__( 'Transition Duration (s)', 'hello-plus' ),
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'range' => [
+		// 			'px' => [
+		// 				'min' => 0,
+		// 				'max' => 3,
+		// 				'step' => 0.1,
+		// 			],
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .ehp-footer__site-logo' => 'transition-duration: {{SIZE}}s',
+		// 		],
+		// 		'condition' => [
+		// 			'site_logo_brand_select' => 'logo',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'style_title_hover_transition_duration',
+		// 	[
+		// 		'label' => esc_html__( 'Transition Duration (s)', 'hello-plus' ),
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'range' => [
+		// 			'px' => [
+		// 				'min' => 0,
+		// 				'max' => 3,
+		// 				'step' => 0.1,
+		// 			],
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .ehp-footer__site-title' => 'transition-duration: {{SIZE}}s',
+		// 		],
+		// 		'condition' => [
+		// 			'site_logo_brand_select' => 'title',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'style_logo_hover_animation',
+		// 	[
+		// 		'label' => esc_html__( 'Hover Animation', 'hello-plus' ),
+		// 		'type' => Controls_Manager::HOVER_ANIMATION,
+		// 		'condition' => [
+		// 			'site_logo_brand_select' => 'logo',
+		// 		],
+		// 	]
+		// );
+
+		// $this->end_controls_tab();
+
+		// $this->end_controls_tabs();
+
+		// $this->add_control(
+		// 	'show_logo_border',
+		// 	[
+		// 		'label' => esc_html__( 'Border', 'hello-plus' ),
+		// 		'type' => Controls_Manager::SWITCHER,
+		// 		'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+		// 		'label_off' => esc_html__( 'No', 'hello-plus' ),
+		// 		'return_value' => 'yes',
+		// 		'default' => 'no',
+		// 		'separator' => 'before',
+		// 		'condition' => [
+		// 			'site_logo_brand_select' => 'logo',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'logo_border_width',
+		// 	[
+		// 		'label' => __( 'Border Width', 'hello-plus' ),
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'size_units' => [ 'px' ],
+		// 		'range' => [
+		// 			'px' => [
+		// 				'min' => 0,
+		// 				'max' => 10,
+		// 				'step' => 1,
+		// 			],
+		// 		],
+		// 		'default' => [
+		// 			'size' => 1,
+		// 			'unit' => 'px',
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .ehp-footer' => '--footer-logo-border-width: {{SIZE}}{{UNIT}};',
+		// 		],
+		// 		'conditions' => [
+		// 			'relation' => 'and',
+		// 			'terms' => [
+		// 				[
+		// 					'name' => 'show_logo_border',
+		// 					'operator' => '==',
+		// 					'value' => 'yes',
+		// 				],
+		// 				[
+		// 					'name' => 'site_logo_brand_select',
+		// 					'operator' => '==',
+		// 					'value' => 'logo',
+		// 				],
+		// 			],
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'logo_border_color',
+		// 	[
+		// 		'label' => esc_html__( 'Color', 'hello-plus' ),
+		// 		'type' => Controls_Manager::COLOR,
+		// 		'global' => [
+		// 			'default' => Global_Colors::COLOR_TEXT,
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .ehp-footer' => '--footer-logo-border-color: {{VALUE}}',
+		// 		],
+		// 		'conditions' => [
+		// 			'relation' => 'and',
+		// 			'terms' => [
+		// 				[
+		// 					'name' => 'show_logo_border',
+		// 					'operator' => '==',
+		// 					'value' => 'yes',
+		// 				],
+		// 				[
+		// 					'name' => 'site_logo_brand_select',
+		// 					'operator' => '==',
+		// 					'value' => 'logo',
+		// 				],
+		// 			],
+		// 		],
+		// 	]
+		// );
+
+		// $shapes = new Ehp_Shapes( $this, [
+		// 	'widget_name' => 'footer',
+		// 	'container_prefix' => 'logo',
+		// 	'condition' => [
+		// 		'site_logo_brand_select' => 'logo',
+		// 	],
+		// ] );
+		// $shapes->add_style_controls();
+
+		// $this->add_group_control(
+		// 	Group_Control_Box_Shadow::get_type(),
+		// 	[
+		// 		'name' => 'logo_box_shadow',
+		// 		'selector' => '{{WRAPPER}} .ehp-footer__site-logo',
+		// 		'condition' => [
+		// 			'site_logo_brand_select' => 'logo',
+		// 		],
+		// 	]
+		// );
 
 		$this->add_control(
 			'footer_description_heading',

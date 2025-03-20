@@ -606,7 +606,6 @@ class Ehp_Footer extends Ehp_Widget_Base {
 			]
 		);
 
-
 		$this->add_group_control(
 			Group_Control_Css_Filter::get_type(),
 			[

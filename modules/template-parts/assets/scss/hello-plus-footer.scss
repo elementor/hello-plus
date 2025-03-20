@@ -90,6 +90,10 @@
 		gap: var(--footer-vertical-gap-content);
 	}
 
+	&__site-link-container {
+		display: flex;
+	}
+
 	&__site-link {
 		align-items: center;
 		display: flex;

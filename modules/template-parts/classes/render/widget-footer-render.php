@@ -45,7 +45,10 @@ class Widget_Footer_Render {
 
 		$this->widget->add_render_attribute( 'layout', $render_attributes );
 
-		$this->maybe_add_advanced_attributes();
+		$ehp_shared_template_parts = new Ehp_Shared_Template_Parts( $this->widget, [
+			'widget_name' => 'header',
+		] );
+		$ehp_shared_template_parts->maybe_add_advanced_attributes();
 
 		$this->widget->add_render_attribute( 'row', 'class', self::LAYOUT_CLASSNAME . '__row' );
 
@@ -61,25 +64,6 @@ class Widget_Footer_Render {
 			<?php $this->render_copyright(); ?>
 		</footer>
 		<?php
-	}
-
-
-	protected function maybe_add_advanced_attributes() {
-		$advanced_css_id = $this->settings['advanced_custom_css_id'];
-		$advanced_css_classes = $this->settings['advanced_custom_css_classes'];
-
-		$wrapper_render_attributes = [];
-		if ( ! empty( $advanced_css_classes ) ) {
-			$wrapper_render_attributes['class'] = $advanced_css_classes;
-		}
-
-		if ( ! empty( $advanced_css_id ) ) {
-			$wrapper_render_attributes['id'] = $advanced_css_id;
-		}
-		if ( empty( $wrapper_render_attributes ) ) {
-			return;
-		}
-		$this->widget->add_render_attribute( '_wrapper', $wrapper_render_attributes );
 	}
 
 	public function render_side_content(): void {

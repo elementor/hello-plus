@@ -25,6 +25,9 @@ use HelloPlus\Classes\{
 	Ehp_Shapes,
 	Widget_Utils,
 };
+use HelloPlus\Modules\TemplateParts\Classes\{
+	Control_Media_Preview,
+};
 
 class Ehp_Shared_Template_Parts {
 	private $context = [];
@@ -549,6 +552,26 @@ class Ehp_Shared_Template_Parts {
 		}
 
 		return $site_logo_image;
+	}
+
+	public function maybe_add_advanced_attributes() {
+		$this->settings = $this->widget->get_settings_for_display();
+
+		$advanced_css_id = $this->settings['advanced_custom_css_id'];
+		$advanced_css_classes = $this->settings['advanced_custom_css_classes'];
+
+		$wrapper_render_attributes = [];
+		if ( ! empty( $advanced_css_classes ) ) {
+			$wrapper_render_attributes['class'] = $advanced_css_classes;
+		}
+
+		if ( ! empty( $advanced_css_id ) ) {
+			$wrapper_render_attributes['id'] = $advanced_css_id;
+		}
+		if ( empty( $wrapper_render_attributes ) ) {
+			return;
+		}
+		$this->widget->add_render_attribute( '_wrapper', $wrapper_render_attributes );
 	}
 
 	public function __construct( Widget_Base $widget, $context = [], $defaults = [] ) {

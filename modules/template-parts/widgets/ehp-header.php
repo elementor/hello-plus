@@ -23,6 +23,7 @@ use Elementor\Core\Kits\Documents\Tabs\{
 use HelloPlus\Modules\TemplateParts\Classes\{
 	Render\Widget_Header_Render,
 	Control_Media_Preview,
+	Ehp_Shared_Template_Parts,
 };
 use HelloPlus\Modules\Content\Classes\Choose_Img_Control;
 
@@ -504,50 +505,55 @@ class Ehp_Header extends Ehp_Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'style_logo_width',
-			[
-				'label' => __( 'Logo Width', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-						'step' => 1,
-					],
-				],
-				'default' => [
-					'size' => 68,
-					'unit' => 'px',
-				],
-				'tablet_default' => [
-					'size' => 68,
-					'unit' => 'px',
-				],
-				'mobile_default' => [
-					'size' => 68,
-					'unit' => 'px',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-header' => '--header-logo-width: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'site_logo_brand_select' => 'logo',
-				],
-			]
-		);
+		$shared_template_parts = new Ehp_Shared_Template_Parts( $this, [
+			'widget_name' => 'header',
+		] );
+		$shared_template_parts->add_style_brand_controls();
 
-		$this->add_control(
-			'style_title_heading',
-			[
-				'label' => esc_html__( 'Site Name', 'hello-plus' ),
-				'type' => Controls_Manager::HEADING,
-				'condition' => [
-					'site_logo_brand_select' => 'title',
-				],
-			]
-		);
+		// $this->add_responsive_control(
+		// 	'style_logo_width',
+		// 	[
+		// 		'label' => __( 'Logo Width', 'hello-plus' ),
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+		// 		'range' => [
+		// 			'px' => [
+		// 				'min' => 0,
+		// 				'max' => 100,
+		// 				'step' => 1,
+		// 			],
+		// 		],
+		// 		'default' => [
+		// 			'size' => 68,
+		// 			'unit' => 'px',
+		// 		],
+		// 		'tablet_default' => [
+		// 			'size' => 68,
+		// 			'unit' => 'px',
+		// 		],
+		// 		'mobile_default' => [
+		// 			'size' => 68,
+		// 			'unit' => 'px',
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .ehp-header' => '--header-logo-width: {{SIZE}}{{UNIT}};',
+		// 		],
+		// 		'condition' => [
+		// 			'site_logo_brand_select' => 'logo',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'style_title_heading',
+		// 	[
+		// 		'label' => esc_html__( 'Site Name', 'hello-plus' ),
+		// 		'type' => Controls_Manager::HEADING,
+		// 		'condition' => [
+		// 			'site_logo_brand_select' => 'title',
+		// 		],
+		// 	]
+		// );
 
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),

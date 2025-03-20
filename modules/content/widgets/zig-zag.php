@@ -58,13 +58,21 @@ class Zig_Zag extends Widget_Base {
 	}
 
 	public function get_script_depends(): array {
-		return [ 'helloplus-zigzag-fe' ];
+		return [ 'helloplus-zigzag-fe', 'elementor-editor-document', ];
 	}
 
 	protected function render(): void {
 		$render_strategy = new Widget_Zig_Zag_Render( $this );
 
 		$render_strategy->render();
+	}
+
+	public function public_add_inline_editing_attributes( $attribute, $default = 'basic' ) {
+		return $this->add_inline_editing_attributes( $attribute, $default );
+	}
+
+	public function public_get_repeater_setting_key( $setting_key, $repeater_key, $item_key ) {
+		return $this->get_repeater_setting_key( $setting_key, $repeater_key, $item_key );
 	}
 
 	protected function register_controls() {

@@ -178,8 +178,8 @@ class Widget_Zig_Zag_Render {
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'text-container-' . $key ); ?>>
 			<?php
-			Widget_Utils::maybe_render_text_html( $this->widget, $graphic_element . '_title' . $key, 'ehp-zigzag__title', $item[ $graphic_element . '_title' ], $this->settings['zigzag_title_tag'] );
-			Widget_Utils::maybe_render_text_html( $this->widget, $graphic_element . '_description' . $key, 'ehp-zigzag__description', $item[ $graphic_element . '_description' ] );
+			Widget_Utils::maybe_render_text_html( $this->widget, $zigzag_item_title_setting_key, 'ehp-zigzag__title', $item[ $graphic_element . '_title' ], $this->settings['zigzag_title_tag'] );
+			Widget_Utils::maybe_render_text_html( $this->widget, $zigzag_item_description_setting_key, 'ehp-zigzag__description', $item[ $graphic_element . '_description' ] );
 
 			if ( ! empty( $item[ $graphic_element . '_button_text' ] ) ) {
 				$this->render_cta_button( $item, $key );

@@ -123,8 +123,13 @@ class Widget_Footer_Render {
 
 	public function render_site_link(): void {
 		$site_logo_image = $this->settings['site_logo_image'];
-		$site_link_classnames = self::LAYOUT_CLASSNAME . '__site-link';
+		$hover_animation = $this->settings['style_logo_hover_animation'] ?? '';
+		$site_link_classnames = [ self::LAYOUT_CLASSNAME . '__site-link' ];
 		$site_title_tag = $this->settings['site_logo_title_tag'] ?? 'h2';
+
+		if ( ! empty( $hover_animation ) ) {
+			$site_link_classnames[] = 'elementor-animation-' . $hover_animation;
+		}
 
 		$this->widget->add_render_attribute( 'site-link', [
 			'class' => $site_link_classnames,

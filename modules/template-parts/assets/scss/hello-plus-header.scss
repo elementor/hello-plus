@@ -171,6 +171,13 @@
 		&.has-border {
 			border: var(--header-logo-border-width) solid var(--header-logo-border-color);
 		}
+
+		&.has-shape-custom {
+			--ehp-shapes-border-radius-block-end: var(--header-logo-border-radius-block-end);
+			--ehp-shapes-border-radius-block-start: var(--header-logo-border-radius-block-start);
+			--ehp-shapes-border-radius-inline-end: var(--header-logo-border-radius-inline-end);
+			--ehp-shapes-border-radius-inline-start: var(--header-logo-border-radius-inline-start);
+		}
 	}
 
 	&__site-title {

@@ -552,23 +552,6 @@ class Ehp_Footer extends Ehp_Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'site_title_color',
-			[
-				'label' => esc_html__( 'Text Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_PRIMARY,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-footer' => '--footer-title-color: {{VALUE}}',
-				],
-				'condition' => [
-					'site_logo_brand_select' => 'title',
-				],
-			]
-		);
-
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[

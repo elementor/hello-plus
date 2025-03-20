@@ -10,6 +10,7 @@ use Elementor\{
 	Controls_Manager,
 	Group_Control_Background,
 	Group_Control_Box_Shadow,
+	Group_Control_Css_Filter,
 	Group_Control_Text_Shadow,
 	Group_Control_Typography,
 	Repeater,
@@ -73,6 +74,7 @@ class Ehp_Footer extends Ehp_Widget_Base {
 		$this->add_inline_editing_attributes( 'footer_description', 'none' );
 		$this->add_inline_editing_attributes( 'footer_contact_heading', 'none' );
 		$this->add_inline_editing_attributes( 'footer_contact_information', 'none' );
+		$this->add_inline_editing_attributes( 'footer_menu_heading', 'none' );
 
 		$render_strategy->render();
 	}

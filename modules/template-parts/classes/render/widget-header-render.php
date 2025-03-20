@@ -17,6 +17,7 @@ use HelloPlus\Classes\{
 	Ehp_Button,
 	Ehp_Shapes,
 	Ehp_Social_Platforms,
+	Widget_Utils,
 };
 
 /**
@@ -25,8 +26,6 @@ use HelloPlus\Classes\{
 class Widget_Header_Render {
 
 	const LAYOUT_CLASSNAME = 'ehp-header';
-	const SITE_LINK_CLASSNAME = 'ehp-header__site-link';
-	const CTAS_CONTAINER_CLASSNAME = 'ehp-header__ctas-container';
 
 	protected Ehp_Header $widget;
 
@@ -101,9 +100,10 @@ class Widget_Header_Render {
 
 		$this->maybe_add_advanced_attributes();
 
+		$this->widget->add_render_attribute( 'elements-container', 'class', self::LAYOUT_CLASSNAME . '__elements-container' );
 		?>
 		<header <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
-			<div class="ehp-header__elements-container">
+			<div <?php $this->widget->print_render_attribute_string( 'elements-container' ); ?>>
 				<?php
 				$this->render_site_link();
 				$this->render_navigation();
@@ -154,11 +154,8 @@ class Widget_Header_Render {
 
 	public function render_site_link(): void {
 		$site_logo_brand_select = $this->settings['site_logo_brand_select'];
-
-		$site_title_text = $this->widget->get_site_title();
-		$site_title_tag = $this->settings['site_logo_title_tag'] ?? 'h2';
 		$hover_animation = $this->settings['style_logo_hover_animation'] ?? '';
-		$site_link_classnames = [ self::SITE_LINK_CLASSNAME ];
+		$site_link_classnames = [ self::LAYOUT_CLASSNAME . '__site-link' ];
 
 		if ( ! empty( $hover_animation ) ) {
 			$site_link_classnames[] = 'elementor-animation-' . $hover_animation;
@@ -178,8 +175,12 @@ class Widget_Header_Render {
 			$this->settings['site_logo_image'] = $this->widget->add_site_logo_if_present( $this->settings['site_logo_image'] );
 		}
 
+		$this->widget->add_render_attribute( 'site-link-container', 'class', self::LAYOUT_CLASSNAME . '__site-link-container' );
+
+		$site_title_classname = self::LAYOUT_CLASSNAME . '__site-title';
+
 		?>
-		<div class="ehp-header__site-link-container">
+		<div <?php $this->widget->print_render_attribute_string( 'site-link-container' ); ?>>
 			<a <?php $this->widget->print_render_attribute_string( 'site-link' ); ?>>
 				<?php if ( 'logo' === $site_logo_brand_select ) {
 					add_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_attachment_image_html_filter' ], 10, 4 );
@@ -187,9 +188,7 @@ class Widget_Header_Render {
 					remove_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_attachment_image_html_filter' ], 10 );
 				} ?>
 				<?php if ( 'title' === $site_logo_brand_select ) {
-					$site_title_output = sprintf( '<%1$s %2$s %3$s>%4$s</%1$s>', Utils::validate_html_tag( $site_title_tag ), $this->widget->get_render_attribute_string( 'heading' ), 'class="ehp-header__site-title"', esc_html( $site_title_text ) );
-					// Escaped above
-					Utils::print_unescaped_internal_string( $site_title_output );
+					Widget_Utils::maybe_render_text_html( $this->widget, 'header_site_title', $site_title_classname,  $this->widget->get_site_title(), $this->settings['site_logo_title_tag'] );
 				} ?>
 			</a>
 		</div>
@@ -198,7 +197,7 @@ class Widget_Header_Render {
 
 	public function render_navigation(): void {
 		$available_menus = $this->widget->get_available_menus();
-		$menu_classname = 'ehp-header__menu';
+		$menu_classname = self::LAYOUT_CLASSNAME . '__menu';
 
 		if ( ! $available_menus ) {
 			return;
@@ -257,7 +256,7 @@ class Widget_Header_Render {
 
 		$this->widget->add_render_attribute( 'main-menu', 'class', [
 			' has-submenu-layout-' . $submenu_layout,
-			'ehp-header__navigation',
+			self::LAYOUT_CLASSNAME . '__navigation',
 		] );
 		?>
 
@@ -288,7 +287,7 @@ class Widget_Header_Render {
 
 	private function render_menu_toggle() {
 		$toggle_icon = $this->settings['navigation_menu_icon'];
-		$toggle_classname = 'ehp-header__button-toggle';
+		$toggle_classname = self::LAYOUT_CLASSNAME . '__button-toggle';
 		$show_contact_buttons = 'yes' === $this->settings['contact_buttons_show'] || 'yes' === $this->settings['contact_buttons_show_connect'];
 
 		$this->widget->add_render_attribute( 'button-toggle', [
@@ -299,13 +298,31 @@ class Widget_Header_Render {
 			'aria-expanded' => 'false',
 		] );
 
+		$this->widget->add_render_attribute( 'side-toggle', 'class', self::LAYOUT_CLASSNAME . '__side-toggle' );
+		$this->widget->add_render_attribute( 'toggle-icon-open', [
+			'class' => [
+				self::LAYOUT_CLASSNAME . '__toggle-icon',
+				self::LAYOUT_CLASSNAME . '__toggle-icon--open',
+			],
+			'aria-hidden' => 'true',
+		] );
+
+		$this->widget->add_render_attribute( 'toggle-icon-close', [
+			'class' => [
+				'eicon-close',
+				self::LAYOUT_CLASSNAME . '__toggle-icon',
+				self::LAYOUT_CLASSNAME . '__toggle-icon--close',
+			],
+			'aria-hidden' => 'true',
+		] );
+
 		?>
-		<div class="ehp-header__side-toggle">
+		<div <?php $this->widget->print_render_attribute_string( 'side-toggle' ); ?>>
 			<?php if ( $show_contact_buttons ) {
 				$this->render_contact_buttons();
 			} ?>
 			<button <?php $this->widget->print_render_attribute_string( 'button-toggle' ); ?>>
-				<span class="ehp-header__toggle-icon ehp-header__toggle-icon--open" aria-hidden="true">
+				<span <?php $this->widget->print_render_attribute_string( 'toggle-icon-open' ); ?>>
 					<?php
 					Icons_Manager::render_icon( $toggle_icon,
 						[
@@ -314,7 +331,7 @@ class Widget_Header_Render {
 					);
 					?>
 				</span>
-				<i class="eicon-close ehp-header__toggle-icon ehp-header__toggle-icon--close"></i>
+				<i <?php $this->widget->print_render_attribute_string( 'toggle-icon-close' ); ?>></i>
 				<span class="elementor-screen-only"><?php esc_html_e( 'Menu', 'hello-plus' ); ?></span>
 			</button>
 		</div>
@@ -323,7 +340,7 @@ class Widget_Header_Render {
 
 	protected function render_ctas_container() {
 		$responsive_button_width = $this->settings['cta_responsive_width'] ?? '';
-		$ctas_container_classnames = self::CTAS_CONTAINER_CLASSNAME;
+		$ctas_container_classnames = self::LAYOUT_CLASSNAME . '__ctas-container';
 		$show_contact_buttons = 'yes' === $this->settings['contact_buttons_show'] || 'yes' === $this->settings['contact_buttons_show_connect'];
 
 		if ( '' !== $responsive_button_width ) {
@@ -357,7 +374,7 @@ class Widget_Header_Render {
 		$hover_animation = $this->settings['contact_button_hover_animation'];
 
 		$contact_buttons_classnames = [
-			'ehp-header__contact-buttons',
+			self::LAYOUT_CLASSNAME . '__contact-buttons',
 			'has-responsive-display-' . $responsive_display,
 		];
 
@@ -390,7 +407,7 @@ class Widget_Header_Render {
 
 				$icon = $contact_button['contact_buttons_icon'];
 
-				$button_classnames = [ 'ehp-header__contact-button' ];
+				$button_classnames = [ self::LAYOUT_CLASSNAME . '__contact-button' ];
 
 				if ( ! empty( $hover_animation ) ) {
 					$button_classnames[] = 'elementor-animation-' . $hover_animation;
@@ -412,6 +429,8 @@ class Widget_Header_Render {
 						'target' => '_blank',
 					] );
 				}
+
+				$this->widget->add_render_attribute( 'contact-button-label', 'class', self::LAYOUT_CLASSNAME . '__contact-button-label' );
 				?>
 
 				<a <?php $this->widget->print_render_attribute_string( 'contact-button-' . $key ); ?>>
@@ -419,12 +438,12 @@ class Widget_Header_Render {
 					Icons_Manager::render_icon( $icon,
 						[
 							'aria-hidden' => 'true',
-							'class' => 'ehp-header__contact-button-icon',
+							'class' => self::LAYOUT_CLASSNAME . '__contact-button-icon',
 						]
 					);
 				} ?>
 				<?php if ( 'label' === $link_type ) { ?>
-					<span class="ehp-header__contact-button-label"><?php echo esc_html( $contact_button['contact_buttons_label'] ); ?></span>
+					<span <?php $this->widget->print_render_attribute_string( 'contact-button-label' ); ?>><?php echo esc_html( $contact_button['contact_buttons_label'] ); ?></span>
 				<?php } ?>
 				</a>
 			<?php } ?>
@@ -482,21 +501,28 @@ class Widget_Header_Render {
 	}
 
 	public function handle_link_classes( $atts, $item, $args, $depth ) {
-		$classes = $depth ? 'ehp-header__item ehp-header__item--sub-level' : 'ehp-header__item ehp-header__item--top-level';
+		$classes = [
+			self::LAYOUT_CLASSNAME . '__item',
+			$depth ? self::LAYOUT_CLASSNAME . '__item--sub-level' : self::LAYOUT_CLASSNAME . '__item--top-level',
+		];
+
 		$is_anchor = false !== strpos( $atts['href'], '#' );
 
 		if ( ! $is_anchor && in_array( 'current-menu-item', $item->classes, true ) ) {
-			$classes .= ' is-item-active';
+			$classes[] = 'is-item-active';
 		}
 
 		if ( $is_anchor ) {
-			$classes .= ' is-item-anchor';
+			$classes[] = 'is-item-anchor';
 		}
 
+
+		$class_string = implode( ' ', $classes );
+
 		if ( empty( $atts['class'] ) ) {
-			$atts['class'] = $classes;
+			$atts['class'] = $class_string;
 		} else {
-			$atts['class'] .= ' ' . $classes;
+			$atts['class'] .= ' ' . $class_string;
 		}
 
 		return $atts;
@@ -505,7 +531,7 @@ class Widget_Header_Render {
 	public function handle_sub_menu_classes() {
 		$submenu_layout = $this->settings['style_submenu_layout'] ?? 'horizontal';
 
-		$dropdown_classnames = [ 'ehp-header__dropdown' ];
+		$dropdown_classnames = [ self::LAYOUT_CLASSNAME . '__dropdown' ];
 		$dropdown_classnames[] = 'has-layout-' . $submenu_layout;
 
 		$shapes = new Ehp_Shapes( $this->widget, [
@@ -527,11 +553,13 @@ class Widget_Header_Render {
 			$svg_icon = Icons_Manager::try_get_icon_html( $submenu_icon,
 				[
 					'aria-hidden' => 'true',
-					'class' => 'ehp-header__submenu-toggle-icon',
+					'class' => self::LAYOUT_CLASSNAME . '__submenu-toggle-icon',
 				]
 			);
 
-			$item_output = '<button type="button" class="ehp-header__item ehp-header__dropdown-toggle" aria-expanded="false">' . esc_html( $item->title ) . $svg_icon . '</button>';
+			$button_classes = self::LAYOUT_CLASSNAME . '__item ' . self::LAYOUT_CLASSNAME . '__dropdown-toggle';
+
+			$item_output = '<button type="button" class="' . $button_classes . '" aria-expanded="false">' . esc_html( $item->title ) . $svg_icon . '</button>';
 		}
 
 		return $item_output;

@@ -110,7 +110,7 @@ class Ehp_Footer extends Ehp_Widget_Base {
 		);
 
 		$shared_template_parts = new Ehp_Shared_Template_Parts( $this, [
-			'widget_name' => 'header',
+			'widget_name' => 'footer',
 		] );
 		$shared_template_parts->add_content_brand_controls();
 
@@ -306,7 +306,7 @@ class Ehp_Footer extends Ehp_Widget_Base {
 		);
 
 		$shared_template_parts = new Ehp_Shared_Template_Parts( $this, [
-			'widget_name' => 'header',
+			'widget_name' => 'footer',
 		] );
 
 		$menus = $shared_template_parts->get_available_menus();

@@ -67,28 +67,17 @@ class Widget_Footer_Render {
 	}
 
 	public function render_side_content(): void {
-		$description_text = $this->settings['footer_description'];
-		$description_tag = $this->settings['footer_description_tag'] ?? 'p';
-		$has_description = '' !== $description_text;
-
-		$this->widget->add_render_attribute( 'footer_description', [
-			'class' => self::LAYOUT_CLASSNAME . '__description',
-		] );
 		$this->widget->add_render_attribute( 'side-content', 'class', self::LAYOUT_CLASSNAME . '__side-content' );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'side-content' ); ?>>
 			<?php
-				$ehp_shared_template_parts = new Ehp_Shared_Template_Parts( $this->widget, [
-					'widget_name' => 'footer',
-				] );
-				$ehp_shared_template_parts->render_site_link();
-			
-			if ( $has_description ) {
-				$element_html = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $description_tag ), $this->widget->get_render_attribute_string( 'footer_description' ), esc_html( $description_text ) );
+			$ehp_shared_template_parts = new Ehp_Shared_Template_Parts( $this->widget, [
+				'widget_name' => 'footer',
+			] );
+			$ehp_shared_template_parts->render_site_link();
 
-				// Escaped above
-				Utils::print_unescaped_internal_string( $element_html );
-			} ?>
+			Widget_Utils::maybe_render_text_html( $this->widget, 'footer_description', self::LAYOUT_CLASSNAME . '__description', $this->settings['footer_description'], $this->settings['footer_description_tag'] ?? 'p' );
+			?>
 			<?php $this->render_social_icons(); ?>
 		</div>
 		<?php
@@ -146,8 +135,6 @@ class Widget_Footer_Render {
 		] );
 		$available_menus = $shared_template_parts->get_available_menus();
 
-		$menu_classname = self::LAYOUT_CLASSNAME . '__menu';
-
 		if ( ! $available_menus ) {
 			return;
 		}
@@ -155,7 +142,7 @@ class Widget_Footer_Render {
 		$args = [
 			'echo' => false,
 			'menu' => $this->settings['navigation_menu'],
-			'menu_class' => $menu_classname,
+			'menu_class' => self::LAYOUT_CLASSNAME . '__menu',
 			'menu_id' => 'menu-' . $this->get_and_advance_nav_menu_index() . '-' . $this->widget->get_id(),
 			'fallback_cb' => '__return_empty_string',
 			'container' => '',

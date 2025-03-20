@@ -244,7 +244,6 @@ class Widget_Header_Render {
 				self::LAYOUT_CLASSNAME . '__toggle-icon',
 				self::LAYOUT_CLASSNAME . '__toggle-icon--close',
 			],
-			'aria-hidden' => 'true',
 		] );
 
 		?>

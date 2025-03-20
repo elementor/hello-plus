@@ -4,11 +4,10 @@ namespace HelloPlus\Modules\TemplateParts\Widgets;
 
 use Elementor\Controls_Manager;
 use Elementor\Widget_Base;
-use HelloPlus\Modules\TemplateParts\Classes\Traits\Shared_Header_Traits;
+
 use HelloPlus\Includes\Utils as Theme_Utils;
 
 abstract class Ehp_Widget_Base extends Widget_Base {
-	use Shared_Header_Traits;
 
 	public function get_stack( $with_common_controls = true ): array {
 		return parent::get_stack( false );

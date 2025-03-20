@@ -6,8 +6,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use Elementor\Icons_Manager;
-use Elementor\Utils;
+use HelloPlus\Classes\Widget_Utils;
+use Elementor\{
+	Icons_Manager,
+};
 
 use HelloPlus\Modules\Content\Widgets\Zig_Zag;
 use HelloPlus\Classes\{
@@ -18,10 +20,6 @@ use HelloPlus\Classes\{
 class Widget_Zig_Zag_Render {
 	protected Zig_Zag $widget;
 	const LAYOUT_CLASSNAME = 'ehp-zigzag';
-	const ITEM_CLASSNAME = 'ehp-zigzag__item-container';
-	const GRAPHIC_ELEMENT_CLASSNAME = 'ehp-zigzag__graphic-element-container';
-	const BUTTON_CLASSNAME = 'ehp-zigzag__button';
-	const TEXT_CONTAINER_CLASSNAME = 'ehp-zigzag__text-container';
 
 	protected array $settings;
 
@@ -70,7 +68,7 @@ class Widget_Zig_Zag_Render {
 			$repeater = 'image' === $graphic_element ? $this->settings['image_zigzag_items'] : $this->settings['icon_zigzag_items'];
 
 			$wrapper_classnames = [
-				'ehp-zigzag__item-wrapper',
+				self::LAYOUT_CLASSNAME . '__item-wrapper',
 			];
 
 			if ( $has_entrance_animation ) {
@@ -83,7 +81,7 @@ class Widget_Zig_Zag_Render {
 				] );
 
 				$this->widget->add_render_attribute( 'zigzag-item-' . $key, [
-					'class' => self::ITEM_CLASSNAME,
+					'class' => self::LAYOUT_CLASSNAME . '__item-container',
 				] );
 				?>
 				<div <?php $this->widget->print_render_attribute_string( 'zigzag-item-wrapper-' . $key ); ?>>
@@ -104,7 +102,7 @@ class Widget_Zig_Zag_Render {
 		$graphic_element = $this->settings['graphic_element'];
 
 		$graphic_element_classnames = [
-			self::GRAPHIC_ELEMENT_CLASSNAME,
+			self::LAYOUT_CLASSNAME . '__graphic-element-container',
 		];
 
 		$is_icon = 'icon' === $graphic_element && ! empty( $item['icon_graphic_icon'] );
@@ -156,11 +154,11 @@ class Widget_Zig_Zag_Render {
 		$is_graphic_image = 'image' === $graphic_element;
 		$is_graphic_icon = 'icon' === $graphic_element;
 		$text_container_classnames = [
-			self::TEXT_CONTAINER_CLASSNAME,
+			self::LAYOUT_CLASSNAME . '__text-container',
 		];
 
 		$this->widget->add_render_attribute( 'description-' . $key, [
-			'class' => 'ehp-zigzag__description',
+			'class' => self::LAYOUT_CLASSNAME . '__description',
 		] );
 
 		if ( $is_graphic_icon ) {
@@ -172,19 +170,19 @@ class Widget_Zig_Zag_Render {
 		$this->widget->add_render_attribute( 'text-container-' . $key, [
 			'class' => $text_container_classnames,
 		] );
+
+		$title_classname = self::LAYOUT_CLASSNAME . '__title';
+		$description_classname = self::LAYOUT_CLASSNAME . '__description';
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'text-container-' . $key ); ?>>
-			<?php if ( $has_title ) {
-				$title_output = sprintf( '<%1$s %2$s %3$s>%4$s</%1$s>', Utils::validate_html_tag( $title_tag ), $this->widget->get_render_attribute_string( 'heading' ), 'class="ehp-zigzag__title"', esc_html( $title_text ) );
-				// Escaped above
-				Utils::print_unescaped_internal_string( $title_output );
-			} ?>
-			<?php if ( $has_description ) { ?>
-				<p <?php $this->widget->print_render_attribute_string( 'description-' . $key ); ?>><?php echo esc_html( $description_text ); ?></p>
-			<?php } ?>
-			<?php if ( ! empty( $item[ $graphic_element . '_button_text' ] ) ) {
+			<?php
+			Widget_Utils::maybe_render_text_html( $this->widget, $graphic_element . '_title' . $key, $title_classname, $item[ $graphic_element . '_title' ], $this->settings['zigzag_title_tag'] );
+			Widget_Utils::maybe_render_text_html( $this->widget, $graphic_element . '_description' . $key, $description_classname, $item[ $graphic_element . '_description' ] );
+
+			if ( ! empty( $item[ $graphic_element . '_button_text' ] ) ) {
 				$this->render_cta_button( $item, $key );
-			} ?>
+			}
+			?>
 		</div>
 		<?php
 	}
@@ -206,8 +204,10 @@ class Widget_Zig_Zag_Render {
 			'widget_name' => $this->widget->get_name(),
 			'key' => $key,
 		], $defaults );
+
+		$this->widget->add_render_attribute( 'button-container', 'class', self::LAYOUT_CLASSNAME . '__button-container' );
 		?>
-		<div class="ehp-zigzag__button-container">
+		<div <?php $this->widget->print_render_attribute_string( 'button-container' ); ?>>
 			<?php $button->render(); ?>
 		</div>
 		<?php

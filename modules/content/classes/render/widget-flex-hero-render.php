@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use Elementor\Utils;
+use HelloPlus\Classes\Widget_Utils;
 use HelloPlus\Modules\Content\Widgets\Flex_Hero;
 use HelloPlus\Classes\{
 	Ehp_Button,
@@ -16,9 +16,6 @@ use HelloPlus\Classes\{
 class Widget_Flex_Hero_Render {
 	protected Flex_Hero $widget;
 	const LAYOUT_CLASSNAME = 'ehp-flex-hero';
-	const CTAS_CONTAINER_CLASSNAME = 'ehp-flex-hero__ctas-container';
-	const BUTTON_CLASSNAME = 'ehp-flex-hero__button';
-	const IMAGE_CLASSNAME = 'ehp-flex-hero__image';
 
 	protected array $settings;
 
@@ -94,9 +91,11 @@ class Widget_Flex_Hero_Render {
 	}
 
 	public function render_content_container() {
+		$this->widget->add_render_attribute( 'content-container', 'class', self::LAYOUT_CLASSNAME . '__content-container' );
+		$this->widget->add_render_attribute( 'overlay', 'class', self::LAYOUT_CLASSNAME . '__overlay' );
 		?>
-			<div class="ehp-flex-hero__overlay"></div>
-			<div class="ehp-flex-hero__content-container">
+			<div <?php $this->widget->print_render_attribute_string( 'overlay' ); ?>></div>
+			<div <?php $this->widget->print_render_attribute_string( 'content-container' ); ?>>
 				<?php
 					$this->render_text_container();
 					$this->render_ctas_container();
@@ -106,22 +105,13 @@ class Widget_Flex_Hero_Render {
 	}
 
 	public function render_text_container() {
-		$this->maybe_render_text_html( 'intro_text', 'ehp-flex-hero__intro', $this->settings['intro_text'], $this->settings['intro_tag'] );
-		$this->maybe_render_text_html( 'heading_text', 'ehp-flex-hero__heading', $this->settings['heading_text'], $this->settings['heading_tag'] );
-		$this->maybe_render_text_html( 'subheading_text', 'ehp-flex-hero__subheading', $this->settings['subheading_text'], $this->settings['subheading_tag'] );
-	}
+		$intro_classname = self::LAYOUT_CLASSNAME . '__intro';
+		$heading_classname = self::LAYOUT_CLASSNAME . '__heading';
+		$subheading_classname = self::LAYOUT_CLASSNAME . '__subheading';
 
-	public function maybe_render_text_html( $render_key, $css_class, $settings_text, $settings_tag ) {
-		if ( '' !== $settings_text ) {
-			$this->widget->add_render_attribute( $render_key, 'class', $css_class );
-
-			$element = wp_kses_post( $settings_text );
-
-			$element_html = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $settings_tag ), $this->widget->get_render_attribute_string( $render_key ), $element );
-
-			// PHPCS - the variable $element_html holds safe data.
-			echo $element_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		}
+		Widget_Utils::maybe_render_text_html( $this->widget, 'intro_text', $intro_classname, $this->settings['intro_text'], $this->settings['intro_tag'] );
+		Widget_Utils::maybe_render_text_html( $this->widget, 'heading_text', $heading_classname, $this->settings['heading_text'], $this->settings['heading_tag'] );
+		Widget_Utils::maybe_render_text_html( $this->widget, 'subheading_text', $subheading_classname, $this->settings['subheading_text'], $this->settings['subheading_tag'] );
 	}
 
 	protected function render_ctas_container() {
@@ -130,7 +120,7 @@ class Widget_Flex_Hero_Render {
 		$has_primary_button = ! empty( $primary_cta_button_text );
 		$has_secondary_button = ! empty( $secondary_cta_button_text );
 
-		$ctas_container_classnames = [ self::CTAS_CONTAINER_CLASSNAME ];
+		$ctas_container_classnames = [ self::LAYOUT_CLASSNAME . '__ctas-container' ];
 
 		$this->widget->add_render_attribute( 'ctas-container', [
 			'class' => $ctas_container_classnames,
@@ -156,8 +146,9 @@ class Widget_Flex_Hero_Render {
 	}
 
 	protected function render_image_container() {
+		$this->widget->add_render_attribute( 'image-wrapper', 'class', self::LAYOUT_CLASSNAME . '__image-wrapper' );
 		?>
-		<div class="ehp-flex-hero__image-wrapper">
+		<div <?php $this->widget->print_render_attribute_string( 'image-wrapper' ); ?>>
 		<?php
 			$image = new Ehp_Image( $this->widget, [
 				'widget_name' => $this->widget->get_name(),

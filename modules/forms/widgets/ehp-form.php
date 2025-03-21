@@ -978,7 +978,7 @@ class Ehp_Form extends Form_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'text_align',
 			[
 				'label' => esc_html__( 'Align', 'hello-plus' ),

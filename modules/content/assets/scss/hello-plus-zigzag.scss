@@ -3,9 +3,6 @@
 .ehp-zigzag {
 	--zigzag-title-color: #000000;
 	--zigzag-description-color: #000000;
-	--zigzag-wrapper-border-width: 2px;
-	--zigzag-wrapper-border-color: #000000;
-	--zigzag-wrapper-border-radius: 0;
 	--zigzag-content-position: center;
 	--zigzag-image-width: 50%;
 	--zigzag-icon-width: 50%;
@@ -23,6 +20,8 @@
 	--zigzag-button-primary-icon-spacing: 10px;
 	--zigzag-button-primary-text-color: #{$global-colors-white};
 	--zigzag-button-primary-text-color-hover: #{$global-colors-text};
+	--zigzag-button-primary-text-color-alternate: var(--zigzag-button-primary-text-color);
+	--zigzag-button-primary-text-color-hover-alternate: var(--zigzag-button-primary-text-color-hover);
 	--zigzag-button-primary-border-width: 0;
 	--zigzag-button-primary-border-color: transparent;
 	--zigzag-button-primary-border-radius-block-end: #{$corners-shape-default};
@@ -34,12 +33,6 @@
 	background-color: transparent;
 	display: flex;
 	flex-direction: column;
-
-	&.has-border {
-		border-color: var(--zigzag-wrapper-border-color);
-		border-style: solid;
-		border-width: var(--zigzag-wrapper-border-width);
-	}
 
 	& a.ehp-zigzag__button,
 	& a.ehp-zigzag__button:not([href]):not([tabindex]) {
@@ -56,6 +49,17 @@
 		--ehp-button-primary-border-radius-block-start: var(--zigzag-button-primary-border-radius-block-start);
 		--ehp-button-primary-border-radius-inline-end: var(--zigzag-button-primary-border-radius-inline-end);
 		--ehp-button-primary-border-radius-inline-start: var(--zigzag-button-primary-border-radius-inline-start);
+	}
+
+
+	& .ehp-zigzag__item-wrapper:nth-child(even) {
+		border: var(--zigzag-wrapper-border-width-alternate) solid var(--zigzag-wrapper-border-color-alternate);
+		
+		& a.ehp-zigzag__button,
+		& a.ehp-zigzag__button:not([href]):not([tabindex]) {
+			--ehp-button-primary-text-color: var(--zigzag-button-primary-text-color-alternate);
+			--ehp-button-primary-text-color-hover: var(--zigzag-button-primary-text-color-hover-alternate);
+		}
 	}
 
 	& .ehp-image {

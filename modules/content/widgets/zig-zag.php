@@ -65,6 +65,15 @@ class Zig_Zag extends Widget_Base {
 	protected function render(): void {
 		$render_strategy = new Widget_Zig_Zag_Render( $this );
 
+		$settings = $this->get_settings_for_display();
+
+		if (
+			( ! empty( $settings['show_alternate_background'] ) && $settings['show_alternate_background'] === 'yes' ) ||
+			( ! empty( $settings['has_alternate_icon_color'] ) && $settings['has_alternate_icon_color'] === 'yes' )
+		) {
+			$settings['has_alternate_row_styles'] = 'yes';
+		}
+
 		$render_strategy->render();
 	}
 
@@ -416,36 +425,6 @@ class Zig_Zag extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'has_alternate_icon_color',
-			[
-				'label' => esc_html__( 'Alternate Icon Color', 'hello-plus' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
-				'label_off' => esc_html__( 'No', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => 'no',
-				'frontend_available' => true,
-			]
-		);
-
-		$this->add_control(
-			'icon_alternate_color',
-			[
-				'label' => esc_html__( 'Alternate Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_ACCENT,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-icon-color-alternate: {{VALUE}}',
-				],
-				'condition' => [
-					'has_alternate_icon_color' => 'yes',
-				],
-			]
-		);
-
 		$this->add_responsive_control(
 			'icon_zigzag_size',
 			[
@@ -696,6 +675,7 @@ class Zig_Zag extends Widget_Base {
 				'label' => esc_html__( 'Sequenced Entrance Animation', 'hello-plus' ),
 				'type' => Control_Zig_Zag_Animation::CONTROL_TYPE,
 				'frontend_available' => true,
+				
 			]
 		);
 
@@ -750,7 +730,7 @@ class Zig_Zag extends Widget_Base {
 		);
 
 		$this->add_control(
-			'show_alternate_background',
+			'has_alternate_row_styles',
 			[
 				'label' => esc_html__( 'Alternate Style', 'hello-plus' ),
 				'type' => Controls_Manager::SWITCHER,
@@ -767,7 +747,7 @@ class Zig_Zag extends Widget_Base {
 				'label' => esc_html__( 'Text', 'hello-plus' ),
 				'type' => Controls_Manager::HEADING,
 				'condition' => [
-					'show_alternate_background' => 'yes',
+					'has_alternate_row_styles' => 'yes',
 				],
 				'separator' => 'before',
 			]
@@ -782,7 +762,7 @@ class Zig_Zag extends Widget_Base {
 					'{{WRAPPER}} .ehp-zigzag__item-wrapper:nth-child(even) .ehp-zigzag__title' => 'color: {{VALUE}}',
 				],
 				'condition' => [
-					'show_alternate_background' => 'yes',
+					'has_alternate_row_styles' => 'yes',
 				],
 			]
 		);
@@ -796,7 +776,7 @@ class Zig_Zag extends Widget_Base {
 					'{{WRAPPER}} .ehp-zigzag__item-wrapper:nth-child(even) .ehp-zigzag__description' => 'color: {{VALUE}}',
 				],
 				'condition' => [
-					'show_alternate_background' => 'yes',
+					'has_alternate_row_styles' => 'yes',
 				],
 			]
 		);
@@ -807,11 +787,11 @@ class Zig_Zag extends Widget_Base {
 				'label' => esc_html__( 'CTA Button', 'hello-plus' ),
 				'type' => Controls_Manager::HEADING,
 				'condition' => [
-					'show_alternate_background' => 'yes',
+					'has_alternate_row_styles' => 'yes',
 				],
 				'separator' => 'before',
 				'condition' => [
-					'show_alternate_background' => 'yes',
+					'has_alternate_row_styles' => 'yes',
 				],
 			]
 		);
@@ -823,7 +803,7 @@ class Zig_Zag extends Widget_Base {
 			[
 				'label' => esc_html__( 'Normal', 'hello-plus' ),
 				'condition' => [
-					'show_alternate_background' => 'yes',
+					'has_alternate_row_styles' => 'yes',
 				],
 			]
 		);
@@ -837,7 +817,7 @@ class Zig_Zag extends Widget_Base {
 					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-button-primary-text-color-alternate: {{VALUE}}',
 				],
 				'condition' => [
-					'show_alternate_background' => 'yes',
+					'has_alternate_row_styles' => 'yes',
 				],
 			]
 		);
@@ -852,7 +832,7 @@ class Zig_Zag extends Widget_Base {
 					'relation' => 'and',
 					'terms' => [
 						[
-							'name' => 'show_alternate_background',
+							'name' => 'has_alternate_row_styles',
 							'operator' => '===',
 							'value' => 'yes',
 						],
@@ -874,7 +854,7 @@ class Zig_Zag extends Widget_Base {
 			[
 				'label' => esc_html__( 'Hover', 'hello-plus' ),
 				'condition' => [
-					'show_alternate_background' => 'yes',
+					'has_alternate_row_styles' => 'yes',
 				],
 			]
 		);
@@ -888,7 +868,7 @@ class Zig_Zag extends Widget_Base {
 					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-button-primary-text-color-hover-alternate: {{VALUE}}',
 				],
 				'condition' => [
-					'show_alternate_background' => 'yes',
+					'has_alternate_row_styles' => 'yes',
 				],
 			]
 		);
@@ -903,7 +883,7 @@ class Zig_Zag extends Widget_Base {
 					'relation' => 'and',
 					'terms' => [
 						[
-							'name' => 'show_alternate_background',
+							'name' => 'has_alternate_row_styles',
 							'operator' => '===',
 							'value' => 'yes',
 						],
@@ -923,12 +903,40 @@ class Zig_Zag extends Widget_Base {
 		$this->end_controls_tabs();
 
 		$this->add_control(
+			'alternate_icon_heading',
+			[
+				'label' => esc_html__( 'Icon', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+				'condition' => [
+					'has_alternate_row_styles' => 'yes',
+					'graphic_element' => 'icon',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'icon_alternate_color',
+			[
+				'label' => esc_html__( 'Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-icon-color-alternate: {{VALUE}}',
+				],
+				'condition' => [
+					'has_alternate_row_styles' => 'yes',
+					'graphic_element' => 'icon',
+				],
+			]
+		);
+
+		$this->add_control(
 			'alternate_background_heading',
 			[
 				'label' => esc_html__( 'Background', 'hello-plus' ),
 				'type' => Controls_Manager::HEADING,
 				'condition' => [
-					'show_alternate_background' => 'yes',
+					'has_alternate_row_styles' => 'yes',
 				],
 				'separator' => 'before',
 			]
@@ -941,7 +949,7 @@ class Zig_Zag extends Widget_Base {
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
 				'condition' => [
-					'show_alternate_background' => 'yes',
+					'has_alternate_row_styles' => 'yes',
 				],
 				'selector' => '{{WRAPPER}} .ehp-zigzag__item-wrapper:nth-child(even)',
 			]
@@ -957,7 +965,7 @@ class Zig_Zag extends Widget_Base {
 				'return_value' => 'yes',
 				'default' => 'no',
 				'condition' => [
-					'show_alternate_background' => 'yes',
+					'has_alternate_row_styles' => 'yes',
 				],
 			]
 		);
@@ -991,7 +999,7 @@ class Zig_Zag extends Widget_Base {
 							'value' => 'yes',
 						],
 						[
-							'name' => 'show_alternate_background',
+							'name' => 'has_alternate_row_styles',
 							'operator' => '===',
 							'value' => 'yes',
 						],
@@ -1020,7 +1028,7 @@ class Zig_Zag extends Widget_Base {
 							'value' => 'yes',
 						],
 						[
-							'name' => 'show_alternate_background',
+							'name' => 'has_alternate_row_styles',
 							'operator' => '===',
 							'value' => 'yes',
 						],
@@ -1035,7 +1043,7 @@ class Zig_Zag extends Widget_Base {
 				'name' => 'alternate_box_shadow',
 				'selector' => '{{WRAPPER}} .ehp-zigzag__item-wrapper:nth-child(even)',
 				'condition' => [
-					'show_alternate_background' => 'yes',
+					'has_alternate_row_styles' => 'yes',
 				],
 			]
 		);
@@ -1046,53 +1054,48 @@ class Zig_Zag extends Widget_Base {
 				'label' => esc_html__( 'Motion Effects', 'hello-plus' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
-				'condition' => [
-					'show_alternate_background' => 'yes',
-				],
-			]
-		);
-
-		$this->add_control(
-			'animation_alternate',
-			[
-				'label' => esc_html__( 'Alternate Entrance Animation', 'hello-plus' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
-				'label_off' => esc_html__( 'No', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => 'no',
 				'conditions' => [
-					'relation' => 'or',
+					'relation' => 'and',
 					'terms' => [
 						[
-							'name' => 'zigzag_animation',
+							'name' => 'has_alternate_row_styles',
 							'operator' => '===',
-							'value' => 'fadeInLeft',
+							'value' => 'yes',
 						],
 						[
-							'name' => 'zigzag_animation',
-							'operator' => '===',
-							'value' => 'fadeInRight',
-						],
-						[
-							'name' => 'zigzag_animation',
-							'operator' => '===',
-							'value' => 'bounceInLeft',
-						],
-						[
-							'name' => 'zigzag_animation',
-							'operator' => '===',
-							'value' => 'bounceInRight',
-						],
-						[
-							'name' => 'zigzag_animation',
-							'operator' => '===',
-							'value' => 'slideInLeft',
-						],
-						[
-							'name' => 'zigzag_animation',
-							'operator' => '===',
-							'value' => 'slideInRight',
+							'relation' => 'or',
+							'terms' => [
+								[
+									'name' => 'zigzag_animation',
+									'operator' => '===',
+									'value' => 'fadeInLeft',
+								],
+								[
+									'name' => 'zigzag_animation',
+									'operator' => '===',
+									'value' => 'fadeInRight',
+								],
+								[
+									'name' => 'zigzag_animation',
+									'operator' => '===',
+									'value' => 'bounceInLeft',
+								],
+								[
+									'name' => 'zigzag_animation',
+									'operator' => '===',
+									'value' => 'bounceInRight',
+								],
+								[
+									'name' => 'zigzag_animation',
+									'operator' => '===',
+									'value' => 'slideInLeft',
+								],
+								[
+									'name' => 'zigzag_animation',
+									'operator' => '===',
+									'value' => 'slideInRight',
+								],
+							],
 						],
 					],
 				],
@@ -1109,7 +1112,7 @@ class Zig_Zag extends Widget_Base {
 					'relation' => 'and',
 					'terms' => [
 						[
-							'name' => 'animation_alternate',
+							'name' => 'has_alternate_row_styles',
 							'operator' => '===',
 							'value' => 'yes',
 						],

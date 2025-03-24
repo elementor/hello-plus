@@ -30,10 +30,10 @@ class Widget_Zig_Zag_Render {
 
 	public function render(): void {
 		$first_zigzag_direction = $this->settings['first_zigzag_direction'];
-		$has_alternate_icon_color = $this->settings['has_alternate_icon_color'] ?? 'no';
+		$has_alternate_styles = $this->settings['has_alternate_row_styles'];
 		$entrance_animation = $this->settings['zigzag_animation'] ?? '';
 		$has_entrance_animation = ! empty( $entrance_animation ) && 'none' !== $entrance_animation;
-		$has_alternate_animation = 'yes' === $this->settings['animation_alternate'];
+		$has_alternate_animation = '' === $this->settings['zigzag_animation_alternate'];
 		$image_stretch = $this->settings['image_stretch'];
 
 		$layout_classnames = [
@@ -41,8 +41,8 @@ class Widget_Zig_Zag_Render {
 			'has-direction-' . $first_zigzag_direction,
 		];
 
-		if ( 'yes' === $has_alternate_icon_color ) {
-			$layout_classnames[] = 'has-alternate-icon-color';
+		if ( 'yes' === $has_alternate_styles ) {
+			$layout_classnames[] = 'has-alternate-row-styles';
 		}
 
 		if ( $has_entrance_animation ) {

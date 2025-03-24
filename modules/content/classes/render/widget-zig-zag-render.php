@@ -40,7 +40,7 @@ class Widget_Zig_Zag_Render {
 		$has_alternate_styles = $this->settings['has_alternate_row_styles'];
 		$entrance_animation = $this->settings['zigzag_animation'] ?? '';
 		$has_entrance_animation = ! empty( $entrance_animation ) && 'none' !== $entrance_animation;
-		$has_alternate_animation = '' === $this->settings['zigzag_animation_alternate'];
+		$has_alternate_animation = ! empty( $this->settings['zigzag_animation_alternate'] );
 		$image_stretch = $this->settings['image_stretch'];
 
 		$layout_classnames = [

@@ -65,15 +65,6 @@ class Zig_Zag extends Widget_Base {
 	protected function render(): void {
 		$render_strategy = new Widget_Zig_Zag_Render( $this );
 
-		$settings = $this->get_settings_for_display();
-
-		if (
-			( ! empty( $settings['show_alternate_background'] ) && $settings['show_alternate_background'] === 'yes' ) ||
-			( ! empty( $settings['has_alternate_icon_color'] ) && $settings['has_alternate_icon_color'] === 'yes' )
-		) {
-			$settings['has_alternate_row_styles'] = 'yes';
-		}
-
 		$render_strategy->render();
 	}
 
@@ -923,9 +914,30 @@ class Zig_Zag extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-icon-color-alternate: {{VALUE}}',
 				],
-				'condition' => [
-					'has_alternate_row_styles' => 'yes',
-					'graphic_element' => 'icon',
+				'conditions' => [
+					'relation' => 'and',
+					'terms' => [
+						[
+							'name' => 'graphic_element',
+							'operator' => '===',
+							'value' => 'icon',
+						],
+						[
+							'relation' => 'or',
+							'terms' => [
+								[
+									'name' => 'has_alternate_row_styles',
+									'operator' => '===',
+									'value' => 'yes',
+								],
+								[
+									'name' => 'has_alternate_icon_color',
+									'operator' => '===',
+									'value' => 'yes',
+								],
+							],
+						]
+					],
 				],
 			]
 		);
@@ -948,8 +960,20 @@ class Zig_Zag extends Widget_Base {
 				'name' => 'alternate_background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'condition' => [
-					'has_alternate_row_styles' => 'yes',
+				'conditions' => [
+					'relation' => 'or',
+					'terms' => [
+						[
+							'name' => 'has_alternate_row_styles',
+							'operator' => '===',
+							'value' => 'yes',
+						],
+						[
+							'name' => 'show_alternate_background',
+							'operator' => '===',
+							'value' => 'yes',
+						],
+					],
 				],
 				'selector' => '{{WRAPPER}} .ehp-zigzag__item-wrapper:nth-child(even)',
 			]

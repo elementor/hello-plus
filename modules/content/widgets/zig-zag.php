@@ -712,6 +712,18 @@ class Zig_Zag extends Widget_Base {
 	}
 
 	protected function add_style_alternate_section() {
+		$existing_settings = $this->get_settings();
+
+		$default_alternate = 'no';
+
+		// Backwards compatibility: Check if previous settings exist
+		if (
+			( ! empty( $existing_settings['show_alternate_background'] ) && $existing_settings['show_alternate_background'] === 'yes' ) ||
+			( ! empty( $existing_settings['has_alternate_icon_color'] ) && $existing_settings['has_alternate_icon_color'] === 'yes' )
+		) {
+			$default_alternate = 'yes';
+		}
+
 		$this->start_controls_section(
 			'style_alternate_section',
 			[
@@ -728,7 +740,7 @@ class Zig_Zag extends Widget_Base {
 				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
 				'label_off' => esc_html__( 'No', 'hello-plus' ),
 				'return_value' => 'yes',
-				'default' => 'no',
+				'default' => $default_alternate,
 			]
 		);
 

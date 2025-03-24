@@ -29,6 +29,13 @@ class Widget_Zig_Zag_Render {
 	}
 
 	public function render(): void {
+		if (
+			( ! empty( $this->settings['show_alternate_background'] ) && $this->settings['show_alternate_background'] === 'yes' ) ||
+			( ! empty( $this->settings['has_alternate_icon_color'] ) && $this->settings['has_alternate_icon_color'] === 'yes' )
+		) {
+			$this->settings['has_alternate_row_styles'] = 'yes';
+		}
+
 		$first_zigzag_direction = $this->settings['first_zigzag_direction'];
 		$has_alternate_styles = $this->settings['has_alternate_row_styles'];
 		$entrance_animation = $this->settings['zigzag_animation'] ?? '';

@@ -23,7 +23,6 @@ use Elementor\Core\Kits\Documents\Tabs\{
 use HelloPlus\Modules\TemplateParts\Classes\{
 	Render\Widget_Header_Render,
 	Control_Media_Preview,
-	Ehp_Shared_Template_Parts,
 };
 use HelloPlus\Modules\Content\Classes\Choose_Img_Control;
 
@@ -37,7 +36,6 @@ use HelloPlus\Classes\{
 use HelloPlus\Includes\Utils;
 
 class Ehp_Header extends Ehp_Widget_Base {
-
 	public function get_name(): string {
 		return 'ehp-header';
 	}
@@ -148,10 +146,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 			]
 		);
 
-		$shared_template_parts = new Ehp_Shared_Template_Parts( $this, [
-			'widget_name' => 'header',
-		] );
-		$shared_template_parts->add_content_brand_controls();
+		$this->add_content_brand_controls();
 
 		$this->end_controls_section();
 	}
@@ -173,11 +168,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 			]
 		);
 
-		$shared_template_parts = new Ehp_Shared_Template_Parts( $this, [
-			'widget_name' => 'header',
-		] );
-
-		$menus = $shared_template_parts->get_available_menus();
+		$menus = $this->get_available_menus();
 
 		if ( ! empty( $menus ) ) {
 			$this->add_control(
@@ -424,10 +415,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 			]
 		);
 
-		$shared_template_parts = new Ehp_Shared_Template_Parts( $this, [
-			'widget_name' => 'header',
-		] );
-		$shared_template_parts->add_style_brand_controls();
+		$this->add_style_brand_controls( 'header' );
 
 		$this->end_controls_section();
 	}

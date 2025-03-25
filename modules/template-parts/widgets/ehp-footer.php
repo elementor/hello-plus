@@ -25,7 +25,6 @@ use HelloPlus\Includes\Utils as Theme_Utils;
 use HelloPlus\Modules\TemplateParts\Classes\{
 	Render\Widget_Footer_Render,
 	Control_Media_Preview,
-	Ehp_Shared_Template_Parts,
 };
 
 use HelloPlus\Classes\{
@@ -109,10 +108,7 @@ class Ehp_Footer extends Ehp_Widget_Base {
 			]
 		);
 
-		$shared_template_parts = new Ehp_Shared_Template_Parts( $this, [
-			'widget_name' => 'footer',
-		] );
-		$shared_template_parts->add_content_brand_controls();
+		$this->add_content_brand_controls();
 
 		$this->add_control(
 			'footer_description',
@@ -305,11 +301,7 @@ class Ehp_Footer extends Ehp_Widget_Base {
 			]
 		);
 
-		$shared_template_parts = new Ehp_Shared_Template_Parts( $this, [
-			'widget_name' => 'footer',
-		] );
-
-		$menus = $shared_template_parts->get_available_menus();
+		$menus = $this->get_available_menus();
 
 		if ( ! empty( $menus ) ) {
 			$this->add_control(
@@ -435,10 +427,7 @@ class Ehp_Footer extends Ehp_Widget_Base {
 			]
 		);
 
-		$shared_template_parts = new Ehp_Shared_Template_Parts( $this, [
-			'widget_name' => 'footer',
-		] );
-		$shared_template_parts->add_style_brand_controls();
+		$this->add_style_brand_controls( 'footer' );
 
 		$this->add_control(
 			'footer_description_heading',

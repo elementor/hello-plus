@@ -18,8 +18,6 @@ use HelloPlus\Classes\{
 	Widget_Utils,
 };
 
-use HelloPlus\Modules\TemplateParts\Classes\Ehp_Shared_Template_Parts;
-
 /**
  * class Widget_Footer_Render
  */
@@ -45,10 +43,7 @@ class Widget_Footer_Render {
 
 		$this->widget->add_render_attribute( 'layout', $render_attributes );
 
-		$ehp_shared_template_parts = new Ehp_Shared_Template_Parts( $this->widget, [
-			'widget_name' => 'header',
-		] );
-		$ehp_shared_template_parts->maybe_add_advanced_attributes();
+		$this->widget->maybe_add_advanced_attributes();
 
 		$this->widget->add_render_attribute( 'row', 'class', self::LAYOUT_CLASSNAME . '__row' );
 
@@ -71,10 +66,7 @@ class Widget_Footer_Render {
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'side-content' ); ?>>
 			<?php
-			$ehp_shared_template_parts = new Ehp_Shared_Template_Parts( $this->widget, [
-				'widget_name' => 'footer',
-			] );
-			$ehp_shared_template_parts->render_site_link();
+			$this->widget->render_site_link( 'footer' );
 
 			Widget_Utils::maybe_render_text_html( $this->widget, 'footer_description', self::LAYOUT_CLASSNAME . '__description', $this->settings['footer_description'], $this->settings['footer_description_tag'] ?? 'p' );
 			?>
@@ -130,10 +122,7 @@ class Widget_Footer_Render {
 	}
 
 	public function render_navigation(): void {
-		$shared_template_parts = new Ehp_Shared_Template_Parts( $this->widget, [
-			'widget_name' => 'header',
-		] );
-		$available_menus = $shared_template_parts->get_available_menus();
+		$available_menus = $this->widget->get_available_menus();
 
 		if ( ! $available_menus ) {
 			return;

@@ -20,8 +20,6 @@ use HelloPlus\Classes\{
 	Widget_Utils,
 };
 
-use HelloPlus\Modules\TemplateParts\Classes\Ehp_Shared_Template_Parts;
-
 /**
  * class Widget_Header_Render
  */
@@ -102,10 +100,7 @@ class Widget_Header_Render {
 
 		$this->widget->add_render_attribute( 'layout', $render_attributes );
 
-		$ehp_shared_template_parts = new Ehp_Shared_Template_Parts( $this->widget, [
-			'widget_name' => 'header',
-		] );
-		$ehp_shared_template_parts->maybe_add_advanced_attributes();
+		$this->widget->maybe_add_advanced_attributes();
 
 		$this->widget->add_render_attribute( 'elements-container', 'class', self::LAYOUT_CLASSNAME . '__elements-container' );
 		?>
@@ -113,7 +108,7 @@ class Widget_Header_Render {
 			<div <?php $this->widget->print_render_attribute_string( 'elements-container' ); ?>>
 				<?php
 
-				$ehp_shared_template_parts->render_site_link();
+				$this->widget->render_site_link( 'header' );
 				$this->render_navigation();
 				$this->render_ctas_container();
 				?>
@@ -123,10 +118,7 @@ class Widget_Header_Render {
 	}
 
 	public function render_navigation(): void {
-		$shared_template_parts = new Ehp_Shared_Template_Parts( $this->widget, [
-			'widget_name' => 'header',
-		] );
-		$available_menus = $shared_template_parts->get_available_menus();
+		$available_menus = $this->widget->get_available_menus();
 
 		$menu_classname = self::LAYOUT_CLASSNAME . '__menu';
 

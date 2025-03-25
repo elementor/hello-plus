@@ -434,7 +434,6 @@ class Widget_Header_Render {
 			$classes[] = 'is-item-anchor';
 		}
 
-
 		$class_string = implode( ' ', $classes );
 
 		if ( empty( $atts['class'] ) ) {

@@ -599,7 +599,7 @@ abstract class Ehp_Widget_Base extends Widget_Base {
 		<div <?php $this->print_render_attribute_string( 'site-link-container' ); ?>>
 			<a <?php $this->print_render_attribute_string( 'site-link' ); ?>>
 				<?php if ( 'logo' === $site_logo_brand_select ) {
-					
+
 					if ( 'header' === $widget_name ) {
 						add_filter( 'elementor/image_size/get_header_attachment_image_html_filter', [ $this, 'get_header_attachment_image_html_filter' ], 10, 4 );
 						Group_Control_Image_Size::print_attachment_image_html( $this->settings, 'site_logo_image' );

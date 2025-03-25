@@ -611,7 +611,7 @@ abstract class Ehp_Widget_Base extends Widget_Base {
 					}
 				} ?>
 				<?php if ( 'title' === $site_logo_brand_select ) {
-					Widget_Utils::maybe_render_text_html( $this, 'header_site_title', $site_title_classname,  $this->get_site_title(), $this->settings['site_logo_title_tag'] ?? 'h2' );
+					Widget_Utils::maybe_render_text_html( $this, 'header_site_title', $site_title_classname, $this->get_site_title(), $this->settings['site_logo_title_tag'] ?? 'h2' );
 				} ?>
 			</a>
 		</div>

@@ -29,18 +29,9 @@ class Widget_Zig_Zag_Render {
 	}
 
 	public function render(): void {
-		if (
-			( ! empty( $this->settings['show_alternate_background'] ) && $this->settings['show_alternate_background'] === 'yes' ) ||
-			( ! empty( $this->settings['has_alternate_icon_color'] ) && $this->settings['has_alternate_icon_color'] === 'yes' )
-		) {
-			$this->settings['has_alternate_row_styles'] = 'yes';
-		}
-
 		$first_zigzag_direction = $this->settings['first_zigzag_direction'];
-		$has_alternate_styles = $this->settings['has_alternate_row_styles'];
 		$entrance_animation = $this->settings['zigzag_animation'] ?? '';
 		$has_entrance_animation = ! empty( $entrance_animation ) && 'none' !== $entrance_animation;
-		$has_alternate_animation = ! empty( $this->settings['zigzag_animation_alternate'] );
 		$image_stretch = $this->settings['image_stretch'];
 
 		$layout_classnames = [
@@ -48,20 +39,28 @@ class Widget_Zig_Zag_Render {
 			'has-direction-' . $first_zigzag_direction,
 		];
 
-		if ( 'yes' === $has_alternate_styles ) {
-			$layout_classnames[] = 'has-alternate-row-styles';
-		}
-
 		if ( $has_entrance_animation ) {
 			$layout_classnames[] = 'has-entrance-animation';
 		}
 
-		if ( $has_alternate_animation ) {
-			$layout_classnames[] = 'has-alternate-animation';
-		}
-
 		if ( 'yes' === $image_stretch ) {
 			$layout_classnames[] = 'has-image-stretch';
+		}
+
+		if ( 'yes' === $this->settings['has_alternate_button_styles'] ) {
+			$layout_classnames[] = 'has-alternate-button-styles';
+		}
+
+		if ( 'yes' === $this->settings['has_alternate_icon_color'] ) {
+			$layout_classnames[] = 'has-alternate-icon-color';
+		}
+
+		if ( 'yes' === $this->settings['has_alternate_border'] ) {
+			$layout_classnames[] = 'has-alternate-border-styles';
+		}
+
+		if ( ! empty( $this->settings['zigzag_animation_alternate'] ) ) {
+			$layout_classnames[] = 'has-alternate-animation';
 		}
 
 		$this->widget->add_render_attribute( 'layout', [

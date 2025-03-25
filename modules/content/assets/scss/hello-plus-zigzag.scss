@@ -51,17 +51,26 @@
 		--ehp-button-primary-border-radius-inline-start: var(--zigzag-button-primary-border-radius-inline-start);
 	}
 
-	&.has-alternate-row-styles .ehp-zigzag__item-wrapper:nth-child(even) {
-		border: var(--zigzag-wrapper-border-width-alternate) solid var(--zigzag-wrapper-border-color-alternate);
-		
-		& a.ehp-zigzag__button,
-		& a.ehp-zigzag__button:not([href]):not([tabindex]) {
-			--ehp-button-primary-text-color: var(--zigzag-button-primary-text-color-alternate);
-			--ehp-button-primary-text-color-hover: var(--zigzag-button-primary-text-color-hover-alternate);
+	&.has-alternate {
+
+		&-button-styles .ehp-zigzag__item-wrapper:nth-child(even) {
+
+			& a.ehp-zigzag__button,
+			& a.ehp-zigzag__button:not([href]):not([tabindex]) {
+				--ehp-button-primary-text-color: var(--zigzag-button-primary-text-color-alternate);
+				--ehp-button-primary-text-color-hover: var(--zigzag-button-primary-text-color-hover-alternate);
+			}
 		}
 
-		& .ehp-zigzag__graphic-element-container {
-			color: var(--zigzag-icon-color-alternate);
+		&-icon-color .ehp-zigzag__item-wrapper:nth-child(even) {
+
+			& .ehp-zigzag__graphic-element-container {
+				color: var(--zigzag-icon-color-alternate);
+			}
+		}
+
+		&-border-styles .ehp-zigzag__item-wrapper:nth-child(even) {
+			border: var(--zigzag-wrapper-border-width-alternate) solid var(--zigzag-wrapper-border-color-alternate);
 		}
 	}
 

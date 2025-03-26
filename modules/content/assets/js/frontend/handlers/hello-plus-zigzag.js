@@ -100,10 +100,6 @@ export default class ZigZagHandler extends elementorModules.frontend.handlers.Ba
 		return this.elements.main.classList.contains( hasAlternateAnimation ) && isEven;
 	}
 
-	getAlternateAnimationClass( entranceAnimationClass ) {
-		return entranceAnimationClass.replace( /Right|Left/g, ( match ) => ( 'Right' === match ? 'Left' : 'Right' ) );
-	}
-
 	onInit( ...args ) {
 		const { hasEntranceAnimation } = this.getSettings( 'constants' );
 

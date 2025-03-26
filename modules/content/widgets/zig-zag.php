@@ -666,7 +666,6 @@ class Zig_Zag extends Widget_Base {
 				'label' => esc_html__( 'Sequenced Entrance Animation', 'hello-plus' ),
 				'type' => Control_Zig_Zag_Animation::CONTROL_TYPE,
 				'frontend_available' => true,
-				
 			]
 		);
 

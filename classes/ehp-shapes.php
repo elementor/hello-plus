@@ -41,6 +41,7 @@ class Ehp_Shapes {
 			'image' => [ 'sharp', 'rounded', 'round', 'oval', 'custom' ],
 			'map' => [ 'sharp', 'rounded', 'round', 'oval', 'custom' ],
 			'float' => [ 'default', 'sharp', 'round', 'rounded', 'custom' ],
+			'logo' => [ 'sharp', 'rounded', 'round', 'custom' ],
 		];
 
 		return array_map( function ( $keys ) use ( $options_names ) {
@@ -101,6 +102,7 @@ class Ehp_Shapes {
 			'box' => 'sharp',
 			'image' => 'sharp',
 			'map' => 'sharp',
+			'logo' => 'sharp',
 		];
 
 		if ( $is_responsive ) {

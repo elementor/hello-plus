@@ -853,6 +853,79 @@ class Zig_Zag extends Widget_Base {
 		$this->end_controls_tabs();
 
 		$this->add_control(
+			'has_alternate_button_border',
+			[
+				'label' => esc_html__( 'Border', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'separator' => 'before',
+				'condition' => [
+					'primary_button_type' => 'button',
+					'has_alternate_button_styles' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'alternate_button_border_width',
+			[
+				'label' => __( 'Border Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 10,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 1,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-button-primary-border-width-alternate: {{SIZE}}{{UNIT}}',
+				],
+				'condition' => [
+					'primary_button_type' => 'button',
+					'has_alternate_button_border' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'alternate_button_border_color',
+			[
+				'label' => esc_html__( 'Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-button-primary-border-color-alternate: {{VALUE}}',
+				],
+				'condition' => [
+					'primary_button_type' => 'button',
+					'has_alternate_button_border' => 'yes',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'alternate_box_shadow',
+				'selector' => '{{WRAPPER}} .ehp-zigzag__item-wrapper:nth-child(even) .is-type-button.ehp-zigzag__button--primary',
+				'condition' => [
+					'primary_button_type' => 'button',
+					'has_alternate_button_styles' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
 			'has_alternate_icon_color',
 			[
 				'label' => esc_html__( 'Icon Color', 'hello-plus' ),
@@ -920,9 +993,9 @@ class Zig_Zag extends Widget_Base {
 		);
 
 		$this->add_control(
-			'has_alternate_border',
+			'has_alternate_padding',
 			[
-				'label' => esc_html__( 'Border', 'hello-plus' ),
+				'label' => esc_html__( 'Padding', 'hello-plus' ),
 				'type' => Controls_Manager::SWITCHER,
 				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
 				'label_off' => esc_html__( 'No', 'hello-plus' ),
@@ -932,65 +1005,36 @@ class Zig_Zag extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'alternate_border_width',
+		$this->add_responsive_control(
+			'alternate_padding_horizontal',
 			[
-				'label' => __( 'Border Width', 'hello-plus' ),
+				'label' => esc_html__( 'Horizontal Padding', 'hello-plus' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px' ],
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 10,
-						'step' => 1,
+						'max' => 100,
 					],
 				],
-				'default' => [
-					'size' => 1,
-					'unit' => 'px',
-				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-wrapper-border-width-alternate: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-zigzag__item-wrapper:nth-child(even)' => '--zigzag-box-padding-inline-start: {{SIZE}}{{UNIT}}; --zigzag-box-padding-inline-end: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
-					'has_alternate_border' => 'yes',
+					'has_alternate_padding' => 'yes',
 				],
 			]
 		);
 
 		$this->add_control(
-			'alternate_border_color',
-			[
-				'label' => esc_html__( 'Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_TEXT,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-wrapper-border-color-alternate: {{VALUE}}',
-				],
-				'condition' => [
-					'has_alternate_border' => 'yes',
-				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Box_Shadow::get_type(),
-			[
-				'name' => 'alternate_box_shadow',
-				'selector' => '{{WRAPPER}} .ehp-zigzag__item-wrapper:nth-child(even)',
-				'condition' => [
-					'has_alternate_border' => 'yes',
-				],
-			]
-		);
-
-		$this->add_control(
-			'alternate_animation_motion_effects_label',
+			'animation_alternate',
 			[
 				'label' => esc_html__( 'Motion Effects', 'hello-plus' ),
-				'type' => Controls_Manager::HEADING,
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'no',
 				'separator' => 'before',
 				'conditions' => [
 					'relation' => 'or',
@@ -1033,41 +1077,51 @@ class Zig_Zag extends Widget_Base {
 		$this->add_responsive_control(
 			'zigzag_animation_alternate',
 			[
-				'label' => esc_html__( 'Alternate Entrance Animation', 'hello-plus' ),
+				'label' => esc_html__( 'Sequenced Entrance Animation', 'hello-plus' ),
 				'type' => Control_Zig_Zag_Animation::CONTROL_TYPE,
 				'frontend_available' => true,
 				'conditions' => [
-					'relation' => 'or',
+					'relation' => 'and',
 					'terms' => [
 						[
-							'name' => 'zigzag_animation',
+							'name' => 'animation_alternate',
 							'operator' => '===',
-							'value' => 'fadeInLeft',
+							'value' => 'yes',
 						],
 						[
-							'name' => 'zigzag_animation',
-							'operator' => '===',
-							'value' => 'fadeInRight',
-						],
-						[
-							'name' => 'zigzag_animation',
-							'operator' => '===',
-							'value' => 'bounceInLeft',
-						],
-						[
-							'name' => 'zigzag_animation',
-							'operator' => '===',
-							'value' => 'bounceInRight',
-						],
-						[
-							'name' => 'zigzag_animation',
-							'operator' => '===',
-							'value' => 'slideInLeft',
-						],
-						[
-							'name' => 'zigzag_animation',
-							'operator' => '===',
-							'value' => 'slideInRight',
+							'relation' => 'or',
+							'terms' => [
+								[
+									'name' => 'zigzag_animation',
+									'operator' => '===',
+									'value' => 'fadeInLeft',
+								],
+								[
+									'name' => 'zigzag_animation',
+									'operator' => '===',
+									'value' => 'fadeInRight',
+								],
+								[
+									'name' => 'zigzag_animation',
+									'operator' => '===',
+									'value' => 'bounceInLeft',
+								],
+								[
+									'name' => 'zigzag_animation',
+									'operator' => '===',
+									'value' => 'bounceInRight',
+								],
+								[
+									'name' => 'zigzag_animation',
+									'operator' => '===',
+									'value' => 'slideInLeft',
+								],
+								[
+									'name' => 'zigzag_animation',
+									'operator' => '===',
+									'value' => 'slideInRight',
+								],
+							],
 						],
 					],
 				],

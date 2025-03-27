@@ -61,8 +61,10 @@ class Widget_Zig_Zag_Render {
 			'class' => $layout_classnames,
 		] );
 
+		$this->widget->add_render_attribute( 'image_zigzag_items', 'class', 'elementor-inline-items' );
+
 		?>
-		<div <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
+		<div <?php $this->widget->print_render_attribute_string( 'image_zigzag_items' ); ?>>
 			<?php
 			$graphic_element = $this->settings['graphic_element'];
 			$repeater = 'image' === $graphic_element ? $this->settings['image_zigzag_items'] : $this->settings['icon_zigzag_items'];
@@ -74,23 +76,27 @@ class Widget_Zig_Zag_Render {
 			if ( $has_entrance_animation ) {
 				$wrapper_classnames[] = 'hidden';
 			}
-
-			foreach ( $repeater as $key => $item ) {
-				$this->widget->add_render_attribute( 'zigzag-item-wrapper-' . $key, [
-					'class' => $wrapper_classnames,
-				] );
-
+			$this->widget->add_render_attribute( 'zigzag-item', [
+				'class' => 'elementor-inline-item',
+			] );
+			foreach ( $this->settings['image_zigzag_items'] as $key => $item ) {
+				$repeater_setting_key = $this->widget->get_repeater_setting_key(
+					'image_title',
+					'image_zigzag_items',
+					$key
+				);
+				$this->widget->add_inline_editing_attributes( $repeater_setting_key, 'none' );
+				$this->widget->add_render_attribute( $repeater_setting_key, 'class', 'elementor-zigzag-item-image_title' );
 				$this->widget->add_render_attribute( 'zigzag-item-' . $key, [
 					'class' => self::LAYOUT_CLASSNAME . '__item-container',
 				] );
+
+
 				?>
-				<div <?php $this->widget->print_render_attribute_string( 'zigzag-item-wrapper-' . $key ); ?>>
-					<div <?php $this->widget->print_render_attribute_string( 'zigzag-item-' . $key ); ?>>
-						<?php
-							$this->render_graphic_element_container( $item, $key );
-							$this->render_text_element_container( $item, $key );
-						?>
-					</div>
+				<div <?php $this->widget->print_render_attribute_string( 'zigzag-item' ); ?>>
+					<span <?php $this->widget->print_render_attribute_string( $repeater_setting_key ); ?>>
+						<?php $this->widget->print_unescaped_setting( 'image_title', 'image_zigzag_items', $key ); ?>
+					</span>
 				</div>
 				<?php
 			} ?>

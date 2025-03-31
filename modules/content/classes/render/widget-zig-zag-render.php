@@ -80,13 +80,7 @@ class Widget_Zig_Zag_Render {
 				'class' => 'elementor-inline-item',
 			] );
 			foreach ( $this->settings['image_zigzag_items'] as $key => $item ) {
-				$repeater_setting_key = $this->widget->get_repeater_setting_key(
-					'image_title',
-					'image_zigzag_items',
-					$key
-				);
-				$this->widget->add_inline_editing_attributes( $repeater_setting_key, 'none' );
-				$this->widget->add_render_attribute( $repeater_setting_key, 'class', 'elementor-zigzag-item-image_title' );
+				$repeater_setting_key = $this->widget->add_repeater_inline_attributes( $key );
 				$this->widget->add_render_attribute( 'zigzag-item-' . $key, [
 					'class' => self::LAYOUT_CLASSNAME . '__item-container',
 				] );

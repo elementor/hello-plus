@@ -65,6 +65,17 @@ class Zig_Zag extends Widget_Base {
 		return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 
+	public function add_repeater_inline_attributes( $key ): string {
+		$repeater_setting_key = $this->get_repeater_setting_key(
+			'image_title',
+			'image_zigzag_items',
+			$key
+		);
+		$this->add_inline_editing_attributes( $repeater_setting_key, 'none' );
+
+		return $repeater_setting_key;
+	}
+
 	protected function render(): void {
 		$render_strategy = new Widget_Zig_Zag_Render( $this );
 

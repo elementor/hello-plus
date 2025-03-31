@@ -180,23 +180,18 @@ class Widget_Form_Render {
 
 	protected function render_button(): void {
 		$button_classnames = [ self::LAYOUT_CLASSNAME . '__button' ];
-		$submit_group_classnames = [ self::LAYOUT_CLASSNAME . '__submit-group' ];
 
 		if ( ! empty( $this->settings['button_width'] ) ) {
-			$submit_group_classnames[] = 'has-width-' . $this->settings['button_width'];
+			$button_classnames[] = 'has-width-' . $this->settings['button_width'];
 
 			if ( ! empty( $this->settings['button_width_tablet'] ) ) {
-				$submit_group_classnames[] = 'has-width-md-' . $this->settings['button_width_tablet'];
+				$button_classnames[] = 'has-width-md-' . $this->settings['button_width_tablet'];
 			}
 
 			if ( ! empty( $this->settings['button_width_mobile'] ) ) {
-				$submit_group_classnames[] = 'has-width-sm-' . $this->settings['button_width_mobile'];
+				$button_classnames[] = 'has-width-sm-' . $this->settings['button_width_mobile'];
 			}
 		}
-
-		$this->widget->add_render_attribute( 'submit-group', [
-			'class' => $submit_group_classnames,
-		] );
 
 		if ( 'yes' === $this->settings['button_border_switcher'] ) {
 			$button_classnames[] = 'has-border';
@@ -210,21 +205,26 @@ class Widget_Form_Render {
 			$button_classnames[] = 'is-type-' . $this->settings['button_type'];
 		}
 
+		if ( $this->settings['button_hover_animation'] ) {
+			$button_classnames[] = 'elementor-animation-' . $this->settings['button_hover_animation'];
+		}
+
 		$this->widget->add_render_attribute( 'button', [
 			'class' => $button_classnames,
 			'type' => 'submit',
 		] );
 
-		if ( $this->settings['button_hover_animation'] ) {
-			$this->widget->add_render_attribute( 'button', 'class', 'elementor-animation-' . $this->settings['button_hover_animation'] );
-		}
-
 		if ( ! empty( $this->settings['button_css_id'] ) ) {
 			$this->widget->add_render_attribute( 'button', 'id', $this->settings['button_css_id'] );
 		}
 
+
 		$this->widget->add_render_attribute( 'button-text', [
 			'class' => self::LAYOUT_CLASSNAME . '__button-text',
+		] );
+
+		$this->widget->add_render_attribute( 'submit-group', [
+			'class' => self::LAYOUT_CLASSNAME . '__submit-group',
 		] );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'submit-group' ); ?>>

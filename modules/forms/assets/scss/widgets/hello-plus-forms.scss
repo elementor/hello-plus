@@ -87,7 +87,7 @@
 	}
 
 	&__field-group,
-	&__submit-group {
+	& .ehp-form__button {
 		width: 100%;
 
 		&.has-width {
@@ -167,6 +167,7 @@
 		align-items: flex-end;
 		display: flex;
 		justify-content: var(--ehp-form-button-align);
+		width: 100%;
 	}
 
 	&__button[type="submit"] {

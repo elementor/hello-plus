@@ -218,7 +218,6 @@ class Widget_Form_Render {
 			$this->widget->add_render_attribute( 'button', 'id', $this->settings['button_css_id'] );
 		}
 
-
 		$this->widget->add_render_attribute( 'button-text', [
 			'class' => self::LAYOUT_CLASSNAME . '__button-text',
 		] );

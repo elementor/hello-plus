@@ -220,16 +220,32 @@ class Widget_Contact_Render {
 						'rel' => 'noopener noreferrer',
 					] );
 				}
+
+				$label_repeater_key = $this->widget->public_get_repeater_setting_key(
+					'group_' . $group_number . '_label',
+					'group_' . $group_number . '_repeater',
+					$key
+				);
+
+				$this->widget->public_add_inline_editing_attributes( $label_repeater_key, 'none' );
 				?>
 				<a <?php $this->widget->print_render_attribute_string( 'contact-link-' . $key ); ?>>
 					<?php
+
 						Icons_Manager::render_icon( $icon,
 							[
 								'aria-hidden' => 'true',
 								'class' => self::LAYOUT_CLASSNAME . '__contact-link-icon',
 							]
 						);
-						Widget_Utils::maybe_render_text_html( $this->widget, 'group_' . $group_number . '_label', self::LAYOUT_CLASSNAME . '__contact-link-label', $contact_link[ 'group_' . $group_number . '_label' ], 'span' );
+
+						Widget_Utils::maybe_render_text_html(
+							$this->widget,
+							$label_repeater_key,
+							self::LAYOUT_CLASSNAME . '__contact-link-label',
+							$contact_link[ 'group_' . $group_number . '_label' ],
+							'span'
+						);
 					?>
 				</a>
 				<?php
@@ -251,6 +267,7 @@ class Widget_Contact_Render {
 		$repeater = $this->settings[ 'group_' . $group_number . '_social_repeater' ];
 
 		$this->render_subheading( $group_number, 'social' );
+
 		$this->widget->add_render_attribute( 'social-icons-container', 'class', self::LAYOUT_CLASSNAME . '__social-icons-container' );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'social-icons-container' ); ?>>
@@ -334,11 +351,13 @@ class Widget_Contact_Render {
 			'render_attribute' => 'map',
 			'widget_name' => $this->widget->get_name(),
 		] );
+
 		$shapes->add_shape_attributes();
 
 		$this->widget->add_render_attribute( 'map', [
 			'class' => $map_classnames,
 		] );
+
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'map-container' ); ?>>
 			<div <?php $this->widget->print_render_attribute_string( 'map' ); ?>>

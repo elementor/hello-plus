@@ -7,6 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use HelloPlus\Modules\Content\Classes\Choose_Img_Control;
 use HelloPlus\Modules\Content\Classes\Render\Widget_Contact_Render;
+use HelloPlus\Modules\Content\Traits\Widget_Repeater_Editable;
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 use HelloPlus\Includes\Utils;
 use HelloPlus\Classes\{
@@ -25,13 +26,17 @@ use Elementor\{
 	Settings,
 	Widget_Base,
 };
+
 use Elementor\Core\Kits\Documents\Tabs\{
 	Global_Typography,
 	Global_Colors,
 };
+
 use Elementor\Modules\DynamicTags\Module as TagsModule;
 
 class Contact extends Widget_Base {
+
+	use Widget_Repeater_Editable;
 
 	public function get_name(): string {
 		return 'contact';

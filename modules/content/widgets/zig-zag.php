@@ -23,6 +23,7 @@ use HelloPlus\Modules\Content\Classes\{
 	Control_Zig_Zag_Animation,
 	Render\Widget_Zig_Zag_Render
 };
+use HelloPlus\Modules\Content\Traits\Widget_Repeater_Editable;
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 use HelloPlus\Classes\{
 	Ehp_Button,
@@ -32,6 +33,8 @@ use HelloPlus\Classes\{
 use HelloPlus\Includes\Utils;
 
 class Zig_Zag extends Widget_Base {
+
+	use Widget_Repeater_Editable;
 
 	public function get_name(): string {
 		return 'zigzag';
@@ -65,14 +68,6 @@ class Zig_Zag extends Widget_Base {
 		$render_strategy = new Widget_Zig_Zag_Render( $this );
 
 		$render_strategy->render();
-	}
-
-	public function public_add_inline_editing_attributes( $attribute, $default = 'basic' ) {
-		return $this->add_inline_editing_attributes( $attribute, $default );
-	}
-
-	public function public_get_repeater_setting_key( $setting_key, $repeater_key, $item_key ) {
-		return $this->get_repeater_setting_key( $setting_key, $repeater_key, $item_key );
 	}
 
 	protected function register_controls() {

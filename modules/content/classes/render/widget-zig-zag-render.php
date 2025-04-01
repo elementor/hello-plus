@@ -18,7 +18,9 @@ use HelloPlus\Classes\{
 };
 
 class Widget_Zig_Zag_Render {
+
 	protected Zig_Zag $widget;
+
 	const LAYOUT_CLASSNAME = 'ehp-zigzag';
 
 	protected array $settings;
@@ -88,7 +90,7 @@ class Widget_Zig_Zag_Render {
 					<div <?php $this->widget->print_render_attribute_string( 'zigzag-item-' . $key ); ?>>
 						<?php
 							$this->render_graphic_element_container( $item, $key );
-							$this->render_text_element_container( $item, $key );
+							$this->render_text_element_container( $item, $key, $repeater );
 						?>
 					</div>
 				</div>
@@ -144,12 +146,6 @@ class Widget_Zig_Zag_Render {
 	private function render_text_element_container( $item, $key ) {
 		$graphic_element = $this->settings['graphic_element'];
 
-		$title_tag = $this->settings['zigzag_title_tag'] ?? 'h2';
-		$title_text = $item[ $graphic_element . '_title' ] ?? '';
-		$has_title = ! empty( $title_text );
-
-		$description_text = $item[ $graphic_element . '_description' ] ?? '';
-		$has_description = ! empty( $description_text );
 
 		$is_graphic_image = 'image' === $graphic_element;
 		$is_graphic_icon = 'icon' === $graphic_element;
@@ -157,8 +153,17 @@ class Widget_Zig_Zag_Render {
 			self::LAYOUT_CLASSNAME . '__text-container',
 		];
 
-		$zigzag_item_title_setting_key = $this->widget->public_get_repeater_setting_key( $graphic_element . '_title', $graphic_element . '_zigzag_items', $key );
-		$zigzag_item_description_setting_key = $this->widget->public_get_repeater_setting_key( $graphic_element . '_description', $graphic_element . '_zigzag_items', $key );
+		$zigzag_item_title_setting_key = $this->widget->public_get_repeater_setting_key(
+			$graphic_element . '_title',
+			$graphic_element . '_zigzag_items',
+			$key
+		);
+
+		$zigzag_item_description_setting_key = $this->widget->public_get_repeater_setting_key(
+			$graphic_element . '_description',
+			$graphic_element . '_zigzag_items',
+			$key
+		);
 
 		$this->widget->public_add_inline_editing_attributes( $zigzag_item_title_setting_key, 'none' );
 		$this->widget->public_add_inline_editing_attributes( $zigzag_item_description_setting_key, 'none' );
@@ -178,8 +183,21 @@ class Widget_Zig_Zag_Render {
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'text-container-' . $key ); ?>>
 			<?php
-			Widget_Utils::maybe_render_text_html( $this->widget, $zigzag_item_title_setting_key, 'ehp-zigzag__title', $item[ $graphic_element . '_title' ], $this->settings['zigzag_title_tag'] );
-			Widget_Utils::maybe_render_text_html( $this->widget, $zigzag_item_description_setting_key, 'ehp-zigzag__description', $item[ $graphic_element . '_description' ] );
+
+			Widget_Utils::maybe_render_text_html(
+				$this->widget,
+				$zigzag_item_title_setting_key,
+				$title_classname,
+				$item[ $graphic_element . '_title' ],
+				$this->settings['zigzag_title_tag']
+			);
+
+			Widget_Utils::maybe_render_text_html(
+				$this->widget,
+				$zigzag_item_description_setting_key,
+				$description_classname,
+				$item[ $graphic_element . '_description' ]
+			);
 
 			if ( ! empty( $item[ $graphic_element . '_button_text' ] ) ) {
 				$this->render_cta_button( $item, $key );

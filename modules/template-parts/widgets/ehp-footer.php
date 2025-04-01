@@ -10,12 +10,14 @@ use Elementor\{
 	Controls_Manager,
 	Group_Control_Background,
 	Group_Control_Box_Shadow,
+	Group_Control_Css_Filter,
+	Group_Control_Text_Shadow,
 	Group_Control_Typography,
 	Repeater,
 };
 use Elementor\Core\Kits\Documents\Tabs\{
-	Global_Typography,
 	Global_Colors,
+	Global_Typography,
 };
 
 use HelloPlus\Includes\Utils as Theme_Utils;
@@ -27,6 +29,7 @@ use HelloPlus\Modules\TemplateParts\Classes\{
 
 use HelloPlus\Classes\{
 	Ehp_Padding,
+	Ehp_Shapes,
 };
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
@@ -70,6 +73,7 @@ class Ehp_Footer extends Ehp_Widget_Base {
 		$this->add_inline_editing_attributes( 'footer_description', 'none' );
 		$this->add_inline_editing_attributes( 'footer_contact_heading', 'none' );
 		$this->add_inline_editing_attributes( 'footer_contact_information', 'none' );
+		$this->add_inline_editing_attributes( 'footer_menu_heading', 'none' );
 
 		$render_strategy->render();
 	}
@@ -104,72 +108,7 @@ class Ehp_Footer extends Ehp_Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'site_logo_brand_select',
-			[
-				'label' => esc_html__( 'Brand', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'logo' => 'Site Logo',
-					'title' => 'Site Name',
-				],
-				'default' => 'logo',
-				'tablet_default' => 'logo',
-				'mobile_default' => 'logo',
-			]
-		);
-
-		$this->add_control(
-			'site_logo_image',
-			[
-				'label' => esc_html__( 'Site Logo', 'hello-plus' ),
-				'type' => Control_Media_Preview::CONTROL_TYPE,
-				'src' => $this->get_site_logo_url(),
-				'default' => [
-					'url' => $this->get_site_logo_url(),
-				],
-				'condition' => [
-					'site_logo_brand_select' => 'logo',
-				],
-			],
-			[
-				'recursive' => true,
-			]
-		);
-
-		$this->add_control(
-			'change_logo_cta',
-			[
-				'type' => Controls_Manager::BUTTON,
-				'label_block' => true,
-				'show_label' => false,
-				'button_type' => 'default elementor-button-center',
-				'text' => esc_html__( 'Change Site Logo', 'hello-plus' ),
-				'event' => 'helloPlusLogo:change',
-				'condition' => [
-					'site_logo_brand_select' => 'logo',
-				],
-			],
-			[
-				'position' => [
-					'of' => 'image',
-					'type' => 'control',
-					'at' => 'after',
-				],
-			]
-		);
-
-		$this->add_control(
-			'site_logo_title_alert',
-			[
-				'type' => Controls_Manager::ALERT,
-				'alert_type' => 'info',
-				'content' => esc_html__( 'Go to', 'hello-plus' ) . ' <a href="#" onclick="templatesModule.openSiteIdentity( event )" >' . esc_html__( 'Site Identity > Site Description', 'hello-plus' ) . '</a>' . esc_html__( ' to edit the Site Name', 'hello-plus' ),
-				'condition' => [
-					'site_logo_brand_select' => 'title',
-				],
-			]
-		);
+		$this->add_content_brand_controls();
 
 		$this->add_control(
 			'footer_description',
@@ -488,96 +427,7 @@ class Ehp_Footer extends Ehp_Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'site_logo_heading',
-			[
-				'label' => esc_html__( 'Logo', 'hello-plus' ),
-				'type' => Controls_Manager::HEADING,
-				'condition' => [
-					'site_logo_brand_select' => 'logo',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'site_logo_width',
-			[
-				'label' => esc_html__( 'Width', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%' ],
-				'range' => [
-					'px' => [
-						'min' => 10,
-						'max' => 500,
-					],
-					'%' => [
-						'min' => 10,
-						'max' => 100,
-					],
-				],
-				'default' => [
-					'size' => 68,
-					'unit' => 'px',
-				],
-				'tablet_default' => [
-					'size' => 68,
-					'unit' => 'px',
-				],
-				'mobile_default' => [
-					'size' => 68,
-					'unit' => 'px',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-footer' => '--footer-logo-width: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'site_logo_brand_select' => 'logo',
-				],
-			]
-		);
-
-		$this->add_control(
-			'site_title_heading',
-			[
-				'label' => esc_html__( 'Site Name', 'hello-plus' ),
-				'type' => Controls_Manager::HEADING,
-				'condition' => [
-					'site_logo_brand_select' => 'title',
-				],
-			]
-		);
-
-		$this->add_control(
-			'site_title_color',
-			[
-				'label' => esc_html__( 'Text Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_PRIMARY,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-footer' => '--footer-title-color: {{VALUE}}',
-				],
-				'condition' => [
-					'site_logo_brand_select' => 'title',
-				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => 'site_title_typography',
-				'label' => esc_html__( 'Typography', 'hello-plus' ),
-				'selector' => '{{WRAPPER}} .ehp-footer__site-title',
-				'global' => [
-					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
-				],
-				'condition' => [
-					'site_logo_brand_select' => 'title',
-				],
-			]
-		);
+		$this->add_style_brand_controls( 'footer' );
 
 		$this->add_control(
 			'footer_description_heading',

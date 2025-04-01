@@ -2,7 +2,6 @@
 
 .ehp-footer {
 	--footer-logo-width: 68px;
-	--footer-title-color: #28292B;
 	--footer-description-color: #28292B;
 	--footer-copyright-color: #28292B;
 	--footer-menu-heading-color: #28292B;
@@ -90,19 +89,39 @@
 		gap: var(--footer-vertical-gap-content);
 	}
 
+	&__site-link-container {
+		display: flex;
+	}
+
 	&__site-link {
 		align-items: center;
 		display: flex;
 		margin: 0;
+	}
 
-		img {
-			width: var(--footer-logo-width);
+	&__site-logo {
+		width: var(--footer-logo-width);
+
+		&.has-border {
+			border: var(--footer-logo-border-width) solid var(--footer-logo-border-color);
+		}
+
+		&.has-shape-custom {
+			--ehp-shapes-border-radius-block-end: var(--footer-logo-border-radius-block-end);
+			--ehp-shapes-border-radius-block-start: var(--footer-logo-border-radius-block-start);
+			--ehp-shapes-border-radius-inline-end: var(--footer-logo-border-radius-inline-end);
+			--ehp-shapes-border-radius-inline-start: var(--footer-logo-border-radius-inline-start);
 		}
 	}
 
 	&__site-title {
-		color: var(--footer-title-color);
+		color: var(--footer-site-title-color);
 		margin: 0;
+
+		.ehp-footer__site-link:hover &,
+		.ehp-footer__site-link:focus & {
+			color: var(--footer-site-title-color-hover);
+		}
 	}
 
 	&__description {

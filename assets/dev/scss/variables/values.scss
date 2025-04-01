@@ -1,12 +1,18 @@
 $transition: all .3s;
 
+// Common to all elements
 $corners-shape-default: 8px;
 $corners-shape-sharp: 0;
 $corners-shape-rounded: 12px;
 $corners-shape-round: 32px;
 $corners-shape-oval: 50%;
 
+// Image specific
 $corners-image-shape-rounded: 52px;
 $corners-image-shape-round: 300px;
 
+// Box specific
 $corners-box-shape-rounded: 52px;
+
+// Logo specific
+$corners-logo-shape-round: 52px;

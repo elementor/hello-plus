@@ -146,7 +146,6 @@ class Widget_Zig_Zag_Render {
 	private function render_text_element_container( $item, $key ) {
 		$graphic_element = $this->settings['graphic_element'];
 
-
 		$is_graphic_image = 'image' === $graphic_element;
 		$is_graphic_icon = 'icon' === $graphic_element;
 		$text_container_classnames = [

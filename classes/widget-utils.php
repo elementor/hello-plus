@@ -27,7 +27,13 @@ class Widget_Utils {
 		];
 	}
 
-	public static function maybe_render_text_html( \Elementor\Widget_Base $context, string $render_key, string $css_class, string $settings_text, string $settings_tag = 'p' ): void {
+	public static function maybe_render_text_html(
+		\Elementor\Widget_Base $context,
+		string $render_key,
+		string $css_class,
+		string $settings_text,
+		string $settings_tag = 'p'
+	): void {
 		if ( '' === $settings_text ) {
 			return;
 		}
@@ -36,7 +42,12 @@ class Widget_Utils {
 
 		$element = wp_kses_post( $settings_text );
 
-		$element_html = sprintf( '<%1$s %2$s>%3$s</%1$s>', \Elementor\Utils::validate_html_tag( $settings_tag ), $context->get_render_attribute_string( $render_key ), $element );
+		$element_html = sprintf(
+			'<%1$s %2$s>%3$s</%1$s>',
+			\Elementor\Utils::validate_html_tag( $settings_tag ),
+			$context->get_render_attribute_string( $render_key ),
+			$element
+		);
 
 		// PHPCS - the variable $element_html holds safe data.
 		echo $element_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

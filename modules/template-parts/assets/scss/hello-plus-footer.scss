@@ -99,7 +99,8 @@
 		margin: 0;
 	}
 
-	&__site-logo {
+	&__site-logo,
+	&__site-link img {
 		width: var(--footer-logo-width);
 
 		&.has-border {

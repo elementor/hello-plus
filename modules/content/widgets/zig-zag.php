@@ -62,7 +62,7 @@ class Zig_Zag extends Widget_Base {
 	}
 
 	public function get_script_depends(): array {
-		return [ 'helloplus-zigzag-fe', 'elementor-editor-document' ];
+		return [ 'helloplus-zigzag-fe' ];
 	}
 
 	protected function render(): void {

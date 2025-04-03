@@ -1,4 +1,5 @@
 @import "../../../../../assets/dev/scss/variables";
+@import "../../../../../assets/dev/scss/ehp-full-height";
 
 @mixin column-width-sizes() {
 	&-33 {
@@ -24,6 +25,7 @@
 	--ehp-form-button-icon-spacing: 8px;
 	--ehp-form-button-icon-position: row;
 	--ehp-form-text-container-align: center;
+	--ehp-form-text-spacing: 20px;
 	--ehp-form-heading-color: #000;
 	--ehp-form-description-color: #000;
 	--ehp-form-label-spacing: 0;
@@ -40,7 +42,6 @@
 	--ehp-form-button-text-color-hover: #ffffff;
 	--ehp-form-button-border-width: 1px;
 	--ehp-form-button-border-color: #28292B;
-	--ehp-form-button-border-radius: 0;
 	--ehp-form-button-padding-block-end: 8px;
 	--ehp-form-button-padding-block-start: 8px;
 	--ehp-form-button-padding-inline-end: 16px;
@@ -51,17 +52,41 @@
 	--ehp-form-box-padding-inline-end: 60px;
 	--ehp-form-box-padding-inline-start: 60px;
 
+	@include full-height-viewports();
+
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	align-items: var(--ehp-form-content-position);
 	padding-block-start: var(--ehp-form-box-padding-block-start);
 	padding-block-end: var(--ehp-form-box-padding-block-end);
 	padding-inline-start: var(--ehp-form-box-padding-inline-start);
 	padding-inline-end: var(--ehp-form-box-padding-inline-end);
+	position: relative;
 
-	& > * {
+	&.has-shape-custom.shape-type-box {
+		--ehp-shapes-border-radius-block-end: var(--form-box-border-radius-block-end);
+		--ehp-shapes-border-radius-block-start: var(--form-box-border-radius-block-start);
+		--ehp-shapes-border-radius-inline-end: var(--form-box-border-radius-inline-end);
+		--ehp-shapes-border-radius-inline-start: var(--form-box-border-radius-inline-start);
+	}
+
+	&.has-border {
+		border-color: var(--ehp-form-box-border-color);
+		border-style: solid;
+		border-width: var(--ehp-form-box-border-width);
+	}
+
+	&.has-layout-preset {
+
+		&-quick-connect {
+			gap: var(--ehp-form-elements-spacing);
+		}
+	}
+
+	& > *:is(:not(.ehp-form__overlay)) {
 		max-width: var(--ehp-form-content-width);
 		width: 100%;
+		z-index: 1;
 	}
 
 	&__wrapper {
@@ -111,14 +136,17 @@
 		align-items: var(--ehp-form-text-container-align);
 		display: flex;
 		flex-direction: column;
+		gap: var(--ehp-form-text-spacing);
 	}
 
 	&__heading {
 		color: var(--ehp-form-heading-color);
+		margin: 0;
 	}
 
 	&__description {
 		color: var(--ehp-form-description-color);
+		margin: 0;
 	}
 
 	&__field-label {
@@ -192,7 +220,7 @@
 			border-color: var(--ehp-form-button-border-color);
 			border-style: solid;
 			border-width: var(--ehp-form-button-border-width);
-			border-radius: var(--ehp-form-button-border-radius);
+			// border-radius: var(--ehp-form-button-border-radius);
 		}
 
 		&.is-type {
@@ -220,23 +248,11 @@
 			}
 		}
 
-		&.has-shape {
-
-			&-sharp {
-				border-radius: $corners-shape-sharp;
-			}
-
-			&-rounded {
-				border-radius: $corners-shape-rounded;
-			}
-
-			&-round {
-				border-radius: $corners-shape-round;
-			}
-
-			&-default {
-				border-radius: $corners-shape-default;
-			}
+		&.has-shape-custom.shape-type-button {
+			--ehp-shapes-border-radius-block-end: var(--form-button-border-radius-block-end);
+			--ehp-shapes-border-radius-block-start: var(--form-button-border-radius-block-start);
+			--ehp-shapes-border-radius-inline-end: var(--form-button-border-radius-inline-end);
+			--ehp-shapes-border-radius-inline-start: var(--form-button-border-radius-inline-start);
 		}
 
 		& svg {
@@ -282,5 +298,15 @@
 				display: none;
 			}
 		}
+	}
+
+	&__overlay {
+		height: 100%;
+		left: 0;
+		opacity: var(--ehp-form-overlay-opacity);
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: 0;
 	}
 }

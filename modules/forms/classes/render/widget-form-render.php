@@ -9,7 +9,10 @@ use HelloPlus\Modules\Forms\Widgets\Ehp_Form;
 use HelloPlus\Includes\Utils;
 use Elementor\Icons_Manager;
 
-use HelloPlus\Classes\Widget_Utils;
+use HelloPlus\Classes\{
+	Ehp_Shapes,
+	Widget_Utils,
+};
 
 class Widget_Form_Render {
 	protected Ehp_Form $widget;
@@ -18,15 +21,35 @@ class Widget_Form_Render {
 	const LAYOUT_CLASSNAME = 'ehp-form';
 
 	public function render() {
-		$form_name = $this->settings['form_name'];
+		$layout_full_height_controls = $this->settings['box_full_screen_height_controls'] ?? '';
 
-		if ( ! empty( $form_name ) ) {
-			$this->widget->add_render_attribute( 'form', [
-				'name' => $form_name,
-				'class' => self::LAYOUT_CLASSNAME,
-				'method' => 'post',
-			] );
+		$layout_classnames = [
+			self::LAYOUT_CLASSNAME,
+			'has-layout-preset-' . $this->settings['layout_preset'],
+		];
+
+		if ( ! empty( $layout_full_height_controls ) ) {
+			foreach ( $layout_full_height_controls as $breakpoint ) {
+				$layout_classnames[] = ' is-full-height-' . $breakpoint;
+			}
 		}
+
+		if ( 'yes' === $this->settings['show_box_border'] ) {
+			$layout_classnames[] = 'has-border';
+		}
+
+		$shapes = new Ehp_Shapes( $this->widget, [
+			'container_prefix' => 'box',
+			'render_attribute' => 'layout',
+			'widget_name' => 'form',
+		] );
+		$shapes->add_shape_attributes();
+
+		$this->widget->add_render_attribute( 'layout', [
+			'name' => $this->settings['form_name'] || '',
+			'class' => $layout_classnames,
+			'method' => 'post',
+		] );
 
 		$this->widget->add_render_attribute( 'wrapper', [
 			'class' => self::LAYOUT_CLASSNAME . '__wrapper',
@@ -38,8 +61,12 @@ class Widget_Form_Render {
 			$referer_title = get_option( 'blogname' );
 		}
 
+		$this->widget->add_render_attribute( 'overlay', [
+			'class' => self::LAYOUT_CLASSNAME . '__overlay',
+		] );
+
 		?>
-		<form <?php $this->widget->print_render_attribute_string( 'form' ); ?>>
+		<form <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
 			<?php $this->render_text_container(); ?>
 			<input type="hidden" name="post_id" value="<?php echo (int) Utils::get_current_post_id(); ?>"/>
 			<input type="hidden" name="form_id" value="<?php echo esc_attr( $this->widget->get_id() ); ?>"/>
@@ -174,6 +201,7 @@ class Widget_Form_Render {
 				<?php endforeach; ?>
 				<?php $this->render_button(); ?>
 			</div>
+			<div <?php $this->widget->print_render_attribute_string( 'overlay' ); ?>></div>
 		</form>
 		<?php
 	}
@@ -197,9 +225,12 @@ class Widget_Form_Render {
 			$button_classnames[] = 'has-border';
 		}
 
-		if ( ! empty( $this->settings['button_shape'] ) ) {
-			$button_classnames[] = 'has-shape-' . $this->settings['button_shape'];
-		}
+		$shapes = new Ehp_Shapes( $this->widget, [
+			'container_prefix' => 'button',
+			'render_attribute' => 'button',
+			'widget_name' => 'form',
+		] );
+		$shapes->add_shape_attributes();
 
 		if ( ! empty( $this->settings['button_type'] ) ) {
 			$button_classnames[] = 'is-type-' . $this->settings['button_type'];

@@ -2,19 +2,38 @@
 namespace HelloPlus\Modules\Forms\Widgets;
 
 use Elementor\Controls_Manager;
-use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
-use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
-use Elementor\Group_Control_Background;
-use Elementor\Group_Control_Typography;
+use Elementor\Core\Kits\Documents\Tabs\{
+	Global_Colors,
+	Global_Typography,
+};
+
+use Elementor\{
+	Group_Control_Background,
+	Group_Control_Box_Shadow,
+	Group_Control_Typography,
+};
+
 use Elementor\Modules\DynamicTags\Module as TagsModule;
 use Elementor\Modules\Promotions\Controls\Promotion_Control;
 use Elementor\Repeater;
 use HelloPlus\Includes\Utils;
-use HelloPlus\Modules\Forms\Classes\Form_Base;
-use HelloPlus\Modules\Forms\Classes\Render\Widget_Form_Render;
-use HelloPlus\Modules\Forms\Components\Ajax_Handler;
-use HelloPlus\Modules\Forms\Controls\Fields_Repeater;
-use HelloPlus\Modules\Forms\Module;
+
+use HelloPlus\Modules\Forms\{
+	Classes\Form_Base,
+	Classes\Render\Widget_Form_Render,
+	Components\Ajax_Handler,
+	Controls\Fields_Repeater,
+	Module,
+};
+
+use HelloPlus\Modules\Content\Classes\{
+	Choose_Img_Control,
+};
+
+use HelloPlus\Classes\{
+	Ehp_Shapes,
+	Widget_Utils,
+};
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -82,6 +101,7 @@ class Ehp_Form extends Form_Base {
 	}
 
 	protected function register_controls() {
+		$this->add_content_layout_section();
 		$this->add_content_text_section();
 		$this->add_content_form_fields_section();
 		$this->add_content_button_section();
@@ -89,6 +109,7 @@ class Ehp_Form extends Form_Base {
 		$this->add_action_sections();
 		$this->add_content_additional_options_section();
 
+		$this->add_style_layout_section();
 		$this->add_style_text_section();
 		$this->add_style_form_section();
 		$this->add_style_fields_section();
@@ -103,6 +124,47 @@ class Ehp_Form extends Form_Base {
 		foreach ( $actions as $action ) {
 			$action->register_settings_section( $this );
 		}
+	}
+
+	protected function add_content_layout_section(): void {
+		$this->start_controls_section(
+			'section_layout',
+			[
+				'label' => esc_html__( 'Layout', 'hello-plus' ),
+			]
+		);
+
+		$this->add_control(
+			'layout_preset',
+			[
+				'label' => esc_html__( 'Preset', 'hello-plus' ),
+				'type' => Choose_Img_Control::CONTROL_NAME,
+				'default' => 'quick-connect',
+				'label_block' => true,
+				'columns' => 2,
+				'toggle' => false,
+				'options' => [
+					'quick-connect' => [
+						'title' => wp_kses_post( "Quick Connect:\nEncourage fast, direct\ncontact." ),
+						'image' => HELLOPLUS_IMAGES_URL . 'form-lite-quick-connect.svg',
+						'hover_image' => true,
+					],
+					'interact' => [
+						'title' => wp_kses_post( "Interact: Focus on\nyour messaging to\nstart a conversation." ),
+						'image' => HELLOPLUS_IMAGES_URL . 'form-lite-interact.svg',
+						'hover_image' => true,
+					],
+					'engage' => [
+						'title' => wp_kses_post( "Engage: Capture\nattention to drive\ninteraction." ),
+						'image' => HELLOPLUS_IMAGES_URL . 'form-lite-engage.svg',
+						'hover_image' => true,
+					],
+				],
+				'frontend_available' => true,
+			]
+		);
+
+		$this->end_controls_section();
 	}
 
 	protected function add_content_text_section(): void {
@@ -850,6 +912,110 @@ class Ehp_Form extends Form_Base {
 		$this->end_controls_section();
 	}
 
+	protected function add_style_layout_section(): void {
+		$this->start_controls_section(
+			'section_layout_style',
+			[
+				'label' => esc_html__( 'Layout', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_responsive_control(
+			'content_position',
+			[
+				'label' => esc_html__( 'Content Position', 'hello-plus' ),
+				'type' => Controls_Manager::CHOOSE,
+				'toggle' => false,
+				'options' => [
+					'start' => [
+						'title' => esc_html__( 'Start', 'hello-plus' ),
+						'icon' => 'eicon-h-align-' . ( is_rtl() ? 'right' : 'left' ),
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'hello-plus' ),
+						'icon' => 'eicon-h-align-center',
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-content-position: {{VALUE}};',
+				],
+				'default' => 'center',
+				'tablet_default' => 'center',
+				'mobile_default' => 'center',
+				'condition' => [
+					'layout_preset' => 'quick-connect',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'text_align',
+			[
+				'label' => esc_html__( 'Content Alignment', 'hello-plus' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'flex-start' => [
+						'title' => esc_html__( 'Left', 'hello-plus' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'hello-plus' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'flex-end' => [
+						'title' => esc_html__( 'Right', 'hello-plus' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'default' => 'center',
+				'condition' => [
+					'layout_preset' => 'quick-connect',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-text-container-align: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'content_width',
+			[
+				'label' => esc_html__( 'Content Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 1600,
+					],
+					'%' => [
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'size' => 640,
+					'unit' => 'px',
+				],
+				'tablet_default' => [
+					'size' => 640,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 320,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-content-width: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'layout_preset' => 'quick-connect',
+				],
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
 	protected function add_content_additional_options_section(): void {
 		$this->start_controls_section(
 			'section_form_options',
@@ -978,32 +1144,6 @@ class Ehp_Form extends Form_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'text_align',
-			[
-				'label' => esc_html__( 'Align', 'hello-plus' ),
-				'type' => Controls_Manager::CHOOSE,
-				'options' => [
-					'flex-start' => [
-						'title' => esc_html__( 'Left', 'hello-plus' ),
-						'icon' => 'eicon-text-align-left',
-					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'hello-plus' ),
-						'icon' => 'eicon-text-align-center',
-					],
-					'flex-end' => [
-						'title' => esc_html__( 'Right', 'hello-plus' ),
-						'icon' => 'eicon-text-align-right',
-					],
-				],
-				'default' => 'center',
-				'selectors' => [
-					'{{WRAPPER}} .ehp-form' => '--ehp-form-text-container-align: {{VALUE}};',
-				],
-			]
-		);
-
 		$this->add_control(
 			'heading_text',
 			[
@@ -1066,6 +1206,38 @@ class Ehp_Form extends Form_Base {
 				'selector' => '{{WRAPPER}} .ehp-form__description',
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'text_spacing',
+			[
+				'label' => esc_html__( 'Spacing', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 100,
+					],
+					'%' => [
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'size' => 20,
+					'unit' => 'px',
+				],
+				'tablet_default' => [
+					'size' => 20,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 20,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-text-spacing: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -1648,18 +1820,17 @@ class Ehp_Form extends Form_Base {
 			]
 		);
 
-		$this->add_control(
-			'button_shape',
+		$shapes = new Ehp_Shapes( $this, [
+			'widget_name' => 'form',
+			'container_prefix' => 'button',
+		] );
+		$shapes->add_style_controls();
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
 			[
-				'label' => esc_html__( 'Shape', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'default' => 'Default',
-					'sharp' => 'Sharp',
-					'rounded' => 'Rounded',
-					'round' => 'Round',
-				],
-				'default' => 'default',
+				'name' => 'map_box_shadow',
+				'selector' => '{{WRAPPER}} .ehp-form__button',
 			]
 		);
 
@@ -1788,36 +1959,145 @@ class Ehp_Form extends Form_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'content_width',
+		$this->add_control(
+			'box_background_overlay_label',
 			[
-				'label' => esc_html__( 'Content Width', 'hello-plus' ),
+				'label' => esc_html__( 'Background Overlay', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
+			[
+				'name' => 'background_overlay',
+				'types' => [ 'classic', 'gradient' ],
+				'exclude' => [ 'image' ],
+				'selector' => '{{WRAPPER}} .ehp-form__overlay',
+				'fields_options' => [
+					'background' => [
+						'default' => 'classic',
+					],
+				],
+				'frontend_available' => true,
+			]
+		);
+
+		$this->add_responsive_control(
+			'background_overlay_opacity',
+			[
+				'label' => esc_html__( 'Opacity', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'%' => [
+						'max' => 1,
+						'min' => 0.10,
+						'step' => 0.01,
+					],
+				],
+				'default' => [
+					'unit' => '%',
+					'size' => 0.5,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-overlay-opacity: {{SIZE}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'box_element_spacing',
+			[
+				'label' => esc_html__( 'Element Spacing', 'hello-plus' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
 				'range' => [
 					'px' => [
-						'max' => 1600,
+						'max' => 150,
 					],
 					'%' => [
 						'max' => 100,
 					],
 				],
 				'default' => [
-					'size' => 640,
-					'unit' => 'px',
-				],
-				'tablet_default' => [
-					'size' => 640,
-					'unit' => 'px',
-				],
-				'mobile_default' => [
-					'size' => 320,
+					'size' => 32,
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-form' => '--ehp-form-content-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-elements-spacing: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'show_box_border',
+			[
+				'label' => esc_html__( 'Border', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'box_border_width',
+			[
+				'label' => __( 'Border Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 10,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 1,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-box-border-width: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'show_box_border' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'box_border_color',
+			[
+				'label' => esc_html__( 'Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-box-border-color: {{VALUE}}',
+				],
+				'condition' => [
+					'show_box_border' => 'yes',
+				],
+			]
+		);
+
+		$shapes = new Ehp_Shapes( $this, [
+			'widget_name' => 'form',
+			'container_prefix' => 'box',
+		] );
+		$shapes->add_style_controls();
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'box_box_shadow',
+				'selector' => '{{WRAPPER}} .ehp-form',
 			]
 		);
 
@@ -1838,6 +2118,38 @@ class Ehp_Form extends Form_Base {
 					'unit' => 'px',
 				],
 				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'box_full_screen_height',
+			[
+				'label' => esc_html__( 'Full Screen Height', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => '',
+				'tablet_default' => '',
+				'mobile_default' => '',
+				'separator' => 'before',
+			]
+		);
+
+		$configured_breakpoints = Widget_Utils::get_configured_breakpoints();
+
+		$this->add_control(
+			'box_full_screen_height_controls',
+			[
+				'label' => esc_html__( 'Apply Full Screen Height on', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT2,
+				'label_block' => true,
+				'multiple' => true,
+				'options' => $configured_breakpoints['devices_options'],
+				'default' => $configured_breakpoints['active_devices'],
+				'condition' => [
+					'box_full_screen_height' => 'yes',
+				],
 			]
 		);
 

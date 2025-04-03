@@ -165,7 +165,8 @@
 		display: flex;
 	}
 
-	&__site-logo {
+	&__site-logo,
+	&__site-link img {
 		width: var(--header-logo-width);
 
 		&.has-border {
@@ -616,7 +617,7 @@
 
 		&.has-align-link-center {
 
-			.ehp-header__site-link {
+			.ehp-header__site-link-container {
 				grid-area: center;
 				justify-content: center;
 			}

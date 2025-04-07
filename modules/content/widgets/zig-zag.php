@@ -765,7 +765,7 @@ class Zig_Zag extends Widget_Base {
 		$this->add_control(
 			'has_alternate_button_styles',
 			[
-				'label' => esc_html__( 'CTA Button Style', 'hello-plus' ),
+				'label' => esc_html__( 'CTA Button', 'hello-plus' ),
 				'type' => Controls_Manager::SWITCHER,
 				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
 				'label_off' => esc_html__( 'No', 'hello-plus' ),
@@ -963,7 +963,7 @@ class Zig_Zag extends Widget_Base {
 		$this->add_control(
 			'show_alternate_background',
 			[
-				'label' => esc_html__( 'Alternate Background Style', 'hello-plus' ),
+				'label' => esc_html__( 'Background', 'hello-plus' ),
 				'type' => Controls_Manager::SWITCHER,
 				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
 				'label_off' => esc_html__( 'No', 'hello-plus' ),

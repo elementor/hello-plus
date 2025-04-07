@@ -40,16 +40,16 @@ class Widget_Utils {
 
 		$context->add_render_attribute( $render_key, 'class', $css_class );
 
-		$element = esc_html( $settings_text );
+		$element_text = esc_html( $settings_text );
 
 		$element_html = sprintf(
 			'<%1$s %2$s>%3$s</%1$s>',
 			\Elementor\Utils::validate_html_tag( $settings_tag ),
 			$context->get_render_attribute_string( $render_key ),
-			$element
+			$element_text
 		);
 
-		// PHPCS - the variable $element_html holds safe data.
-		echo $element_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+		echo wp_kses_post( $element_html );
 	}
 }

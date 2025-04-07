@@ -49,7 +49,6 @@ class Widget_Utils {
 			$element_text
 		);
 
-
 		echo wp_kses_post( $element_html );
 	}
 }

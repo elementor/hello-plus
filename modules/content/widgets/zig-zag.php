@@ -892,6 +892,7 @@ class Zig_Zag extends Widget_Base {
 				],
 				'condition' => [
 					'primary_button_type' => 'button',
+					'has_alternate_button_styles' => 'yes',
 					'has_alternate_button_border' => 'yes',
 				],
 			]
@@ -910,6 +911,7 @@ class Zig_Zag extends Widget_Base {
 				],
 				'condition' => [
 					'primary_button_type' => 'button',
+					'has_alternate_button_styles' => 'yes',
 					'has_alternate_button_border' => 'yes',
 				],
 			]

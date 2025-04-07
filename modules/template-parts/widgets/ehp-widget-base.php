@@ -535,11 +535,11 @@ abstract class Ehp_Widget_Base extends Widget_Base {
 	}
 
 	public function get_header_attachment_image_html_filter( $html ) {
-		$this->get_attachment_image_html_filter( $html, 'header' );
+		return $this->get_attachment_image_html_filter( $html, 'header' );
 	}
 
 	public function get_footer_attachment_image_html_filter( $html ) {
-		$this->get_attachment_image_html_filter( $html, 'footer' );
+		return $this->get_attachment_image_html_filter( $html, 'footer' );
 	}
 
 	public function get_attachment_image_html_filter( $html, $widget_name ) {
@@ -601,13 +601,13 @@ abstract class Ehp_Widget_Base extends Widget_Base {
 				<?php if ( 'logo' === $site_logo_brand_select ) {
 
 					if ( 'header' === $widget_name ) {
-						add_filter( 'elementor/image_size/get_header_attachment_image_html_filter', [ $this, 'get_header_attachment_image_html_filter' ], 10, 4 );
+						add_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_header_attachment_image_html_filter' ], 10, 4 );
 						Group_Control_Image_Size::print_attachment_image_html( $this->settings, 'site_logo_image' );
-						remove_filter( 'elementor/image_size/get_header_attachment_image_html_filter', [ $this, 'get_header_attachment_image_html_filter' ], 10 );
+						remove_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_header_attachment_image_html_filter' ], 10 );
 					} else {
-						add_filter( 'elementor/image_size/get_footer_attachment_image_html_filter', [ $this, 'get_footer_attachment_image_html_filter' ], 10, 4 );
+						add_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_footer_attachment_image_html_filter' ], 10, 4 );
 						Group_Control_Image_Size::print_attachment_image_html( $this->settings, 'site_logo_image' );
-						remove_filter( 'elementor/image_size/get_footer_attachment_image_html_filter', [ $this, 'get_footer_attachment_image_html_filter' ], 10 );
+						remove_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_footer_attachment_image_html_filter' ], 10 );
 					}
 				} ?>
 				<?php if ( 'title' === $site_logo_brand_select ) {

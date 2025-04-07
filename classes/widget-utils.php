@@ -40,7 +40,7 @@ class Widget_Utils {
 
 		$context->add_render_attribute( $render_key, 'class', $css_class );
 
-		$element = wp_kses_post( $settings_text );
+		$element = esc_html( $settings_text );
 
 		$element_html = sprintf(
 			'<%1$s %2$s>%3$s</%1$s>',

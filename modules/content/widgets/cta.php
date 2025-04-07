@@ -31,8 +31,11 @@ use HelloPlus\Classes\{
 	Widget_Utils
 };
 use HelloPlus\Includes\Utils;
+use HelloPlus\Modules\Content\Traits\Widget_Repeater_Editable;
 
 class CTA extends Widget_Base {
+
+	use Widget_Repeater_Editable;
 
 	public function get_name(): string {
 		return 'cta';
@@ -63,6 +66,8 @@ class CTA extends Widget_Base {
 
 		$this->add_inline_editing_attributes( 'heading_text', 'basic' );
 		$this->add_inline_editing_attributes( 'description_text', 'basic' );
+		$this->add_inline_editing_attributes( 'primary_cta_button_text', 'none' );
+		$this->add_inline_editing_attributes( 'secondary_cta_button_text', 'none' );
 
 		$render_strategy->render();
 	}

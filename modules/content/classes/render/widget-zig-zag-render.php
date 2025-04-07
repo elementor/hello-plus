@@ -218,6 +218,7 @@ class Widget_Zig_Zag_Render {
 			'button_hover_animation' => $this->settings['primary_button_hover_animation'] ?? '',
 			'button_has_border' => $this->settings['primary_show_button_border'],
 			'button_type' => $this->settings['primary_button_type'] ?? '',
+			'button_text_key' => $graphic_element . '_button_text' ?? '',
 		];
 
 		$button = new Ehp_Button( $this->widget, [
@@ -225,6 +226,14 @@ class Widget_Zig_Zag_Render {
 			'widget_name' => $this->widget->get_name(),
 			'key' => $key,
 		], $defaults );
+
+		$zigzag_item_button_setting_key = $this->widget->public_get_repeater_setting_key(
+			$graphic_element . '_button_text',
+			$graphic_element . '_zigzag_items',
+			$key
+		);
+
+		$this->widget->public_add_inline_editing_attributes( $zigzag_item_button_setting_key, 'none' );
 
 		$this->widget->add_render_attribute( 'button-container', 'class', self::LAYOUT_CLASSNAME . '__button-container' );
 		?>

@@ -102,9 +102,33 @@ class Ehp_Button {
 				'class' => 'ehp-button__icon',
 				'ehp-' . $widget_name . '__button-icon',
 			] );
+
+			$this->render_button_text( $type );
 			?>
-			<?php echo esc_html( $button_text ); ?>
 		</a>
+		<?php
+	}
+
+	protected function render_button_text() {
+		$type = $this->context['type'] ?? '';
+		$widget_name = $this->context['widget_name'];
+		$key = $this->context['key'] ?? '';
+		$key_attr = $key ? '-' . $key : '';
+
+		$render_attr = $type . '_cta_button_text';
+
+		$this->widget->add_render_attribute( $render_attr, [
+			'class' => [
+				self::CLASSNAME_BUTTON . '__text',
+				self::EHP_PREFIX . $widget_name . '__button-text',
+				self::EHP_PREFIX . $widget_name . '__button-text--' . $type,
+			],
+		] );
+
+		$button_text = $this->get_control_value( 'button_text', '', 'cta_button_text' );
+		?>
+		<span <?php $this->widget->print_render_attribute_string( $render_attr ); ?>>
+			<?php echo esc_html( $button_text ); ?>
 		<?php
 	}
 

@@ -13,8 +13,8 @@ use Elementor\{
 
 use HelloPlus\Modules\Content\Widgets\Zig_Zag;
 use HelloPlus\Classes\{
-	Ehp_Button,
 	Ehp_Image,
+	Ehp_Shapes,
 };
 
 class Widget_Zig_Zag_Render {
@@ -211,21 +211,70 @@ class Widget_Zig_Zag_Render {
 	public function render_cta_button( $item, $key ) {
 		$graphic_element = $this->settings['graphic_element'];
 
-		$defaults = [
-			'button_text' => $item[ $graphic_element . '_button_text' ] ?? '',
-			'button_link' => $item[ $graphic_element . '_button_link' ] ?? '',
-			'button_icon' => $item[ $graphic_element . '_button_icon' ] ?? '',
-			'button_hover_animation' => $this->settings['primary_button_hover_animation'] ?? '',
-			'button_has_border' => $this->settings['primary_show_button_border'],
-			'button_type' => $this->settings['primary_button_type'] ?? '',
-			'button_text_key' => $graphic_element . '_button_text' ?? '',
+		$this->widget->add_render_attribute( 'button-container', 'class', self::LAYOUT_CLASSNAME . '__button-container' );
+
+		$button_classnames = [
+			'ehp-button',
+			'ehp-button--primary',
+			self::LAYOUT_CLASSNAME . '__button',
+			self::LAYOUT_CLASSNAME . '__button--primary',
 		];
 
-		$button = new Ehp_Button( $this->widget, [
-			'type' => 'primary',
+		if ( ! empty( $this->settings['primary_button_type'] ) ) {
+			$button_classnames[] = 'is-type-' . $this->settings['primary_button_type'];
+		}
+
+		if ( $this->settings['primary_button_hover_animation'] ) {
+			$button_classnames[] = 'elementor-animation-' . $this->settings['primary_button_hover_animation'];
+		}
+
+		if ( 'yes' === $this->settings['primary_show_button_border'] ) {
+			$button_classnames[] = 'has-border';
+		}
+
+		$button_render_attr = $graphic_element . '-primary-button-' . $key;
+
+		$shapes = new Ehp_Shapes( $this->widget, [
 			'widget_name' => $this->widget->get_name(),
+			'container_prefix' => 'button',
+			'type_prefix' => 'primary',
+			'render_attribute' => $button_render_attr,
 			'key' => $key,
-		], $defaults );
+		] );
+		$shapes_classnames = $shapes->get_shape_classnames();
+
+		$button_classnames = array_merge( $button_classnames, $shapes_classnames );
+
+		$this->widget->add_render_attribute( $button_render_attr, [
+			'class' => $button_classnames,
+		] );
+
+		$this->widget->add_link_attributes( $button_render_attr, $item[ $graphic_element . '_button_link'], true );
+		?>
+		<div <?php $this->widget->print_render_attribute_string( 'button-container' ); ?>>
+			<a <?php $this->widget->print_render_attribute_string( $button_render_attr ); ?>>
+				<?php
+				Icons_Manager::render_icon( $item[ $graphic_element . '_button_icon' ], [
+					'aria-hidden' => 'true',
+					'class' => 'ehp-button__icon',
+					self::LAYOUT_CLASSNAME . '__button-icon',
+				] );
+
+				$this->render_button_text( $item, $key );
+				?>
+			</a>
+		</div>
+		<?php
+	}
+
+	protected function render_button_text( $item, $key ) {
+		$graphic_element = $this->settings['graphic_element'];
+
+		$render_attr = $graphic_element . '_button_text';
+
+		$this->widget->add_render_attribute( $render_attr, [
+			'class' => self::LAYOUT_CLASSNAME . '__button-text',
+		] );
 
 		$zigzag_item_button_setting_key = $this->widget->public_get_repeater_setting_key(
 			$graphic_element . '_button_text',
@@ -235,11 +284,14 @@ class Widget_Zig_Zag_Render {
 
 		$this->widget->public_add_inline_editing_attributes( $zigzag_item_button_setting_key, 'none' );
 
-		$this->widget->add_render_attribute( 'button-container', 'class', self::LAYOUT_CLASSNAME . '__button-container' );
+		Widget_Utils::maybe_render_text_html(
+			$this->widget,
+			$zigzag_item_button_setting_key,
+			self::LAYOUT_CLASSNAME . '__button-text',
+			$item[ $graphic_element . '_button_text' ],
+			'span',
+		);
 		?>
-		<div <?php $this->widget->print_render_attribute_string( 'button-container' ); ?>>
-			<?php $button->render(); ?>
-		</div>
 		<?php
 	}
 }

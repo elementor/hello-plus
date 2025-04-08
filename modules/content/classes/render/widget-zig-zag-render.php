@@ -249,7 +249,7 @@ class Widget_Zig_Zag_Render {
 			'class' => $button_classnames,
 		] );
 
-		$this->widget->add_link_attributes( $button_render_attr, $item[ $graphic_element . '_button_link'], true );
+		$this->widget->add_link_attributes( $button_render_attr, $item[ $graphic_element . '_button_link' ], true );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'button-container' ); ?>>
 			<a <?php $this->widget->print_render_attribute_string( $button_render_attr ); ?>>

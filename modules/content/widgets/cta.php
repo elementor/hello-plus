@@ -31,11 +31,8 @@ use HelloPlus\Classes\{
 	Widget_Utils
 };
 use HelloPlus\Includes\Utils;
-use HelloPlus\Modules\Content\Traits\Widget_Repeater_Editable;
 
 class CTA extends Widget_Base {
-
-	use Widget_Repeater_Editable;
 
 	public function get_name(): string {
 		return 'cta';

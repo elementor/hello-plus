@@ -51,6 +51,12 @@
 	--ehp-form-box-padding-block-start: 60px;
 	--ehp-form-box-padding-inline-end: 60px;
 	--ehp-form-box-padding-inline-start: 60px;
+	--ehp-form-content-position: center;
+
+	--ehp-form-order-start: 1;
+	--ehp-form-order-end: 2;
+	--ehp-text-order-start: 2;
+	--ehp-text-order-end: 1;
 
 	@include full-height-viewports();
 
@@ -80,13 +86,56 @@
 
 		&-quick-connect {
 			gap: var(--ehp-form-elements-spacing);
+
+			& > *:is(:not(.ehp-form__overlay)) {
+				max-width: var(--ehp-form-content-width);
+				width: 100%;
+				z-index: 1;
+			}
+		}
+
+		&-interact {
+			--ehp-form-text-container-align: flex-start;
+			display: grid;
+			gap: var(--ehp-form-row-gap);
+			grid-template-columns: 1fr;
+
+			& .ehp-form__wrapper {
+				order: var(--ehp-form-order);
+			}
+
+			& .ehp-form__text-container {
+				height: 100%;
+				justify-content: var(--ehp-form-content-alignment);
+				order: var(--ehp-text-order);
+			}
 		}
 	}
 
-	& > *:is(:not(.ehp-form__overlay)) {
-		max-width: var(--ehp-form-content-width);
-		width: 100%;
-		z-index: 1;
+	&.has-column-structure {
+
+		@media screen and (min-width: $screen-desktop-min) {
+
+			&-50-50 {
+				grid-template-columns: 50% 50%;
+			}
+	
+			&-33-66 {
+				grid-template-columns: 33% 66%;
+	
+				&.is-reverse {
+					grid-template-columns: 66% 33%;
+				}
+			}
+	
+			&-25-75 {
+				grid-template-columns: 25% 75%;
+	
+				&.is-reverse {
+					grid-template-columns: 75% 25%;
+				}
+			}
+		}
 	}
 
 	&__wrapper {
@@ -142,6 +191,8 @@
 	&__heading {
 		color: var(--ehp-form-heading-color);
 		margin: 0;
+		overflow-wrap: break-word;
+		word-break: break-word;
 	}
 
 	&__description {

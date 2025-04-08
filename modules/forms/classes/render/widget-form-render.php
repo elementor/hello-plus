@@ -38,6 +38,14 @@ class Widget_Form_Render {
 			$layout_classnames[] = 'has-border';
 		}
 
+		if ( ! empty( $this->settings['layout_column_structure'] ) ) {
+			$layout_classnames[] = 'has-column-structure-' . $this->settings['layout_column_structure'];
+		}
+
+		if ( 'yes' === $this->settings['layout_reverse_structure'] ) {
+			$layout_classnames[] = 'is-reverse';
+		}
+
 		$shapes = new Ehp_Shapes( $this->widget, [
 			'container_prefix' => 'box',
 			'render_attribute' => 'layout',

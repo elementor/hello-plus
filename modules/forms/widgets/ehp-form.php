@@ -1401,9 +1401,6 @@ class Ehp_Form extends Form_Base {
 					],
 				],
 				'default' => 'center',
-				'selectors' => [
-					'{{WRAPPER}} .ehp-form' => '--ehp-form-button-align: {{VALUE}};',
-				],
 				'condition' => [
 					'button_width!' => '100',
 				],

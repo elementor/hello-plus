@@ -87,7 +87,7 @@
 	}
 
 	&__field-group,
-	& .ehp-form__button {
+	&__submit-group {
 		width: 100%;
 
 		&.has-width {
@@ -163,11 +163,39 @@
 		}
 	}
 
+	@mixin has-button-align() {
+		&-center {
+			margin-inline: auto;
+		}
+
+		&-flex-end {
+			margin-inline-start: auto;
+		}
+
+		&-flex-start{
+			margin-inline-end: auto;
+		}
+	}
+
 	&__submit-group {
 		align-items: flex-end;
 		display: flex;
-		justify-content: var(--ehp-form-button-align);
-		width: 100%;
+
+		&.has-button-align {
+			@include has-button-align();
+
+			&-md {
+				@media screen and (max-width: $screen-tablet-max) {
+					@include has-button-align();
+				}
+			}
+
+			&-sm {
+				@media screen and (max-width: $screen-mobile-max) {
+					@include has-button-align();
+				}
+			}
+		}
 	}
 
 	&__button[type="submit"] {

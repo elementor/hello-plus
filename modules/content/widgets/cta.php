@@ -61,8 +61,10 @@ class CTA extends Widget_Base {
 	protected function render(): void {
 		$render_strategy = new Widget_CTA_Render( $this );
 
-		$this->add_inline_editing_attributes( 'heading_text', 'basic' );
-		$this->add_inline_editing_attributes( 'description_text', 'basic' );
+		$this->add_inline_editing_attributes( 'heading_text', 'none' );
+		$this->add_inline_editing_attributes( 'description_text', 'none' );
+		$this->add_inline_editing_attributes( 'primary_cta_button_text', 'none' );
+		$this->add_inline_editing_attributes( 'secondary_cta_button_text', 'none' );
 
 		$render_strategy->render();
 	}

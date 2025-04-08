@@ -36,6 +36,7 @@ use HelloPlus\Classes\{
 use HelloPlus\Includes\Utils;
 
 class Ehp_Header extends Ehp_Widget_Base {
+
 	public function get_name(): string {
 		return 'ehp-header';
 	}
@@ -66,6 +67,9 @@ class Ehp_Header extends Ehp_Widget_Base {
 
 	protected function render(): void {
 		$render_strategy = new Widget_Header_Render( $this );
+
+		$this->add_inline_editing_attributes( 'primary_cta_button_text', 'none' );
+		$this->add_inline_editing_attributes( 'secondary_cta_button_text', 'none' );
 
 		$render_strategy->render();
 	}

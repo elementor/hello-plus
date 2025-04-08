@@ -10,6 +10,7 @@ use HelloPlus\Includes\Utils;
 use Elementor\Icons_Manager;
 
 use HelloPlus\Classes\{
+	Ehp_Image,
 	Ehp_Shapes,
 	Widget_Utils,
 };
@@ -22,6 +23,7 @@ class Widget_Form_Render {
 
 	public function render() {
 		$layout_full_height_controls = $this->settings['box_full_screen_height_controls'] ?? '';
+		$layout_preset = $this->settings['layout_preset'] ?? '';
 
 		$layout_classnames = [
 			self::LAYOUT_CLASSNAME,
@@ -75,7 +77,11 @@ class Widget_Form_Render {
 
 		?>
 		<form <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
-			<?php $this->render_text_container(); ?>
+			<?php if ( 'engage' !== $layout_preset ) {
+				$this->render_text_container();
+			} else {
+				$this->render_image_container();
+			} ?>
 			<input type="hidden" name="post_id" value="<?php echo (int) Utils::get_current_post_id(); ?>"/>
 			<input type="hidden" name="form_id" value="<?php echo esc_attr( $this->widget->get_id() ); ?>"/>
 			<input type="hidden" name="referer_title" value="<?php echo esc_attr( $referer_title ); ?>"/>
@@ -86,128 +92,133 @@ class Widget_Form_Render {
 				<input type="hidden" name="queried_id" value="<?php echo (int) get_the_ID(); ?>"/>
 			<?php } ?>
 
-			<div <?php $this->widget->print_render_attribute_string( 'wrapper' ); ?>>
-				<?php
-				foreach ( $this->settings['form_fields'] as $item_index => $item ) :
-					$item['input_size'] = $this->settings['input_size'];
-					$this->widget->form_fields_render_attributes( $item_index, $this->settings, $item );
+			<div class="ehp-form__content">
+				<div <?php $this->widget->print_render_attribute_string( 'wrapper' ); ?>>
+					<?php if ( 'engage' === $layout_preset ) {
+						$this->render_text_container();
+					} ?>
+					<?php
+					foreach ( $this->settings['form_fields'] as $item_index => $item ) :
+						$item['input_size'] = $this->settings['input_size'];
+						$this->widget->form_fields_render_attributes( $item_index, $this->settings, $item );
 
-					$field_type = $item['field_type'];
+						$field_type = $item['field_type'];
 
-					/**
-					 * Render form field.
-					 *
-					 * Filters the field rendered by Elementor forms.
-					 *
-					 * @param array $item The field value.
-					 * @param int $item_index The field index.
-					 * @param Ehp_Form $this An instance of the form.
-					 *
-					 * @since 1.0.0
-					 *
-					 */
-					$item = apply_filters( 'hello_plus/forms/render/item', $item, $item_index, $this );
+						/**
+						 * Render form field.
+						 *
+						 * Filters the field rendered by Elementor forms.
+						 *
+						 * @param array $item The field value.
+						 * @param int $item_index The field index.
+						 * @param Ehp_Form $this An instance of the form.
+						 *
+						 * @since 1.0.0
+						 *
+						 */
+						$item = apply_filters( 'hello_plus/forms/render/item', $item, $item_index, $this );
 
-					/**
-					 * Render form field.
-					 *
-					 * Filters the field rendered by Elementor forms.
-					 *
-					 * The dynamic portion of the hook name, `$field_type`, refers to the field type.
-					 *
-					 * @param array $item The field value.
-					 * @param int $item_index The field index.
-					 * @param Ehp_Form $this An instance of the form.
-					 *
-					 * @since 1.0.0
-					 *
-					 */
-					$item = apply_filters( "hello_plus/forms/render/item/{$field_type}", $item, $item_index, $this );
+						/**
+						 * Render form field.
+						 *
+						 * Filters the field rendered by Elementor forms.
+						 *
+						 * The dynamic portion of the hook name, `$field_type`, refers to the field type.
+						 *
+						 * @param array $item The field value.
+						 * @param int $item_index The field index.
+						 * @param Ehp_Form $this An instance of the form.
+						 *
+						 * @since 1.0.0
+						 *
+						 */
+						$item = apply_filters( "hello_plus/forms/render/item/{$field_type}", $item, $item_index, $this );
 
-					$print_label = ! in_array( $item['field_type'], [ 'hidden', 'html', 'step' ], true );
-					?>
-					<div <?php $this->widget->print_render_attribute_string( 'field-group' . $item_index ); ?>>
-						<?php
-						if ( $print_label && $item['field_label'] ) {
-							?>
-							<label <?php $this->widget->print_render_attribute_string( 'label' . $item_index ); ?>>
-								<?php
-								echo esc_html( $item['field_label'] ); ?>
-							</label>
+						$print_label = ! in_array( $item['field_type'], [ 'hidden', 'html', 'step' ], true );
+						?>
+						<div <?php $this->widget->print_render_attribute_string( 'field-group' . $item_index ); ?>>
 							<?php
-						}
+							if ( $print_label && $item['field_label'] ) {
+								?>
+								<label <?php $this->widget->print_render_attribute_string( 'label' . $item_index ); ?>>
+									<?php
+									echo esc_html( $item['field_label'] ); ?>
+								</label>
+								<?php
+							}
 
-						switch ( $item['field_type'] ) :
-							case 'textarea':
-								echo wp_kses(
-									$this->widget->make_textarea_field( $item, $item_index, $this->settings ),
-									[
-										'textarea' => [
-											'cols' => true,
-											'rows' => true,
+							switch ( $item['field_type'] ) :
+								case 'textarea':
+									echo wp_kses(
+										$this->widget->make_textarea_field( $item, $item_index, $this->settings ),
+										[
+											'textarea' => [
+												'cols' => true,
+												'rows' => true,
+												'name' => true,
+												'id' => true,
+												'class' => true,
+												'style' => true,
+												'placeholder' => true,
+												'maxlength' => true,
+												'required' => true,
+												'readonly' => true,
+												'disabled' => true,
+											],
+										]
+									);
+									break;
+
+								case 'select':
+									echo wp_kses( $this->widget->make_select_field( $item, $item_index ), [
+										'select' => [
 											'name' => true,
 											'id' => true,
 											'class' => true,
 											'style' => true,
-											'placeholder' => true,
-											'maxlength' => true,
 											'required' => true,
-											'readonly' => true,
 											'disabled' => true,
 										],
-									]
-								);
-								break;
+										'option' => [
+											'value' => true,
+											'selected' => true,
+										],
+									] );
+									break;
 
-							case 'select':
-								echo wp_kses( $this->widget->make_select_field( $item, $item_index ), [
-									'select' => [
-										'name' => true,
-										'id' => true,
-										'class' => true,
-										'style' => true,
-										'required' => true,
-										'disabled' => true,
-									],
-									'option' => [
-										'value' => true,
-										'selected' => true,
-									],
-								] );
-								break;
+								case 'text':
+								case 'email':
+									$this->widget->add_render_attribute( 'input' . $item_index, 'class', 'elementor-field-textual' );
+									?>
+									<input size="1" <?php $this->widget->print_render_attribute_string( 'input' . $item_index ); ?>>
+									<?php
+									break;
 
-							case 'text':
-							case 'email':
-								$this->widget->add_render_attribute( 'input' . $item_index, 'class', 'elementor-field-textual' );
-								?>
-								<input size="1" <?php $this->widget->print_render_attribute_string( 'input' . $item_index ); ?>>
-								<?php
-								break;
+								default:
+									$field_type = $item['field_type'];
 
-							default:
-								$field_type = $item['field_type'];
-
-								/**
-								 * Hello+ form field render.
-								 *
-								 * Fires when a field is rendered in the frontend. This hook allows developers to
-								 * add functionality when from fields are rendered.
-								 *
-								 * The dynamic portion of the hook name, `$field_type`, refers to the field type.
-								 *
-								 * @param array $item The field value.
-								 * @param int $item_index The field index.
-								 * @param Ehp_Form $this An instance of the form.
-								 *
-								 * @since 1.0.0
-								 *
-								 */
-								do_action( "hello_plus/forms/render_field/{$field_type}", $item, $item_index, $this->widget );
-						endswitch;
-						?>
-					</div>
-				<?php endforeach; ?>
-				<?php $this->render_button(); ?>
+									/**
+									 * Hello+ form field render.
+									 *
+									 * Fires when a field is rendered in the frontend. This hook allows developers to
+									 * add functionality when from fields are rendered.
+									 *
+									 * The dynamic portion of the hook name, `$field_type`, refers to the field type.
+									 *
+									 * @param array $item The field value.
+									 * @param int $item_index The field index.
+									 * @param Ehp_Form $this An instance of the form.
+									 *
+									 * @since 1.0.0
+									 *
+									 */
+									do_action( "hello_plus/forms/render_field/{$field_type}", $item, $item_index, $this->widget );
+							endswitch;
+							?>
+						</div>
+					<?php endforeach; ?>
+					<?php $this->render_button(); ?>
+				</div>
 			</div>
 			<div <?php $this->widget->print_render_attribute_string( 'overlay' ); ?>></div>
 		</form>
@@ -316,6 +327,12 @@ class Widget_Form_Render {
 		<?php
 	}
 
+	protected function render_image_container() {
+		$image = new Ehp_Image( $this->widget, [
+			'widget_name' => 'form',
+		] );
+		$image->render();
+	}
 	public function __construct( Ehp_Form $widget ) {
 		$this->widget = $widget;
 		$this->settings = $widget->get_settings_for_display();

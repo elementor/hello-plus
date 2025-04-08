@@ -94,19 +94,32 @@
 			}
 		}
 
-		&-interact {
+		&-interact,
+		&-engage {
 			--ehp-form-text-container-align: flex-start;
 			display: grid;
-			gap: var(--ehp-form-row-gap);
+			gap: var(--ehp-form-elements-gap);
 			grid-template-columns: 1fr;
 
-			& .ehp-form__wrapper {
+			& .ehp-form__content {
 				order: var(--ehp-form-order);
 			}
+		}
 
+		&-interact {
+		
 			& .ehp-form__text-container {
 				height: 100%;
 				justify-content: var(--ehp-form-content-alignment);
+				order: var(--ehp-text-order);
+			}
+		}
+
+		&-engage {
+
+			& .ehp-form__image-container {
+				align-items: var(--ehp-form-content-alignment);
+				height: 100%;
 				order: var(--ehp-text-order);
 			}
 		}
@@ -117,25 +130,45 @@
 		@media screen and (min-width: $screen-desktop-min) {
 
 			&-50-50 {
-				grid-template-columns: 50% 50%;
+				grid-template-columns: 1fr 1fr;
 			}
 	
 			&-33-66 {
-				grid-template-columns: 33% 66%;
-	
+				grid-template-columns: 1fr 2fr;
+			
 				&.is-reverse {
-					grid-template-columns: 66% 33%;
+					grid-template-columns: 2fr 1fr;
 				}
 			}
 	
 			&-25-75 {
-				grid-template-columns: 25% 75%;
-	
+				grid-template-columns: 1fr 3fr;
+			
 				&.is-reverse {
-					grid-template-columns: 75% 25%;
+					grid-template-columns: 3fr 1fr;
 				}
 			}
 		}
+	}
+
+	& .ehp-image {
+		--ehp-image-height: var(--form-image-height);
+		--ehp-image-min-height: var(--form-image-min-height);
+		--ehp-image-position: var(--form-image-position);
+		--ehp-image-width: var(--form-image-width);
+		--ehp-image-border-color: var(--form-image-border-color);
+		--ehp-image-border-width: var(--form-image-border-width);
+		--ehp-image-border-radius-block-end: var(--form-image-border-radius-block-end);
+		--ehp-image-border-radius-block-start: var(--form-image-border-radius-block-start);
+		--ehp-image-border-radius-inline-end: var(--form-image-border-radius-inline-end);
+		--ehp-image-border-radius-inline-start: var(--form-image-border-radius-inline-start);
+	}
+
+	&__content {
+		display: flex;
+		height: 100%;
+		flex-direction: column;
+		justify-content: var(--ehp-form-content-alignment);
 	}
 
 	&__wrapper {
@@ -186,6 +219,10 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--ehp-form-text-spacing);
+	}
+
+	&__image-container {
+		display: flex;
 	}
 
 	&__heading {

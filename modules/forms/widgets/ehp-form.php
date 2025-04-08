@@ -31,6 +31,7 @@ use HelloPlus\Modules\Content\Classes\{
 };
 
 use HelloPlus\Classes\{
+	Ehp_Image,
 	Ehp_Shapes,
 	Widget_Utils,
 };
@@ -103,6 +104,7 @@ class Ehp_Form extends Form_Base {
 	protected function register_controls() {
 		$this->add_content_layout_section();
 		$this->add_content_text_section();
+		$this->add_content_image_section();
 		$this->add_content_form_fields_section();
 		$this->add_content_button_section();
 		$this->add_content_actions_after_submit_section();
@@ -111,6 +113,7 @@ class Ehp_Form extends Form_Base {
 
 		$this->add_style_layout_section();
 		$this->add_style_text_section();
+		$this->add_style_image_section();
 		$this->add_style_form_section();
 		$this->add_style_fields_section();
 		$this->add_style_buttons_section();
@@ -220,6 +223,23 @@ class Ehp_Form extends Form_Base {
 				],
 			]
 		);
+
+		$this->end_controls_section();
+	}
+
+	protected function add_content_image_section(): void {
+		$this->start_controls_section(
+			'section_image',
+			[
+				'label' => esc_html__( 'Image', 'hello-plus' ),
+				'condition' => [
+					'layout_preset' => 'engage',
+				],
+			]
+		);
+
+		$image = new Ehp_Image( $this, [ 'widget_name' => 'form' ] );
+		$image->add_content_section();
 
 		$this->end_controls_section();
 	}
@@ -949,7 +969,10 @@ class Ehp_Form extends Form_Base {
 				],
 				'frontend_available' => true,
 				'condition' => [
-					'layout_preset' => 'interact',
+					'layout_preset' => [
+						'interact',
+						'engage',
+					],
 				],
 			]
 		);
@@ -966,7 +989,10 @@ class Ehp_Form extends Form_Base {
 				'default' => '',
 				'condition' => [
 					'layout_column_structure!' => '50-50',
-					'layout_preset' => 'interact',
+					'layout_preset' => [
+						'interact',
+						'engage',
+					],
 				],
 			]
 		);
@@ -992,7 +1018,10 @@ class Ehp_Form extends Form_Base {
 				],
 				'default' => 'end',
 				'condition' => [
-					'layout_preset' => 'interact',
+					'layout_preset' => [
+						'interact',
+						'engage',
+					],
 				],
 				'separator' => 'before',
 			]
@@ -1025,6 +1054,7 @@ class Ehp_Form extends Form_Base {
 				'condition' => [
 					'layout_preset' => [
 						'interact',
+						'engage',
 					],
 				],
 			]
@@ -1350,6 +1380,24 @@ class Ehp_Form extends Form_Base {
 				],
 			]
 		);
+
+		$this->end_controls_section();
+	}
+
+	protected function add_style_image_section() {
+		$this->start_controls_section(
+			'style_image',
+			[
+				'label' => esc_html__( 'Image', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'layout_preset' => 'engage',
+				],
+			]
+		);
+
+		$image = new Ehp_Image( $this, [ 'widget_name' => 'form' ] );
+		$image->add_style_controls();
 
 		$this->end_controls_section();
 	}
@@ -2131,6 +2179,48 @@ class Ehp_Form extends Form_Base {
 					'{{WRAPPER}} .ehp-form' => '--ehp-form-elements-spacing: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
+				'condition' => [
+					'layout_preset' => 'quick-connect',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'box_elements_gap',
+			[
+				'label' => esc_html__( 'Gap', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'max' => 150,
+					],
+					'%' => [
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'size' => 60,
+					'unit' => 'px',
+				],
+				'tablet_default' => [
+					'size' => 32,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 32,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-form' => '--ehp-form-elements-gap: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
+				'condition' => [
+					'layout_preset' => [
+						'interact',
+						'engage',
+					],
+				]
 			]
 		);
 

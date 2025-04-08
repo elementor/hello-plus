@@ -1,4 +1,5 @@
 .idea/
+tmp/
 node_modules/
 .sass-cache/
 build/
@@ -16,3 +17,6 @@ yarn.lock
 
 hello-plus*.zip
 hello-plus/
+
+!tests/phpunit/hello-plus
+.phpunit.result.cache

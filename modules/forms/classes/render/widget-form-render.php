@@ -48,6 +48,10 @@ class Widget_Form_Render {
 			$layout_classnames[] = 'is-reverse';
 		}
 
+		if ( 'yes' === $this->settings['image_stretch'] ) {
+			$layout_classnames[] = 'has-image-stretch';
+		}
+
 		$shapes = new Ehp_Shapes( $this->widget, [
 			'container_prefix' => 'box',
 			'render_attribute' => 'layout',
@@ -93,10 +97,10 @@ class Widget_Form_Render {
 			<?php } ?>
 
 			<div class="ehp-form__content">
+				<?php if ( 'engage' === $layout_preset ) {
+					$this->render_text_container();
+				} ?>
 				<div <?php $this->widget->print_render_attribute_string( 'wrapper' ); ?>>
-					<?php if ( 'engage' === $layout_preset ) {
-						$this->render_text_container();
-					} ?>
 					<?php
 					foreach ( $this->settings['form_fields'] as $item_index => $item ) :
 						$item['input_size'] = $this->settings['input_size'];

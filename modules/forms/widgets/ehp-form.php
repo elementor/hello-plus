@@ -2180,7 +2180,10 @@ class Ehp_Form extends Form_Base {
 				],
 				'separator' => 'before',
 				'condition' => [
-					'layout_preset' => 'quick-connect',
+					'layout_preset' => [
+						'quick-connect',
+						'engage',
+					],
 				],
 			]
 		);

@@ -94,6 +94,13 @@
 			}
 		}
 
+		&-engage {
+
+			& .ehp-form__content {
+				gap: var(--ehp-form-elements-spacing);
+			}
+		}
+
 		&-interact,
 		&-engage {
 			--ehp-form-text-container-align: flex-start;
@@ -336,7 +343,6 @@
 			border-color: var(--ehp-form-button-border-color);
 			border-style: solid;
 			border-width: var(--ehp-form-button-border-width);
-			// border-radius: var(--ehp-form-button-border-radius);
 		}
 
 		&.is-type {
@@ -413,6 +419,20 @@
 			&::-ms-expand {
 				display: none;
 			}
+		}
+	}
+
+	&.has-image-stretch {
+		--form-image-width: 100%;
+
+		gap: 0;
+		padding: 0;
+
+		&.has-layout-preset-engage .ehp-form__content {
+			padding-inline-start: var(--ehp-form-box-padding-inline-start);
+			padding-inline-end: var(--ehp-form-box-padding-inline-end);
+			padding-block-start: var(--ehp-form-box-padding-block-start);
+			padding-block-end: var(--ehp-form-box-padding-block-end);
 		}
 	}
 

@@ -2223,7 +2223,7 @@ class Ehp_Form extends Form_Base {
 						'interact',
 						'engage',
 					],
-				]
+				],
 			]
 		);
 

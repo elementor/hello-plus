@@ -1,0 +1,64 @@
+@mixin full-height($min: null, $max: null) {
+    --ehp-box-height: auto;
+	--ehp-box-full-height: 100vh;
+
+    $query: null;
+
+    @supports (height: 100dvh) {
+        --ehp-box-full-height: 100dvh;
+    }
+
+    @if $min != null and $max != null {
+        $query: "(min-width: " + $min + ") and (max-width: " + $max + ")";
+    } @else if $max != null {
+        $query: "(max-width: " + $max + ")";
+    } @else if $min != null {
+        $query: "(min-width: " + $min + ")";
+    }
+
+    @if $query != null {
+        @media #{$query} {
+            --ehp-box-height: var(--ehp-box-full-height, 100vh);
+
+            align-items: center;
+            justify-content: center;
+        };
+    }
+}
+
+@mixin full-height-viewports() {
+    height: 100%;
+	min-height: var(--ehp-box-height);
+
+    &.is-full-height-mobile {
+        @include full-height(null, $screen-mobile-max);
+    }
+    
+    &.is-full-height-mobile_extra {
+        @include full-height($screen-mobile-extra-min, $screen-mobile-extra-max);
+    }
+    
+    &.is-full-height-tablet {
+        @include full-height($screen-tablet-min, $screen-tablet-max);
+    }
+    
+    &.is-full-height-tablet_extra {
+        @include full-height($screen-tablet-extra-min, $screen-tablet-extra-max);
+    }
+    
+    &.is-full-height-laptop {
+        @include full-height($screen-laptop-min, $screen-laptop-max);
+    }
+    
+    &.is-full-height-desktop {
+        @include full-height($screen-desktop-min, null);
+    
+        &.is-full-height-widescreen {
+            @include full-height($screen-desktop-min, $screen-desktop-max);
+        }
+    }
+    
+    &.is-full-height-widescreen {
+        @include full-height($screen-widescreen-min, null);
+    }
+}

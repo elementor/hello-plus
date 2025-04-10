@@ -79,6 +79,8 @@ class Widget_Form_Render {
 			'class' => self::LAYOUT_CLASSNAME . '__overlay',
 		] );
 
+		$this->widget->add_render_attribute( 'content', 'class', self::LAYOUT_CLASSNAME . '__content' );
+
 		?>
 		<form <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
 			<?php if ( 'engage' !== $layout_preset ) {
@@ -96,7 +98,7 @@ class Widget_Form_Render {
 				<input type="hidden" name="queried_id" value="<?php echo (int) get_the_ID(); ?>"/>
 			<?php } ?>
 
-			<div class="ehp-form__content">
+			<div <?php $this->widget->print_render_attribute_string( 'content' ); ?>>
 				<?php if ( 'engage' === $layout_preset ) {
 					$this->render_text_container();
 				} ?>

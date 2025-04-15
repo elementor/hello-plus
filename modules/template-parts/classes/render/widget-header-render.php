@@ -351,8 +351,6 @@ class Widget_Header_Render {
 						'target' => '_blank',
 					] );
 				}
-
-				$this->widget->add_render_attribute( 'contact-button-label', 'class', self::LAYOUT_CLASSNAME . '__contact-button-label' );
 				?>
 
 				<a <?php $this->widget->print_render_attribute_string( 'contact-button-' . $key ); ?>>
@@ -364,12 +362,34 @@ class Widget_Header_Render {
 						]
 					);
 				} ?>
-				<?php if ( 'label' === $link_type ) { ?>
-					<span <?php $this->widget->print_render_attribute_string( 'contact-button-label' ); ?>><?php echo esc_html( $contact_button['contact_buttons_label'] ); ?></span>
-				<?php } ?>
+				<?php if ( 'label' === $link_type ) {
+					$this->render_contact_button_text( $contact_button, $key );
+				} ?>
 				</a>
 			<?php } ?>
 		</div>
+		<?php
+	}
+
+	protected function render_contact_button_text( $contact_button, $key ) {
+		$label_repeater_key = $this->widget->public_get_repeater_setting_key(
+			'contact_buttons_label',
+			'contact_buttons_repeater',
+			$key
+		);
+
+		$this->widget->remove_render_attribute( $label_repeater_key );
+
+		$this->widget->public_add_inline_editing_attributes( $label_repeater_key, 'none' );
+
+		Widget_Utils::maybe_render_text_html(
+			$this->widget,
+			$label_repeater_key,
+			self::LAYOUT_CLASSNAME . '__contact-button-label',
+			$contact_button[ 'contact_buttons_label' ],
+			'span'
+		);
+		?>
 		<?php
 	}
 

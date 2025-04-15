@@ -168,6 +168,11 @@
 
 	&.has-image-stretch {
 		--flex-hero-image-width: 100%;
+		--flex-hero-image-height: 100%;
+
+		& .ehp-image {
+			height: 100%;
+		}
 
 		padding: 0;
 

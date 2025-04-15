@@ -386,7 +386,7 @@ class Widget_Header_Render {
 			$this->widget,
 			$label_repeater_key,
 			self::LAYOUT_CLASSNAME . '__contact-button-label',
-			$contact_button[ 'contact_buttons_label' ],
+			$contact_button['contact_buttons_label'],
 			'span'
 		);
 		?>

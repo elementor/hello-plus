@@ -2126,7 +2126,6 @@ class Ehp_Form extends Form_Base {
 			[
 				'name' => 'background_overlay',
 				'types' => [ 'classic', 'gradient' ],
-				'exclude' => [ 'image' ],
 				'selector' => '{{WRAPPER}} .ehp-form__overlay',
 				'frontend_available' => true,
 			]

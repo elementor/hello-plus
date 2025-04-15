@@ -1108,8 +1108,20 @@ class Ehp_Form extends Form_Base {
 					],
 				],
 				'default' => 'center',
-				'condition' => [
-					'layout_preset' => 'quick-connect',
+				'conditions' => [
+					'relation' => 'and',
+					'terms' => [
+						[
+							'name' => 'layout_preset',
+							'operator' => '==',
+							'value' => 'quick-connect',
+						],
+						[
+							'name' => 'content_position',
+							'operator' => '==',
+							'value' => 'center',
+						],
+					],
 				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-form' => '--ehp-form-text-container-align: {{VALUE}};',

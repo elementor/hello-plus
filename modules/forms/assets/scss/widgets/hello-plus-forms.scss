@@ -60,9 +60,10 @@
 
 	@include full-height-viewports();
 
+	align-items: var(--ehp-form-content-position);
 	display: flex;
 	flex-direction: column;
-	align-items: var(--ehp-form-content-position);
+	overflow: hidden;
 	padding-block-start: var(--ehp-form-box-padding-block-start);
 	padding-block-end: var(--ehp-form-box-padding-block-end);
 	padding-inline-start: var(--ehp-form-box-padding-inline-start);
@@ -90,7 +91,7 @@
 			& > *:is(:not(.ehp-form__overlay)) {
 				max-width: var(--ehp-form-content-width);
 				width: 100%;
-				z-index: 1;
+				z-index: $first-layer;
 			}
 		}
 
@@ -176,6 +177,7 @@
 		height: 100%;
 		flex-direction: column;
 		justify-content: var(--ehp-form-content-alignment);
+		z-index: $first-layer;
 	}
 
 	&__wrapper {
@@ -444,6 +446,6 @@
 		position: absolute;
 		top: 0;
 		width: 100%;
-		z-index: 0;
+		z-index: $ground-layer;
 	}
 }

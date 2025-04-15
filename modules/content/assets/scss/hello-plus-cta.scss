@@ -40,10 +40,12 @@
 	justify-content: center;
 	height: 100%;
 	min-height: var(--cta-box-height);
+	overflow: hidden;
 	padding-block-end: var(--cta-box-padding-block-end);
 	padding-block-start: var(--cta-box-padding-block-start);
 	padding-inline-end: var(--cta-box-padding-inline-end);
 	padding-inline-start: var(--cta-box-padding-inline-start);
+	position: relative;
 
 	&.has-border {
 		border-color: var(--cta-box-border-color);
@@ -389,7 +391,7 @@
 		height: 100%;
 		max-width: var(--cta-content-width);
 		width: 100%;
-		z-index: 1;
+		z-index: $first-layer;
 	}
 
 	&__heading {
@@ -417,6 +419,6 @@
 		position: absolute;
 		top: 0;
 		width: 100%;
-		z-index: 1;
+		z-index: $ground-layer;
 	}
 }

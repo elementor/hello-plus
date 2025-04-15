@@ -174,13 +174,14 @@
 			height: 100%;
 		}
 
+		gap: 0;
 		padding: 0;
 
 		@media screen and (min-width: $screen-desktop-min) {
 			
-			&.has-layout-preset-storytelling .ehp-flex-hero__content-container {
+			& .ehp-flex-hero__content-container {
 				padding-block-start: var(--flex-hero-box-padding-block-start);
-				padding-block-end: 0;
+				padding-block-end: var(--flex-hero-box-padding-block-end);
 				padding-inline-start: var(--flex-hero-box-padding-inline-start);
 				padding-inline-end: var(--flex-hero-box-padding-inline-end);
 			}
@@ -235,13 +236,6 @@
 			& .ehp-flex-hero__image {
 				order: 1;
 			}
-			
-			&.has-image-stretch .ehp-flex-hero__content-container {
-				padding-block-start: 0;
-				padding-block-end: var(--flex-hero-box-padding-block-end);
-				padding-inline-start: var(--flex-hero-box-padding-inline-start);
-				padding-inline-end: var(--flex-hero-box-padding-inline-end);
-			}
 		}
 	
 		&-end {
@@ -251,13 +245,6 @@
 			
 			& .ehp-flex-hero__image {
 				order: 2;
-			}
-
-			&.has-image-stretch .ehp-flex-hero__content-container {
-				padding-block-start: var(--flex-hero-box-padding-block-start);
-				padding-block-end: 0;
-				padding-inline-start: var(--flex-hero-box-padding-inline-start);
-				padding-inline-end: var(--flex-hero-box-padding-inline-end);
 			}
 		}
 	}
@@ -278,24 +265,9 @@
 		}
 
 		@media screen and (min-width: $screen-desktop-min) {
-			
-			&-start {
-				&.has-image-stretch .ehp-flex-hero__content-container {
-					padding-block-start: var(--flex-hero-box-padding-block-start);
-					padding-block-end: var(--flex-hero-box-padding-block-end);
-					padding-inline-start: 0;
-					padding-inline-end: var(--flex-hero-box-padding-inline-end);
-				}
-			}
 
 			&-end {
 				flex-direction: row-reverse;
-				&.has-image-stretch .ehp-flex-hero__content-container {
-					padding-block-start: var(--flex-hero-box-padding-block-start);
-					padding-block-end: var(--flex-hero-box-padding-block-end);
-					padding-inline-start: var(--flex-hero-box-padding-inline-start);
-					padding-inline-end: 0;
-				}
 			}
 		}
 	}
@@ -304,7 +276,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--flex-hero-element-spacing);
-		z-index: 2;
+		z-index: $second-layer;
 	}
 
 	&__intro {
@@ -331,6 +303,10 @@
 		}
 	}
 
+	&__image-wrapper {
+		z-index: $first-layer;
+	}
+
 	&__overlay {
 		height: 100%;
 		left: 0;
@@ -338,6 +314,6 @@
 		position: absolute;
 		top: 0;
 		width: 100%;
-		z-index: 1;
+		z-index: $ground-layer;
 	}
 }

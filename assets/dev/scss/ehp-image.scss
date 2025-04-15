@@ -15,7 +15,7 @@
 	align-items: center;
 	display: flex;
 	justify-content: center;
-	z-index: 2;
+	z-index: $second-layer;
 
 	.elementor & img {
 		height: var(--ehp-image-height);

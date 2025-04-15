@@ -577,7 +577,6 @@ class CTA extends Widget_Base {
 			[
 				'name' => 'background',
 				'types' => [ 'classic', 'gradient' ],
-				'exclude' => [ 'image' ],
 				'selector' => '{{WRAPPER}} .ehp-cta',
 				'fields_options' => [
 					'background' => [

@@ -16,7 +16,8 @@
 		"test:php": "docker-compose -f bin/docker-compose.yml run --rm wordpress_phpunit phpunit",
 		"test:playwright": "playwright test -c tests/playwright/playwright.config.ts",
 		"test:playwright:debug": "npm run test:playwright -- --debug",
-		"test:setup:playwright": "wp-env run cli bash hello-plus-config/setup.sh && wp-env run tests-cli bash hello-plus-config/setup.sh && npx playwright install chromium"
+		"test:setup:playwright": "wp-env run cli bash hello-plus-config/setup.sh && wp-env run tests-cli bash hello-plus-config/setup.sh",
+		"test:setup:chromium": "npx playwright install chromium"
 	},
 	"devDependencies": {
 		"@playwright/test": "1.51.0",

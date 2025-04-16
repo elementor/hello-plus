@@ -3,7 +3,7 @@ import { expect } from '@playwright/test';
 import WpAdminPage from '../pages/wp-admin-page';
 
 test.describe( 'Admin menu', () => {
-	test( 'Is hidden if home is active (default for plugin users)', async ( { page, apiRequests }, testInfo ) => {
+	test( 'That the menu is visible and has three entries', async ( { page, apiRequests }, testInfo ) => {
 		// Arrange.
 		const wpAdmin = new WpAdminPage( page, testInfo, apiRequests );
 

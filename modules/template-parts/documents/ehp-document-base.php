@@ -77,15 +77,27 @@ abstract class Ehp_Document_Base extends Library_Document {
 	}
 
 	public function filter_admin_row_actions( $actions ) {
-		$actions = parent::filter_admin_row_actions( $actions );
+		$built_with_elementor = parent::filter_admin_row_actions( [] );
 
-		return $this->set_as_entire_site( $actions );
+		if ( isset( $actions['trash'] ) ) {
+			$delete = $actions['trash'];
+			unset( $actions['trash'] );
+			$actions['trash'] = $delete;
+		}
+
+		if ( ! Utils::are_we_on_elementor_domains() ) {
+			unset( $actions['edit'] );
+			unset( $actions['inline hide-if-no-js'] );
+		}
+
+		return $built_with_elementor + $this->set_as_entire_site( $actions );
 	}
 
 	public function set_as_entire_site( $actions ) {
+		$multiple_published = static::are_multiple_post_published();
 		$active_doc = static::get_active_document();
 
-		if ( empty( $active_doc ) || $this->get_main_id() !== $active_doc[0] ) {
+		if ( $multiple_published || empty( $active_doc ) || $this->get_main_id() !== $active_doc[0] ) {
 			$actions['set_as_entire_site'] = sprintf(
 				'<a href="?post=%s&action=hello_plus_set_as_entire_site&_wpnonce=%s&redirect_to=%s">%s</a>',
 				$this->get_post()->ID,
@@ -174,15 +186,15 @@ abstract class Ehp_Document_Base extends Library_Document {
 	}
 
 	public static function maybe_display_notice() {
-		$posts = static::get_all_document_posts();
-
-		if ( count( $posts ) > 1 && 'edit-elementor_library' === get_current_screen()->id ) {
+		if ( 'edit-elementor_library' === get_current_screen()->id && static::are_multiple_post_published() ) {
 			$admin_notices = Utils::elementor()->admin->get_component( 'admin-notices' );
 
 			$options = [
+				/* translators: %s: Widget Name (e.g. "Hello+ Header"). */
 				'title' => sprintf( esc_html__( 'More than one %s published.', 'hello-plus' ), static::get_title() ),
 				'description' => sprintf(
-					esc_html__( 'We noticed that you have more than one %s published. This is an issue that will prevent it from rendering on the front end', 'hello-plus' ),
+					/* translators: %s: Widget Name (e.g. "Hello+ Header"). */
+					esc_html__( 'Please notice! Your site allows only one %s at a time. Please move one to ‘Draft’', 'hello-plus' ),
 					static::get_title(),
 				),
 				'type' => 'error',
@@ -195,12 +207,33 @@ abstract class Ehp_Document_Base extends Library_Document {
 	}
 
 	public static function display_post_states( array $post_states, \WP_Post $post ): array {
+		if ( 'publish' === $post->post_status && static::are_multiple_post_published() ) {
+			$document = Utils::elementor()->documents->get( $post->ID );
+
+			if ( $document instanceof static ) {
+				$post_states['error'] = sprintf( esc_html__( 'Error: multiple %s published', 'hello-plus' ), static::get_title() );
+				return $post_states;
+			}
+		}
+
 		$active_doc = static::get_active_document();
 		if ( ! empty( $active_doc ) && $active_doc[0] === $post->ID ) {
 			$post_states['active'] = sprintf( esc_html__( 'Active %s', 'hello-plus' ), static::get_title() );
 		}
 
 		return $post_states;
+	}
+
+	public static function are_multiple_post_published() {
+		static $are_multiple_post_published = [];
+
+		if ( ! isset( $are_multiple_post_published[ static::get_type() ] ) ) {
+			$posts = static::get_all_document_posts();
+
+			$are_multiple_post_published[ static::get_type() ] = count( $posts ) > 1;
+		}
+
+		return $are_multiple_post_published[ static::get_type() ];
 	}
 
 	public static function maybe_get_template( ?string $name, array $args ): void {
@@ -215,6 +248,7 @@ abstract class Ehp_Document_Base extends Library_Document {
 				return;
 			}
 		}
+
 		static::get_template( $name, $args );
 	}
 

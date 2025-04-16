@@ -87,7 +87,14 @@ class Module extends Module_Base {
 			HELLOPLUS_VERSION,
 			true
 		);
+
+		$settings = [
+			'isElementorDomain' => Utils::are_we_on_elementor_domains(),
+		];
+
+		\wp_add_inline_script( 'helloplus-editor', 'const ehpTemplatePartsEditorSettings = ' . wp_json_encode( $settings ), 'before' );
 	}
+
 
 	/**
 	 * @return void

@@ -7,6 +7,7 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 		elementor.hooks.addFilter( 'elements/widget/controls/common/default', this.resetCommonControls.bind( this ) );
 		elementor.hooks.addFilter( 'elements/widget/controls/common-optimized/default', this.resetCommonControls.bind( this ) );
 		elementor.hooks.addFilter( 'templates/source/is-remote', this.setSourceAsRemote.bind( this ) );
+		elementor.hooks.addFilter( 'elements/base/behaviors', this.filterBehviors.bind( this ), 1000 );
 
 		const types = [
 			'core/modal/close/ehp-footer',
@@ -20,6 +21,20 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 		window.templatesModule = this;
 	}
 
+	filterBehviors( behaviors ) {
+		if ( this.isEhpDocument() && this.notElementorDomain() ) {
+			const { contextMenu: { groups } } = behaviors;
+			behaviors.contextMenu.groups = groups
+				.map( this.filterOutUnsupportedActions() )
+				.filter( ( group ) => group.actions.length );
+		}
+		return behaviors;
+	}
+
+	notElementorDomain() {
+		return ! ehpTemplatePartsEditorSettings.isElementorDomain;
+	}
+
 	setSourceAsRemote( isRemote, activeSource ) {
 		if ( 'remote-ehp' === activeSource ) {
 			return true;
@@ -29,7 +44,8 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 	}
 
 	redirectToHelloPlus() {
-		window.location.href = elementor.config.close_modal_redirect_hello_plus;
+		$e.internal( 'document/save/set-is-modified', { status: false } );
+		window.location.href = elementor.config.close_modal_redirect_hello_plus + elementor.config.document.type;
 	}
 
 	async openSiteIdentity() {
@@ -43,6 +59,20 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 		}
 
 		return commonControls;
+	}
+
+	filterOutUnsupportedActions() {
+		return ( group ) => {
+			const enabledCommands = elementor.helpers.hasPro()
+				? [ 'edit', 'delete', 'resetStyle' ]
+				: [ 'edit', 'delete', 'resetStyle', 'save' ];
+			const { name, actions } = group;
+
+			return {
+				name,
+				actions: actions.filter( ( action ) => enabledCommands.includes( action.name ) ),
+			};
+		};
 	}
 
 	isEhpDocument() {

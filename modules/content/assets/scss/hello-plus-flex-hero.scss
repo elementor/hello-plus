@@ -20,7 +20,6 @@
 	--flex-hero-subheading-color: #{$global-colors-secondary};
 
 	--flex-hero-button-primary-icon-spacing: 10px;
-	--flex-hero-button-primary-icon-size: 16px;
 	--flex-hero-button-primary-text-color: #{$global-colors-white};
 	--flex-hero-button-primary-text-color-hover: #{$global-colors-text};
 	--flex-hero-button-primary-border-width: 0;
@@ -31,7 +30,6 @@
 	--flex-hero-button-primary-border-radius-inline-start: #{$corners-shape-default};
 
 	--flex-hero-button-secondary-icon-spacing: 10px;
-	--flex-hero-button-secondary-icon-size: 16px;
 	--flex-hero-button-secondary-text-color: #{$global-colors-secondary};
 	--flex-hero-button-secondary-text-color-hover: #{$global-colors-secondary};
 	--flex-hero-button-secondary-border-width: 2px;
@@ -105,7 +103,6 @@
 	& a.ehp-button,
 	& a.ehp-button:not([href]):not([tabindex]) {
 		--ehp-button-primary-icon-spacing: var(--flex-hero-button-primary-icon-spacing);
-		--ehp-button-primary-icon-size: var(--flex-hero-button-primary-icon-size);
 		--ehp-button-primary-text-color: var(--flex-hero-button-primary-text-color);
 		--ehp-button-primary-text-color-hover: var(--flex-hero-button-primary-text-color-hover);
 		--ehp-button-primary-border-width: var(--flex-hero-button-primary-border-width);
@@ -120,7 +117,6 @@
 		--ehp-button-primary-border-radius-inline-start: var(--flex-hero-button-primary-border-radius-inline-start);
 
 		--ehp-button-secondary-icon-spacing: var(--flex-hero-button-secondary-icon-spacing);
-		--ehp-button-secondary-icon-size: var(--flex-hero-button-secondary-icon-size);
 		--ehp-button-secondary-text-color: var(--flex-hero-button-secondary-text-color);
 		--ehp-button-secondary-text-color-hover: var(--flex-hero-button-secondary-text-color-hover);
 		--ehp-button-secondary-border-width: var(--flex-hero-button-secondary-border-width);
@@ -172,14 +168,20 @@
 
 	&.has-image-stretch {
 		--flex-hero-image-width: 100%;
+		--flex-hero-image-height: 100%;
 
+		& .ehp-image {
+			height: 100%;
+		}
+
+		gap: 0;
 		padding: 0;
 
 		@media screen and (min-width: $screen-desktop-min) {
 			
-			&.has-layout-preset-storytelling .ehp-flex-hero__content-container {
+			& .ehp-flex-hero__content-container {
 				padding-block-start: var(--flex-hero-box-padding-block-start);
-				padding-block-end: 0;
+				padding-block-end: var(--flex-hero-box-padding-block-end);
 				padding-inline-start: var(--flex-hero-box-padding-inline-start);
 				padding-inline-end: var(--flex-hero-box-padding-inline-end);
 			}
@@ -193,8 +195,12 @@
 				flex-direction: row;
 
 				& .ehp-flex-hero__content-container,
-				& .ehp-flex-hero__image {
+				& .ehp-flex-hero__image-wrapper {
 					flex-basis: 50%;
+				}
+
+				& .ehp-flex-hero__image-wrapper {
+					justify-content: center;
 				}
 			}
 
@@ -202,8 +208,9 @@
 				justify-content: var(--flex-hero-content-alignment-showcase);
 			}
 
-			& .ehp-flex-hero__image {
+			& .ehp-flex-hero__image-wrapper {
 				align-items: var(--flex-hero-content-alignment-showcase);
+				display: flex;
 			}
 		}
 
@@ -222,20 +229,12 @@
 
 	@mixin responsive-image-position() {
 		&-start {
-
 			& .ehp-flex-hero__content-container {
 				order: 2;
 			}
 			
 			& .ehp-flex-hero__image {
 				order: 1;
-			}
-			
-			&.has-image-stretch .ehp-flex-hero__content-container {
-				padding-block-start: 0;
-				padding-block-end: var(--flex-hero-box-padding-block-end);
-				padding-inline-start: var(--flex-hero-box-padding-inline-start);
-				padding-inline-end: var(--flex-hero-box-padding-inline-end);
 			}
 		}
 	
@@ -245,14 +244,7 @@
 			}
 			
 			& .ehp-flex-hero__image {
-				order: 1;
-			}
-
-			&.has-image-stretch .ehp-flex-hero__content-container {
-				padding-block-start: var(--flex-hero-box-padding-block-start);
-				padding-block-end: 0;
-				padding-inline-start: var(--flex-hero-box-padding-inline-start);
-				padding-inline-end: var(--flex-hero-box-padding-inline-end);
+				order: 2;
 			}
 		}
 	}
@@ -273,24 +265,9 @@
 		}
 
 		@media screen and (min-width: $screen-desktop-min) {
-			
-			&-start {
-				&.has-image-stretch .ehp-flex-hero__content-container {
-					padding-block-start: var(--flex-hero-box-padding-block-start);
-					padding-block-end: var(--flex-hero-box-padding-block-end);
-					padding-inline-start: 0;
-					padding-inline-end: var(--flex-hero-box-padding-inline-end);
-				}
-			}
 
 			&-end {
 				flex-direction: row-reverse;
-				&.has-image-stretch .ehp-flex-hero__content-container {
-					padding-block-start: var(--flex-hero-box-padding-block-start);
-					padding-block-end: var(--flex-hero-box-padding-block-end);
-					padding-inline-start: var(--flex-hero-box-padding-inline-start);
-					padding-inline-end: 0;
-				}
 			}
 		}
 	}
@@ -299,7 +276,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--flex-hero-element-spacing);
-		z-index: 2;
+		z-index: $second-layer;
 	}
 
 	&__intro {
@@ -326,6 +303,10 @@
 		}
 	}
 
+	&__image-wrapper {
+		z-index: $first-layer;
+	}
+
 	&__overlay {
 		height: 100%;
 		left: 0;
@@ -333,6 +314,6 @@
 		position: absolute;
 		top: 0;
 		width: 100%;
-		z-index: 1;
+		z-index: $ground-layer;
 	}
 }

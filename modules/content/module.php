@@ -40,6 +40,7 @@ class Module extends Module_Base {
 			'Hero',
 			'CTA',
 			'Flex_Hero',
+			'Contact',
 		];
 	}
 
@@ -50,7 +51,7 @@ class Module extends Module_Base {
 		wp_register_script(
 			'helloplus-zigzag-fe',
 			HELLOPLUS_SCRIPTS_URL . 'helloplus-zigzag-fe.js',
-			[ 'elementor-frontend', 'elementor-common', 'elementor-frontend-modules' ],
+			[ 'elementor-frontend' ],
 			HELLOPLUS_VERSION,
 			true
 		);
@@ -81,6 +82,13 @@ class Module extends Module_Base {
 		wp_register_style(
 			'helloplus-flex-hero',
 			HELLOPLUS_STYLE_URL . 'helloplus-flex-hero.css',
+			[ 'elementor-frontend' ],
+			HELLOPLUS_VERSION
+		);
+
+		wp_register_style(
+			'helloplus-contact',
+			HELLOPLUS_STYLE_URL . 'helloplus-contact.css',
 			[ 'elementor-frontend' ],
 			HELLOPLUS_VERSION
 		);

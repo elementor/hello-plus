@@ -14,7 +14,6 @@
 	--cta-description-color: #28292B;
 
 	--cta-button-primary-icon-spacing: 10px;
-	--cta-button-primary-icon-size: 16px;
 	--cta-button-primary-text-color: #{$global-colors-white};
 	--cta-button-primary-text-color-hover: #{$global-colors-text};
 	--cta-button-primary-border-width: 0;
@@ -25,7 +24,6 @@
 	--cta-button-primary-border-radius-inline-start: #{$corners-shape-default};
 
 	--cta-button-secondary-icon-spacing: 10px;
-	--cta-button-secondary-icon-size: 16px;
 	--cta-button-secondary-text-color: #{$global-colors-secondary};
 	--cta-button-secondary-text-color-hover: #{$global-colors-secondary};
 	--cta-button-secondary-border-width: 2px;
@@ -42,10 +40,12 @@
 	justify-content: center;
 	height: 100%;
 	min-height: var(--cta-box-height);
+	overflow: hidden;
 	padding-block-end: var(--cta-box-padding-block-end);
 	padding-block-start: var(--cta-box-padding-block-start);
 	padding-inline-end: var(--cta-box-padding-inline-end);
 	padding-inline-start: var(--cta-box-padding-inline-start);
+	position: relative;
 
 	&.has-border {
 		border-color: var(--cta-box-border-color);
@@ -55,6 +55,7 @@
 
 	&.has-image-stretch {
 		--cta-image-width: 100%;
+		--cta-image-height: 100%;
 
 		padding: 0;
 
@@ -272,7 +273,6 @@
 	& a.ehp-button,
 	& a.ehp-button:not([href]):not([tabindex]) {
 		--ehp-button-primary-icon-spacing: var(--cta-button-primary-icon-spacing);
-		--ehp-button-primary-icon-size: var(--cta-button-primary-icon-size);
 		--ehp-button-primary-text-color: var(--cta-button-primary-text-color);
 		--ehp-button-primary-text-color-hover: var(--cta-button-primary-text-color-hover);
 		--ehp-button-primary-border-width: var(--cta-button-primary-border-width);
@@ -287,7 +287,6 @@
 		--ehp-button-primary-border-radius-inline-start: var(--cta-button-primary-border-radius-inline-start);
 
 		--ehp-button-secondary-icon-spacing: var(--cta-button-secondary-icon-spacing);
-		--ehp-button-secondary-icon-size: var(--cta-button-secondary-icon-size);
 		--ehp-button-secondary-text-color: var(--cta-button-secondary-text-color);
 		--ehp-button-secondary-text-color-hover: var(--cta-button-secondary-text-color-hover);
 		--ehp-button-secondary-border-width: var(--cta-button-secondary-border-width);
@@ -331,19 +330,21 @@
 		}
 	}
 
-	&__ctas-container {
-		align-items: var(--cta-buttons-vertical-position);
-		display: flex;
-	}
-
 	@mixin cta-width() {
 		&-default {
-			flex-direction: row;
+
+			& .ehp-cta__buttons-wrapper {
+				flex-direction: row;
+			}
 		}
 
 		&-stretch {
-			align-items: flex-start;
-			flex-direction: column;
+			width: 100%;
+
+			& .ehp-cta__buttons-wrapper {
+				align-items: flex-start;
+				flex-direction: column;
+			}
 
 			& .ehp-cta__button {
 				width: 100%;
@@ -351,16 +352,9 @@
 		}
 	}
 
-	&__buttons-wrapper {
+	&__ctas-container {
+		align-items: var(--cta-buttons-vertical-position);
 		display: flex;
-		gap: var(--cta-buttons-space-between);
-		justify-content: var(--cta-content-alignment);
-		width: 100%;
-
-		@media screen and (min-width: $screen-tablet-min) {
-			align-items: center;
-			flex-direction: row;
-		}
 
 		&.has-cta-width {
 			@include cta-width();
@@ -379,13 +373,25 @@
 		}
 	}
 
+	&__buttons-wrapper {
+		display: flex;
+		gap: var(--cta-buttons-space-between);
+		justify-content: var(--cta-content-alignment);
+		width: 100%;
+
+		@media screen and (min-width: $screen-tablet-min) {
+			align-items: center;
+			flex-direction: row;
+		}
+	}
+
 	&__elements-container {
 		display: flex;
 		gap: var(--cta-elements-spacing);
 		height: 100%;
 		max-width: var(--cta-content-width);
 		width: 100%;
-		z-index: 1;
+		z-index: $first-layer;
 	}
 
 	&__heading {
@@ -413,6 +419,6 @@
 		position: absolute;
 		top: 0;
 		width: 100%;
-		z-index: 1;
+		z-index: $ground-layer;
 	}
 }

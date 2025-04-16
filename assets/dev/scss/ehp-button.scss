@@ -3,7 +3,6 @@
 a.ehp-button,
 a.ehp-button:not([href]):not([tabindex]) {
 	--ehp-button-primary-icon-spacing: 10px;
-	--ehp-button-primary-icon-size: 16px;
 	--ehp-button-primary-text-color: #FFFFFF;
 	--ehp-button-primary-text-color-hover: #555963;
 	--ehp-button-primary-border-width: 0;
@@ -18,7 +17,6 @@ a.ehp-button:not([href]):not([tabindex]) {
 	--ehp-button-primary-border-radius-inline-start: #{$corners-shape-default};
 
 	--ehp-button-secondary-icon-spacing: 10px;
-	--ehp-button-secondary-icon-size: 16px;
 	--ehp-button-secondary-text-color: #555963;
 	--ehp-button-secondary-text-color-hover: #555963;
 	--ehp-button-secondary-border-width: 2px;
@@ -37,7 +35,6 @@ a.ehp-button:not([href]):not([tabindex]) {
 	--ehp-button-padding-inline-start: var(--ehp-button-primary-padding-inline-start);
 	--ehp-button-border-width: var(--ehp-button-primary-border-width);
 	--ehp-button-icon-spacing: var(--ehp-button-primary-icon-spacing);
-	--ehp-button-icon-size: var(--ehp-button-primary-icon-size);
 	--ehp-button-border-radius-block-end: var(--ehp-button-primary-border-radius-block-end);
 	--ehp-button-border-radius-block-start: var(--ehp-button-primary-border-radius-block-start);
 	--ehp-button-border-radius-inline-end: var(--ehp-button-primary-border-radius-inline-end);
@@ -100,10 +97,14 @@ a.ehp-button:not([href]):not([tabindex]) {
 		--ehp-shapes-border-radius-inline-start: var(--ehp-button-primary-border-radius-inline-start);
 	}
 
-	.ehp-button__icon {
+	& i {
+		color: currentColor;
+	}
+
+	& svg {
 		fill: currentColor;
-		height: var(--ehp-button-icon-size);
-		width: var(--ehp-button-icon-size);
+		height: 1em;
+		width: 1em;
 	}
 }
 

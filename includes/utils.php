@@ -162,6 +162,17 @@ class Utils {
 		return __( 'Hello+', 'hello-plus' );
 	}
 
+	public static function are_submissions_enabled(): bool {
+		return static::has_pro() &&
+			class_exists( '\ElementorPro\Modules\Forms\Submissions\Actions\Save_To_Database' ) &&
+			class_exists( '\ElementorPro\License\API' ) &&
+			class_exists( '\ElementorPro\Modules\Forms\Submissions\Component' ) &&
+			\ElementorPro\License\API::is_licence_has_feature(
+				\ElementorPro\Modules\Forms\Submissions\Component::NAME,
+				\ElementorPro\License\APi::BC_VALIDATION_CALLBACK
+			);
+	}
+
 	public static function get_widgets_depends(): array {
 		return [ 'helloplus-button', 'helloplus-image', 'helloplus-shapes' ];
 	}

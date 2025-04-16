@@ -3,15 +3,12 @@
 .ehp-zigzag {
 	--zigzag-title-color: #000000;
 	--zigzag-description-color: #000000;
-	--zigzag-wrapper-border-width: 2px;
-	--zigzag-wrapper-border-color: #000000;
-	--zigzag-wrapper-border-radius: 0;
 	--zigzag-content-position: center;
 	--zigzag-image-width: 50%;
 	--zigzag-icon-width: 50%;
 	--zigzag-icon-size: 256px;
 	--zigzag-icon-color: #555963;
-	--zigzag-icon-color-alternate: #61CE70;
+	--zigzag-icon-color-alternate: var(--zigzag-icon-color);
 
 	--zigzag-animation-delay: 0;
 	--zigzag-animation-duration: 1s;
@@ -21,9 +18,10 @@
 	--zigzag-animation-duration-fast: 0.8s;
 
 	--zigzag-button-primary-icon-spacing: 10px;
-	--zigzag-button-primary-icon-size: 16px;
 	--zigzag-button-primary-text-color: #{$global-colors-white};
 	--zigzag-button-primary-text-color-hover: #{$global-colors-text};
+	--zigzag-button-primary-text-color-alternate: var(--zigzag-button-primary-text-color);
+	--zigzag-button-primary-text-color-hover-alternate: var(--zigzag-button-primary-text-color-hover);
 	--zigzag-button-primary-border-width: 0;
 	--zigzag-button-primary-border-color: transparent;
 	--zigzag-button-primary-border-radius-block-end: #{$corners-shape-default};
@@ -36,16 +34,9 @@
 	display: flex;
 	flex-direction: column;
 
-	&.has-border {
-		border-color: var(--zigzag-wrapper-border-color);
-		border-style: solid;
-		border-width: var(--zigzag-wrapper-border-width);
-	}
-
 	& a.ehp-zigzag__button,
 	& a.ehp-zigzag__button:not([href]):not([tabindex]) {
 		--ehp-button-primary-icon-spacing: var(--zigzag-button-primary-icon-spacing);
-		--ehp-button-primary-icon-size: var(--zigzag-button-primary-icon-size);
 		--ehp-button-primary-text-color: var(--zigzag-button-primary-text-color);
 		--ehp-button-primary-text-color-hover: var(--zigzag-button-primary-text-color-hover);
 		--ehp-button-primary-border-width: var(--zigzag-button-primary-border-width);
@@ -58,6 +49,32 @@
 		--ehp-button-primary-border-radius-block-start: var(--zigzag-button-primary-border-radius-block-start);
 		--ehp-button-primary-border-radius-inline-end: var(--zigzag-button-primary-border-radius-inline-end);
 		--ehp-button-primary-border-radius-inline-start: var(--zigzag-button-primary-border-radius-inline-start);
+	}
+
+	&.has-alternate {
+
+		&-button-styles .ehp-zigzag__item-wrapper:nth-child(even) {
+
+			& a.ehp-zigzag__button,
+			& a.ehp-zigzag__button:not([href]):not([tabindex]) {
+				--ehp-button-primary-text-color: var(--zigzag-button-primary-text-color-alternate);
+				--ehp-button-primary-text-color-hover: var(--zigzag-button-primary-text-color-hover-alternate);
+			}
+		}
+
+		&-button-border-styles .ehp-zigzag__item-wrapper:nth-child(even) {
+			& a.ehp-zigzag__button,
+			& a.ehp-zigzag__button:not([href]):not([tabindex]) {
+				border: var(--zigzag-button-primary-border-width-alternate) solid var(--zigzag-button-primary-border-color-alternate);
+			}
+		}
+
+		&-icon-color .ehp-zigzag__item-wrapper:nth-child(even) {
+
+			& .ehp-zigzag__graphic-element-container {
+				color: var(--zigzag-icon-color-alternate);
+			}
+		}
 	}
 
 	& .ehp-image {
@@ -74,14 +91,6 @@
 
 	&__button-container {
 		display: flex;
-	}
-
-	&.has-alternate-icon-color {
-		.ehp-zigzag__item-wrapper:nth-child(even) {
-			.ehp-zigzag__graphic-element-container {
-				color: var(--zigzag-icon-color-alternate);
-			}
-		}
 	}
 
 	&__text-container {

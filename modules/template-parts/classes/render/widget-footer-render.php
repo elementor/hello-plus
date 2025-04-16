@@ -13,16 +13,21 @@ use Elementor\{
 
 use HelloPlus\Modules\TemplateParts\Widgets\Ehp_Footer;
 
+use HelloPlus\Classes\{
+	Ehp_Shapes,
+	Widget_Utils,
+};
+
 /**
  * class Widget_Footer_Render
  */
 class Widget_Footer_Render {
-	const LAYOUT_CLASSNAME = 'ehp-footer';
-	const SITE_LINK_CLASSNAME = 'ehp-footer__site-link';
-
 	protected Ehp_Footer $widget;
+	const LAYOUT_CLASSNAME = 'ehp-footer';
 
 	protected array $settings;
+
+	protected int $nav_menu_index = 1;
 
 	public function render(): void {
 		$layout_classnames = self::LAYOUT_CLASSNAME;
@@ -38,11 +43,13 @@ class Widget_Footer_Render {
 
 		$this->widget->add_render_attribute( 'layout', $render_attributes );
 
-		$this->maybe_add_advanced_attributes();
+		$this->widget->maybe_add_advanced_attributes();
+
+		$this->widget->add_render_attribute( 'row', 'class', self::LAYOUT_CLASSNAME . '__row' );
 
 		?>
-		<footer <?php $this->widget->print_render_attribute_string( 'layout' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-			<div class="ehp-footer__row">
+		<footer <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
+			<div <?php $this->widget->print_render_attribute_string( 'row' ); ?>>
 				<?php
 					$this->render_side_content();
 					$this->render_navigation();
@@ -54,79 +61,24 @@ class Widget_Footer_Render {
 		<?php
 	}
 
-
-	protected function maybe_add_advanced_attributes() {
-		$advanced_css_id = $this->settings['advanced_custom_css_id'];
-		$advanced_css_classes = $this->settings['advanced_custom_css_classes'];
-
-		$wrapper_render_attributes = [];
-		if ( ! empty( $advanced_css_classes ) ) {
-			$wrapper_render_attributes['class'] = $advanced_css_classes;
-		}
-
-		if ( ! empty( $advanced_css_id ) ) {
-			$wrapper_render_attributes['id'] = $advanced_css_id;
-		}
-		if ( empty( $wrapper_render_attributes ) ) {
-			return;
-		}
-		$this->widget->add_render_attribute( '_wrapper', $wrapper_render_attributes );
-	}
-
 	public function render_side_content(): void {
-		$description_text = $this->settings['footer_description'];
-		$description_tag = $this->settings['footer_description_tag'] ?? 'p';
-		$has_description = '' !== $description_text;
+		$this->widget->add_render_attribute( 'side-content', 'class', self::LAYOUT_CLASSNAME . '__side-content' );
 		?>
-		<div class="ehp-footer__side-content">
-			<?php $this->render_site_link(); ?>
-			<?php if ( $has_description ) {
-				$description_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $description_tag ), 'class="ehp-footer__description"', esc_html( $description_text ) );
-				// Escaped above
-				Utils::print_unescaped_internal_string( $description_output );
-			} ?>
+		<div <?php $this->widget->print_render_attribute_string( 'side-content' ); ?>>
+			<?php
+			$this->widget->render_site_link( 'footer' );
+
+			Widget_Utils::maybe_render_text_html( $this->widget, 'footer_description', self::LAYOUT_CLASSNAME . '__description', $this->settings['footer_description'], $this->settings['footer_description_tag'] ?? 'p' );
+			?>
 			<?php $this->render_social_icons(); ?>
 		</div>
-		<?php
-	}
-
-	public function render_site_link(): void {
-		$site_logo_image = $this->settings['site_logo_image'];
-		$site_title_text = $this->widget->get_site_title();
-		$site_title_tag = $this->settings['site_logo_title_tag'] ?? 'h2';
-		$site_link_classnames = self::SITE_LINK_CLASSNAME;
-
-		$this->widget->add_render_attribute( 'site-link', [
-			'class' => $site_link_classnames,
-		] );
-
-		$site_link = $this->get_link_url();
-
-		if ( $site_link ) {
-			$this->widget->add_link_attributes( 'site-link', $site_link );
-		}
-
-		if ( $site_logo_image ) {
-			$this->settings['site_logo_image'] = $this->widget->add_site_logo_if_present( $this->settings['site_logo_image'] );
-		}
-
-		?>
-		<a <?php $this->widget->print_render_attribute_string( 'site-link' ); ?>>
-			<?php if ( $site_logo_image ) { ?>
-				<?php Group_Control_Image_Size::print_attachment_image_html( $this->settings, 'site_logo_image' ); ?>
-			<?php } else {
-				$site_title_output = sprintf( '<%1$s %2$s %3$s>%4$s</%1$s>', Utils::validate_html_tag( $site_title_tag ), $this->widget->get_render_attribute_string( 'heading' ), 'class="ehp-footer__site-title"', esc_html( $site_title_text ) );
-				// Escaped above
-				Utils::print_unescaped_internal_string( $site_title_output );
-			} ?>
-		</a>
 		<?php
 	}
 
 	public function render_social_icons(): void {
 		$icons = $this->settings['footer_icons'] ?? [];
 		$icon_hover_animation = $this->settings['social_icons_hover_animation'] ?? '';
-		$footer_icons_classnames = 'ehp-footer__social-icons';
+		$footer_icons_classnames = self::LAYOUT_CLASSNAME . '__social-icons';
 
 		if ( empty( $icons ) ) {
 			return;
@@ -143,7 +95,7 @@ class Widget_Footer_Render {
 				$text = $icon['footer_icon_text'];
 				$selected_icon = $icon['footer_selected_icon'];
 
-				$icon_classnames = 'ehp-footer__social-icon';
+				$icon_classnames = self::LAYOUT_CLASSNAME . '__social-icon';
 
 				if ( $icon_hover_animation ) {
 					$icon_classnames .= ' elementor-animation-' . $icon_hover_animation;
@@ -171,11 +123,6 @@ class Widget_Footer_Render {
 
 	public function render_navigation(): void {
 		$available_menus = $this->widget->get_available_menus();
-		$menu_classname = 'ehp-footer__menu';
-
-		$menu_heading = $this->settings['footer_menu_heading'];
-		$menu_heading_tag = $this->settings['footer_menu_heading_tag'] ?? 'h6';
-		$has_menu_heading = '' !== $menu_heading;
 
 		if ( ! $available_menus ) {
 			return;
@@ -184,8 +131,8 @@ class Widget_Footer_Render {
 		$args = [
 			'echo' => false,
 			'menu' => $this->settings['navigation_menu'],
-			'menu_class' => $menu_classname,
-			'menu_id' => 'menu-' . $this->widget->get_and_advance_nav_menu_index() . '-' . $this->widget->get_id(),
+			'menu_class' => self::LAYOUT_CLASSNAME . '__menu',
+			'menu_id' => 'menu-' . $this->get_and_advance_nav_menu_index() . '-' . $this->widget->get_id(),
 			'fallback_cb' => '__return_empty_string',
 			'container' => '',
 			'depth' => 1,
@@ -201,22 +148,18 @@ class Widget_Footer_Render {
 			return;
 		}
 
-		if ( $this->settings['footer_menu_heading'] ) {
-			$this->widget->add_render_attribute( 'main-menu', 'aria-label', $this->settings['footer_menu_heading'] );
-		}
-
 		$this->widget->add_render_attribute( 'main-menu', [
-			'class' => 'ehp-footer__navigation',
+			'class' => self::LAYOUT_CLASSNAME . '__navigation',
+			'aria-label' => $this->settings['footer_menu_heading'],
 		] );
+
+		$this->widget->add_render_attribute( 'nav-container', 'class', self::LAYOUT_CLASSNAME . '__nav-container' );
 		?>
-		<div class="ehp-footer__nav-container">
+		<div <?php $this->widget->print_render_attribute_string( 'nav-container' ); ?>>
 			<nav <?php $this->widget->print_render_attribute_string( 'main-menu' ); ?>>
-				<?php if ( $has_menu_heading ) {
-					$menu_heading_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $menu_heading_tag ), 'class="ehp-footer__menu-heading"', esc_html( $menu_heading ) );
-					// Escaped above
-					Utils::print_unescaped_internal_string( $menu_heading_output );
-				} ?>
 				<?php
+				Widget_Utils::maybe_render_text_html( $this->widget, 'footer_menu_heading', self::LAYOUT_CLASSNAME . '__menu-heading', $this->settings['footer_menu_heading'], $this->settings['footer_menu_heading_tag'] ?? 'h6' );
+
 				add_filter( 'nav_menu_link_attributes', [ $this, 'handle_link_classes' ], 10, 4 );
 
 				$args['echo'] = true;
@@ -231,79 +174,66 @@ class Widget_Footer_Render {
 	}
 
 	public function render_contact(): void {
-		$contact_text = $this->settings['footer_contact_heading'];
-		$contact_tag = $this->settings['footer_contact_heading_tag'] ?? 'p';
-		$has_contact = '' !== $contact_text;
-
-		$contact_information_text = $this->settings['footer_contact_information'];
-		$contact_information_tag = $this->settings['footer_contact_information_tag'] ?? 'p';
-		$has_contact_information = '' !== $contact_information_text;
-
 		$this->widget->add_render_attribute( 'contact', [
-			'class' => 'ehp-footer__contact',
+			'class' => self::LAYOUT_CLASSNAME . '__contact',
 		] );
+		$this->widget->add_render_attribute( 'contact-container', 'class', self::LAYOUT_CLASSNAME . '__contact-container' );
+
+		$contact_heading_classname = self::LAYOUT_CLASSNAME . '__contact-heading';
+		$contact_information_classname = self::LAYOUT_CLASSNAME . '__contact-information';
 		?>
-		<div class="ehp-footer__contact-container">
+		<div <?php $this->widget->print_render_attribute_string( 'contact-container' ); ?>>
 			<div <?php $this->widget->print_render_attribute_string( 'contact' ); ?>>
-				<?php if ( $has_contact ) {
-					$contact_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $contact_tag ), 'class="ehp-footer__contact-heading"', esc_html( $contact_text ) );
-					// Escaped above
-					Utils::print_unescaped_internal_string( $contact_output );
-				} ?>
-				<?php if ( $has_contact_information ) {
-					$contact_information_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $contact_information_tag ), 'class="ehp-footer__contact-information"', wp_kses_post( nl2br( esc_html( $contact_information_text ) ) ) );
-					// Escaped above
-					Utils::print_unescaped_internal_string( $contact_information_output );
-				} ?>
+				<?php
+					Widget_Utils::maybe_render_text_html( $this->widget, 'footer_contact_heading', $contact_heading_classname, $this->settings['footer_contact_heading'], $this->settings['footer_contact_heading_tag'] );
+					Widget_Utils::maybe_render_text_html( $this->widget, 'footer_contact_information', $contact_information_classname, $this->settings['footer_contact_information'], $this->settings['footer_contact_information_tag'] );
+				?>
 			</div>
 		</div>
 		<?php
 	}
 
 	public function render_copyright(): void {
-		$copyright_text = $this->settings['footer_copyright'];
-		$copyright_tag = $this->settings['footer_copyright_tag'] ?? 'p';
-		$has_copyright = '' !== $copyright_text;
+		$this->widget->add_render_attribute( 'footer-copyright', 'class', self::LAYOUT_CLASSNAME . '__copyright' );
 		?>
-
-		<div class="ehp-footer__copyright">
-			<?php if ( $has_copyright ) {
-				$copyright_output = sprintf( '<%1$s %2$s>%3$s</%1$s>', Utils::validate_html_tag( $copyright_tag ), 'class="ehp-footer__copyright"', esc_html( $copyright_text ) );
-				// Escaped above
-				Utils::print_unescaped_internal_string( $copyright_output );
-			} ?>
+		<div <?php $this->widget->print_render_attribute_string( 'footer-copyright' ); ?>>
+			<?php
+			Widget_Utils::maybe_render_text_html( $this->widget, 'footer_copyright', self::LAYOUT_CLASSNAME . '__copyright', $this->settings['footer_copyright'], $this->settings['footer_copyright_tag'] ?? 'p' );
+			?>
 		</div>
 		<?php
 	}
 
-	public function get_link_url(): array {
-		return [ 'url' => $this->widget->get_site_url() ];
-	}
-
 	public function handle_link_classes( $atts, $item ) {
-		$classes = 'ehp-footer__menu-item';
+		$classes = [ self::LAYOUT_CLASSNAME . '__menu-item' ];
 		$is_anchor = false !== strpos( $atts['href'], '#' );
 		$has_hover_animation = $this->settings['style_navigation_hover_animation'] ?? '';
 
 		if ( $has_hover_animation ) {
-			$classes .= ' elementor-animation-' . $has_hover_animation;
+			$classes[] = 'elementor-animation-' . $has_hover_animation;
 		}
 
 		if ( ! $is_anchor && in_array( 'current-menu-item', $item->classes, true ) ) {
-			$classes .= ' is-item-active';
+			$classes[] = 'is-item-active';
 		}
 
 		if ( $is_anchor ) {
-			$classes .= ' is-item-anchor';
+			$classes[] = 'is-item-anchor';
 		}
 
+		$class_string = implode( ' ', $classes );
+
 		if ( empty( $atts['class'] ) ) {
-			$atts['class'] = $classes;
+			$atts['class'] = $class_string;
 		} else {
-			$atts['class'] .= ' ' . $classes;
+			$atts['class'] .= ' ' . $class_string;
 		}
 
 		return $atts;
+	}
+
+	public function get_and_advance_nav_menu_index(): int {
+		return $this->nav_menu_index++;
 	}
 
 	public function __construct( Ehp_Footer $widget ) {

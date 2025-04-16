@@ -6,21 +6,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use Elementor\Controls_Manager;
-use Elementor\Group_Control_Background;
-use Elementor\Group_Control_Typography;
-use Elementor\Repeater;
-use Elementor\Widget_Base;
+use Elementor\{
+	Controls_Manager,
+	Group_Control_Background,
+	Group_Control_Box_Shadow,
+	Group_Control_Typography,
+	Repeater,
+	Widget_Base,
+	Utils as Elementor_Utils,
+};
 use Elementor\Core\Kits\Documents\Tabs\{
 	Global_Typography,
 	Global_Colors
 };
-use Elementor\Utils as Elementor_Utils;
 
 use HelloPlus\Modules\Content\Classes\{
 	Control_Zig_Zag_Animation,
 	Render\Widget_Zig_Zag_Render
 };
+use HelloPlus\Modules\Content\Traits\Widget_Repeater_Editable;
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 use HelloPlus\Classes\{
 	Ehp_Button,
@@ -30,6 +34,8 @@ use HelloPlus\Classes\{
 use HelloPlus\Includes\Utils;
 
 class Zig_Zag extends Widget_Base {
+
+	use Widget_Repeater_Editable;
 
 	public function get_name(): string {
 		return 'zigzag';
@@ -81,6 +87,7 @@ class Zig_Zag extends Widget_Base {
 		$this->add_style_image_section();
 		$this->add_style_icon_section();
 		$this->add_style_box_section();
+		$this->add_style_alternate_section();
 	}
 
 	private function add_zigzags_content_section() {
@@ -412,36 +419,6 @@ class Zig_Zag extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'has_alternate_icon_color',
-			[
-				'label' => esc_html__( 'Alternate Icon Color', 'hello-plus' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
-				'label_off' => esc_html__( 'No', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => 'no',
-				'frontend_available' => true,
-			]
-		);
-
-		$this->add_control(
-			'icon_alternate_color',
-			[
-				'label' => esc_html__( 'Alternate Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_ACCENT,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-icon-color-alternate: {{VALUE}}',
-				],
-				'condition' => [
-					'has_alternate_icon_color' => 'yes',
-				],
-			]
-		);
-
 		$this->add_responsive_control(
 			'icon_zigzag_size',
 			[
@@ -591,42 +568,12 @@ class Zig_Zag extends Widget_Base {
 			[
 				'name' => 'background',
 				'types' => [ 'classic', 'gradient' ],
-				'exclude' => [ 'image' ],
 				'selector' => '{{WRAPPER}} .ehp-zigzag__item-wrapper',
-
-			]
-		);
-
-		$this->add_control(
-			'show_alternate_background',
-			[
-				'label' => esc_html__( 'Alternate Background', 'hello-plus' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
-				'label_off' => esc_html__( 'No', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => 'no',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Background::get_type(),
-			[
-				'name' => 'alternate_background',
-				'types' => [ 'classic', 'gradient' ],
-				'exclude' => [ 'image' ],
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
 					],
-					'color' => [
-						'default' => '#F6F7F8',
-					],
 				],
-				'condition' => [
-					'show_alternate_background' => 'yes',
-				],
-				'selector' => '{{WRAPPER}} .ehp-zigzag__item-wrapper:nth-child(even)',
 			]
 		);
 
@@ -766,15 +713,335 @@ class Zig_Zag extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'animation_alternate',
+		$this->end_controls_section();
+	}
+
+	protected function add_style_alternate_section() {
+		$this->start_controls_section(
+			'style_alternate_section',
 			[
-				'label' => esc_html__( 'Alternate Entrance Animation', 'hello-plus' ),
+				'label' => esc_html__( 'Alternate Row Style', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'has_alternate_text_styles',
+			[
+				'label' => esc_html__( 'Text Color', 'hello-plus' ),
 				'type' => Controls_Manager::SWITCHER,
 				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
 				'label_off' => esc_html__( 'No', 'hello-plus' ),
 				'return_value' => 'yes',
 				'default' => 'no',
+			]
+		);
+
+		$this->add_control(
+			'alternate_title_color',
+			[
+				'label' => esc_html__( 'Heading Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .ehp-zigzag__item-wrapper:nth-child(even) .ehp-zigzag__title' => 'color: {{VALUE}}',
+				],
+				'condition' => [
+					'has_alternate_text_styles' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'alternate_description_color',
+			[
+				'label' => esc_html__( 'Description Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .ehp-zigzag__item-wrapper:nth-child(even) .ehp-zigzag__description' => 'color: {{VALUE}}',
+				],
+				'condition' => [
+					'has_alternate_text_styles' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'has_alternate_button_styles',
+			[
+				'label' => esc_html__( 'CTA Button', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+				'separator' => 'before',
+			]
+		);
+
+		$this->start_controls_tabs(
+			'alternate_button_tabs',
+			[
+				'condition' => [
+					'has_alternate_button_styles' => 'yes',
+				],
+			]
+		);
+
+		$this->start_controls_tab(
+			'alternate_button_normal_tab',
+			[
+				'label' => esc_html__( 'Normal', 'hello-plus' ),
+			]
+		);
+
+		$this->add_control(
+			'alternate_button_color',
+			[
+				'label' => esc_html__( 'Text Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-button-primary-text-color-alternate: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
+			[
+				'name' => 'zigzag_button_alternate_background',
+				'types' => [ 'classic', 'gradient' ],
+				'exclude' => [ 'image' ],
+				'condition' => [
+					'primary_button_type' => 'button',
+					'has_alternate_button_styles' => 'yes',
+				],
+				'selector' => '{{WRAPPER}} .ehp-zigzag__item-wrapper:nth-child(even) .is-type-button.ehp-zigzag__button--primary',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'alternate_button_hover_tab',
+			[
+				'label' => esc_html__( 'Hover', 'hello-plus' ),
+			]
+		);
+
+		$this->add_control(
+			'alternate_button_hover_color',
+			[
+				'label' => esc_html__( 'Text Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-button-primary-text-color-hover-alternate: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
+			[
+				'name' => 'zigzag_button_alternate_background_hover',
+				'types' => [ 'classic', 'gradient' ],
+				'exclude' => [ 'image' ],
+				'condition' => [
+					'primary_button_type' => 'button',
+					'has_alternate_button_styles' => 'yes',
+				],
+				'selector' => '{{WRAPPER}} .ehp-zigzag__item-wrapper:nth-child(even) .is-type-button.ehp-zigzag__button--primary:hover, {{WRAPPER}} .ehp-zigzag__item-wrapper:nth-child(even) .is-type-button.ehp-zigzag__button--primary:focus',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_control(
+			'has_alternate_button_border',
+			[
+				'label' => esc_html__( 'Border', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'separator' => 'before',
+				'condition' => [
+					'primary_button_type' => 'button',
+					'has_alternate_button_styles' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'alternate_button_border_width',
+			[
+				'label' => __( 'Border Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 10,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 1,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-button-primary-border-width-alternate: {{SIZE}}{{UNIT}}',
+				],
+				'condition' => [
+					'primary_button_type' => 'button',
+					'has_alternate_button_styles' => 'yes',
+					'has_alternate_button_border' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'alternate_button_border_color',
+			[
+				'label' => esc_html__( 'Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-button-primary-border-color-alternate: {{VALUE}}',
+				],
+				'condition' => [
+					'primary_button_type' => 'button',
+					'has_alternate_button_styles' => 'yes',
+					'has_alternate_button_border' => 'yes',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'alternate_box_shadow',
+				'selector' => '{{WRAPPER}} .ehp-zigzag__item-wrapper:nth-child(even) .is-type-button.ehp-zigzag__button--primary',
+				'condition' => [
+					'primary_button_type' => 'button',
+					'has_alternate_button_styles' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'has_alternate_icon_color',
+			[
+				'label' => esc_html__( 'Icon Color', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+				'separator' => 'before',
+				'condition' => [
+					'graphic_element' => 'icon',
+				],
+			]
+		);
+
+		$this->add_control(
+			'icon_alternate_color',
+			[
+				'label' => esc_html__( 'Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-icon-color-alternate: {{VALUE}}',
+				],
+				'global' => [
+					'default' => Global_Colors::COLOR_ACCENT,
+				],
+				'condition' => [
+					'has_alternate_icon_color' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'show_alternate_background',
+			[
+				'label' => esc_html__( 'Background', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
+			[
+				'name' => 'alternate_background',
+				'types' => [ 'classic', 'gradient' ],
+				'fields_options' => [
+					'background' => [
+						'default' => 'classic',
+					],
+					'color' => [
+						'default' => '#F6F7F8',
+					],
+				],
+				'condition' => [
+					'show_alternate_background' => 'yes',
+				],
+				'selector' => '{{WRAPPER}} .ehp-zigzag__item-wrapper:nth-child(even)',
+			]
+		);
+
+		$this->add_control(
+			'has_alternate_padding',
+			[
+				'label' => esc_html__( 'Padding', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'alternate_padding_horizontal',
+			[
+				'label' => esc_html__( 'Horizontal Padding', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-zigzag__item-wrapper:nth-child(even)' => '--zigzag-box-padding-inline-start: {{SIZE}}{{UNIT}}; --zigzag-box-padding-inline-end: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'has_alternate_padding' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'animation_alternate',
+			[
+				'label' => esc_html__( 'Motion Effects', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+				'separator' => 'before',
 				'conditions' => [
 					'relation' => 'or',
 					'terms' => [
@@ -816,7 +1083,7 @@ class Zig_Zag extends Widget_Base {
 		$this->add_responsive_control(
 			'zigzag_animation_alternate',
 			[
-				'label' => esc_html__( 'Alternate Entrance Animation', 'hello-plus' ),
+				'label' => esc_html__( 'Sequenced Entrance Animation', 'hello-plus' ),
 				'type' => Control_Zig_Zag_Animation::CONTROL_TYPE,
 				'frontend_available' => true,
 				'conditions' => [

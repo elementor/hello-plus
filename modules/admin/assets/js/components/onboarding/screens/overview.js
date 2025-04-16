@@ -38,14 +38,14 @@ export const Overview = ( { title, description, setIsLoading, setPreviewUrl, set
 					<Typography variant="h6" sx={ { mb: 2, color: 'text.primary' } }>{ __( 'Pages', 'hello-plus' ) }</Typography>
 					<Grid container rowSpacing={ 3 } columnSpacing={ 5 }>
 						{ pages.map( ( [ id, data ] ) => (
-							<Grid key={ id } item xs={ 12 } sm={ 6 } md={ 2 }>
+							<Grid key={ id } item xs={ 12 } sm={ 6 } lg={ 3 }>
 								<PreviewWithImage { ...data } onClick={ () => {
-											setIsLoading( true );
-											setPreviewUrl( data.url );
-											setIsOverview( false );
-										} } />
+									setIsLoading( true );
+									setPreviewUrl( data.url );
+									setIsOverview( false );
+								} } />
 							</Grid>
-								) ) }
+						) ) }
 					</Grid>
 				</>
 					) }

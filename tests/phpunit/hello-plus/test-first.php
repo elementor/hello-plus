@@ -7,6 +7,6 @@ use ElementorEditorTesting\Elementor_Test_Base;
 class Elementor_Test_First extends Elementor_Test_Base {
 
 	public function test_truthness() {
-		$this->assertTrue( 1 === 1 );
+		$this->assertTrue( defined( 'HELLOPLUS_VERSION' ) );
 	}
 }

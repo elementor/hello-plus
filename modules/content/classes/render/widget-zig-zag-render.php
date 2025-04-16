@@ -6,22 +6,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use Elementor\Icons_Manager;
-use Elementor\Utils;
+use HelloPlus\Classes\Widget_Utils;
+use Elementor\{
+	Icons_Manager,
+};
 
 use HelloPlus\Modules\Content\Widgets\Zig_Zag;
 use HelloPlus\Classes\{
-	Ehp_Button,
 	Ehp_Image,
+	Ehp_Shapes,
 };
 
 class Widget_Zig_Zag_Render {
+
 	protected Zig_Zag $widget;
+
 	const LAYOUT_CLASSNAME = 'ehp-zigzag';
-	const ITEM_CLASSNAME = 'ehp-zigzag__item-container';
-	const GRAPHIC_ELEMENT_CLASSNAME = 'ehp-zigzag__graphic-element-container';
-	const BUTTON_CLASSNAME = 'ehp-zigzag__button';
-	const TEXT_CONTAINER_CLASSNAME = 'ehp-zigzag__text-container';
 
 	protected array $settings;
 
@@ -31,32 +31,34 @@ class Widget_Zig_Zag_Render {
 	}
 
 	public function render(): void {
-		$first_zigzag_direction = $this->settings['first_zigzag_direction'];
-		$has_alternate_icon_color = $this->settings['has_alternate_icon_color'] ?? 'no';
-		$entrance_animation = $this->settings['zigzag_animation'] ?? '';
-		$has_entrance_animation = ! empty( $entrance_animation ) && 'none' !== $entrance_animation;
-		$has_alternate_animation = 'yes' === $this->settings['animation_alternate'];
-		$image_stretch = $this->settings['image_stretch'];
-
+		$has_entrance_animation = ! empty( $this->settings['zigzag_animation'] ) && 'none' !== $this->settings['zigzag_animation'];
 		$layout_classnames = [
 			self::LAYOUT_CLASSNAME,
-			'has-direction-' . $first_zigzag_direction,
+			'has-direction-' . $this->settings['first_zigzag_direction'],
 		];
-
-		if ( 'yes' === $has_alternate_icon_color ) {
-			$layout_classnames[] = 'has-alternate-icon-color';
-		}
 
 		if ( $has_entrance_animation ) {
 			$layout_classnames[] = 'has-entrance-animation';
 		}
 
-		if ( $has_alternate_animation ) {
-			$layout_classnames[] = 'has-alternate-animation';
+		if ( 'yes' === $this->settings['image_stretch'] ) {
+			$layout_classnames[] = 'has-image-stretch';
 		}
 
-		if ( 'yes' === $image_stretch ) {
-			$layout_classnames[] = 'has-image-stretch';
+		if ( 'yes' === $this->settings['has_alternate_button_styles'] ) {
+			$layout_classnames[] = 'has-alternate-button-styles';
+		}
+
+		if ( 'yes' === $this->settings['has_alternate_icon_color'] ) {
+			$layout_classnames[] = 'has-alternate-icon-color';
+		}
+
+		if ( 'yes' === $this->settings['has_alternate_button_border'] ) {
+			$layout_classnames[] = 'has-alternate-button-border-styles';
+		}
+
+		if ( 'yes' === $this->settings['animation_alternate'] ) {
+			$layout_classnames[] = 'has-alternate-animation';
 		}
 
 		$this->widget->add_render_attribute( 'layout', [
@@ -70,7 +72,7 @@ class Widget_Zig_Zag_Render {
 			$repeater = 'image' === $graphic_element ? $this->settings['image_zigzag_items'] : $this->settings['icon_zigzag_items'];
 
 			$wrapper_classnames = [
-				'ehp-zigzag__item-wrapper',
+				self::LAYOUT_CLASSNAME . '__item-wrapper',
 			];
 
 			if ( $has_entrance_animation ) {
@@ -83,14 +85,14 @@ class Widget_Zig_Zag_Render {
 				] );
 
 				$this->widget->add_render_attribute( 'zigzag-item-' . $key, [
-					'class' => self::ITEM_CLASSNAME,
+					'class' => self::LAYOUT_CLASSNAME . '__item-container',
 				] );
 				?>
 				<div <?php $this->widget->print_render_attribute_string( 'zigzag-item-wrapper-' . $key ); ?>>
 					<div <?php $this->widget->print_render_attribute_string( 'zigzag-item-' . $key ); ?>>
 						<?php
 							$this->render_graphic_element_container( $item, $key );
-							$this->render_text_element_container( $item, $key );
+							$this->render_text_element_container( $item, $key, $repeater );
 						?>
 					</div>
 				</div>
@@ -104,7 +106,7 @@ class Widget_Zig_Zag_Render {
 		$graphic_element = $this->settings['graphic_element'];
 
 		$graphic_element_classnames = [
-			self::GRAPHIC_ELEMENT_CLASSNAME,
+			self::LAYOUT_CLASSNAME . '__graphic-element-container',
 		];
 
 		$is_icon = 'icon' === $graphic_element && ! empty( $item['icon_graphic_icon'] );
@@ -146,22 +148,26 @@ class Widget_Zig_Zag_Render {
 	private function render_text_element_container( $item, $key ) {
 		$graphic_element = $this->settings['graphic_element'];
 
-		$title_tag = $this->settings['zigzag_title_tag'] ?? 'h2';
-		$title_text = $item[ $graphic_element . '_title' ] ?? '';
-		$has_title = ! empty( $title_text );
-
-		$description_text = $item[ $graphic_element . '_description' ] ?? '';
-		$has_description = ! empty( $description_text );
-
 		$is_graphic_image = 'image' === $graphic_element;
 		$is_graphic_icon = 'icon' === $graphic_element;
 		$text_container_classnames = [
-			self::TEXT_CONTAINER_CLASSNAME,
+			self::LAYOUT_CLASSNAME . '__text-container',
 		];
 
-		$this->widget->add_render_attribute( 'description-' . $key, [
-			'class' => 'ehp-zigzag__description',
-		] );
+		$zigzag_item_title_setting_key = $this->widget->public_get_repeater_setting_key(
+			$graphic_element . '_title',
+			$graphic_element . '_zigzag_items',
+			$key
+		);
+
+		$zigzag_item_description_setting_key = $this->widget->public_get_repeater_setting_key(
+			$graphic_element . '_description',
+			$graphic_element . '_zigzag_items',
+			$key
+		);
+
+		$this->widget->public_add_inline_editing_attributes( $zigzag_item_title_setting_key, 'none' );
+		$this->widget->public_add_inline_editing_attributes( $zigzag_item_description_setting_key, 'none' );
 
 		if ( $is_graphic_icon ) {
 			$text_container_classnames[] = 'is-graphic-icon';
@@ -172,19 +178,32 @@ class Widget_Zig_Zag_Render {
 		$this->widget->add_render_attribute( 'text-container-' . $key, [
 			'class' => $text_container_classnames,
 		] );
+
+		$title_classname = self::LAYOUT_CLASSNAME . '__title';
+		$description_classname = self::LAYOUT_CLASSNAME . '__description';
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'text-container-' . $key ); ?>>
-			<?php if ( $has_title ) {
-				$title_output = sprintf( '<%1$s %2$s %3$s>%4$s</%1$s>', Utils::validate_html_tag( $title_tag ), $this->widget->get_render_attribute_string( 'heading' ), 'class="ehp-zigzag__title"', esc_html( $title_text ) );
-				// Escaped above
-				Utils::print_unescaped_internal_string( $title_output );
-			} ?>
-			<?php if ( $has_description ) { ?>
-				<p <?php $this->widget->print_render_attribute_string( 'description-' . $key ); ?>><?php echo esc_html( $description_text ); ?></p>
-			<?php } ?>
-			<?php if ( ! empty( $item[ $graphic_element . '_button_text' ] ) ) {
+			<?php
+
+			Widget_Utils::maybe_render_text_html(
+				$this->widget,
+				$zigzag_item_title_setting_key,
+				$title_classname,
+				$item[ $graphic_element . '_title' ],
+				$this->settings['zigzag_title_tag']
+			);
+
+			Widget_Utils::maybe_render_text_html(
+				$this->widget,
+				$zigzag_item_description_setting_key,
+				$description_classname,
+				$item[ $graphic_element . '_description' ]
+			);
+
+			if ( ! empty( $item[ $graphic_element . '_button_text' ] ) ) {
 				$this->render_cta_button( $item, $key );
-			} ?>
+			}
+			?>
 		</div>
 		<?php
 	}
@@ -192,24 +211,87 @@ class Widget_Zig_Zag_Render {
 	public function render_cta_button( $item, $key ) {
 		$graphic_element = $this->settings['graphic_element'];
 
-		$defaults = [
-			'button_text' => $item[ $graphic_element . '_button_text' ] ?? '',
-			'button_link' => $item[ $graphic_element . '_button_link' ] ?? '',
-			'button_icon' => $item[ $graphic_element . '_button_icon' ] ?? '',
-			'button_hover_animation' => $this->settings['primary_button_hover_animation'] ?? '',
-			'button_has_border' => $this->settings['primary_show_button_border'],
-			'button_type' => $this->settings['primary_button_type'] ?? '',
+		$this->widget->add_render_attribute( 'button-container', 'class', self::LAYOUT_CLASSNAME . '__button-container' );
+
+		$button_classnames = [
+			'ehp-button',
+			'ehp-button--primary',
+			self::LAYOUT_CLASSNAME . '__button',
+			self::LAYOUT_CLASSNAME . '__button--primary',
 		];
 
-		$button = new Ehp_Button( $this->widget, [
-			'type' => 'primary',
+		if ( ! empty( $this->settings['primary_button_type'] ) ) {
+			$button_classnames[] = 'is-type-' . $this->settings['primary_button_type'];
+		}
+
+		if ( $this->settings['primary_button_hover_animation'] ) {
+			$button_classnames[] = 'elementor-animation-' . $this->settings['primary_button_hover_animation'];
+		}
+
+		if ( 'yes' === $this->settings['primary_show_button_border'] ) {
+			$button_classnames[] = 'has-border';
+		}
+
+		$button_render_attr = $graphic_element . '-primary-button-' . $key;
+
+		$shapes = new Ehp_Shapes( $this->widget, [
 			'widget_name' => $this->widget->get_name(),
+			'container_prefix' => 'button',
+			'type_prefix' => 'primary',
+			'render_attribute' => $button_render_attr,
 			'key' => $key,
-		], $defaults );
+		] );
+		$shapes_classnames = $shapes->get_shape_classnames();
+
+		$button_classnames = array_merge( $button_classnames, $shapes_classnames );
+
+		$this->widget->add_render_attribute( $button_render_attr, [
+			'class' => $button_classnames,
+		] );
+
+		$this->widget->add_link_attributes( $button_render_attr, $item[ $graphic_element . '_button_link' ], true );
 		?>
-		<div class="ehp-zigzag__button-container">
-			<?php $button->render(); ?>
+		<div <?php $this->widget->print_render_attribute_string( 'button-container' ); ?>>
+			<a <?php $this->widget->print_render_attribute_string( $button_render_attr ); ?>>
+				<?php
+				Icons_Manager::render_icon( $item[ $graphic_element . '_button_icon' ], [
+					'aria-hidden' => 'true',
+					'class' => 'ehp-button__icon',
+					self::LAYOUT_CLASSNAME . '__button-icon',
+				] );
+
+				$this->render_button_text( $item, $key );
+				?>
+			</a>
 		</div>
+		<?php
+	}
+
+	protected function render_button_text( $item, $key ) {
+		$graphic_element = $this->settings['graphic_element'];
+
+		$render_attr = $graphic_element . '_button_text';
+
+		$this->widget->add_render_attribute( $render_attr, [
+			'class' => self::LAYOUT_CLASSNAME . '__button-text',
+		] );
+
+		$zigzag_item_button_setting_key = $this->widget->public_get_repeater_setting_key(
+			$graphic_element . '_button_text',
+			$graphic_element . '_zigzag_items',
+			$key
+		);
+
+		$this->widget->public_add_inline_editing_attributes( $zigzag_item_button_setting_key, 'none' );
+
+		Widget_Utils::maybe_render_text_html(
+			$this->widget,
+			$zigzag_item_button_setting_key,
+			self::LAYOUT_CLASSNAME . '__button-text',
+			$item[ $graphic_element . '_button_text' ],
+			'span',
+		);
+		?>
 		<?php
 	}
 }

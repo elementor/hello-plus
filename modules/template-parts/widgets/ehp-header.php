@@ -10,11 +10,15 @@ use Elementor\{
 	Controls_Manager,
 	Group_Control_Background,
 	Group_Control_Box_Shadow,
+	Group_Control_Css_Filter,
+	Group_Control_Text_Shadow,
 	Group_Control_Typography,
 	Repeater
 };
-use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
-use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+use Elementor\Core\Kits\Documents\Tabs\{
+	Global_Typography,
+	Global_Colors,
+};
 
 use HelloPlus\Modules\TemplateParts\Classes\{
 	Render\Widget_Header_Render,
@@ -27,10 +31,15 @@ use HelloPlus\Classes\{
 	Ehp_Button,
 	Ehp_Shapes,
 	Ehp_Padding,
+	Ehp_Social_Platforms,
 };
 use HelloPlus\Includes\Utils;
 
+use HelloPlus\Modules\Content\Traits\Widget_Repeater_Editable;
+
 class Ehp_Header extends Ehp_Widget_Base {
+
+	use Widget_Repeater_Editable;
 
 	public function get_name(): string {
 		return 'ehp-header';
@@ -62,6 +71,9 @@ class Ehp_Header extends Ehp_Widget_Base {
 
 	protected function render(): void {
 		$render_strategy = new Widget_Header_Render( $this );
+
+		$this->add_inline_editing_attributes( 'primary_cta_button_text', 'none' );
+		$this->add_inline_editing_attributes( 'secondary_cta_button_text', 'none' );
 
 		$render_strategy->render();
 	}
@@ -142,95 +154,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'site_logo_brand_select',
-			[
-				'label' => esc_html__( 'Brand', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'logo' => esc_html__( 'Site Logo', 'hello-plus' ),
-					'title' => esc_html__( 'Site Name', 'hello-plus' ),
-				],
-				'default' => 'logo',
-				'tablet_default' => 'logo',
-				'mobile_default' => 'logo',
-			]
-		);
-
-		$this->add_control(
-			'site_logo_image',
-			[
-				'label' => esc_html__( 'Site Logo', 'hello-plus' ),
-				'type' => Control_Media_Preview::CONTROL_TYPE,
-				'src' => $this->get_site_logo_url(),
-				'default' => [
-					'url' => $this->get_site_logo_url(),
-				],
-				'condition' => [
-					'site_logo_brand_select' => 'logo',
-				],
-			],
-			[
-				'recursive' => true,
-			]
-		);
-
-		$this->add_control(
-			'change_logo_cta',
-			[
-				'type' => Controls_Manager::BUTTON,
-				'label_block' => true,
-				'show_label' => false,
-				'button_type' => 'default elementor-button-center',
-				'text' => esc_html__( 'Change Site Logo', 'hello-plus' ),
-				'event' => 'helloPlusLogo:change',
-				'condition' => [
-					'site_logo_brand_select' => 'logo',
-				],
-			],
-			[
-				'position' => [
-					'of' => 'image',
-					'type' => 'control',
-					'at' => 'after',
-				],
-			]
-		);
-
-		$this->add_control(
-			'site_logo_title_alert',
-			[
-				'type' => Controls_Manager::ALERT,
-				'alert_type' => 'info',
-				'content' => esc_html__( 'Go to', 'hello-plus' ) . ' <a href="#" onclick="templatesModule.openSiteIdentity( event )" >' . esc_html__( 'Site Identity > Site Name', 'hello-plus' ) . '</a>' . esc_html__( ' to edit the Site Name', 'hello-plus' ),
-				'condition' => [
-					'site_logo_brand_select' => 'title',
-				],
-			]
-		);
-
-		$this->add_control(
-			'site_logo_title_tag',
-			[
-				'label' => esc_html__( 'HTML Tag', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'h1' => 'H1',
-					'h2' => 'H2',
-					'h3' => 'H3',
-					'h4' => 'H4',
-					'h5' => 'H5',
-					'h6' => 'H6',
-					'div' => 'div',
-					'span' => 'span',
-					'p' => 'p',
-				],
-				'default' => 'h2',
-				'condition' => [
-					'site_logo_brand_select' => 'title',
-				],
-			]
-		);
+		$this->add_content_brand_controls();
 
 		$this->end_controls_section();
 	}
@@ -405,264 +329,23 @@ class Ehp_Header extends Ehp_Widget_Base {
 			]
 		);
 
+		$defaults = [
+			'icon_default' => [
+				'value' => 'fas fa-map-marker-alt',
+				'library' => 'fa-solid',
+			],
+			'label_default' => esc_html__( 'Visit', 'hello-plus' ),
+			'platform_default' => 'map',
+		];
+
 		$repeater = new Repeater();
 
-		$repeater->add_control(
-			'contact_buttons_icon',
-			[
-				'label' => esc_html__( 'Icon', 'hello-plus' ),
-				'type' => Controls_Manager::ICONS,
-				'default' => [
-					'value' => 'fas fa-map-marker-alt',
-					'library' => 'fa-solid',
-				],
-				'recommended' => [
-					'fa-solid' => [
-						'envelope',
-						'phone-alt',
-						'phone',
-						'mobile',
-						'mobile-alt',
-						'sms',
-						'comment-dots',
-						'map-marker-alt',
-						'map-marker',
-						'location-arrow',
-						'map',
-						'link',
-						'globe',
-					],
-					'fa-regular' => [
-						'envelope',
-						'comment-dots',
-						'map',
-					],
-					'fa-brands' => [
-						'whatsapp',
-						'whatsapp-square',
-						'skype',
-						'facebook-messenger',
-						'viber',
-						'waze',
-					],
-				],
-			]
-		);
+		$social_platforms = new Ehp_Social_Platforms( $this, [
+			'prefix_attr' => 'contact_buttons',
+			'repeater' => $repeater,
+		], $defaults );
 
-		$repeater->add_control(
-			'contact_buttons_label',
-			[
-				'label' => esc_html__( 'Label', 'hello-plus' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => esc_html__( 'Visit', 'hello-plus' ),
-				'dynamic' => [
-					'active' => true,
-				],
-			]
-		);
-
-		$repeater->add_control(
-			'contact_buttons_platform',
-			[
-				'label' => esc_html__( 'Platform', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'email' => esc_html__( 'Email', 'hello-plus' ),
-					'telephone' => esc_html__( 'Telephone', 'hello-plus' ),
-					'sms' => esc_html__( 'SMS', 'hello-plus' ),
-					'whatsapp' => esc_html__( 'Whatsapp', 'hello-plus' ),
-					'skype' => esc_html__( 'Skype', 'hello-plus' ),
-					'messenger' => esc_html__( 'Messenger', 'hello-plus' ),
-					'viber' => esc_html__( 'Viber', 'hello-plus' ),
-					'map' => esc_html__( 'Map', 'hello-plus' ),
-					'waze' => esc_html__( 'Waze', 'hello-plus' ),
-					'url' => esc_html__( 'URL', 'hello-plus' ),
-				],
-				'default' => 'map',
-			],
-		);
-
-		$repeater->add_control(
-			'contact_buttons_mail',
-			[
-				'label' => esc_html__( 'Email', 'hello-plus' ),
-				'type' => Controls_Manager::TEXT,
-				'dynamic' => [
-					'active' => true,
-				],
-				'ai' => [
-					'active' => false,
-				],
-				'label_block' => true,
-				'placeholder' => esc_html__( '@', 'hello-plus' ),
-				'default' => '',
-				'condition' => [
-					'contact_buttons_platform' => 'email',
-				],
-			],
-		);
-
-		$repeater->add_control(
-			'contact_buttons_mail_subject',
-			[
-				'label' => esc_html__( 'Subject', 'hello-plus' ),
-				'type' => Controls_Manager::TEXT,
-				'dynamic' => [
-					'active' => true,
-				],
-				'label_block' => true,
-				'default' => '',
-				'condition' => [
-					'contact_buttons_platform' => 'email',
-				],
-			],
-		);
-
-		$repeater->add_control(
-			'contact_buttons_mail_body',
-			[
-				'label' => esc_html__( 'Message', 'hello-plus' ),
-				'type' => Controls_Manager::TEXTAREA,
-				'default' => '',
-				'condition' => [
-					'contact_buttons_platform' => 'email',
-				],
-			]
-		);
-
-		$repeater->add_control(
-			'contact_buttons_number',
-			[
-				'label' => esc_html__( 'Number', 'hello-plus' ),
-				'type' => Controls_Manager::TEXT,
-				'dynamic' => [
-					'active' => false,
-				],
-				'ai' => [
-					'active' => false,
-				],
-				'label_block' => true,
-				'placeholder' => esc_html__( '+', 'hello-plus' ),
-				'condition' => [
-					'contact_buttons_platform' => [
-						'sms',
-						'whatsapp',
-						'viber',
-						'telephone',
-					],
-				],
-			],
-		);
-
-		$repeater->add_control(
-			'contact_buttons_username',
-			[
-				'label' => esc_html__( 'Username', 'hello-plus' ),
-				'type' => Controls_Manager::TEXT,
-				'dynamic' => [
-					'active' => true,
-				],
-				'ai' => [
-					'active' => false,
-				],
-				'label_block' => true,
-				'placeholder' => esc_html__( 'Enter your username', 'hello-plus' ),
-				'condition' => [
-					'contact_buttons_platform' => [
-						'messenger',
-						'skype',
-					],
-				],
-			],
-		);
-
-		$repeater->add_control(
-			'contact_buttons_url',
-			[
-				'label' => esc_html__( 'Link', 'hello-plus' ),
-				'type' => Controls_Manager::URL,
-				'dynamic' => [
-					'active' => true,
-				],
-				'ai' => [
-					'active' => false,
-				],
-				'autocomplete' => true,
-				'label_block' => true,
-				'condition' => [
-					'contact_buttons_platform' => [
-						'url',
-					],
-				],
-				'placeholder' => esc_html__( 'https://www.', 'hello-plus' ),
-			],
-		);
-
-		$repeater->add_control(
-			'contact_buttons_waze',
-			[
-				'label' => esc_html__( 'Link', 'hello-plus' ),
-				'type' => Controls_Manager::URL,
-				'dynamic' => [
-					'active' => true,
-				],
-				'ai' => [
-					'active' => false,
-				],
-				'autocomplete' => true,
-				'label_block' => true,
-				'condition' => [
-					'contact_buttons_platform' => [
-						'waze',
-					],
-				],
-				'placeholder' => esc_html__( 'https://ul.waze.com/ul?place=', 'hello-plus' ),
-			],
-		);
-
-		$repeater->add_control(
-			'contact_buttons_map',
-			[
-				'label' => esc_html__( 'Link', 'hello-plus' ),
-				'type' => Controls_Manager::URL,
-				'dynamic' => [
-					'active' => true,
-				],
-				'ai' => [
-					'active' => false,
-				],
-				'autocomplete' => true,
-				'label_block' => true,
-				'condition' => [
-					'contact_buttons_platform' => [
-						'map',
-					],
-				],
-				'placeholder' => esc_html__( 'https://maps.app.goo.gl', 'hello-plus' ),
-			],
-		);
-
-		$repeater->add_control(
-			'contact_buttons_action',
-			[
-				'label' => esc_html__( 'Action', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'chat',
-				'dynamic' => [
-					'active' => true,
-				],
-				'options' => [
-					'call' => 'Call',
-					'chat' => 'Chat',
-				],
-				'condition' => [
-					'contact_buttons_platform' => [
-						'viber',
-						'skype',
-					],
-				],
-			]
-		);
+		$social_platforms->add_repeater_controls();
 
 		$this->add_control(
 			'contact_buttons_repeater',
@@ -740,70 +423,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'style_logo_width',
-			[
-				'label' => __( 'Logo Width', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-						'step' => 1,
-					],
-				],
-				'default' => [
-					'size' => 68,
-					'unit' => 'px',
-				],
-				'tablet_default' => [
-					'size' => 68,
-					'unit' => 'px',
-				],
-				'mobile_default' => [
-					'size' => 68,
-					'unit' => 'px',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-header' => '--header-logo-width: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'site_logo_brand_select' => 'logo',
-				],
-			]
-		);
-
-		$this->add_control(
-			'style_title_color',
-			[
-				'label' => esc_html__( 'Text Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'global' => [
-					'default' => Global_Colors::COLOR_PRIMARY,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-header' => '--header-site-title-color: {{VALUE}}',
-				],
-				'condition' => [
-					'site_logo_brand_select' => 'title',
-				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => 'style_title_typography',
-				'selector' => '{{WRAPPER}} .ehp-header__site-title',
-				'global' => [
-					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
-				],
-				'condition' => [
-					'site_logo_brand_select' => 'title',
-				],
-			]
-		);
+		$this->add_style_brand_controls( 'header' );
 
 		$this->end_controls_section();
 	}

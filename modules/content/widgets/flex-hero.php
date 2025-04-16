@@ -6,15 +6,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use Elementor\Controls_Manager;
-use Elementor\Group_Control_Background;
-use Elementor\Group_Control_Box_Shadow;
-use Elementor\Group_Control_Typography;
-use Elementor\Widget_Base;
-use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
-use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+use Elementor\{
+	Controls_Manager,
+	Group_Control_Background,
+	Group_Control_Box_Shadow,
+	Group_Control_Typography,
+	Widget_Base,
+};
+use Elementor\Core\Kits\Documents\Tabs\{
+	Global_Colors,
+	Global_Typography,
+};
 
-use HelloPlus\Modules\Content\Base\Traits\Shared_Content_Traits;
 use HelloPlus\Modules\Content\Classes\Choose_Img_Control;
 use HelloPlus\Modules\Content\Classes\Render\Widget_Flex_Hero_Render;
 use HelloPlus\Modules\Theme\Module as Theme_Module;
@@ -23,12 +26,11 @@ use HelloPlus\Classes\{
 	Ehp_Image,
 	Ehp_Padding,
 	Ehp_Shapes,
+	Widget_Utils
 };
 use HelloPlus\Includes\Utils;
 
 class Flex_Hero extends Widget_Base {
-
-	use Shared_Content_Traits;
 
 	public function get_name(): string {
 		return 'flex-hero';
@@ -57,9 +59,11 @@ class Flex_Hero extends Widget_Base {
 	protected function render(): void {
 		$render_strategy = new Widget_Flex_Hero_Render( $this );
 
-		$this->add_inline_editing_attributes( 'intro_text', 'basic' );
-		$this->add_inline_editing_attributes( 'heading_text', 'basic' );
-		$this->add_inline_editing_attributes( 'subheading_text', 'basic' );
+		$this->add_inline_editing_attributes( 'intro_text', 'none' );
+		$this->add_inline_editing_attributes( 'heading_text', 'none' );
+		$this->add_inline_editing_attributes( 'subheading_text', 'none' );
+		$this->add_inline_editing_attributes( 'primary_cta_button_text', 'none' );
+		$this->add_inline_editing_attributes( 'secondary_cta_button_text', 'none' );
 
 		$render_strategy->render();
 	}
@@ -560,11 +564,7 @@ class Flex_Hero extends Widget_Base {
 			]
 		);
 
-		$defaults = [
-			'has_min_height' => true,
-		];
-
-		$image = new Ehp_Image( $this, [ 'widget_name' => $this->get_name() ], $defaults );
+		$image = new Ehp_Image( $this, [ 'widget_name' => $this->get_name() ] );
 		$image->add_style_controls();
 
 		$this->end_controls_section();
@@ -816,7 +816,7 @@ class Flex_Hero extends Widget_Base {
 			]
 		);
 
-		$configured_breakpoints = $this->get_configured_breakpoints();
+		$configured_breakpoints = Widget_Utils::get_configured_breakpoints();
 
 		$this->add_control(
 			'box_full_screen_height_controls',

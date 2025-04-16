@@ -25,3 +25,4 @@ webpack.config.js
 hello-plus*.zip
 hello-plus/
 tests/
+phpunit.xml

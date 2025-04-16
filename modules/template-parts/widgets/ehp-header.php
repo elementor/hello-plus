@@ -35,7 +35,11 @@ use HelloPlus\Classes\{
 };
 use HelloPlus\Includes\Utils;
 
+use HelloPlus\Modules\Content\Traits\Widget_Repeater_Editable;
+
 class Ehp_Header extends Ehp_Widget_Base {
+
+	use Widget_Repeater_Editable;
 
 	public function get_name(): string {
 		return 'ehp-header';

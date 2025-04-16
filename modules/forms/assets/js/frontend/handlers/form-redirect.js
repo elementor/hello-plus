@@ -19,9 +19,11 @@ export default elementorModules.frontend.handlers.Base.extend( {
 		this.elements.$form.addEventListener( 'form_destruct', this.handleSubmit.bind( this ) );
 	},
 
-	handleSubmit( event, response ) {
-		if ( response && response.data && response.data.redirect_url ) {
-			location.href = response.data.redirect_url;
+	handleSubmit( event ) {
+		const { detail: { data: { redirect_url: redirectUrl = '' } = {} } = {} } = event;
+
+		if ( redirectUrl ) {
+			location.href = redirectUrl;
 		}
 	},
 } );

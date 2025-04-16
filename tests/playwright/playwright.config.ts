@@ -12,10 +12,9 @@ _config( {
 } );
 
 export default defineConfig( {
-	testDir: './sanity',
+	testDir: './tests',
 	timeout: timeouts.singleTest,
 	globalTimeout: timeouts.global,
-	grepInvert: /elements-regression/,
 	expect: {
 		timeout: timeouts.expect,
 		toMatchSnapshot: { maxDiffPixelRatio: 0.03 },

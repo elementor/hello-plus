@@ -1,0 +1,60 @@
+name: PHPUnit
+
+on:
+  pull_request:
+    types: ['opened', 'edited', 'reopened', 'synchronize']
+
+# This allows a subsequently queued workflow run to interrupt previous runs
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  phpunit:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        wordpress_versions: [
+          'latest',
+          '6.7',
+          '6.6'
+        ]
+        php_versions: [
+          '7.4',
+          '8.0',
+          '8.1',
+          '8.2'
+        ]
+    name: PHPUnit - WordPress ${{ matrix.wordpress_versions }} - PHP version ${{ matrix.php_versions }}
+    steps:
+    - name: Install SVN
+      run: |
+        sudo apt-get update -y
+        sudo apt-get install -y subversion
+        which svn
+        svn --version
+
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - uses: getong/mariadb-action@v1.1
+
+    - name: Set PHP version
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php_versions }}
+        coverage: xdebug
+        tools: composer:v2
+
+    - name: Update dependencies
+      run: composer install --no-interaction
+
+    - name: Setup WP Tests
+      run: bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1
+
+    - name: PHPUnit
+      run: composer run coverage:test
+
+    - name: Coverage
+      run: composer run coverage:check

@@ -33,6 +33,9 @@ class Redirect extends Action_Base {
 
 	public function run( $record, $ajax_handler ) {
 		$redirect_to = $record->get_form_settings( 'redirect_to' );
+		if ( empty( $redirect_to ) ) {
+			return;
+		}
 
 		$redirect_to = $record->replace_setting_shortcodes( $redirect_to, true );
 

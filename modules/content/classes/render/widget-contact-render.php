@@ -4,6 +4,7 @@ namespace HelloPlus\Modules\Content\Classes\Render;
 use HelloPlus\Classes\Widget_Utils;
 use HelloPlus\Modules\Content\Widgets\Contact;
 use HelloPlus\Classes\{
+	Ehp_Full_Height,
 	Ehp_Shapes,
 	Ehp_Social_Platforms,
 };
@@ -25,17 +26,10 @@ class Widget_Contact_Render {
 			self::LAYOUT_CLASSNAME,
 			'has-preset-' . $this->settings['layout_preset'],
 		];
-		$layout_full_height_controls = $this->settings['box_full_screen_height_controls'] ?? '';
 		$show_map = 'quick-info' !== $this->settings['layout_preset'];
 
 		if ( 'yes' === $this->settings['show_box_border'] ) {
 			$layout_classnames[] = 'has-border';
-		}
-
-		if ( ! empty( $layout_full_height_controls ) ) {
-			foreach ( $layout_full_height_controls as $breakpoint ) {
-				$layout_classnames[] = ' is-full-height-' . $breakpoint;
-			}
 		}
 
 		if ( 'yes' === $this->settings['map_stretch'] ) {
@@ -52,6 +46,9 @@ class Widget_Contact_Render {
 			'widget_name' => $this->widget->get_name(),
 		] );
 		$shapes->add_shape_attributes();
+
+		$ehp_full_height = new Ehp_Full_Height( $this->widget );
+		$ehp_full_height->add_full_height_attributes();
 
 		if ( ! empty( $this->settings['map_position_horizontal'] ) ) {
 			$elements_container_classnames[] = 'has-map-h-position-' . $this->settings['map_position_horizontal'];

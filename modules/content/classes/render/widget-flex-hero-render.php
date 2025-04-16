@@ -9,6 +9,7 @@ use HelloPlus\Classes\Widget_Utils;
 use HelloPlus\Modules\Content\Widgets\Flex_Hero;
 use HelloPlus\Classes\{
 	Ehp_Button,
+	Ehp_Full_Height,
 	Ehp_Image,
 	Ehp_Shapes,
 };
@@ -39,17 +40,10 @@ class Widget_Flex_Hero_Render {
 
 	public function render(): void {
 		$layout_classnames = [ self::LAYOUT_CLASSNAME ];
-		$layout_full_height_controls = $this->settings['box_full_screen_height_controls'] ?? '';
 		$layout_preset = $this->settings['layout_preset'];
 		$image_stretch = $this->settings['image_stretch'];
 		$layout_image_position = $this->settings['layout_image_position'];
 		$has_border = $this->settings['show_box_border'];
-
-		if ( ! empty( $layout_full_height_controls ) ) {
-			foreach ( $layout_full_height_controls as $breakpoint ) {
-				$layout_classnames[] = 'is-full-height-' . $breakpoint;
-			}
-		}
 
 		if ( ! empty( $layout_preset ) ) {
 			$layout_classnames[] = 'has-layout-preset-' . $layout_preset;
@@ -76,6 +70,9 @@ class Widget_Flex_Hero_Render {
 			'widget_name' => $this->widget->get_name(),
 		] );
 		$shapes->add_shape_attributes();
+
+		$ehp_full_height = new Ehp_Full_Height( $this->widget );
+		$ehp_full_height->add_full_height_attributes();
 
 		$this->widget->add_render_attribute( 'layout', [
 			'class' => $layout_classnames,

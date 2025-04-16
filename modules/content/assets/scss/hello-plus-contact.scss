@@ -12,10 +12,12 @@
 	display: flex;
 	height: 100%;
 	min-height: var(--contact-box-height);
+	overflow: hidden;
 	padding-inline-start: var(--contact-box-padding-inline-start);
 	padding-inline-end: var(--contact-box-padding-inline-end);
 	padding-block-start: var(--contact-box-padding-block-start);
 	padding-block-end: var(--contact-box-padding-block-end);
+	position: relative;
 
 	@mixin map-position {
 		&-start {
@@ -209,7 +211,7 @@
 		flex-direction: column;
 		flex-grow: 1;
 		gap: var(--contact-box-gap);
-		z-index: 1;
+		z-index: $first-layer;
 	}
 
 	&__heading {
@@ -382,6 +384,6 @@
 		position: absolute;
 		top: 0;
 		width: 100%;
-		z-index: 1;
+		z-index: $ground-layer;
 	}
 }

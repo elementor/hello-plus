@@ -568,9 +568,12 @@ class Zig_Zag extends Widget_Base {
 			[
 				'name' => 'background',
 				'types' => [ 'classic', 'gradient' ],
-				'exclude' => [ 'image' ],
 				'selector' => '{{WRAPPER}} .ehp-zigzag__item-wrapper',
-
+				'fields_options' => [
+					'background' => [
+						'default' => 'classic',
+					],
+				],
 			]
 		);
 
@@ -980,7 +983,6 @@ class Zig_Zag extends Widget_Base {
 			[
 				'name' => 'alternate_background',
 				'types' => [ 'classic', 'gradient' ],
-				'exclude' => [ 'image' ],
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',

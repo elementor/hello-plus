@@ -5,10 +5,7 @@ wp plugin activate elementor
 wp theme activate hello-biz
 wp plugin activate hello-plus
 
-# Remove Akismet as it is pre-installed in the Docker image
-wp plugin uninstall akismet --deactivate
-
-WP_CLI_CONFIG_PATH=elementor-config/wp-cli.yml wp rewrite structure '/%postname%/' --hard
+WP_CLI_CONFIG_PATH=hello-plus-config/wp-cli.yml wp rewrite structure '/%postname%/' --hard
 
 # Remove the Guttenberg welcome guide popup
 wp user meta add admin wp_persisted_preferences 'a:2:{s:14:\"core/edit-post\";a:2:{b:1;s:12:\"welcomeGuide\";b:0;}}'

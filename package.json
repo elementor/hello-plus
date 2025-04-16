@@ -13,7 +13,10 @@
 		"build:dir": "npm run clean && npm run build:dev && rsync -av --exclude-from=.buildignore . hello-plus",
 		"package": "npm run clean && npm run build && rsync -av --exclude-from=.buildignore . $npm_package_name",
 		"package:zip": "npm run package && zip -r $npm_package_name.$npm_package_version.zip ./$npm_package_name/*",
-		"test:php": "docker-compose -f bin/docker-compose.yml run --rm wordpress_phpunit phpunit"
+		"test:php": "docker-compose -f bin/docker-compose.yml run --rm wordpress_phpunit phpunit",
+		"test:playwright": "playwright test -c tests/playwright/playwright.config.ts",
+		"test:playwright:debug": "npm run test:playwright -- --debug",
+		"test:setup:playwright": "wp-env run cli bash hello-plus-config/setup.sh && wp-env run tests-cli bash hello-plus-config/setup.sh"
 	},
 	"devDependencies": {
 		"@playwright/test": "1.51.0",
@@ -25,6 +28,7 @@
 		"eslint-plugin-no-jquery": "^3.0.2",
 		"eslint-plugin-react": "^7.35.2",
 		"path": "^0.12.7",
+		"typescript": "^5.8.3",
 		"webpack-cli": "^5.1.4",
 		"webpack-remove-empty-scripts": "^1.0.4"
 	},

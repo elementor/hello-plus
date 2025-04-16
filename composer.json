@@ -3,18 +3,34 @@
 	"require-dev": {
 		"squizlabs/php_codesniffer": "^3.10.2",
 		"dealerdirect/phpcodesniffer-composer-installer": "^v1.0.0",
-		"wp-coding-standards/wpcs": "^3.1.0"
+		"wp-coding-standards/wpcs": "^3.1.0",
+		"phpunit/phpunit": "9.5.14",
+		"elementor/elementor-editor-testing": "0.0.3",
+		"johnpbloch/wordpress-core": "^6.0",
+		"php-stubs/wordpress-stubs": "^6.0",
+		"elementor/eunit": "^0.0.10",
+		"phpcompatibility/phpcompatibility-wp": "^2.1",
+		"phpunit/php-code-coverage": "^9.2",
+		"wildwolf/wordpress-test-library-stubs": "^6.0",
+		"wp-phpunit/wp-phpunit": "^6.0",
+		"yoast/phpunit-polyfills": "^2.0"
 	},
 	"require": {
 		"elementor/wp-notifications-package": "^1.1.0"
 	},
 	"config": {
 		"allow-plugins": {
-			"dealerdirect/phpcodesniffer-composer-installer": true
+			"dealerdirect/phpcodesniffer-composer-installer": true,
+			"composer/installers": true
 		}
 	},
 	"scripts": {
 		"lint": "vendor/bin/phpcs --standard=./phpcs.xml --ignore=node_modules,vendor,build .",
-		"lint:fix": "vendor/bin/phpcbf --ignore=node_modules,vendor,build ."
+		"lint:fix": "vendor/bin/phpcbf --ignore=node_modules,vendor,build .",
+		"test": "phpunit --testsuite hello-plus",
+		"test:install": "bash ./bin/install-wp-tests-local.sh",
+		"coverage": "composer run coverage:test && composer run coverage:check",
+		"coverage:test": "phpdbg -qrr vendor/phpunit/phpunit/phpunit --testsuite hello-plus --coverage-clover coverage-report/clover.xml",
+		"coverage:check": "phpunit-coverage-check -t 20 coverage-report/clover.xml"
 	}
 }

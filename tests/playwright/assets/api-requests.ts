@@ -47,7 +47,7 @@ export default class ApiRequests {
 				title: image.title,
 				status: 'publish',
 				description: image.description,
-				alt_text: image.alt_text,
+				altText: image.alt_text,
 				caption: image.caption,
 			},
 		} );

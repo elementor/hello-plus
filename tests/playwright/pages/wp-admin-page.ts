@@ -140,7 +140,7 @@ export default class WpAdminPage extends BasePage {
 	async setPageName(): Promise<void> {
 		await this.page.locator( '#elementor-panel-footer-settings' ).click();
 
-		const pageId = await this.page.evaluate( () => elementor.config.initial_document.id );
+		const pageId = await this.page.evaluate( () => elementor.config.initialDocument.id );
 		await this.page.locator( '.elementor-control-post_title input' ).fill( `Playwright Test Page #${ pageId }` );
 
 		await this.page.locator( '#elementor-panel-footer-saver-options' ).click();

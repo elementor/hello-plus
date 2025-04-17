@@ -1,7 +1,7 @@
 export type Image = {
     title: string,
     description?: string,
-    alt_text?: string,
+    altText?: string,
     caption?: string,
     extension: string,
     filePath?: string
@@ -28,26 +28,26 @@ export type WpPage = {
 		rendered?: string,
 	}
 	date?: string,
-	date_gmt?: string,
+	dateGmt?: string,
 	guid?: string,
 	id?: string,
 	link?: string,
 	modified?: string,
-	modified_gmt?: string,
+	modifiedGmt?: string,
 	slug: string,
 	status?: 'publish' | 'future' | 'draft' | 'pending' | 'private',
 	type?: string,
 	password?: string,
-	permalink_template?: string,
-	generated_slug?: string,
+	permalinkTemplate?: string,
+	generatedSlug?: string,
 	parent?: string,
 	content: string,
 	author?: string,
 	excerpt?: string,
-	featured_media?: string,
-	comment_status?: string,
-	ping_status?: string,
-	menu_order?: string,
+	featuredMedia?: string,
+	commentStatus?: string,
+	pingStatus?: string,
+	menuOrder?: string,
 	meta?: string,
 	template?: string,
 }
@@ -55,7 +55,7 @@ export type WpPage = {
 export type Post = {
 	id?: string,
 	date?: string,
-	date_gmt?: string,
+	dateGmt?: string,
 	slug?: string,
 	status?: 'publish' | 'future' | 'draft' | 'pending' | 'private',
 	password?: string,
@@ -63,9 +63,9 @@ export type Post = {
 	content?: string,
 	author?: number,
 	excerpt?: string,
-	featured_media?: number,
-	comment_status?: 'open' | 'closed',
-	ping_status?: 'open' | 'closed',
+	featuredMedia?: number,
+	commentStatus?: 'open' | 'closed',
+	pingStatus?: 'open' | 'closed',
 	format?: 'standard' | 'aside' | 'chat' | 'gallery' | 'link' | 'image' | 'quote' | 'status' | 'video' | 'audio',
 	meta?: string,
 	sticky?: boolean,
@@ -93,7 +93,7 @@ export type ElementorType = {
 	},
 	getContainer?: ( id: string )=> unknown,
 	config?: {
-		initial_document:{
+		initialDocument:{
 			id: string
 		}
 	},

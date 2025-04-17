@@ -1031,7 +1031,7 @@ export default class EditorPage extends BasePage {
 	 * @return {Promise<string>} The ID of the current page.
 	 */
 	async getPageId(): Promise<string> {
-		return await this.page.evaluate( () => elementor.config.initial_document.id );
+		return await this.page.evaluate( () => elementor.config.initialDocument.id );
 	}
 
 	/**

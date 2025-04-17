@@ -51,7 +51,7 @@ export default class EditorPage extends BasePage {
 	 *
 	 * @param {JSON} templateData - Template data.
 	 *
-	 * @return {JSON}
+	 * @return {JSON} The updated template data with current dates.
 	 */
 	updateImageDates( templateData: JSON ): JSON {
 		const date = new Date();
@@ -248,7 +248,7 @@ export default class EditorPage extends BasePage {
 	/**
 	 * Get the frame of the Elementor editor preview.
 	 *
-	 * @return {Frame}
+	 * @return {Frame} The preview iframe element.
 	 */
 	getPreviewFrame(): Frame {
 		return this.page.frame( { name: 'elementor-preview-iframe' } );
@@ -740,7 +740,7 @@ export default class EditorPage extends BasePage {
 	/**
 	 * Whether the Top Bar is active or not.
 	 *
-	 * @return {Promise<boolean>}
+	 * @return {Promise<boolean>} Returns true if the Top Bar is visible, false otherwise.
 	 */
 	async hasTopBar(): Promise<boolean> {
 		return await this.page.locator( EditorSelectors.panels.topBar.wrapper ).isVisible();
@@ -1028,7 +1028,7 @@ export default class EditorPage extends BasePage {
 	/**
 	 * Get the current page ID.
 	 *
-	 * @return {Promise<string>}
+	 * @return {Promise<string>} The ID of the current page.
 	 */
 	async getPageId(): Promise<string> {
 		return await this.page.evaluate( () => elementor.config.initial_document.id );
@@ -1071,7 +1071,7 @@ export default class EditorPage extends BasePage {
 	 *
 	 * @param {string} itemSelector - The item selector.
 	 *
-	 * @return {Promise<boolean>}
+	 * @return {Promise<boolean>} Returns true if the item is in the viewport, false otherwise.
 	 */
 	async isItemInViewport( itemSelector: string ): Promise<boolean> {
 		return this.page.evaluate( ( item: string ) => {
@@ -1098,7 +1098,7 @@ export default class EditorPage extends BasePage {
 	/**
 	 * Get the number of widgets in the editor.
 	 *
-	 * @return {Promise<number>}
+	 * @return {Promise<number>} The number of widgets in the editor.
 	 */
 	async getWidgetCount(): Promise<number> {
 		return ( await this.getPreviewFrame().$$( EditorSelectors.widget ) ).length;
@@ -1304,7 +1304,7 @@ export default class EditorPage extends BasePage {
 	 * @param {string} idPrefix - The prefix of the item.
 	 * @param {string} itemID   - The item ID.
 	 *
-	 * @return {Promise<number>}
+	 * @return {Promise<number>} The numeric part of the ID with the prefix removed.
 	 */
 	async isolatedIdNumber( idPrefix: string, itemID: string ): Promise<number> {
 		return Number( itemID.replace( idPrefix, '' ) );

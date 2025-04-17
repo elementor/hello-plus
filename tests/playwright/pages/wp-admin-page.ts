@@ -73,7 +73,7 @@ export default class WpAdminPage extends BasePage {
 	 * @param {boolean} setWithApi  - Optional. Whether to create the page with the API. Default is true.
 	 * @param {boolean} setPageName - Optional. Whether to set the page name. Default is true.
 	 *
-	 * @return {Promise<EditorPage>}
+	 * @return {Promise<EditorPage>} A promise that resolves to the new editor page instance.
 	 */
 	async openNewPage( setWithApi: boolean = true, setPageName: boolean = true ): Promise<EditorPage> {
 		if ( setWithApi ) {
@@ -92,7 +92,7 @@ export default class WpAdminPage extends BasePage {
 	/**
 	 * Create a new page with the API and open it in Elementor.
 	 *
-	 * @return {Promise<string>}
+	 * @return {Promise<string>} A promise that resolves to the created page ID.
 	 */
 	async createNewPostWithAPI(): Promise<string> {
 		const request: APIRequestContext = this.page.context().request,
@@ -151,7 +151,7 @@ export default class WpAdminPage extends BasePage {
 	/**
 	 * Convert the current page from Gutenberg to Elementor.
 	 *
-	 * @return {Promise<EditorPage>}
+	 * @return {Promise<EditorPage>} A promise that resolves to the editor page instance.
 	 */
 	async convertFromGutenberg(): Promise<EditorPage> {
 		await Promise.all( [
@@ -173,7 +173,7 @@ export default class WpAdminPage extends BasePage {
 	 *
 	 * @param {Response} response - The response object.
 	 *
-	 * @return {Promise<boolean>}
+	 * @return {Promise<boolean>} A promise that resolves to true if the response is a valid REST/JSON request with a 200 status.
 	 */
 	async blockUrlResponse( response: Response ): Promise<boolean> {
 		const isRestRequest = response.url().includes( 'rest_route=%2Fwp%2Fv2%2Fpages%2' ); // For local testing
@@ -306,7 +306,7 @@ export default class WpAdminPage extends BasePage {
 	/**
 	 * Get the active WordPress theme.
 	 *
-	 * @return {Promise<string>}
+	 * @return {Promise<string>} The name of the active WordPress theme.
 	 */
 	async getActiveTheme(): Promise<string> {
 		const request: APIRequestContext = this.page.context().request;

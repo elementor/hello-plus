@@ -1,9 +1,7 @@
 @import "../../../../assets/dev/scss/variables";
+@import "../../../../assets/dev/scss/ehp-full-height";
 
 .ehp-cta {
-	--cta-box-height: auto;
-	--cta-box-full-height: 100vh;
-
 	--cta-elements-spacing: 40px;
 	--cta-buttons-space-between: 16px;
 	--cta-content-alignment: center;
@@ -47,6 +45,8 @@
 	padding-inline-start: var(--cta-box-padding-inline-start);
 	position: relative;
 
+	@include full-height-viewports();
+
 	&.has-border {
 		border-color: var(--cta-box-border-color);
 		border-style: solid;
@@ -84,62 +84,6 @@
 				padding-inline-start: var(--cta-box-padding-inline-start);
 			}
 		}
-	}
-
-	@supports (height: 100dvh) {
-		--cta-box-full-height: 100dvh;
-	}
-
-	@mixin full-height($min: null, $max: null) {
-		$query: null;
-
-		@if $min != null and $max != null {
-			$query: "(min-width: " + $min + ") and (max-width: " + $max + ")";
-		} @else if $max != null {
-			$query: "(max-width: " + $max + ")";
-		} @else if $min != null {
-			$query: "(min-width: " + $min + ")";
-		}
-
-		@if $query != null {
-			@media #{$query} {
-				--cta-box-height: var(--cta-box-full-height, 100vh);
-
-				align-items: center;
-			};
-		}
-	}
-
-	&.is-full-height-mobile {
-		@include full-height(null, $screen-mobile-max);
-	}
-
-	&.is-full-height-mobile_extra {
-		@include full-height($screen-mobile-extra-min, $screen-mobile-extra-max);
-	}
-
-	&.is-full-height-tablet {
-		@include full-height($screen-tablet-min, $screen-tablet-max);
-	}
-
-	&.is-full-height-tablet_extra {
-		@include full-height($screen-tablet-extra-min, $screen-tablet-extra-max);
-	}
-
-	&.is-full-height-laptop {
-		@include full-height($screen-laptop-min, $screen-laptop-max);
-	}
-
-	&.is-full-height-desktop {
-		@include full-height($screen-desktop-min, null);
-
-		&.is-full-height-widescreen {
-			@include full-height($screen-desktop-min, $screen-desktop-max);
-		}
-	}
-
-	&.is-full-height-widescreen {
-		@include full-height($screen-widescreen-min, null);
 	}
 
 	&.has-preset {

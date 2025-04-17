@@ -10,6 +10,7 @@ use HelloPlus\Includes\Utils;
 use Elementor\Icons_Manager;
 
 use HelloPlus\Classes\{
+	Ehp_Full_Height,
 	Ehp_Image,
 	Ehp_Shapes,
 	Widget_Utils,
@@ -58,6 +59,9 @@ class Widget_Form_Render {
 			'widget_name' => 'form',
 		] );
 		$shapes->add_shape_attributes();
+
+		$ehp_full_height = new Ehp_Full_Height( $this->widget );
+		$ehp_full_height->add_full_height_attributes();
 
 		$this->widget->add_render_attribute( 'layout', [
 			'name' => $this->settings['form_name'] || '',

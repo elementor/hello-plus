@@ -21,7 +21,6 @@ for id in $(wp user list --field=ID)
 do wp user meta add "$id" "announcements_user_counter" 999
 done
 
-
 wp cache flush
 wp rewrite flush --hard
 wp elementor flush-css

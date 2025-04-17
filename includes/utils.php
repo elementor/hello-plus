@@ -38,7 +38,7 @@ class Utils {
 	}
 
 	public static function has_hello_biz(): bool {
-		if ( defined( 'WP_TESTS_DOMAIN') ) {
+		if ( defined( 'WP_TESTS_DOMAIN' ) ) {
 			return true;
 		}
 

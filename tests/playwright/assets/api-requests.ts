@@ -261,8 +261,7 @@ export default class ApiRequests {
 	}
 
 	public async createNewUser( request: APIRequestContext, user: User ) {
-		const randomBytes = crypto.randomBytes( 4 );
-		const randomNumber = randomBytes.readUInt32BE( 0 ) % 1000;
+		const randomNumber = crypto.randomInt( 0, 1000 );
 		const username = `${ user.username }${ randomNumber }`,
 			email = user.email || username + '@example.com',
 			password = user.password || 'password',

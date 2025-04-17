@@ -20,6 +20,7 @@
 		"test:setup:chromium": "npx playwright install chromium"
 	},
 	"devDependencies": {
+		"@elementor/wp-lite-env": "^0.0.20",
 		"@playwright/test": "1.51.0",
 		"@typescript-eslint/parser": "^6.21.0",
 		"@wordpress/eslint-plugin": "^21.6.0",

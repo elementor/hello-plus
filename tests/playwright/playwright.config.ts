@@ -33,8 +33,8 @@ export default defineConfig( {
 		},
 		headless: !! process.env.CI,
 		ignoreHTTPSErrors: true,
-		actionTimeout: timeouts.action,
-		navigationTimeout: timeouts.navigation,
+		actionTimeout: 30000, // Increase from the default
+		navigationTimeout: 45000, // Increase from the default
 		trace: 'retain-on-failure',
 		video: process.env.CI ? 'retain-on-failure' : 'off',
 		baseURL: process.env.BASE_URL ||

@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { type APIRequestContext } from '@playwright/test';
-
+import crypto from 'crypto';
 import { Image, Post, WpPage, User } from '../types/types';
 
 export default class ApiRequests {
@@ -261,7 +261,9 @@ export default class ApiRequests {
 	}
 
 	public async createNewUser( request: APIRequestContext, user: User ) {
-		const username = `${ user.username }${ Math.floor( Math.random() * 1000 ) }`,
+		const randomBytes = crypto.randomBytes(4);
+		const randomNumber = randomBytes.readUInt32BE(0) % 1000;
+		const username = `${ user.username }${ randomNumber }`,
 			email = user.email || username + '@example.com',
 			password = user.password || 'password',
 			roles = user.roles;

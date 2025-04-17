@@ -153,4 +153,9 @@ module.exports = {
 		'import/no-named-as-default': 'error',
 		'react/no-unescaped-entities': 'warn',
     },
+	settings: {
+		'import/resolver': {
+			typescript: {}, // this uses tsconfig.json paths
+		},
+	},
 };

@@ -29,7 +29,7 @@ class Ehp_Full_Height {
 		$this->widget_settings = $this->widget->get_settings_for_display();
 
 		$layout_full_height_controls = $this->widget_settings['box_full_screen_height_controls'] ?? '';
-		
+
 		if ( ! empty( $layout_full_height_controls ) ) {
 			$full_height_classnames = [ 'is-full-height' ];
 

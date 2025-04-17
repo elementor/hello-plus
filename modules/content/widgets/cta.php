@@ -25,10 +25,10 @@ use HelloPlus\Modules\Content\Classes\{
 };
 use HelloPlus\Classes\{
 	Ehp_Button,
+	Ehp_Full_Height,
 	Ehp_Image,
 	Ehp_Padding,
 	Ehp_Shapes,
-	Widget_Utils
 };
 use HelloPlus\Includes\Utils;
 
@@ -722,11 +722,11 @@ class CTA extends Widget_Base {
 			]
 		);
 
-		$shapes = new Ehp_Shapes( $this, [
+		$ehp_shapes = new Ehp_Shapes( $this, [
 			'widget_name' => $this->get_name(),
 			'container_prefix' => 'box',
 		] );
-		$shapes->add_style_controls();
+		$ehp_shapes->add_style_controls();
 
 		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
@@ -736,37 +736,8 @@ class CTA extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'box_full_screen_height',
-			[
-				'label' => esc_html__( 'Full Screen Height', 'hello-plus' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
-				'label_off' => esc_html__( 'No', 'hello-plus' ),
-				'return_value' => 'yes',
-				'default' => '',
-				'tablet_default' => '',
-				'mobile_default' => '',
-				'separator' => 'before',
-			]
-		);
-
-		$configured_breakpoints = Widget_Utils::get_configured_breakpoints();
-
-		$this->add_control(
-			'box_full_screen_height_controls',
-			[
-				'label' => esc_html__( 'Apply Full Screen Height on', 'hello-plus' ),
-				'type' => Controls_Manager::SELECT2,
-				'label_block' => true,
-				'multiple' => true,
-				'options' => $configured_breakpoints['devices_options'],
-				'default' => $configured_breakpoints['active_devices'],
-				'condition' => [
-					'box_full_screen_height' => 'yes',
-				],
-			]
-		);
+		$ehp_full_height = new Ehp_Full_Height( $this );
+		$ehp_full_height->add_style_controls();
 
 		$this->end_controls_section();
 	}

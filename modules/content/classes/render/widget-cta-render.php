@@ -5,6 +5,7 @@ use HelloPlus\Classes\Widget_Utils;
 use HelloPlus\Modules\Content\Widgets\CTA;
 use HelloPlus\Classes\{
 	Ehp_Button,
+	Ehp_Full_Height,
 	Ehp_Image,
 	Ehp_Shapes,
 };
@@ -29,17 +30,10 @@ class Widget_CTA_Render {
 			self::LAYOUT_CLASSNAME,
 			'has-preset-' . $this->settings['layout_preset'],
 		];
-		$layout_full_height_controls = $this->settings['box_full_screen_height_controls'] ?? '';
 
 		$show_image = 'storytelling' === $this->settings['layout_preset'] || 'showcase' === $this->settings['layout_preset'];
 		$image_stretch = $this->settings['image_stretch'];
 		$has_border = $this->settings['show_box_border'];
-
-		if ( ! empty( $layout_full_height_controls ) ) {
-			foreach ( $layout_full_height_controls as $breakpoint ) {
-				$layout_classnames[] = ' is-full-height-' . $breakpoint;
-			}
-		}
 
 		if ( 'yes' === $image_stretch ) {
 			$layout_classnames[] = 'has-image-stretch';
@@ -55,6 +49,9 @@ class Widget_CTA_Render {
 			'widget_name' => $this->widget->get_name(),
 		] );
 		$shapes->add_shape_attributes();
+
+		$ehp_full_height = new Ehp_Full_Height( $this->widget );
+		$ehp_full_height->add_full_height_attributes();
 
 		$this->widget->add_render_attribute( 'layout', [
 			'class' => $layout_classnames,

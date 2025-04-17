@@ -1,4 +1,5 @@
 @import "../../../../assets/dev/scss/variables";
+@import "../../../../assets/dev/scss/ehp-full-height";
 
 .ehp-flex-hero {
 	--flex-hero-content-alignment-showcase: center;
@@ -8,12 +9,6 @@
 	--flex-hero-buttons-space-between: 16px;
 	--flex-hero-gap: 60px;
 	--flex-hero-element-spacing: 40px;
-	--flex-hero-box-height: auto;
-	--flex-hero-box-full-height: 100vh;
-
-	@supports (height: 100dvh) {
-		--flex-hero-box-full-height: 100dvh;
-	}
 
 	--flex-hero-intro-color: #{$global-colors-text};
 	--flex-hero-heading-color: #{$global-colors-secondary};
@@ -49,56 +44,7 @@
 	padding-inline-start: var(--flex-hero-box-padding-inline-start);
 	position: relative;
 
-	@mixin full-height($min: null, $max: null) {
-		$query: null;
-
-		@if $min != null and $max != null {
-			$query: "(min-width: " + $min + ") and (max-width: " + $max + ")";
-		} @else if $max != null {
-			$query: "(max-width: " + $max + ")";
-		} @else if $min != null {
-			$query: "(min-width: " + $min + ")";
-		}
-
-		@if $query != null {
-			@media #{$query} {
-				--flex-hero-box-height: var(--flex-hero-box-full-height, 100vh);
-			};
-		}
-	}
-
-	&.is-full-height-mobile {
-		@include full-height(null, $screen-mobile-max);
-	}
-
-	&.is-full-height-mobile_extra {
-		@include full-height($screen-mobile-extra-min, $screen-mobile-extra-max);
-	}
-
-	&.is-full-height-tablet {
-		@include full-height($screen-tablet-min, $screen-tablet-max);
-	}
-
-	&.is-full-height-tablet_extra {
-		@include full-height($screen-tablet-extra-min, $screen-tablet-extra-max);
-	}
-
-	&.is-full-height-laptop {
-		@include full-height($screen-laptop-min, $screen-laptop-max);
-	}
-
-	&.is-full-height-desktop {
-
-		@include full-height($screen-desktop-min, null);
-
-		&.is-full-height-widescreen {
-			@include full-height($screen-desktop-min, $screen-desktop-max);
-		}
-	}
-
-	&.is-full-height-widescreen {
-		@include full-height($screen-widescreen-min, null);
-	}
+	@include full-height-viewports();
 
 	& a.ehp-button,
 	& a.ehp-button:not([href]):not([tabindex]) {

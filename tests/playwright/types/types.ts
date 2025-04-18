@@ -78,6 +78,9 @@ export type WindowType = Window & {
 		run: ( s: string, o: object )=> unknown
 	}
 	wpApiSettings?: { nonce: string }
+	elementorNotifications?: {
+		destroy: () => void
+	}
 };
 export type BackboneType = {
 	Model: new ( o: {title: string} )=> unknown

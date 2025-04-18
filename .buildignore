@@ -26,3 +26,6 @@ hello-plus*.zip
 hello-plus/
 tests/
 phpunit.xml
+
+tsconfig.json
+.wp-env.json

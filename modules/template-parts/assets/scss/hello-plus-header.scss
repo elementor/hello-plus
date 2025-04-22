@@ -720,6 +720,10 @@
 			@include responsive_styles_desktop();
 		}
 	}
+
+	&[data-responsive-breakpoint="none"] {
+		@include responsive_styles_desktop();
+	}
 }
 
 .e-con.e-con--ehp-header,

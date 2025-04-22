@@ -25,13 +25,84 @@ $elementor_plugin_path = 'elementor/elementor.php';
 $active_plugins = [ $elementor_plugin_path, PLUGIN_PATH ];
 
 // Activates this plugin in WordPress so it can be tested.
-$GLOBALS['wp_tests_options'] = [
+$GLOBALS[ 'wp_tests_options' ] = [
 	'active_plugins' => $active_plugins,
-	'template' => 'twentytwentyone',
-	'stylesheet' => 'twentytwentyone',
+	'template'       => 'twentytwentyone',
+	'stylesheet'     => 'twentytwentyone',
 ];
 
 require_once $_tests_dir . '/includes/functions.php';
+
+// Mock email implementation for tests
+tests_add_filter( 'wp_mail', function ( $args ) {
+	// Create our mock emails table if it doesn't exist
+	global $wpdb;
+	$table_name = $wpdb->prefix . 'mock_emails';
+
+	// Check if table exists
+	if ( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) != $table_name ) {
+		$charset_collate = $wpdb->get_charset_collate();
+
+		$sql = "CREATE TABLE $table_name (
+            id mediumint(9) NOT NULL AUTO_INCREMENT,
+            time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+            to_email text NOT NULL,
+            subject text NOT NULL,
+            message text NOT NULL,
+            headers text NOT NULL,
+            PRIMARY KEY  (id)
+        ) $charset_collate;";
+
+		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+		dbDelta( $sql );
+	}
+
+	// Store the email
+	$to      = $args[ 'to' ];
+	$subject = $args[ 'subject' ];
+	$message = $args[ 'message' ];
+	$headers = $args[ 'headers' ];
+
+	$wpdb->insert(
+		$table_name,
+		[
+			'time'     => current_time( 'mysql' ),
+			'to_email' => is_array( $to ) ? implode( ',', $to ) : $to,
+			'subject'  => $subject,
+			'message'  => $message,
+			'headers'  => is_array( $headers ) ? implode( "\n", $headers ) : (string) $headers,
+		]
+	);
+
+	// Log for debugging
+	error_log( "Mock email captured: To: $to, Subject: $subject" );
+
+	// Return true to indicate success and prevent actual sending
+	return true;
+}, 10, 1 );
+
+// Instead of REST API, create an AJAX endpoint for checking emails
+tests_add_filter( 'wp_ajax_check_mock_emails', 'check_mock_emails_handler' );
+tests_add_filter( 'wp_ajax_nopriv_check_mock_emails', 'check_mock_emails_handler' );
+function check_mock_emails_handler() {
+	global $wpdb;
+	$table_name = $wpdb->prefix . 'mock_emails';
+
+	$emails = $wpdb->get_results( "SELECT * FROM $table_name ORDER BY id DESC LIMIT 10" );
+
+	wp_send_json( $emails );
+}
+
+tests_add_filter( 'wp_ajax_clear_mock_emails', 'clear_mock_emails_handler' );
+tests_add_filter( 'wp_ajax_nopriv_clear_mock_emails', 'clear_mock_emails_handler' );
+function clear_mock_emails_handler() {
+	global $wpdb;
+	$table_name = $wpdb->prefix . 'mock_emails';
+
+	$wpdb->query( "TRUNCATE TABLE $table_name" );
+
+	wp_send_json( [ 'success' => true, 'message' => 'Email log cleared' ] );
+}
 
 tests_add_filter( 'muplugins_loaded', function () {
 	// Manually load plugin

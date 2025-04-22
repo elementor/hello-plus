@@ -1,10 +1,10 @@
 export type Image = {
-    title: string,
-    description?: string,
-    altText?: string,
-    caption?: string,
-    extension: string,
-    filePath?: string
+	title: string,
+	description?: string,
+	altText?: string,
+	caption?: string,
+	extension: string,
+	filePath?: string
 }
 
 export type User = {
@@ -16,11 +16,11 @@ export type User = {
 }
 
 export type LinkOptions = {
-    targetBlank?: boolean,
-    noFollow?: boolean,
-    customAttributes?: {key:string, value: string },
-    linkTo?: boolean,
-    linkInpSelector?: string
+	targetBlank?: boolean,
+	noFollow?: boolean,
+	customAttributes?: { key: string, value: string },
+	linkTo?: boolean,
+	linkInpSelector?: string
 }
 
 export type WpPage = {
@@ -73,30 +73,37 @@ export type Post = {
 	tags?: number
 }
 
+export type PageData = {
+	id: string;
+	url: string;
+};
+
 export type WindowType = Window & {
 	$e?: {
-		run: ( s: string, o: object )=> unknown
+		run: ( s: string, o: object ) => unknown
 	}
 	wpApiSettings?: { nonce: string }
 	elementorNotifications?: {
 		destroy: () => void
-	}
+	},
+	formWasSubmitted?: boolean
+    formErrorDetected?: boolean
 };
 export type BackboneType = {
-	Model: new ( o: {title: string} )=> unknown
+	Model: new ( o: { title: string } ) => unknown
 };
 
 export type $eType = {
-	run: ( s: string, o: object )=> unknown
+	run: ( s: string, o: object ) => unknown
 }
 
 export type ElementorType = {
 	navigator?: {
-		isOpen: ()=> unknown
+		isOpen: () => unknown
 	},
-	getContainer?: ( id: string )=> unknown,
+	getContainer?: ( id: string ) => unknown,
 	config?: {
-		initialDocument:{
+		initialDocument: {
 			id: string
 		}
 	},

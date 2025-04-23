@@ -224,16 +224,21 @@ abstract class Ehp_Document_Base extends Library_Document {
 		return $post_states;
 	}
 
-	public static function are_multiple_post_published() {
+	/**
+	 * @param bool $return_count
+	 *
+	 * @return bool|int
+	 */
+	public static function are_multiple_post_published( bool $return_count = false ) {
 		static $are_multiple_post_published = [];
 
 		if ( ! isset( $are_multiple_post_published[ static::get_type() ] ) ) {
 			$posts = static::get_all_document_posts();
 
-			$are_multiple_post_published[ static::get_type() ] = count( $posts ) > 1;
+			$are_multiple_post_published[ static::get_type() ] = count( $posts );
 		}
 
-		return $are_multiple_post_published[ static::get_type() ];
+		return $return_count ? $are_multiple_post_published[ static::get_type() ] : ( 1 < $are_multiple_post_published[ static::get_type() ] );
 	}
 
 	public static function maybe_get_template( ?string $name, array $args ): void {

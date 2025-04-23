@@ -61,16 +61,19 @@ class Theme_Overrides {
 
 	protected function display_default_header_footer( bool $display, string $location ): bool {
 		if ( ! Utils::elementor()->preview->is_preview_mode() ) {
+			$count = 0;
 			switch ( $location ) {
 				case 'header':
-					return Ehp_Header::are_multiple_post_published();
-
+					$count = Ehp_Header::are_multiple_post_published( true );
+					break;
 				case 'footer':
-					return Ehp_Footer::are_multiple_post_published();
-
+					$count = Ehp_Footer::are_multiple_post_published( true );
+					break;
 				default:
 					return $display;
 			}
+
+			return ( 0 < $count ) ? false : $display;
 		}
 
 		$preview_post_id = filter_input( INPUT_GET, 'elementor-preview', FILTER_VALIDATE_INT );
@@ -84,7 +87,7 @@ class Theme_Overrides {
 	}
 
 	public function __construct() {
-		add_filter( 'hello-plus-theme/settings/header_footer', '__return_false' );
+		add_filter( 'hello-plus-theme/settings/default/header_footer', '__return_true' );
 		add_filter( 'hello-plus-theme/settings/hello_theme', '__return_false' );
 		add_filter( 'hello-plus-theme/settings/hello_style', '__return_false' );
 		add_filter( 'hello-plus-theme/customizer/enable', Setup_Wizard::has_site_wizard_been_completed() ? '__return_false' : '__return_true' );

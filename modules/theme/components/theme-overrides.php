@@ -63,9 +63,9 @@ class Theme_Overrides {
 		if ( ! Utils::elementor()->preview->is_preview_mode() ) {
 			switch ( $location ) {
 				case 'header':
-					return 0 >= Ehp_Header::are_multiple_post_published( true );
+					return 0 >= Ehp_Header::get_published_post_count() ? $display : false;
 				case 'footer':
-					return 0 >= Ehp_Footer::are_multiple_post_published( true );
+					return 0 >= Ehp_Footer::get_published_post_count() ? $display : false;
 				default:
 					return $display;
 			}

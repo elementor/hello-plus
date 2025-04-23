@@ -224,12 +224,11 @@ abstract class Ehp_Document_Base extends Library_Document {
 		return $post_states;
 	}
 
-	/**
-	 * @param bool $return_count
-	 *
-	 * @return bool|int
-	 */
-	public static function are_multiple_post_published( bool $return_count = false ) {
+	public static function are_multiple_post_published(): bool {
+		return static::get_published_post_count() > 1;
+	}
+
+	public static function get_published_post_count(): int {
 		static $are_multiple_post_published = [];
 
 		if ( ! isset( $are_multiple_post_published[ static::get_type() ] ) ) {
@@ -238,7 +237,7 @@ abstract class Ehp_Document_Base extends Library_Document {
 			$are_multiple_post_published[ static::get_type() ] = count( $posts );
 		}
 
-		return $return_count ? $are_multiple_post_published[ static::get_type() ] : ( 1 < $are_multiple_post_published[ static::get_type() ] );
+		return $are_multiple_post_published[ static::get_type() ];
 	}
 
 	public static function maybe_get_template( ?string $name, array $args ): void {

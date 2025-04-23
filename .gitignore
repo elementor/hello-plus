@@ -20,3 +20,4 @@ hello-plus/
 
 !tests/phpunit/hello-plus
 .phpunit.result.cache
+test-results/

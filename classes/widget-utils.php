@@ -44,7 +44,7 @@ class Widget_Utils {
 			'<%1$s %2$s>%3$s</%1$s>',
 			\Elementor\Utils::validate_html_tag( $settings_tag ),
 			$context->get_render_attribute_string( $render_key ),
-			nl2br( $settings_text ),
+			$settings_text,
 		);
 
 		echo wp_kses_post( $element_html );

@@ -74,6 +74,7 @@ class Ehp_Footer extends Ehp_Widget_Base {
 		$this->add_inline_editing_attributes( 'footer_contact_heading', 'none' );
 		$this->add_inline_editing_attributes( 'footer_contact_information', 'none' );
 		$this->add_inline_editing_attributes( 'footer_menu_heading', 'none' );
+		$this->add_inline_editing_attributes( 'footer_copyright', 'none' );
 
 		$render_strategy->render();
 	}

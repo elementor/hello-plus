@@ -155,8 +155,6 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 	}
 
 	handleScrollDown( behaviorOnScroll ) {
-		const { scrollUp } = this.getSettings( 'constants' );
-
 		const currentScrollY = window.scrollY;
 		const headerHeight = this.elements.main.offsetHeight;
 		const wpAdminBarOffsetHeight = this.elements.wpAdminBar?.offsetHeight || 0;
@@ -164,14 +162,22 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 		const headerFloatOffset = parseInt( headerFloatOffsetProperty, 10 ) || 0;
 		const totalOffset = headerHeight + wpAdminBarOffsetHeight + headerFloatOffset;
 
+		if ( currentScrollY <= 0 ) {
+			this.elements.main.classList.remove( 'scroll-down' );
+			this.elements.main.style.removeProperty( '--header-scroll-down' );
+			return;
+		}
+
 		if ( currentScrollY > this.lastScrollY ) {
 			this.elements.main.classList.add( 'scroll-down' );
 
+			const { scrollUp } = this.getSettings( 'constants' );
 			if ( scrollUp === behaviorOnScroll ) {
 				this.elements.main.style.setProperty( '--header-scroll-down', `${ totalOffset }px` );
 			}
 		} else {
 			this.elements.main.classList.remove( 'scroll-down' );
+			this.elements.main.style.removeProperty( '--header-scroll-down' );
 		}
 		this.lastScrollY = currentScrollY;
 	}

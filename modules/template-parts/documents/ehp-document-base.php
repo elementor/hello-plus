@@ -229,15 +229,15 @@ abstract class Ehp_Document_Base extends Library_Document {
 	}
 
 	public static function get_published_post_count(): int {
-		static $are_multiple_post_published = [];
+		static $published_posts_count = [];
 
-		if ( ! isset( $are_multiple_post_published[ static::get_type() ] ) ) {
+		if ( ! isset( $published_posts_count[ static::get_type() ] ) ) {
 			$posts = static::get_all_document_posts();
 
-			$are_multiple_post_published[ static::get_type() ] = count( $posts );
+			$published_posts_count[ static::get_type() ] = count( $posts );
 		}
 
-		return $are_multiple_post_published[ static::get_type() ];
+		return $published_posts_count[ static::get_type() ];
 	}
 
 	public static function maybe_get_template( ?string $name, array $args ): void {

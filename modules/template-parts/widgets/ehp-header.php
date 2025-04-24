@@ -236,7 +236,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 					'options' => [
 						'mobile-portrait' => 'Mobile Portrait (> 767px)',
 						'tablet-portrait' => 'Tablet Portrait (> 1024px)',
-						'none' => 'none',
+						'none' => 'None',
 					],
 					'default' => 'mobile-portrait',
 					'separator' => 'after',

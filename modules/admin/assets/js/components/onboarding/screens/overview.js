@@ -8,7 +8,7 @@ import { __ } from '@wordpress/i18n';
 
 export const Overview = ( { title, description, setIsLoading, setPreviewUrl, setIsOverview, pages, kit } ) => {
 	return (
-		<Stack direction="row">
+		<Stack direction="row" sx={ { height: '100%' } }>
 			<Stack
 				sx={ {
 						flex: '0 0 30%',
@@ -31,6 +31,7 @@ export const Overview = ( { title, description, setIsLoading, setPreviewUrl, set
 				sx={ {
 						flex: '1',
 						padding: 3,
+						overflowY: 'auto',
 					} }
 				>
 				{ pages.length && (

@@ -544,13 +544,13 @@ abstract class Ehp_Widget_Base extends Widget_Base {
 
 	public function get_attachment_image_html_filter( $html, $widget_name ) {
 		$layout_classname = self::LAYOUT_PREFIX . $widget_name;
-		$this->settings = $this->get_settings_for_display();
+		$settings = $this->get_settings_for_display();
 
 		$logo_classnames = [
 			$layout_classname . '__site-logo',
 		];
 
-		if ( ! empty( $this->settings['show_logo_border'] ) && 'yes' === $this->settings['show_logo_border'] ) {
+		if ( ! empty( $settings['show_logo_border'] ) && 'yes' === $settings['show_logo_border'] ) {
 			$logo_classnames[] = 'has-border';
 		}
 
@@ -567,10 +567,10 @@ abstract class Ehp_Widget_Base extends Widget_Base {
 
 	public function render_site_link( $widget_name ): void {
 		$layout_classname = self::LAYOUT_PREFIX . $widget_name;
-		$this->settings = $this->get_settings_for_display();
+		$settings = $this->get_settings_for_display();
 
-		$site_logo_brand_select = $this->settings['site_logo_brand_select'];
-		$hover_animation = $this->settings['style_logo_hover_animation'] ?? '';
+		$site_logo_brand_select = $settings['site_logo_brand_select'];
+		$hover_animation = $settings['style_logo_hover_animation'] ?? '';
 		$site_link_classnames = [ $layout_classname . '__site-link' ];
 
 		if ( ! empty( $hover_animation ) ) {
@@ -587,8 +587,8 @@ abstract class Ehp_Widget_Base extends Widget_Base {
 			$this->add_link_attributes( 'site-link', $site_link );
 		}
 
-		if ( ! empty( $this->settings['site_logo_image'] ) ) {
-			$this->settings['site_logo_image'] = $this->add_site_logo_if_present( $this->settings['site_logo_image'] );
+		if ( ! empty( $settings['site_logo_image'] ) ) {
+			$settings['site_logo_image'] = $this->add_site_logo_if_present( $settings['site_logo_image'] );
 		}
 
 		$this->add_render_attribute( 'site-link-container', 'class', $layout_classname . '__site-link-container' );
@@ -602,16 +602,16 @@ abstract class Ehp_Widget_Base extends Widget_Base {
 
 					if ( 'header' === $widget_name ) {
 						add_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_header_attachment_image_html_filter' ], 10, 4 );
-						Group_Control_Image_Size::print_attachment_image_html( $this->settings, 'site_logo_image' );
+						Group_Control_Image_Size::print_attachment_image_html( $settings, 'site_logo_image' );
 						remove_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_header_attachment_image_html_filter' ], 10 );
 					} else {
 						add_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_footer_attachment_image_html_filter' ], 10, 4 );
-						Group_Control_Image_Size::print_attachment_image_html( $this->settings, 'site_logo_image' );
+						Group_Control_Image_Size::print_attachment_image_html( $settings, 'site_logo_image' );
 						remove_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_footer_attachment_image_html_filter' ], 10 );
 					}
 				} ?>
 				<?php if ( 'title' === $site_logo_brand_select ) {
-					Widget_Utils::maybe_render_text_html( $this, 'header_site_title', $site_title_classname, $this->get_site_title(), $this->settings['site_logo_title_tag'] ?? 'h2' );
+					Widget_Utils::maybe_render_text_html( $this, 'header_site_title', $site_title_classname, $this->get_site_title(), $settings['site_logo_title_tag'] ?? 'h2' );
 				} ?>
 			</a>
 		</div>
@@ -656,10 +656,10 @@ abstract class Ehp_Widget_Base extends Widget_Base {
 	}
 
 	public function maybe_add_advanced_attributes() {
-		$this->settings = $this->get_settings_for_display();
+		$settings = $this->get_settings_for_display();
 
-		$advanced_css_id = $this->settings['advanced_custom_css_id'];
-		$advanced_css_classes = $this->settings['advanced_custom_css_classes'];
+		$advanced_css_id = $settings['advanced_custom_css_id'];
+		$advanced_css_classes = $settings['advanced_custom_css_classes'];
 
 		$wrapper_render_attributes = [];
 		if ( ! empty( $advanced_css_classes ) ) {

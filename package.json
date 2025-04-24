@@ -15,6 +15,7 @@
 		"package:zip": "npm run package && zip -r $npm_package_name.$npm_package_version.zip ./$npm_package_name/*",
 		"test:php": "docker-compose -f bin/docker-compose.yml run --rm wordpress_phpunit phpunit",
 		"test:playwright": "playwright test -c tests/playwright/playwright.config.ts",
+		"test:playwright:headless": "CI=1 playwright test -c tests/playwright/playwright.config.ts",
 		"test:playwright:debug": "npm run test:playwright -- --debug",
 		"test:setup:playwright": "wp-env run cli bash hello-plus-config/setup.sh && wp-env run tests-cli bash hello-plus-config/setup.sh",
 		"test:setup:chromium": "npx playwright install chromium"

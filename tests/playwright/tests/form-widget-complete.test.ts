@@ -1,4 +1,16 @@
-// form-widget-frontend.test.ts
+/* eslint-disable no-console */
+/**
+ * Form Widget Test Suite
+ *
+ * End-to-end tests for the Form Lite widget functionality in Hello Plus.
+ * This file contains tests for form creation, submission, and validation.
+ *
+ * The tests use a sequential approach:
+ * 1. Setting up a test page with a form widget
+ * 2. Testing form submission functionality
+ * 3. Testing form validation behavior
+ *
+ */
 import { parallelTest as test } from '../parallelTest';
 import { expect } from '@playwright/test';
 import WidgetSetup from '../utils/widget-setup';
@@ -10,7 +22,16 @@ import { WindowType } from '../types/types';
 // File to store page URL (simple solution for sharing data between tests)
 const urlStorePath = path.join( __dirname, '..', 'temp-form-page-url.txt' );
 
-// Setup function that runs first due to @setup tag
+/**
+ * Initial setup test that creates a test page with a Form Lite widget
+ *
+ * This test:
+ * - Creates a new WordPress page via API
+ * - Adds a Form Lite widget to the page
+ * - Publishes the page and saves its URL for other tests to use
+ * - Verifies the page was created correctly
+ *
+ */
 test( 'Create test page with form @setup', async ( { page, apiRequests }, testInfo ) => {
 	const widgetSetup = new WidgetSetup( page, testInfo, apiRequests );
 	const pageData = await widgetSetup.createTestPageWithWidget( 'Form Lite' );
@@ -39,7 +60,16 @@ const getPageUrl = () => {
 	}
 };
 
-// Update the FormPage to use proper selectors that match your actual form
+/**
+ * Tests that the form is visible and functional on the frontend
+ *
+ * This test:
+ * - Navigates to the previously created page
+ * - Fills out the form with test data
+ * - Monitors form submission through multiple channels (AJAX, events, HTML state)
+ * - Verifies either a success message or an acceptable error message is displayed
+ * - Provides detailed logging of all form submission criteria
+ */
 test( 'Form should be visible and functional on frontend', async ( { page }, testInfo ) => {
 	const pageUrl = getPageUrl();
 	expect( pageUrl ).toBeTruthy();
@@ -160,19 +190,46 @@ test( 'Form should be visible and functional on frontend', async ( { page }, tes
 		ajaxRequested ||
 		serverErrorVisible;
 
-	console.log( `Test success conditions:
-		- Success message visible: ${ successVisible }
-		- Form submit detected via AJAX: ${ formSubmitDetected }
-		- Form submit detected via client event: ${ formWasSubmitted }
-		- Form error detected: ${ formErrorDetected }
-		- Form attempted submission (HTML): ${ formAttemptedSubmission }
-		- AJAX request made: ${ ajaxRequested }
-		- Server error visible: ${ serverErrorVisible }
-	` );
-
 	expect( testSuccessful ).toBeTruthy();
+
+	const successOrAcceptableError = await formPage.hasSuccessMessageOrAcceptableError();
+
+// Define which conditions are expected to pass or fail
+	const expectations = {
+		successOrAcceptableError: true,
+		formSubmitDetected: false, // Expected to be false
+		formWasSubmitted: true,
+		formErrorDetected: false, // Expected to be false
+		formAttemptedSubmission: true,
+		ajaxRequested: true,
+		serverErrorVisible: true,
+	};
+
+// Create colored output with checkmarks/x based on expectations
+	console.log( `Test success conditions:
+  - ${ successOrAcceptableError === expectations.successOrAcceptableError ? '\x1b[32m✓\x1b[0m' : '\x1b[31m✘\x1b[0m' } Success message or acceptable error: ${ successOrAcceptableError }
+  - ${ formSubmitDetected === expectations.formSubmitDetected ? '\x1b[32m✓\x1b[0m' : '\x1b[31m✘\x1b[0m' } Form submit detected via AJAX: ${ formSubmitDetected }
+  - ${ formWasSubmitted === expectations.formWasSubmitted ? '\x1b[32m✓\x1b[0m' : '\x1b[31m✘\x1b[0m' } Form submit detected via client event: ${ formWasSubmitted }
+  - ${ formErrorDetected === expectations.formErrorDetected ? '\x1b[32m✓\x1b[0m' : '\x1b[31m✘\x1b[0m' } Form error detected: ${ formErrorDetected }
+  - ${ formAttemptedSubmission === expectations.formAttemptedSubmission ? '\x1b[32m✓\x1b[0m' : '\x1b[31m✘\x1b[0m' } Form attempted submission (HTML): ${ formAttemptedSubmission }
+  - ${ ajaxRequested === expectations.ajaxRequested ? '\x1b[32m✓\x1b[0m' : '\x1b[31m✘\x1b[0m' } AJAX request made: ${ ajaxRequested }
+  - ${ serverErrorVisible === expectations.serverErrorVisible ? '\x1b[32m✓\x1b[0m' : '\x1b[31m✘\x1b[0m' } Server error visible: ${ serverErrorVisible }
+` );
+
+	expect( successOrAcceptableError ).toBeTruthy();
 } );
 
+/**
+ * Tests the form validation functionality
+ *
+ * This test:
+ * - Navigates to the form page
+ * - Attempts to submit an empty form
+ * - Verifies validation errors appear
+ * - Fills out only partial information
+ * - Verifies validation errors still occur with incomplete information
+ * - Takes screenshots at each stage for debugging purposes
+ */
 test( 'Form validation should work properly', async ( { page }, testInfo ) => {
 	const pageUrl = getPageUrl();
 	expect( pageUrl ).toBeTruthy();

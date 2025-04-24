@@ -63,11 +63,9 @@ class Theme_Overrides {
 		if ( ! Utils::elementor()->preview->is_preview_mode() ) {
 			switch ( $location ) {
 				case 'header':
-					return Ehp_Header::are_multiple_post_published();
-
+					return 0 >= Ehp_Header::get_published_post_count() ? $display : false;
 				case 'footer':
-					return Ehp_Footer::are_multiple_post_published();
-
+					return 0 >= Ehp_Footer::get_published_post_count() ? $display : false;
 				default:
 					return $display;
 			}
@@ -84,7 +82,6 @@ class Theme_Overrides {
 	}
 
 	public function __construct() {
-		add_filter( 'hello-plus-theme/settings/header_footer', '__return_false' );
 		add_filter( 'hello-plus-theme/settings/hello_theme', '__return_false' );
 		add_filter( 'hello-plus-theme/settings/hello_style', '__return_false' );
 		add_filter( 'hello-plus-theme/customizer/enable', Setup_Wizard::has_site_wizard_been_completed() ? '__return_false' : '__return_true' );

@@ -101,10 +101,20 @@ export default class FormPage extends BasePage {
 
 			// Clean and format the error message
 			const cleanText = errorText
+				// First convert all HTML entity codes
+				.replace( /&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});/ig, ' ' )
+				// Replace <br> tags with newlines
 				.replace( /<br\s*\/?>/gi, '\n' )
+				// Add newlines before divs
 				.replace( /<div[^>]*>/gi, '\n' )
+				// Remove all HTML tags
 				.replace( /<[^>]*>/g, '' )
+				// Remove potential script insertion points
+				.replace( /javascript:/gi, '' )
+				.replace( /data:/gi, '' )
+				// Replace multiple spaces with a single space
 				.replace( /\s{2,}/g, ' ' )
+				// Clean up lines
 				.split( '\n' )
 				.map( ( line ) => line.trim() )
 				.filter( ( line ) => line.length > 0 )

@@ -84,13 +84,6 @@ export default class FormPage extends BasePage {
 			}
 		}
 
-		// If no success message is found, check if there's an error message
-		// This helps with debugging
-		const errorMessage = this.page.locator( '.elementor-message-danger' );
-		if ( await errorMessage.count() > 0 && await errorMessage.isVisible() ) {
-			console.log( 'Error message found instead of success:', await errorMessage.textContent() );
-		}
-
 		return false;
 	}
 
@@ -102,11 +95,27 @@ export default class FormPage extends BasePage {
 		}
 
 		// If we don't have success, check if we have an email-specific error that we can accept
-		// This error is expected in test environments with no email configuration
 		const errorMessage = this.page.locator( '.elementor-message-danger' );
 		if ( await errorMessage.count() > 0 && await errorMessage.isVisible() ) {
 			const errorText = await errorMessage.textContent() || '';
-			console.log( 'Found error message:', errorText );
+
+			// Clean and format the error message
+			const cleanText = errorText
+				.replace( /<br\s*\/?>/gi, '\n' )
+				.replace( /<div[^>]*>/gi, '\n' )
+				.replace( /<[^>]*>/g, '' )
+				.replace( /\s{2,}/g, ' ' )
+				.split( '\n' )
+				.map( ( line ) => line.trim() )
+				.filter( ( line ) => line.length > 0 )
+				.join( '\n' );
+
+			// Display the formatted error
+			console.log( 'Error message found instead of success:' );
+			console.log( '\n' +
+				'┄'.repeat( 60 ) + '\n' +
+				cleanText + '\n' +
+				'┄'.repeat( 60 ) );
 
 			// If the error is specifically about email sending, consider this acceptable
 			if ( errorText.includes( 'server error' ) && errorText.includes( 'Email' ) ) {

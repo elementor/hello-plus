@@ -100,25 +100,42 @@ export default class FormPage extends BasePage {
 			const errorText = await errorMessage.textContent() || '';
 
 			// Clean and format the error message
-			const cleanText = errorText
-				// First convert all HTML entity codes
-				.replace( /&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});/ig, ' ' )
-				// Replace <br> tags with newlines
-				.replace( /<br\s*\/?>/gi, '\n' )
-				// Add newlines before divs
-				.replace( /<div[^>]*>/gi, '\n' )
-				// Remove all HTML tags
-				.replace( /<[^>]*>/g, '' )
-				// Remove potential script insertion points
-				.replace( /javascript:/gi, '' )
-				.replace( /data:/gi, '' )
-				// Replace multiple spaces with a single space
-				.replace( /\s{2,}/g, ' ' )
-				// Clean up lines
-				.split( '\n' )
-				.map( ( line ) => line.trim() )
-				.filter( ( line ) => line.length > 0 )
-				.join( '\n' );
+			// Clean and format the error message
+			const cleanText = ( () => {
+				// Make a copy of the original text
+				let text = errorText;
+
+				// Define patterns that should be repeatedly removed until stable
+				const dangerousPatterns = [
+					/&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});/ig, // HTML entities
+					/<[^>]*>/g, // HTML tags
+					/javascript:/gi, // JavaScript protocol
+					/data:/gi, // Data protocol
+					/on\w+\s*=/gi, // Event handlers (onclick, etc.)
+				];
+
+				// First replace <br> and <div> with newlines (for formatting)
+				text = text.replace( /<br\s*\/?>/gi, '\n' ).replace( /<div[^>]*>/gi, '\n' );
+
+				// Apply dangerous pattern removal repeatedly until the string stabilizes
+				let prevText;
+				do {
+					prevText = text;
+
+					// Apply each dangerous pattern
+					for ( const pattern of dangerousPatterns ) {
+						text = text.replace( pattern, ' ' );
+					}
+				} while ( text !== prevText ); // Continue until no more changes
+
+				// Final formatting
+				return text
+					.replace( /\s{2,}/g, ' ' )
+					.split( '\n' )
+					.map( ( line ) => line.trim() )
+					.filter( ( line ) => line.length > 0 )
+					.join( '\n' );
+			} )();
 
 			// Display the formatted error
 			console.log( 'Error message found instead of success:' );

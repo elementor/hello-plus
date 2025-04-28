@@ -15,7 +15,7 @@ class Notificator {
 	}
 
 	public function __construct() {
-		if ( ! class_exists( 'Elementor\WPNotificationsPackage\V110\Notifications' ) ) {
+		if ( ! class_exists( 'Elementor\WPNotificationsPackage\V120\Notifications' ) ) {
 			require_once HELLOPLUS_PATH . '/vendor/autoload.php';
 		}
 

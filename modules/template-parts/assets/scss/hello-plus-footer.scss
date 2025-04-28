@@ -189,6 +189,10 @@
 
 	&__contact-information {
 		color: var(--footer-contact-information-color);
+
+		&.pen.elementor-inline-editing {
+			white-space: normal;
+		}
 	}
 
 	&__menu {

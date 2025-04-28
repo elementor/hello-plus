@@ -5,7 +5,6 @@ node_modules/
 build/
 log/
 vendor/
-composer.lock
 .DS_Store
 .project
 Thumbs.db

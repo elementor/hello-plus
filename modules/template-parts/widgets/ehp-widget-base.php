@@ -219,6 +219,28 @@ abstract class Ehp_Widget_Base extends Widget_Base {
 	}
 
 	public function add_style_brand_controls( $widget_name ) {
+		$this->add_control(
+			'style_logo_heading',
+			[
+				'label' => esc_html__( 'Logo', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+				'condition' => [
+					'site_logo_brand_select' => 'logo',
+				],
+			]
+		);
+
+		$this->add_control(
+			'style_title_heading',
+			[
+				'label' => esc_html__( 'Site Name', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+				'condition' => [
+					'site_logo_brand_select' => 'title',
+				],
+			]
+		);
+
 		$this->add_responsive_control(
 			'style_logo_width',
 			[
@@ -249,17 +271,6 @@ abstract class Ehp_Widget_Base extends Widget_Base {
 				],
 				'condition' => [
 					'site_logo_brand_select' => 'logo',
-				],
-			]
-		);
-
-		$this->add_control(
-			'style_title_heading',
-			[
-				'label' => esc_html__( 'Site Name', 'hello-plus' ),
-				'type' => Controls_Manager::HEADING,
-				'condition' => [
-					'site_logo_brand_select' => 'title',
 				],
 			]
 		);

@@ -78,11 +78,13 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 	protected function register_controls(): void {
 		$this->add_content_section();
 		$this->add_style_section();
+		$this->add_advanced_tab();
 	}
 
 	public function add_content_section(): void {
 		$this->add_content_layout_section();
 		$this->add_content_business_details_section();
+		$this->add_content_copyright_section();
 	}
 
 	public function add_content_layout_section(): void {
@@ -184,6 +186,27 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 
 		$this->add_group_controls( '4' );
 
+		$this->add_control(
+			'subheading_tag',
+			[
+				'label' => esc_html__( 'Subheading HTML Tag', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => 'H1',
+					'h2' => 'H2',
+					'h3' => 'H3',
+					'h4' => 'H4',
+					'h5' => 'H5',
+					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'p' => 'p',
+				],
+				'default' => 'h6',
+				'separator' => 'before',
+			]
+		);
+
 		$this->end_controls_section();
 	}
 
@@ -253,6 +276,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				],
 				'condition' => array_merge( $group_condition, [
 					'group_' . $group_number . '_type' => 'navigation-links',
+					'layout_preset_select' => 'info_hub',
 				] ),
 				'separator' => 'before',
 			]
@@ -317,6 +341,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				],
 				'condition' => array_merge( $group_condition, [
 					'group_' . $group_number . '_type' => 'contact-links',
+					'layout_preset_select' => 'info_hub',
 				] ),
 			]
 		);
@@ -380,6 +405,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				],
 				'condition' => array_merge( $group_condition, [
 					'group_' . $group_number . '_type' => 'text',
+					'layout_preset_select' => 'info_hub',
 				] ),
 			]
 		);
@@ -415,6 +441,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				],
 				'condition' => array_merge( $group_condition, [
 					'group_' . $group_number . '_type' => 'social-links',
+					'layout_preset_select' => 'info_hub',
 				] ),
 			]
 		);
@@ -507,9 +534,851 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 		);
 	}
 
+	public function add_content_copyright_section(): void {
+		$this->start_controls_section(
+			'section_copyright',
+			[
+				'label' => esc_html__( 'Copyright', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		// "Current Year" switch
+		$this->add_control(
+			'current_year_switcher',
+			[
+				'label' => esc_html__( 'Current Year', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Show', 'hello-plus' ),
+				'label_off' => esc_html__( 'Hide', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'yes',
+			]
+		);
+
+		$this->add_control(
+			'copyright_text',
+			[
+				'label' => esc_html__( 'Statement', 'hello-plus' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => esc_html__( 'All rights reserved.', 'hello-plus' ),
+				'placeholder' => esc_html__( 'Type your text here', 'hello-plus' ),
+				'label_block' => true,
+				'ai' => [
+					'active' => true,
+				],
+				'dynamic' => [
+					'active' => true,
+				],
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
 	public function add_style_section(): void {
-		// Add your style controls here
+		$this->add_style_layout_section();
+		$this->add_style_subheadings_section();
+		$this->add_style_business_details_section();
+		$this->add_style_copyright_section();
+		$this->add_box_style_section();
+	}
+
+	public function add_style_layout_section(): void {
+		$this->start_controls_section(
+			'section_style_layout',
+			[
+				'label' => esc_html__( 'Layout', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'style_business_details_heading',
+			[
+				'label' => esc_html__( 'Business Details', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+				'condition' => [
+					'layout_preset_select' => 'info_hub',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'style_layout_columns',
+			[
+				'label' => esc_html__( 'Columns', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => '4',
+				'options' => [
+					'1' => esc_html__( '1', 'hello-plus' ),
+					'2' => esc_html__( '2', 'hello-plus' ),
+					'3' => esc_html__( '3', 'hello-plus' ),
+					'4' => esc_html__( '4', 'hello-plus' ),
+				],
+				'condition' => [
+					'layout_preset_select' => 'info_hub',
+				],
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .ehp-flex-footer__content' => 'grid-template-columns: repeat({{VALUE}}, 1fr);',
+				// ],
+			]
+		);
+
+		$this->add_responsive_control(
+			'style_layout_gaps',
+			[
+				'label' => esc_html__( 'Gaps', 'hello-plus' ),
+				'type' => Controls_Manager::GAPS,
+				'default' => [
+					'row' => '60',
+					'column' => '40',
+					'unit' => 'px',
+				],
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
+				'condition' => [
+					'layout_preset_select' => 'info_hub',
+				],
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .ehp-flex-footer__content' => '--flex-footer-row-gap: {{ROW}}{{UNIT}}; --flex-footer-column-gap: {{COLUMN}}{{UNIT}};',
+				// ],
+			]
+		);
+
+		$this->add_control(
+			'style_layout_align_center_mobile',
+			[
+				'label' => esc_html__( 'Align Center on Mobile', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+				'separator' => 'before',
+				'condition' => [
+					'layout_preset_select' => 'info_hub',
+				],
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .ehp-flex-footer__content' => '--flex-footer-mobile-align: {{VALUE}};',
+				// ],
+			]
+		);
+
+		$this->add_responsive_control(
+			'style_layout_content_alignment',
+			[
+				'label' => esc_html__( 'Content Alignment', 'hello-plus' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'start' => [
+						'title' => esc_html__( 'Start', 'hello-plus' ),
+						'icon' => 'eicon-align-start-h',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'hello-plus' ),
+						'icon' => 'eicon-align-center-h',
+					],
+				],
+				'default' => 'start',
+				'condition' => [
+					'layout_preset_select' => 'quick_reference',
+				],
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .ehp-flex-footer__content' => 'justify-content: {{VALUE}};',
+				// ],
+			]
+		);
+
+		$this->add_responsive_control(
+			'style_layout_content_width',
+			[
+				'label' => esc_html__( 'Content Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
+				'range' => [
+					'%' => [
+						'min' => 1,
+						'max' => 100,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 100,
+					'unit' => '%',
+				],
+				'condition' => [
+					'layout_preset_select' => 'quick_reference',
+				],
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .ehp-flex-footer__content' => 'max-width: {{SIZE}}{{UNIT}};',
+				// ],
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
+	public function add_style_subheadings_section(): void {
+		$this->start_controls_section(
+			'section_style_subheadings',
+			[
+				'label' => esc_html__( 'Subheadings', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'style_subheadings_color',
+			[
+				'label' => esc_html__( 'Text Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-subheading-color: {{VALUE}}',
+				// ],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'style_subheadings_typography',
+				'label' => esc_html__( 'Typography', 'hello-plus' ),
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_TEXT,
+				],
+				// 'selector' => '{{WRAPPER}} .ehp-flex-footer__subheading',
+			]
+		);
+
+		$this->add_responsive_control(
+			'style_subheadings_spacing',
+			[
+				'label' => esc_html__( 'Spacing', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
+				'range' => [
+					'px' => [
+						'min' => 1,
+						'max' => 50,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 20,
+					'unit' => 'px',
+				],
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-subheading-spacing: {{SIZE}}{{UNIT}};',
+				// ],
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
+	public function add_style_business_details_section(): void {
+		$this->start_controls_section(
+			'section_style_business_details',
+			[
+				'label' => esc_html__( 'Business Details', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_style_brand_controls( 'flex-footer' );
+
+		$this->add_control(
+			'style_business_details_description_heading',
+			[
+				'label' => esc_html__( 'Descriptions', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'style_business_details_description_color',
+			[
+				'label' => esc_html__( 'Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-description-color: {{VALUE}}',
+				// ],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'style_business_details_description_typography',
+				'label' => esc_html__( 'Typography', 'hello-plus' ),
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_TEXT,
+				],
+				// 'selector' => '{{WRAPPER}} .ehp-flex-footer__description',
+			]
+		);
+
+		$this->add_responsive_control(
+			'style_business_details_description_max_width',
+			[
+				'label' => esc_html__( 'Max Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
+				'range' => [
+					'px' => [
+						'min' => 1,
+						'max' => 1000,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 100,
+					'unit' => '%',
+				],
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .ehp-flex-footer__description' => 'max-width: {{SIZE}}{{UNIT}};',
+				// ],
+			]
+		);
+
+		$this->add_control(
+			'style_business_details_links_heading',
+			[
+				'label' => esc_html__( 'Links', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+				'conditions' => $this->get_conditions_by_type_value( 'contact-links' ),
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'style_business_details_links_typography',
+				'label' => esc_html__( 'Typography', 'hello-plus' ),
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_TEXT,
+				],
+				'conditions' => $this->get_conditions_by_type_value( 'contact-links' ),
+				// 'selector' => '{{WRAPPER}} .ehp-flex-footer__link',
+			]
+		);
+
+		$this->start_controls_tabs(
+			'style_business_details_links_tabs',
+			[
+				'conditions' => $this->get_conditions_by_type_value( 'contact-links' ),
+			]
+		);
+
+		$this->start_controls_tab(
+			'style_business_details_links_normal_tab',
+			[
+				'label' => esc_html__( 'Normal', 'hello-plus' ),
+			]
+		);
+
+		$this->add_control(
+			'style_business_details_links_color',
+			[
+				'label' => esc_html__( 'Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .ehp-flex-footer__link' => 'color: {{VALUE}}',
+				// ],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'style_business_details_links_hover_tab',
+			[
+				'label' => esc_html__( 'Hover', 'hello-plus' ),
+			]
+		);
+
+		$this->add_control(
+			'style_business_details_links_hover_color',
+			[
+				'label' => esc_html__( 'Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .ehp-flex-footer__link:hover' => 'color: {{VALUE}}',
+				// ],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_control(
+			'style_business_details_icons_heading',
+			[
+				'label' => esc_html__( 'Icons', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+				'conditions' => $this->get_conditions_by_type_value( 'social-links' ),
+			]
+		);
+
+		$this->add_responsive_control(
+			'style_business_details_icons_alignment',
+			[
+				'label' => esc_html__( 'Alignment', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'horizontal' => esc_html__( 'Horizontal', 'hello-plus' ),
+					'vertical' => esc_html__( 'Vertical', 'hello-plus' ),
+				],
+				'default' => 'horizontal',
+				'conditions' => [
+					'relation' => 'and',
+					'terms' => [
+						$this->get_conditions_by_type_value( 'social-links' ),
+						[
+							'name' => 'layout_preset_select',
+							'operator' => '===',
+							'value' => 'info_hub',
+						],
+					],
+				],
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .ehp-flex-footer__social-icons' => '--flex-footer-icons-alignment: {{VALUE}};',
+				// ],
+			]
+		);
+
+		$this->add_responsive_control(
+			'style_business_details_icons_size',
+			[
+				'label' => esc_html__( 'Size', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
+				'range' => [
+					'px' => [
+						'min' => 1,
+						'max' => 50,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 20,
+					'unit' => 'px',
+				],
+				'conditions' => $this->get_conditions_by_type_value( 'social-links' ),
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .ehp-flex-footer__social-icon' => 'font-size: {{SIZE}}{{UNIT}};',
+				// ],
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
+	public function add_style_copyright_section(): void {
+		// Copyright Section
+		$this->start_controls_section(
+			'copyright_style_section',
+			[
+				'label' => esc_html__( 'Copyright', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'style_copyright_typography',
+				'label' => esc_html__( 'Typography', 'hello-plus' ),
+				'global' => [
+					'default' => Global_Typography::TYPOGRAPHY_TEXT,
+				],
+				// 'selector' => '{{WRAPPER}} .ehp-flex-footer__copyright',
+			]
+		);
+
+		$this->add_control(
+			'style_copyright_color',
+			[
+				'label' => esc_html__( 'Text Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .ehp-flex-footer__copyright' => 'color: {{VALUE}}',
+				// ],
+			]
+		);
+
+		$this->add_responsive_control(
+			'style_copyright_alignment',
+			[
+				'label' => esc_html__( 'Alignment', 'hello-plus' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'start' => [
+						'title' => esc_html__( 'Left', 'hello-plus' ),
+						'icon' => 'eicon-align-start-h',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'hello-plus' ),
+						'icon' => 'eicon-align-center-h',
+					],
+					'end' => [
+						'title' => esc_html__( 'Right', 'hello-plus' ),
+						'icon' => 'eicon-align-end-h',
+					],
+				],
+				'default' => 'start',
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .ehp-flex-footer__copyright' => 'text-align: {{VALUE}};',
+				// ],
+			]
+		);
+
+		$this->add_responsive_control(
+			'style_copyright_separator',
+			[
+				'label' => esc_html__( 'Copyright Separator', 'hello-plus' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'hello-plus' ),
+					'divider' => esc_html__( 'Divider', 'hello-plus' ),
+					'background' => esc_html__( 'Background', 'hello-plus' ),
+				],
+				'default' => 'none',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'style_copyright_separator_width',
+			[
+				'label' => esc_html__( 'Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
+				'range' => [
+					'px' => [
+						'min' => 1,
+						'max' => 10,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 1,
+					'unit' => 'px',
+				],
+				'condition' => [
+					'style_copyright_separator' => 'divider',
+				],
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .ehp-flex-footer__copyright-separator' => 'border-width: {{SIZE}}{{UNIT}};',
+				// ],
+			]
+		);
+
+		$this->add_control(
+			'style_copyright_separator_color',
+			[
+				'label' => esc_html__( 'Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
+				'condition' => [
+					'style_copyright_separator' => 'divider',
+				],
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .ehp-flex-footer__copyright-separator' => 'border-color: {{VALUE}};',
+				// ],
+			]
+		);
+
+		$this->add_control(
+			'style_copyright_separator_background_type',
+			[
+				'label' => esc_html__( 'Background Type', 'hello-plus' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'classic' => [
+						'title' => esc_html__( 'Classic', 'hello-plus' ),
+						'icon' => 'eicon-paint-brush',
+					],
+					'gradient' => [
+						'title' => esc_html__( 'Gradient', 'hello-plus' ),
+						'icon' => 'eicon-background-gradient',
+					],
+				],
+				'default' => 'classic',
+				'condition' => [
+					'style_copyright_separator' => 'background',
+				],
+			]
+		);
+
+		$this->add_control(
+			'style_copyright_separator_background_color',
+			[
+				'label' => esc_html__( 'Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#F6F7F8',
+				'condition' => [
+					'style_copyright_separator' => 'background',
+					'style_copyright_separator_background_type' => 'classic',
+				],
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .ehp-flex-footer__copyright-separator' => 'background-color: {{VALUE}};',
+				// ],
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
+	public function add_box_style_section(): void {
+		// Box Section
+		$this->start_controls_section(
+			'box_style_section',
+			[
+				'label' => esc_html__( 'Box', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
+			[
+				'name' => 'style_box_background',
+				'label' => esc_html__( 'Background', 'hello-plus' ),
+				// 'selector' => '{{WRAPPER}} .ehp-flex-footer',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
+			[
+				'name' => 'style_box_background_overlay',
+				'label' => esc_html__( 'Background Overlay', 'hello-plus' ),
+				'separator' => 'before',
+				// 'selector' => '{{WRAPPER}} .ehp-flex-footer__overlay',
+			]
+		);
+
+		$this->add_responsive_control(
+			'style_box_element_spacing',
+			[
+				'label' => esc_html__( 'Element Spacing', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 20,
+					'unit' => 'px',
+				],
+				'separator' => 'before',
+				'condition' => [
+					'layout_preset_select' => 'quick_reference',
+				],
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .ehp-flex-footer__business-details-group' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				// ],
+			]
+		);
+
+
+		$this->add_responsive_control(
+			'style_box_gap',
+			[
+				'label' => esc_html__( 'Gap', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
+				'separator' => 'before',
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 200,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 60,
+					'unit' => 'px',
+				],
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-gap: {{SIZE}}{{UNIT}};',
+				// ],
+			]
+		);
+
+		$this->add_control(
+			'style_box_border',
+			[
+				'label' => esc_html__( 'Border', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
+				'label_off' => esc_html__( 'No', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+				'separator' => 'before',
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .ehp-flex-footer' => 'border-style: solid;',
+				// ],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'style_box_shadow',
+				'label' => esc_html__( 'Box Shadow', 'hello-plus' ),
+				// 'selector' => '{{WRAPPER}} .ehp-flex-footer',
+			]
+		);
+
+		$this->add_responsive_control(
+			'style_box_padding',
+			[
+				'label' => esc_html__( 'Padding', 'hello-plus' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
+				'separator' => 'before',
+				'default' => [
+					'top' => 100,
+					'right' => 100,
+					'bottom' => 100,
+					'left' => 100,
+					'unit' => 'px',
+				],
+				'tablet_default' => [
+					'top' => 60,
+					'right' => 60,
+					'bottom' => 60,
+					'left' => 60,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'top' => 32,
+					'right' => 32,
+					'bottom' => 32,
+					'left' => 32,
+					'unit' => 'px',
+				],
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .ehp-flex-footer' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				// ],
+			]
+		);
+
+		$this->add_responsive_control(
+			'style_box_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
+				'range' => [
+					'px' => [
+						'min' => 1,
+						'max' => 10,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 1,
+					'unit' => 'px',
+				],
+				'condition' => [
+					'style_box_border' => 'yes',
+				],
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .ehp-flex-footer' => 'border-width: {{SIZE}}{{UNIT}};',
+				// ],
+			]
+		);
+
+		$this->add_control(
+			'style_box_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_TEXT,
+				],
+				'condition' => [
+					'style_box_border' => 'yes',
+				],
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .ehp-flex-footer' => 'border-color: {{VALUE}};',
+				// ],
+			]
+		);
+
+		$this->end_controls_section();
 	}
 
 	public function add_custom_advanced_sections(): void {}
+
+	protected function get_conditions_by_type_value( $type_value ): array {
+		return [
+			'relation' => 'or',
+			'terms' => [
+				[
+					'name' => 'group_2_type',
+					'operator' => '===',
+					'value' => $type_value,
+				],
+				[
+					'relation' => 'and',
+					'terms' => [
+						[
+							'name' => 'group_3_type',
+							'operator' => '===',
+							'value' => $type_value,
+						],
+						[
+							'name' => 'group_3_switcher',
+							'operator' => '===',
+							'value' => 'yes',
+						],
+					],
+				],
+				[
+					'relation' => 'and',
+					'terms' => [
+						[
+							'name' => 'group_4_type',
+							'operator' => '===',
+							'value' => $type_value,
+						],
+						[
+							'name' => 'group_4_switcher',
+							'operator' => '===',
+							'value' => 'yes',
+						],
+					],
+				],
+			],
+		];
+	}
 }

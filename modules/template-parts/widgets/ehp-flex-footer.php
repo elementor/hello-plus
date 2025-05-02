@@ -34,9 +34,13 @@ use HelloPlus\Classes\{
 	Ehp_Social_Platforms,
 };
 
+use HelloPlus\Modules\Content\Traits\Widget_Repeater_Editable;
+
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
 class Ehp_Flex_Footer extends Ehp_Widget_Base {
+
+	use Widget_Repeater_Editable;
 
 	public function get_name(): string {
 		return 'ehp-flex-footer';
@@ -63,7 +67,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 			? parent::get_style_depends()
 			: [ 'elementor-icons-fa-solid', 'elementor-icons-fa-brands', 'elementor-icons-fa-regular' ];
 
-		$style_depends[] = 'helloplus-footer';
+		$style_depends[] = 'helloplus-flex-footer';
 		$style_depends[] = 'e-apple-webkit';
 
 		return $style_depends;
@@ -71,6 +75,28 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 
 	protected function render(): void {
 		$render_strategy = new Widget_Flex_Footer_Render( $this );
+
+		
+		$this->add_inline_editing_attributes( 'group_1_business_details_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_1_business_details_description', 'none' );
+		
+		$this->add_inline_editing_attributes( 'group_2_navigation_links_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_2_text_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_2_text_textarea', 'none' );
+		$this->add_inline_editing_attributes( 'group_2_contact_links_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_2_social_links_subheading', 'none' );
+		
+		$this->add_inline_editing_attributes( 'group_3_navigation_links_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_3_text_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_3_text_textarea', 'none' );
+		$this->add_inline_editing_attributes( 'group_3_contact_links_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_3_social_links_subheading', 'none' );
+		
+		$this->add_inline_editing_attributes( 'group_4_navigation_links_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_4_text_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_4_text_textarea', 'none' );
+		$this->add_inline_editing_attributes( 'group_4_contact_links_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'group_4_social_links_subheading', 'none' );
 
 		$render_strategy->render();
 	}
@@ -143,7 +169,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 		$this->add_content_brand_controls();
 
 		$this->add_control(
-			'business_details_subheading',
+			'group_1_business_details_subheading',
 			[
 				'label' => esc_html__( 'Subheading', 'hello-plus' ),
 				'type' => Controls_Manager::TEXT,
@@ -164,12 +190,13 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 		);
 
 		$this->add_control(
-			'business_details_description',
+			'group_1_business_details_description',
 			[
 				'label' => esc_html__( 'Description', 'hello-plus' ),
 				'type' => Controls_Manager::TEXTAREA,
 				'rows' => 6,
-				'placeholder' => esc_html__( 'Helping your business stand out with thoughtful details that drive action.', 'hello-plus' ),
+				'default' => esc_html__( 'Helping your business stand out with thoughtful details that drive action.', 'hello-plus' ),
+				'placeholder' => esc_html__( 'Enter your text here.', 'hello-plus' ),
 				'separator' => 'before',
 				'dynamic' => [
 					'active' => true,
@@ -261,7 +288,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 
 	public function add_navigation_links_controls( $group_number, $group_condition ): void {
 		$this->add_control(
-			$group_number . 'navigation_links_subheading',
+			'group_' . $group_number . '_navigation_links_subheading',
 			[
 				'label' => esc_html__( 'Subheading', 'hello-plus' ),
 				'type' => Controls_Manager::TEXT,
@@ -329,7 +356,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 
 	protected function add_contact_links_controls( $group_number, $group_condition ) {
 		$this->add_control(
-			'group_' . $group_number . '_links_subheading',
+			'group_' . $group_number . '_contact_links_subheading',
 			[
 				'label' => esc_html__( 'Subheading', 'hello-plus' ),
 				'type' => Controls_Manager::TEXT,
@@ -429,7 +456,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 
 	protected function add_social_links_controls( $group_number, $group_condition ) {
 		$this->add_control(
-			'group_' . $group_number . '_social_subheading',
+			'group_' . $group_number . '_social_links_subheading',
 			[
 				'label' => esc_html__( 'Subheading', 'hello-plus' ),
 				'type' => Controls_Manager::TEXT,
@@ -543,7 +570,6 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 			]
 		);
 
-		// "Current Year" switch
 		$this->add_control(
 			'current_year_switcher',
 			[
@@ -854,7 +880,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'label' => esc_html__( 'Links', 'hello-plus' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
-				'conditions' => $this->get_conditions_by_type_value( 'contact-links' ),
+				// 'conditions' => $this->get_conditions_by_type_value( 'contact-links' ),
 			]
 		);
 
@@ -866,7 +892,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
-				'conditions' => $this->get_conditions_by_type_value( 'contact-links' ),
+				// 'conditions' => $this->get_conditions_by_type_value( 'contact-links' ),
 				// 'selector' => '{{WRAPPER}} .ehp-flex-footer__link',
 			]
 		);
@@ -874,7 +900,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 		$this->start_controls_tabs(
 			'style_business_details_links_tabs',
 			[
-				'conditions' => $this->get_conditions_by_type_value( 'contact-links' ),
+				// 'conditions' => $this->get_conditions_by_type_value( 'contact-links' ),
 			]
 		);
 
@@ -893,9 +919,9 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'global' => [
 					'default' => Global_Colors::COLOR_SECONDARY,
 				],
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .ehp-flex-footer__link' => 'color: {{VALUE}}',
-				// ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-link-color: {{VALUE}}',
+				],
 			]
 		);
 
@@ -916,9 +942,17 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'global' => [
 					'default' => Global_Colors::COLOR_SECONDARY,
 				],
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .ehp-flex-footer__link:hover' => 'color: {{VALUE}}',
-				// ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-link-color-hover: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'style_business_details_links_hover_animation',
+			[
+				'label' => esc_html__( 'Hover Animation', 'hello-plus' ),
+				'type' => Controls_Manager::HOVER_ANIMATION,
 			]
 		);
 
@@ -981,9 +1015,9 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 					'unit' => 'px',
 				],
 				'conditions' => $this->get_conditions_by_type_value( 'social-links' ),
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .ehp-flex-footer__social-icon' => 'font-size: {{SIZE}}{{UNIT}};',
-				// ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-social-icon-size: {{SIZE}}{{UNIT}};',
+				],
 			]
 		);
 
@@ -991,7 +1025,6 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 	}
 
 	public function add_style_copyright_section(): void {
-		// Copyright Section
 		$this->start_controls_section(
 			'copyright_style_section',
 			[

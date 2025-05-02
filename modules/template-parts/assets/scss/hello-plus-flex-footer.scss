@@ -1,5 +1,52 @@
 @import "../../../../assets/dev/scss/variables";
 
 .ehp-flex-footer {
-	// Add your styles here
+
+	&__site-logo,
+	&__site-link img {
+		width: var(--flex-footer-logo-width);
+
+		&.has-border {
+			border: var(--flex-footer-logo-border-width) solid var(--flex-footer-logo-border-color);
+		}
+
+		&.has-shape-custom {
+			--ehp-shapes-border-radius-block-end: var(--flex-footer-logo-border-radius-block-end);
+			--ehp-shapes-border-radius-block-start: var(--flex-footer-logo-border-radius-block-start);
+			--ehp-shapes-border-radius-inline-end: var(--flex-footer-logo-border-radius-inline-end);
+			--ehp-shapes-border-radius-inline-start: var(--flex-footer-logo-border-radius-inline-start);
+		}
+	}
+
+	&__social-link {
+
+		& .ehp-flex-footer__social-icon {
+			transition: $transition;
+			
+			&:is(svg) {
+				fill: var(--flex-footer-link-color);
+				height: var(--flex-footer-social-icon-size);
+				width: var(--flex-footer-social-icon-size);
+			}
+
+			&:is(i) {
+				color: var(--flex-footer-link-color);
+				font-size: var(--flex-footer-social-icon-size);
+			}
+		}
+
+		&:hover,
+		&:focus {
+
+			& .ehp-flex-footer__social-icon {
+				color: var(--flex-footer-link-color-hover);
+				transition: $transition;
+
+				&:is(svg) {
+					fill: var(--flex-footer-link-color-hover);
+					transition: $transition;
+				}
+			}
+		}
+	}
 } 

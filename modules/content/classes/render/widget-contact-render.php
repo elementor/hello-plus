@@ -210,7 +210,7 @@ class Widget_Contact_Render {
 				if ( $ehp_platforms->is_url_link( $contact_link[ 'group_' . $group_number . '_platform' ] ) ) {
 					$ehp_platforms->render_link_attributes( $link, 'contact-link-' . $key );
 				} else {
-					$formatted_link = $ehp_platforms->get_formatted_link( $link, 'contact_icon' );
+					$formatted_link = $ehp_platforms->get_formatted_link( $link, 'group_' . $group_number );
 
 					$this->widget->add_render_attribute( 'contact-link-' . $key, [
 						'href' => $formatted_link,

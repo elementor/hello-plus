@@ -15,6 +15,9 @@ class Admin_Menu_Controller {
 	const SETUP_WIZARD_TRANSIENT_NAME = 'helloplus_redirect_to_setup_wizard';
 
 	public function admin_menu( $parent_slug ) {
+		if ( defined( 'EHP_THEME_SLUG' ) && 'hello-elementor' === EHP_THEME_SLUG ) {
+			return;
+		}
 		$setup_wizard = new Setup_Wizard();
 		$setup_wizard->register_setup_wizard_page( $parent_slug );
 	}

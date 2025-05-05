@@ -49,6 +49,10 @@ class Utils {
 		return defined( 'EHP_THEME_SLUG' );
 	}
 
+	public static function has_hello_elementor_theme(): bool {
+		return defined( 'EHP_THEME_SLUG' ) && ( 'hello-elementor' === EHP_THEME_SLUG );
+	}
+
 	public static function is_elementor_active(): bool {
 		if ( null === self::$elementor_active ) {
 			self::$elementor_active = defined( 'ELEMENTOR_VERSION' );

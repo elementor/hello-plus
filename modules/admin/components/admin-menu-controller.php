@@ -49,7 +49,9 @@ class Admin_Menu_Controller {
 
 	public function __construct() {
 		add_action( 'hello-plus-theme/admin-menu', [ $this, 'admin_menu' ], 10, 1 );
-		add_action( 'hello-plus/activate', [ $this, 'activate' ] );
 		add_action( 'hello-plus/init', [ $this, 'redirect_on_first_activation' ] );
+		if ( ! Utils::has_hello_elementor_theme() ) {
+			add_action( 'hello-plus/activate', [ $this, 'activate' ] );
+		}
 	}
 }

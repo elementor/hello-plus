@@ -1078,7 +1078,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
-				// 'selector' => '{{WRAPPER}} .ehp-flex-footer__copyright',
+				'selector' => '{{WRAPPER}} .ehp-flex-footer__copyright-text',
 			]
 		);
 
@@ -1090,9 +1090,9 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
 				],
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .ehp-flex-footer__copyright' => 'color: {{VALUE}}',
-				// ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-copyright-color: {{VALUE}}',
+				],
 			]
 		);
 
@@ -1116,9 +1116,9 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 					],
 				],
 				'default' => 'start',
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .ehp-flex-footer__copyright' => 'text-align: {{VALUE}};',
-				// ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-copyright-alignment: {{VALUE}};',
+				],
 			]
 		);
 
@@ -1154,12 +1154,12 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 					'size' => 1,
 					'unit' => 'px',
 				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-flex-footer__copyright-wrapper' => 'border-top-width: {{SIZE}}{{UNIT}}; border-top-style: solid;',
+				],
 				'condition' => [
 					'style_copyright_separator' => 'divider',
 				],
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .ehp-flex-footer__copyright-separator' => 'border-width: {{SIZE}}{{UNIT}};',
-				// ],
 			]
 		);
 
@@ -1171,50 +1171,33 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'global' => [
 					'default' => Global_Colors::COLOR_SECONDARY,
 				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-flex-footer__copyright-wrapper' => 'border-top-color: {{VALUE}};',
+				],
 				'condition' => [
 					'style_copyright_separator' => 'divider',
 				],
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .ehp-flex-footer__copyright-separator' => 'border-color: {{VALUE}};',
-				// ],
 			]
 		);
 
-		$this->add_control(
-			'style_copyright_separator_background_type',
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
 			[
-				'label' => esc_html__( 'Background Type', 'hello-plus' ),
-				'type' => Controls_Manager::CHOOSE,
-				'options' => [
-					'classic' => [
-						'title' => esc_html__( 'Classic', 'hello-plus' ),
-						'icon' => 'eicon-paint-brush',
+				'name' => 'background',
+				'types' => [ 'classic', 'gradient' ],
+				'selector' => '{{WRAPPER}} .ehp-flex-footer__copyright',
+				'exclude' => [ 'image' ],
+				'fields_options' => [
+					'background' => [
+						'default' => 'classic',
 					],
-					'gradient' => [
-						'title' => esc_html__( 'Gradient', 'hello-plus' ),
-						'icon' => 'eicon-background-gradient',
+					'color' => [
+						'default' => '#F6F7F8',
 					],
 				],
-				'default' => 'classic',
 				'condition' => [
 					'style_copyright_separator' => 'background',
 				],
-			]
-		);
-
-		$this->add_control(
-			'style_copyright_separator_background_color',
-			[
-				'label' => esc_html__( 'Color', 'hello-plus' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#F6F7F8',
-				'condition' => [
-					'style_copyright_separator' => 'background',
-					'style_copyright_separator_background_type' => 'classic',
-				],
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .ehp-flex-footer__copyright-separator' => 'background-color: {{VALUE}};',
-				// ],
 			]
 		);
 
@@ -1222,7 +1205,6 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 	}
 
 	public function add_box_style_section(): void {
-		// Box Section
 		$this->start_controls_section(
 			'box_style_section',
 			[
@@ -1231,12 +1213,29 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'style_box_background_label',
+			[
+				'label' => esc_html__( 'Background', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+			]
+		);
+
 		$this->add_group_control(
 			Group_Control_Background::get_type(),
 			[
 				'name' => 'style_box_background',
 				'label' => esc_html__( 'Background', 'hello-plus' ),
-				// 'selector' => '{{WRAPPER}} .ehp-flex-footer',
+				'selector' => '{{WRAPPER}} .ehp-flex-footer',
+			]
+		);
+
+		$this->add_control(
+			'style_box_background_overlay_label',
+			[
+				'label' => esc_html__( 'Background Overlay', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
 			]
 		);
 
@@ -1245,8 +1244,29 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 			[
 				'name' => 'style_box_background_overlay',
 				'label' => esc_html__( 'Background Overlay', 'hello-plus' ),
-				'separator' => 'before',
-				// 'selector' => '{{WRAPPER}} .ehp-flex-footer__overlay',
+				'selector' => '{{WRAPPER}} .ehp-flex-footer__overlay',
+			]
+		);
+
+		$this->add_responsive_control(
+			'background_overlay_opacity',
+			[
+				'label' => esc_html__( 'Opacity', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'%' => [
+						'max' => 1,
+						'min' => 0.10,
+						'step' => 0.01,
+					],
+				],
+				'default' => [
+					'unit' => '%',
+					'size' => 0.5,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-overlay-opacity: {{SIZE}};',
+				],
 			]
 		);
 
@@ -1296,9 +1316,9 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 					'size' => 60,
 					'unit' => 'px',
 				],
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-gap: {{SIZE}}{{UNIT}};',
-				// ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-box-gap: {{SIZE}}{{UNIT}};',
+				],
 			]
 		);
 
@@ -1312,64 +1332,18 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'return_value' => 'yes',
 				'default' => 'no',
 				'separator' => 'before',
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .ehp-flex-footer' => 'border-style: solid;',
-				// ],
 			]
 		);
 
-		$this->add_group_control(
-			Group_Control_Box_Shadow::get_type(),
-			[
-				'name' => 'style_box_shadow',
-				'label' => esc_html__( 'Box Shadow', 'hello-plus' ),
-				// 'selector' => '{{WRAPPER}} .ehp-flex-footer',
-			]
-		);
-
-		$this->add_responsive_control(
-			'style_box_padding',
-			[
-				'label' => esc_html__( 'Padding', 'hello-plus' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
-				'separator' => 'before',
-				'default' => [
-					'top' => 100,
-					'right' => 100,
-					'bottom' => 100,
-					'left' => 100,
-					'unit' => 'px',
-				],
-				'tablet_default' => [
-					'top' => 60,
-					'right' => 60,
-					'bottom' => 60,
-					'left' => 60,
-					'unit' => 'px',
-				],
-				'mobile_default' => [
-					'top' => 32,
-					'right' => 32,
-					'bottom' => 32,
-					'left' => 32,
-					'unit' => 'px',
-				],
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .ehp-flex-footer' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				// ],
-			]
-		);
-
-		$this->add_responsive_control(
+		$this->add_control(
 			'style_box_border_width',
 			[
-				'label' => esc_html__( 'Border Width', 'hello-plus' ),
+				'label' => __( 'Border Width', 'hello-plus' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
+				'size_units' => [ 'px' ],
 				'range' => [
 					'px' => [
-						'min' => 1,
+						'min' => 0,
 						'max' => 10,
 						'step' => 1,
 					],
@@ -1378,31 +1352,64 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 					'size' => 1,
 					'unit' => 'px',
 				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-flex-footer' => 'border-top-width: {{SIZE}}{{UNIT}}; border-top-style: solid;',
+				],
 				'condition' => [
 					'style_box_border' => 'yes',
 				],
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .ehp-flex-footer' => 'border-width: {{SIZE}}{{UNIT}};',
-				// ],
 			]
 		);
 
 		$this->add_control(
 			'style_box_border_color',
 			[
-				'label' => esc_html__( 'Border Color', 'hello-plus' ),
+				'label' => esc_html__( 'Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
 				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-flex-footer' => 'border-top-color: {{VALUE}};',
+				],
 				'condition' => [
 					'style_box_border' => 'yes',
 				],
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .ehp-flex-footer' => 'border-color: {{VALUE}};',
-				// ],
 			]
 		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'style_box_shadow',
+				'label' => esc_html__( 'Box Shadow', 'hello-plus' ),
+				'selector' => '{{WRAPPER}} .ehp-flex-footer',
+			]
+		);
+
+		$ehp_padding = new Ehp_Padding( $this, [
+			'widget_name' => 'flex-footer',
+			'container_prefix' => 'box',
+			'default_padding' => [
+				'top' => '100',
+				'right' => '100',
+				'bottom' => '100',
+				'left' => '100',
+			],
+			'tablet_default_padding' => [
+				'top' => '60',
+				'right' => '60',
+				'bottom' => '60',
+				'left' => '60',
+			],
+			'mobile_default_padding' => [
+				'top' => '32',
+				'right' => '32',
+				'bottom' => '32',
+				'left' => '32',
+			],
+		] );
+		$ehp_padding->add_style_controls();
 
 		$this->end_controls_section();
 	}

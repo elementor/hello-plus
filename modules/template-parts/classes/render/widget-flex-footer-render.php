@@ -40,10 +40,6 @@ class Widget_Flex_Footer_Render {
 			$layout_classnames[] = 'is-align-center-mobile';
 		}
 
-		if ( 'yes' === $this->settings['style_box_border'] ) {
-			$layout_classnames .= ' has-border';
-		}
-
 		$this->widget->add_render_attribute( 'layout', [
 			'class' => $layout_classnames
 		] );
@@ -51,8 +47,10 @@ class Widget_Flex_Footer_Render {
 		$this->widget->maybe_add_advanced_attributes();
 
 		$this->widget->add_render_attribute( 'groups-row', 'class', self::LAYOUT_CLASSNAME . '__groups-row' );
+		$this->widget->add_render_attribute( 'overlay', 'class', self::LAYOUT_CLASSNAME . '__overlay' );
 		?>
 		<footer <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
+			<div <?php $this->widget->print_render_attribute_string( 'overlay' ); ?>></div>
 			<div <?php $this->widget->print_render_attribute_string( 'groups-row' ); ?>>
 				<?php
 					$this->render_business_details();
@@ -378,9 +376,11 @@ class Widget_Flex_Footer_Render {
 
 	public function render_copyright(): void {
 		$this->widget->add_render_attribute( 'copyright', 'class', self::LAYOUT_CLASSNAME . '__copyright' );
+		$this->widget->add_render_attribute( 'copyright-wrapper', 'class', self::LAYOUT_CLASSNAME . '__copyright-wrapper' );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'copyright' ); ?>>
-			<?php
+			<div <?php $this->widget->print_render_attribute_string( 'copyright-wrapper' ); ?>>
+				<?php
 				$copyright_prefix = '';
 				if ( ! empty( $this->settings['current_year_switcher'] ) && $this->settings['current_year_switcher'] === 'yes' ) {
 					$copyright_prefix = '&copy;' . date('Y') . '. ';
@@ -389,9 +389,10 @@ class Widget_Flex_Footer_Render {
 					$this->widget,
 					'copyright_text',
 					self::LAYOUT_CLASSNAME . '__copyright-text',
-					$copyright_prefix . $this->settings['copyright_text']
-				);
-			?>
+						$copyright_prefix . $this->settings['copyright_text']
+					);
+				?>
+			</div>
 		</div>
 		<?php
 	}

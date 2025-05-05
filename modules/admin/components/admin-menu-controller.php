@@ -23,7 +23,7 @@ class Admin_Menu_Controller {
 	}
 
 	public function activate() {
-		if ( ! Setup_Wizard::has_site_wizard_been_completed() && ! Utils::has_hello_elementor_theme() ){
+		if ( ! Setup_Wizard::has_site_wizard_been_completed() && ! Utils::has_hello_elementor_theme() ) {
 			set_transient( self::SETUP_WIZARD_TRANSIENT_NAME, true );
 		}
 	}

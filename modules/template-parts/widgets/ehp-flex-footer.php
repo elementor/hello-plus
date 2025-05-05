@@ -113,6 +113,14 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 		$this->add_content_copyright_section();
 	}
 
+	public function add_style_section(): void {
+		$this->add_style_layout_section();
+		$this->add_style_subheadings_section();
+		$this->add_style_business_details_section();
+		$this->add_style_copyright_section();
+		$this->add_box_style_section();
+	}
+
 	public function add_content_layout_section(): void {
 		$this->start_controls_section(
 			'section_layout',
@@ -123,20 +131,20 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 		);
 
 		$this->add_control(
-			'layout_preset_select',
+			'layout_preset',
 			[
 				'label' => esc_html__( 'Preset', 'hello-plus' ),
 				'type' => Choose_Img_Control::CONTROL_NAME,
-				'default' => 'info_hub',
+				'default' => 'info-hub',
 				'label_block' => true,
 				'columns' => 2,
 				'options' => [
-					'info_hub' => [
+					'info-hub' => [
 						'title' => wp_kses_post( "Info Hub:\nOrganize business details in a\nclear structure." ),
 						'image' => HELLOPLUS_IMAGES_URL . 'footer-info-hub.svg',
 						'hover_image' => true,
 					],
-					'quick_reference' => [
+					'quick-reference' => [
 						'title' => wp_kses_post( "Quick Reference:\nHighlight key info at a\nglance." ),
 						'image' => HELLOPLUS_IMAGES_URL . 'footer-quick-reference.svg',
 						'hover_image' => true,
@@ -183,7 +191,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 					'active' => true,
 				],
 				'condition' => [
-					'layout_preset_select' => 'info_hub',
+					'layout_preset' => 'info-hub',
 				],
 				'separator' => 'before',
 			]
@@ -303,7 +311,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				],
 				'condition' => array_merge( $group_condition, [
 					'group_' . $group_number . '_type' => 'navigation-links',
-					'layout_preset_select' => 'info_hub',
+					'layout_preset' => 'info-hub',
 				] ),
 				'separator' => 'before',
 			]
@@ -368,7 +376,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				],
 				'condition' => array_merge( $group_condition, [
 					'group_' . $group_number . '_type' => 'contact-links',
-					'layout_preset_select' => 'info_hub',
+					'layout_preset' => 'info-hub',
 				] ),
 			]
 		);
@@ -432,7 +440,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				],
 				'condition' => array_merge( $group_condition, [
 					'group_' . $group_number . '_type' => 'text',
-					'layout_preset_select' => 'info_hub',
+					'layout_preset' => 'info-hub',
 				] ),
 			]
 		);
@@ -468,7 +476,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				],
 				'condition' => array_merge( $group_condition, [
 					'group_' . $group_number . '_type' => 'social-links',
-					'layout_preset_select' => 'info_hub',
+					'layout_preset' => 'info-hub',
 				] ),
 			]
 		);
@@ -602,14 +610,6 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 		$this->end_controls_section();
 	}
 
-	public function add_style_section(): void {
-		$this->add_style_layout_section();
-		$this->add_style_subheadings_section();
-		$this->add_style_business_details_section();
-		$this->add_style_copyright_section();
-		$this->add_box_style_section();
-	}
-
 	public function add_style_layout_section(): void {
 		$this->start_controls_section(
 			'section_style_layout',
@@ -625,7 +625,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'label' => esc_html__( 'Business Details', 'hello-plus' ),
 				'type' => Controls_Manager::HEADING,
 				'condition' => [
-					'layout_preset_select' => 'info_hub',
+					'layout_preset' => 'info-hub',
 				],
 			]
 		);
@@ -636,6 +636,8 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'label' => esc_html__( 'Columns', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => '4',
+				'mobile_default' => '1',
+				'tablet_default' => '2',
 				'options' => [
 					'1' => esc_html__( '1', 'hello-plus' ),
 					'2' => esc_html__( '2', 'hello-plus' ),
@@ -643,11 +645,11 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 					'4' => esc_html__( '4', 'hello-plus' ),
 				],
 				'condition' => [
-					'layout_preset_select' => 'info_hub',
+					'layout_preset' => 'info-hub',
 				],
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .ehp-flex-footer__content' => 'grid-template-columns: repeat({{VALUE}}, 1fr);',
-				// ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-columns: {{VALUE}};',
+				],
 			]
 		);
 
@@ -661,13 +663,23 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 					'column' => '40',
 					'unit' => 'px',
 				],
+				'mobile_default' => [
+					'row' => '60',
+					'column' => '40',
+					'unit' => 'px',
+				],
+				'tablet_default' => [
+					'row' => '60',
+					'column' => '40',
+					'unit' => 'px',
+				],
 				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'condition' => [
-					'layout_preset_select' => 'info_hub',
+					'layout_preset' => 'info-hub',
 				],
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .ehp-flex-footer__content' => '--flex-footer-row-gap: {{ROW}}{{UNIT}}; --flex-footer-column-gap: {{COLUMN}}{{UNIT}};',
-				// ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-row-gap: {{ROW}}{{UNIT}}; --flex-footer-column-gap: {{COLUMN}}{{UNIT}};',
+				],
 			]
 		);
 
@@ -682,11 +694,8 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'default' => 'no',
 				'separator' => 'before',
 				'condition' => [
-					'layout_preset_select' => 'info_hub',
+					'layout_preset' => 'info-hub',
 				],
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .ehp-flex-footer__content' => '--flex-footer-mobile-align: {{VALUE}};',
-				// ],
 			]
 		);
 
@@ -707,7 +716,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				],
 				'default' => 'start',
 				'condition' => [
-					'layout_preset_select' => 'quick_reference',
+					'layout_preset' => 'quick-reference',
 				],
 				// 'selectors' => [
 				// 	'{{WRAPPER}} .ehp-flex-footer__content' => 'justify-content: {{VALUE}};',
@@ -733,7 +742,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 					'unit' => '%',
 				],
 				'condition' => [
-					'layout_preset_select' => 'quick_reference',
+					'layout_preset' => 'quick-reference',
 				],
 				// 'selectors' => [
 				// 	'{{WRAPPER}} .ehp-flex-footer__content' => 'max-width: {{SIZE}}{{UNIT}};',
@@ -761,9 +770,9 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'global' => [
 					'default' => Global_Colors::COLOR_SECONDARY,
 				],
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-subheading-color: {{VALUE}}',
-				// ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-subheading-color: {{VALUE}}',
+				],
 			]
 		);
 
@@ -773,9 +782,9 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'name' => 'style_subheadings_typography',
 				'label' => esc_html__( 'Typography', 'hello-plus' ),
 				'global' => [
-					'default' => Global_Typography::TYPOGRAPHY_TEXT,
+					'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
 				],
-				// 'selector' => '{{WRAPPER}} .ehp-flex-footer__subheading',
+				'selector' => '{{WRAPPER}} .ehp-flex-footer__subheading',
 			]
 		);
 
@@ -796,9 +805,9 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 					'size' => 20,
 					'unit' => 'px',
 				],
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-subheading-spacing: {{SIZE}}{{UNIT}};',
-				// ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-subheading-spacing: {{SIZE}}{{UNIT}};',
+				],
 			]
 		);
 
@@ -833,9 +842,9 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'global' => [
 					'default' => Global_Colors::COLOR_TEXT,
 				],
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-description-color: {{VALUE}}',
-				// ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-description-color: {{VALUE}}',
+				],
 			]
 		);
 
@@ -847,7 +856,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
-				// 'selector' => '{{WRAPPER}} .ehp-flex-footer__description',
+				'selector' => '{{WRAPPER}} .ehp-flex-footer__description',
 			]
 		);
 
@@ -868,9 +877,9 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 					'size' => 100,
 					'unit' => '%',
 				],
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .ehp-flex-footer__description' => 'max-width: {{SIZE}}{{UNIT}};',
-				// ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-description-max-width: {{SIZE}}{{UNIT}};',
+				],
 			]
 		);
 
@@ -880,7 +889,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'label' => esc_html__( 'Links', 'hello-plus' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
-				// 'conditions' => $this->get_conditions_by_type_value( 'contact-links' ),
+				'conditions' => $this->get_conditions_by_type_values( [ 'contact-links', 'social-links', 'navigation-links' ] ),
 			]
 		);
 
@@ -892,15 +901,14 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
-				// 'conditions' => $this->get_conditions_by_type_value( 'contact-links' ),
-				// 'selector' => '{{WRAPPER}} .ehp-flex-footer__link',
+				'selector' => '{{WRAPPER}} .ehp-flex-footer__link',
 			]
 		);
 
 		$this->start_controls_tabs(
 			'style_business_details_links_tabs',
 			[
-				// 'conditions' => $this->get_conditions_by_type_value( 'contact-links' ),
+				'conditions' => $this->get_conditions_by_type_values( [ 'contact-links', 'social-links', 'navigation-links' ] ),
 			]
 		);
 
@@ -908,6 +916,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 			'style_business_details_links_normal_tab',
 			[
 				'label' => esc_html__( 'Normal', 'hello-plus' ),
+				'conditions' => $this->get_conditions_by_type_values( [ 'contact-links', 'social-links', 'navigation-links' ] ),
 			]
 		);
 
@@ -922,6 +931,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-link-color: {{VALUE}}',
 				],
+				'conditions' => $this->get_conditions_by_type_values( [ 'contact-links', 'social-links', 'navigation-links' ] ),
 			]
 		);
 
@@ -931,6 +941,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 			'style_business_details_links_hover_tab',
 			[
 				'label' => esc_html__( 'Hover', 'hello-plus' ),
+				'conditions' => $this->get_conditions_by_type_values( [ 'contact-links', 'social-links', 'navigation-links' ] ),
 			]
 		);
 
@@ -945,6 +956,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-link-color-hover: {{VALUE}}',
 				],
+				'conditions' => $this->get_conditions_by_type_values( [ 'contact-links', 'social-links', 'navigation-links' ] ),
 			]
 		);
 
@@ -953,6 +965,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 			[
 				'label' => esc_html__( 'Hover Animation', 'hello-plus' ),
 				'type' => Controls_Manager::HOVER_ANIMATION,
+				'conditions' => $this->get_conditions_by_type_values( [ 'contact-links', 'social-links', 'navigation-links' ] ),
 			]
 		);
 
@@ -961,12 +974,36 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 		$this->end_controls_tabs();
 
 		$this->add_control(
+			'style_business_details_links_spacing',
+			[
+				'label' => esc_html__( 'Spacing', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
+				'default' => [
+					'size' => 8,
+					'unit' => 'px',
+				],
+				'range' => [
+					'px' => [
+						'min' => 1,
+						'max' => 50,
+						'step' => 1,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-links-spacing: {{SIZE}}{{UNIT}};',
+				],
+				'conditions' => $this->get_conditions_by_type_values( [ 'contact-links', 'social-links', 'navigation-links' ] ),
+			]
+		);
+
+		$this->add_control(
 			'style_business_details_icons_heading',
 			[
 				'label' => esc_html__( 'Icons', 'hello-plus' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
-				'conditions' => $this->get_conditions_by_type_value( 'social-links' ),
+				'conditions' => $this->get_conditions_by_type_values( [ 'social-links' ] ),
 			]
 		);
 
@@ -976,24 +1013,24 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'label' => esc_html__( 'Alignment', 'hello-plus' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'horizontal' => esc_html__( 'Horizontal', 'hello-plus' ),
-					'vertical' => esc_html__( 'Vertical', 'hello-plus' ),
+					'row' => esc_html__( 'Horizontal', 'hello-plus' ),
+					'column' => esc_html__( 'Vertical', 'hello-plus' ),
 				],
-				'default' => 'horizontal',
+				'default' => 'row',
 				'conditions' => [
 					'relation' => 'and',
 					'terms' => [
-						$this->get_conditions_by_type_value( 'social-links' ),
+						$this->get_conditions_by_type_values( [ 'social-links' ] ),
 						[
-							'name' => 'layout_preset_select',
+							'name' => 'layout_preset',
 							'operator' => '===',
-							'value' => 'info_hub',
+							'value' => 'info-hub',
 						],
 					],
 				],
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .ehp-flex-footer__social-icons' => '--flex-footer-icons-alignment: {{VALUE}};',
-				// ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-icons-alignment: {{VALUE}};',
+				],
 			]
 		);
 
@@ -1014,7 +1051,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 					'size' => 20,
 					'unit' => 'px',
 				],
-				'conditions' => $this->get_conditions_by_type_value( 'social-links' ),
+				'conditions' => $this->get_conditions_by_type_values( 'social-links' ),
 				'selectors' => [
 					'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-social-icon-size: {{SIZE}}{{UNIT}};',
 				],
@@ -1232,7 +1269,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				],
 				'separator' => 'before',
 				'condition' => [
-					'layout_preset_select' => 'quick_reference',
+					'layout_preset' => 'quick-reference',
 				],
 				// 'selectors' => [
 				// 	'{{WRAPPER}} .ehp-flex-footer__business-details-group' => 'margin-bottom: {{SIZE}}{{UNIT}};',
@@ -1372,46 +1409,30 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 
 	public function add_custom_advanced_sections(): void {}
 
-	protected function get_conditions_by_type_value( $type_value ): array {
+	protected function get_conditions_by_type_values( $type_values ) {
+		$type_values = (array) $type_values;
+		$terms = [];
+		foreach ( [2, 3, 4] as $group_number ) {
+			$group_terms = [
+				[
+					'name' => 'group_' . $group_number . '_type',
+					'operator' => 'in',
+					'value' => $type_values,
+				],
+				[
+					'name' => 'group_' . $group_number . '_switcher',
+					'operator' => '===',
+					'value' => 'yes',
+				],
+			];
+			$terms[] = [
+				'relation' => 'and',
+				'terms' => $group_terms,
+			];
+		}
 		return [
 			'relation' => 'or',
-			'terms' => [
-				[
-					'name' => 'group_2_type',
-					'operator' => '===',
-					'value' => $type_value,
-				],
-				[
-					'relation' => 'and',
-					'terms' => [
-						[
-							'name' => 'group_3_type',
-							'operator' => '===',
-							'value' => $type_value,
-						],
-						[
-							'name' => 'group_3_switcher',
-							'operator' => '===',
-							'value' => 'yes',
-						],
-					],
-				],
-				[
-					'relation' => 'and',
-					'terms' => [
-						[
-							'name' => 'group_4_type',
-							'operator' => '===',
-							'value' => $type_value,
-						],
-						[
-							'name' => 'group_4_switcher',
-							'operator' => '===',
-							'value' => 'yes',
-						],
-					],
-				],
-			],
+			'terms' => $terms,
 		];
 	}
 }

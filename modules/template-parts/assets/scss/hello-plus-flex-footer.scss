@@ -2,6 +2,36 @@
 
 .ehp-flex-footer {
 
+	&.has-preset {
+		&-info-hub {
+			
+			& .ehp-flex-footer__groups-row {
+				display: grid;
+				grid-template-columns: repeat(var(--flex-footer-columns), 1fr);
+				row-gap: var(--flex-footer-row-gap);
+				column-gap: var(--flex-footer-column-gap);
+			}
+		}
+
+		&-quick-reference {
+		}
+	}
+
+	&.is-align-center-mobile {
+		@media screen and (max-width: $screen-mobile-max) {
+			text-align: center;
+		}
+	}
+
+	&__subheading {
+		color: var(--flex-footer-subheading-color);
+		margin: 0 0 var(--flex-footer-subheading-spacing);
+	}
+
+	&__site-link-container {
+		margin-bottom: var(--flex-footer-subheading-spacing);
+	}
+
 	&__site-logo,
 	&__site-link img {
 		width: var(--flex-footer-logo-width);
@@ -18,35 +48,69 @@
 		}
 	}
 
-	&__social-link {
+	&__description {
+		color: var(--flex-footer-description-color);
+		max-width: var(--flex-footer-description-max-width);
+	}
 
-		& .ehp-flex-footer__social-icon {
+	&__link {
+		color: var(--flex-footer-link-color);
+		display: inline-block;
+		margin-bottom: var(--flex-footer-links-spacing);
+		transition: $transition;
+
+		&:hover,
+		&:focus {
+			color: var(--flex-footer-link-color-hover);
 			transition: $transition;
-			
-			&:is(svg) {
-				fill: var(--flex-footer-link-color);
-				height: var(--flex-footer-social-icon-size);
-				width: var(--flex-footer-social-icon-size);
-			}
+		}
+	}
 
-			&:is(i) {
-				color: var(--flex-footer-link-color);
-				font-size: var(--flex-footer-social-icon-size);
-			}
+	&__menu .menu-item:last-of-type,
+	&__link--contact:last-of-type {
+
+		.ehp-flex-footer__link {
+			margin-bottom: 0;
+		}
+	}
+
+	& a.ehp-flex-footer__link--social {
+
+		& svg {
+			fill: var(--flex-footer-link-color);
+			height: var(--flex-footer-social-icon-size);
+			transition: $transition;
+			width: var(--flex-footer-social-icon-size);
+		}
+
+		& i {
+			color: var(--flex-footer-link-color);
+			font-size: var(--flex-footer-social-icon-size);
+			transition: $transition;
 		}
 
 		&:hover,
 		&:focus {
+			& svg {
+				fill: var(--flex-footer-link-color-hover);
+				transition: $transition;
+			}
 
-			& .ehp-flex-footer__social-icon {
+			& i {
 				color: var(--flex-footer-link-color-hover);
 				transition: $transition;
-
-				&:is(svg) {
-					fill: var(--flex-footer-link-color-hover);
-					transition: $transition;
-				}
 			}
 		}
 	}
-} 
+
+	&__list {
+		list-style: none;
+		padding: 0;
+	}
+
+	&__list--social-links {
+		display: flex;
+		flex-direction: var(--flex-footer-icons-alignment);
+		gap: var(--flex-footer-links-spacing);
+	}
+}

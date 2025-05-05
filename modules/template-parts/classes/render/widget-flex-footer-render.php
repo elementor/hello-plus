@@ -31,18 +31,22 @@ class Widget_Flex_Footer_Render {
 	protected int $nav_menu_index = 1;
 
 	public function render(): void {
-		$layout_classnames = self::LAYOUT_CLASSNAME;
-		$box_border = $this->settings['footer_box_border'] ?? '';
-
-		if ( 'yes' === $box_border ) {
-			$layout_classnames .= ' has-box-border';
-		}
-
-		$render_attributes = [
-			'class' => $layout_classnames,
+		$layout_classnames = [
+			self::LAYOUT_CLASSNAME,
+			'has-preset-' . $this->settings['layout_preset'],
 		];
 
-		$this->widget->add_render_attribute( 'layout', $render_attributes );
+		if ( 'yes' === $this->settings['style_layout_align_center_mobile'] ) {
+			$layout_classnames[] = 'is-align-center-mobile';
+		}
+
+		if ( 'yes' === $this->settings['style_box_border'] ) {
+			$layout_classnames .= ' has-border';
+		}
+
+		$this->widget->add_render_attribute( 'layout', [
+			'class' => $layout_classnames
+		] );
 
 		$this->widget->maybe_add_advanced_attributes();
 
@@ -77,12 +81,14 @@ class Widget_Flex_Footer_Render {
 				self::LAYOUT_CLASSNAME . '__group--business-details',
 			],
 		] );
+
+		$description_classnames = self::LAYOUT_CLASSNAME . '__description ' . self::LAYOUT_CLASSNAME . '__description--business-details';
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'business-details' ); ?>>
 			<?php
 				$this->widget->render_site_link( 'flex-footer' );
 				$this->render_subheading( 1, 'business_details' );
-				Widget_Utils::maybe_render_text_html( $this->widget, 'group_1_business_details_description', self::LAYOUT_CLASSNAME . '__business-details-description', $this->settings['group_1_business_details_description'] );
+				Widget_Utils::maybe_render_text_html( $this->widget, 'group_1_business_details_description', $description_classnames, $this->settings['group_1_business_details_description'] );
 			?>
 		</div>
 		<?php
@@ -95,7 +101,7 @@ class Widget_Flex_Footer_Render {
 			if ( 'contact-links' === $group_type ) {
 				$this->render_contact_links_group( $group_number );
 			} elseif ( 'text' === $group_type ) {
-				$this->render_contact_text_group( $group_number );
+				$this->render_text_group( $group_number );
 			} elseif ( 'social-links' === $group_type ) {
 				$this->render_social_links_group( $group_number );
 			} elseif ( 'navigation-links' === $group_type ) {
@@ -116,92 +122,113 @@ class Widget_Flex_Footer_Render {
 				self::LAYOUT_CLASSNAME . '__group--contact-links',
 			],
 		] );
+		$this->widget->add_render_attribute( 'contact-links-list', [
+			'class' => [
+				self::LAYOUT_CLASSNAME . '__list',
+				self::LAYOUT_CLASSNAME . '__list--contact-links',
+			],
+		] );
+		$this->widget->add_render_attribute( 'contact-link', [
+			'class' => [
+				self::LAYOUT_CLASSNAME . '__list-item',
+				self::LAYOUT_CLASSNAME . '__list-item--contact-link',
+			],
+		] );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'contact-links-group' ); ?>>
-			<?php
-				$this->render_subheading( $group_number, 'contact_links' );
+				<?php $this->render_subheading( $group_number, 'contact_links' ); ?>
+				<ul <?php $this->widget->print_render_attribute_string( 'contact-links-list' ); ?>>
+					<?php
+					foreach ( $repeater as $key => $contact_link ) {
+						$link = [
+							'platform' => $contact_link[ 'group_' . $group_number . '_platform' ],
+							'number' => $contact_link[ 'group_' . $group_number . '_number' ] ?? '',
+							'username' => $contact_link[ 'group_' . $group_number . '_username' ] ?? '',
+							'email_data' => [
+								'group_' . $group_number . '_mail' => $contact_link[ 'group_' . $group_number . '_mail' ] ?? '',
+								'group_' . $group_number . '_mail_subject' => $contact_link[ 'group_' . $group_number . '_mail_subject' ] ?? '',
+								'group_' . $group_number . '_mail_body' => $contact_link[ 'group_' . $group_number . '_mail_body' ] ?? '',
+							],
+							'viber_action' => $contact_link[ 'group_' . $group_number . '_viber_action' ] ?? '',
+							'url' => $contact_link[ 'group_' . $group_number . '_url' ] ?? '',
+							'location' => $contact_link[ 'group_' . $group_number . '_waze' ] ?? '',
+							'map' => $contact_link[ 'group_' . $group_number . '_map' ] ?? '',
+						];
 
-				foreach ( $repeater as $key => $contact_link ) {
-					$link = [
-						'platform' => $contact_link[ 'group_' . $group_number . '_platform' ],
-						'number' => $contact_link[ 'group_' . $group_number . '_number' ] ?? '',
-						'username' => $contact_link[ 'group_' . $group_number . '_username' ] ?? '',
-						'email_data' => [
-							'group_' . $group_number . '_mail' => $contact_link[ 'group_' . $group_number . '_mail' ] ?? '',
-							'group_' . $group_number . '_mail_subject' => $contact_link[ 'group_' . $group_number . '_mail_subject' ] ?? '',
-							'group_' . $group_number . '_mail_body' => $contact_link[ 'group_' . $group_number . '_mail_body' ] ?? '',
-						],
-						'viber_action' => $contact_link[ 'group_' . $group_number . '_viber_action' ] ?? '',
-						'url' => $contact_link[ 'group_' . $group_number . '_url' ] ?? '',
-						'location' => $contact_link[ 'group_' . $group_number . '_waze' ] ?? '',
-						'map' => $contact_link[ 'group_' . $group_number . '_map' ] ?? '',
-					];
+						$hover_animation = $this->settings['style_business_details_links_hover_animation'];
 
-					// $icon = $contact_link[ 'group_' . $group_number . '_icon' ];
+						$contact_link_classnames = [
+							self::LAYOUT_CLASSNAME . '__link',
+							self::LAYOUT_CLASSNAME . '__link--contact',
+						 ];
 
-					$contact_link_classnames = [ self::LAYOUT_CLASSNAME . '__contact-link' ];
-
-					if ( ! empty( $hover_animation ) ) {
-						$contact_link_classnames[] = 'elementor-animation-' . $hover_animation;
-					}
-
-					$this->widget->add_render_attribute( 'contact-link-' . $key, [
-						'aria-label' => esc_attr( $contact_link[ 'group_' . $group_number . '_label' ] ),
-						'class' => $contact_link_classnames,
-					] );
-
-					if ( $ehp_platforms->is_url_link( $contact_link[ 'group_' . $group_number . '_platform' ] ) ) {
-						$ehp_platforms->render_link_attributes( $link, 'contact-link-' . $key );
-					} else {
-						$formatted_link = $ehp_platforms->get_formatted_link( $link, 'group_' . $group_number );
+						if ( ! empty( $hover_animation ) ) {
+							$contact_link_classnames[] = 'elementor-animation-' . $hover_animation;
+						}
 
 						$this->widget->add_render_attribute( 'contact-link-' . $key, [
-							'href' => $formatted_link,
-							'rel' => 'noopener noreferrer',
+							'aria-label' => esc_attr( $contact_link[ 'group_' . $group_number . '_label' ] ),
+							'class' => $contact_link_classnames,
 						] );
-					}
 
-					$label_repeater_key = $this->widget->public_get_repeater_setting_key(
-						'group_' . $group_number . '_label',
-						'group_' . $group_number . '_repeater',
-						$key
-					);
+						if ( $ehp_platforms->is_url_link( $contact_link[ 'group_' . $group_number . '_platform' ] ) ) {
+							$ehp_platforms->render_link_attributes( $link, 'contact-link-' . $key );
+						} else {
+							$formatted_link = $ehp_platforms->get_formatted_link( $link, 'group_' . $group_number );
 
-					$this->widget->public_add_inline_editing_attributes( $label_repeater_key, 'none' );
-					?>
-					<a <?php $this->widget->print_render_attribute_string( 'contact-link-' . $key ); ?>>
-						<?php
-							Widget_Utils::maybe_render_text_html(
-								$this->widget,
-								$label_repeater_key,
-								self::LAYOUT_CLASSNAME . '__contact-link-label',
-								$contact_link[ 'group_' . $group_number . '_label' ],
-								'span'
-							);
+							$this->widget->add_render_attribute( 'contact-link-' . $key, [
+								'href' => $formatted_link,
+								'rel' => 'noopener noreferrer',
+							] );
+						}
+
+						$label_repeater_key = $this->widget->public_get_repeater_setting_key(
+							'group_' . $group_number . '_label',
+							'group_' . $group_number . '_repeater',
+							$key
+						);
+
+						$this->widget->public_add_inline_editing_attributes( $label_repeater_key, 'none' );
 						?>
-					</a>
-				<?php
-			} ?>
+						<li <?php $this->widget->print_render_attribute_string( 'contact-link' ); ?>>
+							<a <?php $this->widget->print_render_attribute_string( 'contact-link-' . $key ); ?>>
+								<?php
+									Widget_Utils::maybe_render_text_html(
+										$this->widget,
+										$label_repeater_key,
+										self::LAYOUT_CLASSNAME . '__contact-link-label',
+										$contact_link[ 'group_' . $group_number . '_label' ],
+										'span'
+									);
+								?>
+							</a>
+						</li>
+					<?php
+				} ?>
+			</ul>
 		</div>
 		<?php
 	}
 
-	protected function render_contact_text_group( $group_number ) {
+	protected function render_text_group( $group_number ) {
 		$settings = $this->widget->get_settings_for_display();
 
-		$this->widget->remove_render_attribute( 'contact-text-group' );
-		$this->widget->add_render_attribute( 'contact-text-group', [
+		$this->widget->remove_render_attribute( 'group-text' );
+		$this->widget->add_render_attribute( 'group-text', [
 			'class' => [
 				self::LAYOUT_CLASSNAME . '__group',
 				self::LAYOUT_CLASSNAME . '__group--text',
 			],
 		] );
+
+		$description_classnames = self::LAYOUT_CLASSNAME . '__description ' . self::LAYOUT_CLASSNAME . '__description--text';
+
 		?>
-		<div <?php $this->widget->print_render_attribute_string( 'contact-text-group' ); ?>>
+		<div <?php $this->widget->print_render_attribute_string( 'group-text' ); ?>>
 			<?php
 				$this->render_subheading( $group_number, 'text' );
 
-				Widget_Utils::maybe_render_text_html( $this->widget, 'group_' . $group_number . '_text_textarea', self::LAYOUT_CLASSNAME . '__contact-text', $settings[ 'group_' . $group_number . '_text_textarea' ] );
+				Widget_Utils::maybe_render_text_html( $this->widget, 'group_' . $group_number . '_text_textarea', $description_classnames, $settings[ 'group_' . $group_number . '_text_textarea' ] );
 			?>
 		</div>
 		<?php
@@ -217,44 +244,61 @@ class Widget_Flex_Footer_Render {
 				self::LAYOUT_CLASSNAME . '__group--social-links',
 			],
 		] );
+		$this->widget->add_render_attribute( 'social-links-list', [
+			'class' => [
+				self::LAYOUT_CLASSNAME . '__list',
+				self::LAYOUT_CLASSNAME . '__list--social-links',
+			],
+		] );
+		$this->widget->add_render_attribute( 'social-link', [
+			'class' => [
+				self::LAYOUT_CLASSNAME . '__list-item',
+				self::LAYOUT_CLASSNAME . '__list-item--social-link',
+			],
+		] );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'social-links-group' ); ?>>
-			<?php
-			$this->render_subheading( $group_number, 'social_links' );
+			<?php $this->render_subheading( $group_number, 'social_links' ); ?>
 
-			foreach ( $repeater as $key => $social_icon ) {
-				$icon = $social_icon[ 'group_' . $group_number . '_social_icon' ] ?? [];
-				$label = $social_icon[ 'group_' . $group_number . '_social_label' ] ?? '';
-				$url = $social_icon[ 'group_' . $group_number . '_social_link' ] ?? [];
-				$hover_animation = $this->settings['style_business_details_links_hover_animation'];
+			<ul <?php $this->widget->print_render_attribute_string( 'social-links-list' ); ?>>
+				<?php foreach ( $repeater as $key => $social_icon ) {
+					$icon = $social_icon[ 'group_' . $group_number . '_social_icon' ] ?? [];
+					$label = $social_icon[ 'group_' . $group_number . '_social_label' ] ?? '';
+					$url = $social_icon[ 'group_' . $group_number . '_social_link' ] ?? [];
+					$hover_animation = $this->settings['style_business_details_links_hover_animation'];
 
-				$social_icon_classnames = [ self::LAYOUT_CLASSNAME . '__social-link' ];
+					$social_icon_classnames = [
+						self::LAYOUT_CLASSNAME . '__link',
+						self::LAYOUT_CLASSNAME . '__link--social',
+					];
 
-				if ( ! empty( $hover_animation ) ) {
-					$social_icon_classnames[] = 'elementor-animation-' . $hover_animation;
-				}
+					if ( ! empty( $hover_animation ) ) {
+						$social_icon_classnames[] = 'elementor-animation-' . $hover_animation;
+					}
 
-				$this->widget->add_render_attribute( 'social-icon-' . $key, [
-					'aria-label' => esc_attr( $label ),
-					'class' => $social_icon_classnames,
-					'rel' => 'noopener noreferrer',
-				] );
+					$this->widget->add_render_attribute( 'social-icon-' . $key, [
+						'aria-label' => esc_attr( $label ),
+						'class' => $social_icon_classnames,
+						'rel' => 'noopener noreferrer',
+					] );
 
-				if ( ! empty( $url['url'] ) ) {
-					$this->widget->add_link_attributes( 'social-icon-' . $key, $url );
-				}
-				?>
-				<a <?php $this->widget->print_render_attribute_string( 'social-icon-' . $key ); ?>>
-					<?php Icons_Manager::render_icon( $icon,
-						[
-							'aria-hidden' => 'true',
-							'class' => self::LAYOUT_CLASSNAME . '__social-icon',
-						]
-					); ?>
-				</a>
+					if ( ! empty( $url['url'] ) ) {
+						$this->widget->add_link_attributes( 'social-icon-' . $key, $url );
+					}
+					?>
+					<li <?php $this->widget->print_render_attribute_string( 'social-link' ); ?>>
+						<a <?php $this->widget->print_render_attribute_string( 'social-icon-' . $key ); ?>>
+						<?php Icons_Manager::render_icon( $icon,
+							[
+								'aria-hidden' => 'true',
+								'class' => self::LAYOUT_CLASSNAME . '__social-icon',
+							]
+							); ?>
+						</a>
+					</li>
 				<?php
-			}
-			?>
+				} ?>
+			</ul>
 		</div>
 		<?php
 	}
@@ -269,7 +313,9 @@ class Widget_Flex_Footer_Render {
 		] );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'navigation-links-group' ); ?>>
+			<?php $this->render_subheading( $group_number, 'navigation_links' ); ?>
 			<?php $this->render_navigation( $group_number ); ?>
+		</div>
 		<?php
 	}
 
@@ -294,7 +340,7 @@ class Widget_Flex_Footer_Render {
 		$args = [
 			'echo' => false,
 			'menu' => $this->settings['footer_navigation_menu_' . $group_number],
-			'menu_class' => self::LAYOUT_CLASSNAME . '__menu',
+			'menu_class' => self::LAYOUT_CLASSNAME . '__menu ' . self::LAYOUT_CLASSNAME . '__list',
 			'menu_id' => 'menu-' . $this->get_and_advance_nav_menu_index() . '-' . $this->widget->get_id(),
 			'fallback_cb' => '__return_empty_string',
 			'container' => '',
@@ -351,12 +397,15 @@ class Widget_Flex_Footer_Render {
 	}
 
 	public function handle_link_classes( $atts, $item ) {
-		$classes = [ self::LAYOUT_CLASSNAME . '__menu-item' ];
+		$classes = [
+			self::LAYOUT_CLASSNAME . '__menu-item',
+			self::LAYOUT_CLASSNAME . '__link',
+		];
 		$is_anchor = false !== strpos( $atts['href'], '#' );
-		$has_hover_animation = $this->settings['style_navigation_hover_animation'] ?? '';
+		$hover_animation = $this->settings['style_business_details_links_hover_animation'];
 
-		if ( $has_hover_animation ) {
-			$classes[] = 'elementor-animation-' . $has_hover_animation;
+		if ( $hover_animation ) {
+			$classes[] = 'elementor-animation-' . $hover_animation;
 		}
 
 		if ( ! $is_anchor && in_array( 'current-menu-item', $item->classes, true ) ) {

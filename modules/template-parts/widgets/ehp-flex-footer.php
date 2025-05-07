@@ -37,6 +37,7 @@ use HelloPlus\Classes\{
 use HelloPlus\Modules\Content\Traits\Widget_Repeater_Editable;
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
+use HelloPlus\Includes\Utils;
 
 class Ehp_Flex_Footer extends Ehp_Widget_Base {
 
@@ -73,6 +74,18 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 		return $style_depends;
 	}
 
+	protected function get_upsale_data(): array {
+		return [
+			'condition' => ! Utils::has_pro(),
+			'image' => esc_url( HELLOPLUS_IMAGES_URL . 'go-pro.svg' ),
+			'image_alt' => esc_attr__( 'Upgrade Now', 'hello-plus' ),
+			'title' => esc_html__( 'Create a custom footer with multiple options', 'hello-plus' ),
+			'description' => esc_html__( 'Upgrade to Elementor Pro and enjoy free design and many more features', 'hello-plus' ),
+			'upgrade_url' => esc_url( 'https://go.elementor.com/biz-footer-pro' ),
+			'upgrade_text' => esc_html__( 'Upgrade Now', 'hello-plus' ),
+		];
+	}
+
 	protected function render(): void {
 		$render_strategy = new Widget_Flex_Footer_Render( $this );
 
@@ -97,6 +110,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 		$this->add_inline_editing_attributes( 'group_4_text_textarea', 'none' );
 		$this->add_inline_editing_attributes( 'group_4_contact_links_subheading', 'none' );
 		$this->add_inline_editing_attributes( 'group_4_social_links_subheading', 'none' );
+		$this->add_inline_editing_attributes( 'copyright_text', 'none' );
 
 		$render_strategy->render();
 	}
@@ -1088,7 +1102,10 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
-				'selector' => '{{WRAPPER}} .ehp-flex-footer__copyright-text',
+				'selectors' => [
+					'{{WRAPPER}} .ehp-flex-footer__copyright-text',
+					'{{WRAPPER}} .ehp-flex-footer__copyright-prefix',
+				]
 			]
 		);
 

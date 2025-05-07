@@ -377,19 +377,24 @@ class Widget_Flex_Footer_Render {
 	public function render_copyright(): void {
 		$this->widget->add_render_attribute( 'copyright', 'class', self::LAYOUT_CLASSNAME . '__copyright' );
 		$this->widget->add_render_attribute( 'copyright-wrapper', 'class', self::LAYOUT_CLASSNAME . '__copyright-wrapper' );
+		$this->widget->add_render_attribute( 'copyright-prefix', 'class', self::LAYOUT_CLASSNAME . '__copyright-prefix' );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'copyright' ); ?>>
 			<div <?php $this->widget->print_render_attribute_string( 'copyright-wrapper' ); ?>>
+				<span <?php $this->widget->print_render_attribute_string( 'copyright-prefix' ); ?>>
+					<?php
+						if ( ! empty( $this->settings['current_year_switcher'] ) && $this->settings['current_year_switcher'] === 'yes' ) {
+							echo '&copy;' . date('Y') . '.&nbsp;';
+						}
+					?>
+				</span>
 				<?php
-				$copyright_prefix = '';
-				if ( ! empty( $this->settings['current_year_switcher'] ) && $this->settings['current_year_switcher'] === 'yes' ) {
-					$copyright_prefix = '&copy;' . date('Y') . '. ';
-				}
-				Widget_Utils::maybe_render_text_html(
-					$this->widget,
-					'copyright_text',
-					self::LAYOUT_CLASSNAME . '__copyright-text',
-						$copyright_prefix . $this->settings['copyright_text']
+					Widget_Utils::maybe_render_text_html(
+						$this->widget,
+						'copyright_text',
+						self::LAYOUT_CLASSNAME . '__copyright-text',
+						$this->settings['copyright_text'],
+						'span',
 					);
 				?>
 			</div>

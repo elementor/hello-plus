@@ -93,10 +93,21 @@
 		}
 	}
 
+	&__site-title {
+		color: var(--flex-footer-site-title-color);
+		margin: 0;
+
+		.ehp-flex-footer__site-link:hover &,
+		.ehp-flex-footer__site-link:focus & {
+			color: var(--flex-footer-site-title-color-hover);
+		}
+	}
+
 	&__description {
 		color: var(--flex-footer-description-color);
 		margin: 0;
 		max-width: var(--flex-footer-description-max-width);
+		white-space: pre-wrap;
 	}
 
 	&__link {
@@ -184,6 +195,10 @@
 	&__copyright-text {
 		color: var(--flex-footer-copyright-color);
 		margin-bottom: 0;
+	}
+
+	&__copyright-prefix {
+		color: var(--flex-footer-copyright-color);
 	}
 
 	&__overlay {

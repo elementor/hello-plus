@@ -714,13 +714,13 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 						'icon' => 'eicon-align-center-h',
 					],
 				],
-				'default' => 'start',
+				'default' => 'center',
 				'condition' => [
 					'layout_preset' => 'quick-reference',
 				],
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .ehp-flex-footer__content' => 'justify-content: {{VALUE}};',
-				// ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-content-alignment: {{VALUE}};',
+				],
 			]
 		);
 
@@ -744,9 +744,9 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'condition' => [
 					'layout_preset' => 'quick-reference',
 				],
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .ehp-flex-footer__content' => 'max-width: {{SIZE}}{{UNIT}};',
-				// ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-content-width: {{SIZE}}{{UNIT}};',
+				],
 			]
 		);
 
@@ -1119,6 +1119,9 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-copyright-alignment: {{VALUE}};',
 				],
+				'condition' => [
+					'layout_preset' => 'info-hub',
+				],
 			]
 		);
 
@@ -1291,9 +1294,9 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'condition' => [
 					'layout_preset' => 'quick-reference',
 				],
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .ehp-flex-footer__business-details-group' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-				// ],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-element-spacing: {{SIZE}}{{UNIT}};',
+				],
 			]
 		);
 

@@ -1,9 +1,11 @@
 @import "../../../../assets/dev/scss/variables";
 
 .ehp-flex-footer {
+	--flex-footer-icons-alignment: row;
 
 	&.has-preset {
 		&-info-hub {
+			--flex-footer-business-details-gap: var(--flex-footer-subheading-spacing);
 			
 			& .ehp-flex-footer__groups-row {
 				display: grid;
@@ -14,6 +16,40 @@
 		}
 
 		&-quick-reference {
+			--flex-footer-business-details-gap: var(--flex-footer-element-spacing);
+
+			& .ehp-flex-footer__group,
+			& .ehp-flex-footer__copyright-wrapper {
+				display: flex;
+				justify-content: var(--flex-footer-content-alignment);
+				text-align: var(--flex-footer-content-alignment);
+			}
+
+			& .ehp-flex-footer__group--business-details {
+				align-items: var(--flex-footer-content-alignment);
+				flex-direction: column;
+			}
+
+			& .ehp-flex-footer__menu,
+			& .ehp-flex-footer__list--contact-links {
+				display: flex;
+				flex-direction: row;
+				gap: var(--flex-footer-links-spacing);
+			}
+
+			& .ehp-flex-footer__group {
+				margin-bottom: var(--flex-footer-element-spacing);
+				
+				&:last-of-type {
+					margin-bottom: 0;
+				}
+			}
+
+			& .ehp-flex-footer__groups-row,
+			& .ehp-flex-footer__copyright-wrapper {
+				margin-inline: auto;
+				max-width: var(--flex-footer-content-width);
+			}
 		}
 	}
 
@@ -38,7 +74,7 @@
 	}
 
 	&__site-link-container {
-		margin-bottom: var(--flex-footer-subheading-spacing);
+		margin: 0 0 var(--flex-footer-business-details-gap);
 	}
 
 	&__site-logo,
@@ -59,13 +95,13 @@
 
 	&__description {
 		color: var(--flex-footer-description-color);
+		margin: 0;
 		max-width: var(--flex-footer-description-max-width);
 	}
 
 	&__link {
 		color: var(--flex-footer-link-color);
-		display: inline-block;
-		margin-bottom: var(--flex-footer-links-spacing);
+		display: inline-flex;
 		transition: $transition;
 
 		&:hover,
@@ -113,6 +149,9 @@
 	}
 
 	&__list {
+		display: flex;
+		flex-direction: column;
+		gap: var(--flex-footer-links-spacing);
 		list-style: none;
 		padding: 0;
 	}
@@ -121,6 +160,11 @@
 		display: flex;
 		flex-direction: var(--flex-footer-icons-alignment);
 		gap: var(--flex-footer-links-spacing);
+	}
+
+	&__list-item {
+		align-items: center;
+		display: flex;
 	}
 
 	&__copyright {

@@ -759,6 +759,16 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 			[
 				'label' => esc_html__( 'Subheadings', 'hello-plus' ),
 				'tab' => Controls_Manager::TAB_STYLE,
+				'conditions' => [
+					'relation' => 'or',
+					'terms' => [
+						[
+							'name' => 'layout_preset',
+							'operator' => '!==',
+							'value' => 'quick-reference',
+						],
+					],
+				],
 			]
 		);
 

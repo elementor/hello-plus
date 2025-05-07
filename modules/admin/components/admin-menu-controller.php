@@ -15,7 +15,7 @@ class Admin_Menu_Controller {
 	const SETUP_WIZARD_TRANSIENT_NAME = 'helloplus_redirect_to_setup_wizard';
 
 	public function admin_menu( $parent_slug ) {
-		if ( defined( 'EHP_THEME_SLUG' ) && 'hello-elementor' === EHP_THEME_SLUG ) {
+		if ( Utils::has_hello_elementor_theme() ) {
 			return;
 		}
 		$setup_wizard = new Setup_Wizard();
@@ -49,7 +49,9 @@ class Admin_Menu_Controller {
 
 	public function __construct() {
 		add_action( 'hello-plus-theme/admin-menu', [ $this, 'admin_menu' ], 10, 1 );
-		add_action( 'hello-plus/activate', [ $this, 'activate' ] );
 		add_action( 'hello-plus/init', [ $this, 'redirect_on_first_activation' ] );
+		if ( ! Utils::has_hello_elementor_theme() ) {
+			add_action( 'hello-plus/activate', [ $this, 'activate' ] );
+		}
 	}
 }

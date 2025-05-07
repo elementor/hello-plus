@@ -22,7 +22,7 @@
 	},
 	"devDependencies": {
 		"@elementor/wp-lite-env": "^0.0.20",
-		"@playwright/test": "1.51.0",
+		"@playwright/test": "1.51.1",
 		"@typescript-eslint/parser": "^6.21.0",
 		"@wordpress/eslint-plugin": "^21.6.0",
 		"@wordpress/scripts": "^30.13.0",
@@ -38,8 +38,8 @@
 		"webpack-remove-empty-scripts": "^1.0.4"
 	},
 	"dependencies": {
-		"@elementor/icons": "1.12.0",
-		"@elementor/ui": "1.20.3",
+		"@elementor/icons": "1.40.2",
+		"@elementor/ui": "1.34.2",
 		"composer": "^4.1.0",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1"

@@ -88,30 +88,24 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 
 	protected function render(): void {
 		$render_strategy = new Widget_Flex_Footer_Render( $this );
-
-		
 		$this->add_inline_editing_attributes( 'group_1_business_details_subheading', 'none' );
 		$this->add_inline_editing_attributes( 'group_1_business_details_description', 'none' );
-		
 		$this->add_inline_editing_attributes( 'group_2_navigation_links_subheading', 'none' );
 		$this->add_inline_editing_attributes( 'group_2_text_subheading', 'none' );
 		$this->add_inline_editing_attributes( 'group_2_text_textarea', 'none' );
 		$this->add_inline_editing_attributes( 'group_2_contact_links_subheading', 'none' );
 		$this->add_inline_editing_attributes( 'group_2_social_links_subheading', 'none' );
-		
 		$this->add_inline_editing_attributes( 'group_3_navigation_links_subheading', 'none' );
 		$this->add_inline_editing_attributes( 'group_3_text_subheading', 'none' );
 		$this->add_inline_editing_attributes( 'group_3_text_textarea', 'none' );
 		$this->add_inline_editing_attributes( 'group_3_contact_links_subheading', 'none' );
 		$this->add_inline_editing_attributes( 'group_3_social_links_subheading', 'none' );
-		
 		$this->add_inline_editing_attributes( 'group_4_navigation_links_subheading', 'none' );
 		$this->add_inline_editing_attributes( 'group_4_text_subheading', 'none' );
 		$this->add_inline_editing_attributes( 'group_4_text_textarea', 'none' );
 		$this->add_inline_editing_attributes( 'group_4_contact_links_subheading', 'none' );
 		$this->add_inline_editing_attributes( 'group_4_social_links_subheading', 'none' );
 		$this->add_inline_editing_attributes( 'copyright_text', 'none' );
-
 		$render_strategy->render();
 	}
 
@@ -1449,7 +1443,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 	protected function get_conditions_by_type_values( $type_values ) {
 		$type_values = (array) $type_values;
 		$terms = [];
-		foreach ( [2, 3, 4] as $group_number ) {
+		foreach ( [ 2, 3, 4 ] as $group_number ) {
 			$group_terms = [
 				[
 					'name' => 'group_' . $group_number . '_type',

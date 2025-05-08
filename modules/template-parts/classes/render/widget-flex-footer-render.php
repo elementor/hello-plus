@@ -41,7 +41,7 @@ class Widget_Flex_Footer_Render {
 		}
 
 		$this->widget->add_render_attribute( 'layout', [
-			'class' => $layout_classnames
+			'class' => $layout_classnames,
 		] );
 
 		$this->widget->maybe_add_advanced_attributes();
@@ -55,15 +55,15 @@ class Widget_Flex_Footer_Render {
 				<?php
 					$this->render_business_details();
 
-					if ( 'yes' === $this->settings['group_2_switcher'] ) {
-						$this->render_footer_group( '2' );
-					}
-					if ( 'yes' === $this->settings['group_3_switcher'] ) {
-						$this->render_footer_group( '3' );
-					}
-					if ( 'yes' === $this->settings['group_4_switcher'] ) {
-						$this->render_footer_group( '4' );
-					}
+				if ( 'yes' === $this->settings['group_2_switcher'] ) {
+					$this->render_footer_group( '2' );
+				}
+				if ( 'yes' === $this->settings['group_3_switcher'] ) {
+					$this->render_footer_group( '3' );
+				}
+				if ( 'yes' === $this->settings['group_4_switcher'] ) {
+					$this->render_footer_group( '4' );
+				}
 				?>
 			</div>
 
@@ -96,15 +96,15 @@ class Widget_Flex_Footer_Render {
 		$group_type = $this->settings[ 'group_' . $group_number . '_type' ];
 		?>
 		<?php
-			if ( 'contact-links' === $group_type ) {
-				$this->render_contact_links_group( $group_number );
-			} elseif ( 'text' === $group_type ) {
-				$this->render_text_group( $group_number );
-			} elseif ( 'social-links' === $group_type ) {
-				$this->render_social_links_group( $group_number );
-			} elseif ( 'navigation-links' === $group_type ) {
-				$this->render_navigation_links_group( $group_number );
-			}
+		if ( 'contact-links' === $group_type ) {
+			$this->render_contact_links_group( $group_number );
+		} elseif ( 'text' === $group_type ) {
+			$this->render_text_group( $group_number );
+		} elseif ( 'social-links' === $group_type ) {
+			$this->render_social_links_group( $group_number );
+		} elseif ( 'navigation-links' === $group_type ) {
+			$this->render_navigation_links_group( $group_number );
+		}
 		?>
 		<?php
 	}
@@ -134,75 +134,76 @@ class Widget_Flex_Footer_Render {
 		] );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'contact-links-group' ); ?>>
-				<?php $this->render_subheading( $group_number, 'contact_links' ); ?>
-				<ul <?php $this->widget->print_render_attribute_string( 'contact-links-list' ); ?>>
-					<?php
-					foreach ( $repeater as $key => $contact_link ) {
-						$link = [
-							'platform' => $contact_link[ 'group_' . $group_number . '_platform' ],
-							'number' => $contact_link[ 'group_' . $group_number . '_number' ] ?? '',
-							'username' => $contact_link[ 'group_' . $group_number . '_username' ] ?? '',
-							'email_data' => [
-								'group_' . $group_number . '_mail' => $contact_link[ 'group_' . $group_number . '_mail' ] ?? '',
-								'group_' . $group_number . '_mail_subject' => $contact_link[ 'group_' . $group_number . '_mail_subject' ] ?? '',
-								'group_' . $group_number . '_mail_body' => $contact_link[ 'group_' . $group_number . '_mail_body' ] ?? '',
-							],
-							'viber_action' => $contact_link[ 'group_' . $group_number . '_viber_action' ] ?? '',
-							'url' => $contact_link[ 'group_' . $group_number . '_url' ] ?? '',
-							'location' => $contact_link[ 'group_' . $group_number . '_waze' ] ?? '',
-							'map' => $contact_link[ 'group_' . $group_number . '_map' ] ?? '',
-						];
+			<?php $this->render_subheading( $group_number, 'contact_links' ); ?>
+			<ul <?php $this->widget->print_render_attribute_string( 'contact-links-list' ); ?>>
+				<?php
+				foreach ( $repeater as $key => $contact_link ) {
+					$link = [
+						'platform' => $contact_link[ 'group_' . $group_number . '_platform' ],
+						'number'   => $contact_link[ 'group_' . $group_number . '_number' ] ?? '',
+						'username' => $contact_link[ 'group_' . $group_number . '_username' ] ?? '',
+						'email_data' => [
+							'group_' . $group_number . '_mail'         => $contact_link[ 'group_' . $group_number . '_mail' ] ?? '',
+							'group_' . $group_number . '_mail_subject' => $contact_link[ 'group_' . $group_number . '_mail_subject' ] ?? '',
+							'group_' . $group_number . '_mail_body'    => $contact_link[ 'group_' . $group_number . '_mail_body' ] ?? '',
+						],
+						'viber_action' => $contact_link[ 'group_' . $group_number . '_viber_action' ] ?? '',
+						'url'          => $contact_link[ 'group_' . $group_number . '_url' ] ?? '',
+						'location'     => $contact_link[ 'group_' . $group_number . '_waze' ] ?? '',
+						'map'          => $contact_link[ 'group_' . $group_number . '_map' ] ?? '',
+					];
 
-						$hover_animation = $this->settings['style_business_details_links_hover_animation'];
+					$hover_animation = $this->settings['style_business_details_links_hover_animation'];
 
-						$contact_link_classnames = [
-							self::LAYOUT_CLASSNAME . '__link',
-							self::LAYOUT_CLASSNAME . '__link--contact',
-						 ];
+					$contact_link_classnames = [
+						self::LAYOUT_CLASSNAME . '__link',
+						self::LAYOUT_CLASSNAME . '__link--contact',
+					];
 
-						if ( ! empty( $hover_animation ) ) {
-							$contact_link_classnames[] = 'elementor-animation-' . $hover_animation;
-						}
+					if ( ! empty( $hover_animation ) ) {
+						$contact_link_classnames[] = 'elementor-animation-' . $hover_animation;
+					}
+
+					$this->widget->add_render_attribute( 'contact-link-' . $key, [
+						'aria-label' => esc_attr( $contact_link[ 'group_' . $group_number . '_label' ] ),
+						'class'      => $contact_link_classnames,
+					] );
+
+					if ( $ehp_platforms->is_url_link( $contact_link[ 'group_' . $group_number . '_platform' ] ) ) {
+						$ehp_platforms->render_link_attributes( $link, 'contact-link-' . $key );
+					} else {
+						$formatted_link = $ehp_platforms->get_formatted_link( $link, 'group_' . $group_number );
 
 						$this->widget->add_render_attribute( 'contact-link-' . $key, [
-							'aria-label' => esc_attr( $contact_link[ 'group_' . $group_number . '_label' ] ),
-							'class' => $contact_link_classnames,
+							'href' => $formatted_link,
+							'rel'  => 'noopener noreferrer',
 						] );
+					}
 
-						if ( $ehp_platforms->is_url_link( $contact_link[ 'group_' . $group_number . '_platform' ] ) ) {
-							$ehp_platforms->render_link_attributes( $link, 'contact-link-' . $key );
-						} else {
-							$formatted_link = $ehp_platforms->get_formatted_link( $link, 'group_' . $group_number );
+					$label_repeater_key = $this->widget->public_get_repeater_setting_key(
+						'group_' . $group_number . '_label',
+						'group_' . $group_number . '_repeater',
+						$key
+					);
 
-							$this->widget->add_render_attribute( 'contact-link-' . $key, [
-								'href' => $formatted_link,
-								'rel' => 'noopener noreferrer',
-							] );
-						}
-
-						$label_repeater_key = $this->widget->public_get_repeater_setting_key(
-							'group_' . $group_number . '_label',
-							'group_' . $group_number . '_repeater',
-							$key
-						);
-
-						$this->widget->public_add_inline_editing_attributes( $label_repeater_key, 'none' );
-						?>
-						<li <?php $this->widget->print_render_attribute_string( 'contact-link' ); ?>>
-							<a <?php $this->widget->print_render_attribute_string( 'contact-link-' . $key ); ?>>
-								<?php
-									Widget_Utils::maybe_render_text_html(
-										$this->widget,
-										$label_repeater_key,
-										self::LAYOUT_CLASSNAME . '__contact-link-label',
-										$contact_link[ 'group_' . $group_number . '_label' ],
-										'span'
-									);
-								?>
-							</a>
-						</li>
+					$this->widget->public_add_inline_editing_attributes( $label_repeater_key, 'none' );
+					?>
+					<li <?php $this->widget->print_render_attribute_string( 'contact-link' ); ?>>
+						<a <?php $this->widget->print_render_attribute_string( 'contact-link-' . $key ); ?>>
+							<?php
+							Widget_Utils::maybe_render_text_html(
+								$this->widget,
+								$label_repeater_key,
+								self::LAYOUT_CLASSNAME . '__contact-link-label',
+								$contact_link[ 'group_' . $group_number . '_label' ],
+								'span'
+							);
+							?>
+						</a>
+					</li>
 					<?php
-				} ?>
+				}
+				?>
 			</ul>
 		</div>
 		<?php
@@ -234,7 +235,7 @@ class Widget_Flex_Footer_Render {
 
 	protected function render_social_links_group( $group_number ) {
 		$repeater = $this->settings[ 'group_' . $group_number . '_social_repeater' ];
-	
+
 		$this->widget->remove_render_attribute( 'social-links-group' );
 		$this->widget->add_render_attribute( 'social-links-group', [
 			'class' => [
@@ -286,16 +287,13 @@ class Widget_Flex_Footer_Render {
 					?>
 					<li <?php $this->widget->print_render_attribute_string( 'social-link' ); ?>>
 						<a <?php $this->widget->print_render_attribute_string( 'social-icon-' . $key ); ?>>
-						<?php Icons_Manager::render_icon( $icon,
-							[
+							<?php Icons_Manager::render_icon( $icon, [
 								'aria-hidden' => 'true',
 								'class' => self::LAYOUT_CLASSNAME . '__social-icon',
-							]
-							); ?>
+							] ); ?>
 						</a>
 					</li>
-				<?php
-				} ?>
+				<?php } ?>
 			</ul>
 		</div>
 		<?php
@@ -337,7 +335,7 @@ class Widget_Flex_Footer_Render {
 
 		$args = [
 			'echo' => false,
-			'menu' => $this->settings['footer_navigation_menu_' . $group_number],
+			'menu' => $this->settings[ 'footer_navigation_menu_' . $group_number ],
 			'menu_class' => self::LAYOUT_CLASSNAME . '__menu ' . self::LAYOUT_CLASSNAME . '__list',
 			'menu_id' => 'menu-' . $this->get_and_advance_nav_menu_index() . '-' . $this->widget->get_id(),
 			'fallback_cb' => '__return_empty_string',
@@ -383,19 +381,19 @@ class Widget_Flex_Footer_Render {
 			<div <?php $this->widget->print_render_attribute_string( 'copyright-wrapper' ); ?>>
 				<span <?php $this->widget->print_render_attribute_string( 'copyright-prefix' ); ?>>
 					<?php
-						if ( ! empty( $this->settings['current_year_switcher'] ) && $this->settings['current_year_switcher'] === 'yes' ) {
-							echo '&copy;' . date('Y') . '.&nbsp;';
-						}
+					if ( ! empty( $this->settings['current_year_switcher'] ) && 'yes' === $this->settings['current_year_switcher'] ) {
+						echo wp_kses_post( '&copy;' . esc_html( gmdate('Y') ) . '.&nbsp;' );
+					}
 					?>
 				</span>
 				<?php
-					Widget_Utils::maybe_render_text_html(
-						$this->widget,
-						'copyright_text',
-						self::LAYOUT_CLASSNAME . '__copyright-text',
-						$this->settings['copyright_text'],
-						'span',
-					);
+				Widget_Utils::maybe_render_text_html(
+					$this->widget,
+					'copyright_text',
+					self::LAYOUT_CLASSNAME . '__copyright-text',
+					$this->settings['copyright_text'],
+					'span',
+				);
 				?>
 			</div>
 		</div>

@@ -287,9 +287,10 @@ class Widget_Flex_Footer_Render {
 					?>
 					<li <?php $this->widget->print_render_attribute_string( 'social-link' ); ?>>
 						<a <?php $this->widget->print_render_attribute_string( 'social-icon-' . $key ); ?>>
-							<?php Icons_Manager::render_icon( $icon, [
+							<?php
+							Icons_Manager::render_icon( $icon, [
 								'aria-hidden' => 'true',
-								'class' => self::LAYOUT_CLASSNAME . '__social-icon',
+								'class' => self::LAYOUT_CLASSNAME . '__social-icon'
 							] ); ?>
 						</a>
 					</li>
@@ -382,7 +383,7 @@ class Widget_Flex_Footer_Render {
 				<span <?php $this->widget->print_render_attribute_string( 'copyright-prefix' ); ?>>
 					<?php
 					if ( ! empty( $this->settings['current_year_switcher'] ) && 'yes' === $this->settings['current_year_switcher'] ) {
-						echo wp_kses_post( '&copy;' . esc_html( gmdate('Y') ) . '.&nbsp;' );
+						echo wp_kses_post( '&copy;' . esc_html( gmdate( 'Y' ) ) . '.&nbsp;' );
 					}
 					?>
 				</span>

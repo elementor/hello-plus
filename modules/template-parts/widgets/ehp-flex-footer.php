@@ -1099,7 +1099,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .ehp-flex-footer__copyright-text',
 					'{{WRAPPER}} .ehp-flex-footer__copyright-prefix',
-				]
+				],
 			]
 		);
 
@@ -1320,7 +1320,6 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				],
 			]
 		);
-
 
 		$this->add_responsive_control(
 			'style_box_gap',

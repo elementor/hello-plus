@@ -976,7 +976,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'condition' => [
 					'contact_buttons_show' => 'yes',
 				],
-			],
+			]
 		);
 
 		$this->add_control(

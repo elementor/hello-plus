@@ -225,9 +225,14 @@ class Widget_Flex_Footer_Render {
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'group-text' ); ?>>
 			<?php
-				$this->render_subheading( $group_number, 'text' );
+			$this->render_subheading( $group_number, 'text' );
 
-				Widget_Utils::maybe_render_text_html( $this->widget, 'group_' . $group_number . '_text_textarea', $description_classnames, $settings[ 'group_' . $group_number . '_text_textarea' ] );
+			Widget_Utils::maybe_render_text_html(
+				$this->widget,
+				'group_' . $group_number . '_text_textarea',
+				$description_classnames,
+				$settings[ 'group_' . $group_number . '_text_textarea' ]
+			);
 			?>
 		</div>
 		<?php
@@ -290,7 +295,7 @@ class Widget_Flex_Footer_Render {
 							<?php
 							Icons_Manager::render_icon( $icon, [
 								'aria-hidden' => 'true',
-								'class' => self::LAYOUT_CLASSNAME . '__social-icon'
+								'class' => self::LAYOUT_CLASSNAME . '__social-icon',
 							] ); ?>
 						</a>
 					</li>

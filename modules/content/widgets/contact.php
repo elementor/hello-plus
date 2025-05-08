@@ -25,6 +25,7 @@ use Elementor\{
 	Repeater,
 	Settings,
 	Widget_Base,
+	Group_Control_Css_Filter,
 };
 
 use Elementor\Core\Kits\Documents\Tabs\{
@@ -1563,6 +1564,62 @@ class Contact extends Widget_Base {
 				],
 			]
 		);
+
+		$this->start_controls_tabs( 'map_filters_tabs' );
+
+		$this->start_controls_tab(
+			'map_filters_normal_tab',
+			[
+				'label' => esc_html__( 'Normal', 'hello-plus' ),
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Css_Filter::get_type(),
+			[
+				'name' => 'map_css_filters',
+				'selector' => '{{WRAPPER}} .ehp-contact__map',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'map_filters_hover_tab',
+			[
+				'label' => esc_html__( 'Hover', 'hello-plus' ),
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Css_Filter::get_type(),
+			[
+				'name' => 'map_css_filters_hover',
+				'selector' => '{{WRAPPER}} .ehp-contact__map:hover',
+			]
+		);
+
+		$this->add_control(
+			'map_css_filters_hover_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration (s)', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 3,
+						'step' => 0.1,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-contact__map' => 'transition-duration: {{SIZE}}s',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
 
 		$this->add_control(
 			'show_map_border',

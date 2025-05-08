@@ -203,8 +203,8 @@
 		padding: 0;
 	}
 
-	&__menu-item:is(a),
-	&__menu-item:is(a):is(:not([href]):not([tabindex])) {
+	& .ehp-footer__menu-item:is(a),
+	& .ehp-footer__menu-item:is(a):is(:not([href]):not([tabindex])) {
 		color: var(--footer-menu-item-color);
 		display: inline-flex;
 

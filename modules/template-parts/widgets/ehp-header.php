@@ -973,7 +973,10 @@ class Ehp_Header extends Ehp_Widget_Base {
 			[
 				'label' => esc_html__( 'Contact Button', 'hello-plus' ),
 				'tab' => Controls_Manager::TAB_STYLE,
-			]
+				'condition' => [
+					'contact_buttons_show' => 'yes',
+				],
+			],
 		);
 
 		$this->add_control(

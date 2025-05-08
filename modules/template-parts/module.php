@@ -41,6 +41,7 @@ class Module extends Module_Base {
 		return [
 			'Ehp_Header',
 			'Ehp_Footer',
+			'Ehp_Flex_Footer',
 		];
 	}
 
@@ -71,6 +72,13 @@ class Module extends Module_Base {
 		wp_register_style(
 			'helloplus-footer',
 			HELLOPLUS_STYLE_URL . 'helloplus-footer.css',
+			[ 'elementor-frontend' ],
+			HELLOPLUS_VERSION
+		);
+
+		wp_register_style(
+			'helloplus-flex-footer',
+			HELLOPLUS_STYLE_URL . 'helloplus-flex-footer.css',
 			[ 'elementor-frontend' ],
 			HELLOPLUS_VERSION
 		);

@@ -1,0 +1,22 @@
+<svg width="1140" height="312" viewBox="0 0 1140 312" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M8 4H1132C1134.21 4 1136 5.79088 1136 8V304C1136 306.209 1134.21 308 1132 308H8C5.79086 308 4 306.209 4 304V8C4 5.79086 5.79086 4 8 4Z" fill="white"/>
+<path d="M8 4H1132C1134.21 4 1136 5.79088 1136 8V304C1136 306.209 1134.21 308 1132 308H8C5.79086 308 4 306.209 4 304V8C4 5.79086 5.79086 4 8 4Z" stroke="#515962" stroke-width="8"/>
+<rect x="64" y="64" width="68" height="68" rx="4" fill="#D5D8DC" stroke="#515962" stroke-width="8" stroke-linejoin="round"/>
+<rect x="60" y="156" width="92" height="12" rx="6" fill="#818A96"/>
+<rect x="60" y="188" width="180" height="8" rx="4" fill="#BABFC5"/>
+<rect x="60" y="204" width="80" height="8" rx="4" fill="#BABFC5"/>
+<rect x="369.333" y="60" width="92" height="12" rx="6" fill="#818A96"/>
+<rect x="369.333" y="92" width="72" height="8" rx="4" fill="#BABFC5"/>
+<rect x="369.333" y="112" width="72" height="8" rx="4" fill="#BABFC5"/>
+<rect x="369.333" y="132" width="72" height="8" rx="4" fill="#BABFC5"/>
+<rect x="369.333" y="152" width="72" height="8" rx="4" fill="#BABFC5"/>
+<rect x="678.667" y="60" width="92" height="12" rx="6" fill="#818A96"/>
+<rect x="678.667" y="92" width="72" height="8" rx="4" fill="#BABFC5"/>
+<rect x="678.667" y="112" width="72" height="8" rx="4" fill="#BABFC5"/>
+<rect x="678.667" y="132" width="72" height="8" rx="4" fill="#BABFC5"/>
+<rect x="988" y="60" width="92" height="12" rx="6" fill="#818A96"/>
+<path d="M996 93.25C1000.28 93.25 1003.75 96.7188 1003.75 101C1003.75 105.281 1000.28 108.75 996 108.75C991.719 108.75 988.25 105.281 988.25 101C988.25 96.7188 991.719 93.25 996 93.25Z" fill="#BABFC5"/>
+<path d="M1024 93.25C1028.28 93.25 1031.75 96.7188 1031.75 101C1031.75 105.281 1028.28 108.75 1024 108.75C1019.72 108.75 1016.25 105.281 1016.25 101C1016.25 96.7188 1019.72 93.25 1024 93.25Z" fill="#BABFC5"/>
+<path d="M1052 93.25C1056.28 93.25 1059.75 96.7188 1059.75 101C1059.75 105.281 1056.28 108.75 1052 108.75C1047.72 108.75 1044.25 105.281 1044.25 101C1044.25 96.7188 1047.72 93.25 1052 93.25Z" fill="#BABFC5"/>
+<rect x="60" y="244" width="120" height="8" rx="4" fill="#BABFC5"/>
+</svg>

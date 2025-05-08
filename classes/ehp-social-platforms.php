@@ -126,47 +126,50 @@ class Ehp_Social_Platforms {
 	public function add_repeater_controls() {
 		$prefix_attr = $this->context['prefix_attr'];
 		$repeater = $this->context['repeater'];
+		$show_icon = $this->context['show_icon'] ?? true;
 
-		$repeater->add_control(
-			$prefix_attr . '_icon',
-			[
-				'label' => esc_html__( 'Icon', 'hello-plus' ),
-				'type' => Controls_Manager::ICONS,
-				'default' => $this->defaults['icon_default'] ?? [
-					'value' => 'fas fa-phone-alt',
-					'library' => 'fa-solid',
-				],
-				'recommended' => [
-					'fa-solid' => [
-						'envelope',
-						'phone-alt',
-						'phone',
-						'mobile',
-						'mobile-alt',
-						'sms',
-						'comment-dots',
-						'map-marker-alt',
-						'map-marker',
-						'location-arrow',
-						'map',
-						'link',
-						'globe',
+		if ( $show_icon ) {
+			$repeater->add_control(
+				$prefix_attr . '_icon',
+				[
+					'label' => esc_html__( 'Icon', 'hello-plus' ),
+					'type' => Controls_Manager::ICONS,
+					'default' => $this->defaults['icon_default'] ?? [
+						'value' => 'fas fa-phone-alt',
+						'library' => 'fa-solid',
 					],
-					'fa-regular' => [
-						'envelope',
-						'comment-dots',
-						'map',
+					'recommended' => [
+						'fa-solid' => [
+							'envelope',
+							'phone-alt',
+							'phone',
+							'mobile',
+							'mobile-alt',
+							'sms',
+							'comment-dots',
+							'map-marker-alt',
+							'map-marker',
+							'location-arrow',
+							'map',
+							'link',
+							'globe',
+						],
+						'fa-regular' => [
+							'envelope',
+							'comment-dots',
+							'map',
+						],
+						'fa-brands' => [
+							'whatsapp',
+							'whatsapp-square',
+							'facebook-messenger',
+							'viber',
+							'waze',
+						],
 					],
-					'fa-brands' => [
-						'whatsapp',
-						'whatsapp-square',
-						'facebook-messenger',
-						'viber',
-						'waze',
-					],
-				],
-			]
-		);
+				]
+			);
+		}
 
 		$repeater->add_control(
 			$prefix_attr . '_label',

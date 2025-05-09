@@ -73,11 +73,21 @@ export type Post = {
 	tags?: number
 }
 
+export type PageData = {
+	id: string;
+	url: string;
+};
+
 export type WindowType = Window & {
 	$e?: {
 		run: ( s: string, o: object )=> unknown
 	}
 	wpApiSettings?: { nonce: string }
+	elementorNotifications?: {
+		destroy: () => void
+	},
+	formWasSubmitted?: boolean
+    formErrorDetected?: boolean
 };
 export type BackboneType = {
 	Model: new ( o: {title: string} )=> unknown

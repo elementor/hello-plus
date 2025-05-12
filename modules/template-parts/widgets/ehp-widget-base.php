@@ -219,6 +219,28 @@ abstract class Ehp_Widget_Base extends Widget_Base {
 	}
 
 	public function add_style_brand_controls( $widget_name ) {
+		$this->add_control(
+			'style_logo_heading',
+			[
+				'label' => esc_html__( 'Logo', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+				'condition' => [
+					'site_logo_brand_select' => 'logo',
+				],
+			]
+		);
+
+		$this->add_control(
+			'style_title_heading',
+			[
+				'label' => esc_html__( 'Site Name', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+				'condition' => [
+					'site_logo_brand_select' => 'title',
+				],
+			]
+		);
+
 		$this->add_responsive_control(
 			'style_logo_width',
 			[
@@ -249,17 +271,6 @@ abstract class Ehp_Widget_Base extends Widget_Base {
 				],
 				'condition' => [
 					'site_logo_brand_select' => 'logo',
-				],
-			]
-		);
-
-		$this->add_control(
-			'style_title_heading',
-			[
-				'label' => esc_html__( 'Site Name', 'hello-plus' ),
-				'type' => Controls_Manager::HEADING,
-				'condition' => [
-					'site_logo_brand_select' => 'title',
 				],
 			]
 		);
@@ -542,6 +553,10 @@ abstract class Ehp_Widget_Base extends Widget_Base {
 		return $this->get_attachment_image_html_filter( $html, 'footer' );
 	}
 
+	public function get_flex_footer_attachment_image_html_filter( $html ) {
+		return $this->get_attachment_image_html_filter( $html, 'flex-footer' );
+	}
+
 	public function get_attachment_image_html_filter( $html, $widget_name ) {
 		$layout_classname = self::LAYOUT_PREFIX . $widget_name;
 		$settings = $this->get_settings_for_display();
@@ -604,10 +619,14 @@ abstract class Ehp_Widget_Base extends Widget_Base {
 						add_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_header_attachment_image_html_filter' ], 10, 4 );
 						Group_Control_Image_Size::print_attachment_image_html( $settings, 'site_logo_image' );
 						remove_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_header_attachment_image_html_filter' ], 10 );
-					} else {
+					} elseif ( 'footer' === $widget_name ) {
 						add_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_footer_attachment_image_html_filter' ], 10, 4 );
 						Group_Control_Image_Size::print_attachment_image_html( $settings, 'site_logo_image' );
 						remove_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_footer_attachment_image_html_filter' ], 10 );
+					} elseif ( 'flex-footer' === $widget_name ) {
+						add_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_flex_footer_attachment_image_html_filter' ], 10, 4 );
+						Group_Control_Image_Size::print_attachment_image_html( $settings, 'site_logo_image' );
+						remove_filter( 'elementor/image_size/get_attachment_image_html', [ $this, 'get_flex_footer_attachment_image_html_filter' ], 10 );
 					}
 				} ?>
 				<?php if ( 'title' === $site_logo_brand_select ) {

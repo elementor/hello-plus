@@ -65,6 +65,10 @@ class Zig_Zag extends Widget_Base {
 		return [ 'helloplus-zigzag-fe' ];
 	}
 
+	public function get_custom_help_url(): string {
+		return 'https://go.elementor.com/zigzag-help';
+	}
+
 	protected function render(): void {
 		$render_strategy = new Widget_Zig_Zag_Render( $this );
 

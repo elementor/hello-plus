@@ -1,4 +1,4 @@
-@import "../../../../assets/dev/scss/variables";
+@use "../../../../assets/dev/scss/variables";
 
 .elementor-control-type-choose-img {
 
@@ -8,7 +8,7 @@
 		&-img {
 			column-gap: 4px;
 			display: grid;
-			grid-template-columns: repeat(var(--elementor-choices-columns), 1fr); 
+			grid-template-columns: repeat(var(--elementor-choices-columns), 1fr);
 			height: fit-content;
 			line-height: normal;
 			row-gap: 4px;
@@ -49,7 +49,7 @@
 			&.e-choose-placeholder + .elementor-choices-label,
 			&:checked + .elementor-choices-label {
 				background-color: initial;
-				border: 2px solid $e-pink-300;
+				border: 2px solid variables.$e-pink-300;
 				border-radius: 3px;
 				opacity: 1;
 			}

@@ -1,4 +1,4 @@
-@import "../../../../assets/dev/scss/variables";
+@use "../../../../assets/dev/scss/variables";
 
 .ehp-hero {
 	--hero-box-height: auto;
@@ -19,8 +19,8 @@
 
 	--hero-button-primary-icon-spacing: 10px;
 	--hero-button-primary-icon-size: 16px;
-	--hero-button-primary-text-color: #{$global-colors-white};
-	--hero-button-primary-text-color-hover: #{$global-colors-text};
+	--hero-button-primary-text-color: #{variables.$global-colors-white};
+	--hero-button-primary-text-color-hover: #{variables.$global-colors-text};
 	--hero-button-primary-border-width: 0;
 	--hero-button-primary-border-color: transparent;
 
@@ -63,36 +63,36 @@
 	}
 
 	&.is-full-height-mobile {
-		@include full-height(null, $screen-mobile-max);
+		@include full-height(null, variables.$screen-mobile-max);
 	}
 
 	&.is-full-height-mobile_extra {
-		@include full-height($screen-mobile-extra-min, $screen-mobile-extra-max);
+		@include full-height(variables.$screen-mobile-extra-min, variables.$screen-mobile-extra-max);
 	}
 
 	&.is-full-height-tablet {
-		@include full-height($screen-tablet-min, $screen-tablet-max);
+		@include full-height(variables.$screen-tablet-min, variables.$screen-tablet-max);
 	}
 
 	&.is-full-height-tablet_extra {
-		@include full-height($screen-tablet-extra-min, $screen-tablet-extra-max);
+		@include full-height(variables.$screen-tablet-extra-min, variables.$screen-tablet-extra-max);
 	}
 
 	&.is-full-height-laptop {
-		@include full-height($screen-laptop-min, $screen-laptop-max);
+		@include full-height(variables.$screen-laptop-min, variables.$screen-laptop-max);
 	}
 
 	&.is-full-height-desktop {
 
-		@include full-height($screen-desktop-min, null);
+		@include full-height(variables.$screen-desktop-min, null);
 
 		&.is-full-height-widescreen {
-			@include full-height($screen-desktop-min, $screen-desktop-max);
+			@include full-height(variables.$screen-desktop-min, variables.$screen-desktop-max);
 		}
 	}
 
 	&.is-full-height-widescreen {
-		@include full-height($screen-widescreen-min, null);
+		@include full-height(variables.$screen-widescreen-min, null);
 	}
 
 	&__text-container {

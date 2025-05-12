@@ -1,4 +1,4 @@
-@import "./variables";
+@use "./variables" as variables;
 
 a.ehp-button,
 a.ehp-button:not([href]):not([tabindex]) {
@@ -11,10 +11,10 @@ a.ehp-button:not([href]):not([tabindex]) {
 	--ehp-button-primary-padding-block-start: 8px;
 	--ehp-button-primary-padding-inline-end: 16px;
 	--ehp-button-primary-padding-inline-start: 16px;
-	--ehp-button-primary-border-radius-block-end: #{$corners-shape-default};
-	--ehp-button-primary-border-radius-block-start: #{$corners-shape-default};
-	--ehp-button-primary-border-radius-inline-end: #{$corners-shape-default};
-	--ehp-button-primary-border-radius-inline-start: #{$corners-shape-default};
+	--ehp-button-primary-border-radius-block-end: #{variables.$corners-shape-default};
+	--ehp-button-primary-border-radius-block-start: #{variables.$corners-shape-default};
+	--ehp-button-primary-border-radius-inline-end: #{variables.$corners-shape-default};
+	--ehp-button-primary-border-radius-inline-start: #{variables.$corners-shape-default};
 
 	--ehp-button-secondary-icon-spacing: 10px;
 	--ehp-button-secondary-text-color: #555963;
@@ -45,11 +45,11 @@ a.ehp-button:not([href]):not([tabindex]) {
 	gap: var(--ehp-button-icon-spacing);
 	justify-content: center;
 	text-decoration: none;
-	transition: $transition;
+	transition: variables.$transition;
 
 	&:hover,
 	&:focus {
-		transition: $transition;
+		transition: variables.$transition;
 	}
 
 	&.has-border {
@@ -71,7 +71,7 @@ a.ehp-button:not([href]):not([tabindex]) {
 		background: none;
 		align-self: center;
 		text-decoration: underline;
-		
+
 		&:hover,
 		&:focus {
 			background: none;

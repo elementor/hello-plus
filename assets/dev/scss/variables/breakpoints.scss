@@ -1,3 +1,5 @@
+@use "sass:map";
+
 $breakpoints: (
 	sm: 480px, // Mobile landscape
 	md: 768px, // Tablet
@@ -6,14 +8,14 @@ $breakpoints: (
 	xxl: 1600px // Largest devices
 );
 
-$screen-mobile-min: map_get($breakpoints, sm);
-$screen-mobile-max: map_get($breakpoints, md) - 1;
-$screen-tablet-min: map_get($breakpoints, md);
-$screen-mobile-next: map_get($breakpoints, md);
-$screen-tablet-max: map_get($breakpoints, lg) - 1;
-$screen-desktop-min: map_get($breakpoints, lg);
+$screen-mobile-min: ($breakpoints, sm);
+$screen-mobile-max: map.get($breakpoints, md) - 1;
+$screen-tablet-min: map.get($breakpoints, md);
+$screen-mobile-next: map.get($breakpoints, md);
+$screen-tablet-max: map.get($breakpoints, lg) - 1;
+$screen-desktop-min: map.get($breakpoints, lg);
 $screen-desktop-max: 99999px;
-$screen-tablet-next: map_get($breakpoints, lg);
+$screen-tablet-next: map.get($breakpoints, lg);
 
 // Additional Custom Breakpoints - SCSS placeholders
 $screen-mobile-extra-min: -1;
@@ -26,13 +28,13 @@ $screen-laptop-min: -1;
 $screen-laptop-max: -1;
 $screen-widescreen-min: -1;
 
-$editor-screen-xs-max: map_get($breakpoints, sm) - 1;
-$editor-screen-sm-min: map_get($breakpoints, sm);
-$editor-screen-sm-max: map_get($breakpoints, md) - 1;
-$editor-screen-md-min: map_get($breakpoints, md);
-$editor-screen-md-max: map_get($breakpoints, lg) - 1;
-$editor-screen-lg-min: map_get($breakpoints, lg);
-$editor-screen-lg-max: map_get($breakpoints, xl) - 1;
-$editor-screen-xl-min: map_get($breakpoints, xl);
-$editor-screen-xl-max: map_get($breakpoints, xxl) - 1;
-$editor-screen-xxl-min: map_get($breakpoints, xxl);
+$editor-screen-xs-max: map.get($breakpoints, sm) - 1;
+$editor-screen-sm-min: map.get($breakpoints, sm);
+$editor-screen-sm-max: map.get($breakpoints, md) - 1;
+$editor-screen-md-min: map.get($breakpoints, md);
+$editor-screen-md-max: map.get($breakpoints, lg) - 1;
+$editor-screen-lg-min: map.get($breakpoints, lg);
+$editor-screen-lg-max: map.get($breakpoints, xl) - 1;
+$editor-screen-xl-min: map.get($breakpoints, xl);
+$editor-screen-xl-max: map.get($breakpoints, xxl) - 1;
+$editor-screen-xxl-min: map.get($breakpoints, xxl);

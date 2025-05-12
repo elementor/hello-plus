@@ -1,5 +1,5 @@
-@import "../../../../assets/dev/scss/variables";
-@import "../../../../assets/dev/scss/ehp-full-height";
+@use "../../../../assets/dev/scss/variables";
+@use "../../../../assets/dev/scss/ehp-full-height";
 
 .ehp-contact {
 	--contact-alignment-width-center: 80%;
@@ -17,7 +17,7 @@
 	padding-block-end: var(--contact-box-padding-block-end);
 	position: relative;
 
-	@include full-height-viewports();
+	@include ehp-full-height.full-height-viewports();
 
 	@mixin map-position {
 		&-start {
@@ -45,8 +45,8 @@
 	&.has-preset {
 
 		&-locate {
-			@media screen and (min-width: $screen-desktop-min) {
-				
+			@media screen and (min-width: variables.$screen-desktop-min) {
+
 				& .ehp-contact__elements-container {
 					flex-direction: row;
 				}
@@ -61,13 +61,13 @@
 				@include map-position();
 
 				&-md {
-					@media screen and (max-width: $screen-tablet-max) {
+					@media screen and (max-width: variables.$screen-tablet-max) {
 						@include map-position();
 					}
 				}
 
 				&-sm {
-					@media screen and (max-width: $screen-mobile-max) {
+					@media screen and (max-width: variables.$screen-mobile-max) {
 						@include map-position();
 					}
 				}
@@ -80,13 +80,13 @@
 				@include map-position();
 
 				&-md {
-					@media screen and (max-width: $screen-tablet-max) {
+					@media screen and (max-width: variables.$screen-tablet-max) {
 						@include map-position();
 					}
 				}
 
 				&-sm {
-					@media screen and (max-width: $screen-mobile-max) {
+					@media screen and (max-width: variables.$screen-mobile-max) {
 						@include map-position();
 					}
 				}
@@ -155,7 +155,7 @@
 		flex-direction: column;
 		flex-grow: 1;
 		gap: var(--contact-box-gap);
-		z-index: $first-layer;
+		z-index: variables.$first-layer;
 	}
 
 	&__heading {
@@ -178,7 +178,7 @@
 	&__groups {
 		column-gap: var(--contact-layout-columns-column-gap);
 		display: grid;
-		grid-template-columns: repeat(var(--contact-layout-columns), 1fr); 
+		grid-template-columns: repeat(var(--contact-layout-columns), 1fr);
 		row-gap: var(--contact-layout-columns-row-gap);
 	}
 
@@ -198,7 +198,7 @@
 		flex-direction: column;
 		gap: var(--contact-links-spacing);
 	}
-	
+
 	&__contact-link {
 		align-items: center;
 		display: flex;
@@ -207,9 +207,9 @@
 		& i,
 		& svg,
 		& .ehp-contact__contact-link-label {
-			transition: $transition;
+			transition: variables.$transition;
 		}
-	
+
 		& .ehp-contact__contact-link-label {
 			color: var(--contact-link-label-color);
 		}
@@ -224,14 +224,14 @@
 			color: var(--contact-link-icon-color);
 			font-size: var(--contact-link-icon-size);
 		}
-		
+
 		&:hover,
 		&:focus {
 
 			& i,
 			& svg,
 			& .ehp-contact__contact-link-label {
-				transition: $transition;
+				transition: variables.$transition;
 			}
 
 			& i {
@@ -241,7 +241,7 @@
 			& svg {
 				fill: var(--contact-link-icon-hover-color);
 			}
-	
+
 			& .ehp-contact__contact-link-label {
 				color: var(--contact-link-label-hover-color);
 			}
@@ -260,8 +260,8 @@
 	&__social-link {
 
 		& .ehp-contact__contact-social-icon {
-			transition: $transition;
-			
+			transition: variables.$transition;
+
 			&:is(svg) {
 				fill: var(--contact-social-icon-color);
 				height: var(--contact-social-icon-size);
@@ -279,11 +279,11 @@
 
 			& .ehp-contact__contact-social-icon {
 				color: var(--contact-social-icon-hover-color);
-				transition: $transition;
+				transition: variables.$transition;
 
 				&:is(svg) {
 					fill: var(--contact-social-icon-hover-color);
-					transition: $transition;
+					transition: variables.$transition;
 				}
 			}
 		}
@@ -328,6 +328,6 @@
 		position: absolute;
 		top: 0;
 		width: 100%;
-		z-index: $ground-layer;
+		z-index: variables.$ground-layer;
 	}
 }

@@ -1,4 +1,4 @@
-@import "../../../../assets/dev/scss/variables";
+@use "../../../../assets/dev/scss/variables";
 
 .ehp-flex-footer {
 	--flex-footer-icons-alignment: row;
@@ -6,7 +6,7 @@
 	&.has-preset {
 		&-info-hub {
 			--flex-footer-business-details-gap: var(--flex-footer-subheading-spacing);
-			
+
 			& .ehp-flex-footer__groups-row {
 				display: grid;
 				grid-template-columns: repeat(var(--flex-footer-columns), 1fr);
@@ -39,7 +39,7 @@
 
 			& .ehp-flex-footer__group {
 				margin-bottom: var(--flex-footer-element-spacing);
-				
+
 				&:last-of-type {
 					margin-bottom: 0;
 				}
@@ -54,7 +54,7 @@
 	}
 
 	&.is-align-center-mobile {
-		@media screen and (max-width: $screen-mobile-max) {
+		@media screen and (max-width: variables.$screen-mobile-max) {
 			text-align: center;
 		}
 	}
@@ -65,7 +65,7 @@
 		padding-block-start: var(--flex-footer-box-padding-block-start);
 		padding-block-end: calc(var(--flex-footer-box-gap) / 2);
 		position: relative;
-		z-index: $first-layer;
+		z-index: variables.$first-layer;
 	}
 
 	&__subheading {
@@ -113,12 +113,12 @@
 	&__link {
 		color: var(--flex-footer-link-color);
 		display: inline-flex;
-		transition: $transition;
+		transition: variables.$transition;
 
 		&:hover,
 		&:focus {
 			color: var(--flex-footer-link-color-hover);
-			transition: $transition;
+			transition: variables.$transition;
 		}
 	}
 
@@ -135,26 +135,26 @@
 		& svg {
 			fill: var(--flex-footer-link-color);
 			height: var(--flex-footer-social-icon-size);
-			transition: $transition;
+			transition: variables.$transition;
 			width: var(--flex-footer-social-icon-size);
 		}
 
 		& i {
 			color: var(--flex-footer-link-color);
 			font-size: var(--flex-footer-social-icon-size);
-			transition: $transition;
+			transition: variables.$transition;
 		}
 
 		&:hover,
 		&:focus {
 			& svg {
 				fill: var(--flex-footer-link-color-hover);
-				transition: $transition;
+				transition: variables.$transition;
 			}
 
 			& i {
 				color: var(--flex-footer-link-color-hover);
-				transition: $transition;
+				transition: variables.$transition;
 			}
 		}
 	}
@@ -183,7 +183,7 @@
 		padding-inline-end: var(--flex-footer-box-padding-inline-end);
 		padding-block-end: var(--flex-footer-box-padding-block-end);
 		position: relative;
-		z-index: $first-layer;
+		z-index: variables.$first-layer;
 	}
 
 	&__copyright-wrapper {
@@ -208,6 +208,6 @@
 		position: absolute;
 		top: 0;
 		width: 100%;
-		z-index: $ground-layer;
+		z-index: variables.$ground-layer;
 	}
 }

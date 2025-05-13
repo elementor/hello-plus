@@ -58,6 +58,10 @@ class CTA extends Widget_Base {
 		return array_merge( [ 'helloplus-cta' ], Utils::get_widgets_depends() );
 	}
 
+	public function get_custom_help_url(): string {
+		return 'https://go.elementor.com/cta-widget-help';
+	}
+
 	protected function render(): void {
 		$render_strategy = new Widget_CTA_Render( $this );
 

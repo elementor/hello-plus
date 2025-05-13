@@ -69,6 +69,10 @@ class Ehp_Header extends Ehp_Widget_Base {
 		return [ 'helloplus-header-fe' ];
 	}
 
+	public function get_custom_help_url(): string {
+		return 'https://go.elementor.com/biz-header-help';
+	}
+
 	protected function render(): void {
 		$render_strategy = new Widget_Header_Render( $this );
 

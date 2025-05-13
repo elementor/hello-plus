@@ -1,3 +1,4 @@
+@use "../../../../../assets/dev/scss/variables";
 $remote-templates-items-space: 30px;
 
 #elementor-template-library-templates[data-template-source="remote-ehp"] {
@@ -43,7 +44,7 @@ $remote-templates-items-space: 30px;
 			text-transform: uppercase;
 			line-height: 1;
 			top: 5px;
-			@include end(5px);
+			@include variables.end(5px);
 			padding: 3px 5px;
 			font-size: 8px;
 			border-radius: 2px;
@@ -65,7 +66,7 @@ $remote-templates-items-space: 30px;
 			position: absolute;
 			width: 100%;
 			bottom: 0;
-			@include start(0);
+			@include variables.start(0);
 			padding: 10px;
 			background-color: var(--e-a-bg-default);
 			transition: transform .5s;
@@ -88,7 +89,7 @@ $remote-templates-items-space: 30px;
 		min-height: 65px;
 	}
 
-	@media (max-width: $editor-screen-lg-min) {
+	@media (max-width: variables.$editor-screen-lg-min) {
 
 		.elementor-template-library-template-body {
 			height: 300px;
@@ -111,7 +112,7 @@ $remote-templates-items-space: 30px;
 
 		i {
 			font-size: 20px;
-			@include absolute-center;
+			@include variables.absolute-center;
 		}
 	}
 
@@ -127,7 +128,7 @@ $remote-templates-items-space: 30px;
 	.elementor-template-library-template-name {
 		text-align: start;
 		flex-grow: 1;
-		@include ellipsis;
+		@include variables.ellipsis;
 		padding-inline-end: 5px;
 	}
 

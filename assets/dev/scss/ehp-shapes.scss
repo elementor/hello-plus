@@ -1,32 +1,32 @@
-@import "./variables";
+@use "./variables" as variables;
 
 @mixin shapes() {
 	&-sharp {
-		--ehp-shapes-border-radius-sharp: #{$corners-shape-sharp};
+		--ehp-shapes-border-radius-sharp: #{variables.$corners-shape-sharp};
 
 		border-radius: var(--ehp-shapes-border-radius-sharp);
 	}
 
 	&-rounded {
-		--ehp-shapes-border-radius-rounded: #{$corners-shape-rounded};
+		--ehp-shapes-border-radius-rounded: #{variables.$corners-shape-rounded};
 
 		border-radius: var(--ehp-shapes-border-radius-rounded);
 	}
 
 	&-round {
-		--ehp-shapes-border-radius-round: #{$corners-shape-round};
+		--ehp-shapes-border-radius-round: #{variables.$corners-shape-round};
 
 		border-radius: var(--ehp-shapes-border-radius-round);
 	}
 
 	&-default {
-		--ehp-shapes-border-radius-default: #{$corners-shape-default};
+		--ehp-shapes-border-radius-default: #{variables.$corners-shape-default};
 
 		border-radius: var(--ehp-shapes-border-radius-default);
 	}
 
 	&-oval {
-		--ehp-shapes-border-radius-oval: #{$corners-shape-oval};
+		--ehp-shapes-border-radius-oval: #{variables.$corners-shape-oval};
 
 		border-radius: var(--ehp-shapes-border-radius-oval);
 	}
@@ -44,13 +44,13 @@
 	@include shapes();
 
 	&-md {
-		@media screen and (max-width: $screen-tablet-max) {
+		@media screen and (max-width: variables.$screen-tablet-max) {
 			@include shapes();
 		}
 	}
 
 	&-sm {
-		@media screen and (max-width: $screen-mobile-max) {
+		@media screen and (max-width: variables.$screen-mobile-max) {
 			@include shapes();
 		}
 	}
@@ -58,16 +58,16 @@
 	&.shape-type {
 
 		&-box {
-			--ehp-shapes-border-shape-rounded: #{$corners-box-shape-rounded};
+			--ehp-shapes-border-shape-rounded: #{variables.$corners-box-shape-rounded};
 		}
 
 		&-image {
-			--ehp-shapes-border-radius-rounded: #{$corners-image-shape-rounded};
-			--ehp-shapes-border-radius-round: #{$corners-image-shape-round};
+			--ehp-shapes-border-radius-rounded: #{variables.$corners-image-shape-rounded};
+			--ehp-shapes-border-radius-round: #{variables.$corners-image-shape-round};
 		}
 
 		&-logo {
-			--ehp-shapes-border-radius-round: #{$corners-logo-shape-round};
+			--ehp-shapes-border-radius-round: #{variables.$corners-logo-shape-round};
 		}
 	}
 }

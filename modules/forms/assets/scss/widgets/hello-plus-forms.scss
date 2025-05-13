@@ -1,6 +1,6 @@
-@import "../../../../../assets/dev/scss/variables";
-@import "../../../../../assets/dev/scss/ehp-full-height";
-@import "../../../../../assets/dev/scss/ehp-column-structure";
+@use "../../../../../assets/dev/scss/variables";
+@use "../../../../../assets/dev/scss/ehp-full-height" as ehp-full-height;
+@use "../../../../../assets/dev/scss/ehp-column-structure" as ehp-column-structure;
 
 @mixin column-width-sizes() {
 	&-33 {
@@ -59,8 +59,6 @@
 	--ehp-text-order-start: 2;
 	--ehp-text-order-end: 1;
 
-	@include full-height-viewports();
-
 	align-items: var(--ehp-form-content-position);
 	display: flex;
 	flex-direction: column;
@@ -70,6 +68,8 @@
 	padding-inline-start: var(--ehp-form-box-padding-inline-start);
 	padding-inline-end: var(--ehp-form-box-padding-inline-end);
 	position: relative;
+
+	@include ehp-full-height.full-height-viewports();
 
 	&.has-shape-custom.shape-type-box {
 		--ehp-shapes-border-radius-block-end: var(--form-box-border-radius-block-end);
@@ -92,7 +92,7 @@
 			& > *:is(:not(.ehp-form__overlay)) {
 				max-width: var(--ehp-form-content-width);
 				width: 100%;
-				z-index: $first-layer;
+				z-index: variables.$first-layer;
 			}
 		}
 
@@ -117,7 +117,7 @@
 		}
 
 		&-interact {
-		
+
 			& .ehp-form__text-container {
 				height: 100%;
 				justify-content: var(--ehp-form-content-alignment);
@@ -135,7 +135,7 @@
 		}
 	}
 
-	@include has-column-structure();
+	@include ehp-column-structure.has-column-structure();
 
 	& .ehp-image {
 		--ehp-image-height: var(--form-image-height);
@@ -155,7 +155,7 @@
 		height: 100%;
 		flex-direction: column;
 		justify-content: var(--ehp-form-content-alignment);
-		z-index: $first-layer;
+		z-index: variables.$first-layer;
 	}
 
 	&__wrapper {
@@ -190,13 +190,13 @@
 			@include column-width-sizes();
 
 			&-md {
-				@media screen and (max-width: $screen-tablet-max) {
+				@media screen and (max-width: variables.$screen-tablet-max) {
 					@include column-width-sizes();
 				}
 			}
 
 			&-sm {
-				@media screen and (max-width: $screen-mobile-max) {
+				@media screen and (max-width: variables.$screen-mobile-max) {
 					@include column-width-sizes();
 				}
 			}
@@ -208,7 +208,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--ehp-form-text-spacing);
-		z-index: $first-layer;
+		z-index: variables.$first-layer;
 	}
 
 	&__image-container {
@@ -253,19 +253,19 @@
 		}
 
 		.has-shape-sharp & {
-			border-radius: $corners-shape-sharp;
+			border-radius: variables.$corners-shape-sharp;
 		}
 
 		.has-shape-rounded & {
-			border-radius: $corners-shape-rounded;
+			border-radius: variables.$corners-shape-rounded;
 		}
 
 		.has-shape-round & {
-			border-radius: $corners-shape-round;
+			border-radius: variables.$corners-shape-round;
 		}
 
 		.has-shape-default & {
-			border-radius: $corners-shape-default;
+			border-radius: variables.$corners-shape-default;
 		}
 	}
 
@@ -292,13 +292,13 @@
 			@include has-button-align();
 
 			&-md {
-				@media screen and (max-width: $screen-tablet-max) {
+				@media screen and (max-width: variables.$screen-tablet-max) {
 					@include has-button-align();
 				}
 			}
 
 			&-sm {
-				@media screen and (max-width: $screen-mobile-max) {
+				@media screen and (max-width: variables.$screen-mobile-max) {
 					@include has-button-align();
 				}
 			}
@@ -315,12 +315,12 @@
 		justify-content: center;
 		gap: var(--ehp-form-button-icon-spacing);
 		text-decoration: none;
-		transition: $transition;
+		transition: variables.$transition;
 
 		&:hover,
 		&:focus {
 			color: var(--ehp-form-button-text-color-hover);
-			transition: $transition;
+			transition: variables.$transition;
 		}
 
 		&.has-border {
@@ -427,6 +427,6 @@
 		position: absolute;
 		top: 0;
 		width: 100%;
-		z-index: $ground-layer;
+		z-index: variables.$ground-layer;
 	}
 }

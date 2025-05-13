@@ -138,10 +138,20 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 		const ariaHidden = subMenu.getAttribute( 'aria-hidden' );
 
 		if ( 'true' === ariaHidden ) {
+			this.closeAllOtherSubMenus( targetItem );
 			this.openSubMenu( targetItem, subMenu );
 		} else {
 			this.closeSubMenu( targetItem, subMenu );
 		}
+	}
+
+	closeAllOtherSubMenus( currentTargetItem ) {
+		Array.from( this.elements.dropdownToggle ).forEach( ( toggle ) => {
+			if ( toggle !== currentTargetItem && 'true' === toggle.getAttribute( 'aria-expanded' ) ) {
+				const menu = toggle.nextElementSibling;
+				this.closeSubMenu( toggle, menu );
+			}
+		} );
 	}
 
 	openSubMenu( targetItem, subMenu ) {

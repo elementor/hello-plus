@@ -1,9 +1,10 @@
-@import './variables';
+@use "./variables";
 
 @mixin has-column-structure() {
+
     &.has-column-structure {
 
-		@media screen and (min-width: $screen-desktop-min) {
+		@media screen and (min-width: variables.$screen-desktop-min) {
 
 			&-50-50 {
 				grid-template-columns: 1fr 1fr;

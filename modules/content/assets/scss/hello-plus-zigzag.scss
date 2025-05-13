@@ -1,4 +1,4 @@
-@import "../../../../assets/dev/scss/variables";
+@use "../../../../assets/dev/scss/variables";
 
 .ehp-zigzag {
 	--zigzag-title-color: #000000;
@@ -18,16 +18,16 @@
 	--zigzag-animation-duration-fast: 0.8s;
 
 	--zigzag-button-primary-icon-spacing: 10px;
-	--zigzag-button-primary-text-color: #{$global-colors-white};
-	--zigzag-button-primary-text-color-hover: #{$global-colors-text};
+	--zigzag-button-primary-text-color: #{variables.$global-colors-white};
+	--zigzag-button-primary-text-color-hover: #{variables.$global-colors-text};
 	--zigzag-button-primary-text-color-alternate: var(--zigzag-button-primary-text-color);
 	--zigzag-button-primary-text-color-hover-alternate: var(--zigzag-button-primary-text-color-hover);
 	--zigzag-button-primary-border-width: 0;
 	--zigzag-button-primary-border-color: transparent;
-	--zigzag-button-primary-border-radius-block-end: #{$corners-shape-default};
-	--zigzag-button-primary-border-radius-block-start: #{$corners-shape-default};
-	--zigzag-button-primary-border-radius-inline-end: #{$corners-shape-default};
-	--zigzag-button-primary-border-radius-inline-start: #{$corners-shape-default};
+	--zigzag-button-primary-border-radius-block-end: #{variables.$corners-shape-default};
+	--zigzag-button-primary-border-radius-block-start: #{variables.$corners-shape-default};
+	--zigzag-button-primary-border-radius-inline-end: #{variables.$corners-shape-default};
+	--zigzag-button-primary-border-radius-inline-start: #{variables.$corners-shape-default};
 
 	align-items: center;
 	background-color: transparent;
@@ -200,7 +200,7 @@
 		}
 	}
 
-	@media screen and (min-width: $screen-desktop-min) {
+	@media screen and (min-width: variables.$screen-desktop-min) {
 		&.has-direction {
 			&-start {
 				.ehp-zigzag__item-wrapper:nth-child(odd) {
@@ -208,21 +208,21 @@
 						flex-direction: row;
 					}
 				}
-	
+
 				.ehp-zigzag__item-wrapper:nth-child(even) {
 					.ehp-zigzag__item-container {
 						flex-direction: row-reverse;
 					}
 				}
 			}
-	
+
 			&-end {
 				.ehp-zigzag__item-wrapper:nth-child(odd) {
 					.ehp-zigzag__item-container {
 						flex-direction: row-reverse;
 					}
 				}
-	
+
 				.ehp-zigzag__item-wrapper:nth-child(even) {
 					.ehp-zigzag__item-container {
 						flex-direction: row;
@@ -232,7 +232,7 @@
 		}
 	}
 
-	@media screen and (max-width: $screen-tablet-max) {
+	@media screen and (max-width: variables.$screen-tablet-max) {
 		.ehp-zigzag__item-container {
 			flex-direction: column;
 		}
@@ -261,13 +261,13 @@
 		& .ehp-zigzag__item-container {
 			padding-inline: 0;
 
-			@media screen and (max-width: $screen-tablet-max) {
+			@media screen and (max-width: variables.$screen-tablet-max) {
 				padding-block: 0;
 			}
 		}
 
 		.ehp-zigzag__text-container {
-			@media screen and (max-width: $screen-tablet-max) {
+			@media screen and (max-width: variables.$screen-tablet-max) {
 				padding-inline-start: var(--zigzag-box-padding-inline-start);
 				padding-inline-end: var(--zigzag-box-padding-inline-end);
 			}
@@ -277,58 +277,58 @@
 			&-start {
 
 				.ehp-zigzag__text-container {
-					@media screen and (max-width: $screen-tablet-max) {
+					@media screen and (max-width: variables.$screen-tablet-max) {
 						padding-block-end: var(--zigzag-box-padding-block-end);
 					}
 				}
 
 				.ehp-zigzag__item-wrapper:nth-child(odd) {
 					.ehp-zigzag__text-container {
-						@media screen and (min-width: $screen-desktop-min) {
+						@media screen and (min-width: variables.$screen-desktop-min) {
 							padding-inline-end: var(--zigzag-box-padding-inline-end);
 						}
 					}
 				}
-	
+
 				.ehp-zigzag__item-wrapper:nth-child(even) {
 					.ehp-zigzag__text-container {
 
-						@media screen and (min-width: $screen-desktop-min) {
+						@media screen and (min-width: variables.$screen-desktop-min) {
 							padding-inline-start: var(--zigzag-box-padding-inline-start);
 						}
 					}
 				}
 			}
-	
+
 			&-end {
 
 				.ehp-zigzag__text-container {
-					@media screen and (max-width: $screen-tablet-max) {
+					@media screen and (max-width: variables.$screen-tablet-max) {
 						padding-block-start: var(--zigzag-box-padding-block-start);
 					}
 				}
 
 				.ehp-zigzag__item-wrapper:nth-child(odd) {
 					.ehp-zigzag__text-container {
-						
-						@media screen and (max-width: $screen-tablet-max) {
+
+						@media screen and (max-width: variables.$screen-tablet-max) {
 							padding-block-start: var(--zigzag-box-padding-block-start);
 						}
 
-						@media screen and (min-width: $screen-desktop-min) {
+						@media screen and (min-width: variables.$screen-desktop-min) {
 							padding-inline-start: var(--zigzag-box-padding-inline-start);
 						}
 					}
 				}
-	
+
 				.ehp-zigzag__item-wrapper:nth-child(even) {
 					.ehp-zigzag__text-container {
 
-						@media screen and (max-width: $screen-tablet-max) {
+						@media screen and (max-width: variables.$screen-tablet-max) {
 							padding-block-start: var(--zigzag-box-padding-block-start);
 						}
 
-						@media screen and (min-width: $screen-desktop-min) {
+						@media screen and (min-width: variables.$screen-desktop-min) {
 							padding-inline-end: var(--zigzag-box-padding-inline-end);
 						}
 					}

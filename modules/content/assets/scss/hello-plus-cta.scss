@@ -1,5 +1,5 @@
-@import "../../../../assets/dev/scss/variables";
-@import "../../../../assets/dev/scss/ehp-full-height";
+@use "../../../../assets/dev/scss/variables";
+@use "../../../../assets/dev/scss/ehp-full-height";
 
 .ehp-cta {
 	--cta-elements-spacing: 40px;
@@ -12,22 +12,22 @@
 	--cta-description-color: #28292B;
 
 	--cta-button-primary-icon-spacing: 10px;
-	--cta-button-primary-text-color: #{$global-colors-white};
-	--cta-button-primary-text-color-hover: #{$global-colors-text};
+	--cta-button-primary-text-color: #{variables.$global-colors-white};
+	--cta-button-primary-text-color-hover: #{variables.$global-colors-text};
 	--cta-button-primary-border-width: 0;
 	--cta-button-primary-border-color: transparent;
-	--cta-button-primary-border-radius-block-end: #{$corners-shape-default};
-	--cta-button-primary-border-radius-block-start: #{$corners-shape-default};
-	--cta-button-primary-border-radius-inline-end: #{$corners-shape-default};
-	--cta-button-primary-border-radius-inline-start: #{$corners-shape-default};
+	--cta-button-primary-border-radius-block-end: #{variables.$corners-shape-default};
+	--cta-button-primary-border-radius-block-start: #{variables.$corners-shape-default};
+	--cta-button-primary-border-radius-inline-end: #{variables.$corners-shape-default};
+	--cta-button-primary-border-radius-inline-start: #{variables.$corners-shape-default};
 
 	--cta-button-secondary-icon-spacing: 10px;
-	--cta-button-secondary-text-color: #{$global-colors-secondary};
-	--cta-button-secondary-text-color-hover: #{$global-colors-secondary};
+	--cta-button-secondary-text-color: #{variables.$global-colors-secondary};
+	--cta-button-secondary-text-color-hover: #{variables.$global-colors-secondary};
 	--cta-button-secondary-border-width: 2px;
-	--cta-button-secondary-border-color: #{$global-colors-secondary};
+	--cta-button-secondary-border-color: #{variables.$global-colors-secondary};
 
-	--cta-box-border-color: #{$global-colors-secondary};
+	--cta-box-border-color: #{variables.$global-colors-secondary};
 	--cta-box-border-width: 1px;
 
 	--cta-text-container-flex-grow-default: 0;
@@ -45,7 +45,7 @@
 	padding-inline-start: var(--cta-box-padding-inline-start);
 	position: relative;
 
-	@include full-height-viewports();
+	@include ehp-full-height.full-height-viewports();
 
 	&.has-border {
 		border-color: var(--cta-box-border-color);
@@ -63,7 +63,7 @@
 			& .ehp-cta__elements-container {
 				gap: 0;
 			}
-	
+
 			& .ehp-cta__text-container {
 				padding-block-end: var(--cta-box-padding-block-end);
 				padding-block-start: var(--cta-box-padding-block-start);
@@ -96,7 +96,7 @@
 				flex-direction: column;
 			}
 
-			@media screen and (min-width: $screen-desktop-min) {
+			@media screen and (min-width: variables.$screen-desktop-min) {
 				.ehp-cta__elements-container {
 					flex-direction: row;
 					justify-content: space-between;
@@ -105,7 +105,7 @@
 				.ehp-cta__text-container {
 					width: 66.66%;
 				}
-	
+
 				.ehp-cta__buttons-wrapper {
 					justify-content: flex-end;
 				}
@@ -127,7 +127,7 @@
 
 			.ehp-cta__buttons-wrapper {
 
-				@media screen and (max-width: $screen-mobile-max) {
+				@media screen and (max-width: variables.$screen-mobile-max) {
 					flex-direction: column;
 				}
 			}
@@ -163,7 +163,7 @@
 				display: flex;
 				flex-direction: column;
 
-				@media screen and (min-width: $screen-desktop-min) {
+				@media screen and (min-width: variables.$screen-desktop-min) {
 					flex-direction: row;
 
 					.ehp-cta__text-container,
@@ -176,13 +176,13 @@
 					@include image-horizontal-position();
 
 					&-md {
-						@media screen and (max-width: $screen-tablet-max) {
+						@media screen and (max-width: variables.$screen-tablet-max) {
 							@include image-horizontal-position();
 						}
 					}
 
 					&-sm {
-						@media screen and (max-width: $screen-mobile-max) {
+						@media screen and (max-width: variables.$screen-mobile-max) {
 							@include image-horizontal-position();
 						}
 					}
@@ -191,8 +191,8 @@
 
 			& .ehp-cta__text-container,
 			& .ehp-cta__image-container {
-				
-				@media screen and (min-width: $screen-desktop-min) {
+
+				@media screen and (min-width: variables.$screen-desktop-min) {
 					display: flex;
 					flex-direction: column;
 					justify-content: var(--cta-content-position-vertical);
@@ -304,13 +304,13 @@
 			@include cta-width();
 
 			&-md {
-				@media screen and (max-width: $screen-tablet-max) {
+				@media screen and (max-width: variables.$screen-tablet-max) {
 					@include cta-width();
 				}
 			}
 
 			&-sm {
-				@media screen and (max-width: $screen-mobile-max) {
+				@media screen and (max-width: variables.$screen-mobile-max) {
 					@include cta-width();
 				}
 			}
@@ -323,7 +323,7 @@
 		justify-content: var(--cta-content-alignment);
 		width: 100%;
 
-		@media screen and (min-width: $screen-tablet-min) {
+		@media screen and (min-width: variables.$screen-tablet-min) {
 			align-items: center;
 			flex-direction: row;
 		}
@@ -335,7 +335,7 @@
 		height: 100%;
 		max-width: var(--cta-content-width);
 		width: 100%;
-		z-index: $first-layer;
+		z-index: variables.$first-layer;
 	}
 
 	&__heading {
@@ -363,6 +363,6 @@
 		position: absolute;
 		top: 0;
 		width: 100%;
-		z-index: $ground-layer;
+		z-index: variables.$ground-layer;
 	}
 }

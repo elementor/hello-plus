@@ -63,6 +63,10 @@ class Contact extends Widget_Base {
 		return array_merge( [ 'helloplus-contact' ], Utils::get_widgets_depends() );
 	}
 
+	public function get_custom_help_url(): string {
+		return 'https://go.elementor.com/contact-widget-help';
+	}
+
 	protected function render(): void {
 		$render_strategy = new Widget_Contact_Render( $this );
 

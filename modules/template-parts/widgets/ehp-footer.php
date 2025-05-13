@@ -67,6 +67,10 @@ class Ehp_Footer extends Ehp_Widget_Base {
 		return $style_depends;
 	}
 
+	public function get_custom_help_url(): string {
+		return 'https://go.elementor.com/biz-footer-help';
+	}
+
 	protected function render(): void {
 		$render_strategy = new Widget_Footer_Render( $this );
 

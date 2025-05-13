@@ -634,7 +634,7 @@ class Contact extends Widget_Base {
 				'layout_preset' => [
 					'locate',
 				],
-			]
+			],
 		] );
 
 		$ehp_column_structure->add_style_controls();

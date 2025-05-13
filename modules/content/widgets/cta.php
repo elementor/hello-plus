@@ -341,7 +341,7 @@ class CTA extends Widget_Base {
 				'layout_preset' => [
 					'showcase',
 				],
-			]
+			],
 		] );
 
 		$ehp_column_structure->add_style_controls();

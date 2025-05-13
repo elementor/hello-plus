@@ -952,7 +952,7 @@ class Ehp_Form extends Form_Base {
 					'interact',
 					'engage',
 				],
-			]
+			],
 		] );
 
 		$ehp_column_structure->add_style_controls();

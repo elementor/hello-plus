@@ -11,6 +11,7 @@ use HelloPlus\Modules\Content\Traits\Widget_Repeater_Editable;
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 use HelloPlus\Includes\Utils;
 use HelloPlus\Classes\{
+	Ehp_Column_Structure,
 	Ehp_Full_Height,
 	Ehp_Padding,
 	Ehp_Shapes,
@@ -628,6 +629,43 @@ class Contact extends Widget_Base {
 			]
 		);
 
+		$ehp_column_structure = new Ehp_Column_Structure( $this, [
+			'condition' => [
+				'layout_preset' => [
+					'locate',
+				],
+			]
+		] );
+
+		$ehp_column_structure->add_style_controls();
+
+		$this->add_responsive_control(
+			'map_position_horizontal',
+			[
+				'label' => esc_html__( 'Map Position', 'hello-plus' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'start' => [
+						'title' => esc_html__( 'Start', 'hello-plus' ),
+						'icon' => 'eicon-h-align-' . ( is_rtl() ? 'right' : 'left' ),
+					],
+					'end' => [
+						'title' => esc_html__( 'End', 'hello-plus' ),
+						'icon' => 'eicon-h-align-' . ( is_rtl() ? 'left' : 'right' ),
+					],
+				],
+				'toggle' => false,
+				'frontend_available' => true,
+				'default' => 'end',
+				'tablet_default' => 'end',
+				'mobile_default' => 'end',
+				'separator' => 'before',
+				'condition' => [
+					'layout_preset' => 'locate',
+				],
+			]
+		);
+
 		$this->add_responsive_control(
 			'content_alignment_locate',
 			[
@@ -847,33 +885,6 @@ class Contact extends Widget_Base {
 					'Number' => [
 						'min' => 0,
 					],
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'map_position_horizontal',
-			[
-				'label' => esc_html__( 'Map Position', 'hello-plus' ),
-				'type' => Controls_Manager::CHOOSE,
-				'options' => [
-					'start' => [
-						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => 'eicon-h-align-' . ( is_rtl() ? 'right' : 'left' ),
-					],
-					'end' => [
-						'title' => esc_html__( 'End', 'hello-plus' ),
-						'icon' => 'eicon-h-align-' . ( is_rtl() ? 'left' : 'right' ),
-					],
-				],
-				'toggle' => false,
-				'frontend_available' => true,
-				'default' => 'end',
-				'tablet_default' => 'end',
-				'mobile_default' => 'end',
-				'separator' => 'before',
-				'condition' => [
-					'layout_preset' => 'locate',
 				],
 			]
 		);

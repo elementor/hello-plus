@@ -4,6 +4,7 @@ namespace HelloPlus\Modules\Content\Classes\Render;
 use HelloPlus\Classes\Widget_Utils;
 use HelloPlus\Modules\Content\Widgets\Contact;
 use HelloPlus\Classes\{
+	Ehp_Column_Structure,
 	Ehp_Full_Height,
 	Ehp_Shapes,
 	Ehp_Social_Platforms,
@@ -49,6 +50,11 @@ class Widget_Contact_Render {
 
 		$ehp_full_height = new Ehp_Full_Height( $this->widget );
 		$ehp_full_height->add_full_height_attributes();
+
+		$ehp_column_structure = new Ehp_Column_Structure( $this->widget, [
+			'render_attribute' => 'elements-container',
+		] );
+		$ehp_column_structure->add_column_structure_attributes();
 
 		if ( ! empty( $this->settings['map_position_horizontal'] ) ) {
 			$elements_container_classnames[] = 'has-map-h-position-' . $this->settings['map_position_horizontal'];

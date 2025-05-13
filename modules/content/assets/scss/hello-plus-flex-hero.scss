@@ -1,5 +1,5 @@
-@import "../../../../assets/dev/scss/variables";
-@import "../../../../assets/dev/scss/ehp-full-height";
+@use "../../../../assets/dev/scss/variables";
+@use "../../../../assets/dev/scss/ehp-full-height" as ehp-full-height;
 
 .ehp-flex-hero {
 	--flex-hero-content-alignment-showcase: center;
@@ -10,27 +10,27 @@
 	--flex-hero-gap: 60px;
 	--flex-hero-element-spacing: 40px;
 
-	--flex-hero-intro-color: #{$global-colors-text};
-	--flex-hero-heading-color: #{$global-colors-secondary};
-	--flex-hero-subheading-color: #{$global-colors-secondary};
+	--flex-hero-intro-color: #{variables.$global-colors-text};
+	--flex-hero-heading-color: #{variables.$global-colors-secondary};
+	--flex-hero-subheading-color: #{variables.$global-colors-secondary};
 
 	--flex-hero-button-primary-icon-spacing: 10px;
-	--flex-hero-button-primary-text-color: #{$global-colors-white};
-	--flex-hero-button-primary-text-color-hover: #{$global-colors-text};
+	--flex-hero-button-primary-text-color: #{variables.$global-colors-white};
+	--flex-hero-button-primary-text-color-hover: #{variables.$global-colors-text};
 	--flex-hero-button-primary-border-width: 0;
 	--flex-hero-button-primary-border-color: transparent;
-	--flex-hero-button-primary-border-radius-block-end: #{$corners-shape-default};
-	--flex-hero-button-primary-border-radius-block-start: #{$corners-shape-default};
-	--flex-hero-button-primary-border-radius-inline-end: #{$corners-shape-default};
-	--flex-hero-button-primary-border-radius-inline-start: #{$corners-shape-default};
+	--flex-hero-button-primary-border-radius-block-end: #{variables.$corners-shape-default};
+	--flex-hero-button-primary-border-radius-block-start: #{variables.$corners-shape-default};
+	--flex-hero-button-primary-border-radius-inline-end: #{variables.$corners-shape-default};
+	--flex-hero-button-primary-border-radius-inline-start: #{variables.$corners-shape-default};
 
 	--flex-hero-button-secondary-icon-spacing: 10px;
-	--flex-hero-button-secondary-text-color: #{$global-colors-secondary};
-	--flex-hero-button-secondary-text-color-hover: #{$global-colors-secondary};
+	--flex-hero-button-secondary-text-color: #{variables.$global-colors-secondary};
+	--flex-hero-button-secondary-text-color-hover: #{variables.$global-colors-secondary};
 	--flex-hero-button-secondary-border-width: 2px;
-	--flex-hero-button-secondary-border-color: #{$global-colors-secondary};
+	--flex-hero-button-secondary-border-color: #{variables.$global-colors-secondary};
 
-	--flex-hero-box-border-color: #{$global-colors-secondary};
+	--flex-hero-box-border-color: #{variables.$global-colors-secondary};
 	--flex-hero-box-border-width: 1px;
 
 	display: flex;
@@ -44,7 +44,7 @@
 	padding-inline-start: var(--flex-hero-box-padding-inline-start);
 	position: relative;
 
-	@include full-height-viewports();
+	@include ehp-full-height.full-height-viewports();
 
 	& a.ehp-button,
 	& a.ehp-button:not([href]):not([tabindex]) {
@@ -133,7 +133,7 @@
 	&.has-layout-preset {
 
 		&-showcase {
-			@media screen and (min-width: $screen-desktop-min) {
+			@media screen and (min-width: variables.$screen-desktop-min) {
 				flex-direction: row;
 
 				& .ehp-flex-hero__content-container,
@@ -179,7 +179,7 @@
 				order: 1;
 			}
 		}
-	
+
 		&-end {
 			& .ehp-flex-hero__content-container {
 				order: 1;
@@ -195,13 +195,13 @@
 		@include responsive-image-position();
 
 		&-md {
-			@media screen and (max-width: $screen-tablet-max) {
+			@media screen and (max-width: variables.$screen-tablet-max) {
 				@include responsive-image-position();
 			}
 		}
 
 		&-sm {
-			@media screen and (max-width: $screen-mobile-max) {
+			@media screen and (max-width: variables.$screen-mobile-max) {
 				@include responsive-image-position();
 			}
 		}
@@ -211,7 +211,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--flex-hero-element-spacing);
-		z-index: $second-layer;
+		z-index: variables.$second-layer;
 	}
 
 	&__intro {
@@ -233,13 +233,13 @@
 		display: flex;
 		gap: var(--flex-hero-buttons-space-between);
 
-		@media screen and (max-width: $screen-tablet-max) {
+		@media screen and (max-width: variables.$screen-tablet-max) {
 			flex-direction: column;
 		}
 	}
 
 	&__image-wrapper {
-		z-index: $first-layer;
+		z-index: variables.$first-layer;
 	}
 
 	&__overlay {
@@ -249,6 +249,6 @@
 		position: absolute;
 		top: 0;
 		width: 100%;
-		z-index: $ground-layer;
+		z-index: variables.$ground-layer;
 	}
 }

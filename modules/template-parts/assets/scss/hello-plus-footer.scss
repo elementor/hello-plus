@@ -1,4 +1,4 @@
-@import "../../../../assets/dev/scss/variables";
+@use "../../../../assets/dev/scss/variables";
 
 .ehp-footer {
 	--footer-logo-width: 68px;
@@ -55,7 +55,7 @@
 		flex-direction: column;
 		gap: 20px;
 
-		@media screen and (min-width: $screen-tablet-min) {
+		@media screen and (min-width: variables.$screen-tablet-min) {
 			gap: 0;
 			flex-direction: row;
 			justify-content: space-between;
@@ -63,14 +63,14 @@
 	}
 
 	&__nav-container {
-		@media screen and (min-width: $screen-tablet-min) {
+		@media screen and (min-width: variables.$screen-tablet-min) {
 			display: flex;
 			justify-content: center;
 		}
 	}
 
 	&__contact-container {
-		@media screen and (min-width: $screen-tablet-min) {
+		@media screen and (min-width: variables.$screen-tablet-min) {
 			display: flex;
 			justify-content: flex-end;
 		}
@@ -146,33 +146,33 @@
 		color: var(--footer-icon-color);
 		display: inline-flex;
 		font-size: var(--footer-icon-size);
-		transition: $transition;
+		transition: variables.$transition;
 
 		svg {
 			fill: var(--footer-icon-color);
 			height: var(--footer-icon-size);
 			width: var(--footer-icon-size);
-			transition: $transition;
+			transition: variables.$transition;
 		}
 
 		i {
 			color: var(--footer-icon-color);
-			transition: $transition;
+			transition: variables.$transition;
 		}
 
 		&:hover,
 		&:focus {
 			color: var(--footer-icon-color-hover);
-			transition: $transition;
+			transition: variables.$transition;
 
 			svg {
 				fill: var(--footer-icon-color-hover);
-				transition: $transition;
+				transition: variables.$transition;
 			}
 
 			i {
 				color: var(--footer-icon-color-hover);
-				transition: $transition;
+				transition: variables.$transition;
 			}
 		}
 	}

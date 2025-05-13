@@ -1,21 +1,21 @@
-@import "./variables";
+@use "./variables";
 
 .ehp-image {
 	--ehp-image-height: 100%;
 	--ehp-image-min-height: 0;
 	--ehp-image-position: center;
 	--ehp-image-width: 100%;
-	--ehp-image-border-color: #{$global-colors-secondary};
+	--ehp-image-border-color: #{variables.$global-colors-secondary};
 	--ehp-image-border-width: 0;
-	--ehp-image-border-radius-block-end:  #{$corners-shape-default};
-	--ehp-image-border-radius-block-start:  #{$corners-shape-default};
-	--ehp-image-border-radius-inline-end:  #{$corners-shape-default};
-	--ehp-image-border-radius-inline-start:  #{$corners-shape-default};
+	--ehp-image-border-radius-block-end:  #{variables.$corners-shape-default};
+	--ehp-image-border-radius-block-start:  #{variables.$corners-shape-default};
+	--ehp-image-border-radius-inline-end:  #{variables.$corners-shape-default};
+	--ehp-image-border-radius-inline-start:  #{variables.$corners-shape-default};
 
 	align-items: center;
 	display: flex;
 	justify-content: center;
-	z-index: $second-layer;
+	z-index: variables.$second-layer;
 
 	.elementor & img {
 		height: var(--ehp-image-height);

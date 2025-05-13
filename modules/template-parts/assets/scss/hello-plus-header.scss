@@ -1,4 +1,4 @@
-@import "../../../../assets/dev/scss/variables";
+@use "../../../../assets/dev/scss/variables";
 
 .ehp-header {
 	--header-logo-width: 68px;
@@ -22,24 +22,24 @@
 	--header-scroll-down: 0;
 
 	--header-button-primary-icon-spacing: 10px;
-	--header-button-primary-text-color: #{$global-colors-white};
-	--header-button-primary-text-color-hover: #{$global-colors-text};
+	--header-button-primary-text-color: #{variables.$global-colors-white};
+	--header-button-primary-text-color-hover: #{variables.$global-colors-text};
 	--header-button-primary-border-width: 0;
 	--header-button-primary-border-color: transparent;
-	--header-button-primary-border-radius-block-end: #{$corners-shape-default};
-	--header-button-primary-border-radius-block-start: #{$corners-shape-default};
-	--header-button-primary-border-radius-inline-end: #{$corners-shape-default};
-	--header-button-primary-border-radius-inline-start: #{$corners-shape-default};
+	--header-button-primary-border-radius-block-end: #{variables.$corners-shape-default};
+	--header-button-primary-border-radius-block-start: #{variables.$corners-shape-default};
+	--header-button-primary-border-radius-inline-end: #{variables.$corners-shape-default};
+	--header-button-primary-border-radius-inline-start: #{variables.$corners-shape-default};
 
 	--header-button-secondary-icon-spacing: 10px;
-	--header-button-secondary-text-color: #{$global-colors-secondary};
-	--header-button-secondary-text-color-hover: #{$global-colors-secondary};
+	--header-button-secondary-text-color: #{variables.$global-colors-secondary};
+	--header-button-secondary-text-color-hover: #{variables.$global-colors-secondary};
 	--header-button-secondary-border-width: 2px;
-	--header-button-secondary-border-color: #{$global-colors-secondary};
-	--header-button-secondary-border-radius-block-end: #{$corners-shape-default};
-	--header-button-secondary-border-radius-block-start: #{$corners-shape-default};
-	--header-button-secondary-border-radius-inline-end: #{$corners-shape-default};
-	--header-button-secondary-border-radius-inline-start: #{$corners-shape-default};
+	--header-button-secondary-border-color: #{variables.$global-colors-secondary};
+	--header-button-secondary-border-radius-block-end: #{variables.$corners-shape-default};
+	--header-button-secondary-border-radius-block-start: #{variables.$corners-shape-default};
+	--header-button-secondary-border-radius-inline-end: #{variables.$corners-shape-default};
+	--header-button-secondary-border-radius-inline-start: #{variables.$corners-shape-default};
 
 	--header-toggle-icon-color: #555963;
 	--header-toggle-icon-color-active: #555963;
@@ -97,7 +97,7 @@
 	padding-inline-start: var(--header-box-padding-inline-start);
 	padding-inline-end: var(--header-box-padding-inline-end);
 	position: relative;
-	z-index: $above-layer;
+	z-index: variables.$above-layer;
 
 	&.has-box-border {
 		border-bottom: var(--header-box-border-width) solid var(--header-box-border-color);
@@ -121,7 +121,7 @@
 		top: var(--header-float-height);
 		transition: top 0.5s ease-in-out;
 		width: 100%;
-		z-index: $top-layer;
+		z-index: variables.$top-layer;
 	}
 
 	&.has-behavior-onscroll-scroll-up {
@@ -233,7 +233,7 @@
 
 	&__navigation {
 		order: 1;
-		z-index: $top-layer;
+		z-index: variables.$top-layer;
 
 		&[aria-hidden="true"] {
 			display: none;
@@ -319,7 +319,7 @@
 		position: absolute;
 		top: calc(100% + var(--header-box-padding-block-end));
 		width: auto;
-		z-index: $ninth-layer;
+		z-index: variables.$ninth-layer;
 
 		.menu-item {
 			flex-grow: 1;
@@ -344,11 +344,11 @@
 	& .ehp-header__item:is(a),
 	& .ehp-header__item:is([type="button"]) {
 		color: var(--header-menu-item-color);
-		transition: $transition;
+		transition: variables.$transition;
 
 		&:hover {
 			color: var(--header-menu-item-color-hover);
-			transition: $transition;
+			transition: variables.$transition;
 		}
 
 		&[aria-expanded="true"] {
@@ -450,12 +450,12 @@
 		& i,
 		& .ehp-header__contact-button-label {
 			color: var(--header-contact-button-color);
-			transition: $transition;
+			transition: variables.$transition;
 		}
 
 		& svg {
 			fill: var(--header-contact-button-color);
-			transition: $transition;
+			transition: variables.$transition;
 		}
 
 		&:hover,
@@ -463,12 +463,12 @@
 			& i,
 			& .ehp-header__contact-button-label {
 				color: var(--header-contact-button-color-hover);
-				transition: $transition;
+				transition: variables.$transition;
 			}
 
 			& svg {
 				fill: var(--header-contact-button-color-hover);
-				transition: $transition;
+				transition: variables.$transition;
 			}
 		}
 
@@ -483,21 +483,21 @@
 	}
 
 	&.has-behavior-onscroll-always {
-		transition: $transition;
+		transition: variables.$transition;
 
 		.ehp-header__site-link img,
 		.ehp-header__site-title {
-			transition: $transition;
+			transition: variables.$transition;
 		}
 
 		&.scroll-down {
-			transition: $transition;
+			transition: variables.$transition;
 
 			&.has-behavior-sticky-scale-logo {
 
 				.ehp-header__site-link img {
 					width: var(--header-logo-width-sticky);
-					transition: $transition;
+					transition: variables.$transition;
 				}
 			}
 
@@ -506,7 +506,7 @@
 				.ehp-header__site-title {
 					font-size: var(--header-title-size-sticky);
 					font-weight: var(--header-title-weight-sticky);
-					transition: $transition;
+					transition: variables.$transition;
 				}
 			}
 		}
@@ -700,22 +700,22 @@
 
 	&[data-responsive-breakpoint="mobile-portrait"] {
 
-		@media screen and (max-width: $screen-mobile-max) {
+		@media screen and (max-width: variables.$screen-mobile-max) {
 			@include responsive_styles_mobile();
 		}
 
-		@media screen and (min-width: $screen-tablet-min) {
+		@media screen and (min-width: variables.$screen-tablet-min) {
 			@include responsive_styles_desktop();
 		}
 	}
 
 	&[data-responsive-breakpoint="tablet-portrait"] {
 
-		@media screen and (max-width: $screen-tablet-max) {
+		@media screen and (max-width: variables.$screen-tablet-max) {
 			@include responsive_styles_mobile();
 		}
 
-		@media screen and (min-width: $screen-desktop-min) {
+		@media screen and (min-width: variables.$screen-desktop-min) {
 			@include responsive_styles_desktop();
 		}
 	}

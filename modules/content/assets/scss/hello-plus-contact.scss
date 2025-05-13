@@ -116,10 +116,6 @@
 		&.has-preset-locate,
 		&.has-preset-touchpoint {
 
-			& .ehp-contact__elements-container {
-				gap: 0;
-			}
-
 			& .ehp-contact__text-container {
 				padding-block-end: var(--contact-box-padding-block-end);
 				padding-block-start: var(--contact-box-padding-block-start);

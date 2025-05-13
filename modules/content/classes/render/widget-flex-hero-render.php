@@ -9,6 +9,7 @@ use HelloPlus\Classes\Widget_Utils;
 use HelloPlus\Modules\Content\Widgets\Flex_Hero;
 use HelloPlus\Classes\{
 	Ehp_Button,
+	Ehp_Column_Structure,
 	Ehp_Full_Height,
 	Ehp_Image,
 	Ehp_Shapes,
@@ -74,6 +75,11 @@ class Widget_Flex_Hero_Render {
 		$ehp_full_height = new Ehp_Full_Height( $this->widget );
 		$ehp_full_height->add_full_height_attributes();
 
+		$column_structure = new Ehp_Column_Structure( $this->widget, [
+			'render_attribute' => 'layout',
+		] );
+		$column_structure->add_column_structure_attributes();
+
 		$this->widget->add_render_attribute( 'layout', [
 			'class' => $layout_classnames,
 		] );
@@ -89,14 +95,17 @@ class Widget_Flex_Hero_Render {
 
 	public function render_content_container() {
 		$this->widget->add_render_attribute( 'content-container', 'class', self::LAYOUT_CLASSNAME . '__content-container' );
+		$this->widget->add_render_attribute( 'content-wrapper', 'class', self::LAYOUT_CLASSNAME . '__content-wrapper' );
 		$this->widget->add_render_attribute( 'overlay', 'class', self::LAYOUT_CLASSNAME . '__overlay' );
 		?>
 			<div <?php $this->widget->print_render_attribute_string( 'overlay' ); ?>></div>
-			<div <?php $this->widget->print_render_attribute_string( 'content-container' ); ?>>
-				<?php
-					$this->render_text_container();
-					$this->render_ctas_container();
-				?>
+			<div <?php $this->widget->print_render_attribute_string( 'content-wrapper' ); ?>>
+				<div <?php $this->widget->print_render_attribute_string( 'content-container' ); ?>>
+					<?php
+						$this->render_text_container();
+						$this->render_ctas_container();
+					?>
+				</div>
 			</div>
 		<?php
 	}

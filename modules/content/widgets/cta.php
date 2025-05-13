@@ -109,6 +109,7 @@ class CTA extends Widget_Base {
 				'type' => Choose_Img_Control::CONTROL_NAME,
 				'default' => 'focus',
 				'label_block' => true,
+				'toggle' => false,
 				'columns' => 2,
 				'options' => [
 					'focus' => [

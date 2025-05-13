@@ -1,5 +1,6 @@
 @import "../../../../assets/dev/scss/variables";
 @import "../../../../assets/dev/scss/ehp-full-height";
+@import "../../../../assets/dev/scss/ehp-column-structure";
 
 .ehp-flex-hero {
 	--flex-hero-content-alignment-showcase: center;
@@ -33,9 +34,10 @@
 	--flex-hero-box-border-color: #{$global-colors-secondary};
 	--flex-hero-box-border-width: 1px;
 
-	display: flex;
+	display: grid;
 	gap: var(--flex-hero-gap);
-	flex-direction: column;
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr;
 	min-height: var(--flex-hero-box-height);
 	overflow: hidden;
 	padding-block-end: var(--flex-hero-box-padding-block-end);
@@ -91,6 +93,7 @@
 	}
 
 	&.has-shape-custom.shape-type {
+
 		&-box {
 			--ehp-shapes-border-radius-block-end: var(--flex-hero-box-border-radius-block-end, var(--flex-hero-box-border-radius-custom-block-end));
 			--ehp-shapes-border-radius-block-start: var(--flex-hero-box-border-radius-block-start, var(--flex-hero-box-border-radius-custom-block-start));
@@ -116,11 +119,11 @@
 		--flex-hero-image-width: 100%;
 		--flex-hero-image-height: 100%;
 
+		padding: 0;
+
 		& .ehp-image {
 			height: 100%;
 		}
-
-		padding: 0;
 
 		& .ehp-flex-hero__content-container {
 			padding-block-start: var(--flex-hero-box-padding-block-start);
@@ -133,35 +136,31 @@
 	&.has-layout-preset {
 
 		&-showcase {
-			@media screen and (min-width: $screen-desktop-min) {
-				flex-direction: row;
 
-				& .ehp-flex-hero__content-container,
-				& .ehp-flex-hero__image-wrapper {
-					flex-basis: 50%;
-				}
-
-				& .ehp-flex-hero__image-wrapper {
-					justify-content: center;
-				}
-			}
+			@include has-column-structure();
 
 			& .ehp-flex-hero__content-container {
 				justify-content: var(--flex-hero-content-alignment-showcase);
 			}
 
-			& .ehp-flex-hero__image-wrapper {
-				align-items: var(--flex-hero-content-alignment-showcase);
-				display: flex;
+			@media screen and (min-width: $screen-desktop-min) {
+
+				& .ehp-flex-hero__image-wrapper {
+					align-items: var(--flex-hero-content-alignment-showcase);
+					display: flex;
+					justify-content: center;
+				}
 			}
 		}
 
 		&-storytelling {
-			flex-direction: column;
+
+			& .ehp-flex-hero__content-wrapper {
+				justify-content: var(--flex-hero-content-position);
+			}
 
 			& .ehp-flex-hero__content-container {
 				align-items: var(--flex-hero-content-alignment-storytelling);
-				align-self: var(--flex-hero-content-position);
 				text-align: var(--flex-hero-content-alignment-storytelling);
 				max-width: var(--flex-hero-content-width);
 				width: 100%;
@@ -170,8 +169,9 @@
 	}
 
 	@mixin responsive-image-position() {
+
 		&-start {
-			& .ehp-flex-hero__content-container {
+			& .ehp-flex-hero__content-wrapper {
 				order: 2;
 			}
 			
@@ -181,7 +181,7 @@
 		}
 	
 		&-end {
-			& .ehp-flex-hero__content-container {
+			& .ehp-flex-hero__content-wrapper {
 				order: 1;
 			}
 			
@@ -192,19 +192,30 @@
 	}
 
 	&.has-image-position {
+
 		@include responsive-image-position();
 
 		&-md {
+
 			@media screen and (max-width: $screen-tablet-max) {
+
 				@include responsive-image-position();
 			}
 		}
 
 		&-sm {
+
 			@media screen and (max-width: $screen-mobile-max) {
+
 				@include responsive-image-position();
 			}
 		}
+	}
+
+	&__content-wrapper {
+		display: flex;
+		justify-content: center;
+		width: 100%;
 	}
 
 	&__content-container {
@@ -222,6 +233,7 @@
 	&__heading {
 		color: var(--flex-hero-heading-color);
 		margin: 0;
+		word-break: break-word;
 	}
 
 	&__subheading {
@@ -240,6 +252,10 @@
 
 	&__image-wrapper {
 		z-index: $first-layer;
+	}
+
+	&__image-container {
+		width: 100%;
 	}
 
 	&__overlay {

@@ -27,6 +27,7 @@ use HelloPlus\Classes\{
 	Ehp_Image,
 	Ehp_Padding,
 	Ehp_Shapes,
+	Ehp_Column_Structure,
 };
 use HelloPlus\Includes\Utils;
 
@@ -109,6 +110,7 @@ class Flex_Hero extends Widget_Base {
 				'default' => 'showcase',
 				'label_block' => true,
 				'columns' => 2,
+				'toggle' => false,
 				'options' => [
 					'showcase' => [
 						'title' => wp_kses_post( "Showcase:\nHighlight key concepts\nwith a balanced layout." ),
@@ -273,6 +275,16 @@ class Flex_Hero extends Widget_Base {
 			]
 		);
 
+		$ehp_column_structure = new Ehp_Column_Structure( $this, [
+			'condition' => [
+				'layout_preset' => [
+					'showcase',
+				],
+			]
+		] );
+
+		$ehp_column_structure->add_style_controls();
+
 		$this->add_responsive_control(
 			'layout_image_position',
 			[
@@ -289,6 +301,7 @@ class Flex_Hero extends Widget_Base {
 						'icon' => 'eicon-h-align-' . ( is_rtl() ? 'left' : 'right' ),
 					],
 				],
+				'separator' => 'before',
 				'condition' => [
 					'layout_preset' => 'showcase',
 				],

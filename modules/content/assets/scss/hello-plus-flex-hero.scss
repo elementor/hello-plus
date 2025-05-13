@@ -155,12 +155,9 @@
 
 		&-storytelling {
 
-			& .ehp-flex-hero__content-wrapper {
-				justify-content: var(--flex-hero-content-position);
-			}
-
 			& .ehp-flex-hero__content-container {
 				align-items: var(--flex-hero-content-alignment-storytelling);
+				align-self: var(--flex-hero-content-position);
 				text-align: var(--flex-hero-content-alignment-storytelling);
 				max-width: var(--flex-hero-content-width);
 				width: 100%;
@@ -171,7 +168,7 @@
 	@mixin responsive-image-position() {
 
 		&-start {
-			& .ehp-flex-hero__content-wrapper {
+			& .ehp-flex-hero__content-container {
 				order: 2;
 			}
 			
@@ -181,7 +178,7 @@
 		}
 
 		&-end {
-			& .ehp-flex-hero__content-wrapper {
+			& .ehp-flex-hero__content-container {
 				order: 1;
 			}
 			
@@ -208,12 +205,6 @@
 				@include responsive-image-position();
 			}
 		}
-	}
-
-	&__content-wrapper {
-		display: flex;
-		justify-content: center;
-		width: 100%;
 	}
 
 	&__content-container {

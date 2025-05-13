@@ -346,8 +346,7 @@
 		color: var(--header-menu-item-color);
 		transition: $transition;
 
-		&:hover,
-		&:focus {
+		&:hover {
 			color: var(--header-menu-item-color-hover);
 			transition: $transition;
 		}

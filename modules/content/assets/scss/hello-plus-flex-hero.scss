@@ -34,10 +34,9 @@
 	--flex-hero-box-border-color: #{variables.$global-colors-secondary};
 	--flex-hero-box-border-width: 1px;
 
-	display: grid;
+	display: flex;
 	gap: var(--flex-hero-gap);
-	grid-template-columns: 1fr;
-	grid-template-rows: 1fr;
+	flex-direction: column;
 	min-height: var(--flex-hero-box-height);
 	overflow: hidden;
 	padding-block-end: var(--flex-hero-box-padding-block-end);
@@ -144,6 +143,7 @@
 			}
 
 			@media screen and (min-width: variables.$screen-desktop-min) {
+				display: grid;
 
 				& .ehp-flex-hero__image-wrapper {
 					align-items: var(--flex-hero-content-alignment-showcase);

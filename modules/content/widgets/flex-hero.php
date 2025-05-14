@@ -48,6 +48,10 @@ class Flex_Hero extends Widget_Base {
 		return [ 'flex-hero' ];
 	}
 
+	public function get_custom_help_url(): string {
+		return 'https://go.elementor.com/flex-hero-help';
+	}
+
 	public function get_icon(): string {
 		return 'eicon-ehp-hero';
 	}

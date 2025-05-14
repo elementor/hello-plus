@@ -30,6 +30,7 @@ const entryPoints = {
 	'css/helloplus-template-parts-editor': path.resolve( modulesDir, 'template-parts/assets/scss', 'editor.scss' ),
 	'css/helloplus-header': path.resolve( modulesDir, 'template-parts/assets/scss', 'hello-plus-header.scss' ),
 	'css/helloplus-footer': path.resolve( modulesDir, 'template-parts/assets/scss', 'hello-plus-footer.scss' ),
+	'css/helloplus-flex-footer': path.resolve( modulesDir, 'template-parts/assets/scss', 'hello-plus-flex-footer.scss' ),
 	'js/helloplus-header-fe': path.resolve( modulesDir, 'template-parts/assets/js', 'frontend.js' ),
 	'js/helloplus-editor': path.resolve( modulesDir, 'template-parts/assets/js', 'editor.js' ),
 

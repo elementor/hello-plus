@@ -62,6 +62,10 @@ class Ehp_Form extends Form_Base {
 		return false;
 	}
 
+	public function get_custom_help_url(): string {
+		return 'https://go.elementor.com/form-lite-help';
+	}
+
 	protected function get_upsale_data(): array {
 		return [
 			'condition' => ! Utils::has_pro(),

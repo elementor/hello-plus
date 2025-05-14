@@ -178,6 +178,6 @@ class Utils {
 	}
 
 	public static function get_widgets_depends(): array {
-		return [ 'helloplus-button', 'helloplus-image', 'helloplus-shapes' ];
+		return [ 'helloplus-button', 'helloplus-image', 'helloplus-shapes', 'helloplus-column-structure' ];
 	}
 }

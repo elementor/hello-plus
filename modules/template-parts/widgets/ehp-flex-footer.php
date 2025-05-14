@@ -146,6 +146,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'default' => 'info-hub',
 				'label_block' => true,
 				'columns' => 2,
+				'toggle' => false,
 				'options' => [
 					'info-hub' => [
 						'title' => wp_kses_post( "Info Hub:\nOrganize business details in a\nclear structure." ),

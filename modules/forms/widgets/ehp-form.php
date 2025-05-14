@@ -34,6 +34,7 @@ use HelloPlus\Classes\{
 	Ehp_Full_Height,
 	Ehp_Image,
 	Ehp_Shapes,
+	Ehp_Column_Structure,
 };
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -945,61 +946,16 @@ class Ehp_Form extends Form_Base {
 			]
 		);
 
-		$this->add_control(
-			'layout_column_structure',
-			[
-				'label' => esc_html__( 'Column Structure', 'hello-plus' ),
-				'type' => Choose_Img_Control::CONTROL_NAME,
-				'default' => '50-50',
-				'label_block' => true,
-				'columns' => 2,
-				'toggle' => false,
-				'options' => [
-					'50-50' => [
-						'title' => esc_html__( '50:50', 'hello-plus' ),
-						'image' => HELLOPLUS_IMAGES_URL . 'form-lite-interact-50-50.svg',
-						'hover_image' => true,
-					],
-					'33-66' => [
-						'title' => esc_html__( '33:66', 'hello-plus' ),
-						'image' => HELLOPLUS_IMAGES_URL . 'form-lite-interact-33-66.svg',
-						'hover_image' => true,
-					],
-					'25-75' => [
-						'title' => esc_html__( '25:75', 'hello-plus' ),
-						'image' => HELLOPLUS_IMAGES_URL . 'form-lite-interact-25-75.svg',
-						'hover_image' => true,
-					],
+		$ehp_column_structure = new Ehp_Column_Structure( $this, [
+			'condition' => [
+				'layout_preset' => [
+					'interact',
+					'engage',
 				],
-				'frontend_available' => true,
-				'condition' => [
-					'layout_preset' => [
-						'interact',
-						'engage',
-					],
-				],
-			]
-		);
+			],
+		] );
 
-		$this->add_control(
-			'layout_reverse_structure',
-			[
-				'label' => esc_html__( 'Reverse Structure', 'hello-plus' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'hello-plus' ),
-				'label_off' => esc_html__( 'No', 'hello-plus' ),
-				'return_value' => 'yes',
-				'frontend_available' => true,
-				'default' => '',
-				'condition' => [
-					'layout_column_structure!' => '50-50',
-					'layout_preset' => [
-						'interact',
-						'engage',
-					],
-				],
-			]
-		);
+		$ehp_column_structure->add_style_controls();
 
 		$this->add_responsive_control(
 			'form_position',

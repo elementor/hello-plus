@@ -9,6 +9,7 @@ use HelloPlus\Classes\Widget_Utils;
 use HelloPlus\Modules\Content\Widgets\Flex_Hero;
 use HelloPlus\Classes\{
 	Ehp_Button,
+	Ehp_Column_Structure,
 	Ehp_Full_Height,
 	Ehp_Image,
 	Ehp_Shapes,
@@ -73,6 +74,11 @@ class Widget_Flex_Hero_Render {
 
 		$ehp_full_height = new Ehp_Full_Height( $this->widget );
 		$ehp_full_height->add_full_height_attributes();
+
+		$column_structure = new Ehp_Column_Structure( $this->widget, [
+			'render_attribute' => 'layout',
+		] );
+		$column_structure->add_column_structure_attributes();
 
 		$this->widget->add_render_attribute( 'layout', [
 			'class' => $layout_classnames,

@@ -1,6 +1,6 @@
 @use "../../../../assets/dev/scss/variables";
 @use "../../../../assets/dev/scss/ehp-full-height";
-
+@use "../../../../assets/dev/scss/ehp-column-structure" as ehp-column-structure;
 .ehp-cta {
 	--cta-elements-spacing: 40px;
 	--cta-buttons-space-between: 16px;
@@ -60,6 +60,7 @@
 		padding: 0;
 
 		&.has-preset-showcase {
+
 			& .ehp-cta__elements-container {
 				gap: 0;
 			}
@@ -160,17 +161,9 @@
 			}
 
 			.ehp-cta__elements-container {
-				display: flex;
-				flex-direction: column;
-
-				@media screen and (min-width: variables.$screen-desktop-min) {
-					flex-direction: row;
-
-					.ehp-cta__text-container,
-					.ehp-cta__image-container {
-						width: 50%;
-					}
-				}
+				display: grid;
+				
+				@include ehp-column-structure.has-column-structure();
 
 				&.has-image-position {
 					@include image-horizontal-position();
@@ -341,6 +334,7 @@
 	&__heading {
 		color: var(--cta-heading-color);
 		margin: 0;
+		word-break: break-word;
 	}
 
 	&__description {

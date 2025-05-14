@@ -28,14 +28,16 @@ class Ehp_Column_Structure {
 	public function add_column_structure_attributes() {
 		$this->widget_settings = $this->widget->get_settings_for_display();
 
-		if ( ! empty( $this->widget_settings['layout_column_structure'] ) ) {
-			$this->widget->add_render_attribute( $this->context['render_attribute'], [
-				'class' => [
-					'has-column-structure-' . $this->widget_settings['layout_column_structure'],
-					'yes' === $this->widget_settings['layout_reverse_structure'] ? 'is-reverse' : '',
-				],
-			] );
+		if ( empty( $this->widget_settings['layout_column_structure'] ) ) {
+			return;
 		}
+
+		$this->widget->add_render_attribute( $this->context['render_attribute'], [
+			'class' => [
+				'has-column-structure-' . $this->widget_settings['layout_column_structure'],
+				'yes' === $this->widget_settings['layout_reverse_structure'] ? 'is-reverse' : '',
+			],
+		] );
 	}
 
 	public function add_style_controls() {

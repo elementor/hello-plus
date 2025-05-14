@@ -10,6 +10,7 @@ use HelloPlus\Includes\Utils;
 use Elementor\Icons_Manager;
 
 use HelloPlus\Classes\{
+	Ehp_Column_Structure,
 	Ehp_Full_Height,
 	Ehp_Image,
 	Ehp_Shapes,
@@ -41,14 +42,6 @@ class Widget_Form_Render {
 			$layout_classnames[] = 'has-border';
 		}
 
-		if ( ! empty( $this->settings['layout_column_structure'] ) ) {
-			$layout_classnames[] = 'has-column-structure-' . $this->settings['layout_column_structure'];
-		}
-
-		if ( 'yes' === $this->settings['layout_reverse_structure'] ) {
-			$layout_classnames[] = 'is-reverse';
-		}
-
 		if ( 'yes' === $this->settings['image_stretch'] ) {
 			$layout_classnames[] = 'has-image-stretch';
 		}
@@ -62,6 +55,11 @@ class Widget_Form_Render {
 
 		$ehp_full_height = new Ehp_Full_Height( $this->widget );
 		$ehp_full_height->add_full_height_attributes();
+
+		$column_structure = new Ehp_Column_Structure( $this->widget, [
+			'render_attribute' => 'layout',
+		] );
+		$column_structure->add_column_structure_attributes();
 
 		$this->widget->add_render_attribute( 'layout', [
 			'name' => $this->settings['form_name'] || '',

@@ -1,0 +1,30 @@
+@use "./variables";
+
+@mixin has-column-structure() {
+
+    &.has-column-structure {
+
+		@media screen and (min-width: variables.$screen-desktop-min) {
+
+			&-50-50 {
+				grid-template-columns: 1fr 1fr;
+			}
+	
+			&-33-66 {
+				grid-template-columns: 1fr 2fr;
+			
+				&.is-reverse {
+					grid-template-columns: 2fr 1fr;
+				}
+			}
+	
+			&-25-75 {
+				grid-template-columns: 1fr 3fr;
+			
+				&.is-reverse {
+					grid-template-columns: 3fr 1fr;
+				}
+			}
+		}
+	}
+}

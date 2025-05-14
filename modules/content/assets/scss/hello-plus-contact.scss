@@ -1,5 +1,6 @@
 @use "../../../../assets/dev/scss/variables";
 @use "../../../../assets/dev/scss/ehp-full-height";
+@use "../../../../assets/dev/scss/ehp-column-structure" as ehp-column-structure;
 
 .ehp-contact {
 	--contact-alignment-width-center: 80%;
@@ -45,29 +46,35 @@
 	&.has-preset {
 
 		&-locate {
+
+			& .ehp-contact__elements-container {
+
+				@include ehp-column-structure.has-column-structure();
+			}
+
 			@media screen and (min-width: variables.$screen-desktop-min) {
 
 				& .ehp-contact__elements-container {
-					flex-direction: row;
-				}
-
-				& .ehp-contact__text-container,
-				& .ehp-contact__map-container {
-					width: 50%;
+					display: grid;
 				}
 			}
 
 			& .ehp-contact__elements-container.has-map-h-position {
+
 				@include map-position();
 
 				&-md {
+
 					@media screen and (max-width: variables.$screen-tablet-max) {
+
 						@include map-position();
 					}
 				}
 
 				&-sm {
+
 					@media screen and (max-width: variables.$screen-mobile-max) {
+
 						@include map-position();
 					}
 				}
@@ -77,16 +84,21 @@
 		&-touchpoint {
 
 			& .ehp-contact__elements-container.has-map-v-position {
+
 				@include map-position();
 
 				&-md {
+
 					@media screen and (max-width: variables.$screen-tablet-max) {
+
 						@include map-position();
 					}
 				}
 
 				&-sm {
+
 					@media screen and (max-width: variables.$screen-mobile-max) {
+
 						@include map-position();
 					}
 				}
@@ -157,6 +169,7 @@
 	&__heading {
 		color: var(--contact-text-heading-color);
 		margin: 0 0 var(--contact-text-spacing);
+		word-break: break-word;
 	}
 
 	&__description {

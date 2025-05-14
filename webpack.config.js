@@ -10,6 +10,7 @@ const path = require( 'path' );
 const imagesPath = path.resolve( __dirname, './build/images' );
 
 const modulesDir = process.cwd() + '/modules/';
+const assetsDir = process.cwd() + '/assets/';
 
 const entryPoints = {
 	// Admin module:
@@ -43,6 +44,7 @@ const entryPoints = {
 	'css/helloplus-button': path.resolve( process.cwd(), 'assets/dev/scss', 'ehp-button.scss' ),
 	'css/helloplus-image': path.resolve( process.cwd(), 'assets/dev/scss', 'ehp-image.scss' ),
 	'css/helloplus-shapes': path.resolve( process.cwd(), 'assets/dev/scss', 'ehp-shapes.scss' ),
+	'css/helloplus-column-structure': path.resolve( process.cwd(), 'assets/dev/scss', 'ehp-column-structure.scss' ),
 };
 
 module.exports = {
@@ -69,6 +71,10 @@ module.exports = {
 					},
 					{
 						from: path.resolve( modulesDir, 'template-parts/assets/images' ),
+						to: imagesPath,
+					},
+					{
+						from: path.resolve( assetsDir, 'dev/images' ),
 						to: imagesPath,
 					},
 				],

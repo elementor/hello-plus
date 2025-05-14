@@ -1,5 +1,6 @@
 @use "../../../../../assets/dev/scss/variables";
 @use "../../../../../assets/dev/scss/ehp-full-height" as ehp-full-height;
+@use "../../../../../assets/dev/scss/ehp-column-structure" as ehp-column-structure;
 
 @mixin column-width-sizes() {
 	&-33 {
@@ -105,6 +106,7 @@
 		&-interact,
 		&-engage {
 			--ehp-form-text-container-align: flex-start;
+
 			display: grid;
 			gap: var(--ehp-form-elements-gap);
 			grid-template-columns: 1fr;
@@ -133,31 +135,7 @@
 		}
 	}
 
-	&.has-column-structure {
-
-		@media screen and (min-width: variables.$screen-desktop-min) {
-
-			&-50-50 {
-				grid-template-columns: 1fr 1fr;
-			}
-
-			&-33-66 {
-				grid-template-columns: 1fr 2fr;
-
-				&.is-reverse {
-					grid-template-columns: 2fr 1fr;
-				}
-			}
-
-			&-25-75 {
-				grid-template-columns: 1fr 3fr;
-
-				&.is-reverse {
-					grid-template-columns: 3fr 1fr;
-				}
-			}
-		}
-	}
+	@include ehp-column-structure.has-column-structure();
 
 	& .ehp-image {
 		--ehp-image-height: var(--form-image-height);
@@ -194,6 +172,7 @@
 		gap: var(--ehp-form-label-spacing);
 
 		&.is-field-required.is-mark-required .ehp-form__field-label {
+
 			&::after {
 				content: "*";
 				color: var(--ehp-form-mark-color);
@@ -207,6 +186,7 @@
 		width: 100%;
 
 		&.has-width {
+
 			@include column-width-sizes();
 
 			&-md {
@@ -308,6 +288,7 @@
 		display: flex;
 
 		&.has-button-align {
+
 			@include has-button-align();
 
 			&-md {

@@ -8,6 +8,7 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 				navigation: '.ehp-header__navigation',
 				dropdown: '.ehp-header__dropdown',
 				wpAdminBar: '#wpadminbar',
+				floatingBars: '.e-floating-bars.has-vertical-position-top',
             },
 			constants: {
 				mobilePortrait: 767,
@@ -35,6 +36,7 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 			navigation: this.$element[ 0 ].querySelector( selectors.navigation ),
 			dropdown: this.$element[ 0 ].querySelector( selectors.dropdown ),
 			wpAdminBar: document.querySelector( selectors.wpAdminBar ),
+			floatingBars: document.querySelector( selectors.floatingBars ),
 		};
 	}
 
@@ -108,12 +110,37 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 
 	handleOffsetTop() {
 		const wpAdminBarOffsetHeight = this.elements.wpAdminBar?.offsetHeight || 0;
+		const floatingBars = this.elements.floatingBars;
+
 		this.elements.main.style.setProperty( '--header-wp-admin-bar-height', `${ wpAdminBarOffsetHeight }px` );
+
+		if ( this.elements.floatingBars ) {
+			const floatingBarsHeight = this.elements.floatingBars?.offsetHeight || 0;
+			this.elements.main.style.setProperty( '--header-floating-bars-height', `${ floatingBarsHeight }px` );
+
+			const observer = new MutationObserver( () => {
+				const newHeight = floatingBars.offsetHeight;
+				this.elements.main.style.setProperty( '--header-floating-bars-height', `${ newHeight }px` );
+				this.applyBodyPadding();
+			} );
+
+			observer.observe( floatingBars, { attributes: true, childList: true } );
+		}
 	}
 
 	applyBodyPadding() {
 		const mainHeight = this.elements.main.offsetHeight;
-		document.body.style.paddingTop = `${ mainHeight }px`;
+		const floatingBars = this.elements.floatingBars;
+
+		if ( floatingBars && ! floatingBars.classList.contains( 'is-sticky' ) && ! floatingBars.classList.contains( 'is-hidden' ) ) {
+			floatingBars.style.marginBottom = `${ mainHeight }px`;
+			document.body.style.paddingTop = '0';
+		} else if ( floatingBars && floatingBars.classList.contains( 'is-sticky' ) ) {
+			const floatingBarsHeight = floatingBars?.offsetHeight || 0;
+			document.body.style.paddingTop = `${ mainHeight + floatingBarsHeight }px`;
+		} else {
+			document.body.style.paddingTop = `${ mainHeight }px`;
+		}
 	}
 
 	handleAriaAttributesDropdown() {
@@ -189,6 +216,13 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 			this.elements.main.classList.remove( 'scroll-down' );
 			this.elements.main.style.removeProperty( '--header-scroll-down' );
 		}
+
+		if ( this.elements.floatingBars ) {
+			const floatingBarsRect = this.elements.floatingBars.getBoundingClientRect();
+			const visibleHeight = Math.max( 0, Math.min( floatingBarsRect.height, floatingBarsRect.bottom ) );
+			this.elements.main.style.setProperty( '--header-floating-bars-height', `${ visibleHeight }px` );
+		}
+
 		this.lastScrollY = currentScrollY;
 	}
 

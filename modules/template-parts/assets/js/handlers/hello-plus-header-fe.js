@@ -132,12 +132,18 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 		const mainHeight = this.elements.main.offsetHeight;
 		const floatingBars = this.elements.floatingBars;
 
-		if ( floatingBars && ! floatingBars.classList.contains( 'is-sticky' ) && ! floatingBars.classList.contains( 'is-hidden' ) ) {
-			floatingBars.style.marginBottom = `${ mainHeight }px`;
-			document.body.style.paddingTop = '0';
-		} else if ( floatingBars && floatingBars.classList.contains( 'is-sticky' ) ) {
-			const floatingBarsHeight = floatingBars?.offsetHeight || 0;
-			document.body.style.paddingTop = `${ mainHeight + floatingBarsHeight }px`;
+		if ( floatingBars ) {
+			const { none } = this.getSettings( 'constants' );
+
+			if ( none !== this.getDataScrollBehavior() ) {
+				if ( ! floatingBars.classList.contains( 'is-sticky' ) && ! floatingBars.classList.contains( 'is-hidden' ) ) {
+					floatingBars.style.marginBottom = `${ mainHeight }px`;
+					document.body.style.paddingTop = '0';
+				} else if ( floatingBars.classList.contains( 'is-sticky' ) ) {
+					const floatingBarsHeight = floatingBars?.offsetHeight || 0;
+					document.body.style.paddingTop = `${ mainHeight + floatingBarsHeight }px`;
+				}
+			}
 		} else {
 			document.body.style.paddingTop = `${ mainHeight }px`;
 		}

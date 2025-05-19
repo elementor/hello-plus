@@ -382,10 +382,11 @@ class Widget_Flex_Footer_Render {
 		$this->widget->add_render_attribute( 'copyright', 'class', self::LAYOUT_CLASSNAME . '__copyright' );
 		$this->widget->add_render_attribute( 'copyright-wrapper', 'class', self::LAYOUT_CLASSNAME . '__copyright-wrapper' );
 		$this->widget->add_render_attribute( 'copyright-prefix', 'class', self::LAYOUT_CLASSNAME . '__copyright-prefix' );
+		$this->widget->add_render_attribute( 'copyright-text-container', 'class', self::LAYOUT_CLASSNAME . '__copyright-text-container' );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'copyright' ); ?>>
 			<div <?php $this->widget->print_render_attribute_string( 'copyright-wrapper' ); ?>>
-				<div class="ehp-flex-footer__copyright-text-container">
+				<div <?php $this->widget->print_render_attribute_string( 'copyright-text-container' ); ?>>
 					<span <?php $this->widget->print_render_attribute_string( 'copyright-prefix' ); ?>>
 						<?php
 						if ( ! empty( $this->settings['current_year_switcher'] ) && 'yes' === $this->settings['current_year_switcher'] ) {
@@ -401,7 +402,8 @@ class Widget_Flex_Footer_Render {
 						$this->settings['copyright_text'],
 						'span',
 					);
-				?>
+					?>
+				</div>
 			</div>
 		</div>
 		<?php

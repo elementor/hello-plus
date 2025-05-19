@@ -60,12 +60,9 @@
 		@media screen and (max-width: variables.$screen-mobile-max) {
 			text-align: center;
 
-			& .ehp-flex-footer__menu .menu-item {
-				justify-content: center;
-			}
-
 			& .ehp-flex-footer__list-item,
-			& .ehp-flex-footer__list--social-links {
+			& .ehp-flex-footer__list--social-links,
+			& .ehp-flex-footer__menu .menu-item {
 				justify-content: center;
 			}
 		}
@@ -85,7 +82,8 @@
 		margin: 0 0 var(--flex-footer-subheading-spacing);
 	}
 
-	&__site-link {
+	&__site-link,
+	&__menu .menu-item {
 		display: flex;
 	}
 
@@ -136,10 +134,6 @@
 			color: var(--flex-footer-link-color-hover);
 			transition: variables.$transition;
 		}
-	}
-
-	&__menu .menu-item {
-		display: flex;
 	}
 
 	&__menu .menu-item:last-of-type,

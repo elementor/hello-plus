@@ -64,7 +64,6 @@ test( 'Flex Hero widget should have storytelling layout preset class', async () 
 	// Wait for the label to be visible and clickable
 	await storytellingLabel.waitFor( { state: 'visible' } );
 	await storytellingLabel.click();
-	
 	// Wait for the preview to update
 	await page.waitForTimeout( 1000 );
 	

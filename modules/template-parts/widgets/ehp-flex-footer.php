@@ -248,6 +248,9 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				],
 				'default' => 'h6',
 				'separator' => 'before',
+				'condition' => [
+					'layout_preset' => 'info-hub',
+				],
 			]
 		);
 
@@ -970,7 +973,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'label' => esc_html__( 'Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
-					'default' => Global_Colors::COLOR_SECONDARY,
+					'default' => Global_Colors::COLOR_ACCENT,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-link-color-hover: {{VALUE}}',
@@ -1147,7 +1150,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'style_copyright_separator',
 			[
 				'label' => esc_html__( 'Copyright Separator', 'hello-plus' ),
@@ -1180,7 +1183,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-footer__copyright-wrapper' => 'border-top-width: {{SIZE}}{{UNIT}}; border-top-style: solid;',
+					'{{WRAPPER}} .ehp-flex-footer__copyright-text-container' => 'border-top-width: {{SIZE}}{{UNIT}}; border-top-style: solid;',
 				],
 				'condition' => [
 					'style_copyright_separator' => 'divider',
@@ -1197,7 +1200,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 					'default' => Global_Colors::COLOR_SECONDARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-footer__copyright-wrapper' => 'border-top-color: {{VALUE}};',
+					'{{WRAPPER}} .ehp-flex-footer__copyright-text-container' => 'border-top-color: {{VALUE}};',
 				],
 				'condition' => [
 					'style_copyright_separator' => 'divider',
@@ -1251,6 +1254,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 			[
 				'name' => 'style_box_background',
 				'label' => esc_html__( 'Background', 'hello-plus' ),
+				'exclude' => [ 'image' ],
 				'selector' => '{{WRAPPER}} .ehp-flex-footer',
 			]
 		);

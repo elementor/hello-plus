@@ -385,21 +385,22 @@ class Widget_Flex_Footer_Render {
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'copyright' ); ?>>
 			<div <?php $this->widget->print_render_attribute_string( 'copyright-wrapper' ); ?>>
-				<span <?php $this->widget->print_render_attribute_string( 'copyright-prefix' ); ?>>
+				<div class="ehp-flex-footer__copyright-text-container">
+					<span <?php $this->widget->print_render_attribute_string( 'copyright-prefix' ); ?>>
+						<?php
+						if ( ! empty( $this->settings['current_year_switcher'] ) && 'yes' === $this->settings['current_year_switcher'] ) {
+							echo wp_kses_post( '&copy;' . esc_html( gmdate( 'Y' ) ) . '.&nbsp;' );
+						}
+						?>
+					</span>
 					<?php
-					if ( ! empty( $this->settings['current_year_switcher'] ) && 'yes' === $this->settings['current_year_switcher'] ) {
-						echo wp_kses_post( '&copy;' . esc_html( gmdate( 'Y' ) ) . '.&nbsp;' );
-					}
-					?>
-				</span>
-				<?php
-				Widget_Utils::maybe_render_text_html(
-					$this->widget,
-					'copyright_text',
-					self::LAYOUT_CLASSNAME . '__copyright-text',
-					$this->settings['copyright_text'],
-					'span',
-				);
+					Widget_Utils::maybe_render_text_html(
+						$this->widget,
+						'copyright_text',
+						self::LAYOUT_CLASSNAME . '__copyright-text',
+						$this->settings['copyright_text'],
+						'span',
+					);
 				?>
 			</div>
 		</div>

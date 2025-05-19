@@ -79,8 +79,8 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 			'condition' => ! Utils::has_pro(),
 			'image' => esc_url( HELLOPLUS_IMAGES_URL . 'go-pro.svg' ),
 			'image_alt' => esc_attr__( 'Upgrade Now', 'hello-plus' ),
-			'title' => esc_html__( 'Create a custom footer with multiple options', 'hello-plus' ),
-			'description' => esc_html__( 'Upgrade to Elementor Pro and enjoy free design and many more features', 'hello-plus' ),
+			'title' => esc_html__( 'Create custom footers', 'hello-plus' ),
+			'description' => esc_html__( 'Adjust your footer to include contact forms, sitemaps and more with Elementor Pro.', 'hello-plus' ),
 			'upgrade_url' => esc_url( 'https://go.elementor.com/biz-footer-pro' ),
 			'upgrade_text' => esc_html__( 'Upgrade Now', 'hello-plus' ),
 		];

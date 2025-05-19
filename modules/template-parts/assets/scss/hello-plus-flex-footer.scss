@@ -18,15 +18,21 @@
 		&-quick-reference {
 			--flex-footer-business-details-gap: var(--flex-footer-element-spacing);
 
-			& .ehp-flex-footer__group,
-			& .ehp-flex-footer__copyright-wrapper {
+			& .ehp-flex-footer__groups-row {
+				align-items: var(--flex-footer-content-alignment);
+				display: flex;
+				flex-direction: column;
+				text-align: var(--flex-footer-content-alignment);
+			}
+
+			& .ehp-flex-footer__copyright-text-container {
 				display: flex;
 				justify-content: var(--flex-footer-content-alignment);
-				text-align: var(--flex-footer-content-alignment);
 			}
 
 			& .ehp-flex-footer__group--business-details {
 				align-items: var(--flex-footer-content-alignment);
+				display: flex;
 				flex-direction: column;
 			}
 
@@ -34,21 +40,18 @@
 			& .ehp-flex-footer__list--contact-links {
 				display: flex;
 				flex-direction: row;
+				flex-wrap: wrap;
 				gap: var(--flex-footer-links-spacing);
+				justify-content: var(--flex-footer-content-alignment);
 			}
 
 			& .ehp-flex-footer__group {
 				margin-bottom: var(--flex-footer-element-spacing);
+				max-width: var(--flex-footer-content-width);
 
 				&:last-of-type {
 					margin-bottom: 0;
 				}
-			}
-
-			& .ehp-flex-footer__groups-row,
-			& .ehp-flex-footer__copyright-wrapper {
-				margin-inline: auto;
-				max-width: var(--flex-footer-content-width);
 			}
 		}
 	}
@@ -56,6 +59,12 @@
 	&.is-align-center-mobile {
 		@media screen and (max-width: variables.$screen-mobile-max) {
 			text-align: center;
+
+			& .ehp-flex-footer__list-item,
+			& .ehp-flex-footer__list--social-links,
+			& .ehp-flex-footer__menu .menu-item {
+				justify-content: center;
+			}
 		}
 	}
 
@@ -71,6 +80,11 @@
 	&__subheading {
 		color: var(--flex-footer-subheading-color);
 		margin: 0 0 var(--flex-footer-subheading-spacing);
+	}
+
+	&__site-link,
+	&__menu .menu-item {
+		display: flex;
 	}
 
 	&__site-link-container {
@@ -110,7 +124,7 @@
 		white-space: pre-wrap;
 	}
 
-	&__link {
+	& a.ehp-flex-footer__link {
 		color: var(--flex-footer-link-color);
 		display: inline-flex;
 		transition: variables.$transition;
@@ -188,8 +202,14 @@
 
 	&__copyright-wrapper {
 		display: flex;
+		width: 100%;
+	}
+
+	&__copyright-text-container {
+		display: flex;
 		justify-content: var(--flex-footer-copyright-alignment);
 		padding-block-start: calc(var(--flex-footer-box-gap) / 2);
+		width: 100%;
 	}
 
 	&__copyright-text {

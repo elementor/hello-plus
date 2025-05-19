@@ -86,6 +86,10 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 		];
 	}
 
+	public function get_custom_help_url(): string {
+		return 'https://go.elementor.com/biz-footer-help';
+	}
+
 	protected function render(): void {
 		$render_strategy = new Widget_Flex_Footer_Render( $this );
 		$this->add_inline_editing_attributes( 'group_1_business_details_subheading', 'none' );

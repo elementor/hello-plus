@@ -61,7 +61,6 @@ test( 'Flex Hero widget should have storytelling layout preset class', async () 
 	// Act.
 	// Click the storytelling option using the label (which contains the image)
 	const storytellingLabel = page.locator( '.elementor-control-layout_preset .elementor-choices-label[data-tooltip*="Storytelling"]' );
-	
 	// Wait for the label to be visible and clickable
 	await storytellingLabel.waitFor( { state: 'visible' } );
 	await storytellingLabel.click();

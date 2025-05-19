@@ -66,7 +66,6 @@ test( 'Flex Hero widget should have storytelling layout preset class', async () 
 	await storytellingLabel.click();
 	// Wait for the preview to update
 	await page.waitForTimeout( 1000 );
-	
 	await editor.togglePreviewMode();
 
 	// Assert.

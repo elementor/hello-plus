@@ -37,7 +37,8 @@
 			}
 
 			& .ehp-flex-footer__menu,
-			& .ehp-flex-footer__list--contact-links {
+			& .ehp-flex-footer__list--contact-links,
+			& .ehp-flex-footer__list--social-links {
 				display: flex;
 				flex-direction: row;
 				flex-wrap: wrap;
@@ -185,6 +186,7 @@
 	&__list--social-links {
 		display: flex;
 		flex-direction: var(--flex-footer-icons-alignment);
+		flex-wrap: wrap;
 		gap: var(--flex-footer-links-spacing);
 	}
 

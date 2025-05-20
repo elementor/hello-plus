@@ -59,7 +59,7 @@ class Theme_Overrides {
 		$edit_with_elementor = $elementor_active ? '&action=elementor' : '';
 
 		foreach ( $site_parts['siteParts'] as &$part ) {
-			if ( ! isset( $part['id'] ) || ! in_array( $part['id'], [ 'hello-header', 'hello-footer' ] ) ) {
+			if ( ! isset( $part['id'] ) || ! in_array( $part['id'], [ 'hello-header', 'hello-footer' ], true ) ) {
 				continue;
 			}
 

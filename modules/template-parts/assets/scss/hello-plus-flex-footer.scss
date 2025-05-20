@@ -221,14 +221,4 @@
 	&__copyright-prefix {
 		color: var(--flex-footer-copyright-color);
 	}
-
-	&__overlay {
-		height: 100%;
-		left: 0;
-		opacity: var(--flex-footer-overlay-opacity);
-		position: absolute;
-		top: 0;
-		width: 100%;
-		z-index: variables.$ground-layer;
-	}
 }

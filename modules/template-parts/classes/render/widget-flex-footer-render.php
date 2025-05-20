@@ -47,10 +47,8 @@ class Widget_Flex_Footer_Render {
 		$this->widget->maybe_add_advanced_attributes();
 
 		$this->widget->add_render_attribute( 'groups-row', 'class', self::LAYOUT_CLASSNAME . '__groups-row' );
-		$this->widget->add_render_attribute( 'overlay', 'class', self::LAYOUT_CLASSNAME . '__overlay' );
 		?>
 		<footer <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
-			<div <?php $this->widget->print_render_attribute_string( 'overlay' ); ?>></div>
 			<div <?php $this->widget->print_render_attribute_string( 'groups-row' ); ?>>
 				<?php
 					$this->render_business_details();

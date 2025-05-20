@@ -1263,46 +1263,6 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'style_box_background_overlay_label',
-			[
-				'label' => esc_html__( 'Background Overlay', 'hello-plus' ),
-				'type' => Controls_Manager::HEADING,
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Background::get_type(),
-			[
-				'name' => 'style_box_background_overlay',
-				'label' => esc_html__( 'Background Overlay', 'hello-plus' ),
-				'selector' => '{{WRAPPER}} .ehp-flex-footer__overlay',
-			]
-		);
-
-		$this->add_responsive_control(
-			'background_overlay_opacity',
-			[
-				'label' => esc_html__( 'Opacity', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'%' => [
-						'max' => 1,
-						'min' => 0.10,
-						'step' => 0.01,
-					],
-				],
-				'default' => [
-					'unit' => '%',
-					'size' => 0.5,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-overlay-opacity: {{SIZE}};',
-				],
-			]
-		);
-
 		$this->add_responsive_control(
 			'style_box_element_spacing',
 			[

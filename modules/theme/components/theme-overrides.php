@@ -81,6 +81,35 @@ class Theme_Overrides {
 		return $display;
 	}
 
+	public function site_parts_filter( $site_parts ) {
+		$header = Ehp_Header::get_active_document();
+		$footer = Ehp_Footer::get_active_document();
+		if ( ! empty( $header ) && ! empty( $footer ) ) {
+			return $site_parts;
+		}
+
+		foreach ( $site_parts['siteParts'] as &$part ) {
+			if ( ! isset( $part['id'] ) ) {
+				continue;
+			}
+
+			if ( 'hello-header' === $part['id'] && ! empty( $header ) ) {
+				$part['link'] = admin_url( 'edit.php?post_type=elementor_library&tabs_group=library&elementor_library_type=ehp-header' );
+			} else {
+				$part['link'] = null;
+				$part['tooltip'] = __( 'No header found', 'hello-plus' );
+			}
+			if ( 'hello-footer' === $part['id'] && ! empty( $footer ) ) {
+				$part['link'] = admin_url( 'edit.php?post_type=elementor_library&tabs_group=library&elementor_library_type=ehp-footer' );
+			} else {
+				$part['link'] = null;
+				$part['tooltip'] = __( 'No footer found', 'hello-plus' );
+			}
+		}
+
+		return $site_parts;
+	}
+
 	public function __construct() {
 		add_filter( 'hello-plus-theme/settings/hello_theme', '__return_false' );
 		add_filter( 'hello-plus-theme/settings/hello_style', '__return_false' );
@@ -90,5 +119,7 @@ class Theme_Overrides {
 
 		add_filter( 'hello-plus-theme/display-default-header', [ $this, 'display_default_header' ], 100 );
 		add_filter( 'hello-plus-theme/display-default-footer', [ $this, 'display_default_footer' ], 100 );
+
+		add_filter( 'hello_elementor_site_parts', [ $this, 'site_parts_filter' ], 100 );
 	}
 }

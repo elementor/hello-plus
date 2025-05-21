@@ -53,9 +53,16 @@ class Theme_Overrides {
 	}
 
 	public function site_parts_filter( $site_parts ) {
+		$elementor_active = Utils::is_elementor_active();
+		$has_pro          = Utils::has_pro();
+
+		// If Elementor Pro is active, let the theme handle the logic.
+		if ( $elementor_active && $has_pro ) {
+			return $site_parts;
+		}
+
 		$header              = Ehp_Header::get_active_document();
 		$footer              = Ehp_Footer::get_active_document();
-		$elementor_active    = Utils::is_elementor_active();
 		$edit_with_elementor = $elementor_active ? '&action=elementor' : '';
 
 		foreach ( $site_parts['siteParts'] as &$part ) {
@@ -63,19 +70,19 @@ class Theme_Overrides {
 				continue;
 			}
 
+			// If it has a Hello Plus header, edit with Elementor, else go to the Library.
 			if ( 'hello-header' === $part['id'] && ! empty( $header ) ) {
 				$part['title'] = __( 'Header', 'hello-plus' );
 				$part['link'] = get_edit_post_link( $header[0], 'admin' ) . $edit_with_elementor;
 			} elseif ( 'hello-header' === $part['id'] ) {
-				$part['link'] = null;
-				$part['tooltip'] = __( 'No header found', 'hello-plus' );
+				$part['link'] = admin_url( 'edit.php?post_type=elementor_library&tabs_group=library&elementor_library_type=ehp-header' );
 			}
+			// If it has a Hello Plus footer, edit with Elementor, else go to the Library.
 			if ( 'hello-footer' === $part['id'] && ! empty( $footer ) ) {
 				$part['title'] = __( 'Footer', 'hello-plus' );
 				$part['link'] = get_edit_post_link( $footer[0], 'admin' ) . $edit_with_elementor;
 			} elseif ( 'hello-footer' === $part['id'] ) {
-				$part['link'] = null;
-				$part['tooltip'] = __( 'No footer found', 'hello-plus' );
+				$part['link'] = admin_url( 'edit.php?post_type=elementor_library&tabs_group=library&elementor_library_type=ehp-footer' );
 			}
 		}
 

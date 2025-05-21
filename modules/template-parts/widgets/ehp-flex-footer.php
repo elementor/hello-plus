@@ -723,7 +723,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'options' => [
 					'start' => [
 						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => 'eicon-align-start-h',
+						'icon' => 'eicon-align-' . ( is_rtl() ? 'end' : 'start' ) .'-h',
 					],
 					'center' => [
 						'title' => esc_html__( 'Center', 'hello-plus' ),
@@ -1132,16 +1132,16 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'start' => [
-						'title' => esc_html__( 'Left', 'hello-plus' ),
-						'icon' => 'eicon-align-start-h',
+						'title' => esc_html__( 'Start', 'hello-plus' ),
+						'icon' => 'eicon-align-' . ( is_rtl() ? 'end' : 'start' ) . '-h',
 					],
 					'center' => [
 						'title' => esc_html__( 'Center', 'hello-plus' ),
 						'icon' => 'eicon-align-center-h',
 					],
 					'end' => [
-						'title' => esc_html__( 'Right', 'hello-plus' ),
-						'icon' => 'eicon-align-end-h',
+						'title' => esc_html__( 'End', 'hello-plus' ),
+						'icon' => 'eicon-align-' . ( is_rtl() ? 'start' : 'end' ) . '-h',
 					],
 				],
 				'default' => 'start',

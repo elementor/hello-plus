@@ -206,7 +206,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'condition' => [
 					'layout_preset' => 'info-hub',
 				],
-				'separator' => 'before',
+				'separator' => false,
 			]
 		);
 
@@ -218,7 +218,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'rows' => 6,
 				'default' => esc_html__( 'Helping your business stand out with thoughtful details that drive action.', 'hello-plus' ),
 				'placeholder' => esc_html__( 'Enter your text here.', 'hello-plus' ),
-				'separator' => 'before',
+				'separator' => false,
 				'dynamic' => [
 					'active' => true,
 				],
@@ -329,7 +329,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 					'group_' . $group_number . '_type' => 'navigation-links',
 					'layout_preset' => 'info-hub',
 				] ),
-				'separator' => 'before',
+				'separator' => false,
 			]
 		);
 
@@ -344,7 +344,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 					'options' => $menus,
 					'default' => array_keys( $menus )[0],
 					'save_default' => true,
-					'separator' => 'before',
+					'separator' => false,
 					'description' => sprintf(
 						/* translators: 1: Link opening tag, 2: Link closing tag. */
 						esc_html__( 'Go to the %1$sMenus screen%2$s to manage your menus.', 'hello-plus' ),

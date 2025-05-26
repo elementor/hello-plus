@@ -17,7 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Theme_Overrides {
 
 	public function admin_config( array $config ): array {
-		if ( ! Setup_Wizard::has_site_wizard_been_completed() ) {
+
+		if ( ! Setup_Wizard::has_site_wizard_been_completed() || has_filter( 'hello-plus-theme/template-parts' ) ) {
 			return $config;
 		}
 
@@ -81,38 +82,53 @@ class Theme_Overrides {
 		return $display;
 	}
 
+	protected function update_site_part_link( &$part, $part_type = '', $title = '' ) {
+		if ( empty( $part ) || empty( $part_type ) || empty( $title ) ) {
+			return;
+		}
+		$part_id = 'hello-' . $part_type;
+
+		// Only process if this part matches our type.
+		if ( $part['id'] !== $part_id ) {
+			return;
+		}
+
+		$elementor_active    = Utils::is_elementor_active();
+		$edit_with_elementor = $elementor_active ? '&action=elementor' : '';
+		$library_type        = 'ehp-' . $part_type;
+
+		// Get the active document based on part type.
+		$active_document = null;
+		if ( 'header' === $part_type ) {
+			$active_document = Ehp_Header::get_active_document();
+		} elseif ( 'footer' === $part_type ) {
+			$active_document = Ehp_Footer::get_active_document();
+		}
+
+		if ( ! empty( $active_document ) ) {
+			$part['title'] = $title;
+			$part['link']  = get_edit_post_link( $active_document[0], 'admin' ) . $edit_with_elementor;
+		} else {
+			$part['link'] = admin_url( "edit.php?post_type=elementor_library&tabs_group=library&elementor_library_type={$library_type}" );
+		}
+	}
+
 	public function site_parts_filter( $site_parts ) {
 		$elementor_active = Utils::is_elementor_active();
 		$has_pro          = Utils::has_pro();
 
-		// If Elementor Pro is active, let the theme handle the logic.
-		if ( $elementor_active && $has_pro ) {
+		// If Elementor is not active or if Elementor Pro is active, let the theme handle the logic.
+		if ( ! $elementor_active || $has_pro ) {
 			return $site_parts;
 		}
-
-		$header              = Ehp_Header::get_active_document();
-		$footer              = Ehp_Footer::get_active_document();
-		$edit_with_elementor = $elementor_active ? '&action=elementor' : '';
 
 		foreach ( $site_parts['siteParts'] as &$part ) {
 			if ( ! isset( $part['id'] ) || ! in_array( $part['id'], [ 'hello-header', 'hello-footer' ], true ) ) {
 				continue;
 			}
 
-			// If it has a Hello Plus header, edit with Elementor, else go to the Library.
-			if ( 'hello-header' === $part['id'] && ! empty( $header ) ) {
-				$part['title'] = __( 'Header', 'hello-plus' );
-				$part['link'] = get_edit_post_link( $header[0], 'admin' ) . $edit_with_elementor;
-			} elseif ( 'hello-header' === $part['id'] ) {
-				$part['link'] = admin_url( 'edit.php?post_type=elementor_library&tabs_group=library&elementor_library_type=ehp-header' );
-			}
-			// If it has a Hello Plus footer, edit with Elementor, else go to the Library.
-			if ( 'hello-footer' === $part['id'] && ! empty( $footer ) ) {
-				$part['title'] = __( 'Footer', 'hello-plus' );
-				$part['link'] = get_edit_post_link( $footer[0], 'admin' ) . $edit_with_elementor;
-			} elseif ( 'hello-footer' === $part['id'] ) {
-				$part['link'] = admin_url( 'edit.php?post_type=elementor_library&tabs_group=library&elementor_library_type=ehp-footer' );
-			}
+			$this->update_site_part_link( $part, 'header', __( 'Header', 'hello-plus' ) );
+			$this->update_site_part_link( $part, 'footer', __( 'Footer', 'hello-plus' ) );
 		}
 
 		return $site_parts;

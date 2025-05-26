@@ -10,8 +10,6 @@ use Elementor\{
 	Controls_Manager,
 	Group_Control_Background,
 	Group_Control_Box_Shadow,
-	Group_Control_Css_Filter,
-	Group_Control_Text_Shadow,
 	Group_Control_Typography,
 	Repeater
 };
@@ -20,10 +18,8 @@ use Elementor\Core\Kits\Documents\Tabs\{
 	Global_Colors,
 };
 
-use HelloPlus\Modules\TemplateParts\Classes\{
-	Render\Widget_Header_Render,
-	Control_Media_Preview,
-};
+use HelloPlus\Includes\Utils as General_Utils;
+use HelloPlus\Modules\TemplateParts\Classes\Render\Widget_Header_Render;
 use HelloPlus\Modules\Content\Classes\Choose_Img_Control;
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
@@ -71,6 +67,18 @@ class Ehp_Header extends Ehp_Widget_Base {
 
 	public function get_custom_help_url(): string {
 		return 'https://go.elementor.com/biz-header-help';
+	}
+
+	protected function get_upsale_data(): array {
+		return [
+			'condition' => ! General_Utils::has_pro(),
+			'image' => esc_url( HELLOPLUS_IMAGES_URL . 'go-pro.svg' ),
+			'image_alt' => esc_attr__( 'Upgrade Now', 'hello-plus' ),
+			'title' => esc_html__( 'Create custom headers', 'hello-plus' ),
+			'description' => esc_html__( 'Add mega menus, search bars, login buttons, and more with Elementor Pro.', 'hello-plus' ),
+			'upgrade_url' => esc_url( 'https://go.elementor.com/helloplus-header-pro' ),
+			'upgrade_text' => esc_html__( 'Upgrade Now', 'hello-plus' ),
+		];
 	}
 
 	protected function render(): void {
@@ -449,11 +457,11 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'options' => [
 					'start' => [
 						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => 'eicon-align-start-h',
+						'icon' => 'eicon-align-' . ( is_rtl() ? 'end' : 'start' ) . '-h',
 					],
 					'end' => [
 						'title' => esc_html__( 'End', 'hello-plus' ),
-						'icon' => 'eicon-align-end-h',
+						'icon' => 'eicon-align-' . ( is_rtl() ? 'start' : 'end' ) . '-h',
 					],
 				],
 				'default' => 'start',
@@ -817,7 +825,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'options' => [
 					'flex-start' => [
 						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => 'eicon-align-start-h',
+						'icon' => 'eicon-align-' . ( is_rtl() ? 'end' : 'start' ) . '-h',
 					],
 					'center' => [
 						'title' => esc_html__( 'Center', 'hello-plus' ),

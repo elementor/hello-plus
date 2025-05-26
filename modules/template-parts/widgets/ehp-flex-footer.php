@@ -81,7 +81,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 			'image_alt' => esc_attr__( 'Upgrade Now', 'hello-plus' ),
 			'title' => esc_html__( 'Create custom footers', 'hello-plus' ),
 			'description' => esc_html__( 'Adjust your footer to include contact forms, sitemaps and more with Elementor Pro.', 'hello-plus' ),
-			'upgrade_url' => esc_url( 'https://go.elementor.com/biz-footer-pro' ),
+			'upgrade_url' => esc_url( 'https://go.elementor.com/helloplus-footer-pro' ),
 			'upgrade_text' => esc_html__( 'Upgrade Now', 'hello-plus' ),
 		];
 	}
@@ -206,7 +206,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'condition' => [
 					'layout_preset' => 'info-hub',
 				],
-				'separator' => 'before',
+				'separator' => false,
 			]
 		);
 
@@ -218,7 +218,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'rows' => 6,
 				'default' => esc_html__( 'Helping your business stand out with thoughtful details that drive action.', 'hello-plus' ),
 				'placeholder' => esc_html__( 'Enter your text here.', 'hello-plus' ),
-				'separator' => 'before',
+				'separator' => false,
 				'dynamic' => [
 					'active' => true,
 				],
@@ -329,7 +329,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 					'group_' . $group_number . '_type' => 'navigation-links',
 					'layout_preset' => 'info-hub',
 				] ),
-				'separator' => 'before',
+				'separator' => false,
 			]
 		);
 
@@ -344,7 +344,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 					'options' => $menus,
 					'default' => array_keys( $menus )[0],
 					'save_default' => true,
-					'separator' => 'before',
+					'separator' => false,
 					'description' => sprintf(
 						/* translators: 1: Link opening tag, 2: Link closing tag. */
 						esc_html__( 'Go to the %1$sMenus screen%2$s to manage your menus.', 'hello-plus' ),
@@ -723,7 +723,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'options' => [
 					'start' => [
 						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => 'eicon-align-start-h',
+						'icon' => 'eicon-align-' . ( is_rtl() ? 'end' : 'start' ) . '-h',
 					],
 					'center' => [
 						'title' => esc_html__( 'Center', 'hello-plus' ),
@@ -1132,16 +1132,16 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'start' => [
-						'title' => esc_html__( 'Left', 'hello-plus' ),
-						'icon' => 'eicon-align-start-h',
+						'title' => esc_html__( 'Start', 'hello-plus' ),
+						'icon' => 'eicon-align-' . ( is_rtl() ? 'end' : 'start' ) . '-h',
 					],
 					'center' => [
 						'title' => esc_html__( 'Center', 'hello-plus' ),
 						'icon' => 'eicon-align-center-h',
 					],
 					'end' => [
-						'title' => esc_html__( 'Right', 'hello-plus' ),
-						'icon' => 'eicon-align-end-h',
+						'title' => esc_html__( 'End', 'hello-plus' ),
+						'icon' => 'eicon-align-' . ( is_rtl() ? 'start' : 'end' ) . '-h',
 					],
 				],
 				'default' => 'start',

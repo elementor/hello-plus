@@ -10,8 +10,6 @@ use Elementor\{
 	Controls_Manager,
 	Group_Control_Background,
 	Group_Control_Box_Shadow,
-	Group_Control_Css_Filter,
-	Group_Control_Text_Shadow,
 	Group_Control_Typography,
 	Repeater,
 };
@@ -20,17 +18,11 @@ use Elementor\Core\Kits\Documents\Tabs\{
 	Global_Typography,
 };
 
-use HelloPlus\Includes\Utils as Theme_Utils;
+use HelloPlus\Includes\Utils as General_Utils;
 
-use HelloPlus\Modules\TemplateParts\Classes\{
-	Render\Widget_Footer_Render,
-	Control_Media_Preview,
-};
+use HelloPlus\Modules\TemplateParts\Classes\Render\Widget_Footer_Render;
 
-use HelloPlus\Classes\{
-	Ehp_Padding,
-	Ehp_Shapes,
-};
+use HelloPlus\Classes\Ehp_Padding;
 
 use HelloPlus\Modules\Theme\Module as Theme_Module;
 
@@ -57,7 +49,7 @@ class Ehp_Footer extends Ehp_Widget_Base {
 	}
 
 	public function get_style_depends(): array {
-		$style_depends = Theme_Utils::elementor()->experiments->is_feature_active( 'e_font_icon_svg' )
+		$style_depends = General_Utils::elementor()->experiments->is_feature_active( 'e_font_icon_svg' )
 			? parent::get_style_depends()
 			: [ 'elementor-icons-fa-solid', 'elementor-icons-fa-brands', 'elementor-icons-fa-regular' ];
 
@@ -103,6 +95,18 @@ class Ehp_Footer extends Ehp_Widget_Base {
 	}
 
 	public function add_custom_advanced_sections(): void {}
+
+	protected function get_upsale_data(): array {
+		return [
+			'condition' => ! General_Utils::has_pro(),
+			'image' => esc_url( HELLOPLUS_IMAGES_URL . 'go-pro.svg' ),
+			'image_alt' => esc_attr__( 'Upgrade Now', 'hello-plus' ),
+			'title' => esc_html__( 'Create custom footers', 'hello-plus' ),
+			'description' => esc_html__( 'Adjust your footer to include contact forms, sitemaps, and more with Elementor Pro.', 'hello-plus' ),
+			'upgrade_url' => esc_url( 'https://go.elementor.com/helloplus-footer-pro' ),
+			'upgrade_text' => esc_html__( 'Upgrade Now', 'hello-plus' ),
+		];
+	}
 
 	public function add_content_brand_section(): void {
 		$this->start_controls_section(

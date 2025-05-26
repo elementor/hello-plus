@@ -128,6 +128,6 @@ class Theme_Overrides {
 		add_filter( 'hello-plus-theme/display-default-header', [ $this, 'display_default_header' ], 100 );
 		add_filter( 'hello-plus-theme/display-default-footer', [ $this, 'display_default_footer' ], 100 );
 
-		add_filter( 'hello_elementor_site_parts', [ $this, 'site_parts_filter' ], 100 );
+		add_filter( 'hello-plus-theme/template-parts', [ $this, 'site_parts_filter' ], 100 );
 	}
 }

@@ -105,20 +105,37 @@ class Theme_Overrides {
 			$active_document = Ehp_Footer::get_active_document();
 		}
 
-		if ( ! empty( $active_document ) ) {
-			$part['title'] = $title;
-			$part['link']  = get_edit_post_link( $active_document[0], 'admin' ) . $edit_with_elementor;
-		} else {
-			$part['link'] = admin_url( "edit.php?post_type=elementor_library&tabs_group=library&elementor_library_type={$library_type}" );
+		$edit_link    = $part['link'];
+		$add_new_link = admin_url( "edit.php?post_type=elementor_library&tabs_group=library&elementor_library_type={$library_type}" );
+		$pro_part     = Utils::get_pro_part( $part_type );
+		if ( $pro_part ) {
+			$edit_link = get_edit_post_link( $pro_part, 'admin' ) . $edit_with_elementor;
+		} elseif ( ! empty( $active_document ) ) {
+			$edit_link = get_edit_post_link( $active_document[0], 'admin' ) . $edit_with_elementor;
 		}
+
+		if ( Utils::has_pro() ) {
+			$add_new_link = \Elementor\Plugin::instance()->app->get_base_url() . '#/site-editor/templates/' . $part_type;
+		}
+
+		$part['title']    = $title;
+		$part['sublinks'] = [
+			[
+				'title' => __( 'Edit', 'hello-plus' ),
+				'link'  => $edit_link,
+			],
+			[
+				'title' => __( 'Add New', 'hello-plus' ),
+				'link'  => $add_new_link,
+			],
+		];
 	}
 
 	public function site_parts_filter( $site_parts ) {
 		$elementor_active = Utils::is_elementor_active();
-		$has_pro          = Utils::has_pro();
 
 		// If Elementor is not active or if Elementor Pro is active, let the theme handle the logic.
-		if ( ! $elementor_active || $has_pro ) {
+		if ( ! $elementor_active ) {
 			return $site_parts;
 		}
 

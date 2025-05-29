@@ -180,4 +180,20 @@ class Utils {
 	public static function get_widgets_depends(): array {
 		return [ 'helloplus-button', 'helloplus-image', 'helloplus-shapes', 'helloplus-column-structure' ];
 	}
+
+	public static function get_pro_part( $part = '' ) {
+		if ( ! self::has_pro() ) {
+			return false;
+		}
+		$valid_parts = [ 'header', 'footer' ];
+		if ( ! in_array( $part, $valid_parts, true ) ) {
+			return false;
+		}
+		$theme_builder_module = \ElementorPro\Modules\ThemeBuilder\Module::instance();
+		$conditions_manager   = $theme_builder_module->get_conditions_manager();
+
+		$pro_part = $conditions_manager->get_documents_for_location( $part );
+		$first_pro_part_id  = array_key_first( $pro_part );
+		return ! empty( $first_pro_part_id ) ? $first_pro_part_id : false;
+	}
 }

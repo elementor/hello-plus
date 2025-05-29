@@ -1104,7 +1104,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
-				'selector' => '{{WRAPPER}} .ehp-flex-footer__copyright .ehp-flex-footer__copyright-text'
+				'selector' => '{{WRAPPER}} .ehp-flex-footer__copyright .ehp-flex-footer__copyright-text',
 			]
 		);
 

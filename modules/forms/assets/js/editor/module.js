@@ -20,7 +20,9 @@ export default class FormsModule extends elementorModules.editor.utils.Module {
 		elementor.addControlView( 'Fields_map', FieldsMapControl );
 		elementor.addControlView( 'form-fields-repeater', FieldsRepeaterControl );
 
-		elementorPromotionsData.collect_submit = window.ehpFormsPromotionData;
+		if ( typeof elementorPromotionsData !== 'undefined' ) {
+			elementorPromotionsData.collect_submit = window.ehpFormsPromotionData;
+		}
 	}
 
 	onElementorInitComponents() {

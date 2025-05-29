@@ -379,13 +379,13 @@ class Widget_Flex_Footer_Render {
 	public function render_copyright(): void {
 		$this->widget->add_render_attribute( 'copyright', 'class', self::LAYOUT_CLASSNAME . '__copyright' );
 		$this->widget->add_render_attribute( 'copyright-wrapper', 'class', self::LAYOUT_CLASSNAME . '__copyright-wrapper' );
-		$this->widget->add_render_attribute( 'copyright-prefix', 'class', self::LAYOUT_CLASSNAME . '__copyright-prefix' );
+		$this->widget->add_render_attribute( 'copyright-text', 'class', self::LAYOUT_CLASSNAME . '__copyright-text' );
 		$this->widget->add_render_attribute( 'copyright-text-container', 'class', self::LAYOUT_CLASSNAME . '__copyright-text-container' );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'copyright' ); ?>>
 			<div <?php $this->widget->print_render_attribute_string( 'copyright-wrapper' ); ?>>
 				<div <?php $this->widget->print_render_attribute_string( 'copyright-text-container' ); ?>>
-					<span <?php $this->widget->print_render_attribute_string( 'copyright-prefix' ); ?>>
+					<span <?php $this->widget->print_render_attribute_string( 'copyright-text' ); ?>>
 						<?php
 						if ( ! empty( $this->settings['current_year_switcher'] ) && 'yes' === $this->settings['current_year_switcher'] ) {
 							echo wp_kses_post( '&copy;' . esc_html( gmdate( 'Y' ) ) . '.&nbsp;' );

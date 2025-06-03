@@ -96,7 +96,7 @@ class Theme_Overrides {
 		return $active_document;
 	}
 
-	protected function get_edit_part_link( string $part_type = '', $fallback_link = '' ): string {
+	protected function get_edit_part_link( string $part_type = '', string $fallback_link = '' ): string {
 		$elementor_active    = Utils::is_elementor_active();
 		$edit_with_elementor = $elementor_active ? '&action=elementor' : '';
 		$active_document     = $this->get_active_document_by_part_type( $part_type );

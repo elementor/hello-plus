@@ -189,10 +189,9 @@ class Utils {
 		$conditions_manager   = $theme_builder_module->get_conditions_manager();
 
 		return $conditions_manager->get_documents_for_location( $location );
-
 	}
 
-	public static function get_pro_part( $part = '' ) {
+	public static function get_pro_part( string $part = '' ) {
 		if ( ! self::has_pro() ) {
 			return false;
 		}

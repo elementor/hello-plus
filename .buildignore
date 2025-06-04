@@ -25,6 +25,7 @@ webpack.config.js
 hello-plus*.zip
 hello-plus/
 tests/
+test-results/
 phpunit.xml
 
 tsconfig.json

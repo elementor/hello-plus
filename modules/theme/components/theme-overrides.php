@@ -123,7 +123,7 @@ class Theme_Overrides {
 	}
 
 	protected function update_site_part_link( &$part, string $part_type = '' ): void {
-		if ( empty( $part ) || empty( $part_type ) || empty( $title ) ) {
+		if ( empty( $part ) || empty( $part_type ) ) {
 			return;
 		}
 

@@ -122,12 +122,11 @@ class Theme_Overrides {
 		return $add_new_link;
 	}
 
-	protected function update_site_part_link( &$part, string $part_type = '', string $title = '' ): void {
+	protected function update_site_part_link( &$part, string $part_type = '' ): void {
 		if ( empty( $part ) || empty( $part_type ) || empty( $title ) ) {
 			return;
 		}
 
-		$part['title']    = $title;
 		$part['sublinks'] = [
 			[
 				'title' => __( 'Edit', 'hello-plus' ),
@@ -152,12 +151,8 @@ class Theme_Overrides {
 			if ( ! isset( $part['id'] ) || ! in_array( $part['id'], [ 'header', 'footer' ], true ) ) {
 				continue;
 			}
-			$part_title = [
-				'header' => __( 'Header', 'hello-plus' ),
-				'footer' => __( 'Footer', 'hello-plus' ),
-			];
 
-			$this->update_site_part_link( $part, $part['id'], $part_title[ $part['id'] ] );
+			$this->update_site_part_link( $part, $part['id'] );
 		}
 
 		return $site_parts;

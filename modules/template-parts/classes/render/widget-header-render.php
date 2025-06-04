@@ -232,10 +232,10 @@ class Widget_Header_Render {
 
 		$this->widget->add_render_attribute( 'toggle-icon-close', [
 			'class' => [
-				'eicon-close',
 				self::LAYOUT_CLASSNAME . '__toggle-icon',
 				self::LAYOUT_CLASSNAME . '__toggle-icon--close',
 			],
+			'aria-hidden' => 'true',
 		] );
 
 		?>
@@ -253,7 +253,16 @@ class Widget_Header_Render {
 					);
 					?>
 				</span>
-				<i <?php $this->widget->print_render_attribute_string( 'toggle-icon-close' ); ?>></i>
+				<span <?php $this->widget->print_render_attribute_string( 'toggle-icon-close' ); ?>>
+					<?php
+					Icons_Manager::render_icon(
+						[
+							'library' => 'eicons',
+							'value' => 'eicon-close',
+						]
+					);
+					?>
+				</span>
 				<span class="elementor-screen-only"><?php esc_html_e( 'Menu', 'hello-plus' ); ?></span>
 			</button>
 		</div>

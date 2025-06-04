@@ -9,7 +9,7 @@ export class EhpRemoveLibraryTab extends $e.modules.hookUI.After {
 
 	getConditions( args ) {
 		const document = elementor.documents.get( args.id );
-		return [ 'ehp-header', 'ehp-footer' ].includes( document.config.type );
+		return [ 'ehp-header', 'ehp-footer' ].includes( document?.config?.type );
 	}
 
 	apply() {

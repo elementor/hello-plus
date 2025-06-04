@@ -241,16 +241,9 @@ abstract class Ehp_Document_Base extends Library_Document {
 	}
 
 	public static function maybe_get_template( ?string $name, array $args ): void {
-		if ( Utils::has_pro() ) {
-			/** @var $theme_builder_module */
-			$theme_builder_module = \ElementorPro\Modules\ThemeBuilder\Module::instance();
-			$conditions_manager = $theme_builder_module->get_conditions_manager();
-
-			$location_docs = $conditions_manager->get_documents_for_location( static::LOCATION );
-
-			if ( ! empty( $location_docs ) ) {
-				return;
-			}
+		$location_docs = Utils::maybe_has_pro_location_docs( static::LOCATION );
+		if ( ! empty( $location_docs ) ) {
+			return;
 		}
 
 		static::get_template( $name, $args );

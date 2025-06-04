@@ -180,4 +180,24 @@ class Utils {
 	public static function get_widgets_depends(): array {
 		return [ 'helloplus-button', 'helloplus-image', 'helloplus-shapes', 'helloplus-column-structure' ];
 	}
+
+	public static function maybe_has_pro_location_docs( string $location = '' ): array {
+		if ( ! self::has_pro() ) {
+			return [];
+		}
+		$theme_builder_module = \ElementorPro\Modules\ThemeBuilder\Module::instance();
+		$conditions_manager   = $theme_builder_module->get_conditions_manager();
+
+		return $conditions_manager->get_documents_for_location( $location );
+	}
+
+	public static function get_pro_part( string $part = '' ) {
+		if ( ! self::has_pro() ) {
+			return false;
+		}
+
+		$pro_part = self::maybe_has_pro_location_docs( $part );
+		$first_pro_part_id  = array_key_first( $pro_part );
+		return ! empty( $first_pro_part_id ) ? $first_pro_part_id : false;
+	}
 }

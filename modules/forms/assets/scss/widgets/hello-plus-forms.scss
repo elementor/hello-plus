@@ -1,6 +1,6 @@
-@use "../../../../../assets/dev/scss/variables";
-@use "../../../../../assets/dev/scss/ehp-full-height" as ehp-full-height;
-@use "../../../../../assets/dev/scss/ehp-column-structure" as ehp-column-structure;
+@use "../../../../../dev/scss/variables";
+@use "../../../../../dev/scss/ehp-full-height" as ehp-full-height;
+@use "../../../../../dev/scss/ehp-column-structure" as ehp-column-structure;
 
 @mixin column-width-sizes() {
 	&-33 {

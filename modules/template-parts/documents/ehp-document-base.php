@@ -16,6 +16,7 @@ use Elementor\{
 use HelloPlus\Includes\Utils as Theme_Utils;
 use Elementor\Modules\PageTemplates\Module as Page_Templates_Module;
 use WP_Query;
+use ElementorPro\Modules\ThemeBuilder\Classes\Locations_Manager;
 
 /**
  * class Ehp_Document_Base
@@ -156,12 +157,29 @@ abstract class Ehp_Document_Base extends Library_Document {
 		);
 	}
 
+	public static function skip_document_in_location_in_preview( \ElementorPro\Modules\ThemeBuilder\Classes\Locations_Manager $locations_manager ) {
+		$post_id = filter_input( INPUT_GET, 'elementor-preview', FILTER_VALIDATE_INT );
+		$document = Theme_Utils::elementor()->documents->get( $post_id );
+		if ( $document instanceof static ) {
+			$documents = $locations_manager->get_documents_for_location( static::LOCATION );
+			foreach ( $documents as $post_id ) {
+				$locations_manager->skip_doc_in_location( static::LOCATION, $post_id );
+			}
+		}
+	}
+
 	/**
 	 * @return void
 	 */
 	public static function register_hooks(): void {
 		add_action( 'display_post_states', [ static::get_class_full_name(), 'display_post_states' ], 10, 2 );
 		add_action( 'admin_notices', [ static::get_class_full_name(), 'maybe_display_notice' ] );
+		if ( Utils::has_pro() ) {
+			add_action(
+				'elementor/theme/before_do_' . static::LOCATION,
+				[ static::get_class_full_name(), 'skip_document_in_location_in_preview' ],
+			);
+		}
 
 		$post = static::get_document_post();
 		if ( is_null( $post ) ) {

@@ -1,6 +1,6 @@
-@use "../../../../assets/dev/scss/variables";
-@use "../../../../assets/dev/scss/ehp-full-height" as ehp-full-height;
-@use "../../../../assets/dev/scss/ehp-column-structure" as ehp-column-structure;
+@use "../../../../dev/scss/variables";
+@use "../../../../dev/scss/ehp-full-height" as ehp-full-height;
+@use "../../../../dev/scss/ehp-column-structure" as ehp-column-structure;
 
 .ehp-flex-hero {
 	--flex-hero-content-alignment-showcase: center;
@@ -171,7 +171,7 @@
 			& .ehp-flex-hero__content-container {
 				order: 2;
 			}
-			
+
 			& .ehp-flex-hero__image-wrapper {
 				order: 1;
 			}
@@ -181,7 +181,7 @@
 			& .ehp-flex-hero__content-container {
 				order: 1;
 			}
-			
+
 			& .ehp-flex-hero__image-wrapper {
 				order: 2;
 			}

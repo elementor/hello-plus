@@ -1,6 +1,6 @@
 *.zip
 karma.conf.js
-dev/**
+dev/
 bin/
 composer.json
 composer.lock
@@ -25,6 +25,7 @@ webpack.config.js
 hello-plus*.zip
 hello-plus/
 tests/
+test-results/
 phpunit.xml
 
 tsconfig.json

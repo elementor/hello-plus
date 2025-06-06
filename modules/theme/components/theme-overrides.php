@@ -148,7 +148,7 @@ class Theme_Overrides {
 		}
 
 		foreach ( $site_parts['siteParts'] as &$part ) {
-			if ( ! isset( $part['id'] ) || ! in_array( $part['id'], [ 'header', 'footer' ], true ) ) {
+			if ( ! isset( $part['id'] ) || ! in_array( $part['id'], [ 'header', 'footer' ], true ) || false === $part['showSublinks'] ) {
 				continue;
 			}
 

@@ -148,7 +148,7 @@ class Theme_Overrides {
 		}
 
 		foreach ( $site_parts['siteParts'] as &$part ) {
-			if ( ! isset( $part['id'] ) || ! in_array( $part['id'], [ 'header', 'footer' ], true ) || false === $part['showSublinks'] ) {
+			if ( ! isset( $part['id'] ) || ! in_array( $part['id'], [ 'header', 'footer' ], true ) || ( isset( $part['showSublinks'] ) && false === $part['showSublinks'] ) ) {
 				continue;
 			}
 			$active_document = $this->get_active_document_by_part_type( $part['id'] );

@@ -22,7 +22,7 @@ class Source_Remote_Ehp extends \Elementor\TemplateLibrary\Source_Remote {
 
 	protected function filter_templates_data_by_theme( array $templates_data ): array {
 		return array_filter( $templates_data, function ( $template ) {
-			return in_array( 'Bakery', json_decode( $template['tags'] ), true );
+			return in_array( get_template(), json_decode( $template['tags'] ), true );
 		} );
 	}
 
@@ -35,17 +35,17 @@ class Source_Remote_Ehp extends \Elementor\TemplateLibrary\Source_Remote {
 
 		$editor_layout_type = 'container_flexbox';
 
-		$templates_data = get_transient( $templates_data_cache_key );
+        $templates_data = get_transient( $templates_data_cache_key );
 
 		if ( $force_update || empty( $templates_data ) ) {
 			$templates_data = $this->get_templates_remotely( $editor_layout_type );
 		}
 
-		if ( empty( $templates_data ) ) {
-			return [];
-		}
+        if ( empty( $templates_data ) ) {
+            return [];
+        }
 
-		set_transient( $templates_data_cache_key, $templates_data, 12 * HOUR_IN_SECONDS );
+        set_transient( $templates_data_cache_key, $templates_data, 12 * HOUR_IN_SECONDS );
 
 		return $this->filter_templates_data_by_theme( $templates_data );
 	}

@@ -22,7 +22,7 @@ class Source_Remote_Ehp extends \Elementor\TemplateLibrary\Source_Remote {
 
 	protected function filter_templates_data_by_theme( array $templates_data ): array {
 		return array_filter( $templates_data, function ( $template ) {
-			return in_array( get_template(), json_decode( $template['tags'] ), true );
+			return in_array( EHP_THEME_SLUG, json_decode( $template['tags'] ), true );
 		} );
 	}
 

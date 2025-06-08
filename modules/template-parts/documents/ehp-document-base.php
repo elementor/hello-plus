@@ -157,7 +157,7 @@ abstract class Ehp_Document_Base extends Library_Document {
 		);
 	}
 
-	public static function skip_document_in_location_in_preview( Locations_Manager $locations_manager ) {
+	public static function skip_document_in_location_in_preview( \ElementorPro\Modules\ThemeBuilder\Classes\Locations_Manager $locations_manager ) {
 		$post_id = filter_input( INPUT_GET, 'elementor-preview', FILTER_VALIDATE_INT );
 		$document = Theme_Utils::elementor()->documents->get( $post_id );
 		if ( $document instanceof static ) {

@@ -16,7 +16,6 @@ use Elementor\{
 use HelloPlus\Includes\Utils as Theme_Utils;
 use Elementor\Modules\PageTemplates\Module as Page_Templates_Module;
 use WP_Query;
-use ElementorPro\Modules\ThemeBuilder\Classes\Locations_Manager;
 
 /**
  * class Ehp_Document_Base

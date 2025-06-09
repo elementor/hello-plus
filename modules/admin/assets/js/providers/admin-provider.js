@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
 import apiFetch from '@wordpress/api-fetch';
-import { __ } from '@wordpress/i18n';
 
 export const AdminContext = createContext();
 
@@ -10,7 +9,6 @@ export const AdminProvider = ( { children } ) => {
 	const [ elementorKitSettings, setElementorKitSettings ] = React.useState( {} );
 	const [ stepAction, setStepAction ] = useState( '' );
 	const [ step, setStep ] = useState( 0 );
-	const [ buttonText, setButtonText ] = useState( '' );
 	const { elementorInstalled, elementorActive, wizardCompleted } = onboardingSettings;
 	const { elementorAppConfig } = window;
 
@@ -27,15 +25,12 @@ export const AdminProvider = ( { children } ) => {
 		}
 		if ( false === elementorInstalled ) {
 			setStepAction( 'install-elementor' );
-			setButtonText( __( 'Start building my website', 'hello-plus' ) );
 		}
 		if ( elementorInstalled && false === elementorActive ) {
 			setStepAction( 'activate-elementor' );
-			setButtonText( __( 'Start building my website', 'hello-plus' ) );
 		}
 		if ( elementorInstalled && elementorActive ) {
 			setStepAction( 'install-kit' );
-			setButtonText( __( 'Install Kit', 'hello-plus' ) );
 			setStep( 1 );
 		}
 	}, [ elementorInstalled, elementorActive, wizardCompleted ] );
@@ -55,7 +50,6 @@ export const AdminProvider = ( { children } ) => {
 			onboardingSettings,
 			stepAction,
 			setStepAction,
-			buttonText,
 			step,
 			setStep,
 			isLoading,

@@ -1,6 +1,6 @@
-@use "../../../../assets/dev/scss/variables";
-@use "../../../../assets/dev/scss/ehp-full-height";
-@use "../../../../assets/dev/scss/ehp-column-structure" as ehp-column-structure;
+@use "../../../../dev/scss/variables";
+@use "../../../../dev/scss/ehp-full-height";
+@use "../../../../dev/scss/ehp-column-structure" as ehp-column-structure;
 .ehp-cta {
 	--cta-elements-spacing: 40px;
 	--cta-buttons-space-between: 16px;
@@ -162,7 +162,7 @@
 
 			.ehp-cta__elements-container {
 				display: grid;
-				
+
 				@include ehp-column-structure.has-column-structure();
 
 				&.has-image-position {

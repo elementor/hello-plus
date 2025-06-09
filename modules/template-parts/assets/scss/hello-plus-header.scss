@@ -1,4 +1,4 @@
-@use "../../../../assets/dev/scss/variables";
+@use "../../../../dev/scss/variables";
 
 .ehp-header {
 	--header-logo-width: 68px;
@@ -276,16 +276,6 @@
 			fill: var(--header-toggle-icon-color);
 			height: var(--header-toggle-icon-size);
 			width: var(--header-toggle-icon-size);
-		}
-
-		.ehp-header__toggle-icon--close {
-			color: var(--header-toggle-icon-color-active);
-			fill: var(--header-toggle-icon-color-active);
-		}
-
-		i {
-			color: var(--header-toggle-icon-color);
-			font-size: var(--header-toggle-icon-size);
 		}
 
 		&[aria-expanded="true"] {

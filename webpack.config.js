@@ -7,10 +7,10 @@ const CopyWebpackPlugin = require( 'copy-webpack-plugin' );
 
 // Utilities.
 const path = require( 'path' );
-const imagesPath = path.resolve( __dirname, './build/images' );
+const imagesPath = path.resolve( __dirname, './assets/images' );
 
 const modulesDir = process.cwd() + '/modules/';
-const assetsDir = process.cwd() + '/assets/';
+const devDir = process.cwd() + '/dev/';
 
 const entryPoints = {
 	// Admin module:
@@ -41,10 +41,10 @@ const entryPoints = {
 	'js/helloplus-forms-fe': path.resolve( modulesDir, 'forms/assets/js/frontend', 'frontend.js' ),
 
 	// Classes
-	'css/helloplus-button': path.resolve( process.cwd(), 'assets/dev/scss', 'ehp-button.scss' ),
-	'css/helloplus-image': path.resolve( process.cwd(), 'assets/dev/scss', 'ehp-image.scss' ),
-	'css/helloplus-shapes': path.resolve( process.cwd(), 'assets/dev/scss', 'ehp-shapes.scss' ),
-	'css/helloplus-column-structure': path.resolve( process.cwd(), 'assets/dev/scss', 'ehp-column-structure.scss' ),
+	'css/helloplus-button': path.resolve( devDir, 'scss', 'ehp-button.scss' ),
+	'css/helloplus-image': path.resolve( devDir, 'scss', 'ehp-image.scss' ),
+	'css/helloplus-shapes': path.resolve( devDir, 'scss', 'ehp-shapes.scss' ),
+	'css/helloplus-column-structure': path.resolve( devDir, 'scss', 'ehp-column-structure.scss' ),
 };
 
 module.exports = {
@@ -53,7 +53,7 @@ module.exports = {
 		entry: entryPoints,
 		output: {
 			...defaultConfig.output,
-			path: path.resolve( __dirname, './build' ),
+			path: path.resolve( __dirname, './assets' ),
 		},
 		plugins: [
 			// Include WP's plugin config.
@@ -74,7 +74,7 @@ module.exports = {
 						to: imagesPath,
 					},
 					{
-						from: path.resolve( assetsDir, 'dev/images' ),
+						from: path.resolve( devDir, 'images' ),
 						to: imagesPath,
 					},
 				],

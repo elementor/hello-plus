@@ -47,10 +47,8 @@ class Widget_Flex_Footer_Render {
 		$this->widget->maybe_add_advanced_attributes();
 
 		$this->widget->add_render_attribute( 'groups-row', 'class', self::LAYOUT_CLASSNAME . '__groups-row' );
-		$this->widget->add_render_attribute( 'overlay', 'class', self::LAYOUT_CLASSNAME . '__overlay' );
 		?>
 		<footer <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
-			<div <?php $this->widget->print_render_attribute_string( 'overlay' ); ?>></div>
 			<div <?php $this->widget->print_render_attribute_string( 'groups-row' ); ?>>
 				<?php
 					$this->render_business_details();
@@ -381,26 +379,29 @@ class Widget_Flex_Footer_Render {
 	public function render_copyright(): void {
 		$this->widget->add_render_attribute( 'copyright', 'class', self::LAYOUT_CLASSNAME . '__copyright' );
 		$this->widget->add_render_attribute( 'copyright-wrapper', 'class', self::LAYOUT_CLASSNAME . '__copyright-wrapper' );
-		$this->widget->add_render_attribute( 'copyright-prefix', 'class', self::LAYOUT_CLASSNAME . '__copyright-prefix' );
+		$this->widget->add_render_attribute( 'copyright-text', 'class', self::LAYOUT_CLASSNAME . '__copyright-text' );
+		$this->widget->add_render_attribute( 'copyright-text-container', 'class', self::LAYOUT_CLASSNAME . '__copyright-text-container' );
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'copyright' ); ?>>
 			<div <?php $this->widget->print_render_attribute_string( 'copyright-wrapper' ); ?>>
-				<span <?php $this->widget->print_render_attribute_string( 'copyright-prefix' ); ?>>
+				<div <?php $this->widget->print_render_attribute_string( 'copyright-text-container' ); ?>>
+					<span <?php $this->widget->print_render_attribute_string( 'copyright-text' ); ?>>
+						<?php
+						if ( ! empty( $this->settings['current_year_switcher'] ) && 'yes' === $this->settings['current_year_switcher'] ) {
+							echo wp_kses_post( '&copy;' . esc_html( gmdate( 'Y' ) ) . '.&nbsp;' );
+						}
+						?>
+					</span>
 					<?php
-					if ( ! empty( $this->settings['current_year_switcher'] ) && 'yes' === $this->settings['current_year_switcher'] ) {
-						echo wp_kses_post( '&copy;' . esc_html( gmdate( 'Y' ) ) . '.&nbsp;' );
-					}
+					Widget_Utils::maybe_render_text_html(
+						$this->widget,
+						'copyright_text',
+						self::LAYOUT_CLASSNAME . '__copyright-text',
+						$this->settings['copyright_text'],
+						'span',
+					);
 					?>
-				</span>
-				<?php
-				Widget_Utils::maybe_render_text_html(
-					$this->widget,
-					'copyright_text',
-					self::LAYOUT_CLASSNAME . '__copyright-text',
-					$this->settings['copyright_text'],
-					'span',
-				);
-				?>
+				</div>
 			</div>
 		</div>
 		<?php

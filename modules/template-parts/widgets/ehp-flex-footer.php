@@ -79,11 +79,15 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 			'condition' => ! Utils::has_pro(),
 			'image' => esc_url( HELLOPLUS_IMAGES_URL . 'go-pro.svg' ),
 			'image_alt' => esc_attr__( 'Upgrade Now', 'hello-plus' ),
-			'title' => esc_html__( 'Create a custom footer with multiple options', 'hello-plus' ),
-			'description' => esc_html__( 'Upgrade to Elementor Pro and enjoy free design and many more features', 'hello-plus' ),
-			'upgrade_url' => esc_url( 'https://go.elementor.com/biz-footer-pro' ),
+			'title' => esc_html__( 'Create custom footers', 'hello-plus' ),
+			'description' => esc_html__( 'Adjust your footer to include contact forms, sitemaps and more with Elementor Pro.', 'hello-plus' ),
+			'upgrade_url' => esc_url( 'https://go.elementor.com/helloplus-footer-pro' ),
 			'upgrade_text' => esc_html__( 'Upgrade Now', 'hello-plus' ),
 		];
+	}
+
+	public function get_custom_help_url(): string {
+		return 'https://go.elementor.com/biz-footer-help';
 	}
 
 	protected function render(): void {
@@ -202,7 +206,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'condition' => [
 					'layout_preset' => 'info-hub',
 				],
-				'separator' => 'before',
+				'separator' => false,
 			]
 		);
 
@@ -214,7 +218,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'rows' => 6,
 				'default' => esc_html__( 'Helping your business stand out with thoughtful details that drive action.', 'hello-plus' ),
 				'placeholder' => esc_html__( 'Enter your text here.', 'hello-plus' ),
-				'separator' => 'before',
+				'separator' => false,
 				'dynamic' => [
 					'active' => true,
 				],
@@ -248,6 +252,9 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				],
 				'default' => 'h6',
 				'separator' => 'before',
+				'condition' => [
+					'layout_preset' => 'info-hub',
+				],
 			]
 		);
 
@@ -322,7 +329,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 					'group_' . $group_number . '_type' => 'navigation-links',
 					'layout_preset' => 'info-hub',
 				] ),
-				'separator' => 'before',
+				'separator' => false,
 			]
 		);
 
@@ -337,7 +344,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 					'options' => $menus,
 					'default' => array_keys( $menus )[0],
 					'save_default' => true,
-					'separator' => 'before',
+					'separator' => false,
 					'description' => sprintf(
 						/* translators: 1: Link opening tag, 2: Link closing tag. */
 						esc_html__( 'Go to the %1$sMenus screen%2$s to manage your menus.', 'hello-plus' ),
@@ -716,7 +723,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'options' => [
 					'start' => [
 						'title' => esc_html__( 'Start', 'hello-plus' ),
-						'icon' => 'eicon-align-start-h',
+						'icon' => 'eicon-align-' . ( is_rtl() ? 'end' : 'start' ) . '-h',
 					],
 					'center' => [
 						'title' => esc_html__( 'Center', 'hello-plus' ),
@@ -970,7 +977,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'label' => esc_html__( 'Color', 'hello-plus' ),
 				'type' => Controls_Manager::COLOR,
 				'global' => [
-					'default' => Global_Colors::COLOR_SECONDARY,
+					'default' => Global_Colors::COLOR_ACCENT,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-link-color-hover: {{VALUE}}',
@@ -1097,10 +1104,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-footer__copyright-text',
-					'{{WRAPPER}} .ehp-flex-footer__copyright-prefix',
-				],
+				'selector' => '{{WRAPPER}} .ehp-flex-footer__copyright .ehp-flex-footer__copyright-text',
 			]
 		);
 
@@ -1125,16 +1129,16 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'start' => [
-						'title' => esc_html__( 'Left', 'hello-plus' ),
-						'icon' => 'eicon-align-start-h',
+						'title' => esc_html__( 'Start', 'hello-plus' ),
+						'icon' => 'eicon-align-' . ( is_rtl() ? 'end' : 'start' ) . '-h',
 					],
 					'center' => [
 						'title' => esc_html__( 'Center', 'hello-plus' ),
 						'icon' => 'eicon-align-center-h',
 					],
 					'end' => [
-						'title' => esc_html__( 'Right', 'hello-plus' ),
-						'icon' => 'eicon-align-end-h',
+						'title' => esc_html__( 'End', 'hello-plus' ),
+						'icon' => 'eicon-align-' . ( is_rtl() ? 'start' : 'end' ) . '-h',
 					],
 				],
 				'default' => 'start',
@@ -1147,7 +1151,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'style_copyright_separator',
 			[
 				'label' => esc_html__( 'Copyright Separator', 'hello-plus' ),
@@ -1180,7 +1184,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-footer__copyright-wrapper' => 'border-top-width: {{SIZE}}{{UNIT}}; border-top-style: solid;',
+					'{{WRAPPER}} .ehp-flex-footer__copyright-text-container' => 'border-top-width: {{SIZE}}{{UNIT}}; border-top-style: solid;',
 				],
 				'condition' => [
 					'style_copyright_separator' => 'divider',
@@ -1197,7 +1201,7 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 					'default' => Global_Colors::COLOR_SECONDARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-footer__copyright-wrapper' => 'border-top-color: {{VALUE}};',
+					'{{WRAPPER}} .ehp-flex-footer__copyright-text-container' => 'border-top-color: {{VALUE}};',
 				],
 				'condition' => [
 					'style_copyright_separator' => 'divider',
@@ -1251,47 +1255,8 @@ class Ehp_Flex_Footer extends Ehp_Widget_Base {
 			[
 				'name' => 'style_box_background',
 				'label' => esc_html__( 'Background', 'hello-plus' ),
+				'exclude' => [ 'image' ],
 				'selector' => '{{WRAPPER}} .ehp-flex-footer',
-			]
-		);
-
-		$this->add_control(
-			'style_box_background_overlay_label',
-			[
-				'label' => esc_html__( 'Background Overlay', 'hello-plus' ),
-				'type' => Controls_Manager::HEADING,
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Background::get_type(),
-			[
-				'name' => 'style_box_background_overlay',
-				'label' => esc_html__( 'Background Overlay', 'hello-plus' ),
-				'selector' => '{{WRAPPER}} .ehp-flex-footer__overlay',
-			]
-		);
-
-		$this->add_responsive_control(
-			'background_overlay_opacity',
-			[
-				'label' => esc_html__( 'Opacity', 'hello-plus' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'%' => [
-						'max' => 1,
-						'min' => 0.10,
-						'step' => 0.01,
-					],
-				],
-				'default' => [
-					'unit' => '%',
-					'size' => 0.5,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-footer' => '--flex-footer-overlay-opacity: {{SIZE}};',
-				],
 			]
 		);
 

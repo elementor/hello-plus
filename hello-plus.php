@@ -13,10 +13,10 @@
  *
  * @package HelloPlus
  *
- * Hello+ Plugin is a free WordPress plugin crafted for seamless use with Elementor’s Hello Biz Theme,
- * tailored to help beginner web creators, but far from limited to just them, to build professional websites with ease.
- * It features a guided setup, dedicated kits, streamlined management tools,
- * and specialized widgets (Hello Widgets) to ensure a fast, efficient site-building experience
+ * Hello+ is a free WordPress plugin designed to work seamlessly with Elementor’s Hello suite of themes.
+ * Hello+ includes specialized Hello widgets such as a Header, Footer, Zigzag, Form Lite, and more.
+ * Hello widgets help you build faster and create polished, professional websites.
+ * To use Hello+, you’ll need to install one of Elementor’s Hello suite of themes.
  *
  * Hello+ is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of

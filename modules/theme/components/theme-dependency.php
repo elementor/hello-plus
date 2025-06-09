@@ -14,11 +14,9 @@ class Theme_Dependency {
 			deactivate_plugins( HELLOPLUS_PLUGIN_BASE );
 
 			wp_die(
-				wp_kses( sprintf( __( 'The Hello Plus plugin requires the Hello Biz theme to be installed and active. <a href="%s">Check it out!</a>', 'hello-plus' ), admin_url( 'theme-install.php?theme=hello-biz' ) ),
+				wp_kses( __( '<strong>Hello+ needs an active Hello suite theme to work</strong>. Install and activate a theme from the Elementor Hello suite to start using the plugin.', 'hello-plus' ),
 					[
-						'a' => [
-							'href' => [],
-						],
+						'strong' => [],
 					]
 				),
 				esc_html__( 'Plugin Activation Error', 'hello-plus' ),

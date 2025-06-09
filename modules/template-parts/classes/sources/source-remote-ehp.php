@@ -1,6 +1,8 @@
 <?php
 namespace HelloPlus\Modules\TemplateParts\Classes\Sources;
 
+use HelloPlus\Includes\Utils;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
@@ -22,7 +24,7 @@ class Source_Remote_Ehp extends \Elementor\TemplateLibrary\Source_Remote {
 
 	protected function filter_templates_data_by_theme( array $templates_data ): array {
 		return array_filter( $templates_data, function ( $template ) {
-			return in_array( EHP_THEME_SLUG, json_decode( $template['tags'] ), true );
+			return in_array( Utils::get_theme_slug(), json_decode( $template['tags'] ), true );
 		} );
 	}
 

@@ -75,6 +75,10 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 		if ( none === this.getDataScrollBehavior() && no === this.getBehaviorFloat() ) {
 			this.setupInnerContainer();
 		}
+
+		if ( scrollUp === this.getDataScrollBehavior() || always === this.getDataScrollBehavior() ) {
+			this.applyBodyPadding();
+		}
 	}
 
 	getBehaviorFloat() {
@@ -117,9 +121,31 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 			const observer = new MutationObserver( () => {
 				const newHeight = floatingBars.offsetHeight;
 				this.elements.main.style.setProperty( '--header-floating-bars-height', `${ newHeight }px` );
+				this.applyBodyPadding();
 			} );
 
 			observer.observe( floatingBars, { attributes: true, childList: true } );
+		}
+	}
+
+	applyBodyPadding() {
+		const mainHeight = this.elements.main.offsetHeight;
+		const floatingBars = this.elements.floatingBars;
+
+		if ( floatingBars ) {
+			const { none } = this.getSettings( 'constants' );
+
+			if ( none !== this.getDataScrollBehavior() ) {
+				if ( ! floatingBars.classList.contains( 'is-sticky' ) && ! floatingBars.classList.contains( 'is-hidden' ) ) {
+					floatingBars.style.marginBottom = `${ mainHeight }px`;
+					document.body.style.paddingTop = '0';
+				} else if ( floatingBars.classList.contains( 'is-sticky' ) ) {
+					const floatingBarsHeight = floatingBars?.offsetHeight || 0;
+					document.body.style.paddingTop = `${ mainHeight + floatingBarsHeight }px`;
+				}
+			}
+		} else {
+			document.body.style.paddingTop = `${ mainHeight }px`;
 		}
 	}
 

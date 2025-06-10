@@ -151,8 +151,15 @@ class Theme_Overrides {
 			if ( ! isset( $part['id'] ) || ! in_array( $part['id'], [ 'header', 'footer' ], true ) ) {
 				continue;
 			}
-
-			$this->update_site_part_link( $part, $part['id'] );
+			$active_document = $this->get_active_document_by_part_type( $part['id'] );
+			if ( ( isset( $part['showSublinks'] ) && true === $part['showSublinks'] ) && empty( $active_document ) ) {
+				continue;
+			}
+			if ( isset( $part['showSublinks'] ) && empty( $active_document ) ) {
+				$part['link'] = $this->get_add_new_part_link( $part['id'] );
+			} else {
+				$this->update_site_part_link( $part, $part['id'] );
+			}
 		}
 
 		return $site_parts;

@@ -148,10 +148,13 @@ class Theme_Overrides {
 		}
 
 		foreach ( $site_parts['siteParts'] as &$part ) {
-			if ( ! isset( $part['id'] ) || ! in_array( $part['id'], [ 'header', 'footer' ], true ) || ( isset( $part['showSublinks'] ) && false === $part['showSublinks'] ) ) {
+			if ( ! isset( $part['id'] ) || ! in_array( $part['id'], [ 'header', 'footer' ], true ) ) {
 				continue;
 			}
 			$active_document = $this->get_active_document_by_part_type( $part['id'] );
+			if ( ( isset( $part['showSublinks'] ) && true === $part['showSublinks'] ) && empty( $active_document ) ) {
+				continue;
+			}
 			if ( isset( $part['showSublinks'] ) && empty( $active_document ) ) {
 				$part['link'] = $this->get_add_new_part_link( $part['id'] );
 			} else {

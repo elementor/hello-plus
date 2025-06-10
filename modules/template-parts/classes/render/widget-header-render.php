@@ -212,6 +212,7 @@ class Widget_Header_Render {
 		$toggle_icon = $this->settings['navigation_menu_icon'];
 		$toggle_classname = self::LAYOUT_CLASSNAME . '__button-toggle';
 		$show_contact_buttons = 'yes' === $this->settings['contact_buttons_show'] || 'yes' === $this->settings['contact_buttons_show_connect'];
+		$show_menu_cart = 'yes' === $this->settings['menu_cart_icon_show'];
 
 		$this->widget->add_render_attribute( 'button-toggle', [
 			'class' => $toggle_classname,
@@ -265,6 +266,10 @@ class Widget_Header_Render {
 				</span>
 				<span class="elementor-screen-only"><?php esc_html_e( 'Menu', 'hello-plus' ); ?></span>
 			</button>
+
+			<?php if ( $show_menu_cart ) {
+				$this->render_menu_cart();
+			} ?>
 		</div>
 		<?php
 	}
@@ -281,19 +286,141 @@ class Widget_Header_Render {
 		$this->widget->add_render_attribute( 'ctas-container', [
 			'class' => $ctas_container_classnames,
 		] );
+
+		$show_menu_cart = 'yes' === $this->settings['menu_cart_icon_show'];
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'ctas-container' ); ?>>
 			<?php
 			if ( $show_contact_buttons ) {
 				$this->render_contact_buttons();
 			}
-			?>
-			<?php if ( ! empty( $this->settings['secondary_cta_button_text'] ) ) {
+
+			if ( ! empty( $this->settings['secondary_cta_button_text'] ) ) {
 				$this->render_button( 'secondary' );
-			} ?>
-			<?php if ( ! empty( $this->settings['primary_cta_button_text'] ) ) {
+			}
+
+			if ( ! empty( $this->settings['primary_cta_button_text'] ) ) {
 				$this->render_button( 'primary' );
-			} ?>
+			}
+
+			if ( $show_menu_cart ) {
+				$this->render_menu_cart();
+			}
+			?>
+		</div>
+		<?php
+	}
+
+	protected function render_menu_cart() {
+		$menu_cart_icon = $this->settings['menu_cart_icon'];
+		$menu_cart_icon_show = 'yes' === $this->settings['menu_cart_icon_show'];
+
+		$this->widget->remove_render_attribute( 'menu-cart' );
+		$this->widget->add_render_attribute( 'menu-cart', [
+			'class' => self::LAYOUT_CLASSNAME . '__menu-cart',
+		] );
+
+		$this->widget->remove_render_attribute( 'menu-cart-button' );
+		$this->widget->add_render_attribute( 'menu-cart-button', [
+			'class' => self::LAYOUT_CLASSNAME . '__menu-cart-button',
+			'type' => 'button',
+			'aria-label' => esc_html__( 'Cart', 'hello-plus' ),
+		] );
+
+		?>
+		<div <?php $this->widget->print_render_attribute_string( 'menu-cart' ); ?>>
+			<button <?php $this->widget->print_render_attribute_string( 'menu-cart-button' ); ?>>
+				<?php
+				if ( ! empty( $menu_cart_icon ) ) {
+					Icons_Manager::render_icon( $menu_cart_icon, [
+						'aria-hidden' => 'true',
+					] );
+				}
+				?>
+			</button>
+			<div class="<?php echo esc_attr( self::LAYOUT_CLASSNAME . '__menu-cart-items' ); ?>" inert>
+				<div class="<?php echo esc_attr( self::LAYOUT_CLASSNAME . '__menu-cart-close-container' ); ?>">
+					<button class="<?php echo esc_attr( self::LAYOUT_CLASSNAME . '__menu-cart-close' ); ?>" aria-label="<?php esc_html_e( 'Close Menu Cart', 'hello-plus' ); ?>">
+						<?php
+						Icons_Manager::render_icon(
+							[
+								'library' => 'eicons',
+								'value' => 'eicon-close',
+							]
+						);
+						?>
+					</button>
+				</div>
+
+				<?php
+				$cart = WC()->cart;
+				if ( ! $cart->is_empty() ) :
+					?>
+					<ul class="<?php echo esc_attr( self::LAYOUT_CLASSNAME . '__menu-cart-list' ); ?>">
+						<?php
+
+						foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
+							$_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+							$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
+
+							if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 ) {
+								$product_name = apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key );
+								$product_price = apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key );
+								$product_permalink = apply_filters( 'woocommerce_cart_item_permalink', $_product->is_visible() ? $_product->get_permalink( $cart_item ) : '', $cart_item, $cart_item_key );
+								?>
+								<li class="<?php echo esc_attr( self::LAYOUT_CLASSNAME . '__menu-cart-item' ); ?>">
+									<?php
+									$thumbnail = $_product->get_image( 'thumbnail' );
+									?>
+									<div class="<?php echo esc_attr( self::LAYOUT_CLASSNAME . '__menu-cart-item-info' ); ?>">
+										<a href="<?php echo esc_url( wc_get_cart_remove_url( $cart_item_key ) ); ?>" class="<?php echo esc_attr( self::LAYOUT_CLASSNAME . '__menu-cart-item-remove' ); ?>" aria-label="<?php echo esc_attr__( 'Remove this item', 'hello-plus' ); ?>" data-product_id="<?php echo esc_attr( $product_id ); ?>" data-cart_item_key="<?php echo esc_attr( $cart_item_key ); ?>">
+											&times;
+										</a>
+										<?php if ( ! empty( $thumbnail ) ) : ?>
+											<div class="<?php echo esc_attr( self::LAYOUT_CLASSNAME . '__menu-cart-item-thumbnail' ); ?>">
+												<?php echo $thumbnail; ?>
+											</div>
+										<?php endif; ?>
+										<div class="<?php echo esc_attr( self::LAYOUT_CLASSNAME . '__menu-cart-item-info-content' ); ?>">
+											<?php if ( ! empty( $product_permalink ) ) : ?>
+												<a href="<?php echo esc_url( $product_permalink ); ?>" class="<?php echo esc_attr( self::LAYOUT_CLASSNAME . '__menu-cart-item-name' ); ?> <?php echo esc_attr( self::LAYOUT_CLASSNAME . '__item' ); ?>">
+													<?php echo wp_kses_post( $product_name ); ?>
+												</a>
+											<?php else : ?>
+												<span class="<?php echo esc_attr( self::LAYOUT_CLASSNAME . '__menu-cart-item-name' ); ?>">
+													<?php echo wp_kses_post( $product_name ); ?>
+												</span>
+											<?php endif; ?>
+											<span class="<?php echo esc_attr( self::LAYOUT_CLASSNAME . '__menu-cart-item-price' ); ?>">
+												<?php echo esc_html( $cart_item['quantity'] ); ?> &times;
+												<?php echo wp_kses_post( $product_price ); ?>
+											</span>
+										</div>
+									</div>
+								</li>
+								<?php
+							}
+						}
+						?>
+					</ul>
+					<div class="<?php echo esc_attr( self::LAYOUT_CLASSNAME . '__menu-cart-subtotal' ); ?>">
+						<span><?php esc_html_e( 'Subtotal:', 'hello-plus' ); ?></span>
+						<?php echo wp_kses_post( $cart->get_cart_subtotal() ); ?>
+					</div>
+					<div class="<?php echo esc_attr( self::LAYOUT_CLASSNAME . '__menu-cart-actions' ); ?>">
+						<a class="<?php echo esc_attr( self::LAYOUT_CLASSNAME . '__menu-cart-view-cart' ); ?> <?php echo esc_attr( self::LAYOUT_CLASSNAME . '__item' ); ?>" href="<?php echo esc_url( wc_get_cart_url() ); ?>">
+							<?php esc_html_e( 'View Cart', 'hello-plus' ); ?>
+						</a>
+						<a class="<?php echo esc_attr( self::LAYOUT_CLASSNAME . '__item' ); ?> <?php echo esc_attr( self::LAYOUT_CLASSNAME . '__menu-cart-checkout' ); ?>" href="<?php echo esc_url( wc_get_checkout_url() ); ?>">
+							<?php esc_html_e( 'Checkout', 'hello-plus' ); ?>
+						</a>
+					</div>
+				<?php else : ?>
+					<div class="<?php echo esc_attr( self::LAYOUT_CLASSNAME . '__menu-cart-empty' ); ?>">
+						<?php esc_html_e( 'No products in the cart.', 'hello-plus' ); ?>
+					</div>
+				<?php endif; ?>
+			</div>
 		</div>
 		<?php
 	}

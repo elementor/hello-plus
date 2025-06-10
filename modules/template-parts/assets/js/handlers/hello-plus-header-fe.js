@@ -8,6 +8,9 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 				navigation: '.ehp-header__navigation',
 				dropdown: '.ehp-header__dropdown',
 				wpAdminBar: '#wpadminbar',
+				menuCartItems: '.ehp-header__menu-cart-items',
+				menuCartButton: '.ehp-header__menu-cart-button',
+				menuCartClose: '.ehp-header__menu-cart-close',
             },
 			constants: {
 				mobilePortrait: 767,
@@ -35,6 +38,9 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 			navigation: this.$element[ 0 ].querySelector( selectors.navigation ),
 			dropdown: this.$element[ 0 ].querySelector( selectors.dropdown ),
 			wpAdminBar: document.querySelector( selectors.wpAdminBar ),
+			menuCartItems: this.$element[ 0 ].querySelectorAll( selectors.menuCartItems ),
+			menuCartButton: this.$element[ 0 ].querySelectorAll( selectors.menuCartButton ),
+			menuCartClose: this.$element[ 0 ].querySelectorAll( selectors.menuCartClose ),
 		};
 	}
 
@@ -46,6 +52,18 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 		if ( this.elements.dropdownToggle.length > 0 ) {
 			this.elements.dropdownToggle.forEach( ( menuItem ) => {
 				menuItem.addEventListener( 'click', ( event ) => this.toggleSubMenu( event ) );
+			} );
+		}
+
+		if ( this.elements.menuCartButton.length > 0 ) {
+			this.elements.menuCartButton.forEach( ( button ) => {
+				button.addEventListener( 'click', ( event ) => this.toggleMenuCart( event ) );
+			} );
+		}
+
+		if ( this.elements.menuCartClose.length > 0 ) {
+			this.elements.menuCartClose.forEach( ( close ) => {
+				close.addEventListener( 'click', ( event ) => this.handleMenuCartCloseClick( event ) );
 			} );
 		}
 
@@ -76,6 +94,10 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 
 		if ( scrollUp === this.getDataScrollBehavior() || always === this.getDataScrollBehavior() ) {
 			this.applyBodyPadding();
+		}
+
+		if ( this.elements.menuCartItems ) {
+			this.handleInertMenuCart();
 		}
 	}
 
@@ -119,6 +141,12 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 	handleAriaAttributesDropdown() {
 		this.elements.dropdownToggle.forEach( ( item ) => {
 			item.nextElementSibling.setAttribute( 'aria-hidden', 'true' );
+		} );
+	}
+
+	handleInertMenuCart() {
+		this.elements.menuCartItems.forEach( ( item ) => {
+			item.setAttribute( 'inert', '' );
 		} );
 	}
 
@@ -217,4 +245,33 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 			this.elements.navigationToggle.setAttribute( 'aria-expanded', 'false' );
 		}
     }
+
+	toggleMenuCart( event ) {
+		event.preventDefault();
+
+		const target = event.target;
+		const cartMenuItems = target.nextElementSibling;
+		const inert = cartMenuItems.hasAttribute( 'inert' );
+
+		if ( inert ) {
+			this.openMenuCart( cartMenuItems );
+		} else {
+			this.closeMenuCart( cartMenuItems );
+		}
+	}
+
+	handleMenuCartCloseClick( event ) {
+		event.preventDefault();
+		const target = event.target;
+		const cartMenuItems = target.closest( '.ehp-header__menu-cart-items' );
+		this.closeMenuCart( cartMenuItems );
+	}
+
+	openMenuCart( cartMenuItems ) {
+		cartMenuItems.removeAttribute( 'inert' );
+	}
+
+	closeMenuCart( cartMenuItems ) {
+		cartMenuItems.setAttribute( 'inert', '' );
+	}
 }

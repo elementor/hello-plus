@@ -101,6 +101,9 @@ class Ehp_Header extends Ehp_Widget_Base {
 		$this->add_content_site_logo_section();
 		$this->add_content_navigation_section();
 		$this->add_content_contact_buttons_section();
+		if ( Utils::has_hello_commerce_theme() ) {
+			$this->add_content_menu_cart_section();
+		}
 		$this->add_content_cta_section();
 	}
 
@@ -109,6 +112,9 @@ class Ehp_Header extends Ehp_Widget_Base {
 		$this->add_style_navigation_section();
 		$this->add_style_contact_button_section();
 		$this->add_style_cta_section();
+		if ( Utils::has_hello_commerce_theme() ) {
+			$this->add_style_menu_cart_section();
+		}
 		$this->add_style_box_section();
 	}
 
@@ -424,6 +430,48 @@ class Ehp_Header extends Ehp_Widget_Base {
 		];
 		$button = new Ehp_Button( $this, [ 'widget_name' => 'header' ], $defaults );
 		$button->add_content_section();
+	}
+
+	protected function add_content_menu_cart_section() {
+		$this->start_controls_section(
+			'menu_cart',
+			[
+				'label' => esc_html__( 'Menu Cart', 'hello-plus' ),
+			]
+		);
+
+		$this->add_control(
+			'menu_cart_icon_show',
+			[
+				'label' => esc_html__( 'Menu Icon', 'hello-plus' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Show', 'hello-plus' ),
+				'label_off' => esc_html__( 'Hide', 'hello-plus' ),
+				'return_value' => 'yes',
+				'default' => 'yes',
+				'frontend_available' => true,
+			]
+		);
+
+		$this->add_control(
+			'menu_cart_icon',
+			[
+				'label' => esc_html__( 'Icon', 'hello-plus' ),
+				'type' => Controls_Manager::ICONS,
+				'skin' => 'inline',
+				'label_block' => false,
+				'default' => [
+					'value' => 'fas fa-shopping-basket',
+					'library' => 'fa-solid',
+				],
+				'exclude_inline_options' => [ 'none' ],
+				'condition' => [
+					'menu_cart_icon_show' => 'yes',
+				],
+			]
+		);
+
+		$this->end_controls_section();
 	}
 
 	protected function add_style_site_identity_section() {
@@ -1175,6 +1223,198 @@ class Ehp_Header extends Ehp_Widget_Base {
 		$this->end_controls_section();
 	}
 
+	protected function add_style_menu_cart_section() {
+		$this->start_controls_section(
+			'style_menu_cart',
+			[
+				'label' => esc_html__( 'Menu Cart', 'hello-plus' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'style_menu_cart_icon_label',
+			[
+				'label' => esc_html__( 'Menu Icon', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+			]
+		);
+
+		$this->start_controls_tabs(
+			'style_menu_cart_icon_tabs'
+		);
+
+		$this->start_controls_tab(
+			'style_menu_cart_icon_normal',
+			[
+				'label' => esc_html__( 'Normal', 'hello-plus' ),
+			]
+		);
+
+		$this->add_control(
+			'style_menu_cart_icon_color',
+			[
+				'label' => esc_html__( 'Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-menu-cart-icon-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'style_menu_cart_icon_hover',
+			[
+				'label' => esc_html__( 'Hover', 'hello-plus' ),
+			]
+		);
+
+		$this->add_control(
+			'style_menu_cart_icon_hover_color',
+			[
+				'label' => esc_html__( 'Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_PRIMARY,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-menu-cart-icon-hover-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_responsive_control(
+			'style_menu_cart_icon_size',
+			[
+				'label' => esc_html__( 'Size', 'hello-plus' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', '%', 'custom' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'size' => 16,
+					'unit' => 'px',
+				],
+				'tablet_default' => [
+					'size' => 12,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 12,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-menu-cart-icon-size: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'style_menu_cart_view_cart_heading',
+			[
+				'label' => esc_html__( 'View Cart Button', 'hello-plus' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->start_controls_tabs(
+			'style_menu_cart_view_cart_tabs'
+		);
+
+		$this->start_controls_tab(
+			'style_menu_cart_view_cart_normal',
+			[
+				'label' => esc_html__( 'Normal', 'hello-plus' ),
+			]
+		);
+
+		$this->add_control(
+			'style_menu_cart_view_cart_text_color',
+			[
+				'label' => esc_html__( 'Text Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-menu-cart-view-cart-text-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'style_menu_cart_view_cart_background_color',
+			[
+				'label' => esc_html__( 'Background Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_ACCENT,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-menu-cart-view-cart-background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'style_menu_cart_view_cart_hover',
+			[
+				'label' => esc_html__( 'Hover', 'hello-plus' ),
+			]
+		);
+
+		$this->add_control(
+			'style_menu_cart_view_cart_text_color_hover',
+			[
+				'label' => esc_html__( 'Text Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-menu-cart-view-cart-text-color-hover: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'style_menu_cart_view_cart_background_color_hover',
+			[
+				'label' => esc_html__( 'Background Color', 'hello-plus' ),
+				'type' => Controls_Manager::COLOR,
+				'global' => [
+					'default' => Global_Colors::COLOR_ACCENT,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .ehp-header' => '--header-menu-cart-view-cart-background-color-hover: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->end_controls_section();
+	}
+
 	protected function add_style_box_section() {
 		$this->start_controls_section(
 			'style_box_section',
@@ -1192,13 +1432,22 @@ class Ehp_Header extends Ehp_Widget_Base {
 			]
 		);
 
+		$background_selector = [
+			'{{WRAPPER}} .ehp-header',
+			'{{WRAPPER}} .ehp-header .ehp-header__dropdown',
+			'{{WRAPPER}} .ehp-header .ehp-header__navigation',
+			'{{WRAPPER}} .ehp-header .ehp-header__menu-cart-items',
+		];
+
+		$background_selectors = implode( ', ', $background_selector );
+
 		$this->add_group_control(
 			Group_Control_Background::get_type(),
 			[
 				'name' => 'background',
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => [ 'image' ],
-				'selector' => '{{WRAPPER}} .ehp-header, {{WRAPPER}} .ehp-header .ehp-header__dropdown, {{WRAPPER}} .ehp-header .ehp-header__navigation',
+				'selector' => $background_selectors,
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',

@@ -22,10 +22,30 @@ export const OnboardingPage = () => {
 		isLoading,
 		setIsLoading,
 		stepAction,
-		buttonText,
 		step,
-		onboardingSettings: { nonce, modalCloseRedirectUrl, kits } = {},
+		onboardingSettings: { nonce, modalCloseRedirectUrl, kits, getStartedText = {}, readyToGoText = {}, installKitText = {} } = {},
 	} = useAdminContext();
+
+	const {
+		title = '',
+		description = '',
+		disclaimer = '',
+		termsUrl = '',
+		termsText = '',
+		buttonText: getStartedButtonText = '',
+	} = getStartedText;
+
+	const {
+		title: readyTitle = '',
+		description: readyDescription = '',
+		viewSite = '',
+		customizeSite = '',
+	} = readyToGoText;
+
+	const {
+		title: kitTitle = '',
+		description: kitDescription = '',
+	} = installKitText;
 
 	const onClick = useCallback( async () => {
 		setMessage( '' );
@@ -89,10 +109,37 @@ export const OnboardingPage = () => {
 					} }>
 					{ ! previewKit && ( <TopBarContent onClose={ onClose } sx={ { borderBottom: '1px solid var(--divider-divider, rgba(0, 0, 0, 0.12))', mb: 4 } } iconSize="small" /> ) }
 					{ 0 === step && ! isLoading && ! previewKit && (
-						<GetStarted severity={ severity } message={ message } buttonText={ buttonText } onClick={ onClick } />
+						<GetStarted
+							severity={ severity }
+							message={ message }
+							buttonText={ getStartedButtonText }
+							onClick={ onClick }
+							title={ title }
+							description={ description }
+							disclaimer={ disclaimer }
+							termsUrl={ termsUrl }
+							termsText={ termsText }
+						/>
 					) }
-					{ 1 === step && ! isLoading && ! previewKit && ( <InstallKit setPreviewKit={ setPreviewKit } severity={ severity } message={ message } onClick={ onClick } kits={ kits } /> ) }
-					{ 2 === step && ! isLoading && ! previewKit && ( <ReadyToGo modalCloseRedirectUrl={ modalCloseRedirectUrl } /> ) }
+					{ 1 === step && ! isLoading && ! previewKit && (
+						<InstallKit
+							setPreviewKit={ setPreviewKit }
+							severity={ severity }
+							message={ message }
+							kits={ kits }
+							title={ kitTitle }
+							description={ kitDescription }
+						/>
+					) }
+					{ 2 === step && ! isLoading && ! previewKit && (
+						<ReadyToGo
+							modalCloseRedirectUrl={ modalCloseRedirectUrl }
+							title={ readyTitle }
+							description={ readyDescription }
+							viewSite={ viewSite }
+							customizeSite={ customizeSite }
+						/>
+					) }
 					{ previewKit && <Preview kit={ previewKit } setPreviewKit={ setPreviewKit } /> }
 					{ isLoading && <Spinner /> }
 				</Box>

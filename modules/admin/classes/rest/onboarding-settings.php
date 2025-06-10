@@ -109,6 +109,57 @@ class Onboarding_Settings {
 	public function get_onboarding_settings() {
 		$nonce = wp_create_nonce( 'updates' );
 
+		/**
+		 * Filters the labels for the Get Started page in the Setup Wizard.
+		 *
+		 * @since 1.6.2
+		 *
+		 * @param array $labels The labels and buttons text for the Get Started page in the Setup Wizard.
+		 */
+		$get_started_text = apply_filters(
+			'hello-plus/onboarding/get-started-text',
+			[
+				'title' => __( 'Welcome! Let\'s create your website.', 'hello-plus' ),
+				'description' => __( 'Thanks for installing the Hello Biz theme by Elementor. This setup wizard will help you create a website in moments.', 'hello-plus' ),
+				'disclaimer' => __( 'By clicking "Start building my website", I agree to install & activate the Elementor plugin. I accept the Elementor', 'hello-plus' ),
+				'termsUrl' => 'https://elementor.com/terms/',
+				'termsText' => __( 'Terms and Conditions', 'hello-plus' ),
+				'buttonText' => __( 'Start building my website', 'hello-plus' ),
+			]
+		);
+
+		/**
+		 * Filters the labels for the Ready to Go page in the Setup Wizard.
+		 *
+		 * @since 1.6.2
+		 *
+		 * @param array $labels The labels and buttons text for the Ready to Go page in the Setup Wizard.
+		 */
+		$ready_to_go_text = apply_filters(
+			'hello-plus/onboarding/ready-to-go-text',
+			[
+				'title' => __( 'Congratulations, you have created your website!', 'hello-plus' ),
+				'description' => __( 'It\'s time to make it yours—add your content, style, and personal touch.', 'hello-plus' ),
+				'viewSite' => __( 'View my site', 'hello-plus' ),
+				'customizeSite' => __( 'Customize my site', 'hello-plus' ),
+			]
+		);
+
+		/**
+		 * Filters the labels for the Install Kit page in the Setup Wizard.
+		 *
+		 * @since 1.6.2
+		 *
+		 * @param array $labels The labels and buttons text for the Install Kit page in the Setup Wizard.
+		 */
+		$install_kit_text = apply_filters(
+			'hello-plus/onboarding/install-kit-text',
+			[
+				'title' => __( 'Choose your website template kit', 'hello-plus' ),
+				'description' => __( 'Explore our versatile website kits to find one that fits your style or project.', 'hello-plus' ),
+			]
+		);
+
 		return rest_ensure_response(
 			[
 				'settings' => [
@@ -120,6 +171,9 @@ class Onboarding_Settings {
 					'applyKitBaseUrl' => self_admin_url( 'admin.php?page=elementor-app' ),
 					'wizardCompleted' => Setup_Wizard::has_site_wizard_been_completed(),
 					'returnUrl' => self_admin_url( 'admin.php?page=hello-plus-setup-wizard' ),
+					'getStartedText' => $get_started_text,
+					'readyToGoText' => $ready_to_go_text,
+					'installKitText' => $install_kit_text,
 				],
 			]
 		);

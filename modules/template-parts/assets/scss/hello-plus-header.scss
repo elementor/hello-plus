@@ -246,7 +246,7 @@
 	&__toggle-icon {
 
 		&--open {
-			display: block;
+			display: flex;
 		}
 
 		&--close {
@@ -287,14 +287,14 @@
 			}
 
 			.ehp-header__toggle-icon--close {
-				display: block;
+				display: flex;
 			}
 		}
 
 		&[aria-expanded="false"] {
 
 			.ehp-header__toggle-icon--open {
-				display: block;
+				display: flex;
 			}
 
 			.ehp-header__toggle-icon--close {
@@ -480,6 +480,7 @@
 		& button.ehp-header__menu-cart-button {
 			background-color: transparent;
 			border: none;
+			display: flex;
 			cursor: pointer;
 			height: var(--header-menu-cart-icon-size);
 			padding: 0;
@@ -487,8 +488,10 @@
 	
 			& svg {
 				fill: var(--header-menu-cart-icon-color);
+				height: var(--header-menu-cart-icon-size);
 				pointer-events: none;
 				transition: variables.$transition;
+				width: var(--header-menu-cart-icon-size);
 			}
 	
 			& i {
@@ -501,12 +504,12 @@
 				background-color: transparent;
 	
 				& svg {
-					fill: var(--header-menu-cart-icon-color-hover);
+					fill: var(--header-menu-cart-icon-hover-color);
 					transition: variables.$transition;
 				}
 	
 				& i {
-					color: var(--header-menu-cart-icon-color-hover);
+					color: var(--header-menu-cart-icon-hover-color);
 					transition: variables.$transition;
 				}
 			}
@@ -593,7 +596,7 @@
 			width: 65px;
 		}
 
-		&-item-remove {
+		& a.ehp-header__menu-cart-item-remove {
 			border: 1px solid var(--header-menu-item-color);
 			border-radius: 50%;
 			color: var(--header-menu-item-color);

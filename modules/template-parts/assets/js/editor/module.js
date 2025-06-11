@@ -8,6 +8,11 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 		elementor.hooks.addFilter( 'elements/widget/controls/common-optimized/default', this.resetCommonControls.bind( this ) );
 		elementor.hooks.addFilter( 'templates/source/is-remote', this.setSourceAsRemote.bind( this ) );
 		elementor.hooks.addFilter( 'elements/base/behaviors', this.filterBehviors.bind( this ), 1000 );
+        elementor.hooks.addFilter( 
+            'component/modal/close', 
+            this.preventClosingModal.bind( this ), 
+            1000 
+        );
 
 		const types = [
 			'core/modal/close/ehp-footer',
@@ -20,6 +25,16 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 
 		window.templatesModule = this;
 	}
+
+    preventClosingModal( close, component ) {
+        if (
+            'library' === component.getNamespace() &&
+            'library/templates/ehp-elements' === component.defaultRoute
+        ) {
+            return () => {};
+        }
+        return close;
+    }
 
 	filterBehviors( behaviors ) {
 		if ( this.isEhpDocument() && this.notElementorDomain() ) {

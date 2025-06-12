@@ -460,11 +460,17 @@ class Ehp_Header extends Ehp_Widget_Base {
 				'type' => Controls_Manager::ICONS,
 				'skin' => 'inline',
 				'label_block' => false,
-				'default' => [
-					'value' => 'fas fa-shopping-basket',
-					'library' => 'fa-solid',
+				'skin_settings' => [
+					'inline' => [
+						'none' => [
+							'label' => 'Default',
+							'icon' => 'eicon-basket-medium',
+						],
+						'icon' => [
+							'icon' => 'fas fa-star',
+						],
+					],
 				],
-				'exclude_inline_options' => [ 'none' ],
 				'condition' => [
 					'menu_cart_icon_show' => 'yes',
 				],

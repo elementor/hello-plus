@@ -45,6 +45,7 @@ class Widget_Header_Render {
 		$behavior_scale_logo = $this->settings['behavior_sticky_scale_logo'];
 		$behavior_scale_title = $this->settings['behavior_sticky_scale_title'];
 		$has_blur_background = $this->settings['blur_background'];
+		$has_menu_cart = $this->settings['menu_cart_icon_show'];
 
 		if ( ! empty( $navigation_breakpoint ) ) {
 			$this->widget->add_render_attribute( 'layout', [
@@ -66,6 +67,10 @@ class Widget_Header_Render {
 
 		if ( 'yes' === $behavior_scale_title ) {
 			$layout_classnames[] = 'has-behavior-sticky-scale-title';
+		}
+
+		if ( 'yes' === $has_menu_cart ) {
+			$layout_classnames[] = 'has-menu-cart';
 		}
 
 		$shapes = new Ehp_Shapes( $this->widget, [
@@ -103,10 +108,20 @@ class Widget_Header_Render {
 		$this->widget->maybe_add_advanced_attributes();
 
 		$this->widget->add_render_attribute( 'elements-container', 'class', self::LAYOUT_CLASSNAME . '__elements-container' );
+
+		$this->widget->add_render_attribute( 'menu-cart-container', 'class', self::LAYOUT_CLASSNAME . '__menu-cart-container' );
 		?>
 		<header <?php $this->widget->print_render_attribute_string( 'layout' ); ?>>
 			<div <?php $this->widget->print_render_attribute_string( 'elements-container' ); ?>>
 				<?php
+
+				if ( 'yes' === $has_menu_cart ) {
+					?>
+					<div <?php $this->widget->print_render_attribute_string( 'menu-cart-container' ); ?>>
+						<?php $this->render_button_toggle(); ?>
+					</div>
+					<?php
+				}
 
 				$this->widget->render_site_link( 'header' );
 				$this->render_navigation();
@@ -209,10 +224,32 @@ class Widget_Header_Render {
 	}
 
 	private function render_menu_toggle() {
+		$show_contact_buttons = 'yes' === $this->settings['contact_buttons_show'] || 'yes' === $this->settings['contact_buttons_show_connect'];
+		$has_menu_cart = $this->settings['menu_cart_icon_show'];
+
+		$this->widget->add_render_attribute( 'side-toggle', 'class', self::LAYOUT_CLASSNAME . '__side-toggle' );
+		?>
+		<div <?php $this->widget->print_render_attribute_string( 'side-toggle' ); ?>>
+			<?php
+			if ( $show_contact_buttons ) {
+				$this->render_contact_buttons();
+			}
+
+			if ( empty( $has_menu_cart ) || 'no' === $has_menu_cart ) {
+				$this->render_button_toggle();
+			}
+
+			if ( 'yes' === $has_menu_cart ) {
+				$this->render_menu_cart();		
+			}
+			?>
+		</div>
+		<?php
+	}
+
+	protected function render_button_toggle() {
 		$toggle_icon = $this->settings['navigation_menu_icon'];
 		$toggle_classname = self::LAYOUT_CLASSNAME . '__button-toggle';
-		$show_contact_buttons = 'yes' === $this->settings['contact_buttons_show'] || 'yes' === $this->settings['contact_buttons_show_connect'];
-		$show_menu_cart = 'yes' === $this->settings['menu_cart_icon_show'];
 
 		$this->widget->add_render_attribute( 'button-toggle', [
 			'class' => $toggle_classname,
@@ -222,7 +259,6 @@ class Widget_Header_Render {
 			'aria-expanded' => 'false',
 		] );
 
-		$this->widget->add_render_attribute( 'side-toggle', 'class', self::LAYOUT_CLASSNAME . '__side-toggle' );
 		$this->widget->add_render_attribute( 'toggle-icon-open', [
 			'class' => [
 				self::LAYOUT_CLASSNAME . '__toggle-icon',
@@ -238,39 +274,30 @@ class Widget_Header_Render {
 			],
 			'aria-hidden' => 'true',
 		] );
-
 		?>
-		<div <?php $this->widget->print_render_attribute_string( 'side-toggle' ); ?>>
-			<?php if ( $show_contact_buttons ) {
-				$this->render_contact_buttons();
-			} ?>
-			<button <?php $this->widget->print_render_attribute_string( 'button-toggle' ); ?>>
-				<span <?php $this->widget->print_render_attribute_string( 'toggle-icon-open' ); ?>>
-					<?php
-					Icons_Manager::render_icon( $toggle_icon,
-						[
-							'role' => 'presentation',
-						]
-					);
-					?>
-				</span>
-				<span <?php $this->widget->print_render_attribute_string( 'toggle-icon-close' ); ?>>
-					<?php
-					Icons_Manager::render_icon(
-						[
-							'library' => 'eicons',
-							'value' => 'eicon-close',
-						]
-					);
-					?>
-				</span>
-				<span class="elementor-screen-only"><?php esc_html_e( 'Menu', 'hello-plus' ); ?></span>
-			</button>
+		<button <?php $this->widget->print_render_attribute_string( 'button-toggle' ); ?>>
+			<span <?php $this->widget->print_render_attribute_string( 'toggle-icon-open' ); ?>>
+				<?php
+				Icons_Manager::render_icon( $toggle_icon,
+					[
+						'role' => 'presentation',
+					]
+				);
+				?>
+			</span>
+			<span <?php $this->widget->print_render_attribute_string( 'toggle-icon-close' ); ?>>
+				<?php
+				Icons_Manager::render_icon(
+					[
+						'library' => 'eicons',
+						'value' => 'eicon-close',
+					]
+				);
+				?>
+			</span>
+			<span class="elementor-screen-only"><?php esc_html_e( 'Menu', 'hello-plus' ); ?></span>
+		</button>
 
-			<?php if ( $show_menu_cart ) {
-				$this->render_menu_cart();
-			} ?>
-		</div>
 		<?php
 	}
 
@@ -331,10 +358,17 @@ class Widget_Header_Render {
 		<div <?php $this->widget->print_render_attribute_string( 'menu-cart' ); ?>>
 			<button <?php $this->widget->print_render_attribute_string( 'menu-cart-button' ); ?>>
 				<?php
-				if ( ! empty( $menu_cart_icon ) ) {
+				if ( ! empty( $menu_cart_icon['value'] ) && ! empty( $menu_cart_icon['library'] ) ) {
 					Icons_Manager::render_icon( $menu_cart_icon, [
 						'aria-hidden' => 'true',
 					] );
+				} else {
+					Icons_Manager::render_icon(
+						[
+							'library' => 'eicons',
+							'value' => 'eicon-basket-medium',
+						]
+					);
 				}
 				?>
 			</button>

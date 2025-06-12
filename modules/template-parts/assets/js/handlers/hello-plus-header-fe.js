@@ -70,6 +70,8 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 		if ( this.elements.main ) {
 			window.addEventListener( 'resize', () => this.onResize() );
 			window.addEventListener( 'scroll', () => this.onScroll() );
+			document.addEventListener( 'click', ( event ) => this.handleClickOutside( event ) );
+			document.addEventListener( 'keydown', ( event ) => this.handleKeydown( event ) );
 		}
     }
 
@@ -148,6 +150,16 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 		this.elements.menuCartItems.forEach( ( item ) => {
 			item.setAttribute( 'inert', '' );
 		} );
+	}
+
+	handleKeydown( event ) {
+		if ( 'Escape' === event.key ) {
+			this.elements.menuCartItems.forEach( ( item ) => {
+				if ( ! item.hasAttribute( 'inert' ) ) {
+					this.closeMenuCart( item );
+				}
+			} );
+		}
 	}
 
 	handleAriaAttributesMenu() {
@@ -258,6 +270,10 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 		} else {
 			this.closeMenuCart( cartMenuItems );
 		}
+
+		if ( this.isResponsiveBreakpoint() && 'false' === this.elements.navigation.getAttribute( 'aria-hidden' ) ) {
+			this.toggleNavigation();
+		}
 	}
 
 	handleMenuCartCloseClick( event ) {
@@ -273,5 +289,19 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 
 	closeMenuCart( cartMenuItems ) {
 		cartMenuItems.setAttribute( 'inert', '' );
+	}
+
+	handleClickOutside( event ) {
+		const target = event.target;
+		const isMenuCartButton = target.closest( '.ehp-header__menu-cart-button' );
+		const isMenuCartItems = target.closest( '.ehp-header__menu-cart-items' );
+
+		if ( ! isMenuCartButton && ! isMenuCartItems ) {
+			this.elements.menuCartItems.forEach( ( item ) => {
+				if ( ! item.hasAttribute( 'inert' ) ) {
+					this.closeMenuCart( item );
+				}
+			} );
+		}
 	}
 }

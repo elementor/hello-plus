@@ -583,6 +583,7 @@
 		}
 
 		&-item-price {
+			color: var(--header-menu-item-color);
 			font-size: .75em;
 		}
 
@@ -764,6 +765,10 @@
 				padding-inline-start: var(--header-box-padding-inline-start);
 				padding-inline-end: var(--header-box-padding-inline-end);
 			}
+
+			&__menu-cart-container {
+				display: flex;
+			}
 		}
 
 		.menu-item {
@@ -894,6 +899,10 @@
 				right: 0;
 				top: calc(100% + var(--header-box-padding-block-end));
 				z-index: variables.$ninth-layer;
+			}
+
+			&__menu-cart-container {
+				display: none;
 			}
 		}
 	}

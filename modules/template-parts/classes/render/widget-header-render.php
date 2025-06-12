@@ -236,7 +236,7 @@ class Widget_Header_Render {
 			}
 
 			if ( 'yes' === $has_menu_cart ) {
-				$this->render_menu_cart();		
+				$this->render_menu_cart();
 			}
 			?>
 		</div>
@@ -408,7 +408,7 @@ class Widget_Header_Render {
 										</a>
 										<?php if ( ! empty( $thumbnail ) ) : ?>
 											<div class="<?php echo esc_attr( self::LAYOUT_CLASSNAME . '__menu-cart-item-thumbnail' ); ?>">
-												<?php echo $thumbnail; ?>
+												<?php echo wp_kses_post( $thumbnail ); ?>
 											</div>
 										<?php endif; ?>
 										<div class="<?php echo esc_attr( self::LAYOUT_CLASSNAME . '__menu-cart-item-info-content' ); ?>">

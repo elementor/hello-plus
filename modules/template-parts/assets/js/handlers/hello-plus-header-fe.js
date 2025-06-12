@@ -70,7 +70,7 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 		if ( this.elements.main ) {
 			window.addEventListener( 'resize', () => this.onResize() );
 			window.addEventListener( 'scroll', () => this.onScroll() );
-			document.addEventListener( 'click', ( event ) => this.handleClickOutside( event ) );
+			document.addEventListener( 'click', ( event ) => this.handleDocumentClick( event ) );
 			document.addEventListener( 'keydown', ( event ) => this.handleKeydown( event ) );
 		}
     }
@@ -152,20 +152,26 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 		} );
 	}
 
-	handleKeydown( event ) {
-		if ( 'Escape' === event.key ) {
-			this.elements.menuCartItems.forEach( ( item ) => {
-				if ( ! item.hasAttribute( 'inert' ) ) {
-					this.closeMenuCart( item );
-				}
-			} );
-		}
-	}
-
 	handleAriaAttributesMenu() {
 		if ( this.isResponsiveBreakpoint() ) {
 			this.elements.navigationToggle.setAttribute( 'aria-expanded', 'false' );
 			this.elements.navigation.setAttribute( 'aria-hidden', 'true' );
+		}
+	}
+
+	handleDocumentClick( event ) {
+		const target = event.target;
+		const isMenuCartButton = target.closest( '.ehp-header__menu-cart-button' );
+		const isMenuCartItems = target.closest( '.ehp-header__menu-cart-items' );
+
+		if ( ! isMenuCartButton && ! isMenuCartItems ) {
+			this.closeOpenMenuCart();
+		}
+	}
+
+	handleKeydown( event ) {
+		if ( 'Escape' === event.key ) {
+			this.closeOpenMenuCart();
 		}
 	}
 
@@ -276,11 +282,16 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 		}
 	}
 
+	closeOpenMenuCart() {
+		const openCart = this.elements.main.querySelector( '.ehp-header__menu-cart-items:not([inert])' );
+		if ( openCart ) {
+			this.closeMenuCart( openCart );
+		}
+	}
+
 	handleMenuCartCloseClick( event ) {
 		event.preventDefault();
-		const target = event.target;
-		const cartMenuItems = target.closest( '.ehp-header__menu-cart-items' );
-		this.closeMenuCart( cartMenuItems );
+		this.closeOpenMenuCart();
 	}
 
 	openMenuCart( cartMenuItems ) {
@@ -289,19 +300,5 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 
 	closeMenuCart( cartMenuItems ) {
 		cartMenuItems.setAttribute( 'inert', '' );
-	}
-
-	handleClickOutside( event ) {
-		const target = event.target;
-		const isMenuCartButton = target.closest( '.ehp-header__menu-cart-button' );
-		const isMenuCartItems = target.closest( '.ehp-header__menu-cart-items' );
-
-		if ( ! isMenuCartButton && ! isMenuCartItems ) {
-			this.elements.menuCartItems.forEach( ( item ) => {
-				if ( ! item.hasAttribute( 'inert' ) ) {
-					this.closeMenuCart( item );
-				}
-			} );
-		}
 	}
 }

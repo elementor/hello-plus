@@ -69,10 +69,6 @@ class Widget_Header_Render {
 			$layout_classnames[] = 'has-behavior-sticky-scale-title';
 		}
 
-		if ( 'yes' === $has_menu_cart ) {
-			$layout_classnames[] = 'has-menu-cart';
-		}
-
 		$shapes = new Ehp_Shapes( $this->widget, [
 			'container_prefix' => 'float',
 			'control_prefix' => 'behavior',

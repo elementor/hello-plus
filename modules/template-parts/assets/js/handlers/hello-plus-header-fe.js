@@ -101,10 +101,14 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 	}
 
 	onScroll() {
-		const { scrollUp, always } = this.getSettings( 'constants' );
+		const { scrollUp, always, none } = this.getSettings( 'constants' );
 
 		if ( scrollUp === this.getDataScrollBehavior() || always === this.getDataScrollBehavior() ) {
 			this.handleScrollDown( this.getDataScrollBehavior() );
+		}
+
+		if ( this.elements.floatingBars && none === this.getDataScrollBehavior() && this.elements.main.classList.contains( 'has-behavior-float' ) ) {
+			this.setFloatingBarsHeight();
 		}
 	}
 
@@ -224,12 +228,16 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 		}
 
 		if ( this.elements.floatingBars ) {
-			const floatingBarsRect = this.elements.floatingBars.getBoundingClientRect();
-			const visibleHeight = Math.max( 0, Math.min( floatingBarsRect.height, floatingBarsRect.bottom ) );
-			this.elements.main.style.setProperty( '--header-floating-bars-height', `${ visibleHeight }px` );
+			this.setFloatingBarsHeight();
 		}
 
 		this.lastScrollY = currentScrollY;
+	}
+
+	setFloatingBarsHeight() {
+		const floatingBarsRect = this.elements.floatingBars.getBoundingClientRect();
+		const visibleHeight = Math.max( 0, Math.min( floatingBarsRect.height, floatingBarsRect.bottom ) );
+		this.elements.main.style.setProperty( '--header-floating-bars-height', `${ visibleHeight }px` );
 	}
 
 	isResponsiveBreakpoint() {

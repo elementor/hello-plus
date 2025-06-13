@@ -114,7 +114,8 @@
 	}
 
 	&.has-behavior-onscroll-always,
-	&.has-behavior-onscroll-scroll-up {
+	&.has-behavior-onscroll-scroll-up,
+	&.has-behavior-float {
 		left: 0;
 		margin: 0 auto;
 		position: fixed;

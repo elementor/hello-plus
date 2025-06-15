@@ -143,7 +143,7 @@ class Theme_Overrides {
 					$part['sublinks'] = [];
 					$part['link'] = $this->get_add_new_part_link( $part_type );
 					$part['showSublinks'] = false;
-				};
+				}
 				break;
 			case 'footer':
 				if ( Ehp_Footer::get_active_document() ) {
@@ -161,7 +161,7 @@ class Theme_Overrides {
 					$part['sublinks'] = [];
 					$part['link'] = $this->get_add_new_part_link( $part_type );
 					$part['showSublinks'] = false;
-				};
+				}
 				break;
 			default:
 				break;

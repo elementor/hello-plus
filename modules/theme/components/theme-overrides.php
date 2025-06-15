@@ -126,17 +126,46 @@ class Theme_Overrides {
 		if ( empty( $part ) || empty( $part_type ) ) {
 			return;
 		}
-
-		$part['sublinks'] = [
-			[
-				'title' => __( 'Edit', 'hello-plus' ),
-				'link'  => $this->get_edit_part_link( $part_type, $part['link'] ),
-			],
-			[
-				'title' => __( 'Add New', 'hello-plus' ),
-				'link'  => $this->get_add_new_part_link( $part_type ),
-			],
-		];
+		switch ( $part_type ) {
+			case 'header':
+				if ( Ehp_Header::get_active_document() ) {
+					$part['sublinks'] = [
+						[
+							'title' => __( 'Edit', 'hello-plus' ),
+							'link'  => $this->get_edit_part_link( $part_type, $part['link'] ),
+						],
+						[
+							'title' => __( 'Add New', 'hello-plus' ),
+							'link'  => $this->get_add_new_part_link( $part_type ),
+						],
+					];
+				} else {
+					$part['sublinks'] = [];
+					$part['link'] = $this->get_add_new_part_link( $part_type );
+					$part['showSublinks'] = false;
+				};
+				break;
+			case 'footer':
+				if ( Ehp_Footer::get_active_document() ) {
+					$part['sublinks'] = [
+						[
+							'title' => __( 'Edit', 'hello-plus' ),
+							'link'  => $this->get_edit_part_link( $part_type, $part['link'] ),
+						],
+						[
+							'title' => __( 'Add New', 'hello-plus' ),
+							'link'  => $this->get_add_new_part_link( $part_type ),
+						],
+					];
+				} else {
+					$part['sublinks'] = [];
+					$part['link'] = $this->get_add_new_part_link( $part_type );
+					$part['showSublinks'] = false;
+				};
+				break;
+			default:
+				break;
+		}
 	}
 
 	public function site_parts_filter( array $site_parts = [] ): array {

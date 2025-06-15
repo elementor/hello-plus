@@ -14,8 +14,8 @@ class Utils {
 
 	private static ?bool $elementor_active = null;
 
-	public static function elementor(): \Elementor\Plugin {
-		return \Elementor\Plugin::$instance;
+	public static function elementor(): ?\Elementor\Plugin {
+		return class_exists( '\Elementor\Plugin' ) ? \Elementor\Plugin::instance() : null;
 	}
 
 	public static function has_pro(): bool {
@@ -70,7 +70,7 @@ class Utils {
 	}
 
 	public static function get_current_post_id(): int {
-		if ( isset( self::elementor()->documents ) && self::elementor()->documents->get_current() ) {
+		if ( self::elementor() && isset( self::elementor()->documents ) && self::elementor()->documents->get_current() ) {
 			return self::elementor()->documents->get_current()->get_main_id();
 		}
 

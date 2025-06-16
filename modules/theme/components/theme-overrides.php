@@ -122,27 +122,6 @@ class Theme_Overrides {
 		return $add_new_link;
 	}
 
-	protected function update_site_part_link( &$part, string $part_type = '' ): void {
-		$has_active_document = $this->get_active_document_by_part_type( $part_type );
-
-		if ( $has_active_document ) {
-			$part['sublinks'] = [
-				[
-					'title' => __( 'Edit', 'hello-plus' ),
-					'link'  => $this->get_edit_part_link( $part_type, $part['link'] ),
-				],
-				[
-					'title' => __( 'Add New', 'hello-plus' ),
-					'link'  => $this->get_add_new_part_link( $part_type ),
-				],
-			];
-		} else {
-			$part['sublinks'] = [];
-			$part['link'] = $this->get_add_new_part_link( $part_type );
-			$part['showSublinks'] = false;
-		}
-	}
-
 	public function site_parts_filter( array $site_parts = [] ): array {
 		$elementor_active = Utils::is_elementor_active();
 
@@ -152,17 +131,28 @@ class Theme_Overrides {
 		}
 
 		foreach ( $site_parts['siteParts'] as &$part ) {
-			if ( ! isset( $part['id'] ) || ! in_array( $part['id'], [ 'header', 'footer' ], true ) ) {
+			$part_type = $part['id'] ?? '';
+			if ( ! in_array( $part_type, [ 'header', 'footer' ], true ) ) {
 				continue;
 			}
-			$active_document = $this->get_active_document_by_part_type( $part['id'] );
-			if ( ( isset( $part['showSublinks'] ) && true === $part['showSublinks'] ) && empty( $active_document ) ) {
-				continue;
-			}
-			if ( isset( $part['showSublinks'] ) && empty( $active_document ) ) {
-				$part['link'] = $this->get_add_new_part_link( $part['id'] );
+
+			$has_active_document = $this->get_active_document_by_part_type( $part['id'] );
+
+			if ( $has_active_document ) {
+				$part['sublinks'] = [
+					[
+						'title' => __( 'Edit', 'hello-plus' ),
+						'link'  => $this->get_edit_part_link( $part_type, $part['link'] ),
+					],
+					[
+						'title' => __( 'Add New', 'hello-plus' ),
+						'link'  => $this->get_add_new_part_link( $part_type ),
+					],
+				];
 			} else {
-				$this->update_site_part_link( $part, $part['id'] );
+				$part['sublinks'] = [];
+				$part['link'] = $this->get_add_new_part_link( $part_type );
+				$part['showSublinks'] = false;
 			}
 		}
 

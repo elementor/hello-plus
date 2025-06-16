@@ -122,12 +122,17 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 			const floatingBarsHeight = this.elements.floatingBars?.offsetHeight || 0;
 			this.elements.main.style.setProperty( '--header-floating-bars-height', `${ floatingBarsHeight }px` );
 
+			if ( this.mutationObserver ) {
+				this.mutationObserver.disconnect();
+			}
+
 			const observer = new MutationObserver( () => {
 				const newHeight = floatingBars.offsetHeight;
 				this.elements.main.style.setProperty( '--header-floating-bars-height', `${ newHeight }px` );
 				this.applyBodyPadding();
 			} );
 
+			this.mutationObserver = observer;
 			observer.observe( floatingBars, { attributes: true, childList: true } );
 		}
 	}
@@ -228,9 +233,9 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 		}
 
 		if ( this.elements.floatingBars ) {
-			setTimeout( () => {
+			requestAnimationFrame( () => {
 				this.setFloatingBarsHeight();
-			}, 20 );
+			} );
 		}
 
 		this.lastScrollY = currentScrollY;

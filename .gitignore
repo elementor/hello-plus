@@ -2,7 +2,7 @@
 tmp/
 node_modules/
 .sass-cache/
-build/
+assets/
 log/
 vendor/
 .DS_Store

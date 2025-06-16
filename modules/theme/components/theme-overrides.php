@@ -123,20 +123,24 @@ class Theme_Overrides {
 	}
 
 	protected function update_site_part_link( &$part, string $part_type = '' ): void {
-		if ( empty( $part ) || empty( $part_type ) ) {
-			return;
-		}
+		$has_active_document = $this->get_active_document_by_part_type( $part_type );
 
-		$part['sublinks'] = [
-			[
-				'title' => __( 'Edit', 'hello-plus' ),
-				'link'  => $this->get_edit_part_link( $part_type, $part['link'] ),
-			],
-			[
-				'title' => __( 'Add New', 'hello-plus' ),
-				'link'  => $this->get_add_new_part_link( $part_type ),
-			],
-		];
+		if ( $has_active_document ) {
+			$part['sublinks'] = [
+				[
+					'title' => __( 'Edit', 'hello-plus' ),
+					'link'  => $this->get_edit_part_link( $part_type, $part['link'] ),
+				],
+				[
+					'title' => __( 'Add New', 'hello-plus' ),
+					'link'  => $this->get_add_new_part_link( $part_type ),
+				],
+			];
+		} else {
+			$part['sublinks'] = [];
+			$part['link'] = $this->get_add_new_part_link( $part_type );
+			$part['showSublinks'] = false;
+		}
 	}
 
 	public function site_parts_filter( array $site_parts = [] ): array {

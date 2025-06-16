@@ -310,7 +310,6 @@ class Widget_Header_Render {
 			'class' => $ctas_container_classnames,
 		] );
 
-		$show_menu_cart = 'yes' === $this->settings['menu_cart_icon_show'];
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'ctas-container' ); ?>>
 			<?php
@@ -326,7 +325,7 @@ class Widget_Header_Render {
 				$this->render_button( 'primary' );
 			}
 
-			if ( $show_menu_cart ) {
+			if ( 'yes' === $this->settings['menu_cart_icon_show'] ) {
 				$this->render_menu_cart();
 			}
 			?>
@@ -336,7 +335,10 @@ class Widget_Header_Render {
 
 	protected function render_menu_cart() {
 		$menu_cart_icon = $this->settings['menu_cart_icon'];
-		$menu_cart_icon_show = 'yes' === $this->settings['menu_cart_icon_show'];
+
+		if ( ! class_exists( 'WooCommerce' ) || ! function_exists( 'WC' ) || ! WC()->cart || 'no' === $this->settings['menu_cart_icon_show'] ) {
+			return;
+		}
 
 		$this->widget->remove_render_attribute( 'menu-cart' );
 		$this->widget->add_render_attribute( 'menu-cart', [

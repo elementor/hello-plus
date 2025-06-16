@@ -652,6 +652,10 @@
 			padding: 12px;
 			text-align: center;
 		}
+
+		&-empty {
+			color: var(--header-menu-item-color);
+		}
 	}
 
 	&.has-behavior-onscroll-always {

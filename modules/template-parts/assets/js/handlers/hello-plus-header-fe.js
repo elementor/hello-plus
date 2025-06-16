@@ -228,7 +228,9 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 		}
 
 		if ( this.elements.floatingBars ) {
-			this.setFloatingBarsHeight();
+			setTimeout( () => {
+				this.setFloatingBarsHeight();
+			}, 20 );
 		}
 
 		this.lastScrollY = currentScrollY;

@@ -17,7 +17,8 @@
 
 	--header-wp-admin-bar-height: 0;
 	--header-float-offset: 0px;
-	--header-float-height: calc(var(--header-wp-admin-bar-height) + var(--header-float-offset));
+	--header-floating-bars-height: 0px;
+	--header-float-height: calc(var(--header-wp-admin-bar-height) + var(--header-float-offset) + var(--header-floating-bars-height));
 	--header-float-width: 100%;
 	--header-scroll-down: 0;
 
@@ -113,7 +114,8 @@
 	}
 
 	&.has-behavior-onscroll-always,
-	&.has-behavior-onscroll-scroll-up {
+	&.has-behavior-onscroll-scroll-up,
+	&.has-behavior-float {
 		left: 0;
 		margin: 0 auto;
 		position: fixed;

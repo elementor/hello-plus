@@ -5,7 +5,7 @@
  * Plugin URI: https://elementor.com
  * Author: Elementor.com
  * Author URI: https://elementor.com/?utm_source=wp-plugins&utm_campaign=author-uri&utm_medium=wp-dash
- * Version: 1.6.1
+ * Version: 1.6.2
  * License: GPL-3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
  *
@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'HELLOPLUS_VERSION', '1.6.1' );
+define( 'HELLOPLUS_VERSION', '1.6.2' );
 define( 'HELLO_PLUS_VERSION', HELLOPLUS_VERSION );
 
 define( 'HELLOPLUS__FILE__', __FILE__ );

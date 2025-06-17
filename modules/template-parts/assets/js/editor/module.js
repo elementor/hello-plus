@@ -29,7 +29,7 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 	preventClosingModal( close, component ) {
 		if (
 			'library' === component.getNamespace() &&
-			'library/templates/ehp-elements' === component.defaultRoute
+			'library/templates/ehp-elements' === component?.defaultRoute
 		) {
 			return () => {};
 		}

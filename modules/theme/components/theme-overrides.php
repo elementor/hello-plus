@@ -132,7 +132,6 @@ class Theme_Overrides {
 
 		foreach ( $site_parts['siteParts'] as &$part ) {
 			$part_type = $part['id'] ?? '';
-			
 			if ( ! in_array( $part_type, [ 'header', 'footer' ], true ) ) {
 				continue;
 			}

@@ -61,6 +61,10 @@ class Theme_Overrides {
 	}
 
 	protected function display_default_header_footer( bool $display, string $location ): bool {
+		if ( ! Utils::is_elementor_active() ) {
+			return $display;
+		}
+
 		if ( ! Utils::elementor()->preview->is_preview_mode() ) {
 			switch ( $location ) {
 				case 'header':

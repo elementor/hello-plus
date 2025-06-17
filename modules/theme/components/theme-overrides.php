@@ -132,11 +132,12 @@ class Theme_Overrides {
 
 		foreach ( $site_parts['siteParts'] as &$part ) {
 			$part_type = $part['id'] ?? '';
+			
 			if ( ! in_array( $part_type, [ 'header', 'footer' ], true ) ) {
 				continue;
 			}
 
-			$has_active_document = $this->get_active_document_by_part_type( $part['id'] );
+			$has_active_document = $this->get_active_document_by_part_type( $part_type );
 
 			if ( $has_active_document ) {
 				$part['sublinks'] = [

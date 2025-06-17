@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'HELLOPLUS_VERSION', '1.6.1' );
+define( 'HELLOPLUS_VERSION', '1.6.2' );
 define( 'HELLO_PLUS_VERSION', HELLOPLUS_VERSION );
 
 define( 'HELLOPLUS__FILE__', __FILE__ );

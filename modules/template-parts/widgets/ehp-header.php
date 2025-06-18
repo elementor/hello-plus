@@ -101,7 +101,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 		$this->add_content_site_logo_section();
 		$this->add_content_navigation_section();
 		$this->add_content_contact_buttons_section();
-		if ( Utils::has_hello_commerce_theme() ) {
+		if ( current_theme_supports( 'hello-plus-menu-cart' ) ) {
 			$this->add_content_menu_cart_section();
 		}
 		$this->add_content_cta_section();
@@ -112,7 +112,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 		$this->add_style_navigation_section();
 		$this->add_style_contact_button_section();
 		$this->add_style_cta_section();
-		if ( Utils::has_hello_commerce_theme() ) {
+		if ( current_theme_supports( 'hello-plus-menu-cart' ) ) {
 			$this->add_style_menu_cart_section();
 		}
 		$this->add_style_box_section();

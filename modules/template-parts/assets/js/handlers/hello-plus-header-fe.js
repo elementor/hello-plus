@@ -8,6 +8,9 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 				navigation: '.ehp-header__navigation',
 				dropdown: '.ehp-header__dropdown',
 				wpAdminBar: '#wpadminbar',
+				menuCartItems: '.ehp-header__menu-cart-items',
+				menuCartButton: '.ehp-header__menu-cart-button',
+				menuCartClose: '.ehp-header__menu-cart-close',
 				floatingBars: '.e-floating-bars.has-vertical-position-top',
             },
 			constants: {
@@ -36,6 +39,9 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 			navigation: this.$element[ 0 ].querySelector( selectors.navigation ),
 			dropdown: this.$element[ 0 ].querySelector( selectors.dropdown ),
 			wpAdminBar: document.querySelector( selectors.wpAdminBar ),
+			menuCartItems: this.$element[ 0 ].querySelectorAll( selectors.menuCartItems ),
+			menuCartButton: this.$element[ 0 ].querySelectorAll( selectors.menuCartButton ),
+			menuCartClose: this.$element[ 0 ].querySelectorAll( selectors.menuCartClose ),
 			floatingBars: document.querySelector( selectors.floatingBars ),
 		};
 	}
@@ -51,9 +57,23 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 			} );
 		}
 
+		if ( this.elements.menuCartButton.length > 0 ) {
+			this.elements.menuCartButton.forEach( ( button ) => {
+				button.addEventListener( 'click', ( event ) => this.toggleMenuCart( event ) );
+			} );
+		}
+
+		if ( this.elements.menuCartClose.length > 0 ) {
+			this.elements.menuCartClose.forEach( ( close ) => {
+				close.addEventListener( 'click', ( event ) => this.handleMenuCartCloseClick( event ) );
+			} );
+		}
+
 		if ( this.elements.main ) {
 			window.addEventListener( 'resize', () => this.onResize() );
 			window.addEventListener( 'scroll', () => this.onScroll() );
+			document.addEventListener( 'click', ( event ) => this.handleDocumentClick( event ) );
+			document.addEventListener( 'keydown', ( event ) => this.handleKeydown( event ) );
 		}
     }
 
@@ -78,6 +98,10 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 
 		if ( scrollUp === this.getDataScrollBehavior() || always === this.getDataScrollBehavior() ) {
 			this.applyBodyPadding();
+		}
+
+		if ( this.elements.menuCartItems ) {
+			this.handleInertMenuCart();
 		}
 	}
 
@@ -164,10 +188,32 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 		} );
 	}
 
+	handleInertMenuCart() {
+		this.elements.menuCartItems.forEach( ( item ) => {
+			item.setAttribute( 'inert', '' );
+		} );
+	}
+
 	handleAriaAttributesMenu() {
 		if ( this.isResponsiveBreakpoint() ) {
 			this.elements.navigationToggle.setAttribute( 'aria-expanded', 'false' );
 			this.elements.navigation.setAttribute( 'aria-hidden', 'true' );
+		}
+	}
+
+	handleDocumentClick( event ) {
+		const target = event.target;
+		const isMenuCartButton = target.closest( '.ehp-header__menu-cart-button' );
+		const isMenuCartItems = target.closest( '.ehp-header__menu-cart-items' );
+
+		if ( ! isMenuCartButton && ! isMenuCartItems ) {
+			this.closeOpenMenuCart();
+		}
+	}
+
+	handleKeydown( event ) {
+		if ( 'Escape' === event.key ) {
+			this.closeOpenMenuCart();
 		}
 	}
 
@@ -272,4 +318,42 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 			this.elements.navigationToggle.setAttribute( 'aria-expanded', 'false' );
 		}
     }
+
+	toggleMenuCart( event ) {
+		event.preventDefault();
+
+		const target = event.target;
+		const cartMenuItems = target.nextElementSibling;
+		const inert = cartMenuItems.hasAttribute( 'inert' );
+
+		if ( inert ) {
+			this.openMenuCart( cartMenuItems );
+		} else {
+			this.closeMenuCart( cartMenuItems );
+		}
+
+		if ( this.isResponsiveBreakpoint() && 'false' === this.elements.navigation.getAttribute( 'aria-hidden' ) ) {
+			this.toggleNavigation();
+		}
+	}
+
+	closeOpenMenuCart() {
+		const openCart = this.elements.main.querySelector( '.ehp-header__menu-cart-items:not([inert])' );
+		if ( openCart ) {
+			this.closeMenuCart( openCart );
+		}
+	}
+
+	handleMenuCartCloseClick( event ) {
+		event.preventDefault();
+		this.closeOpenMenuCart();
+	}
+
+	openMenuCart( cartMenuItems ) {
+		cartMenuItems.removeAttribute( 'inert' );
+	}
+
+	closeMenuCart( cartMenuItems ) {
+		cartMenuItems.setAttribute( 'inert', '' );
+	}
 }

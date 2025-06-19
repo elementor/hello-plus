@@ -49,10 +49,6 @@ class Utils {
 		return defined( 'EHP_THEME_SLUG' ) && ( 'hello-elementor' === EHP_THEME_SLUG );
 	}
 
-	public static function has_hello_commerce_theme(): bool {
-		return defined( 'EHP_THEME_SLUG' ) && ( 'hello-commerce' === EHP_THEME_SLUG );
-	}
-
 	public static function is_elementor_active(): bool {
 		static $elementor_active = null;
 		if ( is_null( $elementor_active ) ) {

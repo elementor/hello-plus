@@ -181,16 +181,18 @@ class Onboarding_Settings {
 	}
 
 	public function filter_kits_by_theme( array $kits ): array {
-		return array_filter( $kits, function ( $kit ) {
+		$theme_slug = Utils::get_theme_slug();
+		return array_filter( $kits, function ( $kit ) use ( $theme_slug ) {
 			if ( empty( $kit['categories'] ) || ! is_array( $kit['categories'] ) ) {
 				return false;
 			}
 
 			foreach ( $kit['categories'] as $category ) {
-				if ( isset( $category['name'] ) && $category['name'] === Utils::get_theme_slug() ) {
+				if ( isset( $category['name'] ) && $category['name'] === $theme_slug ) {
 					return true;
 				}
 			}
+
 			return false;
 		} );
 	}

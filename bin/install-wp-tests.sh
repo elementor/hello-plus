@@ -13,6 +13,7 @@ WP_VERSION=${5-latest}
 
 WP_TESTS_DIR=${WP_TESTS_DIR-/tmp/wordpress-tests-lib}
 WP_CORE_DIR=${WP_CORE_DIR-/tmp/wordpress/}
+ELEMENTOR_PLUGIN_DIR=${ELEMENTOR_PLUGIN_DIR-/tmp}
 
 download() {
     if [ `which curl` ]; then
@@ -129,8 +130,15 @@ install_jshint() {
 	npm install -g jshint
 }
 
+install_elementor_plugin() {
+	download https://downloads.wordpress.org/plugin/elementor.latest-stable.zip  /tmp/elementor.zip
+	# Using double-quotes to wrap the unzip path so directory names with spaces will not cause problems
+	unzip -q /tmp/elementor.zip -d "$ELEMENTOR_PLUGIN_DIR"
+}
+
 install_wp
 install_test_suite
+install_elementor_plugin
 install_db
 #install_jscs
 #install_jshint

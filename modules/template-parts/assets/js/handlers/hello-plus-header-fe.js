@@ -61,6 +61,7 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 		super.onInit( ...args );
 
 		this.initDefaultState();
+		this.scrollTimeout = null;
 	}
 
 	initDefaultState() {
@@ -103,11 +104,25 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 	onScroll() {
 		const { scrollUp, always, none } = this.getSettings( 'constants' );
 
+		if ( this.scrollTimeout ) {
+			cancelAnimationFrame( this.scrollTimeout );
+		}
+
 		if ( scrollUp === this.getDataScrollBehavior() || always === this.getDataScrollBehavior() ) {
 			this.handleScrollDown( this.getDataScrollBehavior() );
 		}
 
 		if ( this.elements.floatingBars && none === this.getDataScrollBehavior() && this.elements.main.classList.contains( 'has-behavior-float' ) ) {
+			this.setFloatingBarsHeight();
+		}
+
+		this.scrollTimeout = requestAnimationFrame( () => {
+			this.onScrollEnd();
+		} );
+	}
+
+	onScrollEnd() {
+		if ( this.elements.floatingBars ) {
 			this.setFloatingBarsHeight();
 		}
 	}

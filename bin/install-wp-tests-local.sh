@@ -23,9 +23,9 @@ DB_PASS=${DB_PASS:-"admin"}
 DB_HOST=${DB_HOST:-"127.0.0.1"}
 WP_VERSION=${WP_VERSION:-"latest"}
 
-WP_TESTS_UTILS_DIR=${WP_TESTS_UTILS_DIR-$WORKING_DIR/tmp/wordpress-tests-lib}
-WP_CORE_DIR=${WP_CORE_DIR-$WORKING_DIR/tmp/wordpress/}
-ELEMENTOR_PLUGIN_DIR=${ELEMENTOR_PLUGIN_DIR-$WORKING_DIR/tmp}
+WP_TESTS_DIR=${WP_TESTS_DIR-/tmp/wordpress-tests-lib}
+WP_CORE_DIR=${WP_CORE_DIR-/tmp/wordpress/}
+ELEMENTOR_PLUGIN_DIR=${ELEMENTOR_PLUGIN_DIR-/tmp/wordpress/wp-content/plugins}
 
 
 # Download util
@@ -130,13 +130,13 @@ install_db() {
 }
 
 install_elementor_plugin() {
+	rm -rf ${ELEMENTOR_PLUGIN_DIR}/elementor
 	download https://downloads.wordpress.org/plugin/elementor.latest-stable.zip  /tmp/elementor.zip
-	# Using double-quotes to wrap the unzip path so directory names with spaces will not cause problems
-	unzip -q /tmp/elementor.zip -d "$ELEMENTOR_PLUGIN_DIR"
+	unzip -q /tmp/elementor.zip -d ${ELEMENTOR_PLUGIN_DIR}
 }
 
 check_for_svn
 install_wp
 install_test_suite
-install_elementor_plugin
 install_db
+install_elementor_plugin

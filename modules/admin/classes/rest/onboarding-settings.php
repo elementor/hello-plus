@@ -29,6 +29,7 @@ class Onboarding_Settings {
 
 	public function get_kits() {
 		$kits = get_transient( self::KITS_TRANSIENT );
+
 		if ( ! empty( $kits ) ) {
 			return $kits;
 		}
@@ -167,7 +168,7 @@ class Onboarding_Settings {
 					'elementorInstalled' => Utils::is_elementor_installed(),
 					'elementorActive' => Utils::is_elementor_active(),
 					'modalCloseRedirectUrl' => self_admin_url( 'admin.php?page=' . Utils::get_theme_slug() ),
-					'kits' => $this->get_kits(),
+					'kits' => $this->filter_kits_by_theme( $this->get_kits() ),
 					'applyKitBaseUrl' => self_admin_url( 'admin.php?page=elementor-app' ),
 					'wizardCompleted' => Setup_Wizard::has_site_wizard_been_completed(),
 					'returnUrl' => self_admin_url( 'admin.php?page=hello-plus-setup-wizard' ),
@@ -177,6 +178,23 @@ class Onboarding_Settings {
 				],
 			]
 		);
+	}
+
+	public function filter_kits_by_theme( array $kits ): array {
+		$theme_slug = Utils::get_theme_slug();
+		return array_filter( $kits, function ( $kit ) use ( $theme_slug ) {
+			if ( empty( $kit['categories'] ) || ! is_array( $kit['categories'] ) ) {
+				return false;
+			}
+
+			foreach ( $kit['categories'] as $category ) {
+				if ( isset( $category['name'] ) && $category['name'] === $theme_slug ) {
+					return true;
+				}
+			}
+
+			return false;
+		} );
 	}
 
 	private function sort_kits_by_index( array $kits, string $sort_by = 'featured_index' ): array {

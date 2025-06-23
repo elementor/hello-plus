@@ -59,6 +59,8 @@ jobs:
     name: PHPUnit - WordPress ${{ matrix.wordpress_versions }} - PHP version ${{ matrix.php_versions }}
     env:
       WP_TESTS_DIR: /tmp/wordpress-tests-lib
+      WP_TESTS_ELEMENTOR_DIR: /tmp/elementor/elementor.php
+      PLUGIN_FILE: hello-plus.php
       COVERAGE: ${{ matrix.php_versions >= 8.3 && matrix.wordpress_versions == 'latest' && github.event_name == 'push' }}
     services:
       mysql:

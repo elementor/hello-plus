@@ -198,4 +198,38 @@ class Utils {
 		$first_pro_part_id  = array_key_first( $pro_part );
 		return ! empty( $first_pro_part_id ) ? $first_pro_part_id : false;
 	}
+
+	public static function is_test_environment(): bool {
+		// Check for PHPUnit test environment
+		if ( defined( 'WP_TESTS_DOMAIN' ) ) {
+			return true;
+		}
+
+		// Check for Playwright test environment variables
+		if ( getenv( 'TEST_PARALLEL_INDEX' ) !== false ) {
+			return true;
+		}
+
+		// Check for WP_ENV environment variable set to test-related values
+		$wp_env = getenv( 'WP_ENV' );
+		if ( $wp_env && in_array( strtolower( $wp_env ), [ 'test', 'testing', 'playwright' ], true ) ) {
+			return true;
+		}
+
+		// Check for WordPress testing constants
+		if ( defined( 'WP_TESTS_CONFIG_FILE_PATH' ) || defined( 'WP_PHPUNIT__TESTS_CONFIG' ) ) {
+			return true;
+		}
+
+		// Check if wp-env is being used (common for Playwright tests)
+		if (
+			defined( 'WP_DEBUG' ) &&
+			defined( 'WP_DEBUG_LOG' ) &&
+			filter_input( INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_URL ) === 'localhost:8888'
+		) {
+			return true;
+		}
+
+		return false;
+	}
 }

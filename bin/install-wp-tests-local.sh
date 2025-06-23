@@ -28,12 +28,26 @@ WP_CORE_DIR=${WP_CORE_DIR-/tmp/wordpress/}
 ELEMENTOR_PLUGIN_DIR=${ELEMENTOR_PLUGIN_DIR-/tmp/wordpress/wp-content/plugins}
 
 
-# Download util
+# Download util with better error handling
 download() {
+    local url="$1"
+    local output="$2"
+    
     if [ `which curl` ]; then
-        curl --location -s "$1" > "$2";
+        curl --location --fail --show-error --silent --output "$output" "$url"
+        local exit_code=$?
     elif [ `which wget` ]; then
-        wget -nv -O "$2" "$1"
+        wget -nv -O "$output" "$url"
+        local exit_code=$?
+    else
+        echo "Error: Neither curl nor wget found. Please install one of them."
+        exit 1
+    fi
+    
+    if [ $exit_code -ne 0 ]; then
+        echo "Error: Failed to download $url"
+        rm -f "$output"
+        exit 1
     fi
 }
 
@@ -57,7 +71,7 @@ set -ex
 check_for_svn() {
   if [ ! `which svn` ]; then
     echo 'Please install "svn" and re run this script.'
-    ehco 'Mac users: `brew install svn`'
+    echo 'Mac users: `brew install svn`'
     exit 1
   fi
 }
@@ -130,9 +144,36 @@ install_db() {
 }
 
 install_elementor_plugin() {
+	echo "Installing Elementor plugin..."
 	rm -rf ${ELEMENTOR_PLUGIN_DIR}/elementor
-	download https://downloads.wordpress.org/plugin/elementor.latest-stable.zip  /tmp/elementor.zip
-	unzip -q /tmp/elementor.zip -d ${ELEMENTOR_PLUGIN_DIR}
+	
+	# Download the plugin
+	local zip_file="/tmp/elementor.zip"
+	rm -f "$zip_file"
+	
+	echo "Downloading Elementor from WordPress.org..."
+	download https://downloads.wordpress.org/plugin/elementor.latest-stable.zip "$zip_file"
+	
+	# Validate the downloaded file is a valid zip
+	if ! unzip -t "$zip_file" >/dev/null 2>&1; then
+		echo "Error: Downloaded file is not a valid zip archive"
+		echo "File size: $(ls -lh "$zip_file" 2>/dev/null | awk '{print $5}' || echo 'File not found')"
+		echo "File type: $(file "$zip_file" 2>/dev/null || echo 'Cannot determine file type')"
+		rm -f "$zip_file"
+		exit 1
+	fi
+	
+	# Extract the plugin
+	echo "Extracting Elementor plugin..."
+	if ! unzip -q "$zip_file" -d ${ELEMENTOR_PLUGIN_DIR}; then
+		echo "Error: Failed to extract Elementor plugin"
+		rm -f "$zip_file"
+		exit 1
+	fi
+	
+	# Clean up
+	rm -f "$zip_file"
+	echo "Elementor plugin installed successfully"
 }
 
 check_for_svn

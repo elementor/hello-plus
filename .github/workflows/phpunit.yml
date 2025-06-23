@@ -97,7 +97,7 @@ jobs:
           composer run test
       - name: Run Test - Multisite
         run: |
-          WP_MULTISITE=1
+          export WP_MULTISITE=1
           composer update --no-interaction
           composer run test
 

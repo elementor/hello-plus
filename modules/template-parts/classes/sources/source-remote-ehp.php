@@ -80,6 +80,7 @@ class Source_Remote_Ehp extends \Elementor\TemplateLibrary\Source_Remote {
 		return [
 			'products' => 'ehp',
 			'editor_layout_type' => 'container_flexbox',
+			'plugin_version' => HELLO_PLUS_VERSION,
 		];
 	}
 }

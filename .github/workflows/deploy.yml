@@ -4,13 +4,19 @@ on:
   workflow_dispatch:
 
 jobs:
+  # Run PHPUnit tests before deployment
+  phpunit:
+    uses: ./.github/workflows/phpunit.yml
+    secrets: inherit
+
   build:
+    needs: phpunit
     if: ( github.actor == 'KingYes' || github.actor == 'bainternet'  || github.actor == 'arielk' || github.actor == 'nuritsha' ) && startsWith( github.repository, 'elementor/' )
     uses: ./.github/workflows/build.yml
     secrets: inherit
 
   deploy:
-    needs: build
+    needs: [phpunit, build]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

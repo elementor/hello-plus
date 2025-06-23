@@ -96,8 +96,9 @@ jobs:
         run: |
           composer run test
       - name: Run Test - Multisite
+        env:
+          WP_MULTISITE: 1
         run: |
-          export WP_MULTISITE=1
           composer update --no-interaction
           composer run test
 

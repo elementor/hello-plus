@@ -10,7 +10,11 @@ use HelloPlus\Modules\TemplateParts\Classes\Steps\Setup_Header;
 
 class Checklist {
 	public function __construct() {
-		// Run after Pro did:
+
+		if ( ! class_exists( '\ElementorPro\Modules\Checklist\Steps\Setup_Header' ) ) {
+			return;
+		}
+
 		add_filter( 'elementor/checklist/steps', [ $this, 'replace_steps' ], 2 );
 	}
 

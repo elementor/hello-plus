@@ -169,10 +169,27 @@ class Utils {
 			class_exists( '\ElementorPro\Modules\Forms\Submissions\Actions\Save_To_Database' ) &&
 			class_exists( '\ElementorPro\License\API' ) &&
 			class_exists( '\ElementorPro\Modules\Forms\Submissions\Component' ) &&
-			\ElementorPro\License\API::is_licence_has_feature(
-				\ElementorPro\Modules\Forms\Submissions\Component::NAME,
+			self::is_licence_has_feature_compatible(
+				\ElementorPro\Modules\Forms\Submissions\Component::NAME
+			);
+	}
+
+	private static function is_licence_has_feature_compatible( $feature ) {
+		$method = new \ReflectionMethod(
+			\ElementorPro\License\API::class, 'is_licence_has_feature'
+		);
+		$num_params = $method->getNumberOfParameters();
+
+		if ( $num_params > 1 ) {
+			return \ElementorPro\License\API::is_licence_has_feature(
+				$feature,
 				\ElementorPro\License\APi::BC_VALIDATION_CALLBACK
 			);
+		} else {
+			return \ElementorPro\License\API::is_licence_has_feature(
+				$feature
+			);
+		}
 	}
 
 	public static function get_widgets_depends(): array {

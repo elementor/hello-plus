@@ -183,7 +183,7 @@ class Utils {
 		if ( $num_params > 1 ) {
 			return \ElementorPro\License\API::is_licence_has_feature(
 				$feature,
-				\ElementorPro\License\APi::BC_VALIDATION_CALLBACK
+				\ElementorPro\License\API::BC_VALIDATION_CALLBACK
 			);
 		} else {
 			return \ElementorPro\License\API::is_licence_has_feature(

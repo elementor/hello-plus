@@ -8,8 +8,8 @@
 >
 	<php>
 		<env name="PLUGIN_FILE" value="hello-plus.php"/>
-		<env name="WP_TESTS_DIR" value="./tmp/wordpress-tests-lib"/>
-		<env name="WP_TESTS_ELEMENTOR_DIR" value="./tmp/elementor/elementor.php"/>
+		<env name="WP_TESTS_DIR" value="/tmp/wordpress-tests-lib"/>
+		<env name="WP_TESTS_ELEMENTOR_DIR" value="/tmp/elementor/elementor.php"/>
 	</php>
 
 	<testsuites>

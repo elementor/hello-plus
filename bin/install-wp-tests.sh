@@ -1,34 +1,20 @@
 #!/usr/bin/env bash
 
-WORKING_DIR=$(pwd)
+if [ $# -lt 3 ]; then
+	echo "usage: $0 <db-name> <db-user> <db-pass> [db-host] [wp-version]"
+	exit 1
+fi
 
-# Remove old tmp folder
-rm -rf "$WORKING_DIR/tmp"
-
-# Ask for some parameters to install the test env.
-echo "Choose a database Name for tests [elementor-tests]:"
-read -r DB_NAME
-echo "What is your database username [admin]?"
-read -r DB_USER
-echo "What is your database password [admin]?"
-read -r DB_PASS
-echo "What is your database host (specify port if needed) [127.0.0.1:PORT]?"
-read -r DB_HOST
-echo "Choose WordPress version for testing [latest]:"
-read -r WP_VERSION
-
-DB_NAME=${DB_NAME:-"elementor-tests"}
-DB_USER=${DB_USER:-"admin"}
-DB_PASS=${DB_PASS:-"admin"}
-DB_HOST=${DB_HOST:-"127.0.0.1"}
-WP_VERSION=${WP_VERSION:-"latest"}
+DB_NAME=$1
+DB_USER=$2
+DB_PASS=$3
+DB_HOST=${4-localhost}
+WP_VERSION=${5-latest}
 
 WP_TESTS_DIR=${WP_TESTS_DIR-/tmp/wordpress-tests-lib}
 WP_CORE_DIR=${WP_CORE_DIR-/tmp/wordpress/}
-ELEMENTOR_PLUGIN_DIR=${ELEMENTOR_PLUGIN_DIR-/tmp/wordpress/wp-content/plugins}
+ELEMENTOR_PLUGIN_DIR=${ELEMENTOR_PLUGIN_DIR-/tmp}
 
-
-# Download util with better error handling
 download() {
     local url="$1"
     local output="$2"
@@ -51,7 +37,6 @@ download() {
     fi
 }
 
-## Determine the WP_TEST_TAG.
 if [[ $WP_VERSION =~ [0-9]+\.[0-9]+(\.[0-9]+)? ]]; then
 	WP_TESTS_TAG="tags/$WP_VERSION"
 else
@@ -68,31 +53,35 @@ fi
 
 set -ex
 
-check_for_svn() {
-  if [ ! `which svn` ]; then
-    echo 'Please install "svn" and re run this script.'
-    echo 'Mac users: `brew install svn`'
-    exit 1
-  fi
-}
-
 install_wp() {
-	if [ -d "$WP_CORE_DIR" ]; then
+	if [ -d $WP_CORE_DIR ]; then
 		return;
 	fi
 
-	mkdir -p "$WP_CORE_DIR"
-
-	if [ $WP_VERSION == 'latest' ]; then
-		local ARCHIVE_NAME='latest'
+	mkdir -p $WP_CORE_DIR
+	if [[ $WP_VERSION == 'nightly' || $WP_VERSION == 'trunk' ]]; then
+		mkdir -p /tmp/wordpress-nightly
+		download https://wordpress.org/nightly-builds/wordpress-latest.zip  /tmp/wordpress-nightly/wordpress-nightly.zip
+		unzip -q /tmp/wordpress-nightly/wordpress-nightly.zip -d /tmp/wordpress-nightly/
+		mv /tmp/wordpress-nightly/wordpress/* $WP_CORE_DIR
 	else
-		local ARCHIVE_NAME="wordpress-$WP_VERSION"
+		if [ $WP_VERSION == 'latest' ]; then
+			local ARCHIVE_NAME='latest'
+		else
+			local ARCHIVE_NAME="wordpress-$WP_VERSION"
+		fi
+		download https://wordpress.org/${ARCHIVE_NAME}.tar.gz  /tmp/wordpress.tar.gz
+		tar --strip-components=1 -zxmf /tmp/wordpress.tar.gz -C $WP_CORE_DIR
 	fi
 
-	download https://wordpress.org/${ARCHIVE_NAME}.tar.gz  /tmp/wordpress.tar.gz
-	tar --strip-components=1 -zxmf /tmp/wordpress.tar.gz -C "$WP_CORE_DIR"
+	if [ -z "$(ls -A $WP_CORE_DIR/wp-content/themes/twentytwentyone)" ]; then
+		mkdir -p /tmp/twentytwentyone
+		download https://downloads.wordpress.org/theme/twentytwentyone.2.0.zip /tmp/twentytwentyone/twentytwentyone.zip
+		unzip -q /tmp/twentytwentyone/twentytwentyone.zip -d /tmp/twentytwentyone/
+		mv /tmp/twentytwentyone/twentytwentyone $WP_CORE_DIR/wp-content/themes
+	fi
 
-	download https://raw.github.com/markoheijnen/wp-mysqli/master/db.php "$WP_CORE_DIR/wp-content/db.php"
+	download https://raw.github.com/markoheijnen/wp-mysqli/master/db.php $WP_CORE_DIR/wp-content/db.php
 }
 
 install_test_suite() {
@@ -104,21 +93,21 @@ install_test_suite() {
 	fi
 
 	# set up testing suite if it doesn't yet exist
-	if [ ! -d "$WP_TESTS_UTILS_DIR" ]; then
+	if [ ! -d $WP_TESTS_DIR ]; then
 		# set up testing suite
-		mkdir -p "$WP_TESTS_UTILS_DIR"/includes
-		svn co --quiet https://develop.svn.wordpress.org/${WP_TESTS_TAG}/tests/phpunit/includes/ "$WP_TESTS_UTILS_DIR/includes/"
+		mkdir -p $WP_TESTS_DIR
+		svn co --quiet https://develop.svn.wordpress.org/${WP_TESTS_TAG}/tests/phpunit/includes/ $WP_TESTS_DIR/includes
 	fi
 
-	cd "$WP_TESTS_UTILS_DIR"
+	cd $WP_TESTS_DIR
 
 	if [ ! -f wp-tests-config.php ]; then
-		download https://develop.svn.wordpress.org/${WP_TESTS_TAG}/wp-tests-config-sample.php "$WP_TESTS_UTILS_DIR/wp-tests-config.php"
-		sed $ioption "s:dirname( __FILE__ ) . '/src/':'$WP_CORE_DIR':" "$WP_TESTS_UTILS_DIR"/wp-tests-config.php
-		sed $ioption "s/youremptytestdbnamehere/$DB_NAME/" "$WP_TESTS_UTILS_DIR"/wp-tests-config.php
-		sed $ioption "s/yourusernamehere/$DB_USER/" "$WP_TESTS_UTILS_DIR"/wp-tests-config.php
-		sed $ioption "s/yourpasswordhere/$DB_PASS/" "$WP_TESTS_UTILS_DIR"/wp-tests-config.php
-		sed $ioption "s|localhost|${DB_HOST}|" "$WP_TESTS_UTILS_DIR"/wp-tests-config.php
+		download https://develop.svn.wordpress.org/${WP_TESTS_TAG}/wp-tests-config-sample.php "$WP_TESTS_DIR"/wp-tests-config.php
+		sed $ioption "s:dirname( __FILE__ ) . '/src/':'$WP_CORE_DIR':" "$WP_TESTS_DIR"/wp-tests-config.php
+		sed $ioption "s/youremptytestdbnamehere/$DB_NAME/" "$WP_TESTS_DIR"/wp-tests-config.php
+		sed $ioption "s/yourusernamehere/$DB_USER/" "$WP_TESTS_DIR"/wp-tests-config.php
+		sed $ioption "s/yourpasswordhere/$DB_PASS/" "$WP_TESTS_DIR"/wp-tests-config.php
+		sed $ioption "s|localhost|${DB_HOST}|" "$WP_TESTS_DIR"/wp-tests-config.php
 	fi
 }
 
@@ -176,7 +165,6 @@ install_elementor_plugin() {
 	echo "Elementor plugin installed successfully"
 }
 
-check_for_svn
 install_wp
 install_test_suite
 install_db

@@ -9,7 +9,7 @@ import { useAdminContext } from '../../hooks/use-admin-context';
 export const Navigation = () => {
 	const { step } = useAdminContext();
 
-	const steps = [ __( 'Get Started', 'hello-plus' ), __( 'Choose a Kit', 'hello-plus' ), __( 'Ready to Go', 'hello-plus' ) ];
+	const steps = [ __( 'Get started', 'hello-plus' ), __( 'Choose a kit', 'hello-plus' ), __( 'Ready to go', 'hello-plus' ) ];
 
 	return (
 		<Box sx={ { width: '100%' } }>

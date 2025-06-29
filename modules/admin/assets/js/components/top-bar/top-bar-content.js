@@ -9,7 +9,7 @@ export const TopBarContent = ( { sx = {}, iconSize = 'medium', onClose } ) => {
 	return (
 		<Stack direction="row" sx={ { alignItems: 'center', minHeight: 50, px: 2, backgroundColor: 'background.default', justifyContent: 'space-between', ...sx } }>
 			<Stack direction="row" spacing={ 1 } alignItems="center">
-				<SvgIcon fontSize={ iconSize } color="secondary">
+				<SvgIcon fontSize={ iconSize } color="text.primary">
 					<ElementorNoticeIcon />
 				</SvgIcon>
 				<Typography variant="subtitle1" sx={ { color: 'text.primary' } }>{ __( 'Hello+', 'hello-plus' ) }</Typography>

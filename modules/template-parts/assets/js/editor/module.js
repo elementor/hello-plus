@@ -37,17 +37,22 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 	}
 
 	filterBehviors( behaviors ) {
-		if ( this.isEhpDocument() && this.notElementorDomain() ) {
+		if ( this.isElementorDomain() ) {
+			return behaviors;
+		}
+
+		if ( this.isEhpDocument() ) {
 			const { contextMenu: { groups } } = behaviors;
 			behaviors.contextMenu.groups = groups
 				.map( this.filterOutUnsupportedActions() )
 				.filter( ( group ) => group.actions.length );
 		}
+
 		return behaviors;
 	}
 
-	notElementorDomain() {
-		return ! ehpTemplatePartsEditorSettings.isElementorDomain;
+	isElementorDomain() {
+		return ehpTemplatePartsEditorSettings.isElementorDomain;
 	}
 
 	setSourceAsRemote( isRemote, activeSource ) {
@@ -59,6 +64,10 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 	}
 
 	redirectToHelloPlus() {
+		if ( this.isElementorDomain() ) {
+			return;
+		}
+
 		$e.internal( 'document/save/set-is-modified', { status: false } );
 		window.location.href = elementor.config.close_modal_redirect_hello_plus + elementor.config.document.type;
 	}

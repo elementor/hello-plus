@@ -59,10 +59,12 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 	}
 
 	redirectToHelloPlus() {
-		if ( this.notElementorDomain() ) {
-			$e.internal( 'document/save/set-is-modified', { status: false } );
-			window.location.href = elementor.config.close_modal_redirect_hello_plus + elementor.config.document.type;
+		if ( ! this.notElementorDomain() ) {
+			return;
 		}
+
+		$e.internal( 'document/save/set-is-modified', { status: false } );
+		window.location.href = elementor.config.close_modal_redirect_hello_plus + elementor.config.document.type;
 	}
 
 	async openSiteIdentity() {

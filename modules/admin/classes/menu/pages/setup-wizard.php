@@ -9,6 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Setup_Wizard {
+
 	const SETUP_WIZARD_PAGE_SLUG = 'hello-plus-setup-wizard';
 
 	public static function has_site_wizard_been_completed(): bool {

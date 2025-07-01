@@ -80,10 +80,11 @@ For documentation and tutorials, visit our [Knowledge Base](https://elementor.co
 
 == Changelog ==
 
-= 1.6.2 - 2025-06-18 =
+= 1.6.2 - 2025-07-01 =
 * Fix: Conflict between Hello+ Header and Elementor Floating Banners
 * Tweak: Update plugin description to clarify that it supports the full family of Hello Themes
 * Tweak: Improve Header/Footer logic on theme Home
+* Tweak: Change logo color and capitalization of steps in the Setup Wizard
 
 = 1.6.1 - 2025-06-08 =
 * Fix: Conflict between Hello+ and Elementor Pro popups

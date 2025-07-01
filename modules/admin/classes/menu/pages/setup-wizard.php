@@ -10,7 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Setup_Wizard {
 
+
 	const SETUP_WIZARD_PAGE_SLUG = 'hello-plus-setup-wizard';
+
 	public static function has_site_wizard_been_completed(): bool {
 		static $is_setup_wizard_completed = null;
 
@@ -29,7 +31,7 @@ class Setup_Wizard {
 		}
 
 		$last_session = end( $sessions );
-		$kit_name = $last_session['kit_name'];
+		$kit_name     = $last_session['kit_name'];
 
 		try {
 			/**
@@ -39,9 +41,9 @@ class Setup_Wizard {
 
 			$kits = $onboarding_rest->get_kits();
 
-			$kit = array_filter($kits, function ( $k ) use ( $kit_name ) {
+			$kit = array_filter( $kits, function ( $k ) use ( $kit_name ) {
 				return $k['manifest']['name'] === $kit_name;
-			});
+			} );
 
 			$is_setup_wizard_completed = ! empty( $kit );
 		} catch ( \Exception $e ) {

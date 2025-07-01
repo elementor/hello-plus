@@ -31,7 +31,7 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 			'library' === component.getNamespace() &&
 			'library/templates/ehp-elements' === component?.defaultRoute
 		) {
-			return () => { };
+			return () => {};
 		}
 		return close;
 	}

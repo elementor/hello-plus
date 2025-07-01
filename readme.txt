@@ -1,5 +1,5 @@
 === Hello Plus ===
-Contributors: elemntor
+Contributors: elementor
 Tags: elementor, themes, hello themes, hello plus, widgets
 Requires at least: 6.0
 Tested up to: 6.8

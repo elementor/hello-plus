@@ -52,7 +52,7 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 	}
 
 	isElementorDomain() {
-		return ehpTemplatePartsEditorSettings.isElementorDomain;
+		return ehpTemplatePartsEditorSettings?.isElementorDomain;
 	}
 
 	setSourceAsRemote( isRemote, activeSource ) {

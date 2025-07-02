@@ -13,6 +13,10 @@ export class SelectAfterContainer extends $e.modules.hookUI.After {
 			type = args?.containers[ 0 ]?.document?.config?.type;
 		}
 
+		if ( ehpTemplatePartsEditorSettings.isElementorDomain ) {
+			return false;
+		}
+
 		return [ 'ehp-header', 'ehp-footer' ].includes( type );
 	}
 

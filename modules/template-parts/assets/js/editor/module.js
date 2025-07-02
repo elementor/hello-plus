@@ -78,7 +78,7 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 	}
 
 	resetCommonControls( commonControls, widgetType ) {
-		if ( [ 'ehp-footer', 'ehp-header' ].includes( widgetType ) ) {
+		if ( [ 'ehp-footer', 'ehp-header', 'ehp-flex-footer' ].includes( widgetType ) ) {
 			return null;
 		}
 

@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - '1.*.*'
   workflow_call:
   workflow_dispatch:
     inputs:
@@ -11,7 +12,7 @@ on:
         description: 'Push to Slack'
         type: boolean
         required: true
-        default: 'false'
+        default: false
 
 concurrency:
   cancel-in-progress: true

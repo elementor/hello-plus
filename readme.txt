@@ -3,7 +3,7 @@ Contributors: elemntor
 Tags: elementor, themes, hello themes, hello plus, widgets
 Requires at least: 6.0
 Tested up to: 6.8
-Stable tag: 1.6.2
+Stable tag: 1.7.0
 Requires PHP: 7.4
 License: GPL-3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -80,10 +80,11 @@ For documentation and tutorials, visit our [Knowledge Base](https://elementor.co
 
 == Changelog ==
 
-= 1.6.2 - 2025-06-18 =
+= 1.6.2 - 2025-07-01 =
 * Fix: Conflict between Hello+ Header and Elementor Floating Banners
 * Tweak: Update plugin description to clarify that it supports the full family of Hello Themes
 * Tweak: Improve Header/Footer logic on theme Home
+* Tweak: Change logo color and capitalization of steps in the Setup Wizard
 
 = 1.6.1 - 2025-06-08 =
 * Fix: Conflict between Hello+ and Elementor Pro popups

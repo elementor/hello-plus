@@ -29,7 +29,7 @@ abstract class Ehp_Document_Base extends Library_Document {
 		$properties['support_kit'] = true;
 		$properties['show_in_finder'] = true;
 		$properties['support_site_editor'] = false;
-		$properties['allow_adding_widgets'] = false;
+		$properties['allow_adding_widgets'] = Theme_Utils::are_we_on_elementor_domains();
 		$properties['show_navigator'] = false;
 		$properties['support_page_layout'] = false;
 		$properties['allow_closing_remote_library'] = false;

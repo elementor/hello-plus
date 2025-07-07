@@ -35,7 +35,10 @@ abstract class Ehp_Widget_Base extends Widget_Base {
 	}
 
 	public function show_in_panel(): bool {
-		return apply_filters( 'hello-plus/template-parts/widgets/panel/show', false );
+		return apply_filters(
+			'hello-plus/template-parts/widgets/panel/show',
+			Theme_Utils::are_we_on_elementor_domains()
+		);
 	}
 
 	public function hide_on_search(): bool {

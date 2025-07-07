@@ -64,7 +64,6 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 	}
 
 	redirectToHelloPlus() {
-		console.log( this.isElementorDomain() );
 		if ( this.isElementorDomain() ) {
 			return;
 		}

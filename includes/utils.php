@@ -30,6 +30,7 @@ class Utils {
 				return true;
 			}
 		}
+
 		return false;
 	}
 

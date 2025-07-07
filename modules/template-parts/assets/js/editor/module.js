@@ -20,10 +20,14 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 		];
 
 		types.forEach( ( type ) => {
-			window.addEventListener( type, this.redirectToHelloPlus );
+			window.addEventListener( type, this.redirectToHelloPlus.bind( this ) );
 		} );
 
 		window.templatesModule = this;
+	}
+
+	isElementorDomain() {
+		return ehpTemplatePartsEditorSettings?.isElementorDomain;
 	}
 
 	preventClosingModal( close, component ) {
@@ -51,10 +55,6 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 		return behaviors;
 	}
 
-	isElementorDomain() {
-		return ehpTemplatePartsEditorSettings?.isElementorDomain;
-	}
-
 	setSourceAsRemote( isRemote, activeSource ) {
 		if ( 'remote-ehp' === activeSource ) {
 			return true;
@@ -64,6 +64,7 @@ export default class TemplatesModule extends elementorModules.editor.utils.Modul
 	}
 
 	redirectToHelloPlus() {
+		console.log( this.isElementorDomain() );
 		if ( this.isElementorDomain() ) {
 			return;
 		}

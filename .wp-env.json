@@ -3,7 +3,7 @@
 	"phpVersion": "8.0",
 	"plugins": [
 		"./",
-		"../elementor/"
+		"https://downloads.wordpress.org/plugin/elementor.latest-stable.zip"
 	],
 	"themes": [
 		"https://downloads.wordpress.org/theme/hello-biz.zip"

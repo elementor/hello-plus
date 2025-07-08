@@ -32,7 +32,6 @@ class Admin_Menu_Controller {
 		if ( empty( get_transient( self::SETUP_WIZARD_TRANSIENT_NAME ) ) ) {
 			return;
 		}
-
 		if ( ! is_admin() ) {
 			return;
 		}
@@ -40,6 +39,10 @@ class Admin_Menu_Controller {
 		delete_transient( self::SETUP_WIZARD_TRANSIENT_NAME );
 
 		if ( Utils::are_we_on_elementor_domains() ) {
+			return;
+		}
+
+		if ( Utils::is_test_environment() ) {
 			return;
 		}
 

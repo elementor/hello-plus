@@ -25,12 +25,15 @@ class Utils {
 			'elementor.red',
 		];
 
+		$is_elementor_domain = false;
+
 		foreach ( $allowed_domains as $domain ) {
 			if ( str_ends_with( $current_domain, $domain ) ) {
-				return true;
+				$is_elementor_domain = true;
 			}
 		}
-		return false;
+
+		return apply_filters( 'hello-plus/utils/are_we_on_elementor_domains', $is_elementor_domain );
 	}
 
 	public static function has_hello_biz(): bool {

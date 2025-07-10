@@ -29,8 +29,8 @@ class Utils {
 
 		foreach ( $allowed_domains as $domain ) {
 			if ( str_ends_with( $current_domain, $domain ) ) {
-                                $is_elementor_domain = true;
-                                break;
+								$is_elementor_domain = true;
+								break;
 			}
 		}
 

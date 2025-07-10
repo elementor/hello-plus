@@ -70,15 +70,18 @@ class Ehp_Header extends Ehp_Widget_Base {
 	}
 
 	protected function get_upsale_data(): array {
-		return [
-			'condition' => ! General_Utils::has_pro(),
-			'image' => esc_url( HELLOPLUS_IMAGES_URL . 'go-pro.svg' ),
-			'image_alt' => esc_attr__( 'Upgrade Now', 'hello-plus' ),
-			'title' => esc_html__( 'Create custom headers', 'hello-plus' ),
-			'description' => esc_html__( 'Add mega menus, search bars, login buttons, and more with Elementor Pro.', 'hello-plus' ),
-			'upgrade_url' => esc_url( 'https://go.elementor.com/helloplus-header-pro' ),
-			'upgrade_text' => esc_html__( 'Upgrade Now', 'hello-plus' ),
-		];
+		return apply_filters(
+			'helloplus_header_upsale_data',
+			[
+				'condition' => ! General_Utils::has_pro(),
+				'image' => esc_url( HELLOPLUS_IMAGES_URL . 'go-pro.svg' ),
+				'image_alt' => esc_attr__( 'Upgrade Now', 'hello-plus' ),
+				'title' => esc_html__( 'Create custom headers', 'hello-plus' ),
+				'description' => esc_html__( 'Add mega menus, search bars, login buttons, and more with Elementor Pro.', 'hello-plus' ),
+				'upgrade_url' => esc_url( 'https://go.elementor.com/helloplus-header-pro' ),
+				'upgrade_text' => esc_html__( 'Upgrade Now', 'hello-plus' ),
+			]
+		);
 	}
 
 	protected function render(): void {

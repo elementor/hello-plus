@@ -80,6 +80,10 @@ For documentation and tutorials, visit our [Knowledge Base](https://elementor.co
 
 == Changelog ==
 
+= 1.7.0 - 2025-07-09 =
+* Fix: Remove extra controls from Flex Footer widget advanced tab
+* New: Introduce Menu Cart controls
+
 = 1.6.2 - 2025-07-01 =
 * Fix: Conflict between Hello+ Header and Elementor Floating Banners
 * Tweak: Update plugin description to clarify that it supports the full family of Hello Themes

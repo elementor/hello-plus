@@ -472,7 +472,7 @@ class Zig_Zag extends Widget_Base {
 					'default' => Global_Colors::COLOR_SECONDARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-zigzag' => '--zigzag-title-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-zigzag .ehp-zigzag__title' => 'color: {{VALUE}};',
 				],
 			]
 		);

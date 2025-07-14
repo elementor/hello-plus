@@ -126,6 +126,8 @@ class Widget_Contact_Render {
 			</div>
 			<div <?php $this->widget->print_render_attribute_string( 'groups' ); ?>>
 				<?php
+					$this->widget->add_render_attribute( 'group', 'class', self::LAYOUT_CLASSNAME . '__group' );
+
 					$this->render_contact_group( '1' );
 
 				if ( 'yes' === $this->settings['group_2_switcher'] ) {
@@ -145,7 +147,7 @@ class Widget_Contact_Render {
 
 	protected function render_contact_group( $group_number ) {
 		$group_type = $this->settings[ 'group_' . $group_number . '_type' ];
-		$this->widget->add_render_attribute( 'group', 'class', self::LAYOUT_CLASSNAME . '__group' );
+
 		?>
 		<div <?php $this->widget->print_render_attribute_string( 'group' ); ?>>
 			<?php

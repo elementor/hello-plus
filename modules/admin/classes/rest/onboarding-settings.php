@@ -168,7 +168,7 @@ class Onboarding_Settings {
 					'elementorInstalled' => Utils::is_elementor_installed(),
 					'elementorActive' => Utils::is_elementor_active(),
 					'modalCloseRedirectUrl' => self_admin_url( 'admin.php?page=' . Utils::get_theme_slug() ),
-					'kits' => $this->filter_kits_by_theme( $this->get_kits() ),
+					'kits' => array_values( $this->filter_kits_by_theme( $this->get_kits() ) ),
 					'applyKitBaseUrl' => self_admin_url( 'admin.php?page=elementor-app' ),
 					'wizardCompleted' => Setup_Wizard::has_site_wizard_been_completed(),
 					'returnUrl' => self_admin_url( 'admin.php?page=hello-plus-setup-wizard' ),
@@ -181,8 +181,8 @@ class Onboarding_Settings {
 	}
 
 	public function filter_kits_by_theme( array $kits ): array {
-
 		$theme_slug = Utils::get_theme_slug();
+
 		return array_filter( $kits, function ( $kit ) use ( $theme_slug ) {
 			if ( empty( $kit['taxonomies'] ) || ! is_array( $kit['taxonomies'] ) ) {
 				return false;

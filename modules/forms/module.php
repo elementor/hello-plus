@@ -113,10 +113,11 @@ class Module extends Module_Base {
 	}
 
 	public function register_scripts() {
+
 		wp_register_script(
 			'helloplus-forms-fe',
 			HELLOPLUS_SCRIPTS_URL . 'helloplus-forms-fe.js',
-			[ 'elementor-common', 'elementor-frontend-modules', 'elementor-frontend' ],
+			[ 'elementor-frontend-modules', 'elementor-frontend' ],
 			HELLOPLUS_VERSION,
 			true
 		);

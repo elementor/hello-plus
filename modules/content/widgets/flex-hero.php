@@ -470,7 +470,7 @@ class Flex_Hero extends Widget_Base {
 					'default' => Global_Colors::COLOR_TEXT,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-intro-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-flex-hero .ehp-flex-hero__intro' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -504,7 +504,7 @@ class Flex_Hero extends Widget_Base {
 					'default' => Global_Colors::COLOR_PRIMARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-heading-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-flex-hero .ehp-flex-hero__heading' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -538,7 +538,7 @@ class Flex_Hero extends Widget_Base {
 					'default' => Global_Colors::COLOR_SECONDARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-flex-hero' => '--flex-hero-subheading-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-flex-hero .ehp-flex-hero__subheading' => 'color: {{VALUE}};',
 				],
 			]
 		);

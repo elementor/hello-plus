@@ -945,7 +945,7 @@ class Contact extends Widget_Base {
 					'default' => Global_Colors::COLOR_PRIMARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-contact' => '--contact-text-heading-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-contact .ehp-contact__heading' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -1050,7 +1050,7 @@ class Contact extends Widget_Base {
 					'default' => Global_Colors::COLOR_SECONDARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-contact' => '--contact-group-subheading-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-contact .ehp-contact__groups .ehp-contact__subheading' => 'color: {{VALUE}};',
 				],
 			]
 		);

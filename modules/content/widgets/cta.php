@@ -457,7 +457,7 @@ class CTA extends Widget_Base {
 					'default' => Global_Colors::COLOR_PRIMARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-heading-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-cta .ehp-cta__heading' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -491,7 +491,7 @@ class CTA extends Widget_Base {
 					'default' => Global_Colors::COLOR_TEXT,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .ehp-cta' => '--cta-description-color: {{VALUE}}',
+					'{{WRAPPER}} .ehp-cta .ehp-cta__description' => 'color: {{VALUE}};',
 				],
 			]
 		);

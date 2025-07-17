@@ -80,6 +80,10 @@ For documentation and tutorials, visit our [Knowledge Base](https://elementor.co
 
 == Changelog ==
 
+= 1.7.2 - 2025-07-17 =
+* Fix: Form Lite now correctly submits when user is logged out
+* Fix: Icon shows correctly after submission when user is logged out
+
 = 1.7.1 - 2025-07-16 =
 * Fix: Refactor kits filtering
 

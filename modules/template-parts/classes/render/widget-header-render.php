@@ -46,6 +46,7 @@ class Widget_Header_Render {
 		$behavior_scale_title = $this->settings['behavior_sticky_scale_title'];
 		$has_blur_background = $this->settings['blur_background'];
 		$has_menu_cart = $this->settings['menu_cart_icon_show'] ?? '';
+		$available_menus = $this->widget->get_available_menus();
 
 		if ( ! empty( $navigation_breakpoint ) ) {
 			$this->widget->add_render_attribute( 'layout', [
@@ -111,7 +112,7 @@ class Widget_Header_Render {
 			<div <?php $this->widget->print_render_attribute_string( 'elements-container' ); ?>>
 				<?php
 
-				if ( 'yes' === $has_menu_cart ) {
+				if ( 'yes' === $has_menu_cart && $available_menus ) {
 					?>
 					<div <?php $this->widget->print_render_attribute_string( 'menu-cart-container' ); ?>>
 						<?php $this->render_button_toggle(); ?>
@@ -244,7 +245,11 @@ class Widget_Header_Render {
 	}
 
 	protected function render_button_toggle() {
-		$toggle_icon = $this->settings['navigation_menu_icon'];
+		$toggle_icon = $this->settings['navigation_menu_icon'] ?? [
+			'value' => 'fas fa-bars',
+			'library' => 'fa-solid',
+		];
+
 		$toggle_classname = self::LAYOUT_CLASSNAME . '__button-toggle';
 
 		$this->widget->add_render_attribute( 'button-toggle', [

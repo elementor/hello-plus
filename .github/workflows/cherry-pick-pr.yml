@@ -85,67 +85,115 @@ jobs:
             fi
 
             # Cherry-pick
-            if ! git cherry-pick -m 1 "$MERGE_SHA"; then
-              echo "::error:: Cherry-pick conflicts detected for PR #${PR_NUMBER} on branch ${TARGET}"
+            git cherry-pick -m 1 "$MERGE_SHA" || CHERRY_PICK_EXIT_CODE=$?
+            
+            if [ ${CHERRY_PICK_EXIT_CODE:-0} -ne 0 ]; then
+              # Check if this is an empty cherry-pick (changes already exist)
+              if git status --porcelain | grep -q .; then
+                # There are changes/conflicts - handle as conflict
+                echo "::error:: Cherry-pick conflicts detected for PR #${PR_NUMBER} on branch ${TARGET}"
 
-              # Create a conflict resolution branch
-              CONFLICT_BRANCH="cherry-pick-pr-${PR_NUMBER}-${TARGET}-conflicts"
+                # Create a conflict resolution branch
+                CONFLICT_BRANCH="cherry-pick-pr-${PR_NUMBER}-${TARGET}-conflicts"
 
-              # Add conflict markers and create a commit for manual resolution
-              git add .
-              git commit -m "Cherry-pick PR #${PR_NUMBER} with conflicts - manual resolution needed"
+                # Add conflict markers and create a commit for manual resolution
+                git add .
+                git commit -m "Cherry-pick PR #${PR_NUMBER} with conflicts - manual resolution needed"
 
-              # Push the conflict branch
-              if git push --force-with-lease origin "$BRANCH:$CONFLICT_BRANCH"; then
-                # Create draft PR with conflict information
-                if ! gh pr list --head "$CONFLICT_BRANCH" --base "$TARGET" --state open | grep -q .; then
-                  CONFLICT_TRIGGER_INFO=""
+                # Push the conflict branch
+                if git push --force-with-lease origin "$BRANCH:$CONFLICT_BRANCH"; then
+                  # Create draft PR with conflict information
+                  if ! gh pr list --head "$CONFLICT_BRANCH" --base "$TARGET" --state open | grep -q .; then
+                    CONFLICT_TRIGGER_INFO=""
+                    if [ "${{ github.event.action }}" = "labeled" ]; then
+                      CONFLICT_TRIGGER_INFO="
+                    **Trigger:** Label \`${LABEL_NAME}\` added to closed PR"
+                    fi
+
+                    gh pr create \
+                      --base "$TARGET" \
+                      --head "$CONFLICT_BRANCH" \
+                      --title "🔧 [CONFLICTS] Cherry-pick PR #${PR_NUMBER} → ${TARGET}: ${PR_TITLE}" \
+                      --body "⚠️ **Manual Resolution Required**
+
+                    This cherry-pick of [#${PR_NUMBER}](${ORIG_URL}) to \`${TARGET}\` branch has conflicts that need manual resolution.
+
+                    **Plugin-Specific Conflict Resolution:**
+                    - **Version Conflicts**: Check plugin header version in main plugin file
+                    - **Function Conflicts**: Resolve function name collisions in PHP files
+                    - **Hook Conflicts**: Check for duplicate WordPress hook registrations
+
+                    **Resolution Steps:**
+                    1. Check out this branch: \`git checkout $CONFLICT_BRANCH\`
+                    2. Resolve conflicts in the marked files
+                    3. Stage resolved files: \`git add <resolved-files>\`
+                    4. Amend the commit: \`git commit --amend\`
+                    5. Push changes: \`git push --force-with-lease\`
+                    6. Mark this PR as ready for review
+
+                    **Automatic Validation:**
+                    Once you push resolved changes, the following workflows will run automatically:
+                    - Build validation (\`build.yml\`)
+                    - PHP coding standards (\`php-coding-standards.yml\`)
+                    - PHPUnit tests (\`phpunit.yml\`)
+                    - JavaScript linting (\`js-ci.yml\`)
+                    - Cherry-pick validation (\`cherry-pick-validation.yml\`)
+
+                    **Original PR:** [#${PR_NUMBER}](${ORIG_URL})${CONFLICT_TRIGGER_INFO}" \
+                      --draft
+
+                    echo "::notice:: Created draft PR for manual conflict resolution: $CONFLICT_BRANCH"
+                  else
+                    echo "::notice:: Draft PR already exists for conflict resolution: $CONFLICT_BRANCH"
+                  fi
+                else
+                  echo "::warning:: Failed to push conflict branch $CONFLICT_BRANCH"
+                  git cherry-pick --abort
+                fi
+                continue
+              else
+                # Empty cherry-pick - changes already exist on target branch
+                echo "::notice:: Cherry-pick is empty for PR #${PR_NUMBER} on branch ${TARGET} - changes already exist"
+                git cherry-pick --abort
+                
+                # Check if a PR already exists for this cherry-pick
+                if gh pr list --head "$BRANCH" --base "$TARGET" --state all | grep -q .; then
+                  echo "::notice:: PR already exists for this cherry-pick, skipping creation"
+                else
+                  # Create an informational PR that can be immediately closed
+                  SKIP_TRIGGER_INFO=""
                   if [ "${{ github.event.action }}" = "labeled" ]; then
-                    CONFLICT_TRIGGER_INFO="
+                    SKIP_TRIGGER_INFO="
                   **Trigger:** Label \`${LABEL_NAME}\` added to closed PR"
                   fi
 
+                  # Force push an empty branch so we can create a PR
+                  git commit --allow-empty -m "Empty cherry-pick - changes already exist on ${TARGET}"
+                  git push --force-with-lease origin "$BRANCH"
+
                   gh pr create \
                     --base "$TARGET" \
-                    --head "$CONFLICT_BRANCH" \
-                    --title "🔧 [CONFLICTS] Cherry-pick PR #${PR_NUMBER} → ${TARGET}: ${PR_TITLE}" \
-                    --body "⚠️ **Manual Resolution Required**
+                    --head "$BRANCH" \
+                    --title "ℹ️ [SKIPPED] Cherry-pick PR #${PR_NUMBER} → ${TARGET}: ${PR_TITLE}" \
+                    --body "**Changes Already Present**
 
-                  This cherry-pick of [#${PR_NUMBER}](${ORIG_URL}) to \`${TARGET}\` branch has conflicts that need manual resolution.
+                  The changes from [#${PR_NUMBER}](${ORIG_URL}) already exist on the \`${TARGET}\` branch.
 
-                  **Plugin-Specific Conflict Resolution:**
-                  - **Version Conflicts**: Check plugin header version in main plugin file
-                  - **Function Conflicts**: Resolve function name collisions in PHP files
-                  - **Hook Conflicts**: Check for duplicate WordPress hook registrations
+                  **Possible Reasons:**
+                  - Changes were already manually cherry-picked
+                  - Changes were included in a previous merge
+                  - PR was originally created from this branch
 
-                  **Resolution Steps:**
-                  1. Check out this branch: \`git checkout $CONFLICT_BRANCH\`
-                  2. Resolve conflicts in the marked files
-                  3. Stage resolved files: \`git add <resolved-files>\`
-                  4. Amend the commit: \`git commit --amend\`
-                  5. Push changes: \`git push --force-with-lease\`
-                  6. Mark this PR as ready for review
+                  **Status:** ✅ No action needed - changes are already present on target branch${SKIP_TRIGGER_INFO}
 
-                  **Automatic Validation:**
-                  Once you push resolved changes, the following workflows will run automatically:
-                  - Build validation (\`build.yml\`)
-                  - PHP coding standards (\`php-coding-standards.yml\`)
-                  - PHPUnit tests (\`phpunit.yml\`)
-                  - JavaScript linting (\`js-ci.yml\`)
-                  - Cherry-pick validation (\`cherry-pick-validation.yml\`)
+                  **Original PR:** [#${PR_NUMBER}](${ORIG_URL})"
 
-                  **Original PR:** [#${PR_NUMBER}](${ORIG_URL})${CONFLICT_TRIGGER_INFO}" \
-                    --draft
-
-                  echo "::notice:: Created draft PR for manual conflict resolution: $CONFLICT_BRANCH"
-                else
-                  echo "::notice:: Draft PR already exists for conflict resolution: $CONFLICT_BRANCH"
+                  # Immediately close the PR since no action is needed
+                  gh pr close "$BRANCH" --comment "Auto-closing: Changes already exist on target branch"
+                  echo "::notice:: Created and closed informational PR for empty cherry-pick: $BRANCH"
                 fi
-              else
-                echo "::warning:: Failed to push conflict branch $CONFLICT_BRANCH"
-                git cherry-pick --abort
+                continue
               fi
-              continue
             else
               echo "Cherry-pick successful"
             fi

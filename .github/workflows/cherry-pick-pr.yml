@@ -154,7 +154,7 @@ jobs:
               else
                 # Empty cherry-pick - changes already exist on target branch
                 echo "::notice:: Cherry-pick is empty for PR #${PR_NUMBER} on branch ${TARGET} - changes already exist"
-                git cherry-pick --skip
+                git cherry-pick --abort
                 
                 # Check if a PR already exists for this cherry-pick
                 if gh pr list --head "$BRANCH" --base "$TARGET" --state all | grep -q .; then

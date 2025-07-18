@@ -1,0 +1,279 @@
+name: Cherry-Pick Validation
+
+on:
+  pull_request:
+    branches:
+      - '**'
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  validate-cherry-pick:
+    if: ${{ startsWith(github.head_ref, 'cherry-pick-pr-') }}
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extract cherry-pick information
+        id: extract_info
+        run: |
+          BRANCH_NAME="${{ github.head_ref }}"
+          if [[ $BRANCH_NAME =~ cherry-pick-pr-([0-9]+)-(.+) ]]; then
+            ORIGINAL_PR="${BASH_REMATCH[1]}"
+            TARGET_BRANCH="${BASH_REMATCH[2]}"
+            echo "original_pr=$ORIGINAL_PR" >> "$GITHUB_OUTPUT"
+            echo "target_branch=$TARGET_BRANCH" >> "$GITHUB_OUTPUT"
+            echo "is_cherry_pick=true" >> "$GITHUB_OUTPUT"
+            
+            echo "🍒 Cherry-pick detected:"
+            echo "  Original PR: #$ORIGINAL_PR"
+            echo "  Target branch: $TARGET_BRANCH"
+          else
+            echo "is_cherry_pick=false" >> "$GITHUB_OUTPUT"
+            echo "❌ Not a cherry-pick branch"
+            exit 1
+          fi
+
+      - name: Validate plugin structure
+        run: |
+          echo "🔍 WordPress plugin structure validation..."
+          
+          REQUIRED_FILES=("hello-plus.php" "index.php")
+          MISSING_FILES=()
+          
+          for file in "${REQUIRED_FILES[@]}"; do
+            if [ ! -f "$file" ]; then
+              MISSING_FILES+=("$file")
+            fi
+          done
+          
+          if [ ${#MISSING_FILES[@]} -gt 0 ]; then
+            echo "::error:: Missing required plugin files after cherry-pick: ${MISSING_FILES[*]}"
+            exit 1
+          fi
+          
+          if [ ! -f "plugin.php" ] && [ ! -f "hello-plus.php" ]; then
+            echo "::error:: No main plugin file found (plugin.php or hello-plus.php)"
+            exit 1
+          fi
+          
+          echo "✅ All required plugin files present"
+
+      - name: Check for conflict markers
+        run: |
+          echo "🔍 Checking for unresolved conflict markers..."
+          
+          CONFLICT_FILES=()
+          PHP_FILES=($(find . -name "*.php" -not -path "./vendor/*" -not -path "./node_modules/*"))
+          
+          for file in "${PHP_FILES[@]}"; do
+            if [ -f "$file" ] && grep -q "<<<<<<< HEAD\|=======\|>>>>>>> " "$file"; then
+              CONFLICT_FILES+=("$file")
+            fi
+          done
+          
+          if [ ${#CONFLICT_FILES[@]} -gt 0 ]; then
+            echo "::error:: Unresolved conflict markers found in: ${CONFLICT_FILES[*]}"
+            echo "Please resolve all conflicts before proceeding."
+            exit 1
+          fi
+          
+          echo "✅ No conflict markers detected"
+
+      - name: Validate plugin metadata
+        run: |
+          echo "🔍 Validating WordPress plugin metadata..."
+          
+          MAIN_PLUGIN_FILE=""
+          if [ -f "hello-plus.php" ]; then
+            MAIN_PLUGIN_FILE="hello-plus.php"
+          elif [ -f "plugin.php" ]; then
+            MAIN_PLUGIN_FILE="plugin.php"
+          fi
+          
+          if [ -n "$MAIN_PLUGIN_FILE" ]; then
+            if ! grep -q "Plugin Name:" "$MAIN_PLUGIN_FILE"; then
+              echo "::error:: Missing 'Plugin Name' in $MAIN_PLUGIN_FILE header"
+              exit 1
+            fi
+            
+            if ! grep -q "Version:" "$MAIN_PLUGIN_FILE"; then
+              echo "::error:: Missing 'Version' in $MAIN_PLUGIN_FILE header - WordPress plugins require version numbers"
+              exit 1
+            else
+              PLUGIN_VERSION=$(grep "Version:" "$MAIN_PLUGIN_FILE" | head -1 | sed 's/.*Version: *\([0-9.]*\).*/\1/')
+              echo "Plugin version: $PLUGIN_VERSION"
+              
+              if [[ "$PLUGIN_VERSION" =~ ^[0-9]+\.[0-9]+$ ]] && [[ ! "$PLUGIN_VERSION" =~ \.[0-9]$ ]]; then
+                echo "::error:: Version format indicates unresolved conflict: $PLUGIN_VERSION"
+                exit 1
+              fi
+            fi
+          fi
+          
+          if [ -f "composer.json" ]; then
+            if ! jq empty composer.json 2>/dev/null; then
+              echo "::error:: Invalid JSON syntax in composer.json"
+              exit 1
+            fi
+            echo "✅ composer.json is valid"
+          fi
+          
+          if [ -f "package.json" ]; then
+            if ! jq empty package.json 2>/dev/null; then
+              echo "::error:: Invalid JSON syntax in package.json"
+              exit 1
+            fi
+            echo "✅ package.json is valid"
+          fi
+          
+          echo "✅ Plugin metadata validation passed"
+
+      - name: Check PHP syntax
+        run: |
+          echo "🔍 Basic PHP syntax validation..."
+          
+          PHP_FILES=($(find . -name "*.php" -not -path "./vendor/*" -not -path "./node_modules/*"))
+          SYNTAX_ERRORS=()
+          
+          for file in "${PHP_FILES[@]}"; do
+            if ! php -l "$file" >/dev/null 2>&1; then
+              SYNTAX_ERRORS+=("$file")
+            fi
+          done
+          
+          if [ ${#SYNTAX_ERRORS[@]} -gt 0 ]; then
+            echo "::error:: PHP syntax errors found in: ${SYNTAX_ERRORS[*]}"
+            exit 1
+          fi
+          
+          echo "✅ PHP syntax validation passed"
+
+      - name: WordPress plugin compatibility check
+        run: |
+          echo "🔍 WordPress plugin compatibility checks..."
+          
+          if grep -r "function " . --include="*.php" | grep -v vendor | grep -v node_modules | \
+             sed 's/.*function \([a-zA-Z_][a-zA-Z0-9_]*\).*/\1/' | sort | uniq -d | head -1 >/dev/null; then
+            echo "::error:: Duplicate function names detected - this will cause PHP errors"
+            exit 1
+          fi
+          
+          if find . -name "*.js" -not -path "./vendor/*" -not -path "./node_modules/*" -not -path "./assets/*" | \
+             xargs grep -l "<<<<<<< HEAD\|=======\|>>>>>>> " 2>/dev/null; then
+            echo "::error:: Conflict markers found in JavaScript files"
+            exit 1
+          fi
+          
+          if find . -name "*.css" -not -path "./vendor/*" -not -path "./node_modules/*" -not -path "./assets/*" | \
+             xargs grep -l "<<<<<<< HEAD\|=======\|>>>>>>> " 2>/dev/null; then
+            echo "::error:: Conflict markers found in CSS files"
+            exit 1
+          fi
+          
+          echo "✅ WordPress plugin compatibility check passed"
+
+      - name: Check for WordPress hooks and actions
+        run: |
+          echo "🔍 Checking WordPress hooks and actions..."
+          
+          HOOK_FILES=($(find . -name "*.php" -not -path "./vendor/*" -not -path "./node_modules/*" -exec grep -l "add_action\|add_filter\|do_action\|apply_filters" {} \;))
+          
+          if [ ${#HOOK_FILES[@]} -gt 0 ]; then
+            echo "✅ WordPress hooks found in ${#HOOK_FILES[@]} files"
+            
+            for file in "${HOOK_FILES[@]:0:3}"; do
+              echo "  - $file"
+            done
+            
+            if [ ${#HOOK_FILES[@]} -gt 3 ]; then
+              echo "  - ... and $((${#HOOK_FILES[@]} - 3)) more files"
+            fi
+          else
+            echo "::warning:: No WordPress hooks found - this might not be a typical WordPress plugin"
+          fi
+
+      - name: Generate validation report
+        run: |
+          echo "📊 Generating cherry-pick validation report..."
+          
+          cat << EOF > cherry-pick-validation-report.md
+          # 🍒 Cherry-Pick Validation Report
+          
+          **Branch:** \`${{ github.head_ref }}\`  
+          **Original PR:** [#${{ steps.extract_info.outputs.original_pr }}](https://github.com/${{ github.repository }}/pull/${{ steps.extract_info.outputs.original_pr }})  
+          **Target Branch:** \`${{ steps.extract_info.outputs.target_branch }}\`  
+          **Repository:** ${{ github.repository }}
+          
+          ## ✅ Validation Results
+          
+          - ✅ **Plugin Structure** - All required WordPress plugin files present
+          - ✅ **Conflict Resolution** - No unresolved conflict markers
+          - ✅ **Plugin Metadata** - Valid plugin headers and JSON files
+          - ✅ **PHP Syntax** - No syntax errors detected
+          - ✅ **WordPress Compatibility** - No function conflicts or file issues
+          - ✅ **WordPress Hooks** - WordPress integration checked
+          
+          ## 📋 Files Validated
+          
+          - \`hello-plus.php\` - Main plugin file and header validation
+          - \`plugin.php\` - Secondary plugin file (if exists)
+          - \`index.php\` - Security file presence
+          - \`composer.json\` - Dependency configuration (if exists)
+          - \`package.json\` - Build configuration (if exists)
+          - PHP files - Syntax validation and function conflict detection
+          - JavaScript/CSS files - Conflict marker detection
+          
+          ## 🔄 Additional Validation
+          
+          This cherry-pick PR will also be validated by:
+          - **Build Workflow** (\`build.yml\`) - Plugin compilation and asset building
+          - **PHPUnit Tests** (\`phpunit.yml\`) - Automated testing suite
+          - **PHP Coding Standards** (\`php-coding-standards.yml\`) - Code quality checks
+          - **JavaScript CI** (\`js-ci.yml\`) - Frontend code validation
+          - **Playwright Tests** (\`playwright.yml\`) - End-to-end testing
+          
+          ## ✨ Next Steps
+          
+          1. **Review Changes** - Examine the cherry-picked code changes
+          2. **Test Plugin** - Verify plugin functionality on target branch
+          3. **Check WordPress Compatibility** - Ensure compatibility with target WP version
+          4. **Monitor CI** - Watch for any failures in build/test workflows
+          5. **Merge When Ready** - All validations pass and code review complete
+          
+          ---
+          *🤖 Generated by Cherry-Pick Validation Workflow*
+          EOF
+          
+          echo "✅ Validation report generated"
+
+      - name: Post validation summary
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            
+            try {
+              const report = fs.readFileSync('cherry-pick-validation-report.md', 'utf8');
+              
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: report
+              });
+              
+              console.log('✅ Cherry-pick validation report posted to PR');
+            } catch (error) {
+              console.error('❌ Failed to post validation report:', error);
+            } 

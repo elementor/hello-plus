@@ -1,6 +1,8 @@
 <?php
 namespace HelloPlus\Modules\TemplateParts\Classes\Runners;
 
+use Elementor\Core\Base\Document;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -41,6 +43,7 @@ class Import extends Import_Runner_Base {
 		foreach ( $templates as $id => $template_settings ) {
 			try {
 				$template_data = ImportExportUtils::read_json_file( $path . $id );
+				$this->unpublish_by_doc_type( $template_settings['doc_type'] );
 				$import = $this->import_template( $id, $template_settings, $template_data );
 
 				$result['templates']['succeed'][ $id ] = $import;
@@ -50,6 +53,45 @@ class Import extends Import_Runner_Base {
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Unpublish all documents of a given type.
+	 * This is needed as having multiple published header or footer will result in a conflict.
+	 *
+	 * @param string $doc_type The document type to unpublish.
+	 * @return void
+	 */
+	private function unpublish_by_doc_type( $doc_type ) {
+
+		$doc_types_to_unpublish = [
+			'ehp-header' => true,
+			'ehp-footer' => true,
+			'ehp-flex-footer' => true,
+		];
+
+		if ( ! isset( $doc_types_to_unpublish[ $doc_type ] ) ) {
+			return;
+		}
+
+		$query = new \WP_Query( [
+			'post_type' => Source_Local::CPT,
+			'meta_key' => Document::TYPE_META_KEY ,
+			'meta_value' => $doc_type,
+			'post_status' => 'publish',
+			'posts_per_page' => 100,
+			'fields' => 'ids',
+			'no_found_rows' => true,
+			'update_post_meta_cache' => false,
+			'update_post_term_cache' => false,
+		] );
+
+		foreach ( $query->get_posts() as $post_id ) {
+			wp_update_post( [
+				'ID' => $post_id,
+				'post_status' => 'draft',
+			] );
+		}
 	}
 
 	private function import_template( $id, array $template_settings, array $template_data ) {

@@ -34,6 +34,8 @@ class Utils {
 			}
 		}
 
+		return true;
+
 		return apply_filters( 'hello-plus/utils/are_we_on_elementor_domains', $is_elementor_domain );
 	}
 

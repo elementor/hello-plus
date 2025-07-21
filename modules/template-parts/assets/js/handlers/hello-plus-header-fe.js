@@ -68,22 +68,23 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 
 	handleCartButtonClicks( event ) {
 		const target = event.target;
+		const matches = ( selector ) => target.classList.contains( selector ) || target.closest( `.${ selector }` );
 
-		const isMenuCartButton = target.classList.contains( 'ehp-header__menu-cart-button' ) || target.closest( '.ehp-header__menu-cart-button' );
+		const isMenuCartButton = matches( 'ehp-header__menu-cart-button' );
 
 		if ( isMenuCartButton ) {
 			this.toggleMenuCart( event );
 			return;
 		}
 
-		const isMenuCartClose = target.classList.contains( 'ehp-header__menu-cart-close' ) || target.closest( '.ehp-header__menu-cart-close' );
+		const isMenuCartClose = matches( 'ehp-header__menu-cart-close' );
 
 		if ( isMenuCartClose ) {
 			this.handleMenuCartCloseClick( event );
 			return;
 		}
 
-		const isMenuCartItems = target.classList.contains( 'ehp-header__menu-cart-items' ) || target.closest( '.ehp-header__menu-cart-items' );
+		const isMenuCartItems = matches( 'ehp-header__menu-cart-items' );
 
 		if ( ! isMenuCartItems ) {
 			this.closeOpenMenuCart();

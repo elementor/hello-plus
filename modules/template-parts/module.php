@@ -141,6 +141,7 @@ class Module extends Module_Base {
 		}
 
 		$menu_cart_render = new Render_Menu_Cart( $ehp_header_widget, Widget_Header_Render::LAYOUT_CLASSNAME );
+
 		ob_start();
 
 		$menu_cart_render->render();

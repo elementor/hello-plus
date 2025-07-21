@@ -130,6 +130,24 @@ class Module extends Module_Base {
 		$controls_manager->register( new Control_Media_Preview() );
 	}
 
+	public function add_to_cart_fragments( $fragments ) {
+		$header_doc_post = Ehp_Header::get_document_post();
+		$header = Utils::elementor()->documents->get( $header_doc_post );
+		$ehp_header_widget = $header->get_widget_object();
+		$menu_cart_render = new Render_Menu_Cart( $ehp_header_widget, Widget_Header_Render::LAYOUT_CLASSNAME );
+		ob_start();
+
+		try {
+			$menu_cart_render->render();
+		} catch ( \Exception $e ) {
+			return $fragments;
+		}
+
+		$fragments['.ehp-header__menu-cart'] = ob_get_clean();
+
+		return $fragments;
+	}
+
 	/**
 	 * @inheritDoc
 	 */

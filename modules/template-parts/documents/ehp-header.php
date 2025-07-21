@@ -32,14 +32,8 @@ class Ehp_Header extends Ehp_Document_Base {
 
 	public function get_widget_object() {
 		$elements_data = $this->get_elements_data();
-		foreach ( $elements_data as $element ) {
-			if ( isset( $element['widgetType'] ) ) {
-				// This is a widget
-				$widget_type = $element['widgetType'];
 
-				error_log( print_r( $widget_type, true ) );
-			}
-			// Recursively check for children
+		foreach ( $elements_data as $element ) {
 			if ( ! empty( $element['elements'] ) ) {
 				foreach ( $element['elements'] as $child_element ) {
 					if ( isset( $child_element['widgetType'] ) ) {

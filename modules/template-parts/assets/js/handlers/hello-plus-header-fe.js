@@ -57,25 +57,39 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 			} );
 		}
 
-		if ( this.elements.menuCartButton.length > 0 ) {
-			this.elements.menuCartButton.forEach( ( button ) => {
-				button.addEventListener( 'click', ( event ) => this.toggleMenuCart( event ) );
-			} );
-		}
-
-		if ( this.elements.menuCartClose.length > 0 ) {
-			this.elements.menuCartClose.forEach( ( close ) => {
-				close.addEventListener( 'click', ( event ) => this.handleMenuCartCloseClick( event ) );
-			} );
-		}
-
 		if ( this.elements.main ) {
+			this.elements.main.addEventListener( 'click', ( event ) => this.handleCartButtonClicks( event ) );
 			window.addEventListener( 'resize', () => this.onResize() );
 			window.addEventListener( 'scroll', () => this.onScroll() );
 			document.addEventListener( 'click', ( event ) => this.handleDocumentClick( event ) );
 			document.addEventListener( 'keydown', ( event ) => this.handleKeydown( event ) );
 		}
     }
+
+	handleCartButtonClicks( event ) {
+		const target = event.target;
+		const matches = ( selector ) => target.classList.contains( selector ) || target.closest( `.${ selector }` );
+
+		const isMenuCartButton = matches( 'ehp-header__menu-cart-button' );
+
+		if ( isMenuCartButton ) {
+			this.toggleMenuCart( event );
+			return;
+		}
+
+		const isMenuCartClose = matches( 'ehp-header__menu-cart-close' );
+
+		if ( isMenuCartClose ) {
+			this.handleMenuCartCloseClick( event );
+			return;
+		}
+
+		const isMenuCartItems = matches( 'ehp-header__menu-cart-items' );
+
+		if ( ! isMenuCartItems ) {
+			this.closeOpenMenuCart();
+		}
+	}
 
 	onInit( ...args ) {
 		super.onInit( ...args );

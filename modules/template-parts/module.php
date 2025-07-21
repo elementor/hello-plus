@@ -6,6 +6,9 @@ use Elementor\Controls_Manager;
 use HelloPlus\Includes\Module_Base;
 use HelloPlus\Includes\Utils;
 use HelloPlus\Modules\TemplateParts\Classes\Control_Media_Preview;
+use HelloPlus\Modules\TemplateParts\Classes\Render\Render_Menu_Cart;
+use HelloPlus\Modules\TemplateParts\Classes\Render\Widget_Header_Render;
+use HelloPlus\Modules\TemplateParts\Documents\Ehp_Header;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -127,6 +130,27 @@ class Module extends Module_Base {
 		$controls_manager->register( new Control_Media_Preview() );
 	}
 
+	public function add_to_cart_fragments( $fragments ) {
+		$header_doc_post = Ehp_Header::get_document_post();
+		$header = Utils::elementor()->documents->get( $header_doc_post );
+
+		try {
+			$ehp_header_widget = $header->get_widget_object();
+		} catch ( \Exception $e ) {
+			return $fragments;
+		}
+
+		$menu_cart_render = new Render_Menu_Cart( $ehp_header_widget, Widget_Header_Render::LAYOUT_CLASSNAME );
+
+		ob_start();
+
+		$menu_cart_render->render();
+
+		$fragments['.ehp-header__menu-cart'] = ob_get_clean();
+
+		return $fragments;
+	}
+
 	/**
 	 * @inheritDoc
 	 */
@@ -137,5 +161,6 @@ class Module extends Module_Base {
 		add_action( 'elementor/editor/after_enqueue_styles', [ $this, 'enqueue_editor_styles' ] );
 		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'enqueue_editor_scripts' ] );
 		add_action( 'elementor/controls/register', [ $this, 'register_controls' ] );
+		add_filter( 'woocommerce_add_to_cart_fragments', [ $this, 'add_to_cart_fragments' ] );
 	}
 }

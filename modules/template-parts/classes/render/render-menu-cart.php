@@ -145,7 +145,7 @@ class Render_Menu_Cart {
 
 	protected function render_single_cart_item( string $cart_item_key, array $cart_item ): void {
 		$_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
-		$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
+		$product_id = (int) apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
 
 		if ( ! $_product || ! $_product->exists() || $cart_item['quantity'] <= 0 ) {
 			return;

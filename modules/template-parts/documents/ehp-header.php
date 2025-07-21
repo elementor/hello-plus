@@ -30,23 +30,22 @@ class Ehp_Header extends Ehp_Document_Base {
 		return esc_html__( 'Hello+ Headers', 'hello-plus' );
 	}
 
-	public function get_widget_object() {
-		$elements_data = $this->get_elements_data();
+	public function get_widget_object( array $elements_data = [] ): ?\HelloPlus\Modules\TemplateParts\Widgets\Ehp_Header {
+
+		if ( empty( $elements_data ) ) {
+			$elements_data = $this->get_elements_data();
+		}
 
 		foreach ( $elements_data as $element ) {
-			if ( ! empty( $element['elements'] ) ) {
-				foreach ( $element['elements'] as $child_element ) {
-					if ( isset( $child_element['widgetType'] ) ) {
-						$widget_type = $child_element['widgetType'];
-						if ( 'ehp-header' === $widget_type ) {
-							$child = Utils::elementor()->elements_manager->create_element_instance( 
-								$child_element,
-							);
-
-							return $child;
-						}
-					}
+			if ( isset( $element['widgetType'] ) ) {
+				$widget_type = $element['widgetType'];
+				if ( static::get_type() === $widget_type ) {
+					return Utils::elementor()->elements_manager->create_element_instance( $element );
 				}
+			}
+
+			if ( ! empty( $element['elements'] ) ) {
+				return $this->get_widget_object( $element['elements'] );
 			}
 		}
 

@@ -331,7 +331,6 @@ class Widget_Header_Render {
 				$this->render_button( 'primary' );
 			}
 
-			error_log( print_r( $this->settings['menu_cart_icon_show'], true ) );
 			if ( isset( $this->settings['menu_cart_icon_show'] ) && 'yes' === $this->settings['menu_cart_icon_show'] ) {
 				$this->render_menu_cart();
 			}

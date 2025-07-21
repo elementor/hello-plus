@@ -158,17 +158,6 @@ class Module extends Module_Base {
 		add_action( 'elementor/editor/after_enqueue_styles', [ $this, 'enqueue_editor_styles' ] );
 		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'enqueue_editor_scripts' ] );
 		add_action( 'elementor/controls/register', [ $this, 'register_controls' ] );
-		add_filter('woocommerce_add_to_cart_fragments', function ( $fragments ) {
-			$header_doc_post = Ehp_Header::get_document_post();
-			$header = Utils::elementor()->documents->get( $header_doc_post );
-			$ehp_header_widget = $header->get_widget_object();
-			$menu_cart_render = new Render_Menu_Cart( $ehp_header_widget, Widget_Header_Render::LAYOUT_CLASSNAME );
-			ob_start();
-
-			$menu_cart_render->render();
-
-			$fragments['.ehp-header__menu-cart'] = ob_get_clean();
-			return $fragments;
-		});
+		add_filter( 'woocommerce_add_to_cart_fragments', [ $this, 'add_to_cart_fragments' ] );
 	}
 }

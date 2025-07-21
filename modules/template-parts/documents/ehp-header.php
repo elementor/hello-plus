@@ -2,6 +2,8 @@
 
 namespace HelloPlus\Modules\TemplateParts\Documents;
 
+use HelloPlus\Includes\Utils;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -26,6 +28,35 @@ class Ehp_Header extends Ehp_Document_Base {
 
 	public static function get_plural_title(): string {
 		return esc_html__( 'Hello+ Headers', 'hello-plus' );
+	}
+
+	public function get_widget_object() {
+		$elements_data = $this->get_elements_data();
+		foreach ( $elements_data as $element ) {
+			if ( isset( $element['widgetType'] ) ) {
+				// This is a widget
+				$widget_type = $element['widgetType'];
+
+				error_log( print_r( $widget_type, true ) );
+			}
+			// Recursively check for children
+			if ( ! empty( $element['elements'] ) ) {
+				foreach ( $element['elements'] as $child_element ) {
+					if ( isset( $child_element['widgetType'] ) ) {
+						$widget_type = $child_element['widgetType'];
+						if ( 'ehp-header' === $widget_type ) {
+							$child = Utils::elementor()->elements_manager->create_element_instance( 
+								$child_element,
+							);
+
+							return $child;
+						}
+					}
+				}
+			}
+		}
+
+		throw new \Exception( esc_html__( 'No header widget found', 'hello-plus' ) );
 	}
 
 	protected static function get_site_editor_icon(): string {

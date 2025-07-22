@@ -84,7 +84,7 @@ jobs:
             BASE_BRANCH="${SANITIZED_TITLE}-cherry-pick"
             
             # Check if branch already exists and make it unique
-            if git ls-remote --heads origin "$BASE_BRANCH" | grep -q "$BASE_BRANCH"; then
+            if git ls-remote --heads origin "refs/heads/$BASE_BRANCH" | grep -q "refs/heads/$BASE_BRANCH$"; then
               BRANCH="${SANITIZED_TITLE}-cherry-pick-pr${PR_NUMBER}"
             else
               BRANCH="$BASE_BRANCH"

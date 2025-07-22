@@ -215,10 +215,23 @@ jobs:
                 **Trigger:** Label \`${LABEL_NAME}\` added to closed PR"
               fi
 
+              # Set maximum title length (GitHub recommended: 72 chars)
+              MAX_TITLE_LENGTH=72
+              SUFFIX=" (🍒 CP #${PR_NUMBER}→${TARGET})"
+              SUFFIX_LENGTH=${#SUFFIX}
+              MAX_PR_TITLE_LENGTH=$((MAX_TITLE_LENGTH - SUFFIX_LENGTH))
+
+              # Truncate PR title if needed
+              if [ ${#PR_TITLE} -gt $MAX_PR_TITLE_LENGTH ]; then
+                TRUNCATED_TITLE="${PR_TITLE:0:$((MAX_PR_TITLE_LENGTH - 1))}…"
+              else
+                TRUNCATED_TITLE="$PR_TITLE"
+              fi
+
               gh pr create \
                 --base "$TARGET" \
                 --head "$BRANCH" \
-                --title "${PR_TITLE} (🍒 Cherry-pick PR #${PR_NUMBER} → ${TARGET})" \
+                --title "${TRUNCATED_TITLE}${SUFFIX}" \
                 --body "Automatic cherry-pick of [#${PR_NUMBER}](${ORIG_URL}) to \`${TARGET}\` branch.
 
                 **Plugin Information:**

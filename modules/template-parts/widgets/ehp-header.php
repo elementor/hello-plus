@@ -1055,8 +1055,40 @@ class Ehp_Header extends Ehp_Widget_Base {
 			[
 				'label' => esc_html__( 'Contact Button', 'hello-plus' ),
 				'tab' => Controls_Manager::TAB_STYLE,
-				'condition' => [
-					'contact_buttons_show' => 'yes',
+				'conditions' => [
+					'relation' => 'or',
+					'terms' => [
+						[
+							'relation' => 'and',
+							'terms' => [
+								[
+									'name' => 'layout_preset_select',
+									'operator' => '!==',
+									'value' => 'connect',
+								],
+								[
+									'name' => 'contact_buttons_show',
+									'operator' => '==',
+									'value' => 'yes',
+								],
+							],
+						],
+						[
+							'relation' => 'and',
+							'terms' => [
+								[
+									'name' => 'layout_preset_select',
+									'operator' => '==',
+									'value' => 'connect',
+								],
+								[
+									'name' => 'contact_buttons_show_connect',
+									'operator' => '==',
+									'value' => 'yes',
+								],
+							],
+						],
+					],
 				],
 			]
 		);
@@ -1223,7 +1255,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 		$this->start_controls_section(
 			'style_cta',
 			[
-				'label' => esc_html__( 'Call to Action', 'hello-plus' ),
+				'label' => esc_html__( 'CTA Button', 'hello-plus' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);

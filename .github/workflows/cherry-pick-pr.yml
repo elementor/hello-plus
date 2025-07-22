@@ -79,8 +79,8 @@ jobs:
             
             # Create sanitized branch name from original branch name with timestamp for uniqueness
             ORIGINAL_BRANCH="${{ github.event.pull_request.head.ref }}"
-            # Strip common branch prefixes to ensure ticket numbers appear at the beginning
-            CLEAN_BRANCH=$(echo "$ORIGINAL_BRANCH" | sed 's|^internal/||g' | sed 's|^feature/||g' | sed 's|^bugfix/||g' | sed 's|^hotfix/||g' | sed 's|^fix/||g')
+            # Strip any word followed by '/' to ensure ticket numbers appear at the beginning
+            CLEAN_BRANCH=$(echo "$ORIGINAL_BRANCH" | sed 's|^[^/]*/||g')
             SANITIZED_BRANCH=$(echo "$CLEAN_BRANCH" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-\|-$//g')
             # Limit length to 35 chars to leave room for PR number and timestamp suffix
             SANITIZED_BRANCH=${SANITIZED_BRANCH:0:35}

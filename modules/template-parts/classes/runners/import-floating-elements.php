@@ -47,6 +47,7 @@ class Import_Floating_Elements extends Import_Runner_Base {
 		$widget_type = $post_data['content'][0]['elements'][0]['widgetType'] ?? '';
 		$floating_element_type = 'floating-buttons';
 		$imported_post_id = $imported_floating_elements[ $id ] ?? null;
+
 		if ( ! $imported_post_id ) {
 			return;
 		}

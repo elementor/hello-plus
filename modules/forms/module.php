@@ -57,7 +57,7 @@ class Module extends Module_Base {
 		wp_register_style(
 			'helloplus-forms',
 			HELLOPLUS_STYLE_URL . 'helloplus-forms.css',
-			[ 'elementor-frontend' ],
+			[ 'elementor-frontend', 'elementor-icons' ],
 			HELLOPLUS_VERSION
 		);
 	}

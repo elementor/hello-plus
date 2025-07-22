@@ -200,6 +200,7 @@ class Ehp_Header extends Ehp_Widget_Base {
 		$menus = $this->get_available_menus();
 
 		if ( ! empty( $menus ) ) {
+
 			$this->add_control(
 				'navigation_menu',
 				[
@@ -217,6 +218,27 @@ class Ehp_Header extends Ehp_Widget_Base {
 					),
 				]
 			);
+
+			foreach ( $this->get_empty_menus() as $menu_id => $menu_slug ) {
+
+				$this->add_control(
+					'empty_menu_alert_' . $menu_id,
+					[
+						'type' => Controls_Manager::ALERT,
+						'alert_type' => 'info',
+						'content' => sprintf(
+							/* translators: 1: Link opening tag, 2: Link closing tag. */
+							esc_html__( 'This menu has no items. Select another menu, or %1$sadd items%2$s. Then refresh this page. ', 'hello-plus' ),
+							sprintf( '<a href="%s" target="_blank">', self_admin_url( 'nav-menus.php?action=edit&menu=' . $menu_id ) ),
+							'</a>'
+						),
+						'separator' => 'after',
+						'condition' => [
+							'navigation_menu' => $menu_slug,
+						],
+					]
+				);
+			}
 
 			$this->add_control(
 				'navigation_icon_label',
@@ -866,15 +888,6 @@ class Ehp_Header extends Ehp_Widget_Base {
 		);
 
 		$this->add_control(
-			'style_responsive_menu_alert',
-			[
-				'type' => Controls_Manager::ALERT,
-				'alert_type' => 'info',
-				'content' => esc_html__( 'To preview, select a responsive viewport icon.', 'hello-plus' ),
-			]
-		);
-
-		$this->add_control(
 			'style_responsive_menu_align',
 			[
 				'label' => esc_html__( 'Text Align', 'hello-plus' ),
@@ -1197,6 +1210,9 @@ class Ehp_Header extends Ehp_Widget_Base {
 				],
 				'default' => 'navbar',
 				'separator' => 'before',
+				'condition' => [
+					'navigation_breakpoint' => [ 'mobile-portrait', 'tablet-portrait' ],
+				],
 			]
 		);
 

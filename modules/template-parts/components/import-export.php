@@ -40,6 +40,6 @@ class Import_Export {
 			add_action( 'elementor/import-export/revert-kit', [ $this, 'register_revert_runners' ] );
 		}
 
-		add_action( 'elementor/import-export/import-kit', [ $this, 'register_import_runner_floating_elements' ] );
+		add_action( 'elementor/import-export/import-kit', [ $this, 'register_import_runner_floating_elements' ], 20, 1 );
 	}
 }

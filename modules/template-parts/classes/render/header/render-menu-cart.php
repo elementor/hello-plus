@@ -1,34 +1,18 @@
 <?php
 
-namespace HelloPlus\Modules\TemplateParts\Classes\Render;
+namespace HelloPlus\Modules\TemplateParts\Classes\Render\Header;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
 use Elementor\Icons_Manager;
-use HelloPlus\Modules\TemplateParts\Widgets\Ehp_Header;
+use HelloPlus\Classes\Render_Base;
 
 /**
  * class Render_Menu_Cart
  */
-class Render_Menu_Cart {
-
-	protected Ehp_Header $widget;
-
-	protected array $settings;
-
-	protected string $layout_classname;
-
-	public function __construct( Ehp_Header $widget, string $layout_classname ) {
-		$this->widget = $widget;
-		$this->settings = $widget->get_settings_for_display();
-		$this->layout_classname = $layout_classname;
-	}
-
-	protected function get_class_name( string $suffix ): string {
-		return $this->layout_classname . $suffix;
-	}
+class Render_Menu_Cart extends Render_Base {
 
 	public function render(): void {
 		if ( ! $this->should_render_cart() ) {

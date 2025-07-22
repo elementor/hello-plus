@@ -49,7 +49,6 @@ class Render_Menu_Cart {
 	protected function should_render_cart(): bool {
 		return class_exists( 'WooCommerce' )
 			&& function_exists( 'WC' )
-			&& WC()->cart
 			&& 'yes' === $this->settings['menu_cart_icon_show'];
 	}
 
@@ -122,7 +121,7 @@ class Render_Menu_Cart {
 	protected function render_cart_content(): void {
 		$cart = WC()->cart;
 
-		if ( ! $cart->is_empty() ) {
+		if ( $cart && ! $cart->is_empty() ) {
 			$this->render_cart_items( $cart );
 			$this->render_cart_summary( $cart );
 		} else {

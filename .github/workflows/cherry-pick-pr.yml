@@ -76,7 +76,19 @@ jobs:
           IFS=',' read -ra BRANCHES <<< "${{ steps.get_labels.outputs.filtered_labels_csv }}"
           for lbl in "${BRANCHES[@]}"; do
             TARGET=${lbl#cp_}
-            BRANCH="cherry-pick-pr-${PR_NUMBER}-${TARGET}"
+            
+            # Create sanitized branch name from PR title
+            SANITIZED_TITLE=$(echo "$PR_TITLE" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-\|-$//g')
+            # Limit length to 45 chars to leave room for PR number suffix
+            SANITIZED_TITLE=${SANITIZED_TITLE:0:45}
+            BASE_BRANCH="${SANITIZED_TITLE}-cherry-pick"
+            
+            # Check if branch already exists and make it unique
+            if git ls-remote --heads origin "$BASE_BRANCH" | grep -q "$BASE_BRANCH"; then
+              BRANCH="${SANITIZED_TITLE}-cherry-pick-pr${PR_NUMBER}"
+            else
+              BRANCH="$BASE_BRANCH"
+            fi
 
             # Create branch
             if ! git checkout -b "$BRANCH" "origin/$TARGET"; then
@@ -94,7 +106,7 @@ jobs:
                 echo "::error:: Cherry-pick conflicts detected for PR #${PR_NUMBER} on branch ${TARGET}"
 
                 # Create a conflict resolution branch
-                CONFLICT_BRANCH="cherry-pick-pr-${PR_NUMBER}-${TARGET}-conflicts"
+                CONFLICT_BRANCH="${BRANCH}-conflicts"
 
                 # Add conflict markers and create a commit for manual resolution
                 git add .
@@ -223,7 +235,7 @@ jobs:
 
               # Truncate PR title if needed
               if [ ${#PR_TITLE} -gt $MAX_PR_TITLE_LENGTH ]; then
-                TRUNCATED_TITLE="${PR_TITLE:0:$((MAX_PR_TITLE_LENGTH - 1))}…"
+                TRUNCATED_TITLE="${PR_TITLE:0:$((MAX_PR_TITLE_LENGTH - 3))}..."
               else
                 TRUNCATED_TITLE="$PR_TITLE"
               fi

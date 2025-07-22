@@ -223,7 +223,7 @@ jobs:
 
               # Truncate PR title if needed
               if [ ${#PR_TITLE} -gt $MAX_PR_TITLE_LENGTH ]; then
-                TRUNCATED_TITLE="${PR_TITLE:0:$((MAX_PR_TITLE_LENGTH - 1))}…"
+                TRUNCATED_TITLE="${PR_TITLE:0:$((MAX_PR_TITLE_LENGTH - 3))}..."
               else
                 TRUNCATED_TITLE="$PR_TITLE"
               fi

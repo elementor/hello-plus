@@ -666,6 +666,22 @@ abstract class Ehp_Widget_Base extends Widget_Base {
 		return $options;
 	}
 
+	public function get_empty_menus(): array {
+		$menus = wp_get_nav_menus();
+
+		$options = [];
+
+		foreach ( $menus as $menu ) {
+			$menu_items = wp_get_nav_menu_items( $menu->term_id );
+
+			if ( empty( $menu_items ) ) {
+				$options[ $menu->term_id ] = $menu->slug;
+			}
+		}
+
+		return $options;
+	}
+
 	public function add_site_logo_if_present( array $site_logo_image ) {
 		$custom_logo_id = get_theme_mod( 'custom_logo' );
 

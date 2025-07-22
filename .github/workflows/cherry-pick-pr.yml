@@ -76,7 +76,16 @@ jobs:
           IFS=',' read -ra BRANCHES <<< "${{ steps.get_labels.outputs.filtered_labels_csv }}"
           for lbl in "${BRANCHES[@]}"; do
             TARGET=${lbl#cp_}
-            BRANCH="cherry-pick-pr-${PR_NUMBER}-${TARGET}"
+            
+            # Create sanitized branch name from original branch name with timestamp for uniqueness
+            ORIGINAL_BRANCH="${{ github.event.pull_request.head.ref }}"
+            # Strip any word followed by '/' to ensure ticket numbers appear at the beginning
+            CLEAN_BRANCH=$(echo "$ORIGINAL_BRANCH" | sed 's|^[^/]*/||g')
+            SANITIZED_BRANCH=$(echo "$CLEAN_BRANCH" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-\|-$//g')
+            # Limit length to 35 chars to leave room for PR number and timestamp suffix
+            SANITIZED_BRANCH=${SANITIZED_BRANCH:0:35}
+            TIMESTAMP=$(date +%s)
+            BRANCH="${SANITIZED_BRANCH}-cherry-pick-pr${PR_NUMBER}-${TIMESTAMP}"
 
             # Create branch
             if ! git checkout -b "$BRANCH" "origin/$TARGET"; then
@@ -94,7 +103,7 @@ jobs:
                 echo "::error:: Cherry-pick conflicts detected for PR #${PR_NUMBER} on branch ${TARGET}"
 
                 # Create a conflict resolution branch
-                CONFLICT_BRANCH="cherry-pick-pr-${PR_NUMBER}-${TARGET}-conflicts"
+                CONFLICT_BRANCH="${BRANCH}-conflicts"
 
                 # Add conflict markers and create a commit for manual resolution
                 git add .
@@ -215,10 +224,33 @@ jobs:
                 **Trigger:** Label \`${LABEL_NAME}\` added to closed PR"
               fi
 
+              # Set maximum title length (GitHub recommended: 72 chars)
+              MAX_TITLE_LENGTH=72
+              SUFFIX=" (🍒 CP #${PR_NUMBER}→${TARGET})"
+              SUFFIX_LENGTH=${#SUFFIX}
+              
+              # Extract tickets and remove from content for truncation
+              PR_TICKETS=$(echo "$PR_TITLE" | grep -o '\[[A-Z]\{2,\}-[0-9]\+\]' | tr '\n' ' ' | sed 's/[[:space:]]*$//')
+              PR_TITLE_WITHOUT_TICKETS=$(echo "$PR_TITLE" | sed 's/\[[A-Z]\{2,\}-[0-9]\+\]//g' | sed 's/[[:space:]]*$//')
+              
+              # Reserve 10 characters for ticket number (including space)
+              TICKET_RESERVED_LENGTH=10
+              MAX_PR_TITLE_LENGTH=$((MAX_TITLE_LENGTH - SUFFIX_LENGTH - TICKET_RESERVED_LENGTH))
+
+              # Truncate content and add tickets back
+              if [ ${#PR_TITLE_WITHOUT_TICKETS} -gt $MAX_PR_TITLE_LENGTH ]; then
+                TRUNCATED_CONTENT="${PR_TITLE_WITHOUT_TICKETS:0:$((MAX_PR_TITLE_LENGTH - 3))}..."
+              else
+                TRUNCATED_CONTENT="$PR_TITLE_WITHOUT_TICKETS"
+              fi
+              
+              # Add tickets back at the end
+              TRUNCATED_TITLE="${TRUNCATED_CONTENT} ${PR_TICKETS}"
+
               gh pr create \
                 --base "$TARGET" \
                 --head "$BRANCH" \
-                --title "🍒 Cherry-pick PR #${PR_NUMBER} → ${TARGET}: ${PR_TITLE}" \
+                --title "${TRUNCATED_TITLE}${SUFFIX}" \
                 --body "Automatic cherry-pick of [#${PR_NUMBER}](${ORIG_URL}) to \`${TARGET}\` branch.
 
                 **Plugin Information:**

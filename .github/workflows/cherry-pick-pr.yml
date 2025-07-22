@@ -77,12 +77,13 @@ jobs:
           for lbl in "${BRANCHES[@]}"; do
             TARGET=${lbl#cp_}
             
-            # Create sanitized branch name from PR title with timestamp for uniqueness
-            SANITIZED_TITLE=$(echo "$PR_TITLE" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-\|-$//g')
+            # Create sanitized branch name from original branch name with timestamp for uniqueness
+            ORIGINAL_BRANCH="${{ github.event.pull_request.head.ref }}"
+            SANITIZED_BRANCH=$(echo "$ORIGINAL_BRANCH" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-\|-$//g')
             # Limit length to 35 chars to leave room for PR number and timestamp suffix
-            SANITIZED_TITLE=${SANITIZED_TITLE:0:35}
+            SANITIZED_BRANCH=${SANITIZED_BRANCH:0:35}
             TIMESTAMP=$(date +%s)
-            BRANCH="${SANITIZED_TITLE}-cherry-pick-pr${PR_NUMBER}-${TIMESTAMP}"
+            BRANCH="${SANITIZED_BRANCH}-cherry-pick-pr${PR_NUMBER}-${TIMESTAMP}"
 
             # Create branch
             if ! git checkout -b "$BRANCH" "origin/$TARGET"; then

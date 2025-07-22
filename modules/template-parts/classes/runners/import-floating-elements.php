@@ -39,9 +39,7 @@ class Import_Floating_Elements extends Import_Runner_Base {
 			);
 		}
 
-		return [
-			'product' => 'ehp',
-		];
+		return [];
 	}
 
 	private function import_floating_element_metadata( $id, $path, $imported_floating_elements ) {

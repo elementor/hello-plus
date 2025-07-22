@@ -52,7 +52,7 @@ class Import_Floating_Elements extends Import_Runner_Base {
 			return;
 		}
 
-		if ( strpos( $widget_type, 'floating-bars' ) !== 0 ) {
+		if ( strpos( $widget_type, 'floating-bars' ) === 0 ) {
 			$floating_element_type = 'floating-bars';
 			update_post_meta(
 				$imported_post_id,

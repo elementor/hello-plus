@@ -1,6 +1,8 @@
 <?php
 namespace HelloPlus\Modules\TemplateParts\Components;
 
+use HelloPlus\Modules\TemplateParts\Classes\Runners\Import_Floating_Elements;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -19,6 +21,10 @@ class Import_Export {
 		$import->register( new Ehp_Import() );
 	}
 
+	public function register_import_runner_floating_elements( Elementor_Import $import ) {
+		$import->register( new Import_Floating_Elements() );
+	}
+
 	public function register_export_runners( Elementor_Export $export ) {
 		$export->register( new Ehp_Export() );
 	}
@@ -28,12 +34,12 @@ class Import_Export {
 	}
 
 	public function __construct() {
-		if ( Utils::has_pro() ) {
-			return;
+		if ( ! Utils::has_pro() ) {
+			add_action( 'elementor/import-export/import-kit', [ $this, 'register_import_runners' ] );
+			add_action( 'elementor/import-export/export-kit', [ $this, 'register_export_runners' ] );
+			add_action( 'elementor/import-export/revert-kit', [ $this, 'register_revert_runners' ] );
 		}
 
-		add_action( 'elementor/import-export/import-kit', [ $this, 'register_import_runners' ] );
-		add_action( 'elementor/import-export/export-kit', [ $this, 'register_export_runners' ] );
-		add_action( 'elementor/import-export/revert-kit', [ $this, 'register_revert_runners' ] );
+		add_action( 'elementor/import-export/import-kit', [ $this, 'register_import_runner_floating_elements' ] );
 	}
 }

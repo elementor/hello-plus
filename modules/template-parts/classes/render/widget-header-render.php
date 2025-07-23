@@ -64,8 +64,6 @@ class Widget_Header_Render {
 		$behavior_scale_logo = $this->settings['behavior_sticky_scale_logo'];
 		$behavior_scale_title = $this->settings['behavior_sticky_scale_title'];
 		$has_blur_background = $this->settings['blur_background'];
-		$has_menu_cart = $this->settings['menu_cart_icon_show'] ?? '';
-		$show_contact_buttons = 'yes' === $this->settings['contact_buttons_show'] || 'yes' === $this->settings['contact_buttons_show_connect'];
 
 		if ( ! empty( $navigation_breakpoint ) ) {
 			$this->widget->add_render_attribute( 'layout', [

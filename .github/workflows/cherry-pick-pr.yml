@@ -224,33 +224,20 @@ jobs:
                 **Trigger:** Label \`${LABEL_NAME}\` added to closed PR"
               fi
 
-              # Set maximum title length (GitHub recommended: 72 chars)
-              MAX_TITLE_LENGTH=72
-              SUFFIX=" (🍒 CP #${PR_NUMBER}→${TARGET})"
-              SUFFIX_LENGTH=${#SUFFIX}
-              
-              # Extract tickets and remove from content for truncation
+              # Extract tickets and add to title for Jira compatibility
               PR_TICKETS=$(echo "$PR_TITLE" | grep -o '\[[A-Z]\{2,\}-[0-9]\+\]' | tr '\n' ' ' | sed 's/[[:space:]]*$//')
-              PR_TITLE_WITHOUT_TICKETS=$(echo "$PR_TITLE" | sed 's/\[[A-Z]\{2,\}-[0-9]\+\]//g' | sed 's/[[:space:]]*$//')
               
-              # Reserve 10 characters for ticket number (including space)
-              TICKET_RESERVED_LENGTH=10
-              MAX_PR_TITLE_LENGTH=$((MAX_TITLE_LENGTH - SUFFIX_LENGTH - TICKET_RESERVED_LENGTH))
-
-              # Truncate content and add tickets back
-              if [ ${#PR_TITLE_WITHOUT_TICKETS} -gt $MAX_PR_TITLE_LENGTH ]; then
-                TRUNCATED_CONTENT="${PR_TITLE_WITHOUT_TICKETS:0:$((MAX_PR_TITLE_LENGTH - 3))}..."
+              # Create title with tickets at the end
+              if [ -n "$PR_TICKETS" ]; then
+                CHERRY_PICK_TITLE="$PR_TITLE (🍒 CP #${PR_NUMBER}→${TARGET}) ${PR_TICKETS}"
               else
-                TRUNCATED_CONTENT="$PR_TITLE_WITHOUT_TICKETS"
+                CHERRY_PICK_TITLE="$PR_TITLE (🍒 CP #${PR_NUMBER}→${TARGET})"
               fi
-              
-              # Add suffix first, then tickets at the end for Jira compatibility
-              TRUNCATED_TITLE="${TRUNCATED_CONTENT}${SUFFIX} ${PR_TICKETS}"
 
               gh pr create \
                 --base "$TARGET" \
                 --head "$BRANCH" \
-                --title "${TRUNCATED_TITLE}" \
+                --title "$CHERRY_PICK_TITLE" \
                 --body "Automatic cherry-pick of [#${PR_NUMBER}](${ORIG_URL}) to \`${TARGET}\` branch.
 
                 **Plugin Information:**

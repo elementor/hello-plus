@@ -244,13 +244,13 @@ jobs:
                 TRUNCATED_CONTENT="$PR_TITLE_WITHOUT_TICKETS"
               fi
               
-              # Add tickets back at the end
-              TRUNCATED_TITLE="${TRUNCATED_CONTENT} ${PR_TICKETS}"
+              # Add suffix first, then tickets at the end for Jira compatibility
+              TRUNCATED_TITLE="${TRUNCATED_CONTENT}${SUFFIX} ${PR_TICKETS}"
 
               gh pr create \
                 --base "$TARGET" \
                 --head "$BRANCH" \
-                --title "${TRUNCATED_TITLE}${SUFFIX}" \
+                --title "${TRUNCATED_TITLE}" \
                 --body "Automatic cherry-pick of [#${PR_NUMBER}](${ORIG_URL}) to \`${TARGET}\` branch.
 
                 **Plugin Information:**

@@ -6,7 +6,7 @@ use Elementor\Controls_Manager;
 use HelloPlus\Includes\Module_Base;
 use HelloPlus\Includes\Utils;
 use HelloPlus\Modules\TemplateParts\Classes\Control_Media_Preview;
-use HelloPlus\Modules\TemplateParts\Classes\Render\Render_Menu_Cart;
+use HelloPlus\Modules\TemplateParts\Classes\Render\Header\Render_Menu_Cart;
 use HelloPlus\Modules\TemplateParts\Classes\Render\Widget_Header_Render;
 use HelloPlus\Modules\TemplateParts\Documents\Ehp_Header;
 

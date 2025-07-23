@@ -39,17 +39,34 @@ class Widget_Header_Render {
 	protected int $nav_menu_index = 1;
 
 	protected function should_show_button_toggle(): bool {
-		$has_menu_cart = $this->settings['menu_cart_icon_show'] ?? '';
 		$show_contact_buttons = 'yes' === $this->settings['contact_buttons_show'] || 'yes' === $this->settings['contact_buttons_show_connect'];
 
 		if ( $show_contact_buttons ) {
 			$show_contact_buttons = 'dropdown' === $this->settings['contact_buttons_responsive_display'];
 		}
 
-		return 'yes' === $has_menu_cart ||
-			$show_contact_buttons ||
+		$has_at_least_one_button = $show_contact_buttons ||
 			! empty( $this->settings['primary_cta_button_text'] ) ||
 			! empty( $this->settings['secondary_cta_button_text'] );
+
+		if ( $has_at_least_one_button ) {
+			return true;
+		}
+
+		$available_menus = $this->widget->get_available_menus();
+		if ( ! $available_menus ) {
+			return false;
+		}
+
+		$empty_menus = $this->widget->get_empty_menus();
+		$navigation_menu = $this->settings['navigation_menu'] ?? '';
+		$has_empty_menu = $navigation_menu && in_array( $navigation_menu, $empty_menus, true );
+
+		if ( $has_empty_menu ) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public function render(): void {

@@ -694,7 +694,13 @@
 		.ehp-header {
 
 			&__elements-container > .ehp-header__ctas-container {
-				display: none;
+				& > .ehp-button {
+					display: none;
+				}
+
+				& > .ehp-header__contact-buttons.has-responsive-display-dropdown {
+					display: none;
+				}
 			}
 
 			&__dropdown {

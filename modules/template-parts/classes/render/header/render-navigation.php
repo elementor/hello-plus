@@ -130,11 +130,19 @@ class Render_Navigation extends Render_Base {
 	}
 
 	public function render_button_toggle() {
-		$toggle_icon = $this->settings['navigation_menu_icon'] ?? [
+		$this->setup_toggle_button_attributes();
+		$this->setup_toggle_icon_attributes();
+		$this->render_toggle_button_html();
+	}
+
+	private function get_toggle_icon() {
+		return $this->settings['navigation_menu_icon'] ?? [
 			'value' => 'fas fa-bars',
 			'library' => 'fa-solid',
 		];
+	}
 
+	private function setup_toggle_button_attributes() {
 		$toggle_classname = $this->get_class_name( '__button-toggle' );
 
 		$this->widget->add_render_attribute( 'button-toggle', [
@@ -144,7 +152,9 @@ class Render_Navigation extends Render_Base {
 			'aria-label' => esc_html__( 'Menu Toggle', 'hello-plus' ),
 			'aria-expanded' => 'false',
 		] );
+	}
 
+	private function setup_toggle_icon_attributes() {
 		$this->widget->add_render_attribute( 'toggle-icon-open', [
 			'class' => [
 				$this->get_class_name( '__toggle-icon' ),
@@ -160,30 +170,40 @@ class Render_Navigation extends Render_Base {
 			],
 			'aria-hidden' => 'true',
 		] );
+	}
+
+	private function render_toggle_button_html() {
 		?>
 		<button <?php $this->widget->print_render_attribute_string( 'button-toggle' ); ?>>
-			<span <?php $this->widget->print_render_attribute_string( 'toggle-icon-open' ); ?>>
-				<?php
-				Icons_Manager::render_icon( $toggle_icon,
-					[
-						'role' => 'presentation',
-					]
-				);
-				?>
-			</span>
-			<span <?php $this->widget->print_render_attribute_string( 'toggle-icon-close' ); ?>>
-				<?php
-				Icons_Manager::render_icon(
-					[
-						'library' => 'eicons',
-						'value' => 'eicon-close',
-					]
-				);
-				?>
-			</span>
+			<?php $this->render_open_icon(); ?>
+			<?php $this->render_close_icon(); ?>
 			<span class="elementor-screen-only"><?php esc_html_e( 'Menu', 'hello-plus' ); ?></span>
 		</button>
+		<?php
+	}
 
+	private function render_open_icon() {
+		?>
+		<span <?php $this->widget->print_render_attribute_string( 'toggle-icon-open' ); ?>>
+			<?php
+			Icons_Manager::render_icon( $this->get_toggle_icon(), [
+				'role' => 'presentation',
+			] );
+			?>
+		</span>
+		<?php
+	}
+
+	private function render_close_icon() {
+		?>
+		<span <?php $this->widget->print_render_attribute_string( 'toggle-icon-close' ); ?>>
+			<?php
+			Icons_Manager::render_icon( [
+				'library' => 'eicons',
+				'value' => 'eicon-close',
+			] );
+			?>
+		</span>
 		<?php
 	}
 

@@ -49,4 +49,32 @@ class Widget_Utils {
 
 		echo wp_kses_post( $element_html );
 	}
+
+	public static function get_available_menus(): array {
+		$menus = wp_get_nav_menus();
+
+		$options = [];
+
+		foreach ( $menus as $menu ) {
+			$options[ $menu->slug ] = $menu->name;
+		}
+
+		return $options;
+	}
+
+	public static function get_empty_menus(): array {
+		$menus = wp_get_nav_menus();
+
+		$options = [];
+
+		foreach ( $menus as $menu ) {
+			$menu_items = wp_get_nav_menu_items( $menu->term_id );
+
+			if ( empty( $menu_items ) ) {
+				$options[ $menu->term_id ] = $menu->slug;
+			}
+		}
+
+		return $options;
+	}
 }

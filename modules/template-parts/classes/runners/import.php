@@ -16,6 +16,8 @@ class Import extends Import_Runner_Base {
 
 	private $import_session_id;
 
+	private $import_session_metadata = [];
+
 	public static function get_name(): string {
 		return 'templates';
 	}
@@ -127,12 +129,12 @@ class Import extends Import_Runner_Base {
 
 		$this->set_session_post_meta( $document_id, $this->import_session_id );
 
+		$this->import_session_metadata['templates'][ $id ] = $document_id;
+
 		return $document_id;
 	}
 
 	public function get_import_session_metadata(): array {
-		return [
-			'product' => 'ehp',
-		];
+		return $this->import_session_metadata;
 	}
 }

@@ -200,7 +200,6 @@ class Ehp_Header extends Ehp_Widget_Base {
 		$menus = $this->get_available_menus();
 
 		if ( ! empty( $menus ) ) {
-
 			$this->add_control(
 				'navigation_menu',
 				[

@@ -104,10 +104,10 @@ class Ehp_Header extends Ehp_Widget_Base {
 		$this->add_content_site_logo_section();
 		$this->add_content_navigation_section();
 		$this->add_content_contact_buttons_section();
+		$this->add_content_cta_section();
 		if ( current_theme_supports( 'hello-plus-menu-cart' ) ) {
 			$this->add_content_menu_cart_section();
 		}
-		$this->add_content_cta_section();
 	}
 
 	protected function add_style_tab() {

@@ -137,6 +137,7 @@ export default class HelloPlusHeaderHandler extends elementorModules.frontend.ha
 
 	onResize() {
 		this.handleAriaAttributesMenu();
+		this.handleOffsetTop();
 	}
 
 	onScroll() {

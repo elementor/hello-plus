@@ -1,5 +1,4 @@
-# This workflow will be deprecated in favor of one-click-release.yml, once the release is fully migrated to it.
-name: Deploy
+name: One-Click Release (Enhanced Deploy)
 
 on:
   workflow_dispatch:

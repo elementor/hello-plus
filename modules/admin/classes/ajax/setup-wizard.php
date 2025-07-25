@@ -29,10 +29,12 @@ class Setup_Wizard {
 
 		switch ( $step ) {
 			case 'install-elementor':
+				add_option( 'elementor_onboarded', true );
 				$step = new Install_Elementor();
 				$step->install_and_activate();
 				break;
 			case 'activate-elementor':
+				add_option( 'elementor_onboarded', true );
 				$step = new Install_Elementor();
 				$step->activate();
 				break;

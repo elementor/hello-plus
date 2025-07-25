@@ -1,4 +1,4 @@
-name: Deploy
+name: One-Click Release (Enhanced Deploy)
 
 on:
   workflow_dispatch:

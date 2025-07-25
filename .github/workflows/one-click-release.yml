@@ -1,4 +1,3 @@
-# This workflow will be deprecated in favor of one-click-release.yml, once the release is fully migrated to it.
 name: Deploy
 
 on:

@@ -14,11 +14,64 @@ inputs:
   SVN_PASSWORD:
     required: true
     description: 'SVN password'
+  DRY_RUN:
+    required: false
+    default: 'false'
+    description: 'Show what would be deployed without actually deploying'
 
 runs:
   using: 'composite'
   steps:
-    - name: Publish to WordPress.org SVN
+    - name: Validate build files
+      shell: bash
+      env:
+        PLUGIN_SLUG: ${{ inputs.PLUGIN_SLUG }}
+        PLUGIN_VERSION: ${{ inputs.PLUGIN_VERSION }}
+      run: |
+        echo "🔍 Validating plugin build files..."
+        echo "Plugin: $PLUGIN_SLUG"
+        echo "Version: $PLUGIN_VERSION"
+        
+        bash "${GITHUB_WORKSPACE}/.github/scripts/validate-build-files.sh"
+        
+        echo "✅ Plugin build validation completed successfully"
+    
+    - name: WordPress.org Deployment Preview (Dry Run)
+      if: ${{ inputs.DRY_RUN == 'true' }}
+      shell: bash
+      run: |
+        echo "🧪 **DRY RUN: WordPress.org Deployment Preview**"
+        echo ""
+        echo "📋 **SVN Commands that would be executed:**"
+        echo "   1. svn co https://plugins.svn.wordpress.org/${{ inputs.PLUGIN_SLUG }}/trunk"
+        echo "   2. rsync -ah --progress \$PLUGIN_PATH/* \$SVN_PATH/trunk"
+        echo "   3. svn status (to show file changes)"
+        echo "   4. svn delete (remove deleted files)"
+        echo "   5. svn add (add new files)"
+        echo "   6. svn ci -m 'Upload v${{ inputs.PLUGIN_VERSION }}' --username \$SVN_USERNAME"
+        echo "   7. svn cp trunk tags/${{ inputs.PLUGIN_VERSION }} --message 'Tagged ${{ inputs.PLUGIN_VERSION }}'"
+        echo ""
+        echo "📦 **Plugin Details:**"
+        echo "   - Plugin: ${{ inputs.PLUGIN_SLUG }}"
+        echo "   - Version: ${{ inputs.PLUGIN_VERSION }}"
+        echo "   - SVN Repository: https://plugins.svn.wordpress.org/${{ inputs.PLUGIN_SLUG }}"
+        echo "   - SVN Username: ${{ inputs.SVN_USERNAME }}"
+        echo "   - SVN Password: [HIDDEN]"
+        echo ""
+        echo "📁 **Files that would be deployed:**"
+        echo "   - All plugin files from build artifact"
+        echo "   - readme.txt with version ${{ inputs.PLUGIN_VERSION }}"
+        echo "   - ${{ inputs.PLUGIN_SLUG }}.php with version ${{ inputs.PLUGIN_VERSION }}"
+        echo ""
+        echo "🏷️ **Tags that would be created:**"
+        echo "   - SVN Tag: tags/${{ inputs.PLUGIN_VERSION }}"
+        echo "   - WordPress.org will show: Version ${{ inputs.PLUGIN_VERSION }}"
+        echo ""
+        echo "✅ **WordPress.org deployment preview completed**"
+        echo "💡 **To deploy for real:** Re-run workflow with 'Dry run' unchecked"
+    
+    - name: Publish to WordPress.org SVN (Actual)
+      if: ${{ inputs.DRY_RUN != 'true' }}
       shell: bash
       env:
         PLUGIN_SLUG: ${{ inputs.PLUGIN_SLUG }}
@@ -26,4 +79,10 @@ runs:
         SVN_PASSWORD: ${{ inputs.SVN_PASSWORD }}
         SVN_USERNAME: ${{ inputs.SVN_USERNAME }}
       run: |
+        echo "🚀 Deploying to WordPress.org via SVN..."
+        echo "Plugin: $PLUGIN_SLUG"
+        echo "Version: $PLUGIN_VERSION"
+        
         bash "${GITHUB_WORKSPACE}/.github/scripts/publish-to-wordpress-org.sh"
+        
+        echo "✅ WordPress.org deployment completed successfully"

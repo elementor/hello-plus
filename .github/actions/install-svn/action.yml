@@ -1,0 +1,13 @@
+name: 'Install SVN'
+description: 'Install Subversion tools'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install SVN
+      shell: bash
+      run: |
+        sudo apt-get update -y
+        sudo apt-get install -y subversion
+        which svn
+        svn --version

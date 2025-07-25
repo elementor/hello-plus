@@ -1,0 +1,19 @@
+name: 'Build Plugin'
+description: 'Download build artifacts and show debug info'
+
+inputs:
+  PLUGIN_SLUG:
+    required: true
+    description: 'Plugin slug name'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Download Artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{ inputs.PLUGIN_SLUG }}
+    
+    - name: Debug info
+      shell: bash
+      run: ls -lah && pwd

@@ -1,0 +1,29 @@
+name: 'Deploy to WordPress.org'
+description: 'Deploy plugin to WordPress.org via SVN'
+
+inputs:
+  PLUGIN_SLUG:
+    required: true
+    description: 'Plugin slug name'
+  PLUGIN_VERSION:
+    required: true
+    description: 'Plugin version'
+  SVN_USERNAME:
+    required: true
+    description: 'SVN username'
+  SVN_PASSWORD:
+    required: true
+    description: 'SVN password'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Publish to WordPress.org SVN
+      shell: bash
+      env:
+        PLUGIN_SLUG: ${{ inputs.PLUGIN_SLUG }}
+        PLUGIN_VERSION: ${{ inputs.PLUGIN_VERSION }}
+        SVN_PASSWORD: ${{ inputs.SVN_PASSWORD }}
+        SVN_USERNAME: ${{ inputs.SVN_USERNAME }}
+      run: |
+        bash "${GITHUB_WORKSPACE}/.github/scripts/publish-to-wordpress-org.sh"

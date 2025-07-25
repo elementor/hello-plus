@@ -1,0 +1,22 @@
+name: 'Prepare Plugin Environment'
+description: 'Extract plugin version and slug from package.json'
+
+outputs:
+  PACKAGE_VERSION:
+    description: 'Plugin version from package.json'
+    value: ${{ steps.prepare.outputs.PACKAGE_VERSION }}
+  PLUGIN_SLUG:
+    description: 'Plugin slug from package.json'
+    value: ${{ steps.prepare.outputs.PLUGIN_SLUG }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Preparing envs
+      id: prepare
+      shell: bash
+      run: |
+        echo "PACKAGE_VERSION=$(cat package.json | jq -r '.version')" >> $GITHUB_ENV
+        echo "PLUGIN_SLUG=$(cat package.json | jq -r '.name')" >> $GITHUB_ENV
+        echo "PACKAGE_VERSION=$(cat package.json | jq -r '.version')" >> $GITHUB_OUTPUT
+        echo "PLUGIN_SLUG=$(cat package.json | jq -r '.name')" >> $GITHUB_OUTPUT

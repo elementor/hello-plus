@@ -1,0 +1,21 @@
+name: 'Validate Plugin Build'
+description: 'Validate plugin build files'
+
+inputs:
+  PLUGIN_SLUG:
+    required: true
+    description: 'Plugin slug name'
+  PLUGIN_VERSION:
+    required: true
+    description: 'Plugin version'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Validate build files
+      shell: bash
+      env:
+        PLUGIN_SLUG: ${{ inputs.PLUGIN_SLUG }}
+        PLUGIN_VERSION: ${{ inputs.PLUGIN_VERSION }}
+      run: |
+        bash "${GITHUB_WORKSPACE}/.github/scripts/validate-build-files.sh"

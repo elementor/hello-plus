@@ -15,33 +15,30 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Preparing envs
-        run: |
-          echo "PACKAGE_VERSION=$(cat package.json | jq -r '.version')" >> $GITHUB_ENV
-          echo "PLUGIN_SLUG=$(cat package.json | jq -r '.name')" >> $GITHUB_ENV
-      - name: Download Artifact
-        uses: actions/download-artifact@v4
+        
+      - name: Prepare Plugin Environment
+        id: plugin-env
+        uses: ./.github/actions/prepare-plugin-env
+        
+      - name: Build Plugin
+        id: build-plugin
+        uses: ./.github/actions/build-plugin
         with:
-          name: ${{ env.PLUGIN_SLUG }}
-      - run: ls -lah && pwd
-#      - name: unzip
-#        run: unzip ${{ env.PLUGIN_SLUG }}.zip
-      - name: Preparing envs
-        run: |
-          echo "PACKAGE_VERSION=$(cat package.json | jq -r '.version')" >> $GITHUB_ENV
-          echo "PLUGIN_SLUG=$(cat package.json | jq -r '.name')" >> $GITHUB_ENV
-      - name: Install SVN
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y subversion
-          which svn
-          svn --version
-      - name: Publish to WordPress.org SVN
-        env:
-          PLUGIN_SLUG: ${{ env.PLUGIN_SLUG }}
-          PLUGIN_VERSION: ${{ env.PACKAGE_VERSION }}
-          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          PLUGIN_SLUG: ${{ steps.plugin-env.outputs.PLUGIN_SLUG }}
+          
+      - name: Install SVN Tools
+        uses: ./.github/actions/install-svn
+        
+      - name: Validate Plugin Build
+        uses: ./.github/actions/validate-plugin-build
+        with:
+          PLUGIN_SLUG: ${{ steps.plugin-env.outputs.PLUGIN_SLUG }}
+          PLUGIN_VERSION: ${{ steps.plugin-env.outputs.PACKAGE_VERSION }}
+          
+      - name: Deploy to WordPress.org
+        uses: ./.github/actions/deploy-to-wordpress-org
+        with:
+          PLUGIN_SLUG: ${{ steps.plugin-env.outputs.PLUGIN_SLUG }}
+          PLUGIN_VERSION: ${{ steps.plugin-env.outputs.PACKAGE_VERSION }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-        run: |
-          bash "${GITHUB_WORKSPACE}/.github/scripts/validate-build-files.sh"
-          bash "${GITHUB_WORKSPACE}/.github/scripts/publish-to-wordpress-org.sh"
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}

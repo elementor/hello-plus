@@ -1,0 +1,19 @@
+name: 'Install SVN Tools'
+description: 'Install Subversion tools for WordPress.org deployment'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install SVN
+      shell: bash
+      run: |
+        echo "🔧 Installing SVN tools..."
+        
+        sudo apt-get update -y
+        sudo apt-get install -y subversion
+        
+        # Verify installation
+        which svn
+        svn --version
+        
+        echo "✅ SVN tools installed successfully"

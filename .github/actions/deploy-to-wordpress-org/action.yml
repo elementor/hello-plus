@@ -55,7 +55,7 @@ runs:
         echo "   - Plugin: ${{ inputs.PLUGIN_SLUG }}"
         echo "   - Version: ${{ inputs.PLUGIN_VERSION }}"
         echo "   - SVN Repository: https://plugins.svn.wordpress.org/${{ inputs.PLUGIN_SLUG }}"
-        echo "   - SVN Username: ${{ inputs.SVN_USERNAME }}"
+        echo "   - SVN Username: [SVN_USERNAME]"
         echo "   - SVN Password: [HIDDEN]"
         echo ""
         echo "📁 **Files that would be deployed:**"

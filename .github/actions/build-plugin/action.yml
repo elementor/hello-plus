@@ -1,34 +1,19 @@
 name: 'Build Plugin'
-description: 'Download build artifacts from build workflow'
+description: 'Download build artifacts and show debug info'
 
 inputs:
   PLUGIN_SLUG:
     required: true
     description: 'Plugin slug name'
 
-outputs:
-  BUILD_ARTIFACT_PATH:
-    description: 'Path to downloaded build artifact'
-    value: ${{ steps.download-artifact.outputs.BUILD_ARTIFACT_PATH }}
-
 runs:
   using: 'composite'
   steps:
-    - name: Download Build Artifact
-      id: download-artifact
+    - name: Download Artifact
       uses: actions/download-artifact@v4
       with:
         name: ${{ inputs.PLUGIN_SLUG }}
-        
-    - name: Verify artifact download
+    
+    - name: Debug info
       shell: bash
-      run: |
-        echo "📦 Verifying downloaded artifacts..."
-        ls -lah
-        pwd
-        
-        # Set artifact path for output
-        BUILD_ARTIFACT_PATH="${{ inputs.PLUGIN_SLUG }}.zip"
-        echo "BUILD_ARTIFACT_PATH=$BUILD_ARTIFACT_PATH" >> $GITHUB_OUTPUT
-        
-        echo "✅ Build artifact downloaded successfully"
+      run: ls -lah && pwd

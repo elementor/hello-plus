@@ -21,12 +21,11 @@ jobs:
         uses: ./.github/actions/prepare-plugin-env
         
       - name: Build Plugin
-        id: build-plugin
         uses: ./.github/actions/build-plugin
         with:
           PLUGIN_SLUG: ${{ steps.plugin-env.outputs.PLUGIN_SLUG }}
           
-      - name: Install SVN Tools
+      - name: Install SVN
         uses: ./.github/actions/install-svn
         
       - name: Validate Plugin Build

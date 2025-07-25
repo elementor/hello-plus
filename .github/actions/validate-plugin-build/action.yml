@@ -1,5 +1,5 @@
 name: 'Validate Plugin Build'
-description: 'Validate plugin build files and versions'
+description: 'Validate plugin build files'
 
 inputs:
   PLUGIN_SLUG:
@@ -7,7 +7,7 @@ inputs:
     description: 'Plugin slug name'
   PLUGIN_VERSION:
     required: true
-    description: 'Plugin version to validate'
+    description: 'Plugin version'
 
 runs:
   using: 'composite'
@@ -18,11 +18,4 @@ runs:
         PLUGIN_SLUG: ${{ inputs.PLUGIN_SLUG }}
         PLUGIN_VERSION: ${{ inputs.PLUGIN_VERSION }}
       run: |
-        echo "🔍 Validating plugin build files..."
-        echo "Plugin: $PLUGIN_SLUG"
-        echo "Version: $PLUGIN_VERSION"
-        
-        # Use existing validation script
         bash "${GITHUB_WORKSPACE}/.github/scripts/validate-build-files.sh"
-        
-        echo "✅ Plugin build validation completed successfully"

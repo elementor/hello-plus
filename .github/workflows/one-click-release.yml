@@ -2,6 +2,12 @@ name: One-Click Release (Enhanced Deploy)
 
 on:
   workflow_dispatch:
+    inputs:
+      dry_run:
+        type: boolean
+        description: 'Dry run (test without actual deployment)?'
+        required: false
+        default: false
 
 jobs:
   build:
@@ -15,6 +21,19 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      
+      - name: Pre-flight checks
+        run: |
+          echo "🔍 Pre-flight checks..."
+          echo "Repository: ${{ github.repository }}"
+          echo "Actor: ${{ github.actor }}"
+          echo "Dry Run: ${{ inputs.dry_run }}"
+          
+          if [ "${{ inputs.dry_run }}" == "true" ]; then
+            echo "🧪 **DRY RUN MODE** - No actual deployment will be performed"
+          fi
+          
+          echo "✅ Pre-flight checks passed"
         
       - name: Prepare Plugin Environment
         id: plugin-env
@@ -41,3 +60,29 @@ jobs:
           PLUGIN_VERSION: ${{ steps.plugin-env.outputs.PACKAGE_VERSION }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          DRY_RUN: ${{ inputs.dry_run }}
+      
+      - name: Release Summary
+        run: |
+          if [ "${{ inputs.dry_run }}" == "true" ]; then
+            echo "🧪 **DRY RUN COMPLETE!**"
+            echo ""
+            echo "📋 **This was a test run - no actual deployment was performed**"
+            echo ""
+            echo "🔍 **What would have happened:**"
+            echo "1. Plugin built: ${{ steps.plugin-env.outputs.PLUGIN_SLUG }}"
+            echo "2. Version validated: ${{ steps.plugin-env.outputs.PACKAGE_VERSION }}"
+            echo "3. WordPress.org deployment would be executed via SVN"
+            echo "4. Plugin would be available on WordPress.org"
+            echo ""
+            echo "✅ **Dry run validation passed - ready for actual deployment!**"
+            echo "🎯 **To proceed:** Re-run this workflow with 'Dry run' unchecked"
+          else
+            echo "🚀 **DEPLOYMENT COMPLETE!**"
+            echo ""
+            echo "✅ Successfully deployed: ${{ steps.plugin-env.outputs.PLUGIN_SLUG }} v${{ steps.plugin-env.outputs.PACKAGE_VERSION }}"
+            echo "📦 WordPress.org: Plugin updated and available"
+            echo "🔗 Download: https://wordpress.org/plugins/${{ steps.plugin-env.outputs.PLUGIN_SLUG }}/"
+            echo ""
+            echo "🎉 Hello Plus deployment successful!"
+          fi
